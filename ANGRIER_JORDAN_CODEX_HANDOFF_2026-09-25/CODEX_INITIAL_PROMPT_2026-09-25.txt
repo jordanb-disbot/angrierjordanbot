@@ -1,0 +1,27 @@
+You are taking over implementation of the Angrier Jordan Discord bot for the private Chairs server.
+
+Open and follow `CODEX_MASTER_HANDOFF_2026-09-25.md` first. Treat it as the handoff controller. Use the source-authority order defined there.
+
+Start from `ANGRIER_JORDAN_IMPLEMENTATION_CHECKPOINT_08_2026-09-21.zip`; do not restart or regress to older bundles. The canonical product contract is `ANGRIER_JORDAN_CANONICAL_BUILD_SPEC_2026-09-21.md`. The complete member/staff feature-flow reference is `ANGRIER_JORDAN_FEATURE_FLOW_REFERENCE_2026-09-21.txt`. Use `ANGRIER_JORDAN_FINAL_QA_REPORT_2026-09-25.txt` for current verified implementation status and known cleanup issues.
+
+Your mandate:
+1. Establish a clean installed/reproducible baseline from Checkpoint 08, including a committed lockfile and full workspace/adapters typecheck/build.
+2. Preserve every locked product decision and current command reconciliation.
+3. Implement the remaining roadmap autonomously, beginning with Phase 09 Shop/Inventory/Tools/Crafting/Collections.
+4. Do not stop after normal checkpoints and do not ask about ordinary engineering decisions.
+5. Keep migrations, registries, help/tutorial metadata, dashboard settings, production presentation mappings, tests and manifests synchronized with every feature.
+6. Use shared Ledger/escrow/session/timer/voting/permission/config/audit engines rather than reimplementing infrastructure in individual features.
+7. Keep unfinished features behind flags until acceptance gates pass.
+8. Use deterministic runtime rendering. Do not generate AI art as runtime content.
+9. User-facing sender is Angrier Jordan. User-facing terminology uses server/member. Internal Discord `guild*` code terminology is fine.
+10. Do not restore retired `/race`, `/line`, `/spin`, `/fortune`, `/showcase` or `/sell` paths.
+11. Continue through Phase 12 and then STOP for REVIEW GATE A with real Race/Fight runtime review materials as defined in the handoff.
+
+Before writing new feature code, run the baseline validations listed in the handoff and resolve any dependency/build issues. Then proceed.
+
+When you stop at a review gate, give the owner only:
+- what is complete,
+- the actual review artifacts/screens,
+- validation/test results,
+- any genuine owner decision still needed.
+Do not ask broad or hypothetical questions.

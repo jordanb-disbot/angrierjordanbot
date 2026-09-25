@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-21",
+  "source_of_truth": "2026-09-21 reconciled build",
+  "checkpoint": 8,
+  "checkpoint_name": "Economy Foundation \u2014 ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
+  "status": "PASS",
+  "registry": {
+    "interactions": 192,
+    "settings": 185,
+    "capabilities": 40,
+    "generated_application_commands": 65,
+    "top_level_chat_input_commands": 64
+  },
+  "database": {
+    "schema_version": "0008_economy_foundation",
+    "prisma_models": 79
+  },
+  "visual_library": {
+    "assets_and_templates": 348,
+    "embedded": true,
+    "wyr_visual_standard_approved": true
+  },
+  "implemented": [
+    "Golden WYR vertical slice and approved deterministic runtime renderer",
+    "Config/Audit/Health/Scheduler/PostgreSQL application foundation",
+    "rules acknowledgement, rejoin restoration and member-facing /roles",
+    "moderation Hotseat execution and restart-safe release",
+    "numbered moderation cases, evidence, appeals and manual action controls",
+    "AutoMod, behavior heat, Join Gate, anti-raid, anti-nuke and Panic Mode",
+    "idempotent Ottoman economy transaction headers and balanced ledger movement",
+    "one-time starter grant, wallet/bank accounts, free transfers and five bank tiers",
+    "Tier 5 weekly interest with persisted Monday 4 AM Mountain scheduling",
+    "private /daily hub with Claim Daily, Daily Spin and Fortune at 4 AM Mountain reset",
+    "/weekly plus repeatable /work, /fish, /dig and /scavenge with technical throttling",
+    "tool requirement/durability/fallback foundation for grind activities",
+    "catalog/inventory stack persistence and initial economy item seed",
+    "economy Discord coordinator with approved feature accent variation and containment guards"
+  ],
+  "verification": {
+    "preflight": "PASS",
+    "domain_tests": 68,
+    "domain_tests_failed": 0,
+    "typescript_domain_typecheck": "PASS",
+    "production_wiring_structure": "PASS",
+    "registry_validation": "PASS",
+    "help_coverage": "PASS",
+    "asset_validation": "PASS",
+    "live_discord_postgres_smoke_test": "PENDING_CREDENTIALS",
+    "prisma_client_regeneration": "PENDING_DEPENDENCY_INSTALL",
+    "full_bot_typecheck": "PENDING_WORKSPACE_DEPENDENCY_INSTALL"
+  },
+  "feature_flags": {
+    "party_games": "KEEP_OFF",
+    "ENABLE_WYR_SMOKE": false,
+    "ENABLE_ONBOARDING_SMOKE": false,
+    "ENABLE_JAIL_SMOKE": false,
+    "ENABLE_MODERATION_SMOKE": false,
+    "ENABLE_SECURITY_SMOKE": false,
+    "ENABLE_ECONOMY_SMOKE": false
+  },
+  "next_checkpoint": "Shop / inventory / tools / crafting / collections before escrow-heavy games and wagering"
+}

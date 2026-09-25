@@ -1,0 +1,5354 @@
+{
+  "version": 2,
+  "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
+  "command_count": 192,
+  "commands": [
+    {
+      "id": "help",
+      "command": "/help",
+      "type": "slash",
+      "module": "core",
+      "description": "Quick command reference.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "core.help",
+      "feature_flag": "core",
+      "ephemeral_default": true,
+      "help_id": "help",
+      "tutorial_id": "bot_basics",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/help",
+      "registration_path": "/help"
+    },
+    {
+      "id": "tutorial",
+      "command": "/tutorial",
+      "type": "slash",
+      "module": "tutorial",
+      "description": "Interactive guided tutorial.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "tutorial.tutorial",
+      "feature_flag": "tutorial",
+      "ephemeral_default": true,
+      "help_id": "tutorial",
+      "tutorial_id": "bot_basics",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/tutorial",
+      "registration_path": "/tutorial"
+    },
+    {
+      "id": "rules",
+      "command": "/rules",
+      "type": "slash",
+      "module": "core",
+      "description": "Show branded server rules.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "core.rules",
+      "feature_flag": "core",
+      "ephemeral_default": true,
+      "help_id": "rules",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/rules",
+      "registration_path": "/rules"
+    },
+    {
+      "id": "status",
+      "command": "/status",
+      "type": "slash",
+      "module": "core",
+      "description": "Bot health and uptime.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "core.status",
+      "feature_flag": "core",
+      "ephemeral_default": true,
+      "help_id": "status",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/status",
+      "registration_path": "/status"
+    },
+    {
+      "id": "bug",
+      "command": "/bug",
+      "type": "slash",
+      "module": "core",
+      "description": "Report a bot issue.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "description",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "core.bug",
+      "feature_flag": "core",
+      "ephemeral_default": true,
+      "help_id": "bug",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/bug",
+      "registration_path": "/bug"
+    },
+    {
+      "id": "dms",
+      "command": "/dms",
+      "type": "slash",
+      "module": "core",
+      "description": "Enable or disable bot DMs.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "state",
+          "type": "choice",
+          "required": true,
+          "description": "",
+          "choices": [
+            "on",
+            "off"
+          ]
+        }
+      ],
+      "handler": "core.dms",
+      "feature_flag": "core",
+      "ephemeral_default": true,
+      "help_id": "dms",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/dms",
+      "registration_path": "/dms"
+    },
+    {
+      "id": "profile",
+      "command": "/profile",
+      "type": "slash",
+      "module": "profile",
+      "description": "Show a member profile.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "profile.profile",
+      "feature_flag": "profile",
+      "ephemeral_default": false,
+      "help_id": "profile",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/profile",
+      "registration_path": "/profile"
+    },
+    {
+      "id": "records",
+      "command": "/records",
+      "type": "slash",
+      "module": "profile",
+      "description": "Show current live records.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "profile.records",
+      "feature_flag": "profile",
+      "ephemeral_default": false,
+      "help_id": "records",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/records",
+      "registration_path": "/records"
+    },
+    {
+      "id": "daily",
+      "command": "/daily",
+      "type": "slash",
+      "module": "economy",
+      "description": "Open the private daily hub for Claim Daily, Daily Spin, and Fortune.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "economy.daily",
+      "feature_flag": "economy",
+      "ephemeral_default": true,
+      "help_id": "daily",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/daily",
+      "registration_path": "/daily"
+    },
+    {
+      "id": "weekly",
+      "command": "/weekly",
+      "type": "slash",
+      "module": "economy",
+      "description": "Claim weekly reward.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.weekly",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "weekly",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/weekly",
+      "registration_path": "/weekly"
+    },
+    {
+      "id": "scavenge",
+      "command": "/scavenge",
+      "type": "slash",
+      "module": "economy",
+      "description": "Scavenge for loot.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.scavenge",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "scavenge",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/scavenge",
+      "registration_path": "/scavenge"
+    },
+    {
+      "id": "dig",
+      "command": "/dig",
+      "type": "slash",
+      "module": "economy",
+      "description": "Dig for loot.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.dig",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "dig",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/dig",
+      "registration_path": "/dig"
+    },
+    {
+      "id": "fish",
+      "command": "/fish",
+      "type": "slash",
+      "module": "economy",
+      "description": "Fish for loot.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.fish",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "fish",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/fish",
+      "registration_path": "/fish"
+    },
+    {
+      "id": "work",
+      "command": "/work",
+      "type": "slash",
+      "module": "economy",
+      "description": "Perform a work action.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.work",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "work",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/work",
+      "registration_path": "/work"
+    },
+    {
+      "id": "statement",
+      "command": "/statement",
+      "type": "slash",
+      "module": "economy",
+      "description": "Show wallet, bank, and recent transactions.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.statement",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "statement",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/statement",
+      "registration_path": "/statement"
+    },
+    {
+      "id": "inventory",
+      "command": "/inventory",
+      "type": "slash",
+      "module": "economy",
+      "description": "Browse inventory.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.inventory",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "inventory",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/inventory",
+      "registration_path": "/inventory"
+    },
+    {
+      "id": "bank",
+      "command": "/bank",
+      "type": "slash",
+      "module": "economy",
+      "description": "Open banking controls.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.bank",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "bank",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/bank",
+      "registration_path": "/bank"
+    },
+    {
+      "id": "shop",
+      "command": "/shop",
+      "type": "slash",
+      "module": "economy",
+      "description": "Open the shop.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.shop",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "shop",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/shop",
+      "registration_path": "/shop"
+    },
+    {
+      "id": "craft",
+      "command": "/craft",
+      "type": "slash",
+      "module": "economy",
+      "description": "Open Chair Building/crafting.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.craft",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "craft",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/craft",
+      "registration_path": "/craft"
+    },
+    {
+      "id": "repair",
+      "command": "/repair",
+      "type": "slash",
+      "module": "economy",
+      "description": "Repair an equipped or owned tool.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.repair",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "repair",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/repair",
+      "registration_path": "/repair"
+    },
+    {
+      "id": "transfer",
+      "command": "/transfer",
+      "type": "slash",
+      "module": "economy",
+      "description": "Transfer Ottomans to another member.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "amount",
+          "type": "integer",
+          "required": true,
+          "description": "",
+          "min": 1
+        }
+      ],
+      "handler": "economy.transfer",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "transfer",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/transfer",
+      "registration_path": "/transfer"
+    },
+    {
+      "id": "gift",
+      "command": "/gift",
+      "type": "slash",
+      "module": "economy",
+      "description": "Gift an eligible item to another member.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "item",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "economy.gift",
+      "feature_flag": "economy",
+      "ephemeral_default": false,
+      "help_id": "gift",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/gift",
+      "registration_path": "/gift"
+    },
+    {
+      "id": "unlock_all",
+      "command": "/unlock all",
+      "type": "slash",
+      "module": "economy",
+      "description": "Unlock all inventory locks.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "economy.unlock_all",
+      "feature_flag": "economy",
+      "ephemeral_default": true,
+      "help_id": "unlock_all",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/unlock all",
+      "registration_path": "/unlock all"
+    },
+    {
+      "id": "blackjack",
+      "command": "/blackjack",
+      "type": "slash",
+      "module": "casino",
+      "description": "Start blackjack.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "casino.blackjack",
+      "feature_flag": "casino",
+      "ephemeral_default": false,
+      "help_id": "blackjack",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/casino blackjack",
+      "registration_path": "/casino blackjack"
+    },
+    {
+      "id": "roulette",
+      "command": "/roulette",
+      "type": "slash",
+      "module": "casino",
+      "description": "Play roulette.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "casino.roulette",
+      "feature_flag": "casino",
+      "ephemeral_default": false,
+      "help_id": "roulette",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/casino roulette",
+      "registration_path": "/casino roulette"
+    },
+    {
+      "id": "slots",
+      "command": "/slots",
+      "type": "slash",
+      "module": "casino",
+      "description": "Play the Chair slots.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "casino.slots",
+      "feature_flag": "casino",
+      "ephemeral_default": false,
+      "help_id": "slots",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/casino slots",
+      "registration_path": "/casino slots"
+    },
+    {
+      "id": "dice",
+      "command": "/dice",
+      "type": "slash",
+      "module": "casino",
+      "description": "Play dice.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "casino.dice",
+      "feature_flag": "casino",
+      "ephemeral_default": false,
+      "help_id": "dice",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/casino dice",
+      "registration_path": "/casino dice"
+    },
+    {
+      "id": "coinflip",
+      "command": "/coinflip",
+      "type": "slash",
+      "module": "casino",
+      "description": "Flip for Ottomans.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "casino.coinflip",
+      "feature_flag": "casino",
+      "ephemeral_default": false,
+      "help_id": "coinflip",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/casino coinflip",
+      "registration_path": "/casino coinflip"
+    },
+    {
+      "id": "lottery",
+      "command": "/lottery",
+      "type": "slash",
+      "module": "casino",
+      "description": "View/buy weekly lottery tickets.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "casino.lottery",
+      "feature_flag": "casino",
+      "ephemeral_default": false,
+      "help_id": "lottery",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/lottery",
+      "registration_path": "/lottery"
+    },
+    {
+      "id": "giveaway",
+      "command": "/giveaway",
+      "type": "slash",
+      "module": "community",
+      "description": "Create or manage a giveaway.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "community.giveaway",
+      "feature_flag": "community",
+      "ephemeral_default": false,
+      "help_id": "giveaway",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/giveaway",
+      "registration_path": "/giveaway"
+    },
+    {
+      "id": "race",
+      "command": "!race",
+      "type": "special_text",
+      "module": "special_commands",
+      "description": "Start Chair Race, ping the configured Race role, and open the 60-second join/betting window.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "race.specialRace",
+      "feature_flag": "race",
+      "ephemeral_default": false,
+      "help_id": "race",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "!race",
+      "registration_path": "!race"
+    },
+    {
+      "id": "fight",
+      "command": "/fight",
+      "type": "slash",
+      "module": "fight",
+      "description": "Immediately start a 1v1 Robo Chair Fight against the named member with a 30-second betting window.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Opponent to fight."
+        }
+      ],
+      "handler": "fight.fight",
+      "feature_flag": "fight",
+      "ephemeral_default": false,
+      "help_id": "fight",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/fight @member",
+      "registration_path": "/fight"
+    },
+    {
+      "id": "tictactoe",
+      "command": "/tictactoe",
+      "type": "slash",
+      "module": "pvp",
+      "description": "Challenge a member to Tic-Tac-Toe.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "wager",
+          "type": "integer",
+          "required": false,
+          "description": "",
+          "min": 0
+        }
+      ],
+      "handler": "pvp.tictactoe",
+      "feature_flag": "pvp",
+      "ephemeral_default": false,
+      "help_id": "tictactoe",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/game tictactoe",
+      "registration_path": "/game tictactoe"
+    },
+    {
+      "id": "connectfour",
+      "command": "/connectfour",
+      "type": "slash",
+      "module": "pvp",
+      "description": "Challenge a member to Connect Four.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "wager",
+          "type": "integer",
+          "required": false,
+          "description": "",
+          "min": 0
+        }
+      ],
+      "handler": "pvp.connectfour",
+      "feature_flag": "pvp",
+      "ephemeral_default": false,
+      "help_id": "connectfour",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/game connectfour",
+      "registration_path": "/game connectfour"
+    },
+    {
+      "id": "battleship",
+      "command": "/battleship",
+      "type": "slash",
+      "module": "pvp",
+      "description": "Challenge a member to Battleship.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "wager",
+          "type": "integer",
+          "required": false,
+          "description": "",
+          "min": 0
+        }
+      ],
+      "handler": "pvp.battleship",
+      "feature_flag": "pvp",
+      "ephemeral_default": false,
+      "help_id": "battleship",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/game battleship",
+      "registration_path": "/game battleship"
+    },
+    {
+      "id": "fmk",
+      "command": "/fmk",
+      "type": "slash",
+      "module": "party_games",
+      "description": "Start a random-member FMK round.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [],
+      "handler": "party_games.fmk",
+      "feature_flag": "party_games",
+      "ephemeral_default": false,
+      "help_id": "fmk",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/fmk",
+      "registration_path": "/fmk"
+    },
+    {
+      "id": "truthordare",
+      "command": "/truthordare",
+      "type": "slash",
+      "module": "party_games",
+      "description": "Start Truth or Dare.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "party_games.truthordare",
+      "feature_flag": "party_games",
+      "ephemeral_default": false,
+      "help_id": "truthordare",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/truthordare",
+      "registration_path": "/truthordare"
+    },
+    {
+      "id": "wyr",
+      "command": "/wyr",
+      "type": "slash",
+      "module": "party_games",
+      "description": "Start Would You Rather.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "category",
+          "type": "choice",
+          "required": false,
+          "description": "",
+          "choices": [
+            "Casual",
+            "Friends",
+            "Dating",
+            "Married",
+            "Spicy",
+            "Unhinged",
+            "Random"
+          ]
+        }
+      ],
+      "handler": "party_games.wyr",
+      "feature_flag": "party_games",
+      "ephemeral_default": false,
+      "help_id": "wyr",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/wyr",
+      "registration_path": "/wyr"
+    },
+    {
+      "id": "wwyd",
+      "command": "/wwyd",
+      "type": "slash",
+      "module": "party_games",
+      "description": "Start What Would You Do.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "category",
+          "type": "choice",
+          "required": false,
+          "description": "",
+          "choices": [
+            "Casual",
+            "Friends",
+            "Dating",
+            "Married",
+            "Spicy",
+            "Unhinged",
+            "Random"
+          ]
+        }
+      ],
+      "handler": "party_games.wwyd",
+      "feature_flag": "party_games",
+      "ephemeral_default": false,
+      "help_id": "wwyd",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/wwyd",
+      "registration_path": "/wwyd"
+    },
+    {
+      "id": "finish",
+      "command": "/finishsentence",
+      "type": "slash",
+      "module": "party_games",
+      "description": "Start Finish the Sentence.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [],
+      "handler": "party_games.finish",
+      "feature_flag": "party_games",
+      "ephemeral_default": false,
+      "help_id": "finish",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/finishsentence",
+      "registration_path": "/finishsentence"
+    },
+    {
+      "id": "onewordstory",
+      "command": "/onewordstory",
+      "type": "slash",
+      "module": "party_games",
+      "description": "Start One Word Story.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [
+        {
+          "name": "length",
+          "type": "integer",
+          "required": false,
+          "description": "",
+          "min": 10,
+          "max": 200
+        }
+      ],
+      "handler": "party_games.onewordstory",
+      "feature_flag": "party_games",
+      "ephemeral_default": false,
+      "help_id": "onewordstory",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/onewordstory",
+      "registration_path": "/onewordstory"
+    },
+    {
+      "id": "line",
+      "command": "!line",
+      "type": "special_text",
+      "module": "special_commands",
+      "description": "Start Line Time, ping the configured Line role, and open readiness/entry.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "line.specialLine",
+      "feature_flag": "line",
+      "ephemeral_default": false,
+      "help_id": "line",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "!line",
+      "registration_path": "!line"
+    },
+    {
+      "id": "poll",
+      "command": "/poll",
+      "type": "slash",
+      "module": "community",
+      "description": "Create/manage a poll.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "community.poll",
+      "feature_flag": "community",
+      "ephemeral_default": false,
+      "help_id": "poll",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/poll",
+      "registration_path": "/poll"
+    },
+    {
+      "id": "superlatives",
+      "command": "/superlatives",
+      "type": "slash",
+      "module": "community",
+      "description": "Create/manage a superlatives season.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "community.superlatives",
+      "feature_flag": "community",
+      "ephemeral_default": false,
+      "help_id": "superlatives",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/superlatives",
+      "registration_path": "/superlatives"
+    },
+    {
+      "id": "suggest",
+      "command": "/suggest",
+      "type": "slash",
+      "module": "community",
+      "description": "Submit a suggestion.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "community.suggest",
+      "feature_flag": "community",
+      "ephemeral_default": false,
+      "help_id": "suggest",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/suggest",
+      "registration_path": "/suggest"
+    },
+    {
+      "id": "ama",
+      "command": "/ama",
+      "type": "slash",
+      "module": "community",
+      "description": "Submit/manage AMA questions.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "community.ama",
+      "feature_flag": "community",
+      "ephemeral_default": false,
+      "help_id": "ama",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/ama",
+      "registration_path": "/ama"
+    },
+    {
+      "id": "roles",
+      "command": "/roles",
+      "type": "slash",
+      "module": "roles",
+      "description": "Open the private self-role selection panel.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "roles.roles",
+      "feature_flag": "roles",
+      "ephemeral_default": true,
+      "help_id": "roles",
+      "tutorial_id": "introductions_roles",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/roles",
+      "registration_path": "/roles"
+    },
+    {
+      "id": "quote_message",
+      "command": "/quote message",
+      "type": "slash",
+      "module": "chairisms",
+      "description": "Create Chairism from a message.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_non_private"
+      ],
+      "options": [
+        {
+          "name": "message_link",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "chairisms.quote_message",
+      "feature_flag": "chairisms",
+      "ephemeral_default": false,
+      "help_id": "quote_message",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/quote message",
+      "registration_path": "/quote message"
+    },
+    {
+      "id": "quote_text",
+      "command": "/quote text",
+      "type": "slash",
+      "module": "chairisms",
+      "description": "Create Chairism from self-authored text.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_non_private"
+      ],
+      "options": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "chairisms.quote_text",
+      "feature_flag": "chairisms",
+      "ephemeral_default": false,
+      "help_id": "quote_text",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/quote text",
+      "registration_path": "/quote text"
+    },
+    {
+      "id": "chairisms_recent",
+      "command": "/chairisms recent",
+      "type": "slash",
+      "module": "chairisms",
+      "description": "Browse Chairisms: recent.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "chairisms.chairisms_recent",
+      "feature_flag": "chairisms",
+      "ephemeral_default": false,
+      "help_id": "chairisms_recent",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/chairisms recent",
+      "registration_path": "/chairisms recent"
+    },
+    {
+      "id": "chairisms_member",
+      "command": "/chairisms member",
+      "type": "slash",
+      "module": "chairisms",
+      "description": "Browse Chairisms: member.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "chairisms.chairisms_member",
+      "feature_flag": "chairisms",
+      "ephemeral_default": false,
+      "help_id": "chairisms_member",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/chairisms member",
+      "registration_path": "/chairisms member"
+    },
+    {
+      "id": "chairisms_random",
+      "command": "/chairisms random",
+      "type": "slash",
+      "module": "chairisms",
+      "description": "Browse Chairisms: random.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "chairisms.chairisms_random",
+      "feature_flag": "chairisms",
+      "ephemeral_default": false,
+      "help_id": "chairisms_random",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/chairisms random",
+      "registration_path": "/chairisms random"
+    },
+    {
+      "id": "music_play",
+      "command": "/play",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: play.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [
+        {
+          "name": "query_or_link",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "music.music_play",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_play",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/play",
+      "registration_path": "/play"
+    },
+    {
+      "id": "music_pause",
+      "command": "/pause",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: pause.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_pause",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_pause",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music pause",
+      "registration_path": "/music pause"
+    },
+    {
+      "id": "music_resume",
+      "command": "/resume",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: resume.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_resume",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_resume",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music resume",
+      "registration_path": "/music resume"
+    },
+    {
+      "id": "music_skip",
+      "command": "/skip",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: skip.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_skip",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_skip",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music skip",
+      "registration_path": "/music skip"
+    },
+    {
+      "id": "music_previous",
+      "command": "/previous",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: previous.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_previous",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_previous",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music previous",
+      "registration_path": "/music previous"
+    },
+    {
+      "id": "music_stop",
+      "command": "/stop",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: stop.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_stop",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_stop",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music stop",
+      "registration_path": "/music stop"
+    },
+    {
+      "id": "music_replay",
+      "command": "/replay",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: replay.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_replay",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_replay",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music replay",
+      "registration_path": "/music replay"
+    },
+    {
+      "id": "music_seek",
+      "command": "/seek",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: seek.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "music.music_seek",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_seek",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music seek",
+      "registration_path": "/music seek"
+    },
+    {
+      "id": "music_queue",
+      "command": "/queue",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: queue.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_queue",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_queue",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music queue",
+      "registration_path": "/music queue"
+    },
+    {
+      "id": "music_remove",
+      "command": "/remove",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: remove.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "music.music_remove",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_remove",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music remove",
+      "registration_path": "/music remove"
+    },
+    {
+      "id": "music_move",
+      "command": "/move",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: move.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "music.music_move",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_move",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music move",
+      "registration_path": "/music move"
+    },
+    {
+      "id": "music_clear",
+      "command": "/clear",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: clear.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_clear",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_clear",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music clear",
+      "registration_path": "/music clear"
+    },
+    {
+      "id": "music_shuffle",
+      "command": "/shuffle",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: shuffle.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_shuffle",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_shuffle",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music shuffle",
+      "registration_path": "/music shuffle"
+    },
+    {
+      "id": "music_jump",
+      "command": "/jump",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: jump.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "music.music_jump",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_jump",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music jump",
+      "registration_path": "/music jump"
+    },
+    {
+      "id": "music_loop",
+      "command": "/loop",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: loop.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_loop",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_loop",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music loop",
+      "registration_path": "/music loop"
+    },
+    {
+      "id": "music_autoplay",
+      "command": "/autoplay",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: autoplay.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_autoplay",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_autoplay",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music autoplay",
+      "registration_path": "/music autoplay"
+    },
+    {
+      "id": "music_volume",
+      "command": "/volume",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: volume.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "music.music_volume",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_volume",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music volume",
+      "registration_path": "/music volume"
+    },
+    {
+      "id": "music_nowplaying",
+      "command": "/nowplaying",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: nowplaying.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_nowplaying",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_nowplaying",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music nowplaying",
+      "registration_path": "/music nowplaying"
+    },
+    {
+      "id": "music_history",
+      "command": "/history",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: history.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_history",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_history",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music history",
+      "registration_path": "/music history"
+    },
+    {
+      "id": "music_join",
+      "command": "/join",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: join.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_join",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_join",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music join",
+      "registration_path": "/music join"
+    },
+    {
+      "id": "music_leave",
+      "command": "/leave",
+      "type": "slash",
+      "module": "music",
+      "description": "Music: leave.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_leave",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "music_leave",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music leave",
+      "registration_path": "/music leave"
+    },
+    {
+      "id": "playlist_create",
+      "command": "/playlist create",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: create.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_create",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_create",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist create",
+      "registration_path": "/playlist create"
+    },
+    {
+      "id": "playlist_add",
+      "command": "/playlist add",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: add.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_add",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_add",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist add",
+      "registration_path": "/playlist add"
+    },
+    {
+      "id": "playlist_remove",
+      "command": "/playlist remove",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: remove.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_remove",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_remove",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist remove",
+      "registration_path": "/playlist remove"
+    },
+    {
+      "id": "playlist_play",
+      "command": "/playlist play",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: play.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_play",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_play",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist play",
+      "registration_path": "/playlist play"
+    },
+    {
+      "id": "playlist_rename",
+      "command": "/playlist rename",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: rename.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_rename",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_rename",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist rename",
+      "registration_path": "/playlist rename"
+    },
+    {
+      "id": "playlist_delete",
+      "command": "/playlist delete",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: delete.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_delete",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_delete",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist delete",
+      "registration_path": "/playlist delete"
+    },
+    {
+      "id": "playlist_view",
+      "command": "/playlist view",
+      "type": "slash",
+      "module": "music",
+      "description": "Playlist: view.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.playlist_view",
+      "feature_flag": "music",
+      "ephemeral_default": false,
+      "help_id": "playlist_view",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/playlist view",
+      "registration_path": "/playlist view"
+    },
+    {
+      "id": "music_help",
+      "command": "/music help",
+      "type": "slash",
+      "module": "music",
+      "description": "Show music-specific help.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "voice_text_chat"
+      ],
+      "options": [],
+      "handler": "music.music_help",
+      "feature_flag": "music",
+      "ephemeral_default": true,
+      "help_id": "music_help",
+      "tutorial_id": "music",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/music help",
+      "registration_path": "/music help"
+    },
+    {
+      "id": "social_ts",
+      "command": "/ts",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: ts.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_ts",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_ts",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social ts",
+      "registration_path": "/social ts"
+    },
+    {
+      "id": "social_hit",
+      "command": "/hit",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: hit.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_hit",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_hit",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social hit",
+      "registration_path": "/social hit"
+    },
+    {
+      "id": "social_slap",
+      "command": "/slap",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: slap.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_slap",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_slap",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social slap",
+      "registration_path": "/social slap"
+    },
+    {
+      "id": "social_pillow",
+      "command": "/pillow",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: pillow.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_pillow",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_pillow",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social pillow",
+      "registration_path": "/social pillow"
+    },
+    {
+      "id": "social_cushion",
+      "command": "/cushion",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: cushion.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_cushion",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_cushion",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social cushion",
+      "registration_path": "/social cushion"
+    },
+    {
+      "id": "social_stab",
+      "command": "/stab",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: stab.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_stab",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_stab",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social stab",
+      "registration_path": "/social stab"
+    },
+    {
+      "id": "social_choke",
+      "command": "/choke",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: choke.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_choke",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_choke",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social choke",
+      "registration_path": "/social choke"
+    },
+    {
+      "id": "social_shh",
+      "command": "/shh",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: shh.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_shh",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_shh",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social shh",
+      "registration_path": "/social shh"
+    },
+    {
+      "id": "social_belittle",
+      "command": "/belittle",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: belittle.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_belittle",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_belittle",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social belittle",
+      "registration_path": "/social belittle"
+    },
+    {
+      "id": "social_bonk",
+      "command": "/bonk",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: bonk.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_bonk",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_bonk",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social bonk",
+      "registration_path": "/social bonk"
+    },
+    {
+      "id": "social_yeet",
+      "command": "/yeet",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: yeet.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_yeet",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_yeet",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social yeet",
+      "registration_path": "/social yeet"
+    },
+    {
+      "id": "social_sit",
+      "command": "/sit",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: sit.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_sit",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_sit",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social sit",
+      "registration_path": "/social sit"
+    },
+    {
+      "id": "social_standup",
+      "command": "/standup",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: standup.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_standup",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_standup",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social standup",
+      "registration_path": "/social standup"
+    },
+    {
+      "id": "social_fold",
+      "command": "/fold",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: fold.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_fold",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_fold",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social fold",
+      "registration_path": "/social fold"
+    },
+    {
+      "id": "social_recline",
+      "command": "/recline",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: recline.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_recline",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_recline",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social recline",
+      "registration_path": "/social recline"
+    },
+    {
+      "id": "social_sideeye",
+      "command": "/sideeye",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: sideeye.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_sideeye",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_sideeye",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social sideeye",
+      "registration_path": "/social sideeye"
+    },
+    {
+      "id": "social_judge",
+      "command": "/judge",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: judge.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_judge",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_judge",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social judge",
+      "registration_path": "/social judge"
+    },
+    {
+      "id": "social_shame",
+      "command": "/shame",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: shame.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_shame",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_shame",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social shame",
+      "registration_path": "/social shame"
+    },
+    {
+      "id": "social_boo",
+      "command": "/boo",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: boo.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_boo",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_boo",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social boo",
+      "registration_path": "/social boo"
+    },
+    {
+      "id": "social_bruh",
+      "command": "/bruh",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: bruh.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_bruh",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_bruh",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social bruh",
+      "registration_path": "/social bruh"
+    },
+    {
+      "id": "social_wtf",
+      "command": "/wtf",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: wtf.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_wtf",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_wtf",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social wtf",
+      "registration_path": "/social wtf"
+    },
+    {
+      "id": "social_sus",
+      "command": "/sus",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: sus.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_sus",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_sus",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social sus",
+      "registration_path": "/social sus"
+    },
+    {
+      "id": "social_yap",
+      "command": "/yap",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: yap.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_yap",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_yap",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social yap",
+      "registration_path": "/social yap"
+    },
+    {
+      "id": "social_touchgrass",
+      "command": "/touchgrass",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: touchgrass.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_touchgrass",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_touchgrass",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social touchgrass",
+      "registration_path": "/social touchgrass"
+    },
+    {
+      "id": "social_blame",
+      "command": "/blame",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: blame.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_blame",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_blame",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social blame",
+      "registration_path": "/social blame"
+    },
+    {
+      "id": "social_disappoint",
+      "command": "/disappoint",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: disappoint.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_disappoint",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_disappoint",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social disappoint",
+      "registration_path": "/social disappoint"
+    },
+    {
+      "id": "social_chaircheck",
+      "command": "/chaircheck",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: chaircheck.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_chaircheck",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_chaircheck",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social chaircheck",
+      "registration_path": "/social chaircheck"
+    },
+    {
+      "id": "social_throwchair",
+      "command": "/throwchair",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: throwchair.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_throwchair",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_throwchair",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social throwchair",
+      "registration_path": "/social throwchair"
+    },
+    {
+      "id": "social_getup",
+      "command": "/getup",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: getup.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_getup",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_getup",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social getup",
+      "registration_path": "/social getup"
+    },
+    {
+      "id": "social_calmdown",
+      "command": "/calmdown",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: calmdown.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_calmdown",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_calmdown",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social calmdown",
+      "registration_path": "/social calmdown"
+    },
+    {
+      "id": "social_absolutelynot",
+      "command": "/absolutelynot",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: absolutelynot.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_absolutelynot",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_absolutelynot",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social absolutelynot",
+      "registration_path": "/social absolutelynot"
+    },
+    {
+      "id": "social_explainyourself",
+      "command": "/explainyourself",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: explainyourself.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_explainyourself",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_explainyourself",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social explainyourself",
+      "registration_path": "/social explainyourself"
+    },
+    {
+      "id": "social_embarrassing",
+      "command": "/embarrassing",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: embarrassing.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_embarrassing",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_embarrassing",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social embarrassing",
+      "registration_path": "/social embarrassing"
+    },
+    {
+      "id": "social_questionable",
+      "command": "/questionable",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: questionable.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_questionable",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_questionable",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social questionable",
+      "registration_path": "/social questionable"
+    },
+    {
+      "id": "social_respect",
+      "command": "/respect",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: respect.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_respect",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_respect",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social respect",
+      "registration_path": "/social respect"
+    },
+    {
+      "id": "social_compliment",
+      "command": "/compliment",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: compliment.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.social_compliment",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_compliment",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social compliment",
+      "registration_path": "/social compliment"
+    },
+    {
+      "id": "social_wheresmyvape",
+      "command": "/wheresmyvape",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: wheresmyvape.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "social.social_wheresmyvape",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_wheresmyvape",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social wheresmyvape",
+      "registration_path": "/social wheresmyvape"
+    },
+    {
+      "id": "social_hitthegeekbar",
+      "command": "/hitthegeekbar",
+      "type": "slash",
+      "module": "social",
+      "description": "Social command: hitthegeekbar.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "social.social_hitthegeekbar",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "social_hitthegeekbar",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social hitthegeekbar",
+      "registration_path": "/social hitthegeekbar"
+    },
+    {
+      "id": "roast",
+      "command": "/roast",
+      "type": "slash",
+      "module": "social",
+      "description": "Roast a member.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "social.roast",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "roast",
+      "tutorial_id": "social_commands",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social roast",
+      "registration_path": "/social roast"
+    },
+    {
+      "id": "notmad",
+      "command": "/notmad",
+      "type": "slash",
+      "module": "social",
+      "description": "Owner-only disappointed response.",
+      "permissions": [
+        "throne"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "social.notmad",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "notmad",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/social notmad",
+      "registration_path": "/social notmad"
+    },
+    {
+      "id": "introduce",
+      "command": "/introduce",
+      "type": "slash",
+      "module": "introductions",
+      "description": "Create an introduction.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "introduction_channel"
+      ],
+      "options": [],
+      "handler": "introductions.introduce",
+      "feature_flag": "introductions",
+      "ephemeral_default": false,
+      "help_id": "introduce",
+      "tutorial_id": "introductions_roles",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/introduce",
+      "registration_path": "/introduce"
+    },
+    {
+      "id": "introduce_edit",
+      "command": "/introduce edit",
+      "type": "slash",
+      "module": "introductions",
+      "description": "Edit your introduction.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "introduction_channel"
+      ],
+      "options": [],
+      "handler": "introductions.introduce_edit",
+      "feature_flag": "introductions",
+      "ephemeral_default": true,
+      "help_id": "introduce_edit",
+      "tutorial_id": "introductions_roles",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/introduce edit",
+      "registration_path": "/introduce edit"
+    },
+    {
+      "id": "introduce_preview",
+      "command": "/introduce preview",
+      "type": "slash",
+      "module": "introductions",
+      "description": "Preview your introduction.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "introduction_channel"
+      ],
+      "options": [],
+      "handler": "introductions.introduce_preview",
+      "feature_flag": "introductions",
+      "ephemeral_default": true,
+      "help_id": "introduce_preview",
+      "tutorial_id": "introductions_roles",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/introduce preview",
+      "registration_path": "/introduce preview"
+    },
+    {
+      "id": "intro_config",
+      "command": "/intro-config",
+      "type": "slash",
+      "module": "introductions",
+      "description": "Open introduction form builder.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "introduction_channel"
+      ],
+      "options": [],
+      "handler": "introductions.intro_config",
+      "feature_flag": "introductions",
+      "ephemeral_default": true,
+      "help_id": "intro_config",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/intro-config",
+      "registration_path": "/intro-config"
+    },
+    {
+      "id": "rob",
+      "command": "/rob",
+      "type": "slash",
+      "module": "crime",
+      "description": "Attempt to rob a member.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "crime.rob",
+      "feature_flag": "crime",
+      "ephemeral_default": false,
+      "help_id": "rob",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/crime rob",
+      "registration_path": "/crime rob"
+    },
+    {
+      "id": "crime_911",
+      "command": "/911",
+      "type": "slash",
+      "module": "crime",
+      "description": "Crime system: 911.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "crime.crime_911",
+      "feature_flag": "crime",
+      "ephemeral_default": false,
+      "help_id": "crime_911",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/crime 911",
+      "registration_path": "/crime 911"
+    },
+    {
+      "id": "crime_wanted",
+      "command": "/wanted",
+      "type": "slash",
+      "module": "crime",
+      "description": "Crime system: wanted.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "crime.crime_wanted",
+      "feature_flag": "crime",
+      "ephemeral_default": false,
+      "help_id": "crime_wanted",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/crime wanted",
+      "registration_path": "/crime wanted"
+    },
+    {
+      "id": "crime_bail",
+      "command": "/bail",
+      "type": "slash",
+      "module": "crime",
+      "description": "Crime system: bail.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "crime.crime_bail",
+      "feature_flag": "crime",
+      "ephemeral_default": false,
+      "help_id": "crime_bail",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/crime bail",
+      "registration_path": "/crime bail"
+    },
+    {
+      "id": "family_marry",
+      "command": "/marry",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: marry.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_marry",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_marry",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family marry",
+      "registration_path": "/family marry"
+    },
+    {
+      "id": "family_divorce",
+      "command": "/divorce",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: divorce.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_divorce",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_divorce",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family divorce",
+      "registration_path": "/family divorce"
+    },
+    {
+      "id": "family_adopt",
+      "command": "/adopt",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: adopt.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_adopt",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_adopt",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family adopt",
+      "registration_path": "/family adopt"
+    },
+    {
+      "id": "family_disown",
+      "command": "/disown",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: disown.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_disown",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_disown",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family disown",
+      "registration_path": "/family disown"
+    },
+    {
+      "id": "family_emancipate",
+      "command": "/emancipate",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: emancipate.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_emancipate",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_emancipate",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family emancipate",
+      "registration_path": "/family emancipate"
+    },
+    {
+      "id": "family_familytree",
+      "command": "/familytree",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: familytree.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_familytree",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_familytree",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family familytree",
+      "registration_path": "/family familytree"
+    },
+    {
+      "id": "family_will",
+      "command": "/will",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: will.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_will",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_will",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family will",
+      "registration_path": "/family will"
+    },
+    {
+      "id": "family_familyauction",
+      "command": "/familyauction",
+      "type": "slash",
+      "module": "family",
+      "description": "Family system: familyauction.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [],
+      "handler": "family.family_familyauction",
+      "feature_flag": "family",
+      "ephemeral_default": false,
+      "help_id": "family_familyauction",
+      "tutorial_id": "crime_family",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/family familyauction",
+      "registration_path": "/family familyauction"
+    },
+    {
+      "id": "warn",
+      "command": "/warn",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: warn.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.warn",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "warn",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod warn",
+      "registration_path": "/mod warn"
+    },
+    {
+      "id": "timeout",
+      "command": "/timeout",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: timeout.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "duration",
+          "type": "duration",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.timeout",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "timeout",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod timeout",
+      "registration_path": "/mod timeout"
+    },
+    {
+      "id": "untimeout",
+      "command": "/untimeout",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: untimeout.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.untimeout",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "untimeout",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod untimeout",
+      "registration_path": "/mod untimeout"
+    },
+    {
+      "id": "kick",
+      "command": "/kick",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: kick.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.kick",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "kick",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod kick",
+      "registration_path": "/mod kick"
+    },
+    {
+      "id": "ban",
+      "command": "/ban",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: ban.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "duration",
+          "type": "duration",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.ban",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "ban",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod ban",
+      "registration_path": "/mod ban"
+    },
+    {
+      "id": "unban",
+      "command": "/unban",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: unban.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.unban",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "unban",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod unban",
+      "registration_path": "/mod unban"
+    },
+    {
+      "id": "purge",
+      "command": "/purge",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: purge.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "count",
+          "type": "integer",
+          "required": true,
+          "description": "",
+          "min": 1,
+          "max": 100
+        },
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Reason for the cleanup."
+        }
+      ],
+      "handler": "moderation.purge",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "purge",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod purge",
+      "registration_path": "/mod purge"
+    },
+    {
+      "id": "note",
+      "command": "/note",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: note.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.note",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "note",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod note",
+      "registration_path": "/mod note"
+    },
+    {
+      "id": "history_mod",
+      "command": "/history",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: history_mod.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.history_mod",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "history_mod",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod history",
+      "registration_path": "/mod history"
+    },
+    {
+      "id": "case_view",
+      "command": "/case",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: case_view.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "case_id",
+          "type": "integer",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.case_view",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "case_view",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod case view",
+      "registration_path": "/mod case view"
+    },
+    {
+      "id": "case_edit",
+      "command": "/case edit",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: case_edit.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "case_id",
+          "type": "integer",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.case_edit",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "case_edit",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod case edit",
+      "registration_path": "/mod case edit"
+    },
+    {
+      "id": "case_reverse",
+      "command": "/case reverse",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: case_reverse.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "case_id",
+          "type": "integer",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.case_reverse",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "case_reverse",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod case reverse",
+      "registration_path": "/mod case reverse"
+    },
+    {
+      "id": "lock",
+      "command": "/lock",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: lock.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "channel",
+          "type": "channel",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Reason for locking the channel."
+        }
+      ],
+      "handler": "moderation.lock",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "lock",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod lock",
+      "registration_path": "/mod lock"
+    },
+    {
+      "id": "unlock",
+      "command": "/unlock",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Moderation: unlock.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "channel",
+          "type": "channel",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.unlock",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "unlock",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod unlock",
+      "registration_path": "/mod unlock"
+    },
+    {
+      "id": "slowmode",
+      "command": "/slowmode",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Set or disable channel slowmode while recording the previous value.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "channel",
+          "type": "channel",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "duration",
+          "type": "duration",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.slowmode",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "slowmode",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod slowmode",
+      "registration_path": "/mod slowmode"
+    },
+    {
+      "id": "quarantine",
+      "command": "/quarantine",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Remove a message from public view and preserve restricted staff evidence.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "message_link",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Reason for quarantining the message."
+        }
+      ],
+      "handler": "moderation.quarantine",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "quarantine",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod quarantine",
+      "registration_path": "/mod quarantine"
+    },
+    {
+      "id": "staff_alert",
+      "command": "/staff-alert",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Create a non-punitive internal staff alert for a member.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.staff_alert",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "staff_alert",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod staff-alert",
+      "registration_path": "/mod staff-alert"
+    },
+    {
+      "id": "modstats",
+      "command": "/modstats",
+      "type": "slash",
+      "module": "moderation",
+      "description": "Show operational moderation totals without ranking staff.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff_or_any_target"
+      ],
+      "options": [
+        {
+          "name": "period",
+          "type": "string",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "moderation.modstats",
+      "feature_flag": "moderation",
+      "ephemeral_default": true,
+      "help_id": "modstats",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mod modstats",
+      "registration_path": "/mod modstats"
+    },
+    {
+      "id": "jail_send",
+      "command": "/jail send",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: send.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Member to place in moderation Hotseat."
+        },
+        {
+          "name": "duration",
+          "type": "string",
+          "required": true,
+          "description": "5m\u201330d or indefinite."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Moderation reason linked to the case."
+        }
+      ],
+      "handler": "jail.jail_send",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_send",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail send",
+      "registration_path": "/jail send"
+    },
+    {
+      "id": "jail_release",
+      "command": "/jail release",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: release.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Jailed member to release."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Reason for release."
+        }
+      ],
+      "handler": "jail.jail_release",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_release",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail release",
+      "registration_path": "/jail release"
+    },
+    {
+      "id": "jail_extend",
+      "command": "/jail extend",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: extend.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Jailed member."
+        },
+        {
+          "name": "duration",
+          "type": "string",
+          "required": true,
+          "description": "Additional sentence time."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Reason for extension."
+        }
+      ],
+      "handler": "jail.jail_extend",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_extend",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail extend",
+      "registration_path": "/jail extend"
+    },
+    {
+      "id": "jail_reduce",
+      "command": "/jail reduce",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: reduce.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Jailed member."
+        },
+        {
+          "name": "duration",
+          "type": "string",
+          "required": true,
+          "description": "Amount of time to subtract."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Reason for reduction."
+        }
+      ],
+      "handler": "jail.jail_reduce",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_reduce",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail reduce",
+      "registration_path": "/jail reduce"
+    },
+    {
+      "id": "jail_reason",
+      "command": "/jail reason",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: reason.",
+      "permissions": [
+        "member",
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": "Member to inspect; omit for yourself."
+        }
+      ],
+      "handler": "jail.jail_reason",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_reason",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail reason",
+      "registration_path": "/jail reason"
+    },
+    {
+      "id": "jail_history",
+      "command": "/jail history",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: history.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Member whose moderation Hotseat history to view."
+        }
+      ],
+      "handler": "jail.jail_history",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_history",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail history",
+      "registration_path": "/jail history"
+    },
+    {
+      "id": "jail_roster",
+      "command": "/jail roster",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: roster.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "type",
+          "type": "choice",
+          "required": false,
+          "description": "Filter active jail states.",
+          "choices": [
+            "all",
+            "crime",
+            "moderation"
+          ]
+        }
+      ],
+      "handler": "jail.jail_roster",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_roster",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail roster",
+      "registration_path": "/jail roster"
+    },
+    {
+      "id": "jail_status",
+      "command": "/jail status",
+      "type": "slash",
+      "module": "jail",
+      "description": "Hotseat jail: status.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "hotseat_or_staff"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": "Member to inspect; omit for yourself."
+        }
+      ],
+      "handler": "jail.jail_status",
+      "feature_flag": "jail",
+      "ephemeral_default": false,
+      "help_id": "jail_status",
+      "tutorial_id": "moderation_safety",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/jail status",
+      "registration_path": "/jail status"
+    },
+    {
+      "id": "panic_activate",
+      "command": "/panic activate",
+      "type": "slash",
+      "module": "security",
+      "description": "Activate Panic Mode with an audited reason.",
+      "permissions": [
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Emergency reason recorded in the security audit."
+        }
+      ],
+      "handler": "security.panic_activate",
+      "feature_flag": "security",
+      "ephemeral_default": true,
+      "help_id": "panic_activate",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/panic activate",
+      "registration_path": "/panic activate"
+    },
+    {
+      "id": "panic_deactivate",
+      "command": "/panic deactivate",
+      "type": "slash",
+      "module": "security",
+      "description": "Deactivate Panic Mode after confirmation and restore saved pre-panic state.",
+      "permissions": [
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "security.panic_deactivate",
+      "feature_flag": "security",
+      "ephemeral_default": true,
+      "help_id": "panic_deactivate",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/panic deactivate",
+      "registration_path": "/panic deactivate"
+    },
+    {
+      "id": "panic_status",
+      "command": "/panic status",
+      "type": "slash",
+      "module": "security",
+      "description": "Panic Mode: status.",
+      "permissions": [
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "security.panic_status",
+      "feature_flag": "security",
+      "ephemeral_default": true,
+      "help_id": "panic_status",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/panic status",
+      "registration_path": "/panic status"
+    },
+    {
+      "id": "custom_create",
+      "command": "/custom-command create",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: create.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_create",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_create",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command create",
+      "registration_path": "/custom-command create"
+    },
+    {
+      "id": "custom_edit",
+      "command": "/custom-command edit",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: edit.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_edit",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_edit",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command edit",
+      "registration_path": "/custom-command edit"
+    },
+    {
+      "id": "custom_delete",
+      "command": "/custom-command delete",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: delete.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_delete",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_delete",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command delete",
+      "registration_path": "/custom-command delete"
+    },
+    {
+      "id": "custom_enable",
+      "command": "/custom-command enable",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: enable.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_enable",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_enable",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command enable",
+      "registration_path": "/custom-command enable"
+    },
+    {
+      "id": "custom_disable",
+      "command": "/custom-command disable",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: disable.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_disable",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_disable",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command disable",
+      "registration_path": "/custom-command disable"
+    },
+    {
+      "id": "custom_list",
+      "command": "/custom-command list",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: list.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_list",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_list",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command list",
+      "registration_path": "/custom-command list"
+    },
+    {
+      "id": "custom_test",
+      "command": "/custom-command test",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: test.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_test",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_test",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command test",
+      "registration_path": "/custom-command test"
+    },
+    {
+      "id": "custom_clone",
+      "command": "/custom-command clone",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: clone.",
+      "permissions": [
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_clone",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_clone",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command clone",
+      "registration_path": "/custom-command clone"
+    },
+    {
+      "id": "custom_info",
+      "command": "/custom-command info",
+      "type": "slash",
+      "module": "custom_commands",
+      "description": "Custom command: info.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "custom_commands.custom_info",
+      "feature_flag": "custom_commands",
+      "ephemeral_default": true,
+      "help_id": "custom_info",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/custom-command info",
+      "registration_path": "/custom-command info"
+    },
+    {
+      "id": "setup",
+      "command": "/setup",
+      "type": "slash",
+      "module": "bootstrap",
+      "description": "Run guided server setup.",
+      "permissions": [
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "bootstrap.setup",
+      "feature_flag": "bootstrap",
+      "ephemeral_default": true,
+      "help_id": "setup",
+      "tutorial_id": "owner_admin",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/setup",
+      "registration_path": "/setup"
+    },
+    {
+      "id": "setup_health",
+      "command": "/setup health",
+      "type": "slash",
+      "module": "bootstrap",
+      "description": "Run non-destructive server health checks.",
+      "permissions": [
+        "recliner",
+        "chaise_lounge",
+        "throne"
+      ],
+      "channels": [
+        "staff"
+      ],
+      "options": [],
+      "handler": "bootstrap.health",
+      "feature_flag": "bootstrap",
+      "ephemeral_default": true,
+      "help_id": "setup_health",
+      "tutorial_id": "staff_academy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/setup health",
+      "registration_path": "/setup health"
+    },
+    {
+      "id": "chairism_context",
+      "command": "Create Chairism",
+      "type": "context_message",
+      "module": "chairisms",
+      "description": "Create a Chairism from the selected message.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_non_private"
+      ],
+      "options": [],
+      "handler": "chairisms.contextCreate",
+      "feature_flag": "chairisms",
+      "ephemeral_default": true,
+      "help_id": "quote_message",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "Create Chairism",
+      "registration_path": "Create Chairism"
+    },
+    {
+      "id": "tldr_chat",
+      "command": "/tldr chat",
+      "type": "slash",
+      "module": "profile",
+      "description": "Privately summarize recent main-chat conversation.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "time",
+          "type": "choice",
+          "required": true,
+          "description": "Rolling chat window.",
+          "choices": [
+            "1h",
+            "2h",
+            "4h",
+            "8h"
+          ]
+        }
+      ],
+      "handler": "profile.tldrChat",
+      "feature_flag": "profile",
+      "ephemeral_default": true,
+      "help_id": "tldr_chat",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/tldr chat",
+      "registration_path": "/tldr chat"
+    },
+    {
+      "id": "tldr_events",
+      "command": "/tldr events",
+      "type": "slash",
+      "module": "profile",
+      "description": "Privately summarize recent structured Angrier Jordan events.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "bot_channel"
+      ],
+      "options": [
+        {
+          "name": "time",
+          "type": "choice",
+          "required": true,
+          "description": "Rolling event window.",
+          "choices": [
+            "1d",
+            "7d"
+          ]
+        }
+      ],
+      "handler": "profile.tldrEvents",
+      "feature_flag": "profile",
+      "ephemeral_default": true,
+      "help_id": "tldr_events",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/tldr events",
+      "registration_path": "/tldr events"
+    },
+    {
+      "id": "special_vc",
+      "command": "!vc",
+      "type": "special_text",
+      "module": "special_commands",
+      "description": "Ping the configured VC role with a randomized voice-chat invitation.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "special_commands.vc",
+      "feature_flag": "special_commands",
+      "ephemeral_default": false,
+      "help_id": "special_vc",
+      "tutorial_id": "bot_basics",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "!vc",
+      "registration_path": "!vc"
+    },
+    {
+      "id": "special_chess",
+      "command": "!chess",
+      "type": "special_text",
+      "module": "special_commands",
+      "description": "Ping the configured Chess role with a randomized chess challenge.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "special_commands.chess",
+      "feature_flag": "special_commands",
+      "ephemeral_default": false,
+      "help_id": "special_chess",
+      "tutorial_id": "bot_basics",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "!chess",
+      "registration_path": "!chess"
+    },
+    {
+      "id": "lore",
+      "command": "/lore",
+      "type": "slash",
+      "module": "lore",
+      "description": "Open the private Chairs lore reader and resume saved progress.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "lore.lore",
+      "feature_flag": "lore",
+      "ephemeral_default": true,
+      "help_id": "lore",
+      "tutorial_id": "essentials",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/lore",
+      "registration_path": "/lore"
+    },
+    {
+      "id": "collection",
+      "command": "/collection",
+      "type": "slash",
+      "module": "collections",
+      "description": "Open the collection browser.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "collections.collection",
+      "feature_flag": "collections",
+      "ephemeral_default": true,
+      "help_id": "collection",
+      "tutorial_id": "economy",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/collection",
+      "registration_path": "/collection"
+    },
+    {
+      "id": "leaderboard",
+      "command": "/leaderboard",
+      "type": "slash",
+      "module": "records",
+      "description": "Open leaderboards and choose a category.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "records.leaderboard",
+      "feature_flag": "records",
+      "ephemeral_default": false,
+      "help_id": "leaderboard",
+      "tutorial_id": "essentials",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/leaderboard",
+      "registration_path": "/leaderboard"
+    },
+    {
+      "id": "privacy_activity",
+      "command": "/privacy activity",
+      "type": "slash",
+      "module": "profile",
+      "description": "Set activity-stat visibility.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "state",
+          "type": "choice",
+          "required": true,
+          "description": "Activity visibility.",
+          "choices": [
+            "visible",
+            "hidden"
+          ]
+        }
+      ],
+      "handler": "profile.privacyActivity",
+      "feature_flag": "profile",
+      "ephemeral_default": true,
+      "help_id": "privacy_activity",
+      "tutorial_id": "essentials",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/privacy activity",
+      "registration_path": "/privacy activity"
+    },
+    {
+      "id": "privacy_roast",
+      "command": "/privacy roast",
+      "type": "slash",
+      "module": "social",
+      "description": "Allow or block roast targeting.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "state",
+          "type": "choice",
+          "required": true,
+          "description": "Roast targeting preference.",
+          "choices": [
+            "allow",
+            "block"
+          ]
+        }
+      ],
+      "handler": "social.privacyRoast",
+      "feature_flag": "social",
+      "ephemeral_default": true,
+      "help_id": "privacy_roast",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/privacy roast",
+      "registration_path": "/privacy roast"
+    },
+    {
+      "id": "hangman",
+      "command": "/hangman",
+      "type": "slash",
+      "module": "solo_games",
+      "description": "Start Hangman.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [],
+      "handler": "solo_games.hangman",
+      "feature_flag": "solo_games",
+      "ephemeral_default": false,
+      "help_id": "hangman",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/hangman",
+      "registration_path": "/hangman"
+    },
+    {
+      "id": "wordscramble",
+      "command": "/wordscramble",
+      "type": "slash",
+      "module": "solo_games",
+      "description": "Start Word Scramble.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [],
+      "handler": "solo_games.wordscramble",
+      "feature_flag": "solo_games",
+      "ephemeral_default": false,
+      "help_id": "wordscramble",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/wordscramble",
+      "registration_path": "/wordscramble"
+    },
+    {
+      "id": "mastermind",
+      "command": "/mastermind",
+      "type": "slash",
+      "module": "solo_games",
+      "description": "Start Mastermind.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [],
+      "handler": "solo_games.mastermind",
+      "feature_flag": "solo_games",
+      "ephemeral_default": false,
+      "help_id": "mastermind",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/mastermind",
+      "registration_path": "/mastermind"
+    },
+    {
+      "id": "minesweeper",
+      "command": "/minesweeper",
+      "type": "slash",
+      "module": "solo_games",
+      "description": "Start Minesweeper.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "games_channel"
+      ],
+      "options": [],
+      "handler": "solo_games.minesweeper",
+      "feature_flag": "solo_games",
+      "ephemeral_default": false,
+      "help_id": "minesweeper",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/minesweeper",
+      "registration_path": "/minesweeper"
+    },
+    {
+      "id": "haiku",
+      "command": "/haiku",
+      "type": "slash",
+      "module": "social",
+      "description": "Return the server haiku profiling joke.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "social.haiku",
+      "feature_flag": "haiku",
+      "ephemeral_default": false,
+      "help_id": "haiku",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/haiku",
+      "registration_path": "/haiku"
+    }
+  ],
+  "registration_strategy": {
+    "chat_input_records": 178,
+    "unique_top_level_chat_input_commands": 57,
+    "target_top_level_budget": 95,
+    "note": "Preferred invocations document UX intent; registration_path is the build-safe Discord registration path. Grouped commands preserve room for future additions."
+  }
+}

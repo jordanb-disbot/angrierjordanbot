@@ -1,0 +1,3502 @@
+[
+  {
+    "id": "FINISH-0001",
+    "category": "Casual",
+    "text": "The fastest way to ruin a perfectly good night is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0002",
+    "category": "Friends",
+    "text": "The fastest way to ruin a perfectly good night is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0003",
+    "category": "Dating",
+    "text": "The fastest way to ruin a perfectly good night is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0004",
+    "category": "Married",
+    "text": "The fastest way to ruin a perfectly good night is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0005",
+    "category": "Spicy",
+    "text": "The fastest way to ruin a perfectly good night is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0006",
+    "category": "Unhinged",
+    "text": "The fastest way to ruin a perfectly good night is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0007",
+    "category": "Casual",
+    "text": "The fastest way to ruin a perfectly good night is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0008",
+    "category": "Friends",
+    "text": "The fastest way to ruin a perfectly good night is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0009",
+    "category": "Dating",
+    "text": "The fastest way to ruin a perfectly good night is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0010",
+    "category": "Married",
+    "text": "The fastest way to ruin a perfectly good night is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0011",
+    "category": "Spicy",
+    "text": "The fastest way to ruin a perfectly good night is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0012",
+    "category": "Unhinged",
+    "text": "The fastest way to ruin a perfectly good night is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0013",
+    "category": "Casual",
+    "text": "The fastest way to ruin a perfectly good night is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0014",
+    "category": "Friends",
+    "text": "The fastest way to ruin a perfectly good night is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0015",
+    "category": "Dating",
+    "text": "The fastest way to ruin a perfectly good night is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0016",
+    "category": "Married",
+    "text": "The fastest way to ruin a perfectly good night is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0017",
+    "category": "Spicy",
+    "text": "The fastest way to ruin a perfectly good night is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0018",
+    "category": "Unhinged",
+    "text": "The fastest way to ruin a perfectly good night is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0019",
+    "category": "Casual",
+    "text": "The fastest way to ruin a perfectly good night is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0020",
+    "category": "Friends",
+    "text": "The fastest way to ruin a perfectly good night is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0021",
+    "category": "Dating",
+    "text": "I knew I was getting older when ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0022",
+    "category": "Married",
+    "text": "I knew I was getting older when ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0023",
+    "category": "Spicy",
+    "text": "I knew I was getting older when ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0024",
+    "category": "Unhinged",
+    "text": "I knew I was getting older when ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0025",
+    "category": "Casual",
+    "text": "I knew I was getting older when ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0026",
+    "category": "Friends",
+    "text": "I knew I was getting older when ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0027",
+    "category": "Dating",
+    "text": "I knew I was getting older when ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0028",
+    "category": "Married",
+    "text": "I knew I was getting older when ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0029",
+    "category": "Spicy",
+    "text": "I knew I was getting older when ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0030",
+    "category": "Unhinged",
+    "text": "I knew I was getting older when ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0031",
+    "category": "Casual",
+    "text": "I knew I was getting older when ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0032",
+    "category": "Friends",
+    "text": "I knew I was getting older when ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0033",
+    "category": "Dating",
+    "text": "I knew I was getting older when ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0034",
+    "category": "Married",
+    "text": "I knew I was getting older when ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0035",
+    "category": "Spicy",
+    "text": "I knew I was getting older when ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0036",
+    "category": "Unhinged",
+    "text": "I knew I was getting older when ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0037",
+    "category": "Casual",
+    "text": "I knew I was getting older when ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0038",
+    "category": "Friends",
+    "text": "I knew I was getting older when ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0039",
+    "category": "Dating",
+    "text": "I knew I was getting older when ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0040",
+    "category": "Married",
+    "text": "I knew I was getting older when ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0041",
+    "category": "Spicy",
+    "text": "My toxic trait is believing ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0042",
+    "category": "Unhinged",
+    "text": "My toxic trait is believing ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0043",
+    "category": "Casual",
+    "text": "My toxic trait is believing ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0044",
+    "category": "Friends",
+    "text": "My toxic trait is believing ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0045",
+    "category": "Dating",
+    "text": "My toxic trait is believing ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0046",
+    "category": "Married",
+    "text": "My toxic trait is believing ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0047",
+    "category": "Spicy",
+    "text": "My toxic trait is believing ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0048",
+    "category": "Unhinged",
+    "text": "My toxic trait is believing ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0049",
+    "category": "Casual",
+    "text": "My toxic trait is believing ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0050",
+    "category": "Friends",
+    "text": "My toxic trait is believing ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0051",
+    "category": "Dating",
+    "text": "My toxic trait is believing ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0052",
+    "category": "Married",
+    "text": "My toxic trait is believing ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0053",
+    "category": "Spicy",
+    "text": "My toxic trait is believing ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0054",
+    "category": "Unhinged",
+    "text": "My toxic trait is believing ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0055",
+    "category": "Casual",
+    "text": "My toxic trait is believing ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0056",
+    "category": "Friends",
+    "text": "My toxic trait is believing ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0057",
+    "category": "Dating",
+    "text": "My toxic trait is believing ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0058",
+    "category": "Married",
+    "text": "My toxic trait is believing ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0059",
+    "category": "Spicy",
+    "text": "My toxic trait is believing ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0060",
+    "category": "Unhinged",
+    "text": "My toxic trait is believing ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0061",
+    "category": "Casual",
+    "text": "The group chat would be healthier if ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0062",
+    "category": "Friends",
+    "text": "The group chat would be healthier if ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0063",
+    "category": "Dating",
+    "text": "The group chat would be healthier if ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0064",
+    "category": "Married",
+    "text": "The group chat would be healthier if ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0065",
+    "category": "Spicy",
+    "text": "The group chat would be healthier if ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0066",
+    "category": "Unhinged",
+    "text": "The group chat would be healthier if ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0067",
+    "category": "Casual",
+    "text": "The group chat would be healthier if ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0068",
+    "category": "Friends",
+    "text": "The group chat would be healthier if ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0069",
+    "category": "Dating",
+    "text": "The group chat would be healthier if ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0070",
+    "category": "Married",
+    "text": "The group chat would be healthier if ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0071",
+    "category": "Spicy",
+    "text": "The group chat would be healthier if ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0072",
+    "category": "Unhinged",
+    "text": "The group chat would be healthier if ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0073",
+    "category": "Casual",
+    "text": "The group chat would be healthier if ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0074",
+    "category": "Friends",
+    "text": "The group chat would be healthier if ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0075",
+    "category": "Dating",
+    "text": "The group chat would be healthier if ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0076",
+    "category": "Married",
+    "text": "The group chat would be healthier if ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0077",
+    "category": "Spicy",
+    "text": "The group chat would be healthier if ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0078",
+    "category": "Unhinged",
+    "text": "The group chat would be healthier if ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0079",
+    "category": "Casual",
+    "text": "The group chat would be healthier if ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0080",
+    "category": "Friends",
+    "text": "The group chat would be healthier if ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0081",
+    "category": "Dating",
+    "text": "Nothing exposes a person faster than ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0082",
+    "category": "Married",
+    "text": "Nothing exposes a person faster than ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0083",
+    "category": "Spicy",
+    "text": "Nothing exposes a person faster than ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0084",
+    "category": "Unhinged",
+    "text": "Nothing exposes a person faster than ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0085",
+    "category": "Casual",
+    "text": "Nothing exposes a person faster than ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0086",
+    "category": "Friends",
+    "text": "Nothing exposes a person faster than ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0087",
+    "category": "Dating",
+    "text": "Nothing exposes a person faster than ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0088",
+    "category": "Married",
+    "text": "Nothing exposes a person faster than ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0089",
+    "category": "Spicy",
+    "text": "Nothing exposes a person faster than ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0090",
+    "category": "Unhinged",
+    "text": "Nothing exposes a person faster than ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0091",
+    "category": "Casual",
+    "text": "Nothing exposes a person faster than ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0092",
+    "category": "Friends",
+    "text": "Nothing exposes a person faster than ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0093",
+    "category": "Dating",
+    "text": "Nothing exposes a person faster than ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0094",
+    "category": "Married",
+    "text": "Nothing exposes a person faster than ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0095",
+    "category": "Spicy",
+    "text": "Nothing exposes a person faster than ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0096",
+    "category": "Unhinged",
+    "text": "Nothing exposes a person faster than ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0097",
+    "category": "Casual",
+    "text": "Nothing exposes a person faster than ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0098",
+    "category": "Friends",
+    "text": "Nothing exposes a person faster than ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0099",
+    "category": "Dating",
+    "text": "Nothing exposes a person faster than ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0100",
+    "category": "Married",
+    "text": "Nothing exposes a person faster than ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0101",
+    "category": "Spicy",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0102",
+    "category": "Unhinged",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0103",
+    "category": "Casual",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0104",
+    "category": "Friends",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0105",
+    "category": "Dating",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0106",
+    "category": "Married",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0107",
+    "category": "Spicy",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0108",
+    "category": "Unhinged",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0109",
+    "category": "Casual",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0110",
+    "category": "Friends",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0111",
+    "category": "Dating",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0112",
+    "category": "Married",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0113",
+    "category": "Spicy",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0114",
+    "category": "Unhinged",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0115",
+    "category": "Casual",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0116",
+    "category": "Friends",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0117",
+    "category": "Dating",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0118",
+    "category": "Married",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0119",
+    "category": "Spicy",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0120",
+    "category": "Unhinged",
+    "text": "The worst possible person to get a “we need to talk” text from is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0121",
+    "category": "Casual",
+    "text": "I will defend this terrible opinion forever: ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0122",
+    "category": "Friends",
+    "text": "I will defend this terrible opinion forever: ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0123",
+    "category": "Dating",
+    "text": "I will defend this terrible opinion forever: ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0124",
+    "category": "Married",
+    "text": "I will defend this terrible opinion forever: ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0125",
+    "category": "Spicy",
+    "text": "I will defend this terrible opinion forever: ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0126",
+    "category": "Unhinged",
+    "text": "I will defend this terrible opinion forever: ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0127",
+    "category": "Casual",
+    "text": "I will defend this terrible opinion forever: ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0128",
+    "category": "Friends",
+    "text": "I will defend this terrible opinion forever: ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0129",
+    "category": "Dating",
+    "text": "I will defend this terrible opinion forever: ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0130",
+    "category": "Married",
+    "text": "I will defend this terrible opinion forever: ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0131",
+    "category": "Spicy",
+    "text": "I will defend this terrible opinion forever: ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0132",
+    "category": "Unhinged",
+    "text": "I will defend this terrible opinion forever: ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0133",
+    "category": "Casual",
+    "text": "I will defend this terrible opinion forever: ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0134",
+    "category": "Friends",
+    "text": "I will defend this terrible opinion forever: ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0135",
+    "category": "Dating",
+    "text": "I will defend this terrible opinion forever: ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0136",
+    "category": "Married",
+    "text": "I will defend this terrible opinion forever: ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0137",
+    "category": "Spicy",
+    "text": "I will defend this terrible opinion forever: ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0138",
+    "category": "Unhinged",
+    "text": "I will defend this terrible opinion forever: ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0139",
+    "category": "Casual",
+    "text": "I will defend this terrible opinion forever: ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0140",
+    "category": "Friends",
+    "text": "I will defend this terrible opinion forever: ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0141",
+    "category": "Dating",
+    "text": "A friendship becomes real the moment ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0142",
+    "category": "Married",
+    "text": "A friendship becomes real the moment ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0143",
+    "category": "Spicy",
+    "text": "A friendship becomes real the moment ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0144",
+    "category": "Unhinged",
+    "text": "A friendship becomes real the moment ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0145",
+    "category": "Casual",
+    "text": "A friendship becomes real the moment ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0146",
+    "category": "Friends",
+    "text": "A friendship becomes real the moment ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0147",
+    "category": "Dating",
+    "text": "A friendship becomes real the moment ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0148",
+    "category": "Married",
+    "text": "A friendship becomes real the moment ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0149",
+    "category": "Spicy",
+    "text": "A friendship becomes real the moment ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0150",
+    "category": "Unhinged",
+    "text": "A friendship becomes real the moment ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0151",
+    "category": "Casual",
+    "text": "A friendship becomes real the moment ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0152",
+    "category": "Friends",
+    "text": "A friendship becomes real the moment ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0153",
+    "category": "Dating",
+    "text": "A friendship becomes real the moment ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0154",
+    "category": "Married",
+    "text": "A friendship becomes real the moment ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0155",
+    "category": "Spicy",
+    "text": "A friendship becomes real the moment ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0156",
+    "category": "Unhinged",
+    "text": "A friendship becomes real the moment ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0157",
+    "category": "Casual",
+    "text": "A friendship becomes real the moment ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0158",
+    "category": "Friends",
+    "text": "A friendship becomes real the moment ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0159",
+    "category": "Dating",
+    "text": "A friendship becomes real the moment ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0160",
+    "category": "Married",
+    "text": "A friendship becomes real the moment ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0161",
+    "category": "Spicy",
+    "text": "The most suspicious sentence someone can say is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0162",
+    "category": "Unhinged",
+    "text": "The most suspicious sentence someone can say is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0163",
+    "category": "Casual",
+    "text": "The most suspicious sentence someone can say is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0164",
+    "category": "Friends",
+    "text": "The most suspicious sentence someone can say is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0165",
+    "category": "Dating",
+    "text": "The most suspicious sentence someone can say is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0166",
+    "category": "Married",
+    "text": "The most suspicious sentence someone can say is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0167",
+    "category": "Spicy",
+    "text": "The most suspicious sentence someone can say is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0168",
+    "category": "Unhinged",
+    "text": "The most suspicious sentence someone can say is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0169",
+    "category": "Casual",
+    "text": "The most suspicious sentence someone can say is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0170",
+    "category": "Friends",
+    "text": "The most suspicious sentence someone can say is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0171",
+    "category": "Dating",
+    "text": "The most suspicious sentence someone can say is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0172",
+    "category": "Married",
+    "text": "The most suspicious sentence someone can say is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0173",
+    "category": "Spicy",
+    "text": "The most suspicious sentence someone can say is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0174",
+    "category": "Unhinged",
+    "text": "The most suspicious sentence someone can say is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0175",
+    "category": "Casual",
+    "text": "The most suspicious sentence someone can say is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0176",
+    "category": "Friends",
+    "text": "The most suspicious sentence someone can say is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0177",
+    "category": "Dating",
+    "text": "The most suspicious sentence someone can say is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0178",
+    "category": "Married",
+    "text": "The most suspicious sentence someone can say is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0179",
+    "category": "Spicy",
+    "text": "The most suspicious sentence someone can say is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0180",
+    "category": "Unhinged",
+    "text": "The most suspicious sentence someone can say is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0181",
+    "category": "Casual",
+    "text": "You can tell a date is going badly when ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0182",
+    "category": "Friends",
+    "text": "You can tell a date is going badly when ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0183",
+    "category": "Dating",
+    "text": "You can tell a date is going badly when ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0184",
+    "category": "Married",
+    "text": "You can tell a date is going badly when ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0185",
+    "category": "Spicy",
+    "text": "You can tell a date is going badly when ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0186",
+    "category": "Unhinged",
+    "text": "You can tell a date is going badly when ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0187",
+    "category": "Casual",
+    "text": "You can tell a date is going badly when ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0188",
+    "category": "Friends",
+    "text": "You can tell a date is going badly when ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0189",
+    "category": "Dating",
+    "text": "You can tell a date is going badly when ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0190",
+    "category": "Married",
+    "text": "You can tell a date is going badly when ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0191",
+    "category": "Spicy",
+    "text": "You can tell a date is going badly when ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0192",
+    "category": "Unhinged",
+    "text": "You can tell a date is going badly when ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0193",
+    "category": "Casual",
+    "text": "You can tell a date is going badly when ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0194",
+    "category": "Friends",
+    "text": "You can tell a date is going badly when ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0195",
+    "category": "Dating",
+    "text": "You can tell a date is going badly when ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0196",
+    "category": "Married",
+    "text": "You can tell a date is going badly when ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0197",
+    "category": "Spicy",
+    "text": "You can tell a date is going badly when ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0198",
+    "category": "Unhinged",
+    "text": "You can tell a date is going badly when ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0199",
+    "category": "Casual",
+    "text": "You can tell a date is going badly when ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0200",
+    "category": "Friends",
+    "text": "You can tell a date is going badly when ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0201",
+    "category": "Dating",
+    "text": "The most dangerous amount of confidence is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0202",
+    "category": "Married",
+    "text": "The most dangerous amount of confidence is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0203",
+    "category": "Spicy",
+    "text": "The most dangerous amount of confidence is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0204",
+    "category": "Unhinged",
+    "text": "The most dangerous amount of confidence is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0205",
+    "category": "Casual",
+    "text": "The most dangerous amount of confidence is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0206",
+    "category": "Friends",
+    "text": "The most dangerous amount of confidence is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0207",
+    "category": "Dating",
+    "text": "The most dangerous amount of confidence is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0208",
+    "category": "Married",
+    "text": "The most dangerous amount of confidence is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0209",
+    "category": "Spicy",
+    "text": "The most dangerous amount of confidence is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0210",
+    "category": "Unhinged",
+    "text": "The most dangerous amount of confidence is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0211",
+    "category": "Casual",
+    "text": "The most dangerous amount of confidence is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0212",
+    "category": "Friends",
+    "text": "The most dangerous amount of confidence is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0213",
+    "category": "Dating",
+    "text": "The most dangerous amount of confidence is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0214",
+    "category": "Married",
+    "text": "The most dangerous amount of confidence is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0215",
+    "category": "Spicy",
+    "text": "The most dangerous amount of confidence is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0216",
+    "category": "Unhinged",
+    "text": "The most dangerous amount of confidence is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0217",
+    "category": "Casual",
+    "text": "The most dangerous amount of confidence is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0218",
+    "category": "Friends",
+    "text": "The most dangerous amount of confidence is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0219",
+    "category": "Dating",
+    "text": "The most dangerous amount of confidence is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0220",
+    "category": "Married",
+    "text": "The most dangerous amount of confidence is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0221",
+    "category": "Spicy",
+    "text": "My villain origin story definitely starts with ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0222",
+    "category": "Unhinged",
+    "text": "My villain origin story definitely starts with ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0223",
+    "category": "Casual",
+    "text": "My villain origin story definitely starts with ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0224",
+    "category": "Friends",
+    "text": "My villain origin story definitely starts with ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0225",
+    "category": "Dating",
+    "text": "My villain origin story definitely starts with ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0226",
+    "category": "Married",
+    "text": "My villain origin story definitely starts with ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0227",
+    "category": "Spicy",
+    "text": "My villain origin story definitely starts with ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0228",
+    "category": "Unhinged",
+    "text": "My villain origin story definitely starts with ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0229",
+    "category": "Casual",
+    "text": "My villain origin story definitely starts with ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0230",
+    "category": "Friends",
+    "text": "My villain origin story definitely starts with ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0231",
+    "category": "Dating",
+    "text": "My villain origin story definitely starts with ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0232",
+    "category": "Married",
+    "text": "My villain origin story definitely starts with ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0233",
+    "category": "Spicy",
+    "text": "My villain origin story definitely starts with ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0234",
+    "category": "Unhinged",
+    "text": "My villain origin story definitely starts with ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0235",
+    "category": "Casual",
+    "text": "My villain origin story definitely starts with ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0236",
+    "category": "Friends",
+    "text": "My villain origin story definitely starts with ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0237",
+    "category": "Dating",
+    "text": "My villain origin story definitely starts with ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0238",
+    "category": "Married",
+    "text": "My villain origin story definitely starts with ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0239",
+    "category": "Spicy",
+    "text": "My villain origin story definitely starts with ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0240",
+    "category": "Unhinged",
+    "text": "My villain origin story definitely starts with ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0241",
+    "category": "Casual",
+    "text": "The server would collapse in 24 hours if ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0242",
+    "category": "Friends",
+    "text": "The server would collapse in 24 hours if ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0243",
+    "category": "Dating",
+    "text": "The server would collapse in 24 hours if ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0244",
+    "category": "Married",
+    "text": "The server would collapse in 24 hours if ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0245",
+    "category": "Spicy",
+    "text": "The server would collapse in 24 hours if ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0246",
+    "category": "Unhinged",
+    "text": "The server would collapse in 24 hours if ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0247",
+    "category": "Casual",
+    "text": "The server would collapse in 24 hours if ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0248",
+    "category": "Friends",
+    "text": "The server would collapse in 24 hours if ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0249",
+    "category": "Dating",
+    "text": "The server would collapse in 24 hours if ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0250",
+    "category": "Married",
+    "text": "The server would collapse in 24 hours if ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0251",
+    "category": "Spicy",
+    "text": "The server would collapse in 24 hours if ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0252",
+    "category": "Unhinged",
+    "text": "The server would collapse in 24 hours if ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0253",
+    "category": "Casual",
+    "text": "The server would collapse in 24 hours if ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0254",
+    "category": "Friends",
+    "text": "The server would collapse in 24 hours if ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0255",
+    "category": "Dating",
+    "text": "The server would collapse in 24 hours if ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0256",
+    "category": "Married",
+    "text": "The server would collapse in 24 hours if ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0257",
+    "category": "Spicy",
+    "text": "The server would collapse in 24 hours if ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0258",
+    "category": "Unhinged",
+    "text": "The server would collapse in 24 hours if ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0259",
+    "category": "Casual",
+    "text": "The server would collapse in 24 hours if ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0260",
+    "category": "Friends",
+    "text": "The server would collapse in 24 hours if ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0261",
+    "category": "Dating",
+    "text": "The one thing I should never be trusted to choose is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0262",
+    "category": "Married",
+    "text": "The one thing I should never be trusted to choose is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0263",
+    "category": "Spicy",
+    "text": "The one thing I should never be trusted to choose is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0264",
+    "category": "Unhinged",
+    "text": "The one thing I should never be trusted to choose is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0265",
+    "category": "Casual",
+    "text": "The one thing I should never be trusted to choose is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0266",
+    "category": "Friends",
+    "text": "The one thing I should never be trusted to choose is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0267",
+    "category": "Dating",
+    "text": "The one thing I should never be trusted to choose is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0268",
+    "category": "Married",
+    "text": "The one thing I should never be trusted to choose is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0269",
+    "category": "Spicy",
+    "text": "The one thing I should never be trusted to choose is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0270",
+    "category": "Unhinged",
+    "text": "The one thing I should never be trusted to choose is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0271",
+    "category": "Casual",
+    "text": "The one thing I should never be trusted to choose is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0272",
+    "category": "Friends",
+    "text": "The one thing I should never be trusted to choose is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0273",
+    "category": "Dating",
+    "text": "The one thing I should never be trusted to choose is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0274",
+    "category": "Married",
+    "text": "The one thing I should never be trusted to choose is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0275",
+    "category": "Spicy",
+    "text": "The one thing I should never be trusted to choose is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0276",
+    "category": "Unhinged",
+    "text": "The one thing I should never be trusted to choose is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0277",
+    "category": "Casual",
+    "text": "The one thing I should never be trusted to choose is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0278",
+    "category": "Friends",
+    "text": "The one thing I should never be trusted to choose is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0279",
+    "category": "Dating",
+    "text": "The one thing I should never be trusted to choose is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0280",
+    "category": "Married",
+    "text": "The one thing I should never be trusted to choose is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0281",
+    "category": "Spicy",
+    "text": "Marriage would be easier if everyone agreed ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0282",
+    "category": "Unhinged",
+    "text": "Marriage would be easier if everyone agreed ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0283",
+    "category": "Casual",
+    "text": "Marriage would be easier if everyone agreed ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0284",
+    "category": "Friends",
+    "text": "Marriage would be easier if everyone agreed ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0285",
+    "category": "Dating",
+    "text": "Marriage would be easier if everyone agreed ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0286",
+    "category": "Married",
+    "text": "Marriage would be easier if everyone agreed ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0287",
+    "category": "Spicy",
+    "text": "Marriage would be easier if everyone agreed ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0288",
+    "category": "Unhinged",
+    "text": "Marriage would be easier if everyone agreed ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0289",
+    "category": "Casual",
+    "text": "Marriage would be easier if everyone agreed ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0290",
+    "category": "Friends",
+    "text": "Marriage would be easier if everyone agreed ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0291",
+    "category": "Dating",
+    "text": "Marriage would be easier if everyone agreed ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0292",
+    "category": "Married",
+    "text": "Marriage would be easier if everyone agreed ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0293",
+    "category": "Spicy",
+    "text": "Marriage would be easier if everyone agreed ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0294",
+    "category": "Unhinged",
+    "text": "Marriage would be easier if everyone agreed ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0295",
+    "category": "Casual",
+    "text": "Marriage would be easier if everyone agreed ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0296",
+    "category": "Friends",
+    "text": "Marriage would be easier if everyone agreed ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0297",
+    "category": "Dating",
+    "text": "Marriage would be easier if everyone agreed ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0298",
+    "category": "Married",
+    "text": "Marriage would be easier if everyone agreed ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0299",
+    "category": "Spicy",
+    "text": "Marriage would be easier if everyone agreed ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0300",
+    "category": "Unhinged",
+    "text": "Marriage would be easier if everyone agreed ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0301",
+    "category": "Casual",
+    "text": "The weirdest flex a person can have is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0302",
+    "category": "Friends",
+    "text": "The weirdest flex a person can have is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0303",
+    "category": "Dating",
+    "text": "The weirdest flex a person can have is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0304",
+    "category": "Married",
+    "text": "The weirdest flex a person can have is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0305",
+    "category": "Spicy",
+    "text": "The weirdest flex a person can have is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0306",
+    "category": "Unhinged",
+    "text": "The weirdest flex a person can have is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0307",
+    "category": "Casual",
+    "text": "The weirdest flex a person can have is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0308",
+    "category": "Friends",
+    "text": "The weirdest flex a person can have is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0309",
+    "category": "Dating",
+    "text": "The weirdest flex a person can have is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0310",
+    "category": "Married",
+    "text": "The weirdest flex a person can have is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0311",
+    "category": "Spicy",
+    "text": "The weirdest flex a person can have is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0312",
+    "category": "Unhinged",
+    "text": "The weirdest flex a person can have is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0313",
+    "category": "Casual",
+    "text": "The weirdest flex a person can have is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0314",
+    "category": "Friends",
+    "text": "The weirdest flex a person can have is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0315",
+    "category": "Dating",
+    "text": "The weirdest flex a person can have is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0316",
+    "category": "Married",
+    "text": "The weirdest flex a person can have is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0317",
+    "category": "Spicy",
+    "text": "The weirdest flex a person can have is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0318",
+    "category": "Unhinged",
+    "text": "The weirdest flex a person can have is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0319",
+    "category": "Casual",
+    "text": "The weirdest flex a person can have is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0320",
+    "category": "Friends",
+    "text": "The weirdest flex a person can have is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0321",
+    "category": "Dating",
+    "text": "A completely reasonable reason to leave a party is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0322",
+    "category": "Married",
+    "text": "A completely reasonable reason to leave a party is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0323",
+    "category": "Spicy",
+    "text": "A completely reasonable reason to leave a party is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0324",
+    "category": "Unhinged",
+    "text": "A completely reasonable reason to leave a party is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0325",
+    "category": "Casual",
+    "text": "A completely reasonable reason to leave a party is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0326",
+    "category": "Friends",
+    "text": "A completely reasonable reason to leave a party is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0327",
+    "category": "Dating",
+    "text": "A completely reasonable reason to leave a party is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0328",
+    "category": "Married",
+    "text": "A completely reasonable reason to leave a party is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0329",
+    "category": "Spicy",
+    "text": "A completely reasonable reason to leave a party is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0330",
+    "category": "Unhinged",
+    "text": "A completely reasonable reason to leave a party is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0331",
+    "category": "Casual",
+    "text": "A completely reasonable reason to leave a party is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0332",
+    "category": "Friends",
+    "text": "A completely reasonable reason to leave a party is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0333",
+    "category": "Dating",
+    "text": "A completely reasonable reason to leave a party is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0334",
+    "category": "Married",
+    "text": "A completely reasonable reason to leave a party is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0335",
+    "category": "Spicy",
+    "text": "A completely reasonable reason to leave a party is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0336",
+    "category": "Unhinged",
+    "text": "A completely reasonable reason to leave a party is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0337",
+    "category": "Casual",
+    "text": "A completely reasonable reason to leave a party is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0338",
+    "category": "Friends",
+    "text": "A completely reasonable reason to leave a party is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0339",
+    "category": "Dating",
+    "text": "A completely reasonable reason to leave a party is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0340",
+    "category": "Married",
+    "text": "A completely reasonable reason to leave a party is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0341",
+    "category": "Spicy",
+    "text": "The first sign I am about to make a bad decision is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0342",
+    "category": "Unhinged",
+    "text": "The first sign I am about to make a bad decision is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0343",
+    "category": "Casual",
+    "text": "The first sign I am about to make a bad decision is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0344",
+    "category": "Friends",
+    "text": "The first sign I am about to make a bad decision is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0345",
+    "category": "Dating",
+    "text": "The first sign I am about to make a bad decision is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0346",
+    "category": "Married",
+    "text": "The first sign I am about to make a bad decision is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0347",
+    "category": "Spicy",
+    "text": "The first sign I am about to make a bad decision is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0348",
+    "category": "Unhinged",
+    "text": "The first sign I am about to make a bad decision is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0349",
+    "category": "Casual",
+    "text": "The first sign I am about to make a bad decision is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0350",
+    "category": "Friends",
+    "text": "The first sign I am about to make a bad decision is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0351",
+    "category": "Dating",
+    "text": "The first sign I am about to make a bad decision is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0352",
+    "category": "Married",
+    "text": "The first sign I am about to make a bad decision is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0353",
+    "category": "Spicy",
+    "text": "The first sign I am about to make a bad decision is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0354",
+    "category": "Unhinged",
+    "text": "The first sign I am about to make a bad decision is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0355",
+    "category": "Casual",
+    "text": "The first sign I am about to make a bad decision is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0356",
+    "category": "Friends",
+    "text": "The first sign I am about to make a bad decision is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0357",
+    "category": "Dating",
+    "text": "The first sign I am about to make a bad decision is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0358",
+    "category": "Married",
+    "text": "The first sign I am about to make a bad decision is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0359",
+    "category": "Spicy",
+    "text": "The first sign I am about to make a bad decision is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0360",
+    "category": "Unhinged",
+    "text": "The first sign I am about to make a bad decision is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0361",
+    "category": "Casual",
+    "text": "The only acceptable response to “trust me” is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0362",
+    "category": "Friends",
+    "text": "The only acceptable response to “trust me” is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0363",
+    "category": "Dating",
+    "text": "The only acceptable response to “trust me” is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0364",
+    "category": "Married",
+    "text": "The only acceptable response to “trust me” is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0365",
+    "category": "Spicy",
+    "text": "The only acceptable response to “trust me” is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0366",
+    "category": "Unhinged",
+    "text": "The only acceptable response to “trust me” is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0367",
+    "category": "Casual",
+    "text": "The only acceptable response to “trust me” is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0368",
+    "category": "Friends",
+    "text": "The only acceptable response to “trust me” is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0369",
+    "category": "Dating",
+    "text": "The only acceptable response to “trust me” is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0370",
+    "category": "Married",
+    "text": "The only acceptable response to “trust me” is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0371",
+    "category": "Spicy",
+    "text": "The only acceptable response to “trust me” is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0372",
+    "category": "Unhinged",
+    "text": "The only acceptable response to “trust me” is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0373",
+    "category": "Casual",
+    "text": "The only acceptable response to “trust me” is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0374",
+    "category": "Friends",
+    "text": "The only acceptable response to “trust me” is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0375",
+    "category": "Dating",
+    "text": "The only acceptable response to “trust me” is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0376",
+    "category": "Married",
+    "text": "The only acceptable response to “trust me” is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0377",
+    "category": "Spicy",
+    "text": "The only acceptable response to “trust me” is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0378",
+    "category": "Unhinged",
+    "text": "The only acceptable response to “trust me” is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0379",
+    "category": "Casual",
+    "text": "The only acceptable response to “trust me” is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0380",
+    "category": "Friends",
+    "text": "The only acceptable response to “trust me” is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0381",
+    "category": "Dating",
+    "text": "My retirement plan currently depends on ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0382",
+    "category": "Married",
+    "text": "My retirement plan currently depends on ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0383",
+    "category": "Spicy",
+    "text": "My retirement plan currently depends on ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0384",
+    "category": "Unhinged",
+    "text": "My retirement plan currently depends on ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0385",
+    "category": "Casual",
+    "text": "My retirement plan currently depends on ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0386",
+    "category": "Friends",
+    "text": "My retirement plan currently depends on ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0387",
+    "category": "Dating",
+    "text": "My retirement plan currently depends on ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0388",
+    "category": "Married",
+    "text": "My retirement plan currently depends on ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0389",
+    "category": "Spicy",
+    "text": "My retirement plan currently depends on ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0390",
+    "category": "Unhinged",
+    "text": "My retirement plan currently depends on ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0391",
+    "category": "Casual",
+    "text": "My retirement plan currently depends on ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0392",
+    "category": "Friends",
+    "text": "My retirement plan currently depends on ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0393",
+    "category": "Dating",
+    "text": "My retirement plan currently depends on ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0394",
+    "category": "Married",
+    "text": "My retirement plan currently depends on ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0395",
+    "category": "Spicy",
+    "text": "My retirement plan currently depends on ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0396",
+    "category": "Unhinged",
+    "text": "My retirement plan currently depends on ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0397",
+    "category": "Casual",
+    "text": "My retirement plan currently depends on ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0398",
+    "category": "Friends",
+    "text": "My retirement plan currently depends on ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0399",
+    "category": "Dating",
+    "text": "My retirement plan currently depends on ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0400",
+    "category": "Married",
+    "text": "My retirement plan currently depends on ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0401",
+    "category": "Spicy",
+    "text": "The most powerful thing you can bring to a friendship is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0402",
+    "category": "Unhinged",
+    "text": "The most powerful thing you can bring to a friendship is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0403",
+    "category": "Casual",
+    "text": "The most powerful thing you can bring to a friendship is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0404",
+    "category": "Friends",
+    "text": "The most powerful thing you can bring to a friendship is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0405",
+    "category": "Dating",
+    "text": "The most powerful thing you can bring to a friendship is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0406",
+    "category": "Married",
+    "text": "The most powerful thing you can bring to a friendship is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0407",
+    "category": "Spicy",
+    "text": "The most powerful thing you can bring to a friendship is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0408",
+    "category": "Unhinged",
+    "text": "The most powerful thing you can bring to a friendship is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0409",
+    "category": "Casual",
+    "text": "The most powerful thing you can bring to a friendship is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0410",
+    "category": "Friends",
+    "text": "The most powerful thing you can bring to a friendship is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0411",
+    "category": "Dating",
+    "text": "The most powerful thing you can bring to a friendship is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0412",
+    "category": "Married",
+    "text": "The most powerful thing you can bring to a friendship is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0413",
+    "category": "Spicy",
+    "text": "The most powerful thing you can bring to a friendship is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0414",
+    "category": "Unhinged",
+    "text": "The most powerful thing you can bring to a friendship is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0415",
+    "category": "Casual",
+    "text": "The most powerful thing you can bring to a friendship is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0416",
+    "category": "Friends",
+    "text": "The most powerful thing you can bring to a friendship is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0417",
+    "category": "Dating",
+    "text": "The most powerful thing you can bring to a friendship is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0418",
+    "category": "Married",
+    "text": "The most powerful thing you can bring to a friendship is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0419",
+    "category": "Spicy",
+    "text": "The most powerful thing you can bring to a friendship is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0420",
+    "category": "Unhinged",
+    "text": "The most powerful thing you can bring to a friendship is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0421",
+    "category": "Casual",
+    "text": "You know someone is flirting when ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0422",
+    "category": "Friends",
+    "text": "You know someone is flirting when ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0423",
+    "category": "Dating",
+    "text": "You know someone is flirting when ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0424",
+    "category": "Married",
+    "text": "You know someone is flirting when ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0425",
+    "category": "Spicy",
+    "text": "You know someone is flirting when ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0426",
+    "category": "Unhinged",
+    "text": "You know someone is flirting when ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0427",
+    "category": "Casual",
+    "text": "You know someone is flirting when ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0428",
+    "category": "Friends",
+    "text": "You know someone is flirting when ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0429",
+    "category": "Dating",
+    "text": "You know someone is flirting when ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0430",
+    "category": "Married",
+    "text": "You know someone is flirting when ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0431",
+    "category": "Spicy",
+    "text": "You know someone is flirting when ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0432",
+    "category": "Unhinged",
+    "text": "You know someone is flirting when ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0433",
+    "category": "Casual",
+    "text": "You know someone is flirting when ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0434",
+    "category": "Friends",
+    "text": "You know someone is flirting when ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0435",
+    "category": "Dating",
+    "text": "You know someone is flirting when ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0436",
+    "category": "Married",
+    "text": "You know someone is flirting when ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0437",
+    "category": "Spicy",
+    "text": "You know someone is flirting when ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0438",
+    "category": "Unhinged",
+    "text": "You know someone is flirting when ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0439",
+    "category": "Casual",
+    "text": "You know someone is flirting when ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0440",
+    "category": "Friends",
+    "text": "You know someone is flirting when ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0441",
+    "category": "Dating",
+    "text": "The chair I identify with emotionally is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0442",
+    "category": "Married",
+    "text": "The chair I identify with emotionally is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0443",
+    "category": "Spicy",
+    "text": "The chair I identify with emotionally is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0444",
+    "category": "Unhinged",
+    "text": "The chair I identify with emotionally is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0445",
+    "category": "Casual",
+    "text": "The chair I identify with emotionally is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0446",
+    "category": "Friends",
+    "text": "The chair I identify with emotionally is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0447",
+    "category": "Dating",
+    "text": "The chair I identify with emotionally is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0448",
+    "category": "Married",
+    "text": "The chair I identify with emotionally is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0449",
+    "category": "Spicy",
+    "text": "The chair I identify with emotionally is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0450",
+    "category": "Unhinged",
+    "text": "The chair I identify with emotionally is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0451",
+    "category": "Casual",
+    "text": "The chair I identify with emotionally is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0452",
+    "category": "Friends",
+    "text": "The chair I identify with emotionally is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0453",
+    "category": "Dating",
+    "text": "The chair I identify with emotionally is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0454",
+    "category": "Married",
+    "text": "The chair I identify with emotionally is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0455",
+    "category": "Spicy",
+    "text": "The chair I identify with emotionally is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0456",
+    "category": "Unhinged",
+    "text": "The chair I identify with emotionally is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0457",
+    "category": "Casual",
+    "text": "The chair I identify with emotionally is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0458",
+    "category": "Friends",
+    "text": "The chair I identify with emotionally is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0459",
+    "category": "Dating",
+    "text": "The chair I identify with emotionally is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0460",
+    "category": "Married",
+    "text": "The chair I identify with emotionally is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0461",
+    "category": "Spicy",
+    "text": "The fastest way to make me irrationally annoyed is ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0462",
+    "category": "Unhinged",
+    "text": "The fastest way to make me irrationally annoyed is ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0463",
+    "category": "Casual",
+    "text": "The fastest way to make me irrationally annoyed is ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0464",
+    "category": "Friends",
+    "text": "The fastest way to make me irrationally annoyed is ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0465",
+    "category": "Dating",
+    "text": "The fastest way to make me irrationally annoyed is ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0466",
+    "category": "Married",
+    "text": "The fastest way to make me irrationally annoyed is ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0467",
+    "category": "Spicy",
+    "text": "The fastest way to make me irrationally annoyed is ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0468",
+    "category": "Unhinged",
+    "text": "The fastest way to make me irrationally annoyed is ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0469",
+    "category": "Casual",
+    "text": "The fastest way to make me irrationally annoyed is ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0470",
+    "category": "Friends",
+    "text": "The fastest way to make me irrationally annoyed is ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0471",
+    "category": "Dating",
+    "text": "The fastest way to make me irrationally annoyed is ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0472",
+    "category": "Married",
+    "text": "The fastest way to make me irrationally annoyed is ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0473",
+    "category": "Spicy",
+    "text": "The fastest way to make me irrationally annoyed is ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0474",
+    "category": "Unhinged",
+    "text": "The fastest way to make me irrationally annoyed is ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0475",
+    "category": "Casual",
+    "text": "The fastest way to make me irrationally annoyed is ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0476",
+    "category": "Friends",
+    "text": "The fastest way to make me irrationally annoyed is ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0477",
+    "category": "Dating",
+    "text": "The fastest way to make me irrationally annoyed is ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0478",
+    "category": "Married",
+    "text": "The fastest way to make me irrationally annoyed is ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0479",
+    "category": "Spicy",
+    "text": "The fastest way to make me irrationally annoyed is ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0480",
+    "category": "Unhinged",
+    "text": "The fastest way to make me irrationally annoyed is ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0481",
+    "category": "Casual",
+    "text": "If Angrier Jordan had a warning label, it would say ______ right now.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0482",
+    "category": "Friends",
+    "text": "If Angrier Jordan had a warning label, it would say ______ and nobody can convince me otherwise.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0483",
+    "category": "Dating",
+    "text": "If Angrier Jordan had a warning label, it would say ______ after midnight.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0484",
+    "category": "Married",
+    "text": "If Angrier Jordan had a warning label, it would say ______ when money is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0485",
+    "category": "Spicy",
+    "text": "If Angrier Jordan had a warning label, it would say ______ in a group chat.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0486",
+    "category": "Unhinged",
+    "text": "If Angrier Jordan had a warning label, it would say ______ on vacation.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0487",
+    "category": "Casual",
+    "text": "If Angrier Jordan had a warning label, it would say ______ during a first date.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0488",
+    "category": "Friends",
+    "text": "If Angrier Jordan had a warning label, it would say ______ when everyone is tired.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0489",
+    "category": "Dating",
+    "text": "If Angrier Jordan had a warning label, it would say ______ after two drinks.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0490",
+    "category": "Married",
+    "text": "If Angrier Jordan had a warning label, it would say ______ when someone says “it’ll be fine.”",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0491",
+    "category": "Spicy",
+    "text": "If Angrier Jordan had a warning label, it would say ______ with absolutely no context.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0492",
+    "category": "Unhinged",
+    "text": "If Angrier Jordan had a warning label, it would say ______ and I stand by that.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0493",
+    "category": "Casual",
+    "text": "If Angrier Jordan had a warning label, it would say ______ but only on weekends.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0494",
+    "category": "Friends",
+    "text": "If Angrier Jordan had a warning label, it would say ______ when the server is watching.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0495",
+    "category": "Dating",
+    "text": "If Angrier Jordan had a warning label, it would say ______ and this is somehow controversial.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0496",
+    "category": "Married",
+    "text": "If Angrier Jordan had a warning label, it would say ______ if we are being completely honest.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0497",
+    "category": "Spicy",
+    "text": "If Angrier Jordan had a warning label, it would say ______ the second nobody is supervising.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0498",
+    "category": "Unhinged",
+    "text": "If Angrier Jordan had a warning label, it would say ______ when plans change at the last second.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0499",
+    "category": "Casual",
+    "text": "If Angrier Jordan had a warning label, it would say ______ if pride is involved.",
+    "enabled": true,
+    "content_version": 1
+  },
+  {
+    "id": "FINISH-0500",
+    "category": "Friends",
+    "text": "If Angrier Jordan had a warning label, it would say ______ and that is a hill worth dying on.",
+    "enabled": true,
+    "content_version": 1
+  }
+]

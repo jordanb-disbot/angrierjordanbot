@@ -1,0 +1,31 @@
+{
+  "name": "angrier-jordan",
+  "private": true,
+  "version": "0.1.0-implementation",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "preflight": "node scripts/preflight.mjs",
+    "codegen": "node scripts/generate-command-registration.mjs && node scripts/generate-dashboard-controls.mjs && node scripts/generate-contracts.mjs",
+    "validate:registries": "node scripts/validate-registries.mjs",
+    "validate:content": "node scripts/validate-content.mjs",
+    "validate:assets": "node scripts/validate-assets.mjs",
+    "validate:help": "node scripts/validate-help-coverage.mjs",
+    "validate:golden": "node scripts/validate-golden-wyr.mjs",
+    "test:domain": "node scripts/compile-domain-tests.mjs && node --test testing/runtime/*.test.mjs",
+    "typecheck:domain": "tsc -p tsconfig.domain.json --noEmit",
+    "build": "npm run codegen && npm run typecheck:domain",
+    "dev:bot": "npm --workspace @angrier-jordan/bot run dev",
+    "dev:dashboard": "npm --workspace @angrier-jordan/dashboard run dev",
+    "db:generate": "npm --workspace @angrier-jordan/database run generate",
+    "db:migrate": "npm --workspace @angrier-jordan/database run migrate",
+    "db:seed": "npm --workspace @angrier-jordan/database run seed",
+    "validate:production-wiring": "node scripts/validate-production-wiring.mjs"
+  },
+  "type": "module"
+}

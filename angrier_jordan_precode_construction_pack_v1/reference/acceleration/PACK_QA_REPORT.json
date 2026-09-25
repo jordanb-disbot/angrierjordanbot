@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "json_errors": [],
+  "command_records": 180,
+  "top_level_registered_chat_commands": 57,
+  "settings": 136,
+  "acceptance_tests": 68,
+  "content_entries": 2985,
+  "prisma_brace_balance": true,
+  "notes": [
+    "Full Prisma migration validation should run in Phase 0 with the project-selected Prisma CLI."
+  ]
+}

@@ -1,0 +1,602 @@
+[
+  {
+    "id": "LINE-SHAME-001",
+    "text": "Wonderful. {user} needed more time. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-002",
+    "text": "Excellent. {user} apparently thought sixty seconds was a suggestion. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-003",
+    "text": "Beautiful. {user} has entered the witness protection program. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-004",
+    "text": "Outstanding. {user} is still negotiating with reality. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-005",
+    "text": "Incredible. {user} is consulting their legal team. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-006",
+    "text": "Impressive. {user} has discovered the concept of hesitation. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-007",
+    "text": "Stunning. {user} is buffering. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-008",
+    "text": "Historic. {user} is still reading the instructions somehow. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-009",
+    "text": "Unbelievable. {user} has requested a congressional extension. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-010",
+    "text": "Magnificent. {user} is attempting to locate their dignity. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-011",
+    "text": "Wonderful. {user} is still negotiating with reality. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-012",
+    "text": "Excellent. {user} is consulting their legal team. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-013",
+    "text": "Beautiful. {user} has discovered the concept of hesitation. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-014",
+    "text": "Outstanding. {user} is buffering. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-015",
+    "text": "Incredible. {user} is still reading the instructions somehow. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-016",
+    "text": "Impressive. {user} has requested a congressional extension. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-017",
+    "text": "Stunning. {user} is attempting to locate their dignity. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-018",
+    "text": "Historic. {user} remains emotionally unavailable to the countdown. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-019",
+    "text": "Unbelievable. {user} has chosen cowardice. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-020",
+    "text": "Magnificent. {user} needed more time. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-021",
+    "text": "Wonderful. {user} is buffering. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-022",
+    "text": "Excellent. {user} is still reading the instructions somehow. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-023",
+    "text": "Beautiful. {user} has requested a congressional extension. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-024",
+    "text": "Outstanding. {user} is attempting to locate their dignity. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-025",
+    "text": "Incredible. {user} remains emotionally unavailable to the countdown. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-026",
+    "text": "Impressive. {user} has chosen cowardice. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-027",
+    "text": "Stunning. {user} needed more time. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-028",
+    "text": "Historic. {user} apparently thought sixty seconds was a suggestion. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-029",
+    "text": "Unbelievable. {user} has entered the witness protection program. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-030",
+    "text": "Magnificent. {user} is still negotiating with reality. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-031",
+    "text": "Wonderful. {user} is attempting to locate their dignity. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-032",
+    "text": "Excellent. {user} remains emotionally unavailable to the countdown. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-033",
+    "text": "Beautiful. {user} has chosen cowardice. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-034",
+    "text": "Outstanding. {user} needed more time. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-035",
+    "text": "Incredible. {user} apparently thought sixty seconds was a suggestion. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-036",
+    "text": "Impressive. {user} has entered the witness protection program. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-037",
+    "text": "Stunning. {user} is still negotiating with reality. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-038",
+    "text": "Historic. {user} is consulting their legal team. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-039",
+    "text": "Unbelievable. {user} has discovered the concept of hesitation. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-040",
+    "text": "Magnificent. {user} is buffering. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-041",
+    "text": "Wonderful. {user} needed more time. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-042",
+    "text": "Excellent. {user} apparently thought sixty seconds was a suggestion. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-043",
+    "text": "Beautiful. {user} has entered the witness protection program. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-044",
+    "text": "Outstanding. {user} is still negotiating with reality. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-045",
+    "text": "Incredible. {user} is consulting their legal team. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-046",
+    "text": "Impressive. {user} has discovered the concept of hesitation. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-047",
+    "text": "Stunning. {user} is buffering. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-048",
+    "text": "Historic. {user} is still reading the instructions somehow. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-049",
+    "text": "Unbelievable. {user} has requested a congressional extension. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-050",
+    "text": "Magnificent. {user} is attempting to locate their dignity. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-051",
+    "text": "Wonderful. {user} is still negotiating with reality. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-052",
+    "text": "Excellent. {user} is consulting their legal team. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-053",
+    "text": "Beautiful. {user} has discovered the concept of hesitation. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-054",
+    "text": "Outstanding. {user} is buffering. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-055",
+    "text": "Incredible. {user} is still reading the instructions somehow. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-056",
+    "text": "Impressive. {user} has requested a congressional extension. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-057",
+    "text": "Stunning. {user} is attempting to locate their dignity. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-058",
+    "text": "Historic. {user} remains emotionally unavailable to the countdown. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-059",
+    "text": "Unbelievable. {user} has chosen cowardice. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-060",
+    "text": "Magnificent. {user} needed more time. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-061",
+    "text": "Wonderful. {user} is buffering. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-062",
+    "text": "Excellent. {user} is still reading the instructions somehow. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-063",
+    "text": "Beautiful. {user} has requested a congressional extension. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-064",
+    "text": "Outstanding. {user} is attempting to locate their dignity. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-065",
+    "text": "Incredible. {user} remains emotionally unavailable to the countdown. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-066",
+    "text": "Impressive. {user} has chosen cowardice. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-067",
+    "text": "Stunning. {user} needed more time. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-068",
+    "text": "Historic. {user} apparently thought sixty seconds was a suggestion. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-069",
+    "text": "Unbelievable. {user} has entered the witness protection program. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-070",
+    "text": "Magnificent. {user} is still negotiating with reality. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-071",
+    "text": "Wonderful. {user} is attempting to locate their dignity. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-072",
+    "text": "Excellent. {user} remains emotionally unavailable to the countdown. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-073",
+    "text": "Beautiful. {user} has chosen cowardice. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-074",
+    "text": "Outstanding. {user} needed more time. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-075",
+    "text": "Incredible. {user} apparently thought sixty seconds was a suggestion. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-076",
+    "text": "Impressive. {user} has entered the witness protection program. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-077",
+    "text": "Stunning. {user} is still negotiating with reality. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-078",
+    "text": "Historic. {user} is consulting their legal team. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-079",
+    "text": "Unbelievable. {user} has discovered the concept of hesitation. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-080",
+    "text": "Magnificent. {user} is buffering. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-081",
+    "text": "Wonderful. {user} needed more time. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-082",
+    "text": "Excellent. {user} apparently thought sixty seconds was a suggestion. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-083",
+    "text": "Beautiful. {user} has entered the witness protection program. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-084",
+    "text": "Outstanding. {user} is still negotiating with reality. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-085",
+    "text": "Incredible. {user} is consulting their legal team. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-086",
+    "text": "Impressive. {user} has discovered the concept of hesitation. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-087",
+    "text": "Stunning. {user} is buffering. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-088",
+    "text": "Historic. {user} is still reading the instructions somehow. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-089",
+    "text": "Unbelievable. {user} has requested a congressional extension. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-090",
+    "text": "Magnificent. {user} is attempting to locate their dignity. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-091",
+    "text": "Wonderful. {user} is still negotiating with reality. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-092",
+    "text": "Excellent. {user} is consulting their legal team. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-093",
+    "text": "Beautiful. {user} has discovered the concept of hesitation. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-094",
+    "text": "Outstanding. {user} is buffering. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-095",
+    "text": "Incredible. {user} is still reading the instructions somehow. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-096",
+    "text": "Impressive. {user} has requested a congressional extension. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-097",
+    "text": "Stunning. {user} is attempting to locate their dignity. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-098",
+    "text": "Historic. {user} remains emotionally unavailable to the countdown. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-099",
+    "text": "Unbelievable. {user} has chosen cowardice. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-100",
+    "text": "Magnificent. {user} needed more time. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-101",
+    "text": "Wonderful. {user} is buffering. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-102",
+    "text": "Excellent. {user} is still reading the instructions somehow. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-103",
+    "text": "Beautiful. {user} has requested a congressional extension. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-104",
+    "text": "Outstanding. {user} is attempting to locate their dignity. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-105",
+    "text": "Incredible. {user} remains emotionally unavailable to the countdown. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-106",
+    "text": "Impressive. {user} has chosen cowardice. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-107",
+    "text": "Stunning. {user} needed more time. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-108",
+    "text": "Historic. {user} apparently thought sixty seconds was a suggestion. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-109",
+    "text": "Unbelievable. {user} has entered the witness protection program. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-110",
+    "text": "Magnificent. {user} is still negotiating with reality. History moves on.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-111",
+    "text": "Wonderful. {user} is attempting to locate their dignity. Please file complaints directly into the nearest ottoman.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-112",
+    "text": "Excellent. {user} remains emotionally unavailable to the countdown. May the chairs remember this.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-113",
+    "text": "Beautiful. {user} has chosen cowardice. The countdown shows no mercy.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-114",
+    "text": "Outstanding. {user} needed more time. We are starting anyway.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-115",
+    "text": "Incredible. {user} apparently thought sixty seconds was a suggestion. There will be no additional paperwork.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-116",
+    "text": "Impressive. {user} has entered the witness protection program. The lounge has voted with its feet.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-117",
+    "text": "Stunning. {user} is still negotiating with reality. The furniture cannot wait.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-118",
+    "text": "Historic. {user} is consulting their legal team. We appreciate the lack of urgency.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-119",
+    "text": "Unbelievable. {user} has discovered the concept of hesitation. This is now a personal problem.",
+    "enabled": true
+  },
+  {
+    "id": "LINE-SHAME-120",
+    "text": "Magnificent. {user} is buffering. History moves on.",
+    "enabled": true
+  }
+]

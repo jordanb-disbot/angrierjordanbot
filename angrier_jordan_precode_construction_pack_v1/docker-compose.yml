@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: angrier
+      POSTGRES_PASSWORD: angrier
+      POSTGRES_DB: angrier_jordan
+    ports:
+      - "5432:5432"
+    volumes:
+      - angrier_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U angrier -d angrier_jordan"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+volumes:
+  angrier_postgres:

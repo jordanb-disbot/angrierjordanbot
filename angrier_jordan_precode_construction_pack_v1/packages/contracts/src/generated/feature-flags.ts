@@ -1,0 +1,26 @@
+export const FEATURE_FLAGS = [
+  "bootstrap",
+  "casino",
+  "chairisms",
+  "community",
+  "core",
+  "crime",
+  "custom_commands",
+  "economy",
+  "family",
+  "fight",
+  "introductions",
+  "jail",
+  "line",
+  "moderation",
+  "music",
+  "party_games",
+  "profile",
+  "pvp",
+  "race",
+  "roles",
+  "security",
+  "social",
+  "tutorial"
+] as const;
+export type FeatureFlag = typeof FEATURE_FLAGS[number];

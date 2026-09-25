@@ -1,0 +1,19 @@
+{
+  "production_visual_library": {
+    "manifest": "reference/assets/final-production-visual-manifest.json",
+    "expected_assets": 348,
+    "embedded_here": true,
+    "root": "production/"
+  },
+  "core_prompt_pack": {
+    "filename": "angrier_jordan_core_prompt_pack_v1_FINAL.zip",
+    "embedded_here": true,
+    "intended_final_core_prompts": 6200,
+    "known_gap": "Original WYR-0001..0460 remains an external legacy content dependency unless separately recovered."
+  },
+  "canonical_spec": {
+    "filename": "ANGRIER_JORDAN_CANONICAL_BUILD_SPEC.md",
+    "embedded_here": true,
+    "version": "2026-09-21"
+  }
+}

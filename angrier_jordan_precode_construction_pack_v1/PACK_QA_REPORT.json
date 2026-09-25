@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "checkpoint": 8,
+  "checks": {
+    "command_registry_count": true,
+    "settings_count": true,
+    "capability_count": true,
+    "application_command_budget": true,
+    "application_command_node_limits": true,
+    "unique_command_ids": true,
+    "unique_setting_keys": true,
+    "help_coverage": true,
+    "golden_categories": true,
+    "prisma_models": true,
+    "migration_tables": true,
+    "hotseat_migration_present": true,
+    "main_moderation_migration_present": true,
+    "automated_security_migration_present": true,
+    "production_wiring": true,
+    "domain_typecheck": true,
+    "domain_tests": true,
+    "asset_manifest_present": true,
+    "economy_migration_present": true,
+    "economy_production_wiring": true
+  },
+  "counts": {
+    "prisma_models": 79,
+    "sql_tables": 79,
+    "conceptual_interactions": 192,
+    "settings": 185,
+    "capabilities": 40,
+    "generated_application_commands": 65,
+    "top_level_chat_input_commands": 64,
+    "special_text_commands": 4,
+    "production_assets_and_templates": 348,
+    "domain_tests_passed": 68,
+    "domain_tests_failed": 0,
+    "workspace_files_excluding_test_build": 740
+  },
+  "database_schema_version": "0008_economy_foundation",
+  "environment_limited": {
+    "live_discord_postgres_smoke_test": "PENDING_CREDENTIALS",
+    "prisma_client_regeneration": "PENDING_DEPENDENCY_INSTALL",
+    "full_bot_typecheck": "PENDING_WORKSPACE_DEPENDENCY_INSTALL"
+  }
+}

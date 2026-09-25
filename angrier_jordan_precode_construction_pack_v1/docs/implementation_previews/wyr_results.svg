@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1220"/><stop offset="0.6" stop-color="#0F1E3A"/><stop offset="1" stop-color="#07101D"/></linearGradient>
+  <linearGradient id="teal" x1="0" x2="1"><stop stop-color="#0E7490"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+  <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#9A6A12"/><stop offset="1" stop-color="#FFD880"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+<rect x="18" y="18" width="1164" height="639" rx="24" fill="none" stroke="#29435F" stroke-width="2"/>
+<!-- subdued lounge / chair scene; no logo or wordmark -->
+<g opacity="0.24">
+  <circle cx="1010" cy="125" r="36" fill="#C58A3B" opacity="0.22"/>
+  <rect x="980" y="152" width="60" height="8" rx="4" fill="#C58A3B" opacity="0.24"/>
+  <path d="M970 300c0-48 32-78 72-78h36c40 0 72 30 72 78v130h-180z" fill="#6C4930"/>
+  <rect x="955" y="298" width="210" height="46" rx="22" fill="#7A5234"/>
+  <rect x="980" y="335" width="160" height="118" rx="24" fill="#60402C"/>
+  <path d="M1000 447l-18 86M1120 447l18 86" stroke="#7A5234" stroke-width="14" stroke-linecap="round"/>
+  <path d="M925 315c-32-60-42-122-22-184M917 254c-56-28-74-63-74-108M934 235c38-45 58-94 52-145" stroke="#2D6B5C" stroke-width="10" stroke-linecap="round" fill="none"/>
+</g>
+
+    <text x="600" y="92" font-family="Cinzel, Georgia, serif" font-size="42" font-weight="700" fill="#F8FAFC" text-anchor="middle">WOULD YOU RATHER</text>
+    <text x="600" y="126" font-family="Poppins, Arial, sans-serif" font-size="15" font-weight="700" fill="#F5C542" text-anchor="middle">CASUAL • RESULTS</text>
+    <text x="600" y="174" font-family="Poppins, Arial, sans-serif" font-size="23" font-weight="650" fill="#F8FAFC" text-anchor="middle">Would you rather always have perfect Wi-Fi or always have a</text><text x="600" y="204" font-family="Poppins, Arial, sans-serif" font-size="23" font-weight="650" fill="#F8FAFC" text-anchor="middle">fully charged phone?</text>
+    <g><rect x="92" y="238" width="470" height="250" rx="18" fill="#111C2E" stroke="#22D3EE" stroke-width="2"/>
+  <text x="120" y="276" font-family="Poppins, Arial, sans-serif" font-size="18" font-weight="800" fill="#22D3EE" text-anchor="start">A</text>
+  <text x="327" y="290" font-family="Poppins, Arial, sans-serif" font-size="22" font-weight="650" fill="#F8FAFC" text-anchor="middle">Always have perfect Wi-Fi</text>
+  <rect x="126" y="416" width="402" height="16" rx="8" fill="#07101D" stroke="#22D3EE" stroke-opacity="0.65"/><rect x="126" y="416" width="269.34" height="16" rx="8" fill="url(#teal)" filter="url(#glow)"/><text x="327" y="462" font-family="Poppins, Arial, sans-serif" font-size="30" font-weight="800" fill="#F8FAFC" text-anchor="middle">67%</text><text x="327" y="485" font-family="Poppins, Arial, sans-serif" font-size="14" font-weight="600" fill="#94A3B8" text-anchor="middle">2 votes</text>
+  </g>
+    <g><rect x="638" y="238" width="470" height="250" rx="18" fill="#111C2E" stroke="#F5C542" stroke-width="2"/>
+  <text x="666" y="276" font-family="Poppins, Arial, sans-serif" font-size="18" font-weight="800" fill="#F5C542" text-anchor="start">B</text>
+  <text x="873" y="290" font-family="Poppins, Arial, sans-serif" font-size="22" font-weight="650" fill="#F8FAFC" text-anchor="middle">Always have a fully charged</text><text x="873" y="319" font-family="Poppins, Arial, sans-serif" font-size="22" font-weight="650" fill="#F8FAFC" text-anchor="middle">phone</text>
+  <rect x="672" y="416" width="402" height="16" rx="8" fill="#07101D" stroke="#F5C542" stroke-opacity="0.65"/><rect x="672" y="416" width="132.66" height="16" rx="8" fill="url(#gold)" filter="url(#glow)"/><text x="873" y="462" font-family="Poppins, Arial, sans-serif" font-size="30" font-weight="800" fill="#F8FAFC" text-anchor="middle">33%</text><text x="873" y="485" font-family="Poppins, Arial, sans-serif" font-size="14" font-weight="600" fill="#94A3B8" text-anchor="middle">1 vote</text>
+  </g>
+    <circle cx="600" cy="352" r="34" fill="#07101D" stroke="#F5C542" stroke-width="2"/><text x="600" y="361" font-family="Poppins, Arial, sans-serif" font-size="19" font-weight="800" fill="#FFD880" text-anchor="middle">OR</text>
+    <rect x="160" y="528" width="880" height="64" rx="16" fill="#16253A" stroke="#F5C542"/>
+    <text x="600" y="568" font-family="Poppins, Arial, sans-serif" font-size="20" font-weight="700" fill="#F8FAFC" text-anchor="middle">Most people chose: Always have perfect Wi-Fi</text>
+    <text x="600" y="626" font-family="Poppins, Arial, sans-serif" font-size="15" font-weight="500" fill="#94A3B8" text-anchor="middle">3 total votes • Play Again starts a fresh question</text>
+  </svg>

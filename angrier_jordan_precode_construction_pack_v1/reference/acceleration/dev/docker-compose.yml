@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: angrier_jordan
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports: ["5432:5432"]
+    volumes: ["angrier_jordan_pg:/var/lib/postgresql/data"]
+volumes:
+  angrier_jordan_pg:

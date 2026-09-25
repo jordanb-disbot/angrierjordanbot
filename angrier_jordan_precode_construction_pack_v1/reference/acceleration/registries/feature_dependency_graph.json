@@ -1,0 +1,166 @@
+{
+  "version": 2,
+  "features": {
+    "foundation": [],
+    "database": [
+      "foundation"
+    ],
+    "config_service": [
+      "database"
+    ],
+    "capabilities": [
+      "database"
+    ],
+    "audit": [
+      "database"
+    ],
+    "discord_core": [
+      "foundation",
+      "config_service",
+      "capabilities",
+      "audit"
+    ],
+    "rendering": [
+      "foundation"
+    ],
+    "content_service": [
+      "database"
+    ],
+    "ledger": [
+      "database",
+      "audit"
+    ],
+    "escrow": [
+      "ledger"
+    ],
+    "session_engine": [
+      "database",
+      "audit"
+    ],
+    "voting_engine": [
+      "session_engine"
+    ],
+    "timer_engine": [
+      "session_engine"
+    ],
+    "profile": [
+      "discord_core",
+      "database",
+      "rendering"
+    ],
+    "economy": [
+      "discord_core",
+      "ledger",
+      "content_service"
+    ],
+    "inventory": [
+      "economy"
+    ],
+    "crafting": [
+      "inventory",
+      "content_service"
+    ],
+    "casino": [
+      "economy",
+      "escrow",
+      "session_engine",
+      "rendering"
+    ],
+    "race_fight": [
+      "escrow",
+      "session_engine",
+      "timer_engine",
+      "rendering"
+    ],
+    "party_games": [
+      "session_engine",
+      "voting_engine",
+      "timer_engine",
+      "content_service"
+    ],
+    "crime_family": [
+      "economy",
+      "session_engine",
+      "audit"
+    ],
+    "moderation": [
+      "discord_core",
+      "audit",
+      "timer_engine"
+    ],
+    "jail": [
+      "moderation"
+    ],
+    "security": [
+      "moderation"
+    ],
+    "introductions": [
+      "discord_core",
+      "rendering",
+      "config_service"
+    ],
+    "chairisms": [
+      "discord_core",
+      "rendering"
+    ],
+    "music": [
+      "discord_core",
+      "session_engine"
+    ],
+    "custom_commands": [
+      "discord_core",
+      "config_service",
+      "capabilities",
+      "audit"
+    ],
+    "tutorial": [
+      "discord_core",
+      "content_service"
+    ],
+    "dashboard": [
+      "config_service",
+      "capabilities",
+      "audit"
+    ],
+    "weekly_spotlight": [
+      "profile",
+      "rendering"
+    ],
+    "community": [
+      "voting_engine",
+      "session_engine",
+      "rendering"
+    ],
+    "roles_panel": [
+      "discord_core",
+      "config_service",
+      "audit"
+    ],
+    "special_commands": [
+      "discord_core",
+      "config_service",
+      "capabilities",
+      "audit",
+      "roles_panel"
+    ],
+    "onboarding": [
+      "discord_core",
+      "config_service",
+      "roles_panel",
+      "introductions",
+      "tutorial"
+    ],
+    "rejoin_persistence": [
+      "database",
+      "discord_core",
+      "roles_panel",
+      "jail",
+      "audit"
+    ],
+    "dashboard_drafts": [
+      "dashboard",
+      "audit",
+      "config_service"
+    ]
+  }
+}

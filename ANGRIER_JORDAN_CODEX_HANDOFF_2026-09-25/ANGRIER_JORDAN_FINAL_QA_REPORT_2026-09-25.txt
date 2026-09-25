@@ -1,0 +1,393 @@
+ANGRIER JORDAN — FINAL ASSET / ARTWORK / FEATURE QA REPORT
+Date: 2026-09-25
+Audit baseline: Implementation Checkpoint 08 + Visual Refresh Phase 5 + 2026-09-21 canonical/reconciled source of truth
+
+EXECUTIVE VERDICT
+
+ENGINEERING FOUNDATION: PASS
+PRODUCTION ASSET FILE INTEGRITY: PASS
+COMMAND/PRESENTATION COVERAGE: PASS
+IMPLEMENTED FEATURE DOMAIN TESTS: PASS
+LIVE DISCORD/POSTGRES VALIDATION: PENDING
+FULL FEATURE IMPLEMENTATION: NOT COMPLETE (expected; Checkpoint 08 is the Codex handoff point)
+VISUAL CONSISTENCY WITH THE LATEST APPROVED DIRECTION: NEEDS CLEANUP BEFORE FINAL VISUAL SIGN-OFF
+PRODUCTION-READY: NO
+CODEX-HANDOFF-READY: YES, with the cleanup notes in this report carried into the handoff.
+
+1. WHAT WAS ACTUALLY RUN
+
+The Checkpoint 08 package was extracted and audited directly.
+
+Commands run successfully:
+- npm run build
+- npm run validate:registries
+- npm run validate:content
+- npm run validate:assets
+- npm run validate:help
+- npm run validate:golden
+- npm run validate:production-wiring
+- npm run typecheck:domain
+- npm run test:domain
+- npm run preflight
+
+Final result:
+- Build: PASS
+- Preflight: PASS
+- TypeScript domain typecheck: PASS
+- Domain tests: 68 passed / 0 failed
+- Registry validation: PASS
+- Content validation: PASS
+- Help coverage validation: PASS
+- Golden WYR fixture validation: PASS
+- Production wiring structural validation: PASS
+- Asset validation: PASS
+
+Both major ZIP archives tested clean with no compressed-data errors:
+- ANGRIER_JORDAN_IMPLEMENTATION_CHECKPOINT_08_2026-09-21.zip
+- ANGRIER_JORDAN_VISUAL_REFRESH_PHASE5_FINAL_2026-09-21.zip
+
+2. COMMAND / CONFIG / DATABASE AUDIT
+
+Current generated totals:
+- 192 conceptual interactions
+- 185 settings
+- 40 capabilities
+- 65 generated Discord application commands
+- 64 top-level chat-input commands
+- 4 built-in special text commands
+- 79 Prisma models
+- 79 SQL migration tables
+- Database schema version: 0008_economy_foundation
+
+Generated contracts rebuilt successfully from the registries.
+
+Command presentation coverage:
+- 192 / 192 interactions mapped
+- Dedicated runtime: 52
+- Shared runtime: 72
+- Native Discord: 66
+- Special event runtime: 2
+
+Current command-surface checks pass:
+- !race is the Race trigger; /race is retired
+- !line is the Line trigger; /line is retired
+- /fight requires @member
+- /daily is private
+- /roles is private
+- /tldr chat is private
+- /tldr events is private
+- /lore is private
+- /spin is retired
+- /fortune is retired
+- /showcase is retired
+- /sell is retired
+
+3. PRODUCTION ASSET INTEGRITY AUDIT
+
+Production visual manifest:
+- 348 production visual assets/templates
+- 312 Phase 3 atomic assets
+- 36 Phase 4 runtime templates
+
+Independent file-level verification performed on all 348 production visual entries:
+- Missing files: 0
+- SHA-256 hash mismatches: 0
+- Image/SVG decode failures: 0
+- Dimension mismatches: 0
+- Unmanifested production visual files: 0
+
+File formats verified:
+- 273 PNG
+- 73 SVG
+- 1 APNG
+- 1 GIF
+
+The embedded production directory in Checkpoint 08 is byte-for-byte identical to the production directory in Visual Refresh Phase 5.
+
+The final production visual manifest embedded in Checkpoint 08 is also byte-for-byte identical to the Phase 5 final manifest.
+
+4. APPROVED RUNTIME VISUAL / UX CONTRACT CHECKS
+
+PASS:
+- Race has no lap terminology.
+- Race has no Play Again/rematch.
+- Fight has no Join Fight state.
+- Fight has no accept/decline flow.
+- Fight has no Play Again/rematch.
+- Fight opens betting immediately.
+- Line countdown is 5 -> 4 -> 3 -> 2 -> 1 -> burst, with no visible zero.
+- Discord examples use Angrier Jordan as the bot sender in the final review boards.
+- Production runtime templates use the current dark Discord-native navy/teal/gold system.
+- Production theme tokens use Poppins for UI/data/body and Cinzel only for accent/headings.
+- User-facing production strings checked do not use “Server Bot” as Angrier Jordan’s sender label.
+- Internal Discord/API names such as guildId remain in code where technically appropriate.
+
+5. VISUAL ISSUES FOUND
+
+A. The two recently generated high-level overview graphics are NOT safe as final authoritative sign-off art.
+
+Files:
+- angrier_jordan_feature_system_overview.png
+- angrier_jordan_command_overview.png
+
+Observed problems include outdated/inaccurate command wording, most notably /race instead of !race, plus oversimplified descriptions of Fight/Race behavior.
+
+ACTION:
+Treat these two images as reference-only and exclude them from the Codex source-of-truth handoff unless regenerated.
+
+B. Phase 5 README contains a stale contradictory line.
+
+The Phase 5 QA report says:
+“PASS — 0 errors.”
+
+But the Phase 5 README says:
+“Final QA: FAIL with 3 errors.”
+
+The current validator run confirms PASS, so the README line is stale documentation and should be corrected before a clean archival handoff.
+
+C. The Phase 3 atomic art library is technically valid but visually inconsistent with the newest approved direction.
+
+Manual contact-sheet inspection of all 348 visual entries found that many older atomic icons/badges/items remain highly ornate, gold-heavy, and crown-heavy. The latest approved visual direction says the gold chair/throne is the primary brand mark and crown-first branding should be avoided.
+
+The newer runtime templates (WYR, Race/Fight/Line states, Daily, onboarding, moderation, casino, crafting, family, TLDR, etc.) are much closer to the approved modern Discord-native direction.
+
+ACTION:
+Before declaring the entire art library visually final, Codex should either:
+1. refresh the crown-heavy atomic assets into the current chair/throne-led style, or
+2. explicitly classify the remaining crown imagery as semantic/prestige decoration and obtain owner sign-off.
+
+This is a VISUAL CONSISTENCY issue, not a corrupt-file issue.
+
+D. A separate older working style-sheet image that references Inter should not be treated as the production typography authority.
+
+The production v2 theme tokens currently specify:
+- Poppins — UI/data/body
+- Cinzel — headings/accent only
+
+Those production tokens are what the existing runtime templates actually use.
+
+6. IMPLEMENTED FEATURES THAT PASSED OFFLINE TESTING
+
+The following implementation areas are present and passed the current automated/domain validation:
+
+FOUNDATION
+- Config service
+- Audit service
+- Health/status foundation
+- Persistent scheduler/jobs
+- PostgreSQL adapter structure
+- Registry/code generation
+- Feature flags
+- WYR renderer/session foundation
+
+WYR
+- Public WYR round
+- Six categories
+- Anonymous/editable voting
+- Hidden totals while open
+- One host/staff extension
+- Results
+- Play Again creates a fresh round
+- One active WYR round per channel
+- Restart recovery / Discord-message linkage
+
+ONBOARDING / REJOIN
+- Rules acknowledgment gate
+- Access-role restoration
+- /roles private member panel
+- Single-choice replace/clear behavior
+- Multi-select behavior
+- Leave/rejoin state persistence
+- Staff-role restoration exclusion
+- Booster-role deferral
+- Temporary-role expiry handling
+- Nickname restoration failure logging
+- Punishment pause/resume across leave/rejoin
+
+MODERATION HOTSEAT
+- Send
+- Release
+- Extend
+- Reduce
+- Reason
+- History
+- Roster
+- Status
+- Request Review
+- Numbered case linkage
+- Persistent sentence expiry
+- Restart safety
+- Administrator/hierarchy safety
+- Safe role restoration
+- Jail-safe command/component containment
+
+MANUAL MODERATION
+- Warn
+- Timeout / untimeout
+- Kick
+- Ban / unban
+- Purge
+- Staff notes
+- History
+- Case view/edit/reverse
+- Persisted temporary-action expiry
+- Appeal/review handling
+- Reviewer independence
+- Evidence retention/purge
+- Channel lock/unlock restoration
+- Slowmode bounds
+- Staff alerts
+- Modstats
+
+AUTOMATED SECURITY
+- AutoMod signal detection
+- Behavior heat
+- Progressive discipline
+- Join Gate
+- Verification state
+- Anti-raid escalation
+- Anti-nuke detection
+- Panic Mode
+- Exact pre-Panic state restoration
+
+ECONOMY FOUNDATION
+- One-time starter balance
+- Wallet/bank ledger movement
+- Free member transfers
+- Idempotent transfer protection
+- Five bank tiers
+- Bank-capacity enforcement
+- Tier 5 weekly interest
+- /daily hub
+- Claim Daily streak behavior
+- Daily Spin
+- Fortune
+- 4:00 AM Mountain reset
+- /weekly
+- /work
+- /fish
+- /dig
+- /scavenge
+- Technical anti-spam throttle
+- Required tool/equip checks
+- Tool break/fallback behavior
+- Inventory/catalog persistence foundation
+- Work cannot be configured to drop items
+
+7. FEATURES THAT ARE NOT YET IMPLEMENTED END-TO-END
+
+These have specifications, registries, help/presentation mappings and/or visual assets, but are not complete runtime features in Checkpoint 08:
+
+- Full Shop
+- Inventory selling/bulk selling/lock flows
+- Gifting
+- /unlock all
+- Full tool acquisition/equip/repair
+- Recipes
+- Chair Building/crafting progression
+- Collections
+- Mystery/gift boxes and pity logic
+- Profiles/showcase completion
+- Activity tracking completion
+- Records/leaderboards
+- Achievements/mastery/legacy
+- Weekly Spotlight runtime
+- Blackjack
+- Roulette
+- Slots / Chair Pot
+- Dice
+- Coinflip
+- Lottery
+- !race runtime
+- /fight @member runtime
+- !line runtime
+- !vc
+- !chess
+- Hangman
+- Word Scramble
+- Mastermind
+- Minesweeper
+- Tic-Tac-Toe
+- Connect Four
+- Battleship
+- Truth or Dare
+- WWYD
+- Finish Sentence
+- One Word Story
+- FMK
+- Counting
+- Last Letter
+- Crime / robbery / 911 / wanted / bail
+- Marriage/divorce/adoption/family tree
+- Family auctions
+- Inheritance/estates
+- Polls
+- Superlatives
+- Suggestions
+- AMA
+- Giveaways
+- Chairisms runtime
+- Introduction runtime
+- Lore runtime
+- TLDR runtime
+- Tutorial/help interactive runtime completion
+- Social/personality command suite
+- Haiku passive detector/runtime
+- Music player/queue/playlists
+- General custom-command engine
+- Special-command dashboard management
+- Full Admin dashboard
+- Final integration/deployment
+
+These should NOT be described as “working” yet. They are the remaining Codex implementation scope.
+
+8. LIVE VALIDATION STILL REQUIRED
+
+No live Discord/PostgreSQL smoke test could be performed because production/development credentials are not present.
+
+Still pending:
+- Real DATABASE_URL
+- Discord bot token
+- Discord application ID
+- Discord server ID
+- Real role/channel IDs
+- Prisma client regeneration after dependency installation
+- Full bot-adapter typecheck/build with installed workspace dependencies
+- Discord privileged-intent validation
+- Live command registration
+- Real channel/role hierarchy enforcement checks
+- Voice/music provider validation
+- Real restart/recovery test against PostgreSQL
+- Backup/restore drill
+- Final server smoke test
+
+All smoke feature flags remain OFF by default in Checkpoint 08.
+
+9. PACKAGE / REPRODUCIBILITY NOTE
+
+The project currently has no npm/pnpm/yarn lockfile in the Checkpoint 08 root.
+
+ACTION:
+When Codex installs dependencies, it should commit a package-lock.json (or one chosen workspace lockfile) so the final build uses reproducible dependency versions.
+
+10. FINAL GO / NO-GO
+
+GO — move to Codex for continued implementation.
+
+DO NOT call the bot production-ready yet.
+
+Before final visual sign-off:
+- remove/regenerate the two inaccurate overview graphics;
+- correct the stale Phase 5 README QA line;
+- resolve or explicitly approve the remaining ornate/crown-heavy atomic asset style.
+
+Before live launch:
+- complete the remaining runtime features;
+- install/pin dependencies;
+- generate Prisma client;
+- run full adapter builds;
+- run live Discord/PostgreSQL smoke tests;
+- complete final integration, backup/restore and deployment validation.
+
+Current best description:
+“Checkpoint 08 engineering foundation is healthy and reproducible at the domain/preflight level; production visual files are intact; current implemented modules pass automated tests; remaining modules are correctly staged for Codex, but the bot is not yet feature-complete or live-validated.”

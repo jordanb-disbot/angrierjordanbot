@@ -1,0 +1,42 @@
+import type {LedgerRepository,LedgerTransaction} from '../../core/src/index.js';
+import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,ToolRecord} from './types.js';
+
+export type ClaimField='dailyLastClaimAt'|'weeklyLastClaimAt'|'dailySpinLastAt'|'fortuneLastAt';
+export interface ClaimCommitInput {
+  guildId:string;userId:string;claimField:ClaimField;cycleStart:Date;now:Date;idempotencyKey:string;kind:string;reason:string;
+  walletReward:bigint;items?:readonly InventoryGrant[];dailyStreak?:number;metadata?:Record<string,unknown>;
+}
+export interface ClaimCommitResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;state:MemberClaimStateRecord;inventory:InventoryEntryRecord[];transaction?:EconomyTransactionRecord;}
+export interface ActivityCommitInput {
+  guildId:string;userId:string;activity:GrindActivity;outcome:ActivityOutcome;idempotencyKey:string;reason:string;now:Date;technicalThrottleMs:number;
+  requestedDelta:bigint;items?:readonly InventoryGrant[];toolInstanceId?:string;toolDamage?:number;metadata?:Record<string,unknown>;
+}
+export interface ActivityCommitResult {status:'applied'|'duplicate'|'throttled';account:EconomyAccountRecord;event?:EconomyActivityEventRecord;tool?:ToolRecord;fallbackTool?:ToolRecord;}
+export interface BankUpgradeCommitInput {guildId:string;userId:string;idempotencyKey:string;currentRule:BankTierRule;nextRule:BankTierRule;reason:string;now:Date;}
+export interface StarterCommitResult {status:'applied'|'existing'|'duplicate';account:EconomyAccountRecord;}
+
+export interface EconomyRepository extends LedgerRepository {
+  ensureMember(guildId:string,userId:string):Promise<void>;
+  getEconomyAccount(guildId:string,userId:string):Promise<EconomyAccountRecord>;
+  grantStarter(input:{guildId:string;userId:string;amount:bigint;idempotencyKey:string;now:Date}):Promise<StarterCommitResult>;
+  getTransactionByIdempotencyKey(key:string):Promise<EconomyTransactionRecord|null>;
+  listLedgerEntries(guildId:string,userId:string,limit:number):Promise<EconomyLedgerEntryRecord[]>;
+  getClaimState(guildId:string,userId:string):Promise<MemberClaimStateRecord>;
+  commitClaim(input:ClaimCommitInput):Promise<ClaimCommitResult>;
+  listInventory(guildId:string,userId:string):Promise<InventoryEntryRecord[]>;
+  getCatalogItem(itemId:string):Promise<CatalogItemRecord|null>;
+  listCatalogItems(enabledOnly?:boolean):Promise<CatalogItemRecord[]>;
+  getEquippedUsableTool(guildId:string,userId:string,slot:string):Promise<ToolRecord|null>;
+  commitActivity(input:ActivityCommitInput):Promise<ActivityCommitResult>;
+  getActivityStats(guildId:string,userId:string):Promise<EconomyActivityStatRecord[]>;
+  commitBankUpgrade(input:BankUpgradeCommitInput):Promise<EconomyAccountRecord>;
+  listAccountsAtTier(guildId:string,tier:number):Promise<EconomyAccountRecord[]>;
+  upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
+}
+
+export const balancedSystemReward=(guildId:string,userId:string,amount:bigint,idempotencyKey:string,reason:string,bucket:'wallet'|'bank'='wallet',metadata?:Record<string,unknown>):LedgerTransaction=>({
+  guildId,idempotencyKey,lines:[
+    {userId,bucket,amount,reason,...(metadata?{metadata}:{})},
+    {bucket:'system',amount:-amount,reason,...(metadata?{metadata}:{})},
+  ],
+});

@@ -1,0 +1,139 @@
+{
+  "guild": {
+    "id": "100000000000000001",
+    "name": "Chairs Test Lounge"
+  },
+  "roles": {
+    "throne": "200000000000000001",
+    "chaise_lounge": "200000000000000002",
+    "recliner": "200000000000000003",
+    "jailed": "200000000000000004"
+  },
+  "channels": {
+    "main_chat": "300000000000000001",
+    "bot_channel": "300000000000000002",
+    "games_channel": "300000000000000003",
+    "staff_log": "300000000000000004",
+    "chairisms": "300000000000000005",
+    "introductions": "300000000000000006",
+    "hotseat": "300000000000000007",
+    "counting": "300000000000000008",
+    "last_letter": "300000000000000009"
+  },
+  "members": [
+    {
+      "user_id": "400000000000000001",
+      "name": "JordanTest",
+      "roles": [
+        "throne"
+      ],
+      "wallet": 50000,
+      "bank": 100000
+    },
+    {
+      "user_id": "400000000000000002",
+      "name": "AdminTest",
+      "roles": [
+        "chaise_lounge"
+      ],
+      "wallet": 10000,
+      "bank": 25000
+    },
+    {
+      "user_id": "400000000000000003",
+      "name": "ModTest",
+      "roles": [
+        "recliner"
+      ],
+      "wallet": 5000,
+      "bank": 5000
+    },
+    {
+      "user_id": "400000000000000004",
+      "name": "MemberA",
+      "roles": [
+        "member"
+      ],
+      "wallet": 3000,
+      "bank": 2000
+    },
+    {
+      "user_id": "400000000000000005",
+      "name": "MemberB",
+      "roles": [
+        "member"
+      ],
+      "wallet": 3000,
+      "bank": 2000
+    },
+    {
+      "user_id": "400000000000000006",
+      "name": "MemberC",
+      "roles": [
+        "member"
+      ],
+      "wallet": 200,
+      "bank": 10000
+    },
+    {
+      "user_id": "400000000000000007",
+      "name": "JailedMember",
+      "roles": [
+        "member",
+        "jailed"
+      ],
+      "wallet": 500,
+      "bank": 500
+    },
+    {
+      "user_id": "400000000000000008",
+      "name": "NewAccount",
+      "roles": [
+        "member"
+      ],
+      "wallet": 500,
+      "bank": 0
+    },
+    {
+      "user_id": "400000000000000009",
+      "name": "AltLikeAccount",
+      "roles": [
+        "member"
+      ],
+      "wallet": 500,
+      "bank": 0
+    },
+    {
+      "user_id": "400000000000000010",
+      "name": "MusicRequester",
+      "roles": [
+        "member"
+      ],
+      "wallet": 1000,
+      "bank": 0
+    },
+    {
+      "user_id": "400000000000000011",
+      "name": "ContestantA",
+      "roles": [
+        "member"
+      ],
+      "wallet": 5000,
+      "bank": 1000
+    },
+    {
+      "user_id": "400000000000000012",
+      "name": "ContestantB",
+      "roles": [
+        "member"
+      ],
+      "wallet": 5000,
+      "bank": 1000
+    }
+  ],
+  "seed_settings": "use registries/master_settings_schema.json defaults",
+  "notes": [
+    "IDs are fake and safe for automated tests.",
+    "Never point fixtures at production guild."
+  ]
+}

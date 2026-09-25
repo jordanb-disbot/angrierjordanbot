@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "packages/contracts/src/**/*.ts",
+    "packages/core/src/**/*.ts",
+    "packages/renderer/src/**/*.ts",
+    "packages/features-wyr/src/**/*.ts",
+    "packages/features-onboarding/src/**/*.ts",
+    "packages/features-jail/src/**/*.ts",
+    "packages/features-moderation/src/**/*.ts",
+    "packages/features-security/src/**/*.ts",
+    "packages/features-economy/src/**/*.ts",
+    "packages/database/src/**/*.ts",
+    "apps/bot/src/architecture/**/*.ts",
+    "apps/bot/src/features/**/*.ts"
+  ],
+  "exclude": [
+    "apps/bot/src/discord/**/*.ts",
+    "apps/bot/src/production.ts",
+    "apps/bot/src/index.ts",
+    "packages/database/src/client.ts"
+  ]
+}

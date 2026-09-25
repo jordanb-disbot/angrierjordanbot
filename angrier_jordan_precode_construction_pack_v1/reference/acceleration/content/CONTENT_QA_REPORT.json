@@ -1,0 +1,33 @@
+{
+  "files": {
+    "fortune_300.json": {
+      "entries": 300
+    },
+    "finish_sentence_500.json": {
+      "entries": 500
+    },
+    "superlatives_200.json": {
+      "entries": 200
+    },
+    "line_shame_120.json": {
+      "entries": 120
+    },
+    "haiku_complaints_60.json": {
+      "entries": 60
+    },
+    "roast_300.json": {
+      "entries": 300
+    },
+    "social_response_pools.json": {
+      "entries": 950
+    },
+    "npc_dialogue.json": {
+      "entries": 540
+    },
+    "moderation_policy_catalog.json": {
+      "entries": 15
+    }
+  },
+  "errors": [],
+  "total_authored_entries": 2985
+}

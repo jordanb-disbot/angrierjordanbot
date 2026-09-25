@@ -1,0 +1,88 @@
+{
+  "version": "2.0-phase2",
+  "date": "2026-09-21",
+  "style_source": "Approved second Angrier Jordan Brand Style Guide only",
+  "race": {
+    "trigger": "!race",
+    "slash_registered": false,
+    "trigger_deleted": true,
+    "notification_role_ping": true,
+    "entry_betting_seconds": 60,
+    "host_extension_seconds": 30,
+    "extension_scope": [
+      "racer entry",
+      "betting"
+    ],
+    "max_racers": 6,
+    "min_racers": 2,
+    "bet_flow": "choose racer on public message -> private Discord modal -> validate -> confirm -> public card updates",
+    "sprint_seconds": "15\u201320",
+    "laps": false,
+    "single_authoritative_message": true,
+    "play_again": false,
+    "states": [
+      "join_betting",
+      "sprint_live",
+      "result"
+    ]
+  },
+  "fight": {
+    "trigger": "/fight @member",
+    "member_required": true,
+    "bang_trigger": false,
+    "bare_slash": false,
+    "acceptance_required": false,
+    "join_fight_state": false,
+    "betting_seconds": 30,
+    "host_extension_seconds": 30,
+    "extension_scope": [
+      "betting only"
+    ],
+    "bet_flow": "choose fighter on public message -> private Discord modal -> validate -> confirm -> public card updates",
+    "winner_model": "strict 50/50",
+    "combat_seconds": "22\u201328 target, 30 hard cap",
+    "single_authoritative_message": true,
+    "play_again": false,
+    "states": [
+      "betting",
+      "combat_live",
+      "result"
+    ]
+  },
+  "line": {
+    "trigger": "!line",
+    "slash_registered": false,
+    "trigger_deleted": true,
+    "notification_role_ping": true,
+    "participant_cap": null,
+    "readiness_seconds": 60,
+    "host_extension_seconds": 30,
+    "max_window_seconds": 90,
+    "start_early": true,
+    "entry_locks_at_close": true,
+    "post_lock_host_actions": [
+      "Start Countdown",
+      "Cancel Line"
+    ],
+    "member_states": [
+      "I'm In",
+      "I Need a Second"
+    ],
+    "countdown": [
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "zero_frame": false,
+    "completion": "bounded white-powder/dust burst + brief chair debris",
+    "play_again": false,
+    "states": [
+      "readiness_open",
+      "entry_locked",
+      "countdown",
+      "burst"
+    ]
+  }
+}

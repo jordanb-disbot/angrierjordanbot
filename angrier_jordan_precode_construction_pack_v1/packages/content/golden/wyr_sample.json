@@ -1,0 +1,50 @@
+[
+  {
+    "id": "WYR-GOLD-001",
+    "category": "Casual",
+    "text": "Would you rather always have perfect Wi-Fi or always have a fully charged phone?",
+    "optionA": "always have perfect Wi-Fi",
+    "optionB": "always have a fully charged phone",
+    "enabled": true
+  },
+  {
+    "id": "WYR-GOLD-002",
+    "category": "Friends",
+    "text": "Would you rather have your friends choose your dating-app bio or your profile pictures?",
+    "optionA": "have your friends choose your dating-app bio",
+    "optionB": "have your friends choose your profile pictures",
+    "enabled": true
+  },
+  {
+    "id": "WYR-GOLD-003",
+    "category": "Dating",
+    "text": "Would you rather have a relationship start as friendship or start with immediate attraction?",
+    "optionA": "have a relationship start as friendship",
+    "optionB": "start with immediate attraction",
+    "enabled": true
+  },
+  {
+    "id": "WYR-GOLD-004",
+    "category": "Married",
+    "text": "Would you rather have separate bathrooms or separate closets?",
+    "optionA": "have separate bathrooms",
+    "optionB": "have separate closets",
+    "enabled": true
+  },
+  {
+    "id": "WYR-GOLD-005",
+    "category": "Spicy",
+    "text": "Would you rather get caught smiling at your phone because of someone or catch them doing the same because of you?",
+    "optionA": "get caught smiling at your phone because of someone",
+    "optionB": "catch them doing the same because of you",
+    "enabled": true
+  },
+  {
+    "id": "WYR-GOLD-006",
+    "category": "Unhinged",
+    "text": "Would you rather have Angrier Jordan assign you a dramatic entrance song or a ridiculous title?",
+    "optionA": "have Angrier Jordan assign you a dramatic entrance song",
+    "optionB": "have Angrier Jordan assign you a ridiculous title",
+    "enabled": true
+  }
+]

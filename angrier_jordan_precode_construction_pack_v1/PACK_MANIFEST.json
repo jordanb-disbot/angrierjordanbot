@@ -1,0 +1,51 @@
+{
+  "pack": "Angrier Jordan Active Implementation Repository",
+  "version": "0.8.0-checkpoint-08-2026-09-21",
+  "created_at": "2026-09-21",
+  "current_checkpoint": 8,
+  "core_counts": {
+    "conceptual_interactions": 192,
+    "settings": 185,
+    "capabilities": 40,
+    "generated_application_commands": 65,
+    "top_level_chat_input_commands": 64,
+    "golden_wyr_prompts": 6,
+    "production_assets_and_templates": 348,
+    "prisma_models": 79
+  },
+  "architecture": {
+    "workspace": "npm workspaces",
+    "runtime": "Node.js 22 + TypeScript",
+    "database": "PostgreSQL + Prisma",
+    "database_schema_version": "0008_economy_foundation",
+    "bot": "discord.js adapter",
+    "dashboard": "Next.js adapter",
+    "shared_engine_package": "packages/core",
+    "implemented_features": [
+      "packages/features-wyr",
+      "packages/features-onboarding",
+      "packages/features-jail",
+      "packages/features-moderation",
+      "packages/features-security",
+      "packages/features-economy"
+    ]
+  },
+  "embedded_artifacts": {
+    "production_visual_library": {
+      "expected_assets_and_templates": 348,
+      "embedded_here": true
+    },
+    "core_prompt_pack": {
+      "embedded_here": true,
+      "final_core_prompts": 6200
+    },
+    "canonical_spec": {
+      "filename": "ANGRIER_JORDAN_CANONICAL_BUILD_SPEC.md",
+      "embedded_here": true
+    },
+    "approved_wyr_runtime_visual": {
+      "path": "docs/approved_visuals/wyr_runtime_standard.png",
+      "embedded_here": true
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "version": "4.0",
+  "date": "2026-09-21",
+  "style_source": "Approved second Angrier Jordan visual system only",
+  "families": {
+    "daily": {
+      "entry": "/daily",
+      "visibility": "ephemeral",
+      "actions": [
+        "Claim Daily",
+        "Daily Spin",
+        "Fortune"
+      ],
+      "reset": "04:00 America/Denver",
+      "standalone_removed": [
+        "/spin",
+        "/fortune"
+      ]
+    },
+    "tldr": {
+      "chat": "/tldr chat time:1h|2h|4h|8h",
+      "events": "/tldr events time:1d|7d",
+      "visibility": "ephemeral",
+      "channel_enforced": true
+    },
+    "lore": {
+      "entry": "/lore",
+      "visibility": "ephemeral",
+      "chapters": 3,
+      "progress_persistent": true,
+      "achievement": "Chair Historian"
+    },
+    "onboarding": {
+      "required": [
+        "rules acknowledgment"
+      ],
+      "optional": [
+        "/roles",
+        "/lore",
+        "/introduce",
+        "/tutorial"
+      ],
+      "bot_grants_access_role": true
+    },
+    "roles": {
+      "entry": "/roles",
+      "visibility": "ephemeral",
+      "member_admin_controls": false,
+      "immediate_apply": true,
+      "clear_single_choice": true
+    },
+    "introduction": {
+      "entry": [
+        "/introduce",
+        "/introduce edit",
+        "/introduce preview"
+      ],
+      "one_active_per_member": true,
+      "published_by_bot": true
+    },
+    "crafting": {
+      "ranks": [
+        "Apprentice",
+        "Craftsman",
+        "Chairwright",
+        "Master Chairwright",
+        "Grand Chairwright"
+      ],
+      "quality": [
+        "Standard",
+        "Fine",
+        "Exceptional",
+        "Masterwork",
+        "Perfect"
+      ]
+    },
+    "repair": {
+      "tiers": [
+        "cheap",
+        "standard",
+        "premium"
+      ],
+      "never_destroy": true,
+      "max_durability_never_reduced": true
+    },
+    "casino": {
+      "games": [
+        "blackjack",
+        "roulette",
+        "slots",
+        "dice",
+        "coinflip"
+      ],
+      "play_again": true,
+      "wager_revalidation": true,
+      "payout_currency": "Ottomans"
+    },
+    "family": {
+      "marriage_vote_hours": 3,
+      "compatibility_persisted": true,
+      "success_chance_persisted": true,
+      "first_child_bonus": ">80% approval and >=5 eligible voters"
+    },
+    "moderation": {
+      "case_audit": true,
+      "hotseat_rejoin_pause": true,
+      "panic_throne_only": true,
+      "autopurge_cases_per_message": false
+    },
+    "party": {
+      "play_again": true,
+      "one_public_round_at_a_time": true,
+      "shared_voting_engine": true
+    }
+  }
+}

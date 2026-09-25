@@ -1,0 +1,4828 @@
+{
+  "hit": [
+    {
+      "id": "SOCIAL-HIT-01",
+      "text": "{actor} bonks {target} with the administrative end of a folding chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-02",
+      "text": "{actor} bonks {target} with the administrative end of a folding chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-03",
+      "text": "{actor} bonks {target} with the administrative end of a folding chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-04",
+      "text": "{actor} bonks {target} with the administrative end of a folding chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-05",
+      "text": "{actor} bonks {target} with the administrative end of a folding chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-06",
+      "text": "Apparently, {actor} bonks {target} with the administrative end of a folding chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-07",
+      "text": "Apparently, {actor} bonks {target} with the administrative end of a folding chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-08",
+      "text": "Apparently, {actor} bonks {target} with the administrative end of a folding chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-09",
+      "text": "Apparently, {actor} bonks {target} with the administrative end of a folding chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-10",
+      "text": "Apparently, {actor} bonks {target} with the administrative end of a folding chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-11",
+      "text": "Breaking news: {actor} bonks {target} with the administrative end of a folding chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-12",
+      "text": "Breaking news: {actor} bonks {target} with the administrative end of a folding chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-13",
+      "text": "Breaking news: {actor} bonks {target} with the administrative end of a folding chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-14",
+      "text": "Breaking news: {actor} bonks {target} with the administrative end of a folding chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-15",
+      "text": "Breaking news: {actor} bonks {target} with the administrative end of a folding chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-16",
+      "text": "For reasons nobody requested, {actor} bonks {target} with the administrative end of a folding chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-17",
+      "text": "For reasons nobody requested, {actor} bonks {target} with the administrative end of a folding chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-18",
+      "text": "For reasons nobody requested, {actor} bonks {target} with the administrative end of a folding chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-19",
+      "text": "For reasons nobody requested, {actor} bonks {target} with the administrative end of a folding chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-20",
+      "text": "For reasons nobody requested, {actor} bonks {target} with the administrative end of a folding chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-21",
+      "text": "After careful review, {actor} bonks {target} with the administrative end of a folding chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-22",
+      "text": "After careful review, {actor} bonks {target} with the administrative end of a folding chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-23",
+      "text": "After careful review, {actor} bonks {target} with the administrative end of a folding chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-24",
+      "text": "After careful review, {actor} bonks {target} with the administrative end of a folding chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HIT-25",
+      "text": "After careful review, {actor} bonks {target} with the administrative end of a folding chair. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "slap": [
+    {
+      "id": "SOCIAL-SLAP-01",
+      "text": "{actor} delivers {target} a deeply unnecessary chair-slap.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-02",
+      "text": "{actor} delivers {target} a deeply unnecessary chair-slap. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-03",
+      "text": "{actor} delivers {target} a deeply unnecessary chair-slap. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-04",
+      "text": "{actor} delivers {target} a deeply unnecessary chair-slap. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-05",
+      "text": "{actor} delivers {target} a deeply unnecessary chair-slap. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-06",
+      "text": "Apparently, {actor} delivers {target} a deeply unnecessary chair-slap.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-07",
+      "text": "Apparently, {actor} delivers {target} a deeply unnecessary chair-slap. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-08",
+      "text": "Apparently, {actor} delivers {target} a deeply unnecessary chair-slap. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-09",
+      "text": "Apparently, {actor} delivers {target} a deeply unnecessary chair-slap. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-10",
+      "text": "Apparently, {actor} delivers {target} a deeply unnecessary chair-slap. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-11",
+      "text": "Breaking news: {actor} delivers {target} a deeply unnecessary chair-slap.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-12",
+      "text": "Breaking news: {actor} delivers {target} a deeply unnecessary chair-slap. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-13",
+      "text": "Breaking news: {actor} delivers {target} a deeply unnecessary chair-slap. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-14",
+      "text": "Breaking news: {actor} delivers {target} a deeply unnecessary chair-slap. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-15",
+      "text": "Breaking news: {actor} delivers {target} a deeply unnecessary chair-slap. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-16",
+      "text": "For reasons nobody requested, {actor} delivers {target} a deeply unnecessary chair-slap.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-17",
+      "text": "For reasons nobody requested, {actor} delivers {target} a deeply unnecessary chair-slap. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-18",
+      "text": "For reasons nobody requested, {actor} delivers {target} a deeply unnecessary chair-slap. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-19",
+      "text": "For reasons nobody requested, {actor} delivers {target} a deeply unnecessary chair-slap. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-20",
+      "text": "For reasons nobody requested, {actor} delivers {target} a deeply unnecessary chair-slap. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-21",
+      "text": "After careful review, {actor} delivers {target} a deeply unnecessary chair-slap.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-22",
+      "text": "After careful review, {actor} delivers {target} a deeply unnecessary chair-slap. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-23",
+      "text": "After careful review, {actor} delivers {target} a deeply unnecessary chair-slap. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-24",
+      "text": "After careful review, {actor} delivers {target} a deeply unnecessary chair-slap. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SLAP-25",
+      "text": "After careful review, {actor} delivers {target} a deeply unnecessary chair-slap. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "pillow": [
+    {
+      "id": "SOCIAL-PILLOW-01",
+      "text": "{actor} launches a decorative pillow at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-02",
+      "text": "{actor} launches a decorative pillow at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-03",
+      "text": "{actor} launches a decorative pillow at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-04",
+      "text": "{actor} launches a decorative pillow at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-05",
+      "text": "{actor} launches a decorative pillow at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-06",
+      "text": "Apparently, {actor} launches a decorative pillow at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-07",
+      "text": "Apparently, {actor} launches a decorative pillow at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-08",
+      "text": "Apparently, {actor} launches a decorative pillow at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-09",
+      "text": "Apparently, {actor} launches a decorative pillow at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-10",
+      "text": "Apparently, {actor} launches a decorative pillow at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-11",
+      "text": "Breaking news: {actor} launches a decorative pillow at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-12",
+      "text": "Breaking news: {actor} launches a decorative pillow at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-13",
+      "text": "Breaking news: {actor} launches a decorative pillow at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-14",
+      "text": "Breaking news: {actor} launches a decorative pillow at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-15",
+      "text": "Breaking news: {actor} launches a decorative pillow at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-16",
+      "text": "For reasons nobody requested, {actor} launches a decorative pillow at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-17",
+      "text": "For reasons nobody requested, {actor} launches a decorative pillow at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-18",
+      "text": "For reasons nobody requested, {actor} launches a decorative pillow at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-19",
+      "text": "For reasons nobody requested, {actor} launches a decorative pillow at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-20",
+      "text": "For reasons nobody requested, {actor} launches a decorative pillow at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-21",
+      "text": "After careful review, {actor} launches a decorative pillow at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-22",
+      "text": "After careful review, {actor} launches a decorative pillow at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-23",
+      "text": "After careful review, {actor} launches a decorative pillow at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-24",
+      "text": "After careful review, {actor} launches a decorative pillow at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-PILLOW-25",
+      "text": "After careful review, {actor} launches a decorative pillow at {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "cushion": [
+    {
+      "id": "SOCIAL-CUSHION-01",
+      "text": "{actor} weaponizes upholstery against {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-02",
+      "text": "{actor} weaponizes upholstery against {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-03",
+      "text": "{actor} weaponizes upholstery against {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-04",
+      "text": "{actor} weaponizes upholstery against {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-05",
+      "text": "{actor} weaponizes upholstery against {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-06",
+      "text": "Apparently, {actor} weaponizes upholstery against {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-07",
+      "text": "Apparently, {actor} weaponizes upholstery against {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-08",
+      "text": "Apparently, {actor} weaponizes upholstery against {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-09",
+      "text": "Apparently, {actor} weaponizes upholstery against {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-10",
+      "text": "Apparently, {actor} weaponizes upholstery against {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-11",
+      "text": "Breaking news: {actor} weaponizes upholstery against {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-12",
+      "text": "Breaking news: {actor} weaponizes upholstery against {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-13",
+      "text": "Breaking news: {actor} weaponizes upholstery against {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-14",
+      "text": "Breaking news: {actor} weaponizes upholstery against {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-15",
+      "text": "Breaking news: {actor} weaponizes upholstery against {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-16",
+      "text": "For reasons nobody requested, {actor} weaponizes upholstery against {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-17",
+      "text": "For reasons nobody requested, {actor} weaponizes upholstery against {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-18",
+      "text": "For reasons nobody requested, {actor} weaponizes upholstery against {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-19",
+      "text": "For reasons nobody requested, {actor} weaponizes upholstery against {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-20",
+      "text": "For reasons nobody requested, {actor} weaponizes upholstery against {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-21",
+      "text": "After careful review, {actor} weaponizes upholstery against {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-22",
+      "text": "After careful review, {actor} weaponizes upholstery against {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-23",
+      "text": "After careful review, {actor} weaponizes upholstery against {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-24",
+      "text": "After careful review, {actor} weaponizes upholstery against {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CUSHION-25",
+      "text": "After careful review, {actor} weaponizes upholstery against {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "stab": [
+    {
+      "id": "SOCIAL-STAB-01",
+      "text": "{actor} dramatically fake-stabs {target} with a foam chair leg.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-02",
+      "text": "{actor} dramatically fake-stabs {target} with a foam chair leg. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-03",
+      "text": "{actor} dramatically fake-stabs {target} with a foam chair leg. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-04",
+      "text": "{actor} dramatically fake-stabs {target} with a foam chair leg. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-05",
+      "text": "{actor} dramatically fake-stabs {target} with a foam chair leg. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-06",
+      "text": "Apparently, {actor} dramatically fake-stabs {target} with a foam chair leg.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-07",
+      "text": "Apparently, {actor} dramatically fake-stabs {target} with a foam chair leg. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-08",
+      "text": "Apparently, {actor} dramatically fake-stabs {target} with a foam chair leg. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-09",
+      "text": "Apparently, {actor} dramatically fake-stabs {target} with a foam chair leg. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-10",
+      "text": "Apparently, {actor} dramatically fake-stabs {target} with a foam chair leg. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-11",
+      "text": "Breaking news: {actor} dramatically fake-stabs {target} with a foam chair leg.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-12",
+      "text": "Breaking news: {actor} dramatically fake-stabs {target} with a foam chair leg. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-13",
+      "text": "Breaking news: {actor} dramatically fake-stabs {target} with a foam chair leg. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-14",
+      "text": "Breaking news: {actor} dramatically fake-stabs {target} with a foam chair leg. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-15",
+      "text": "Breaking news: {actor} dramatically fake-stabs {target} with a foam chair leg. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-16",
+      "text": "For reasons nobody requested, {actor} dramatically fake-stabs {target} with a foam chair leg.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-17",
+      "text": "For reasons nobody requested, {actor} dramatically fake-stabs {target} with a foam chair leg. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-18",
+      "text": "For reasons nobody requested, {actor} dramatically fake-stabs {target} with a foam chair leg. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-19",
+      "text": "For reasons nobody requested, {actor} dramatically fake-stabs {target} with a foam chair leg. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-20",
+      "text": "For reasons nobody requested, {actor} dramatically fake-stabs {target} with a foam chair leg. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-21",
+      "text": "After careful review, {actor} dramatically fake-stabs {target} with a foam chair leg.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-22",
+      "text": "After careful review, {actor} dramatically fake-stabs {target} with a foam chair leg. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-23",
+      "text": "After careful review, {actor} dramatically fake-stabs {target} with a foam chair leg. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-24",
+      "text": "After careful review, {actor} dramatically fake-stabs {target} with a foam chair leg. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STAB-25",
+      "text": "After careful review, {actor} dramatically fake-stabs {target} with a foam chair leg. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "choke": [
+    {
+      "id": "SOCIAL-CHOKE-01",
+      "text": "{actor} performs a completely theatrical, zero-damage choke gesture at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-02",
+      "text": "{actor} performs a completely theatrical, zero-damage choke gesture at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-03",
+      "text": "{actor} performs a completely theatrical, zero-damage choke gesture at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-04",
+      "text": "{actor} performs a completely theatrical, zero-damage choke gesture at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-05",
+      "text": "{actor} performs a completely theatrical, zero-damage choke gesture at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-06",
+      "text": "Apparently, {actor} performs a completely theatrical, zero-damage choke gesture at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-07",
+      "text": "Apparently, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-08",
+      "text": "Apparently, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-09",
+      "text": "Apparently, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-10",
+      "text": "Apparently, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-11",
+      "text": "Breaking news: {actor} performs a completely theatrical, zero-damage choke gesture at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-12",
+      "text": "Breaking news: {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-13",
+      "text": "Breaking news: {actor} performs a completely theatrical, zero-damage choke gesture at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-14",
+      "text": "Breaking news: {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-15",
+      "text": "Breaking news: {actor} performs a completely theatrical, zero-damage choke gesture at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-16",
+      "text": "For reasons nobody requested, {actor} performs a completely theatrical, zero-damage choke gesture at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-17",
+      "text": "For reasons nobody requested, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-18",
+      "text": "For reasons nobody requested, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-19",
+      "text": "For reasons nobody requested, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-20",
+      "text": "For reasons nobody requested, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-21",
+      "text": "After careful review, {actor} performs a completely theatrical, zero-damage choke gesture at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-22",
+      "text": "After careful review, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-23",
+      "text": "After careful review, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-24",
+      "text": "After careful review, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHOKE-25",
+      "text": "After careful review, {actor} performs a completely theatrical, zero-damage choke gesture at {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "shh": [
+    {
+      "id": "SOCIAL-SHH-01",
+      "text": "{actor} places one finger to their lips and asks {target} to discover silence.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-02",
+      "text": "{actor} places one finger to their lips and asks {target} to discover silence. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-03",
+      "text": "{actor} places one finger to their lips and asks {target} to discover silence. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-04",
+      "text": "{actor} places one finger to their lips and asks {target} to discover silence. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-05",
+      "text": "{actor} places one finger to their lips and asks {target} to discover silence. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-06",
+      "text": "Apparently, {actor} places one finger to their lips and asks {target} to discover silence.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-07",
+      "text": "Apparently, {actor} places one finger to their lips and asks {target} to discover silence. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-08",
+      "text": "Apparently, {actor} places one finger to their lips and asks {target} to discover silence. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-09",
+      "text": "Apparently, {actor} places one finger to their lips and asks {target} to discover silence. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-10",
+      "text": "Apparently, {actor} places one finger to their lips and asks {target} to discover silence. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-11",
+      "text": "Breaking news: {actor} places one finger to their lips and asks {target} to discover silence.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-12",
+      "text": "Breaking news: {actor} places one finger to their lips and asks {target} to discover silence. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-13",
+      "text": "Breaking news: {actor} places one finger to their lips and asks {target} to discover silence. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-14",
+      "text": "Breaking news: {actor} places one finger to their lips and asks {target} to discover silence. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-15",
+      "text": "Breaking news: {actor} places one finger to their lips and asks {target} to discover silence. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-16",
+      "text": "For reasons nobody requested, {actor} places one finger to their lips and asks {target} to discover silence.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-17",
+      "text": "For reasons nobody requested, {actor} places one finger to their lips and asks {target} to discover silence. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-18",
+      "text": "For reasons nobody requested, {actor} places one finger to their lips and asks {target} to discover silence. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-19",
+      "text": "For reasons nobody requested, {actor} places one finger to their lips and asks {target} to discover silence. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-20",
+      "text": "For reasons nobody requested, {actor} places one finger to their lips and asks {target} to discover silence. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-21",
+      "text": "After careful review, {actor} places one finger to their lips and asks {target} to discover silence.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-22",
+      "text": "After careful review, {actor} places one finger to their lips and asks {target} to discover silence. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-23",
+      "text": "After careful review, {actor} places one finger to their lips and asks {target} to discover silence. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-24",
+      "text": "After careful review, {actor} places one finger to their lips and asks {target} to discover silence. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHH-25",
+      "text": "After careful review, {actor} places one finger to their lips and asks {target} to discover silence. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "belittle": [
+    {
+      "id": "SOCIAL-BELITTLE-01",
+      "text": "{actor} reminds {target} that even the ottoman is judging them.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-02",
+      "text": "{actor} reminds {target} that even the ottoman is judging them. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-03",
+      "text": "{actor} reminds {target} that even the ottoman is judging them. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-04",
+      "text": "{actor} reminds {target} that even the ottoman is judging them. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-05",
+      "text": "{actor} reminds {target} that even the ottoman is judging them. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-06",
+      "text": "Apparently, {actor} reminds {target} that even the ottoman is judging them.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-07",
+      "text": "Apparently, {actor} reminds {target} that even the ottoman is judging them. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-08",
+      "text": "Apparently, {actor} reminds {target} that even the ottoman is judging them. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-09",
+      "text": "Apparently, {actor} reminds {target} that even the ottoman is judging them. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-10",
+      "text": "Apparently, {actor} reminds {target} that even the ottoman is judging them. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-11",
+      "text": "Breaking news: {actor} reminds {target} that even the ottoman is judging them.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-12",
+      "text": "Breaking news: {actor} reminds {target} that even the ottoman is judging them. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-13",
+      "text": "Breaking news: {actor} reminds {target} that even the ottoman is judging them. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-14",
+      "text": "Breaking news: {actor} reminds {target} that even the ottoman is judging them. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-15",
+      "text": "Breaking news: {actor} reminds {target} that even the ottoman is judging them. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-16",
+      "text": "For reasons nobody requested, {actor} reminds {target} that even the ottoman is judging them.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-17",
+      "text": "For reasons nobody requested, {actor} reminds {target} that even the ottoman is judging them. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-18",
+      "text": "For reasons nobody requested, {actor} reminds {target} that even the ottoman is judging them. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-19",
+      "text": "For reasons nobody requested, {actor} reminds {target} that even the ottoman is judging them. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-20",
+      "text": "For reasons nobody requested, {actor} reminds {target} that even the ottoman is judging them. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-21",
+      "text": "After careful review, {actor} reminds {target} that even the ottoman is judging them.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-22",
+      "text": "After careful review, {actor} reminds {target} that even the ottoman is judging them. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-23",
+      "text": "After careful review, {actor} reminds {target} that even the ottoman is judging them. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-24",
+      "text": "After careful review, {actor} reminds {target} that even the ottoman is judging them. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BELITTLE-25",
+      "text": "After careful review, {actor} reminds {target} that even the ottoman is judging them. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "bonk": [
+    {
+      "id": "SOCIAL-BONK-01",
+      "text": "{actor} bonks {target}. The chair approves.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-02",
+      "text": "{actor} bonks {target}. The chair approves. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-03",
+      "text": "{actor} bonks {target}. The chair approves. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-04",
+      "text": "{actor} bonks {target}. The chair approves. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-05",
+      "text": "{actor} bonks {target}. The chair approves. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-06",
+      "text": "Apparently, {actor} bonks {target}. The chair approves.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-07",
+      "text": "Apparently, {actor} bonks {target}. The chair approves. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-08",
+      "text": "Apparently, {actor} bonks {target}. The chair approves. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-09",
+      "text": "Apparently, {actor} bonks {target}. The chair approves. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-10",
+      "text": "Apparently, {actor} bonks {target}. The chair approves. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-11",
+      "text": "Breaking news: {actor} bonks {target}. The chair approves.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-12",
+      "text": "Breaking news: {actor} bonks {target}. The chair approves. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-13",
+      "text": "Breaking news: {actor} bonks {target}. The chair approves. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-14",
+      "text": "Breaking news: {actor} bonks {target}. The chair approves. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-15",
+      "text": "Breaking news: {actor} bonks {target}. The chair approves. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-16",
+      "text": "For reasons nobody requested, {actor} bonks {target}. The chair approves.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-17",
+      "text": "For reasons nobody requested, {actor} bonks {target}. The chair approves. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-18",
+      "text": "For reasons nobody requested, {actor} bonks {target}. The chair approves. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-19",
+      "text": "For reasons nobody requested, {actor} bonks {target}. The chair approves. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-20",
+      "text": "For reasons nobody requested, {actor} bonks {target}. The chair approves. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-21",
+      "text": "After careful review, {actor} bonks {target}. The chair approves.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-22",
+      "text": "After careful review, {actor} bonks {target}. The chair approves. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-23",
+      "text": "After careful review, {actor} bonks {target}. The chair approves. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-24",
+      "text": "After careful review, {actor} bonks {target}. The chair approves. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BONK-25",
+      "text": "After careful review, {actor} bonks {target}. The chair approves. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "yeet": [
+    {
+      "id": "SOCIAL-YEET-01",
+      "text": "{actor} metaphorically yeets {target} across the lounge.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-02",
+      "text": "{actor} metaphorically yeets {target} across the lounge. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-03",
+      "text": "{actor} metaphorically yeets {target} across the lounge. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-04",
+      "text": "{actor} metaphorically yeets {target} across the lounge. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-05",
+      "text": "{actor} metaphorically yeets {target} across the lounge. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-06",
+      "text": "Apparently, {actor} metaphorically yeets {target} across the lounge.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-07",
+      "text": "Apparently, {actor} metaphorically yeets {target} across the lounge. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-08",
+      "text": "Apparently, {actor} metaphorically yeets {target} across the lounge. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-09",
+      "text": "Apparently, {actor} metaphorically yeets {target} across the lounge. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-10",
+      "text": "Apparently, {actor} metaphorically yeets {target} across the lounge. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-11",
+      "text": "Breaking news: {actor} metaphorically yeets {target} across the lounge.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-12",
+      "text": "Breaking news: {actor} metaphorically yeets {target} across the lounge. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-13",
+      "text": "Breaking news: {actor} metaphorically yeets {target} across the lounge. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-14",
+      "text": "Breaking news: {actor} metaphorically yeets {target} across the lounge. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-15",
+      "text": "Breaking news: {actor} metaphorically yeets {target} across the lounge. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-16",
+      "text": "For reasons nobody requested, {actor} metaphorically yeets {target} across the lounge.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-17",
+      "text": "For reasons nobody requested, {actor} metaphorically yeets {target} across the lounge. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-18",
+      "text": "For reasons nobody requested, {actor} metaphorically yeets {target} across the lounge. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-19",
+      "text": "For reasons nobody requested, {actor} metaphorically yeets {target} across the lounge. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-20",
+      "text": "For reasons nobody requested, {actor} metaphorically yeets {target} across the lounge. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-21",
+      "text": "After careful review, {actor} metaphorically yeets {target} across the lounge.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-22",
+      "text": "After careful review, {actor} metaphorically yeets {target} across the lounge. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-23",
+      "text": "After careful review, {actor} metaphorically yeets {target} across the lounge. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-24",
+      "text": "After careful review, {actor} metaphorically yeets {target} across the lounge. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YEET-25",
+      "text": "After careful review, {actor} metaphorically yeets {target} across the lounge. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "sit": [
+    {
+      "id": "SOCIAL-SIT-01",
+      "text": "{actor} points at the nearest chair. {target}, you know what to do.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-02",
+      "text": "{actor} points at the nearest chair. {target}, you know what to do. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-03",
+      "text": "{actor} points at the nearest chair. {target}, you know what to do. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-04",
+      "text": "{actor} points at the nearest chair. {target}, you know what to do. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-05",
+      "text": "{actor} points at the nearest chair. {target}, you know what to do. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-06",
+      "text": "Apparently, {actor} points at the nearest chair. {target}, you know what to do.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-07",
+      "text": "Apparently, {actor} points at the nearest chair. {target}, you know what to do. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-08",
+      "text": "Apparently, {actor} points at the nearest chair. {target}, you know what to do. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-09",
+      "text": "Apparently, {actor} points at the nearest chair. {target}, you know what to do. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-10",
+      "text": "Apparently, {actor} points at the nearest chair. {target}, you know what to do. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-11",
+      "text": "Breaking news: {actor} points at the nearest chair. {target}, you know what to do.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-12",
+      "text": "Breaking news: {actor} points at the nearest chair. {target}, you know what to do. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-13",
+      "text": "Breaking news: {actor} points at the nearest chair. {target}, you know what to do. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-14",
+      "text": "Breaking news: {actor} points at the nearest chair. {target}, you know what to do. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-15",
+      "text": "Breaking news: {actor} points at the nearest chair. {target}, you know what to do. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-16",
+      "text": "For reasons nobody requested, {actor} points at the nearest chair. {target}, you know what to do.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-17",
+      "text": "For reasons nobody requested, {actor} points at the nearest chair. {target}, you know what to do. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-18",
+      "text": "For reasons nobody requested, {actor} points at the nearest chair. {target}, you know what to do. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-19",
+      "text": "For reasons nobody requested, {actor} points at the nearest chair. {target}, you know what to do. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-20",
+      "text": "For reasons nobody requested, {actor} points at the nearest chair. {target}, you know what to do. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-21",
+      "text": "After careful review, {actor} points at the nearest chair. {target}, you know what to do.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-22",
+      "text": "After careful review, {actor} points at the nearest chair. {target}, you know what to do. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-23",
+      "text": "After careful review, {actor} points at the nearest chair. {target}, you know what to do. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-24",
+      "text": "After careful review, {actor} points at the nearest chair. {target}, you know what to do. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIT-25",
+      "text": "After careful review, {actor} points at the nearest chair. {target}, you know what to do. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "standup": [
+    {
+      "id": "SOCIAL-STANDUP-01",
+      "text": "{actor} revokes {target}’s sitting privileges for dramatic effect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-02",
+      "text": "{actor} revokes {target}’s sitting privileges for dramatic effect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-03",
+      "text": "{actor} revokes {target}’s sitting privileges for dramatic effect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-04",
+      "text": "{actor} revokes {target}’s sitting privileges for dramatic effect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-05",
+      "text": "{actor} revokes {target}’s sitting privileges for dramatic effect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-06",
+      "text": "Apparently, {actor} revokes {target}’s sitting privileges for dramatic effect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-07",
+      "text": "Apparently, {actor} revokes {target}’s sitting privileges for dramatic effect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-08",
+      "text": "Apparently, {actor} revokes {target}’s sitting privileges for dramatic effect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-09",
+      "text": "Apparently, {actor} revokes {target}’s sitting privileges for dramatic effect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-10",
+      "text": "Apparently, {actor} revokes {target}’s sitting privileges for dramatic effect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-11",
+      "text": "Breaking news: {actor} revokes {target}’s sitting privileges for dramatic effect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-12",
+      "text": "Breaking news: {actor} revokes {target}’s sitting privileges for dramatic effect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-13",
+      "text": "Breaking news: {actor} revokes {target}’s sitting privileges for dramatic effect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-14",
+      "text": "Breaking news: {actor} revokes {target}’s sitting privileges for dramatic effect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-15",
+      "text": "Breaking news: {actor} revokes {target}’s sitting privileges for dramatic effect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-16",
+      "text": "For reasons nobody requested, {actor} revokes {target}’s sitting privileges for dramatic effect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-17",
+      "text": "For reasons nobody requested, {actor} revokes {target}’s sitting privileges for dramatic effect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-18",
+      "text": "For reasons nobody requested, {actor} revokes {target}’s sitting privileges for dramatic effect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-19",
+      "text": "For reasons nobody requested, {actor} revokes {target}’s sitting privileges for dramatic effect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-20",
+      "text": "For reasons nobody requested, {actor} revokes {target}’s sitting privileges for dramatic effect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-21",
+      "text": "After careful review, {actor} revokes {target}’s sitting privileges for dramatic effect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-22",
+      "text": "After careful review, {actor} revokes {target}’s sitting privileges for dramatic effect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-23",
+      "text": "After careful review, {actor} revokes {target}’s sitting privileges for dramatic effect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-24",
+      "text": "After careful review, {actor} revokes {target}’s sitting privileges for dramatic effect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-STANDUP-25",
+      "text": "After careful review, {actor} revokes {target}’s sitting privileges for dramatic effect. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "fold": [
+    {
+      "id": "SOCIAL-FOLD-01",
+      "text": "{actor} folds {target} emotionally like a cheap lawn chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-02",
+      "text": "{actor} folds {target} emotionally like a cheap lawn chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-03",
+      "text": "{actor} folds {target} emotionally like a cheap lawn chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-04",
+      "text": "{actor} folds {target} emotionally like a cheap lawn chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-05",
+      "text": "{actor} folds {target} emotionally like a cheap lawn chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-06",
+      "text": "Apparently, {actor} folds {target} emotionally like a cheap lawn chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-07",
+      "text": "Apparently, {actor} folds {target} emotionally like a cheap lawn chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-08",
+      "text": "Apparently, {actor} folds {target} emotionally like a cheap lawn chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-09",
+      "text": "Apparently, {actor} folds {target} emotionally like a cheap lawn chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-10",
+      "text": "Apparently, {actor} folds {target} emotionally like a cheap lawn chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-11",
+      "text": "Breaking news: {actor} folds {target} emotionally like a cheap lawn chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-12",
+      "text": "Breaking news: {actor} folds {target} emotionally like a cheap lawn chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-13",
+      "text": "Breaking news: {actor} folds {target} emotionally like a cheap lawn chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-14",
+      "text": "Breaking news: {actor} folds {target} emotionally like a cheap lawn chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-15",
+      "text": "Breaking news: {actor} folds {target} emotionally like a cheap lawn chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-16",
+      "text": "For reasons nobody requested, {actor} folds {target} emotionally like a cheap lawn chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-17",
+      "text": "For reasons nobody requested, {actor} folds {target} emotionally like a cheap lawn chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-18",
+      "text": "For reasons nobody requested, {actor} folds {target} emotionally like a cheap lawn chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-19",
+      "text": "For reasons nobody requested, {actor} folds {target} emotionally like a cheap lawn chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-20",
+      "text": "For reasons nobody requested, {actor} folds {target} emotionally like a cheap lawn chair. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-21",
+      "text": "After careful review, {actor} folds {target} emotionally like a cheap lawn chair.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-22",
+      "text": "After careful review, {actor} folds {target} emotionally like a cheap lawn chair. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-23",
+      "text": "After careful review, {actor} folds {target} emotionally like a cheap lawn chair. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-24",
+      "text": "After careful review, {actor} folds {target} emotionally like a cheap lawn chair. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-FOLD-25",
+      "text": "After careful review, {actor} folds {target} emotionally like a cheap lawn chair. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "recline": [
+    {
+      "id": "SOCIAL-RECLINE-01",
+      "text": "{actor} orders {target} to recline and reconsider everything.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-02",
+      "text": "{actor} orders {target} to recline and reconsider everything. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-03",
+      "text": "{actor} orders {target} to recline and reconsider everything. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-04",
+      "text": "{actor} orders {target} to recline and reconsider everything. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-05",
+      "text": "{actor} orders {target} to recline and reconsider everything. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-06",
+      "text": "Apparently, {actor} orders {target} to recline and reconsider everything.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-07",
+      "text": "Apparently, {actor} orders {target} to recline and reconsider everything. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-08",
+      "text": "Apparently, {actor} orders {target} to recline and reconsider everything. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-09",
+      "text": "Apparently, {actor} orders {target} to recline and reconsider everything. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-10",
+      "text": "Apparently, {actor} orders {target} to recline and reconsider everything. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-11",
+      "text": "Breaking news: {actor} orders {target} to recline and reconsider everything.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-12",
+      "text": "Breaking news: {actor} orders {target} to recline and reconsider everything. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-13",
+      "text": "Breaking news: {actor} orders {target} to recline and reconsider everything. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-14",
+      "text": "Breaking news: {actor} orders {target} to recline and reconsider everything. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-15",
+      "text": "Breaking news: {actor} orders {target} to recline and reconsider everything. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-16",
+      "text": "For reasons nobody requested, {actor} orders {target} to recline and reconsider everything.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-17",
+      "text": "For reasons nobody requested, {actor} orders {target} to recline and reconsider everything. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-18",
+      "text": "For reasons nobody requested, {actor} orders {target} to recline and reconsider everything. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-19",
+      "text": "For reasons nobody requested, {actor} orders {target} to recline and reconsider everything. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-20",
+      "text": "For reasons nobody requested, {actor} orders {target} to recline and reconsider everything. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-21",
+      "text": "After careful review, {actor} orders {target} to recline and reconsider everything.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-22",
+      "text": "After careful review, {actor} orders {target} to recline and reconsider everything. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-23",
+      "text": "After careful review, {actor} orders {target} to recline and reconsider everything. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-24",
+      "text": "After careful review, {actor} orders {target} to recline and reconsider everything. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RECLINE-25",
+      "text": "After careful review, {actor} orders {target} to recline and reconsider everything. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "sideeye": [
+    {
+      "id": "SOCIAL-SIDEEYE-01",
+      "text": "{actor} gives {target} the kind of side-eye that requires no follow-up.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-02",
+      "text": "{actor} gives {target} the kind of side-eye that requires no follow-up. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-03",
+      "text": "{actor} gives {target} the kind of side-eye that requires no follow-up. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-04",
+      "text": "{actor} gives {target} the kind of side-eye that requires no follow-up. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-05",
+      "text": "{actor} gives {target} the kind of side-eye that requires no follow-up. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-06",
+      "text": "Apparently, {actor} gives {target} the kind of side-eye that requires no follow-up.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-07",
+      "text": "Apparently, {actor} gives {target} the kind of side-eye that requires no follow-up. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-08",
+      "text": "Apparently, {actor} gives {target} the kind of side-eye that requires no follow-up. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-09",
+      "text": "Apparently, {actor} gives {target} the kind of side-eye that requires no follow-up. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-10",
+      "text": "Apparently, {actor} gives {target} the kind of side-eye that requires no follow-up. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-11",
+      "text": "Breaking news: {actor} gives {target} the kind of side-eye that requires no follow-up.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-12",
+      "text": "Breaking news: {actor} gives {target} the kind of side-eye that requires no follow-up. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-13",
+      "text": "Breaking news: {actor} gives {target} the kind of side-eye that requires no follow-up. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-14",
+      "text": "Breaking news: {actor} gives {target} the kind of side-eye that requires no follow-up. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-15",
+      "text": "Breaking news: {actor} gives {target} the kind of side-eye that requires no follow-up. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-16",
+      "text": "For reasons nobody requested, {actor} gives {target} the kind of side-eye that requires no follow-up.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-17",
+      "text": "For reasons nobody requested, {actor} gives {target} the kind of side-eye that requires no follow-up. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-18",
+      "text": "For reasons nobody requested, {actor} gives {target} the kind of side-eye that requires no follow-up. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-19",
+      "text": "For reasons nobody requested, {actor} gives {target} the kind of side-eye that requires no follow-up. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-20",
+      "text": "For reasons nobody requested, {actor} gives {target} the kind of side-eye that requires no follow-up. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-21",
+      "text": "After careful review, {actor} gives {target} the kind of side-eye that requires no follow-up.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-22",
+      "text": "After careful review, {actor} gives {target} the kind of side-eye that requires no follow-up. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-23",
+      "text": "After careful review, {actor} gives {target} the kind of side-eye that requires no follow-up. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-24",
+      "text": "After careful review, {actor} gives {target} the kind of side-eye that requires no follow-up. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SIDEEYE-25",
+      "text": "After careful review, {actor} gives {target} the kind of side-eye that requires no follow-up. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "judge": [
+    {
+      "id": "SOCIAL-JUDGE-01",
+      "text": "{actor} and the entire furniture department are judging {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-02",
+      "text": "{actor} and the entire furniture department are judging {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-03",
+      "text": "{actor} and the entire furniture department are judging {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-04",
+      "text": "{actor} and the entire furniture department are judging {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-05",
+      "text": "{actor} and the entire furniture department are judging {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-06",
+      "text": "Apparently, {actor} and the entire furniture department are judging {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-07",
+      "text": "Apparently, {actor} and the entire furniture department are judging {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-08",
+      "text": "Apparently, {actor} and the entire furniture department are judging {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-09",
+      "text": "Apparently, {actor} and the entire furniture department are judging {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-10",
+      "text": "Apparently, {actor} and the entire furniture department are judging {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-11",
+      "text": "Breaking news: {actor} and the entire furniture department are judging {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-12",
+      "text": "Breaking news: {actor} and the entire furniture department are judging {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-13",
+      "text": "Breaking news: {actor} and the entire furniture department are judging {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-14",
+      "text": "Breaking news: {actor} and the entire furniture department are judging {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-15",
+      "text": "Breaking news: {actor} and the entire furniture department are judging {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-16",
+      "text": "For reasons nobody requested, {actor} and the entire furniture department are judging {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-17",
+      "text": "For reasons nobody requested, {actor} and the entire furniture department are judging {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-18",
+      "text": "For reasons nobody requested, {actor} and the entire furniture department are judging {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-19",
+      "text": "For reasons nobody requested, {actor} and the entire furniture department are judging {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-20",
+      "text": "For reasons nobody requested, {actor} and the entire furniture department are judging {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-21",
+      "text": "After careful review, {actor} and the entire furniture department are judging {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-22",
+      "text": "After careful review, {actor} and the entire furniture department are judging {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-23",
+      "text": "After careful review, {actor} and the entire furniture department are judging {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-24",
+      "text": "After careful review, {actor} and the entire furniture department are judging {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-JUDGE-25",
+      "text": "After careful review, {actor} and the entire furniture department are judging {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "shame": [
+    {
+      "id": "SOCIAL-SHAME-01",
+      "text": "{actor} rings the ceremonial bell of shame at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-02",
+      "text": "{actor} rings the ceremonial bell of shame at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-03",
+      "text": "{actor} rings the ceremonial bell of shame at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-04",
+      "text": "{actor} rings the ceremonial bell of shame at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-05",
+      "text": "{actor} rings the ceremonial bell of shame at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-06",
+      "text": "Apparently, {actor} rings the ceremonial bell of shame at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-07",
+      "text": "Apparently, {actor} rings the ceremonial bell of shame at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-08",
+      "text": "Apparently, {actor} rings the ceremonial bell of shame at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-09",
+      "text": "Apparently, {actor} rings the ceremonial bell of shame at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-10",
+      "text": "Apparently, {actor} rings the ceremonial bell of shame at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-11",
+      "text": "Breaking news: {actor} rings the ceremonial bell of shame at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-12",
+      "text": "Breaking news: {actor} rings the ceremonial bell of shame at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-13",
+      "text": "Breaking news: {actor} rings the ceremonial bell of shame at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-14",
+      "text": "Breaking news: {actor} rings the ceremonial bell of shame at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-15",
+      "text": "Breaking news: {actor} rings the ceremonial bell of shame at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-16",
+      "text": "For reasons nobody requested, {actor} rings the ceremonial bell of shame at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-17",
+      "text": "For reasons nobody requested, {actor} rings the ceremonial bell of shame at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-18",
+      "text": "For reasons nobody requested, {actor} rings the ceremonial bell of shame at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-19",
+      "text": "For reasons nobody requested, {actor} rings the ceremonial bell of shame at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-20",
+      "text": "For reasons nobody requested, {actor} rings the ceremonial bell of shame at {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-21",
+      "text": "After careful review, {actor} rings the ceremonial bell of shame at {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-22",
+      "text": "After careful review, {actor} rings the ceremonial bell of shame at {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-23",
+      "text": "After careful review, {actor} rings the ceremonial bell of shame at {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-24",
+      "text": "After careful review, {actor} rings the ceremonial bell of shame at {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SHAME-25",
+      "text": "After careful review, {actor} rings the ceremonial bell of shame at {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "boo": [
+    {
+      "id": "SOCIAL-BOO-01",
+      "text": "{actor} boos {target} with professional enthusiasm.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-02",
+      "text": "{actor} boos {target} with professional enthusiasm. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-03",
+      "text": "{actor} boos {target} with professional enthusiasm. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-04",
+      "text": "{actor} boos {target} with professional enthusiasm. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-05",
+      "text": "{actor} boos {target} with professional enthusiasm. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-06",
+      "text": "Apparently, {actor} boos {target} with professional enthusiasm.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-07",
+      "text": "Apparently, {actor} boos {target} with professional enthusiasm. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-08",
+      "text": "Apparently, {actor} boos {target} with professional enthusiasm. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-09",
+      "text": "Apparently, {actor} boos {target} with professional enthusiasm. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-10",
+      "text": "Apparently, {actor} boos {target} with professional enthusiasm. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-11",
+      "text": "Breaking news: {actor} boos {target} with professional enthusiasm.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-12",
+      "text": "Breaking news: {actor} boos {target} with professional enthusiasm. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-13",
+      "text": "Breaking news: {actor} boos {target} with professional enthusiasm. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-14",
+      "text": "Breaking news: {actor} boos {target} with professional enthusiasm. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-15",
+      "text": "Breaking news: {actor} boos {target} with professional enthusiasm. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-16",
+      "text": "For reasons nobody requested, {actor} boos {target} with professional enthusiasm.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-17",
+      "text": "For reasons nobody requested, {actor} boos {target} with professional enthusiasm. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-18",
+      "text": "For reasons nobody requested, {actor} boos {target} with professional enthusiasm. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-19",
+      "text": "For reasons nobody requested, {actor} boos {target} with professional enthusiasm. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-20",
+      "text": "For reasons nobody requested, {actor} boos {target} with professional enthusiasm. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-21",
+      "text": "After careful review, {actor} boos {target} with professional enthusiasm.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-22",
+      "text": "After careful review, {actor} boos {target} with professional enthusiasm. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-23",
+      "text": "After careful review, {actor} boos {target} with professional enthusiasm. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-24",
+      "text": "After careful review, {actor} boos {target} with professional enthusiasm. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BOO-25",
+      "text": "After careful review, {actor} boos {target} with professional enthusiasm. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "bruh": [
+    {
+      "id": "SOCIAL-BRUH-01",
+      "text": "{actor} has reviewed {target}’s behavior and can only say: bruh.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-02",
+      "text": "{actor} has reviewed {target}’s behavior and can only say: bruh. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-03",
+      "text": "{actor} has reviewed {target}’s behavior and can only say: bruh. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-04",
+      "text": "{actor} has reviewed {target}’s behavior and can only say: bruh. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-05",
+      "text": "{actor} has reviewed {target}’s behavior and can only say: bruh. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-06",
+      "text": "Apparently, {actor} has reviewed {target}’s behavior and can only say: bruh.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-07",
+      "text": "Apparently, {actor} has reviewed {target}’s behavior and can only say: bruh. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-08",
+      "text": "Apparently, {actor} has reviewed {target}’s behavior and can only say: bruh. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-09",
+      "text": "Apparently, {actor} has reviewed {target}’s behavior and can only say: bruh. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-10",
+      "text": "Apparently, {actor} has reviewed {target}’s behavior and can only say: bruh. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-11",
+      "text": "Breaking news: {actor} has reviewed {target}’s behavior and can only say: bruh.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-12",
+      "text": "Breaking news: {actor} has reviewed {target}’s behavior and can only say: bruh. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-13",
+      "text": "Breaking news: {actor} has reviewed {target}’s behavior and can only say: bruh. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-14",
+      "text": "Breaking news: {actor} has reviewed {target}’s behavior and can only say: bruh. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-15",
+      "text": "Breaking news: {actor} has reviewed {target}’s behavior and can only say: bruh. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-16",
+      "text": "For reasons nobody requested, {actor} has reviewed {target}’s behavior and can only say: bruh.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-17",
+      "text": "For reasons nobody requested, {actor} has reviewed {target}’s behavior and can only say: bruh. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-18",
+      "text": "For reasons nobody requested, {actor} has reviewed {target}’s behavior and can only say: bruh. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-19",
+      "text": "For reasons nobody requested, {actor} has reviewed {target}’s behavior and can only say: bruh. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-20",
+      "text": "For reasons nobody requested, {actor} has reviewed {target}’s behavior and can only say: bruh. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-21",
+      "text": "After careful review, {actor} has reviewed {target}’s behavior and can only say: bruh.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-22",
+      "text": "After careful review, {actor} has reviewed {target}’s behavior and can only say: bruh. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-23",
+      "text": "After careful review, {actor} has reviewed {target}’s behavior and can only say: bruh. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-24",
+      "text": "After careful review, {actor} has reviewed {target}’s behavior and can only say: bruh. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BRUH-25",
+      "text": "After careful review, {actor} has reviewed {target}’s behavior and can only say: bruh. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "wtf": [
+    {
+      "id": "SOCIAL-WTF-01",
+      "text": "{actor} submits one formal question regarding {target}: what the fuck?",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-02",
+      "text": "{actor} submits one formal question regarding {target}: what the fuck? The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-03",
+      "text": "{actor} submits one formal question regarding {target}: what the fuck? No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-04",
+      "text": "{actor} submits one formal question regarding {target}: what the fuck? The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-05",
+      "text": "{actor} submits one formal question regarding {target}: what the fuck? Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-06",
+      "text": "Apparently, {actor} submits one formal question regarding {target}: what the fuck?",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-07",
+      "text": "Apparently, {actor} submits one formal question regarding {target}: what the fuck? The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-08",
+      "text": "Apparently, {actor} submits one formal question regarding {target}: what the fuck? No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-09",
+      "text": "Apparently, {actor} submits one formal question regarding {target}: what the fuck? The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-10",
+      "text": "Apparently, {actor} submits one formal question regarding {target}: what the fuck? Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-11",
+      "text": "Breaking news: {actor} submits one formal question regarding {target}: what the fuck?",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-12",
+      "text": "Breaking news: {actor} submits one formal question regarding {target}: what the fuck? The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-13",
+      "text": "Breaking news: {actor} submits one formal question regarding {target}: what the fuck? No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-14",
+      "text": "Breaking news: {actor} submits one formal question regarding {target}: what the fuck? The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-15",
+      "text": "Breaking news: {actor} submits one formal question regarding {target}: what the fuck? Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-16",
+      "text": "For reasons nobody requested, {actor} submits one formal question regarding {target}: what the fuck?",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-17",
+      "text": "For reasons nobody requested, {actor} submits one formal question regarding {target}: what the fuck? The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-18",
+      "text": "For reasons nobody requested, {actor} submits one formal question regarding {target}: what the fuck? No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-19",
+      "text": "For reasons nobody requested, {actor} submits one formal question regarding {target}: what the fuck? The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-20",
+      "text": "For reasons nobody requested, {actor} submits one formal question regarding {target}: what the fuck? Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-21",
+      "text": "After careful review, {actor} submits one formal question regarding {target}: what the fuck?",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-22",
+      "text": "After careful review, {actor} submits one formal question regarding {target}: what the fuck? The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-23",
+      "text": "After careful review, {actor} submits one formal question regarding {target}: what the fuck? No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-24",
+      "text": "After careful review, {actor} submits one formal question regarding {target}: what the fuck? The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WTF-25",
+      "text": "After careful review, {actor} submits one formal question regarding {target}: what the fuck? Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "sus": [
+    {
+      "id": "SOCIAL-SUS-01",
+      "text": "{actor} has marked {target} as extremely chair-suspicious.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-02",
+      "text": "{actor} has marked {target} as extremely chair-suspicious. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-03",
+      "text": "{actor} has marked {target} as extremely chair-suspicious. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-04",
+      "text": "{actor} has marked {target} as extremely chair-suspicious. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-05",
+      "text": "{actor} has marked {target} as extremely chair-suspicious. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-06",
+      "text": "Apparently, {actor} has marked {target} as extremely chair-suspicious.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-07",
+      "text": "Apparently, {actor} has marked {target} as extremely chair-suspicious. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-08",
+      "text": "Apparently, {actor} has marked {target} as extremely chair-suspicious. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-09",
+      "text": "Apparently, {actor} has marked {target} as extremely chair-suspicious. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-10",
+      "text": "Apparently, {actor} has marked {target} as extremely chair-suspicious. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-11",
+      "text": "Breaking news: {actor} has marked {target} as extremely chair-suspicious.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-12",
+      "text": "Breaking news: {actor} has marked {target} as extremely chair-suspicious. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-13",
+      "text": "Breaking news: {actor} has marked {target} as extremely chair-suspicious. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-14",
+      "text": "Breaking news: {actor} has marked {target} as extremely chair-suspicious. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-15",
+      "text": "Breaking news: {actor} has marked {target} as extremely chair-suspicious. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-16",
+      "text": "For reasons nobody requested, {actor} has marked {target} as extremely chair-suspicious.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-17",
+      "text": "For reasons nobody requested, {actor} has marked {target} as extremely chair-suspicious. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-18",
+      "text": "For reasons nobody requested, {actor} has marked {target} as extremely chair-suspicious. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-19",
+      "text": "For reasons nobody requested, {actor} has marked {target} as extremely chair-suspicious. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-20",
+      "text": "For reasons nobody requested, {actor} has marked {target} as extremely chair-suspicious. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-21",
+      "text": "After careful review, {actor} has marked {target} as extremely chair-suspicious.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-22",
+      "text": "After careful review, {actor} has marked {target} as extremely chair-suspicious. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-23",
+      "text": "After careful review, {actor} has marked {target} as extremely chair-suspicious. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-24",
+      "text": "After careful review, {actor} has marked {target} as extremely chair-suspicious. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-SUS-25",
+      "text": "After careful review, {actor} has marked {target} as extremely chair-suspicious. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "yap": [
+    {
+      "id": "SOCIAL-YAP-01",
+      "text": "{actor} has detected an ongoing yapping event involving {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-02",
+      "text": "{actor} has detected an ongoing yapping event involving {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-03",
+      "text": "{actor} has detected an ongoing yapping event involving {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-04",
+      "text": "{actor} has detected an ongoing yapping event involving {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-05",
+      "text": "{actor} has detected an ongoing yapping event involving {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-06",
+      "text": "Apparently, {actor} has detected an ongoing yapping event involving {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-07",
+      "text": "Apparently, {actor} has detected an ongoing yapping event involving {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-08",
+      "text": "Apparently, {actor} has detected an ongoing yapping event involving {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-09",
+      "text": "Apparently, {actor} has detected an ongoing yapping event involving {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-10",
+      "text": "Apparently, {actor} has detected an ongoing yapping event involving {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-11",
+      "text": "Breaking news: {actor} has detected an ongoing yapping event involving {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-12",
+      "text": "Breaking news: {actor} has detected an ongoing yapping event involving {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-13",
+      "text": "Breaking news: {actor} has detected an ongoing yapping event involving {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-14",
+      "text": "Breaking news: {actor} has detected an ongoing yapping event involving {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-15",
+      "text": "Breaking news: {actor} has detected an ongoing yapping event involving {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-16",
+      "text": "For reasons nobody requested, {actor} has detected an ongoing yapping event involving {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-17",
+      "text": "For reasons nobody requested, {actor} has detected an ongoing yapping event involving {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-18",
+      "text": "For reasons nobody requested, {actor} has detected an ongoing yapping event involving {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-19",
+      "text": "For reasons nobody requested, {actor} has detected an ongoing yapping event involving {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-20",
+      "text": "For reasons nobody requested, {actor} has detected an ongoing yapping event involving {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-21",
+      "text": "After careful review, {actor} has detected an ongoing yapping event involving {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-22",
+      "text": "After careful review, {actor} has detected an ongoing yapping event involving {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-23",
+      "text": "After careful review, {actor} has detected an ongoing yapping event involving {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-24",
+      "text": "After careful review, {actor} has detected an ongoing yapping event involving {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-YAP-25",
+      "text": "After careful review, {actor} has detected an ongoing yapping event involving {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "touchgrass": [
+    {
+      "id": "SOCIAL-TOUCHGRASS-01",
+      "text": "{actor} recommends that {target} schedule an immediate grass-touching appointment.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-02",
+      "text": "{actor} recommends that {target} schedule an immediate grass-touching appointment. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-03",
+      "text": "{actor} recommends that {target} schedule an immediate grass-touching appointment. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-04",
+      "text": "{actor} recommends that {target} schedule an immediate grass-touching appointment. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-05",
+      "text": "{actor} recommends that {target} schedule an immediate grass-touching appointment. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-06",
+      "text": "Apparently, {actor} recommends that {target} schedule an immediate grass-touching appointment.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-07",
+      "text": "Apparently, {actor} recommends that {target} schedule an immediate grass-touching appointment. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-08",
+      "text": "Apparently, {actor} recommends that {target} schedule an immediate grass-touching appointment. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-09",
+      "text": "Apparently, {actor} recommends that {target} schedule an immediate grass-touching appointment. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-10",
+      "text": "Apparently, {actor} recommends that {target} schedule an immediate grass-touching appointment. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-11",
+      "text": "Breaking news: {actor} recommends that {target} schedule an immediate grass-touching appointment.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-12",
+      "text": "Breaking news: {actor} recommends that {target} schedule an immediate grass-touching appointment. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-13",
+      "text": "Breaking news: {actor} recommends that {target} schedule an immediate grass-touching appointment. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-14",
+      "text": "Breaking news: {actor} recommends that {target} schedule an immediate grass-touching appointment. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-15",
+      "text": "Breaking news: {actor} recommends that {target} schedule an immediate grass-touching appointment. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-16",
+      "text": "For reasons nobody requested, {actor} recommends that {target} schedule an immediate grass-touching appointment.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-17",
+      "text": "For reasons nobody requested, {actor} recommends that {target} schedule an immediate grass-touching appointment. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-18",
+      "text": "For reasons nobody requested, {actor} recommends that {target} schedule an immediate grass-touching appointment. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-19",
+      "text": "For reasons nobody requested, {actor} recommends that {target} schedule an immediate grass-touching appointment. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-20",
+      "text": "For reasons nobody requested, {actor} recommends that {target} schedule an immediate grass-touching appointment. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-21",
+      "text": "After careful review, {actor} recommends that {target} schedule an immediate grass-touching appointment.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-22",
+      "text": "After careful review, {actor} recommends that {target} schedule an immediate grass-touching appointment. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-23",
+      "text": "After careful review, {actor} recommends that {target} schedule an immediate grass-touching appointment. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-24",
+      "text": "After careful review, {actor} recommends that {target} schedule an immediate grass-touching appointment. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TOUCHGRASS-25",
+      "text": "After careful review, {actor} recommends that {target} schedule an immediate grass-touching appointment. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "blame": [
+    {
+      "id": "SOCIAL-BLAME-01",
+      "text": "{actor} has assigned all current problems to {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-02",
+      "text": "{actor} has assigned all current problems to {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-03",
+      "text": "{actor} has assigned all current problems to {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-04",
+      "text": "{actor} has assigned all current problems to {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-05",
+      "text": "{actor} has assigned all current problems to {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-06",
+      "text": "Apparently, {actor} has assigned all current problems to {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-07",
+      "text": "Apparently, {actor} has assigned all current problems to {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-08",
+      "text": "Apparently, {actor} has assigned all current problems to {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-09",
+      "text": "Apparently, {actor} has assigned all current problems to {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-10",
+      "text": "Apparently, {actor} has assigned all current problems to {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-11",
+      "text": "Breaking news: {actor} has assigned all current problems to {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-12",
+      "text": "Breaking news: {actor} has assigned all current problems to {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-13",
+      "text": "Breaking news: {actor} has assigned all current problems to {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-14",
+      "text": "Breaking news: {actor} has assigned all current problems to {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-15",
+      "text": "Breaking news: {actor} has assigned all current problems to {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-16",
+      "text": "For reasons nobody requested, {actor} has assigned all current problems to {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-17",
+      "text": "For reasons nobody requested, {actor} has assigned all current problems to {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-18",
+      "text": "For reasons nobody requested, {actor} has assigned all current problems to {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-19",
+      "text": "For reasons nobody requested, {actor} has assigned all current problems to {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-20",
+      "text": "For reasons nobody requested, {actor} has assigned all current problems to {target}. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-21",
+      "text": "After careful review, {actor} has assigned all current problems to {target}.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-22",
+      "text": "After careful review, {actor} has assigned all current problems to {target}. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-23",
+      "text": "After careful review, {actor} has assigned all current problems to {target}. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-24",
+      "text": "After careful review, {actor} has assigned all current problems to {target}. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-BLAME-25",
+      "text": "After careful review, {actor} has assigned all current problems to {target}. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "disappoint": [
+    {
+      "id": "SOCIAL-DISAPPOINT-01",
+      "text": "{actor} is not mad at {target}. This is somehow worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-02",
+      "text": "{actor} is not mad at {target}. This is somehow worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-03",
+      "text": "{actor} is not mad at {target}. This is somehow worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-04",
+      "text": "{actor} is not mad at {target}. This is somehow worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-05",
+      "text": "{actor} is not mad at {target}. This is somehow worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-06",
+      "text": "Apparently, {actor} is not mad at {target}. This is somehow worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-07",
+      "text": "Apparently, {actor} is not mad at {target}. This is somehow worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-08",
+      "text": "Apparently, {actor} is not mad at {target}. This is somehow worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-09",
+      "text": "Apparently, {actor} is not mad at {target}. This is somehow worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-10",
+      "text": "Apparently, {actor} is not mad at {target}. This is somehow worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-11",
+      "text": "Breaking news: {actor} is not mad at {target}. This is somehow worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-12",
+      "text": "Breaking news: {actor} is not mad at {target}. This is somehow worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-13",
+      "text": "Breaking news: {actor} is not mad at {target}. This is somehow worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-14",
+      "text": "Breaking news: {actor} is not mad at {target}. This is somehow worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-15",
+      "text": "Breaking news: {actor} is not mad at {target}. This is somehow worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-16",
+      "text": "For reasons nobody requested, {actor} is not mad at {target}. This is somehow worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-17",
+      "text": "For reasons nobody requested, {actor} is not mad at {target}. This is somehow worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-18",
+      "text": "For reasons nobody requested, {actor} is not mad at {target}. This is somehow worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-19",
+      "text": "For reasons nobody requested, {actor} is not mad at {target}. This is somehow worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-20",
+      "text": "For reasons nobody requested, {actor} is not mad at {target}. This is somehow worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-21",
+      "text": "After careful review, {actor} is not mad at {target}. This is somehow worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-22",
+      "text": "After careful review, {actor} is not mad at {target}. This is somehow worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-23",
+      "text": "After careful review, {actor} is not mad at {target}. This is somehow worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-24",
+      "text": "After careful review, {actor} is not mad at {target}. This is somehow worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-DISAPPOINT-25",
+      "text": "After careful review, {actor} is not mad at {target}. This is somehow worse. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "chaircheck": [
+    {
+      "id": "SOCIAL-CHAIRCHECK-01",
+      "text": "{actor} checks {target} for proper chair credentials. Results inconclusive.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-02",
+      "text": "{actor} checks {target} for proper chair credentials. Results inconclusive. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-03",
+      "text": "{actor} checks {target} for proper chair credentials. Results inconclusive. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-04",
+      "text": "{actor} checks {target} for proper chair credentials. Results inconclusive. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-05",
+      "text": "{actor} checks {target} for proper chair credentials. Results inconclusive. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-06",
+      "text": "Apparently, {actor} checks {target} for proper chair credentials. Results inconclusive.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-07",
+      "text": "Apparently, {actor} checks {target} for proper chair credentials. Results inconclusive. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-08",
+      "text": "Apparently, {actor} checks {target} for proper chair credentials. Results inconclusive. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-09",
+      "text": "Apparently, {actor} checks {target} for proper chair credentials. Results inconclusive. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-10",
+      "text": "Apparently, {actor} checks {target} for proper chair credentials. Results inconclusive. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-11",
+      "text": "Breaking news: {actor} checks {target} for proper chair credentials. Results inconclusive.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-12",
+      "text": "Breaking news: {actor} checks {target} for proper chair credentials. Results inconclusive. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-13",
+      "text": "Breaking news: {actor} checks {target} for proper chair credentials. Results inconclusive. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-14",
+      "text": "Breaking news: {actor} checks {target} for proper chair credentials. Results inconclusive. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-15",
+      "text": "Breaking news: {actor} checks {target} for proper chair credentials. Results inconclusive. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-16",
+      "text": "For reasons nobody requested, {actor} checks {target} for proper chair credentials. Results inconclusive.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-17",
+      "text": "For reasons nobody requested, {actor} checks {target} for proper chair credentials. Results inconclusive. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-18",
+      "text": "For reasons nobody requested, {actor} checks {target} for proper chair credentials. Results inconclusive. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-19",
+      "text": "For reasons nobody requested, {actor} checks {target} for proper chair credentials. Results inconclusive. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-20",
+      "text": "For reasons nobody requested, {actor} checks {target} for proper chair credentials. Results inconclusive. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-21",
+      "text": "After careful review, {actor} checks {target} for proper chair credentials. Results inconclusive.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-22",
+      "text": "After careful review, {actor} checks {target} for proper chair credentials. Results inconclusive. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-23",
+      "text": "After careful review, {actor} checks {target} for proper chair credentials. Results inconclusive. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-24",
+      "text": "After careful review, {actor} checks {target} for proper chair credentials. Results inconclusive. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CHAIRCHECK-25",
+      "text": "After careful review, {actor} checks {target} for proper chair credentials. Results inconclusive. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "throwchair": [
+    {
+      "id": "SOCIAL-THROWCHAIR-01",
+      "text": "{actor} throws an imaginary chair in {target}’s general direction. HR has been notified.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-02",
+      "text": "{actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-03",
+      "text": "{actor} throws an imaginary chair in {target}’s general direction. HR has been notified. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-04",
+      "text": "{actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-05",
+      "text": "{actor} throws an imaginary chair in {target}’s general direction. HR has been notified. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-06",
+      "text": "Apparently, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-07",
+      "text": "Apparently, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-08",
+      "text": "Apparently, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-09",
+      "text": "Apparently, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-10",
+      "text": "Apparently, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-11",
+      "text": "Breaking news: {actor} throws an imaginary chair in {target}’s general direction. HR has been notified.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-12",
+      "text": "Breaking news: {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-13",
+      "text": "Breaking news: {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-14",
+      "text": "Breaking news: {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-15",
+      "text": "Breaking news: {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-16",
+      "text": "For reasons nobody requested, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-17",
+      "text": "For reasons nobody requested, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-18",
+      "text": "For reasons nobody requested, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-19",
+      "text": "For reasons nobody requested, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-20",
+      "text": "For reasons nobody requested, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-21",
+      "text": "After careful review, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-22",
+      "text": "After careful review, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-23",
+      "text": "After careful review, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-24",
+      "text": "After careful review, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-THROWCHAIR-25",
+      "text": "After careful review, {actor} throws an imaginary chair in {target}’s general direction. HR has been notified. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "getup": [
+    {
+      "id": "SOCIAL-GETUP-01",
+      "text": "{actor} tells {target} to get up. The chair has seen enough.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-02",
+      "text": "{actor} tells {target} to get up. The chair has seen enough. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-03",
+      "text": "{actor} tells {target} to get up. The chair has seen enough. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-04",
+      "text": "{actor} tells {target} to get up. The chair has seen enough. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-05",
+      "text": "{actor} tells {target} to get up. The chair has seen enough. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-06",
+      "text": "Apparently, {actor} tells {target} to get up. The chair has seen enough.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-07",
+      "text": "Apparently, {actor} tells {target} to get up. The chair has seen enough. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-08",
+      "text": "Apparently, {actor} tells {target} to get up. The chair has seen enough. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-09",
+      "text": "Apparently, {actor} tells {target} to get up. The chair has seen enough. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-10",
+      "text": "Apparently, {actor} tells {target} to get up. The chair has seen enough. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-11",
+      "text": "Breaking news: {actor} tells {target} to get up. The chair has seen enough.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-12",
+      "text": "Breaking news: {actor} tells {target} to get up. The chair has seen enough. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-13",
+      "text": "Breaking news: {actor} tells {target} to get up. The chair has seen enough. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-14",
+      "text": "Breaking news: {actor} tells {target} to get up. The chair has seen enough. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-15",
+      "text": "Breaking news: {actor} tells {target} to get up. The chair has seen enough. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-16",
+      "text": "For reasons nobody requested, {actor} tells {target} to get up. The chair has seen enough.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-17",
+      "text": "For reasons nobody requested, {actor} tells {target} to get up. The chair has seen enough. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-18",
+      "text": "For reasons nobody requested, {actor} tells {target} to get up. The chair has seen enough. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-19",
+      "text": "For reasons nobody requested, {actor} tells {target} to get up. The chair has seen enough. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-20",
+      "text": "For reasons nobody requested, {actor} tells {target} to get up. The chair has seen enough. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-21",
+      "text": "After careful review, {actor} tells {target} to get up. The chair has seen enough.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-22",
+      "text": "After careful review, {actor} tells {target} to get up. The chair has seen enough. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-23",
+      "text": "After careful review, {actor} tells {target} to get up. The chair has seen enough. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-24",
+      "text": "After careful review, {actor} tells {target} to get up. The chair has seen enough. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-GETUP-25",
+      "text": "After careful review, {actor} tells {target} to get up. The chair has seen enough. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "calmdown": [
+    {
+      "id": "SOCIAL-CALMDOWN-01",
+      "text": "{actor} asks {target} to calm down, instantly making the situation worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-02",
+      "text": "{actor} asks {target} to calm down, instantly making the situation worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-03",
+      "text": "{actor} asks {target} to calm down, instantly making the situation worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-04",
+      "text": "{actor} asks {target} to calm down, instantly making the situation worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-05",
+      "text": "{actor} asks {target} to calm down, instantly making the situation worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-06",
+      "text": "Apparently, {actor} asks {target} to calm down, instantly making the situation worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-07",
+      "text": "Apparently, {actor} asks {target} to calm down, instantly making the situation worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-08",
+      "text": "Apparently, {actor} asks {target} to calm down, instantly making the situation worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-09",
+      "text": "Apparently, {actor} asks {target} to calm down, instantly making the situation worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-10",
+      "text": "Apparently, {actor} asks {target} to calm down, instantly making the situation worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-11",
+      "text": "Breaking news: {actor} asks {target} to calm down, instantly making the situation worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-12",
+      "text": "Breaking news: {actor} asks {target} to calm down, instantly making the situation worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-13",
+      "text": "Breaking news: {actor} asks {target} to calm down, instantly making the situation worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-14",
+      "text": "Breaking news: {actor} asks {target} to calm down, instantly making the situation worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-15",
+      "text": "Breaking news: {actor} asks {target} to calm down, instantly making the situation worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-16",
+      "text": "For reasons nobody requested, {actor} asks {target} to calm down, instantly making the situation worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-17",
+      "text": "For reasons nobody requested, {actor} asks {target} to calm down, instantly making the situation worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-18",
+      "text": "For reasons nobody requested, {actor} asks {target} to calm down, instantly making the situation worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-19",
+      "text": "For reasons nobody requested, {actor} asks {target} to calm down, instantly making the situation worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-20",
+      "text": "For reasons nobody requested, {actor} asks {target} to calm down, instantly making the situation worse. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-21",
+      "text": "After careful review, {actor} asks {target} to calm down, instantly making the situation worse.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-22",
+      "text": "After careful review, {actor} asks {target} to calm down, instantly making the situation worse. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-23",
+      "text": "After careful review, {actor} asks {target} to calm down, instantly making the situation worse. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-24",
+      "text": "After careful review, {actor} asks {target} to calm down, instantly making the situation worse. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-CALMDOWN-25",
+      "text": "After careful review, {actor} asks {target} to calm down, instantly making the situation worse. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "absolutelynot": [
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-01",
+      "text": "{actor} has considered {target}’s proposal: absolutely not.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-02",
+      "text": "{actor} has considered {target}’s proposal: absolutely not. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-03",
+      "text": "{actor} has considered {target}’s proposal: absolutely not. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-04",
+      "text": "{actor} has considered {target}’s proposal: absolutely not. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-05",
+      "text": "{actor} has considered {target}’s proposal: absolutely not. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-06",
+      "text": "Apparently, {actor} has considered {target}’s proposal: absolutely not.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-07",
+      "text": "Apparently, {actor} has considered {target}’s proposal: absolutely not. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-08",
+      "text": "Apparently, {actor} has considered {target}’s proposal: absolutely not. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-09",
+      "text": "Apparently, {actor} has considered {target}’s proposal: absolutely not. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-10",
+      "text": "Apparently, {actor} has considered {target}’s proposal: absolutely not. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-11",
+      "text": "Breaking news: {actor} has considered {target}’s proposal: absolutely not.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-12",
+      "text": "Breaking news: {actor} has considered {target}’s proposal: absolutely not. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-13",
+      "text": "Breaking news: {actor} has considered {target}’s proposal: absolutely not. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-14",
+      "text": "Breaking news: {actor} has considered {target}’s proposal: absolutely not. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-15",
+      "text": "Breaking news: {actor} has considered {target}’s proposal: absolutely not. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-16",
+      "text": "For reasons nobody requested, {actor} has considered {target}’s proposal: absolutely not.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-17",
+      "text": "For reasons nobody requested, {actor} has considered {target}’s proposal: absolutely not. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-18",
+      "text": "For reasons nobody requested, {actor} has considered {target}’s proposal: absolutely not. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-19",
+      "text": "For reasons nobody requested, {actor} has considered {target}’s proposal: absolutely not. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-20",
+      "text": "For reasons nobody requested, {actor} has considered {target}’s proposal: absolutely not. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-21",
+      "text": "After careful review, {actor} has considered {target}’s proposal: absolutely not.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-22",
+      "text": "After careful review, {actor} has considered {target}’s proposal: absolutely not. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-23",
+      "text": "After careful review, {actor} has considered {target}’s proposal: absolutely not. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-24",
+      "text": "After careful review, {actor} has considered {target}’s proposal: absolutely not. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-ABSOLUTELYNOT-25",
+      "text": "After careful review, {actor} has considered {target}’s proposal: absolutely not. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "explainyourself": [
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-01",
+      "text": "{actor} requests that {target} explain themselves to the furniture council.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-02",
+      "text": "{actor} requests that {target} explain themselves to the furniture council. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-03",
+      "text": "{actor} requests that {target} explain themselves to the furniture council. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-04",
+      "text": "{actor} requests that {target} explain themselves to the furniture council. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-05",
+      "text": "{actor} requests that {target} explain themselves to the furniture council. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-06",
+      "text": "Apparently, {actor} requests that {target} explain themselves to the furniture council.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-07",
+      "text": "Apparently, {actor} requests that {target} explain themselves to the furniture council. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-08",
+      "text": "Apparently, {actor} requests that {target} explain themselves to the furniture council. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-09",
+      "text": "Apparently, {actor} requests that {target} explain themselves to the furniture council. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-10",
+      "text": "Apparently, {actor} requests that {target} explain themselves to the furniture council. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-11",
+      "text": "Breaking news: {actor} requests that {target} explain themselves to the furniture council.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-12",
+      "text": "Breaking news: {actor} requests that {target} explain themselves to the furniture council. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-13",
+      "text": "Breaking news: {actor} requests that {target} explain themselves to the furniture council. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-14",
+      "text": "Breaking news: {actor} requests that {target} explain themselves to the furniture council. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-15",
+      "text": "Breaking news: {actor} requests that {target} explain themselves to the furniture council. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-16",
+      "text": "For reasons nobody requested, {actor} requests that {target} explain themselves to the furniture council.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-17",
+      "text": "For reasons nobody requested, {actor} requests that {target} explain themselves to the furniture council. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-18",
+      "text": "For reasons nobody requested, {actor} requests that {target} explain themselves to the furniture council. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-19",
+      "text": "For reasons nobody requested, {actor} requests that {target} explain themselves to the furniture council. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-20",
+      "text": "For reasons nobody requested, {actor} requests that {target} explain themselves to the furniture council. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-21",
+      "text": "After careful review, {actor} requests that {target} explain themselves to the furniture council.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-22",
+      "text": "After careful review, {actor} requests that {target} explain themselves to the furniture council. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-23",
+      "text": "After careful review, {actor} requests that {target} explain themselves to the furniture council. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-24",
+      "text": "After careful review, {actor} requests that {target} explain themselves to the furniture council. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EXPLAINYOURSELF-25",
+      "text": "After careful review, {actor} requests that {target} explain themselves to the furniture council. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "embarrassing": [
+    {
+      "id": "SOCIAL-EMBARRASSING-01",
+      "text": "{actor} has classified {target}’s behavior as deeply embarrassing.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-02",
+      "text": "{actor} has classified {target}’s behavior as deeply embarrassing. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-03",
+      "text": "{actor} has classified {target}’s behavior as deeply embarrassing. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-04",
+      "text": "{actor} has classified {target}’s behavior as deeply embarrassing. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-05",
+      "text": "{actor} has classified {target}’s behavior as deeply embarrassing. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-06",
+      "text": "Apparently, {actor} has classified {target}’s behavior as deeply embarrassing.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-07",
+      "text": "Apparently, {actor} has classified {target}’s behavior as deeply embarrassing. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-08",
+      "text": "Apparently, {actor} has classified {target}’s behavior as deeply embarrassing. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-09",
+      "text": "Apparently, {actor} has classified {target}’s behavior as deeply embarrassing. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-10",
+      "text": "Apparently, {actor} has classified {target}’s behavior as deeply embarrassing. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-11",
+      "text": "Breaking news: {actor} has classified {target}’s behavior as deeply embarrassing.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-12",
+      "text": "Breaking news: {actor} has classified {target}’s behavior as deeply embarrassing. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-13",
+      "text": "Breaking news: {actor} has classified {target}’s behavior as deeply embarrassing. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-14",
+      "text": "Breaking news: {actor} has classified {target}’s behavior as deeply embarrassing. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-15",
+      "text": "Breaking news: {actor} has classified {target}’s behavior as deeply embarrassing. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-16",
+      "text": "For reasons nobody requested, {actor} has classified {target}’s behavior as deeply embarrassing.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-17",
+      "text": "For reasons nobody requested, {actor} has classified {target}’s behavior as deeply embarrassing. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-18",
+      "text": "For reasons nobody requested, {actor} has classified {target}’s behavior as deeply embarrassing. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-19",
+      "text": "For reasons nobody requested, {actor} has classified {target}’s behavior as deeply embarrassing. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-20",
+      "text": "For reasons nobody requested, {actor} has classified {target}’s behavior as deeply embarrassing. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-21",
+      "text": "After careful review, {actor} has classified {target}’s behavior as deeply embarrassing.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-22",
+      "text": "After careful review, {actor} has classified {target}’s behavior as deeply embarrassing. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-23",
+      "text": "After careful review, {actor} has classified {target}’s behavior as deeply embarrassing. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-24",
+      "text": "After careful review, {actor} has classified {target}’s behavior as deeply embarrassing. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-EMBARRASSING-25",
+      "text": "After careful review, {actor} has classified {target}’s behavior as deeply embarrassing. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "questionable": [
+    {
+      "id": "SOCIAL-QUESTIONABLE-01",
+      "text": "{actor} marks {target}’s latest decision as aggressively questionable.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-02",
+      "text": "{actor} marks {target}’s latest decision as aggressively questionable. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-03",
+      "text": "{actor} marks {target}’s latest decision as aggressively questionable. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-04",
+      "text": "{actor} marks {target}’s latest decision as aggressively questionable. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-05",
+      "text": "{actor} marks {target}’s latest decision as aggressively questionable. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-06",
+      "text": "Apparently, {actor} marks {target}’s latest decision as aggressively questionable.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-07",
+      "text": "Apparently, {actor} marks {target}’s latest decision as aggressively questionable. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-08",
+      "text": "Apparently, {actor} marks {target}’s latest decision as aggressively questionable. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-09",
+      "text": "Apparently, {actor} marks {target}’s latest decision as aggressively questionable. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-10",
+      "text": "Apparently, {actor} marks {target}’s latest decision as aggressively questionable. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-11",
+      "text": "Breaking news: {actor} marks {target}’s latest decision as aggressively questionable.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-12",
+      "text": "Breaking news: {actor} marks {target}’s latest decision as aggressively questionable. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-13",
+      "text": "Breaking news: {actor} marks {target}’s latest decision as aggressively questionable. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-14",
+      "text": "Breaking news: {actor} marks {target}’s latest decision as aggressively questionable. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-15",
+      "text": "Breaking news: {actor} marks {target}’s latest decision as aggressively questionable. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-16",
+      "text": "For reasons nobody requested, {actor} marks {target}’s latest decision as aggressively questionable.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-17",
+      "text": "For reasons nobody requested, {actor} marks {target}’s latest decision as aggressively questionable. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-18",
+      "text": "For reasons nobody requested, {actor} marks {target}’s latest decision as aggressively questionable. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-19",
+      "text": "For reasons nobody requested, {actor} marks {target}’s latest decision as aggressively questionable. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-20",
+      "text": "For reasons nobody requested, {actor} marks {target}’s latest decision as aggressively questionable. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-21",
+      "text": "After careful review, {actor} marks {target}’s latest decision as aggressively questionable.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-22",
+      "text": "After careful review, {actor} marks {target}’s latest decision as aggressively questionable. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-23",
+      "text": "After careful review, {actor} marks {target}’s latest decision as aggressively questionable. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-24",
+      "text": "After careful review, {actor} marks {target}’s latest decision as aggressively questionable. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-QUESTIONABLE-25",
+      "text": "After careful review, {actor} marks {target}’s latest decision as aggressively questionable. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "respect": [
+    {
+      "id": "SOCIAL-RESPECT-01",
+      "text": "{actor} gives {target} the rare and expensive nod of respect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-02",
+      "text": "{actor} gives {target} the rare and expensive nod of respect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-03",
+      "text": "{actor} gives {target} the rare and expensive nod of respect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-04",
+      "text": "{actor} gives {target} the rare and expensive nod of respect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-05",
+      "text": "{actor} gives {target} the rare and expensive nod of respect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-06",
+      "text": "Apparently, {actor} gives {target} the rare and expensive nod of respect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-07",
+      "text": "Apparently, {actor} gives {target} the rare and expensive nod of respect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-08",
+      "text": "Apparently, {actor} gives {target} the rare and expensive nod of respect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-09",
+      "text": "Apparently, {actor} gives {target} the rare and expensive nod of respect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-10",
+      "text": "Apparently, {actor} gives {target} the rare and expensive nod of respect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-11",
+      "text": "Breaking news: {actor} gives {target} the rare and expensive nod of respect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-12",
+      "text": "Breaking news: {actor} gives {target} the rare and expensive nod of respect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-13",
+      "text": "Breaking news: {actor} gives {target} the rare and expensive nod of respect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-14",
+      "text": "Breaking news: {actor} gives {target} the rare and expensive nod of respect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-15",
+      "text": "Breaking news: {actor} gives {target} the rare and expensive nod of respect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-16",
+      "text": "For reasons nobody requested, {actor} gives {target} the rare and expensive nod of respect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-17",
+      "text": "For reasons nobody requested, {actor} gives {target} the rare and expensive nod of respect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-18",
+      "text": "For reasons nobody requested, {actor} gives {target} the rare and expensive nod of respect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-19",
+      "text": "For reasons nobody requested, {actor} gives {target} the rare and expensive nod of respect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-20",
+      "text": "For reasons nobody requested, {actor} gives {target} the rare and expensive nod of respect. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-21",
+      "text": "After careful review, {actor} gives {target} the rare and expensive nod of respect.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-22",
+      "text": "After careful review, {actor} gives {target} the rare and expensive nod of respect. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-23",
+      "text": "After careful review, {actor} gives {target} the rare and expensive nod of respect. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-24",
+      "text": "After careful review, {actor} gives {target} the rare and expensive nod of respect. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-RESPECT-25",
+      "text": "After careful review, {actor} gives {target} the rare and expensive nod of respect. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "compliment": [
+    {
+      "id": "SOCIAL-COMPLIMENT-01",
+      "text": "{actor} admits {target} did something genuinely impressive. Do not get used to it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-02",
+      "text": "{actor} admits {target} did something genuinely impressive. Do not get used to it. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-03",
+      "text": "{actor} admits {target} did something genuinely impressive. Do not get used to it. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-04",
+      "text": "{actor} admits {target} did something genuinely impressive. Do not get used to it. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-05",
+      "text": "{actor} admits {target} did something genuinely impressive. Do not get used to it. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-06",
+      "text": "Apparently, {actor} admits {target} did something genuinely impressive. Do not get used to it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-07",
+      "text": "Apparently, {actor} admits {target} did something genuinely impressive. Do not get used to it. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-08",
+      "text": "Apparently, {actor} admits {target} did something genuinely impressive. Do not get used to it. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-09",
+      "text": "Apparently, {actor} admits {target} did something genuinely impressive. Do not get used to it. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-10",
+      "text": "Apparently, {actor} admits {target} did something genuinely impressive. Do not get used to it. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-11",
+      "text": "Breaking news: {actor} admits {target} did something genuinely impressive. Do not get used to it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-12",
+      "text": "Breaking news: {actor} admits {target} did something genuinely impressive. Do not get used to it. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-13",
+      "text": "Breaking news: {actor} admits {target} did something genuinely impressive. Do not get used to it. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-14",
+      "text": "Breaking news: {actor} admits {target} did something genuinely impressive. Do not get used to it. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-15",
+      "text": "Breaking news: {actor} admits {target} did something genuinely impressive. Do not get used to it. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-16",
+      "text": "For reasons nobody requested, {actor} admits {target} did something genuinely impressive. Do not get used to it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-17",
+      "text": "For reasons nobody requested, {actor} admits {target} did something genuinely impressive. Do not get used to it. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-18",
+      "text": "For reasons nobody requested, {actor} admits {target} did something genuinely impressive. Do not get used to it. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-19",
+      "text": "For reasons nobody requested, {actor} admits {target} did something genuinely impressive. Do not get used to it. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-20",
+      "text": "For reasons nobody requested, {actor} admits {target} did something genuinely impressive. Do not get used to it. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-21",
+      "text": "After careful review, {actor} admits {target} did something genuinely impressive. Do not get used to it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-22",
+      "text": "After careful review, {actor} admits {target} did something genuinely impressive. Do not get used to it. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-23",
+      "text": "After careful review, {actor} admits {target} did something genuinely impressive. Do not get used to it. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-24",
+      "text": "After careful review, {actor} admits {target} did something genuinely impressive. Do not get used to it. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-COMPLIMENT-25",
+      "text": "After careful review, {actor} admits {target} did something genuinely impressive. Do not get used to it. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "ts": [
+    {
+      "id": "SOCIAL-TS-01",
+      "text": "{actor} has one message for {target}: Type Shit.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-02",
+      "text": "{actor} has one message for {target}: Type Shit. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-03",
+      "text": "{actor} has one message for {target}: Type Shit. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-04",
+      "text": "{actor} has one message for {target}: Type Shit. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-05",
+      "text": "{actor} has one message for {target}: Type Shit. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-06",
+      "text": "Apparently, {actor} has one message for {target}: Type Shit.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-07",
+      "text": "Apparently, {actor} has one message for {target}: Type Shit. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-08",
+      "text": "Apparently, {actor} has one message for {target}: Type Shit. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-09",
+      "text": "Apparently, {actor} has one message for {target}: Type Shit. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-10",
+      "text": "Apparently, {actor} has one message for {target}: Type Shit. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-11",
+      "text": "Breaking news: {actor} has one message for {target}: Type Shit.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-12",
+      "text": "Breaking news: {actor} has one message for {target}: Type Shit. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-13",
+      "text": "Breaking news: {actor} has one message for {target}: Type Shit. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-14",
+      "text": "Breaking news: {actor} has one message for {target}: Type Shit. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-15",
+      "text": "Breaking news: {actor} has one message for {target}: Type Shit. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-16",
+      "text": "For reasons nobody requested, {actor} has one message for {target}: Type Shit.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-17",
+      "text": "For reasons nobody requested, {actor} has one message for {target}: Type Shit. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-18",
+      "text": "For reasons nobody requested, {actor} has one message for {target}: Type Shit. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-19",
+      "text": "For reasons nobody requested, {actor} has one message for {target}: Type Shit. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-20",
+      "text": "For reasons nobody requested, {actor} has one message for {target}: Type Shit. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-21",
+      "text": "After careful review, {actor} has one message for {target}: Type Shit.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-22",
+      "text": "After careful review, {actor} has one message for {target}: Type Shit. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-23",
+      "text": "After careful review, {actor} has one message for {target}: Type Shit. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-24",
+      "text": "After careful review, {actor} has one message for {target}: Type Shit. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-TS-25",
+      "text": "After careful review, {actor} has one message for {target}: Type Shit. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "wheresmyvape": [
+    {
+      "id": "SOCIAL-WHERESMYVAPE-01",
+      "text": "Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-02",
+      "text": "Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-03",
+      "text": "Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-04",
+      "text": "Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-05",
+      "text": "Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-06",
+      "text": "Apparently, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-07",
+      "text": "Apparently, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-08",
+      "text": "Apparently, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-09",
+      "text": "Apparently, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-10",
+      "text": "Apparently, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-11",
+      "text": "Breaking news: Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-12",
+      "text": "Breaking news: Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-13",
+      "text": "Breaking news: Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-14",
+      "text": "Breaking news: Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-15",
+      "text": "Breaking news: Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-16",
+      "text": "For reasons nobody requested, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-17",
+      "text": "For reasons nobody requested, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-18",
+      "text": "For reasons nobody requested, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-19",
+      "text": "For reasons nobody requested, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-20",
+      "text": "For reasons nobody requested, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-21",
+      "text": "After careful review, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-22",
+      "text": "After careful review, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-23",
+      "text": "After careful review, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-24",
+      "text": "After careful review, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-WHERESMYVAPE-25",
+      "text": "After careful review, Angrier Jordan has checked under the couch, behind the recliner, and in your dignity. No vape. Everyone act normal.",
+      "enabled": true
+    }
+  ],
+  "hitthegeekbar": [
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-01",
+      "text": "Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-02",
+      "text": "Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-03",
+      "text": "Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-04",
+      "text": "Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-05",
+      "text": "Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-06",
+      "text": "Apparently, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-07",
+      "text": "Apparently, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-08",
+      "text": "Apparently, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-09",
+      "text": "Apparently, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-10",
+      "text": "Apparently, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-11",
+      "text": "Breaking news: Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-12",
+      "text": "Breaking news: Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-13",
+      "text": "Breaking news: Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-14",
+      "text": "Breaking news: Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-15",
+      "text": "Breaking news: Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-16",
+      "text": "For reasons nobody requested, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-17",
+      "text": "For reasons nobody requested, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-18",
+      "text": "For reasons nobody requested, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-19",
+      "text": "For reasons nobody requested, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-20",
+      "text": "For reasons nobody requested, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. Everyone act normal.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-21",
+      "text": "After careful review, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-22",
+      "text": "After careful review, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The lounge witnessed it.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-23",
+      "text": "After careful review, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. No appeals.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-24",
+      "text": "After careful review, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. The chair record will reflect this.",
+      "enabled": true
+    },
+    {
+      "id": "SOCIAL-HITTHEGEEKBAR-25",
+      "text": "After careful review, Angrier Jordan reluctantly passes the imaginary geek bar. Please make poor decisions responsibly. Everyone act normal.",
+      "enabled": true
+    }
+  ]
+}

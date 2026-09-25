@@ -1,0 +1,1154 @@
+{
+  "help": {
+    "handler": "core.help",
+    "module": "core",
+    "featureFlag": "core",
+    "registered": "/help"
+  },
+  "tutorial": {
+    "handler": "tutorial.tutorial",
+    "module": "tutorial",
+    "featureFlag": "tutorial",
+    "registered": "/tutorial"
+  },
+  "rules": {
+    "handler": "core.rules",
+    "module": "core",
+    "featureFlag": "core",
+    "registered": "/rules"
+  },
+  "status": {
+    "handler": "core.status",
+    "module": "core",
+    "featureFlag": "core",
+    "registered": "/status"
+  },
+  "bug": {
+    "handler": "core.bug",
+    "module": "core",
+    "featureFlag": "core",
+    "registered": "/bug"
+  },
+  "dms": {
+    "handler": "core.dms",
+    "module": "core",
+    "featureFlag": "core",
+    "registered": "/dms"
+  },
+  "profile": {
+    "handler": "profile.profile",
+    "module": "profile",
+    "featureFlag": "profile",
+    "registered": "/profile"
+  },
+  "records": {
+    "handler": "profile.records",
+    "module": "profile",
+    "featureFlag": "profile",
+    "registered": "/records"
+  },
+  "daily": {
+    "handler": "economy.daily",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/daily"
+  },
+  "weekly": {
+    "handler": "economy.weekly",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/weekly"
+  },
+  "scavenge": {
+    "handler": "economy.scavenge",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/scavenge"
+  },
+  "dig": {
+    "handler": "economy.dig",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/dig"
+  },
+  "fish": {
+    "handler": "economy.fish",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/fish"
+  },
+  "work": {
+    "handler": "economy.work",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/work"
+  },
+  "statement": {
+    "handler": "economy.statement",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/statement"
+  },
+  "inventory": {
+    "handler": "economy.inventory",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/inventory"
+  },
+  "bank": {
+    "handler": "economy.bank",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/bank"
+  },
+  "shop": {
+    "handler": "economy.shop",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/shop"
+  },
+  "craft": {
+    "handler": "economy.craft",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/craft"
+  },
+  "repair": {
+    "handler": "economy.repair",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/repair"
+  },
+  "transfer": {
+    "handler": "economy.transfer",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/transfer"
+  },
+  "gift": {
+    "handler": "economy.gift",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/gift"
+  },
+  "unlock_all": {
+    "handler": "economy.unlock_all",
+    "module": "economy",
+    "featureFlag": "economy",
+    "registered": "/unlock all"
+  },
+  "blackjack": {
+    "handler": "casino.blackjack",
+    "module": "casino",
+    "featureFlag": "casino",
+    "registered": "/casino blackjack"
+  },
+  "roulette": {
+    "handler": "casino.roulette",
+    "module": "casino",
+    "featureFlag": "casino",
+    "registered": "/casino roulette"
+  },
+  "slots": {
+    "handler": "casino.slots",
+    "module": "casino",
+    "featureFlag": "casino",
+    "registered": "/casino slots"
+  },
+  "dice": {
+    "handler": "casino.dice",
+    "module": "casino",
+    "featureFlag": "casino",
+    "registered": "/casino dice"
+  },
+  "coinflip": {
+    "handler": "casino.coinflip",
+    "module": "casino",
+    "featureFlag": "casino",
+    "registered": "/casino coinflip"
+  },
+  "lottery": {
+    "handler": "casino.lottery",
+    "module": "casino",
+    "featureFlag": "casino",
+    "registered": "/lottery"
+  },
+  "giveaway": {
+    "handler": "community.giveaway",
+    "module": "community",
+    "featureFlag": "community",
+    "registered": "/giveaway"
+  },
+  "race": {
+    "handler": "race.specialRace",
+    "module": "special_commands",
+    "featureFlag": "race",
+    "registered": "!race"
+  },
+  "fight": {
+    "handler": "fight.fight",
+    "module": "fight",
+    "featureFlag": "fight",
+    "registered": "/fight @member"
+  },
+  "tictactoe": {
+    "handler": "pvp.tictactoe",
+    "module": "pvp",
+    "featureFlag": "pvp",
+    "registered": "/game tictactoe"
+  },
+  "connectfour": {
+    "handler": "pvp.connectfour",
+    "module": "pvp",
+    "featureFlag": "pvp",
+    "registered": "/game connectfour"
+  },
+  "battleship": {
+    "handler": "pvp.battleship",
+    "module": "pvp",
+    "featureFlag": "pvp",
+    "registered": "/game battleship"
+  },
+  "fmk": {
+    "handler": "party_games.fmk",
+    "module": "party_games",
+    "featureFlag": "party_games",
+    "registered": "/fmk"
+  },
+  "truthordare": {
+    "handler": "party_games.truthordare",
+    "module": "party_games",
+    "featureFlag": "party_games",
+    "registered": "/truthordare"
+  },
+  "wyr": {
+    "handler": "party_games.wyr",
+    "module": "party_games",
+    "featureFlag": "party_games",
+    "registered": "/wyr"
+  },
+  "wwyd": {
+    "handler": "party_games.wwyd",
+    "module": "party_games",
+    "featureFlag": "party_games",
+    "registered": "/wwyd"
+  },
+  "finish": {
+    "handler": "party_games.finish",
+    "module": "party_games",
+    "featureFlag": "party_games",
+    "registered": "/finishsentence"
+  },
+  "onewordstory": {
+    "handler": "party_games.onewordstory",
+    "module": "party_games",
+    "featureFlag": "party_games",
+    "registered": "/onewordstory"
+  },
+  "line": {
+    "handler": "line.specialLine",
+    "module": "special_commands",
+    "featureFlag": "line",
+    "registered": "!line"
+  },
+  "poll": {
+    "handler": "community.poll",
+    "module": "community",
+    "featureFlag": "community",
+    "registered": "/poll"
+  },
+  "superlatives": {
+    "handler": "community.superlatives",
+    "module": "community",
+    "featureFlag": "community",
+    "registered": "/superlatives"
+  },
+  "suggest": {
+    "handler": "community.suggest",
+    "module": "community",
+    "featureFlag": "community",
+    "registered": "/suggest"
+  },
+  "ama": {
+    "handler": "community.ama",
+    "module": "community",
+    "featureFlag": "community",
+    "registered": "/ama"
+  },
+  "roles": {
+    "handler": "roles.roles",
+    "module": "roles",
+    "featureFlag": "roles",
+    "registered": "/roles"
+  },
+  "quote_message": {
+    "handler": "chairisms.quote_message",
+    "module": "chairisms",
+    "featureFlag": "chairisms",
+    "registered": "/quote message"
+  },
+  "quote_text": {
+    "handler": "chairisms.quote_text",
+    "module": "chairisms",
+    "featureFlag": "chairisms",
+    "registered": "/quote text"
+  },
+  "chairisms_recent": {
+    "handler": "chairisms.chairisms_recent",
+    "module": "chairisms",
+    "featureFlag": "chairisms",
+    "registered": "/chairisms recent"
+  },
+  "chairisms_member": {
+    "handler": "chairisms.chairisms_member",
+    "module": "chairisms",
+    "featureFlag": "chairisms",
+    "registered": "/chairisms member"
+  },
+  "chairisms_random": {
+    "handler": "chairisms.chairisms_random",
+    "module": "chairisms",
+    "featureFlag": "chairisms",
+    "registered": "/chairisms random"
+  },
+  "music_play": {
+    "handler": "music.music_play",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/play"
+  },
+  "music_pause": {
+    "handler": "music.music_pause",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music pause"
+  },
+  "music_resume": {
+    "handler": "music.music_resume",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music resume"
+  },
+  "music_skip": {
+    "handler": "music.music_skip",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music skip"
+  },
+  "music_previous": {
+    "handler": "music.music_previous",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music previous"
+  },
+  "music_stop": {
+    "handler": "music.music_stop",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music stop"
+  },
+  "music_replay": {
+    "handler": "music.music_replay",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music replay"
+  },
+  "music_seek": {
+    "handler": "music.music_seek",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music seek"
+  },
+  "music_queue": {
+    "handler": "music.music_queue",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music queue"
+  },
+  "music_remove": {
+    "handler": "music.music_remove",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music remove"
+  },
+  "music_move": {
+    "handler": "music.music_move",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music move"
+  },
+  "music_clear": {
+    "handler": "music.music_clear",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music clear"
+  },
+  "music_shuffle": {
+    "handler": "music.music_shuffle",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music shuffle"
+  },
+  "music_jump": {
+    "handler": "music.music_jump",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music jump"
+  },
+  "music_loop": {
+    "handler": "music.music_loop",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music loop"
+  },
+  "music_autoplay": {
+    "handler": "music.music_autoplay",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music autoplay"
+  },
+  "music_volume": {
+    "handler": "music.music_volume",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music volume"
+  },
+  "music_nowplaying": {
+    "handler": "music.music_nowplaying",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music nowplaying"
+  },
+  "music_history": {
+    "handler": "music.music_history",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music history"
+  },
+  "music_join": {
+    "handler": "music.music_join",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music join"
+  },
+  "music_leave": {
+    "handler": "music.music_leave",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music leave"
+  },
+  "playlist_create": {
+    "handler": "music.playlist_create",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist create"
+  },
+  "playlist_add": {
+    "handler": "music.playlist_add",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist add"
+  },
+  "playlist_remove": {
+    "handler": "music.playlist_remove",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist remove"
+  },
+  "playlist_play": {
+    "handler": "music.playlist_play",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist play"
+  },
+  "playlist_rename": {
+    "handler": "music.playlist_rename",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist rename"
+  },
+  "playlist_delete": {
+    "handler": "music.playlist_delete",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist delete"
+  },
+  "playlist_view": {
+    "handler": "music.playlist_view",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/playlist view"
+  },
+  "music_help": {
+    "handler": "music.music_help",
+    "module": "music",
+    "featureFlag": "music",
+    "registered": "/music help"
+  },
+  "social_ts": {
+    "handler": "social.social_ts",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social ts"
+  },
+  "social_hit": {
+    "handler": "social.social_hit",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social hit"
+  },
+  "social_slap": {
+    "handler": "social.social_slap",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social slap"
+  },
+  "social_pillow": {
+    "handler": "social.social_pillow",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social pillow"
+  },
+  "social_cushion": {
+    "handler": "social.social_cushion",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social cushion"
+  },
+  "social_stab": {
+    "handler": "social.social_stab",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social stab"
+  },
+  "social_choke": {
+    "handler": "social.social_choke",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social choke"
+  },
+  "social_shh": {
+    "handler": "social.social_shh",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social shh"
+  },
+  "social_belittle": {
+    "handler": "social.social_belittle",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social belittle"
+  },
+  "social_bonk": {
+    "handler": "social.social_bonk",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social bonk"
+  },
+  "social_yeet": {
+    "handler": "social.social_yeet",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social yeet"
+  },
+  "social_sit": {
+    "handler": "social.social_sit",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social sit"
+  },
+  "social_standup": {
+    "handler": "social.social_standup",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social standup"
+  },
+  "social_fold": {
+    "handler": "social.social_fold",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social fold"
+  },
+  "social_recline": {
+    "handler": "social.social_recline",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social recline"
+  },
+  "social_sideeye": {
+    "handler": "social.social_sideeye",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social sideeye"
+  },
+  "social_judge": {
+    "handler": "social.social_judge",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social judge"
+  },
+  "social_shame": {
+    "handler": "social.social_shame",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social shame"
+  },
+  "social_boo": {
+    "handler": "social.social_boo",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social boo"
+  },
+  "social_bruh": {
+    "handler": "social.social_bruh",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social bruh"
+  },
+  "social_wtf": {
+    "handler": "social.social_wtf",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social wtf"
+  },
+  "social_sus": {
+    "handler": "social.social_sus",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social sus"
+  },
+  "social_yap": {
+    "handler": "social.social_yap",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social yap"
+  },
+  "social_touchgrass": {
+    "handler": "social.social_touchgrass",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social touchgrass"
+  },
+  "social_blame": {
+    "handler": "social.social_blame",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social blame"
+  },
+  "social_disappoint": {
+    "handler": "social.social_disappoint",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social disappoint"
+  },
+  "social_chaircheck": {
+    "handler": "social.social_chaircheck",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social chaircheck"
+  },
+  "social_throwchair": {
+    "handler": "social.social_throwchair",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social throwchair"
+  },
+  "social_getup": {
+    "handler": "social.social_getup",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social getup"
+  },
+  "social_calmdown": {
+    "handler": "social.social_calmdown",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social calmdown"
+  },
+  "social_absolutelynot": {
+    "handler": "social.social_absolutelynot",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social absolutelynot"
+  },
+  "social_explainyourself": {
+    "handler": "social.social_explainyourself",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social explainyourself"
+  },
+  "social_embarrassing": {
+    "handler": "social.social_embarrassing",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social embarrassing"
+  },
+  "social_questionable": {
+    "handler": "social.social_questionable",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social questionable"
+  },
+  "social_respect": {
+    "handler": "social.social_respect",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social respect"
+  },
+  "social_compliment": {
+    "handler": "social.social_compliment",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social compliment"
+  },
+  "social_wheresmyvape": {
+    "handler": "social.social_wheresmyvape",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social wheresmyvape"
+  },
+  "social_hitthegeekbar": {
+    "handler": "social.social_hitthegeekbar",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social hitthegeekbar"
+  },
+  "roast": {
+    "handler": "social.roast",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social roast"
+  },
+  "notmad": {
+    "handler": "social.notmad",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/social notmad"
+  },
+  "introduce": {
+    "handler": "introductions.introduce",
+    "module": "introductions",
+    "featureFlag": "introductions",
+    "registered": "/introduce"
+  },
+  "introduce_edit": {
+    "handler": "introductions.introduce_edit",
+    "module": "introductions",
+    "featureFlag": "introductions",
+    "registered": "/introduce edit"
+  },
+  "introduce_preview": {
+    "handler": "introductions.introduce_preview",
+    "module": "introductions",
+    "featureFlag": "introductions",
+    "registered": "/introduce preview"
+  },
+  "intro_config": {
+    "handler": "introductions.intro_config",
+    "module": "introductions",
+    "featureFlag": "introductions",
+    "registered": "/intro-config"
+  },
+  "rob": {
+    "handler": "crime.rob",
+    "module": "crime",
+    "featureFlag": "crime",
+    "registered": "/crime rob"
+  },
+  "crime_911": {
+    "handler": "crime.crime_911",
+    "module": "crime",
+    "featureFlag": "crime",
+    "registered": "/crime 911"
+  },
+  "crime_wanted": {
+    "handler": "crime.crime_wanted",
+    "module": "crime",
+    "featureFlag": "crime",
+    "registered": "/crime wanted"
+  },
+  "crime_bail": {
+    "handler": "crime.crime_bail",
+    "module": "crime",
+    "featureFlag": "crime",
+    "registered": "/crime bail"
+  },
+  "family_marry": {
+    "handler": "family.family_marry",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family marry"
+  },
+  "family_divorce": {
+    "handler": "family.family_divorce",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family divorce"
+  },
+  "family_adopt": {
+    "handler": "family.family_adopt",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family adopt"
+  },
+  "family_disown": {
+    "handler": "family.family_disown",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family disown"
+  },
+  "family_emancipate": {
+    "handler": "family.family_emancipate",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family emancipate"
+  },
+  "family_familytree": {
+    "handler": "family.family_familytree",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family familytree"
+  },
+  "family_will": {
+    "handler": "family.family_will",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family will"
+  },
+  "family_familyauction": {
+    "handler": "family.family_familyauction",
+    "module": "family",
+    "featureFlag": "family",
+    "registered": "/family familyauction"
+  },
+  "warn": {
+    "handler": "moderation.warn",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod warn"
+  },
+  "timeout": {
+    "handler": "moderation.timeout",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod timeout"
+  },
+  "untimeout": {
+    "handler": "moderation.untimeout",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod untimeout"
+  },
+  "kick": {
+    "handler": "moderation.kick",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod kick"
+  },
+  "ban": {
+    "handler": "moderation.ban",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod ban"
+  },
+  "unban": {
+    "handler": "moderation.unban",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod unban"
+  },
+  "purge": {
+    "handler": "moderation.purge",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod purge"
+  },
+  "note": {
+    "handler": "moderation.note",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod note"
+  },
+  "history_mod": {
+    "handler": "moderation.history_mod",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod history"
+  },
+  "case_view": {
+    "handler": "moderation.case_view",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod case view"
+  },
+  "case_edit": {
+    "handler": "moderation.case_edit",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod case edit"
+  },
+  "case_reverse": {
+    "handler": "moderation.case_reverse",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod case reverse"
+  },
+  "lock": {
+    "handler": "moderation.lock",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod lock"
+  },
+  "unlock": {
+    "handler": "moderation.unlock",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod unlock"
+  },
+  "slowmode": {
+    "handler": "moderation.slowmode",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod slowmode"
+  },
+  "quarantine": {
+    "handler": "moderation.quarantine",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod quarantine"
+  },
+  "staff_alert": {
+    "handler": "moderation.staff_alert",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod staff-alert"
+  },
+  "modstats": {
+    "handler": "moderation.modstats",
+    "module": "moderation",
+    "featureFlag": "moderation",
+    "registered": "/mod modstats"
+  },
+  "jail_send": {
+    "handler": "jail.jail_send",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail send"
+  },
+  "jail_release": {
+    "handler": "jail.jail_release",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail release"
+  },
+  "jail_extend": {
+    "handler": "jail.jail_extend",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail extend"
+  },
+  "jail_reduce": {
+    "handler": "jail.jail_reduce",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail reduce"
+  },
+  "jail_reason": {
+    "handler": "jail.jail_reason",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail reason"
+  },
+  "jail_history": {
+    "handler": "jail.jail_history",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail history"
+  },
+  "jail_roster": {
+    "handler": "jail.jail_roster",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail roster"
+  },
+  "jail_status": {
+    "handler": "jail.jail_status",
+    "module": "jail",
+    "featureFlag": "jail",
+    "registered": "/jail status"
+  },
+  "panic_activate": {
+    "handler": "security.panic_activate",
+    "module": "security",
+    "featureFlag": "security",
+    "registered": "/panic activate"
+  },
+  "panic_deactivate": {
+    "handler": "security.panic_deactivate",
+    "module": "security",
+    "featureFlag": "security",
+    "registered": "/panic deactivate"
+  },
+  "panic_status": {
+    "handler": "security.panic_status",
+    "module": "security",
+    "featureFlag": "security",
+    "registered": "/panic status"
+  },
+  "custom_create": {
+    "handler": "custom_commands.custom_create",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command create"
+  },
+  "custom_edit": {
+    "handler": "custom_commands.custom_edit",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command edit"
+  },
+  "custom_delete": {
+    "handler": "custom_commands.custom_delete",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command delete"
+  },
+  "custom_enable": {
+    "handler": "custom_commands.custom_enable",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command enable"
+  },
+  "custom_disable": {
+    "handler": "custom_commands.custom_disable",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command disable"
+  },
+  "custom_list": {
+    "handler": "custom_commands.custom_list",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command list"
+  },
+  "custom_test": {
+    "handler": "custom_commands.custom_test",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command test"
+  },
+  "custom_clone": {
+    "handler": "custom_commands.custom_clone",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command clone"
+  },
+  "custom_info": {
+    "handler": "custom_commands.custom_info",
+    "module": "custom_commands",
+    "featureFlag": "custom_commands",
+    "registered": "/custom-command info"
+  },
+  "setup": {
+    "handler": "bootstrap.setup",
+    "module": "bootstrap",
+    "featureFlag": "bootstrap",
+    "registered": "/setup"
+  },
+  "setup_health": {
+    "handler": "bootstrap.health",
+    "module": "bootstrap",
+    "featureFlag": "bootstrap",
+    "registered": "/setup health"
+  },
+  "chairism_context": {
+    "handler": "chairisms.contextCreate",
+    "module": "chairisms",
+    "featureFlag": "chairisms",
+    "registered": "Create Chairism"
+  },
+  "tldr_chat": {
+    "handler": "profile.tldrChat",
+    "module": "profile",
+    "featureFlag": "profile",
+    "registered": "/tldr chat"
+  },
+  "tldr_events": {
+    "handler": "profile.tldrEvents",
+    "module": "profile",
+    "featureFlag": "profile",
+    "registered": "/tldr events"
+  },
+  "special_vc": {
+    "handler": "special_commands.vc",
+    "module": "special_commands",
+    "featureFlag": "special_commands",
+    "registered": "!vc"
+  },
+  "special_chess": {
+    "handler": "special_commands.chess",
+    "module": "special_commands",
+    "featureFlag": "special_commands",
+    "registered": "!chess"
+  },
+  "lore": {
+    "handler": "lore.lore",
+    "module": "lore",
+    "featureFlag": "lore",
+    "registered": "/lore"
+  },
+  "collection": {
+    "handler": "collections.collection",
+    "module": "collections",
+    "featureFlag": "collections",
+    "registered": "/collection"
+  },
+  "leaderboard": {
+    "handler": "records.leaderboard",
+    "module": "records",
+    "featureFlag": "records",
+    "registered": "/leaderboard"
+  },
+  "privacy_activity": {
+    "handler": "profile.privacyActivity",
+    "module": "profile",
+    "featureFlag": "profile",
+    "registered": "/privacy activity"
+  },
+  "privacy_roast": {
+    "handler": "social.privacyRoast",
+    "module": "social",
+    "featureFlag": "social",
+    "registered": "/privacy roast"
+  },
+  "hangman": {
+    "handler": "solo_games.hangman",
+    "module": "solo_games",
+    "featureFlag": "solo_games",
+    "registered": "/hangman"
+  },
+  "wordscramble": {
+    "handler": "solo_games.wordscramble",
+    "module": "solo_games",
+    "featureFlag": "solo_games",
+    "registered": "/wordscramble"
+  },
+  "mastermind": {
+    "handler": "solo_games.mastermind",
+    "module": "solo_games",
+    "featureFlag": "solo_games",
+    "registered": "/mastermind"
+  },
+  "minesweeper": {
+    "handler": "solo_games.minesweeper",
+    "module": "solo_games",
+    "featureFlag": "solo_games",
+    "registered": "/minesweeper"
+  },
+  "haiku": {
+    "handler": "social.haiku",
+    "module": "social",
+    "featureFlag": "haiku",
+    "registered": "/haiku"
+  }
+}

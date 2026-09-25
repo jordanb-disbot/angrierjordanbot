@@ -1,0 +1,32 @@
+ANGRIER JORDAN — CODEX HANDOFF MANIFEST
+Date: 2026-09-25
+
+START HERE
+- CODEX_MASTER_HANDOFF_2026-09-25.md
+- CODEX_INITIAL_PROMPT_2026-09-25.txt
+
+IMPLEMENTATION BASELINE
+- ANGRIER_JORDAN_IMPLEMENTATION_CHECKPOINT_08_2026-09-21.zip
+
+AUTHORITATIVE PRODUCT / FLOW DOCUMENTS
+- ANGRIER_JORDAN_CANONICAL_BUILD_SPEC_2026-09-21.md
+- ANGRIER_JORDAN_FEATURE_FLOW_REFERENCE_2026-09-21.txt
+- FINAL_COMMAND_TO_PRESENTATION_AUDIT.md
+- ANGRIER_JORDAN_COMMAND_ASSET_AUDIT.md
+
+QA / CURRENT STATUS
+- ANGRIER_JORDAN_FINAL_QA_REPORT_2026-09-25.txt
+- IMPLEMENTATION_CHECKPOINT_08.md
+
+VISUALS
+- ANGRIER_JORDAN_VISUAL_REFRESH_PHASE5_FINAL_2026-09-21.zip
+- APPROVED_WYR_VISUAL_REFERENCE.png
+
+INTENTIONALLY EXCLUDED AS AUTHORITATIVE SOURCES
+- angrier_jordan_feature_system_overview.png (stale command wording)
+- angrier_jordan_command_overview.png (stale command wording)
+- older handoff/build bundles that predate the 2026-09-21 reconciled source of truth
+- older visual style sheets that conflict with current production tokens / approved WYR direction
+
+IMPORTANT
+The Phase 5 ZIP is included for production visual assets, but one README line inside it is stale and says QA failed. Current validation and the final QA report confirm PASS; correct that documentation line during the Codex baseline cleanup.

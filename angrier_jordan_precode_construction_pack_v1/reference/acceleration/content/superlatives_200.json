@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "SUPERLATIVE-0001",
+    "title": "Most Likely to Catching Feelings",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0002",
+    "title": "Best at Oversharing at 2 AM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0003",
+    "title": "Worst at Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0004",
+    "title": "Most Dangerous When Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0005",
+    "title": "Most Unexpectedly Good at Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0006",
+    "title": "Most Likely to Accidentally Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0007",
+    "title": "Most Likely to Secretly Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0008",
+    "title": "Most Likely to Survive Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0009",
+    "title": "Most Likely to Start Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0010",
+    "title": "Most Likely to Turn Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0011",
+    "title": "Most Likely to Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0012",
+    "title": "Best at Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0013",
+    "title": "Worst at Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0014",
+    "title": "Most Dangerous When Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0015",
+    "title": "Most Unexpectedly Good at Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0016",
+    "title": "Most Likely to Accidentally Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0017",
+    "title": "Most Likely to Secretly Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0018",
+    "title": "Most Likely to Survive Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0019",
+    "title": "Most Likely to Start Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0020",
+    "title": "Most Likely to Turn Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0021",
+    "title": "Most Likely to Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0022",
+    "title": "Best at Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0023",
+    "title": "Worst at Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0024",
+    "title": "Most Dangerous When Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0025",
+    "title": "Most Unexpectedly Good at Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0026",
+    "title": "Most Likely to Accidentally Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0027",
+    "title": "Most Likely to Secretly Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0028",
+    "title": "Most Likely to Survive Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0029",
+    "title": "Most Likely to Start Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0030",
+    "title": "Most Likely to Turn Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0031",
+    "title": "Most Likely to Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0032",
+    "title": "Best at Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0033",
+    "title": "Worst at Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0034",
+    "title": "Most Dangerous When Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0035",
+    "title": "Most Unexpectedly Good at Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0036",
+    "title": "Most Likely to Accidentally Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0037",
+    "title": "Most Likely to Secretly Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0038",
+    "title": "Most Likely to Survive Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0039",
+    "title": "Most Likely to Start Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0040",
+    "title": "Most Likely to Turn Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0041",
+    "title": "Most Likely to Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0042",
+    "title": "Best at Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0043",
+    "title": "Worst at Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0044",
+    "title": "Most Dangerous When Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0045",
+    "title": "Most Unexpectedly Good at Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0046",
+    "title": "Most Likely to Accidentally Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0047",
+    "title": "Most Likely to Secretly Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0048",
+    "title": "Most Likely to Survive Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0049",
+    "title": "Most Likely to Start Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0050",
+    "title": "Most Likely to Turn Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0051",
+    "title": "Most Likely to Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0052",
+    "title": "Best at Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0053",
+    "title": "Worst at Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0054",
+    "title": "Most Dangerous When Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0055",
+    "title": "Most Unexpectedly Good at Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0056",
+    "title": "Most Likely to Accidentally Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0057",
+    "title": "Most Likely to Secretly Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0058",
+    "title": "Most Likely to Survive Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0059",
+    "title": "Most Likely to Start Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0060",
+    "title": "Most Likely to Turn Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0061",
+    "title": "Most Likely to Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0062",
+    "title": "Best at Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0063",
+    "title": "Worst at Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0064",
+    "title": "Most Dangerous When Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0065",
+    "title": "Most Unexpectedly Good at Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0066",
+    "title": "Most Likely to Accidentally Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0067",
+    "title": "Most Likely to Secretly Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0068",
+    "title": "Most Likely to Survive Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0069",
+    "title": "Most Likely to Start Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0070",
+    "title": "Most Likely to Turn Being the Responsible One",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0071",
+    "title": "Most Likely to Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0072",
+    "title": "Best at Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0073",
+    "title": "Worst at Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0074",
+    "title": "Most Dangerous When Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0075",
+    "title": "Most Unexpectedly Good at Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0076",
+    "title": "Most Likely to Accidentally Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0077",
+    "title": "Most Likely to Secretly Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0078",
+    "title": "Most Likely to Survive Being the Responsible One",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0079",
+    "title": "Most Likely to Start Getting Married First",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0080",
+    "title": "Most Likely to Turn Making Friends With a Stranger",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0081",
+    "title": "Most Likely to Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0082",
+    "title": "Best at Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0083",
+    "title": "Worst at Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0084",
+    "title": "Most Dangerous When Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0085",
+    "title": "Most Unexpectedly Good at Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0086",
+    "title": "Most Likely to Accidentally Being the Responsible One",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0087",
+    "title": "Most Likely to Secretly Getting Married First",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0088",
+    "title": "Most Likely to Survive Making Friends With a Stranger",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0089",
+    "title": "Most Likely to Start Starting a Business on a Dare",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0090",
+    "title": "Most Likely to Turn Catching Feelings",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0091",
+    "title": "Most Likely to Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0092",
+    "title": "Best at Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0093",
+    "title": "Worst at Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0094",
+    "title": "Most Dangerous When Being the Responsible One",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0095",
+    "title": "Most Unexpectedly Good at Getting Married First",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0096",
+    "title": "Most Likely to Accidentally Making Friends With a Stranger",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0097",
+    "title": "Most Likely to Secretly Starting a Business on a Dare",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0098",
+    "title": "Most Likely to Survive Catching Feelings",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0099",
+    "title": "Most Likely to Start Oversharing at 2 AM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0100",
+    "title": "Most Likely to Turn Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0101",
+    "title": "Most Likely to Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0102",
+    "title": "Best at Being the Responsible One",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0103",
+    "title": "Worst at Getting Married First",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0104",
+    "title": "Most Dangerous When Making Friends With a Stranger",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0105",
+    "title": "Most Unexpectedly Good at Starting a Business on a Dare",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0106",
+    "title": "Most Likely to Accidentally Catching Feelings",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0107",
+    "title": "Most Likely to Secretly Oversharing at 2 AM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0108",
+    "title": "Most Likely to Survive Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0109",
+    "title": "Most Likely to Start Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0110",
+    "title": "Most Likely to Turn Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0111",
+    "title": "Most Likely to Getting Married First",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0112",
+    "title": "Best at Making Friends With a Stranger",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0113",
+    "title": "Worst at Starting a Business on a Dare",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0114",
+    "title": "Most Dangerous When Catching Feelings",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0115",
+    "title": "Most Unexpectedly Good at Oversharing at 2 AM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0116",
+    "title": "Most Likely to Accidentally Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0117",
+    "title": "Most Likely to Secretly Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0118",
+    "title": "Most Likely to Survive Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0119",
+    "title": "Most Likely to Start Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0120",
+    "title": "Most Likely to Turn Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0121",
+    "title": "Most Likely to Starting a Business on a Dare",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0122",
+    "title": "Best at Catching Feelings",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0123",
+    "title": "Worst at Oversharing at 2 AM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0124",
+    "title": "Most Dangerous When Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0125",
+    "title": "Most Unexpectedly Good at Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0126",
+    "title": "Most Likely to Accidentally Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0127",
+    "title": "Most Likely to Secretly Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0128",
+    "title": "Most Likely to Survive Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0129",
+    "title": "Most Likely to Start Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0130",
+    "title": "Most Likely to Turn Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0131",
+    "title": "Most Likely to Oversharing at 2 AM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0132",
+    "title": "Best at Planning the Best Trip",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0133",
+    "title": "Worst at Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0134",
+    "title": "Most Dangerous When Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0135",
+    "title": "Most Unexpectedly Good at Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0136",
+    "title": "Most Likely to Accidentally Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0137",
+    "title": "Most Likely to Secretly Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0138",
+    "title": "Most Likely to Survive Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0139",
+    "title": "Most Likely to Start Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0140",
+    "title": "Most Likely to Turn Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0141",
+    "title": "Most Likely to Getting Everyone Into Trouble",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0142",
+    "title": "Best at Disappearing Then Returning Like Nothing Happened",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0143",
+    "title": "Worst at Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0144",
+    "title": "Most Dangerous When Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0145",
+    "title": "Most Unexpectedly Good at Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0146",
+    "title": "Most Likely to Accidentally Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0147",
+    "title": "Most Likely to Secretly Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0148",
+    "title": "Most Likely to Survive Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0149",
+    "title": "Most Likely to Start Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0150",
+    "title": "Most Likely to Turn Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0151",
+    "title": "Most Likely to Turning a Joke Into a Full Event",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0152",
+    "title": "Best at Surviving a Zombie Apocalypse",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0153",
+    "title": "Worst at Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0154",
+    "title": "Most Dangerous When Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0155",
+    "title": "Most Unexpectedly Good at Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0156",
+    "title": "Most Likely to Accidentally Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0157",
+    "title": "Most Likely to Secretly Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0158",
+    "title": "Most Likely to Survive Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0159",
+    "title": "Most Likely to Start Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0160",
+    "title": "Most Likely to Turn Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0161",
+    "title": "Most Likely to Getting Banned From Somewhere Weird",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0162",
+    "title": "Best at Winning the Lottery Then Losing the Ticket",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0163",
+    "title": "Worst at Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0164",
+    "title": "Most Dangerous When Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0165",
+    "title": "Most Unexpectedly Good at Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0166",
+    "title": "Most Likely to Accidentally Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0167",
+    "title": "Most Likely to Secretly Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0168",
+    "title": "Most Likely to Survive Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0169",
+    "title": "Most Likely to Start Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0170",
+    "title": "Most Likely to Turn Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0171",
+    "title": "Most Likely to Keeping a Secret",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0172",
+    "title": "Best at Winning an Argument Nobody Started",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0173",
+    "title": "Worst at Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0174",
+    "title": "Most Dangerous When Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0175",
+    "title": "Most Unexpectedly Good at Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0176",
+    "title": "Most Likely to Accidentally Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0177",
+    "title": "Most Likely to Secretly Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0178",
+    "title": "Most Likely to Survive Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0179",
+    "title": "Most Likely to Start Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0180",
+    "title": "Most Likely to Turn Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0181",
+    "title": "Most Likely to Making a Questionable Purchase",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0182",
+    "title": "Best at Sending the Riskiest DM",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0183",
+    "title": "Worst at Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0184",
+    "title": "Most Dangerous When Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0185",
+    "title": "Most Unexpectedly Good at Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0186",
+    "title": "Most Likely to Accidentally Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0187",
+    "title": "Most Likely to Secretly Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0188",
+    "title": "Most Likely to Survive Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0189",
+    "title": "Most Likely to Start Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0190",
+    "title": "Most Likely to Turn Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0191",
+    "title": "Most Likely to Laughing at the Worst Possible Time",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0192",
+    "title": "Best at Ending Up on a Reality Show",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0193",
+    "title": "Worst at Being Mistaken for Staff",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0194",
+    "title": "Most Dangerous When Falling Asleep in VC",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0195",
+    "title": "Most Unexpectedly Good at Starting Server Drama Without Meaning To",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0196",
+    "title": "Most Likely to Accidentally Becoming Server Lore",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0197",
+    "title": "Most Likely to Secretly Forgetting Why They Entered a Room",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0198",
+    "title": "Most Likely to Survive Giving Surprisingly Good Advice",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0199",
+    "title": "Most Likely to Start Being the Responsible One",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  },
+  {
+    "id": "SUPERLATIVE-0200",
+    "title": "Most Likely to Turn Getting Married First",
+    "adult_level": "mild_to_risky",
+    "enabled": true
+  }
+]

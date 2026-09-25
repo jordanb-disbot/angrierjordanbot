@@ -1,0 +1,9 @@
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+COPY apps/bot/package.json apps/bot/package.json
+COPY packages ./packages
+RUN npm install
+COPY . .
+RUN npm --workspace @angrier-jordan/bot run build
+CMD ["npm","--workspace","@angrier-jordan/bot","run","start"]

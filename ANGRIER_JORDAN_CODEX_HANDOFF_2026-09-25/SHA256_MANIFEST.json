@@ -1,0 +1,62 @@
+[
+  {
+    "file": "ANGRIER_JORDAN_CANONICAL_BUILD_SPEC_2026-09-21.md",
+    "size": 106806,
+    "sha256": "4371969ba5230fcd70a754e61206b33d8533567144f900a73e530dcf02534e99"
+  },
+  {
+    "file": "ANGRIER_JORDAN_COMMAND_ASSET_AUDIT.md",
+    "size": 47803,
+    "sha256": "f5fe22ac312a51f0bf9346914cc48aff9200099bdf38ec9323692631043808e3"
+  },
+  {
+    "file": "ANGRIER_JORDAN_FEATURE_FLOW_REFERENCE_2026-09-21.txt",
+    "size": 100348,
+    "sha256": "2da05ac024f7e3f34197f257ad40eb60b219cf785a90e4181c882ccfdf88c099"
+  },
+  {
+    "file": "ANGRIER_JORDAN_FINAL_QA_REPORT_2026-09-25.txt",
+    "size": 11852,
+    "sha256": "7177d9131b88ed5cb72eaddbfb366ed5c5a4062ed30d09e41916cc45890c71e6"
+  },
+  {
+    "file": "ANGRIER_JORDAN_IMPLEMENTATION_CHECKPOINT_08_2026-09-21.zip",
+    "size": 40049194,
+    "sha256": "d2b06a20a40469d4ba2c96973bf05ba5cb1747f99bf40b4c0cdb1cddfc97a639"
+  },
+  {
+    "file": "ANGRIER_JORDAN_VISUAL_REFRESH_PHASE5_FINAL_2026-09-21.zip",
+    "size": 38496908,
+    "sha256": "0c130cb3e41216f025612cfe3235111601f85586fcff226d92090412e01cccd8"
+  },
+  {
+    "file": "APPROVED_WYR_VISUAL_REFERENCE.png",
+    "size": 1921286,
+    "sha256": "a5ab87b3ae9f9cc49a8549e0f7ac6b957720817b67aa30ccd28f8a5572faa9bd"
+  },
+  {
+    "file": "CODEX_HANDOFF_MANIFEST_2026-09-25.txt",
+    "size": 1283,
+    "sha256": "ab43603ba18b7e62b224ad144a0f95c6d70ff33e8db0565d61ba04cf5f86c734"
+  },
+  {
+    "file": "CODEX_INITIAL_PROMPT_2026-09-25.txt",
+    "size": 2326,
+    "sha256": "e7fceffd75e9b4ee4390715cb00ba1ed60d5a66bf77dfdbce20e427f40d682c8"
+  },
+  {
+    "file": "CODEX_MASTER_HANDOFF_2026-09-25.md",
+    "size": 24054,
+    "sha256": "692b887d87fb46c2af32e00644acbe6cbe2a7225526fae7c099b76e92c2df6af"
+  },
+  {
+    "file": "FINAL_COMMAND_TO_PRESENTATION_AUDIT.md",
+    "size": 27189,
+    "sha256": "914e5ba07b5100ad6cf6730f2ad25f41b73bf3fb88b52de948e60c50ba30daba"
+  },
+  {
+    "file": "IMPLEMENTATION_CHECKPOINT_08.md",
+    "size": 6557,
+    "sha256": "8029a8f508807afee3e9fae9f68bf185034e8e414edd17d8842bf8eb4366742a"
+  }
+]

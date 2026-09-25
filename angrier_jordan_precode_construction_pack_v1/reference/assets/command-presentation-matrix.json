@@ -1,0 +1,2945 @@
+{
+  "version": "5.0",
+  "date": "2026-09-21",
+  "source_registry_count": 192,
+  "coverage_count": 192,
+  "presentation_types": {
+    "NATIVE_DISCORD": 66,
+    "SHARED_RUNTIME": 72,
+    "DEDICATED_RUNTIME": 52,
+    "SPECIAL_EVENT_RUNTIME": 2
+  },
+  "commands": [
+    {
+      "id": "help",
+      "module": "core",
+      "invocation": "/help",
+      "registration_path": "/help",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "core",
+      "asset_refs": [
+        "production/atomic_assets/music_community/help.png"
+      ],
+      "interaction_contract": "Ephemeral native/shared shell; no unique runtime illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "tutorial",
+      "module": "tutorial",
+      "invocation": "/tutorial",
+      "registration_path": "/tutorial",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "tutorial",
+      "asset_refs": [
+        "production/atomic_assets/music_community/tutorial.png",
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Ephemeral guided tutorial with native navigation",
+      "status": "COVERED"
+    },
+    {
+      "id": "rules",
+      "module": "core",
+      "invocation": "/rules",
+      "registration_path": "/rules",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "core",
+      "asset_refs": [
+        "production/atomic_assets/music_community/rules.png"
+      ],
+      "interaction_contract": "Ephemeral native/shared shell; no unique runtime illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "status",
+      "module": "core",
+      "invocation": "/status",
+      "registration_path": "/status",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "core",
+      "asset_refs": [
+        "production/atomic_assets/music_community/status.png"
+      ],
+      "interaction_contract": "Ephemeral native/shared shell; no unique runtime illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "bug",
+      "module": "core",
+      "invocation": "/bug",
+      "registration_path": "/bug",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "core",
+      "asset_refs": [
+        "production/atomic_assets/music_community/bug_report.png"
+      ],
+      "interaction_contract": "Ephemeral native/shared shell; no unique runtime illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "dms",
+      "module": "core",
+      "invocation": "/dms",
+      "registration_path": "/dms",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "core",
+      "asset_refs": [
+        "production/atomic_assets/music_community/admin_control.png"
+      ],
+      "interaction_contract": "Ephemeral native/shared shell; no unique runtime illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "profile",
+      "module": "profile",
+      "invocation": "/profile",
+      "registration_path": "/profile",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "profile",
+      "asset_refs": [
+        "production/atomic_assets/templates/profile.svg"
+      ],
+      "interaction_contract": "Rendered profile; native Edit Showcase and pagination controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "records",
+      "module": "profile",
+      "invocation": "/records",
+      "registration_path": "/records",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "records",
+      "asset_refs": [
+        "production/atomic_assets/templates/records.svg"
+      ],
+      "interaction_contract": "Shared records/leaderboard renderer; native category selector where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "daily",
+      "module": "economy",
+      "invocation": "/daily",
+      "registration_path": "/daily",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "daily",
+      "asset_refs": [
+        "production/runtime_templates/daily/01_ready.svg",
+        "production/runtime_templates/daily/02_partial.svg",
+        "production/runtime_templates/daily/03_complete.svg"
+      ],
+      "interaction_contract": "Ephemeral hub; native Claim Daily / Daily Spin / Fortune controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "weekly",
+      "module": "economy",
+      "invocation": "/weekly",
+      "registration_path": "/weekly",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "economy_result",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Shared economy result shell + relevant item/tool assets",
+      "status": "COVERED"
+    },
+    {
+      "id": "scavenge",
+      "module": "economy",
+      "invocation": "/scavenge",
+      "registration_path": "/scavenge",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "economy_result",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Shared economy result shell + relevant item/tool assets",
+      "status": "COVERED"
+    },
+    {
+      "id": "dig",
+      "module": "economy",
+      "invocation": "/dig",
+      "registration_path": "/dig",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "economy_result",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Shared economy result shell + relevant item/tool assets",
+      "status": "COVERED"
+    },
+    {
+      "id": "fish",
+      "module": "economy",
+      "invocation": "/fish",
+      "registration_path": "/fish",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "economy_result",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Shared economy result shell + relevant item/tool assets",
+      "status": "COVERED"
+    },
+    {
+      "id": "work",
+      "module": "economy",
+      "invocation": "/work",
+      "registration_path": "/work",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "economy_result",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Shared economy result shell + relevant item/tool assets",
+      "status": "COVERED"
+    },
+    {
+      "id": "statement",
+      "module": "economy",
+      "invocation": "/statement",
+      "registration_path": "/statement",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "statement",
+      "asset_refs": [
+        "production/atomic_assets/templates/statement.svg"
+      ],
+      "interaction_contract": "Rendered financial statement",
+      "status": "COVERED"
+    },
+    {
+      "id": "inventory",
+      "module": "economy",
+      "invocation": "/inventory",
+      "registration_path": "/inventory",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "inventory_collection",
+      "asset_refs": [
+        "production/atomic_assets/templates/inventory.svg"
+      ],
+      "interaction_contract": "Rendered inventory/collection browser with native filters/actions",
+      "status": "COVERED"
+    },
+    {
+      "id": "bank",
+      "module": "economy",
+      "invocation": "/bank",
+      "registration_path": "/bank",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "economy",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg",
+        "production/atomic_assets/economy/bank.png",
+        "production/atomic_assets/economy/vault.png"
+      ],
+      "interaction_contract": "Native deposit/withdraw controls on shared economy shell",
+      "status": "COVERED"
+    },
+    {
+      "id": "shop",
+      "module": "economy",
+      "invocation": "/shop",
+      "registration_path": "/shop",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "shop",
+      "asset_refs": [
+        "production/atomic_assets/templates/shop.svg"
+      ],
+      "interaction_contract": "Rendered shop with native purchase/navigation controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "craft",
+      "module": "economy",
+      "invocation": "/craft",
+      "registration_path": "/craft",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "crafting",
+      "asset_refs": [
+        "production/runtime_templates/crafting/01_recipe.svg",
+        "production/runtime_templates/crafting/02_success.svg",
+        "production/runtime_templates/crafting/03_failure.svg"
+      ],
+      "interaction_contract": "Native selectors/confirmations around rendered craft result",
+      "status": "COVERED"
+    },
+    {
+      "id": "repair",
+      "module": "economy",
+      "invocation": "/repair",
+      "registration_path": "/repair",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "repair",
+      "asset_refs": [
+        "production/runtime_templates/repair/01_options.svg",
+        "production/runtime_templates/repair/02_result.svg"
+      ],
+      "interaction_contract": "Native repair-tier selection; rendered result",
+      "status": "COVERED"
+    },
+    {
+      "id": "transfer",
+      "module": "economy",
+      "invocation": "/transfer",
+      "registration_path": "/transfer",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "confirmation",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Native confirmation/result flow; no unique illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "gift",
+      "module": "economy",
+      "invocation": "/gift",
+      "registration_path": "/gift",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "confirmation",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Native confirmation/result flow; no unique illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "unlock_all",
+      "module": "economy",
+      "invocation": "/unlock all",
+      "registration_path": "/unlock all",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "confirmation",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Native confirmation/result flow; no unique illustration",
+      "status": "COVERED"
+    },
+    {
+      "id": "blackjack",
+      "module": "casino",
+      "invocation": "/casino blackjack",
+      "registration_path": "/casino blackjack",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "casino",
+      "asset_refs": [
+        "production/runtime_templates/casino/01_blackjack_live.svg",
+        "production/runtime_templates/casino/02_blackjack_result.svg"
+      ],
+      "interaction_contract": "Native game controls; completed rounds include Play Again and revalidate wager/options",
+      "status": "COVERED"
+    },
+    {
+      "id": "roulette",
+      "module": "casino",
+      "invocation": "/casino roulette",
+      "registration_path": "/casino roulette",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "casino",
+      "asset_refs": [
+        "production/runtime_templates/casino/03_roulette_result.svg"
+      ],
+      "interaction_contract": "Native game controls; completed rounds include Play Again and revalidate wager/options",
+      "status": "COVERED"
+    },
+    {
+      "id": "slots",
+      "module": "casino",
+      "invocation": "/casino slots",
+      "registration_path": "/casino slots",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "casino",
+      "asset_refs": [
+        "production/runtime_templates/casino/04_slots_result.svg",
+        "production/runtime_templates/casino/07_chair_pot.svg"
+      ],
+      "interaction_contract": "Native game controls; completed rounds include Play Again and revalidate wager/options",
+      "status": "COVERED"
+    },
+    {
+      "id": "dice",
+      "module": "casino",
+      "invocation": "/casino dice",
+      "registration_path": "/casino dice",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "casino",
+      "asset_refs": [
+        "production/runtime_templates/casino/05_dice_result.svg"
+      ],
+      "interaction_contract": "Native game controls; completed rounds include Play Again and revalidate wager/options",
+      "status": "COVERED"
+    },
+    {
+      "id": "coinflip",
+      "module": "casino",
+      "invocation": "/casino coinflip",
+      "registration_path": "/casino coinflip",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "casino",
+      "asset_refs": [
+        "production/runtime_templates/casino/06_coinflip_result.svg"
+      ],
+      "interaction_contract": "Native game controls; completed rounds include Play Again and revalidate wager/options",
+      "status": "COVERED"
+    },
+    {
+      "id": "lottery",
+      "module": "casino",
+      "invocation": "/lottery",
+      "registration_path": "/lottery",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "lottery",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg",
+        "production/atomic_assets/ui/events/lottery_winner.png",
+        "production/atomic_assets/casino/lottery_ticket.png"
+      ],
+      "interaction_contract": "Scheduled/ticket UI uses shared result shell; no Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "giveaway",
+      "module": "community",
+      "invocation": "/giveaway",
+      "registration_path": "/giveaway",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "community",
+      "asset_refs": [
+        "production/atomic_assets/templates/giveaway.svg"
+      ],
+      "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "race",
+      "module": "special_commands",
+      "invocation": "!race",
+      "registration_path": "!race",
+      "command_type": "special_text",
+      "visibility": "public",
+      "presentation_type": "SPECIAL_EVENT_RUNTIME",
+      "renderer_family": "race",
+      "asset_refs": [
+        "production/atomic_assets/templates/event_states/race/01_join_betting.svg",
+        "production/atomic_assets/templates/event_states/race/02_sprint_live.svg",
+        "production/atomic_assets/templates/event_states/race/03_result.svg"
+      ],
+      "interaction_contract": "!race trigger; native Join/Bet/+30 controls; no Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "fight",
+      "module": "fight",
+      "invocation": "/fight @member",
+      "registration_path": "/fight",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "fight",
+      "asset_refs": [
+        "production/atomic_assets/templates/event_states/fight/01_betting.svg",
+        "production/atomic_assets/templates/event_states/fight/02_combat_live.svg",
+        "production/atomic_assets/templates/event_states/fight/03_result.svg"
+      ],
+      "interaction_contract": "/fight @member only; native wager modal/+30; no accept/join/rematch",
+      "status": "COVERED"
+    },
+    {
+      "id": "tictactoe",
+      "module": "pvp",
+      "invocation": "/game tictactoe",
+      "registration_path": "/game tictactoe",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "pvp",
+      "asset_refs": [
+        "production/atomic_assets/games/pvp/tictactoe_panel.png",
+        "production/atomic_assets/games/pvp/pvp_state_banners.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Native challenge/turn controls; completed match supports same-opponent Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "connectfour",
+      "module": "pvp",
+      "invocation": "/game connectfour",
+      "registration_path": "/game connectfour",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "pvp",
+      "asset_refs": [
+        "production/atomic_assets/games/pvp/connect_four_panel.png",
+        "production/atomic_assets/games/pvp/pvp_state_banners.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Native challenge/turn controls; completed match supports same-opponent Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "battleship",
+      "module": "pvp",
+      "invocation": "/game battleship",
+      "registration_path": "/game battleship",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "pvp",
+      "asset_refs": [
+        "production/atomic_assets/games/pvp/battleship_panel.png",
+        "production/atomic_assets/games/pvp/pvp_state_banners.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Native challenge/turn controls; completed match supports same-opponent Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "fmk",
+      "module": "party_games",
+      "invocation": "/fmk",
+      "registration_path": "/fmk",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "fmk",
+      "asset_refs": [
+        "production/atomic_assets/templates/fmk.svg"
+      ],
+      "interaction_contract": "Sequential chooser + final native Agree/Disagree vote; Play Again creates a new trio",
+      "status": "COVERED"
+    },
+    {
+      "id": "truthordare",
+      "module": "party_games",
+      "invocation": "/truthordare",
+      "registration_path": "/truthordare",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "party",
+      "asset_refs": [
+        "production/runtime_templates/party/02_truth_dare.svg"
+      ],
+      "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "wyr",
+      "module": "party_games",
+      "invocation": "/wyr",
+      "registration_path": "/wyr",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "party",
+      "asset_refs": [
+        "production/runtime_templates/party/01_wyr.svg"
+      ],
+      "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "wwyd",
+      "module": "party_games",
+      "invocation": "/wwyd",
+      "registration_path": "/wwyd",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "party",
+      "asset_refs": [
+        "production/runtime_templates/party/03_wwyd.svg"
+      ],
+      "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "finish",
+      "module": "party_games",
+      "invocation": "/finishsentence",
+      "registration_path": "/finishsentence",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "party",
+      "asset_refs": [
+        "production/runtime_templates/party/04_finish_sentence.svg"
+      ],
+      "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "onewordstory",
+      "module": "party_games",
+      "invocation": "/onewordstory",
+      "registration_path": "/onewordstory",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "party",
+      "asset_refs": [
+        "production/runtime_templates/party/05_one_word_story.svg"
+      ],
+      "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
+      "status": "COVERED"
+    },
+    {
+      "id": "line",
+      "module": "special_commands",
+      "invocation": "!line",
+      "registration_path": "!line",
+      "command_type": "special_text",
+      "visibility": "public",
+      "presentation_type": "SPECIAL_EVENT_RUNTIME",
+      "renderer_family": "line",
+      "asset_refs": [
+        "production/atomic_assets/templates/event_states/line/01_readiness_open.svg",
+        "production/atomic_assets/templates/event_states/line/02_entry_locked.svg",
+        "production/atomic_assets/templates/event_states/line/03_countdown.svg",
+        "production/atomic_assets/templates/event_states/line/04_burst.svg",
+        "production/atomic_assets/animations/line_countdown.apng"
+      ],
+      "interaction_contract": "!line trigger; native readiness/host controls; 5\u21921\u2192burst; no 0",
+      "status": "COVERED"
+    },
+    {
+      "id": "poll",
+      "module": "community",
+      "invocation": "/poll",
+      "registration_path": "/poll",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "community",
+      "asset_refs": [
+        "production/atomic_assets/templates/poll.svg"
+      ],
+      "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "superlatives",
+      "module": "community",
+      "invocation": "/superlatives",
+      "registration_path": "/superlatives",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "community",
+      "asset_refs": [
+        "production/atomic_assets/templates/superlative.svg"
+      ],
+      "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "suggest",
+      "module": "community",
+      "invocation": "/suggest",
+      "registration_path": "/suggest",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "community",
+      "asset_refs": [
+        "production/atomic_assets/templates/suggestion.svg"
+      ],
+      "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "ama",
+      "module": "community",
+      "invocation": "/ama",
+      "registration_path": "/ama",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "community",
+      "asset_refs": [
+        "production/atomic_assets/templates/ama.svg"
+      ],
+      "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "roles",
+      "module": "roles",
+      "invocation": "/roles",
+      "registration_path": "/roles",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "roles",
+      "asset_refs": [
+        "production/runtime_templates/roles/01_panel.svg"
+      ],
+      "interaction_contract": "Ephemeral member selection only; native selects/buttons; no admin editing",
+      "status": "COVERED"
+    },
+    {
+      "id": "quote_message",
+      "module": "chairisms",
+      "invocation": "/quote message",
+      "registration_path": "/quote message",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "chairism",
+      "asset_refs": [
+        "production/atomic_assets/templates/chairism_short.svg",
+        "production/atomic_assets/templates/chairism_long.svg",
+        "production/atomic_assets/templates/chairism_image.svg",
+        "production/atomic_assets/templates/chairism_reply.svg"
+      ],
+      "interaction_contract": "One Chairism renderer family; native context action where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "quote_text",
+      "module": "chairisms",
+      "invocation": "/quote text",
+      "registration_path": "/quote text",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "chairism",
+      "asset_refs": [
+        "production/atomic_assets/templates/chairism_short.svg",
+        "production/atomic_assets/templates/chairism_long.svg",
+        "production/atomic_assets/templates/chairism_image.svg",
+        "production/atomic_assets/templates/chairism_reply.svg"
+      ],
+      "interaction_contract": "One Chairism renderer family; native context action where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "chairisms_recent",
+      "module": "chairisms",
+      "invocation": "/chairisms recent",
+      "registration_path": "/chairisms recent",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "chairism",
+      "asset_refs": [
+        "production/atomic_assets/templates/chairism_short.svg",
+        "production/atomic_assets/templates/chairism_long.svg",
+        "production/atomic_assets/templates/chairism_image.svg",
+        "production/atomic_assets/templates/chairism_reply.svg"
+      ],
+      "interaction_contract": "One Chairism renderer family; native context action where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "chairisms_member",
+      "module": "chairisms",
+      "invocation": "/chairisms member",
+      "registration_path": "/chairisms member",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "chairism",
+      "asset_refs": [
+        "production/atomic_assets/templates/chairism_short.svg",
+        "production/atomic_assets/templates/chairism_long.svg",
+        "production/atomic_assets/templates/chairism_image.svg",
+        "production/atomic_assets/templates/chairism_reply.svg"
+      ],
+      "interaction_contract": "One Chairism renderer family; native context action where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "chairisms_random",
+      "module": "chairisms",
+      "invocation": "/chairisms random",
+      "registration_path": "/chairisms random",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "chairism",
+      "asset_refs": [
+        "production/atomic_assets/templates/chairism_short.svg",
+        "production/atomic_assets/templates/chairism_long.svg",
+        "production/atomic_assets/templates/chairism_image.svg",
+        "production/atomic_assets/templates/chairism_reply.svg"
+      ],
+      "interaction_contract": "One Chairism renderer family; native context action where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_play",
+      "module": "music",
+      "invocation": "/play",
+      "registration_path": "/play",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_pause",
+      "module": "music",
+      "invocation": "/music pause",
+      "registration_path": "/music pause",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_resume",
+      "module": "music",
+      "invocation": "/music resume",
+      "registration_path": "/music resume",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_skip",
+      "module": "music",
+      "invocation": "/music skip",
+      "registration_path": "/music skip",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_previous",
+      "module": "music",
+      "invocation": "/music previous",
+      "registration_path": "/music previous",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_stop",
+      "module": "music",
+      "invocation": "/music stop",
+      "registration_path": "/music stop",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_replay",
+      "module": "music",
+      "invocation": "/music replay",
+      "registration_path": "/music replay",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_seek",
+      "module": "music",
+      "invocation": "/music seek",
+      "registration_path": "/music seek",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_queue",
+      "module": "music",
+      "invocation": "/music queue",
+      "registration_path": "/music queue",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_remove",
+      "module": "music",
+      "invocation": "/music remove",
+      "registration_path": "/music remove",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_move",
+      "module": "music",
+      "invocation": "/music move",
+      "registration_path": "/music move",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_clear",
+      "module": "music",
+      "invocation": "/music clear",
+      "registration_path": "/music clear",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_shuffle",
+      "module": "music",
+      "invocation": "/music shuffle",
+      "registration_path": "/music shuffle",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_jump",
+      "module": "music",
+      "invocation": "/music jump",
+      "registration_path": "/music jump",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_loop",
+      "module": "music",
+      "invocation": "/music loop",
+      "registration_path": "/music loop",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_autoplay",
+      "module": "music",
+      "invocation": "/music autoplay",
+      "registration_path": "/music autoplay",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_volume",
+      "module": "music",
+      "invocation": "/music volume",
+      "registration_path": "/music volume",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_nowplaying",
+      "module": "music",
+      "invocation": "/music nowplaying",
+      "registration_path": "/music nowplaying",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_history",
+      "module": "music",
+      "invocation": "/music history",
+      "registration_path": "/music history",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_join",
+      "module": "music",
+      "invocation": "/music join",
+      "registration_path": "/music join",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_leave",
+      "module": "music",
+      "invocation": "/music leave",
+      "registration_path": "/music leave",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_create",
+      "module": "music",
+      "invocation": "/playlist create",
+      "registration_path": "/playlist create",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_add",
+      "module": "music",
+      "invocation": "/playlist add",
+      "registration_path": "/playlist add",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_remove",
+      "module": "music",
+      "invocation": "/playlist remove",
+      "registration_path": "/playlist remove",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_play",
+      "module": "music",
+      "invocation": "/playlist play",
+      "registration_path": "/playlist play",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_rename",
+      "module": "music",
+      "invocation": "/playlist rename",
+      "registration_path": "/playlist rename",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_delete",
+      "module": "music",
+      "invocation": "/playlist delete",
+      "registration_path": "/playlist delete",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "playlist_view",
+      "module": "music",
+      "invocation": "/playlist view",
+      "registration_path": "/playlist view",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "music",
+      "asset_refs": [
+        "production/atomic_assets/templates/music_controller.svg"
+      ],
+      "interaction_contract": "Shared controller/queue shell; quick transport commands use native updates",
+      "status": "COVERED"
+    },
+    {
+      "id": "music_help",
+      "module": "music",
+      "invocation": "/music help",
+      "registration_path": "/music help",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "music_help",
+      "asset_refs": [
+        "production/atomic_assets/music_community/help.png"
+      ],
+      "interaction_contract": "Ephemeral native help surface",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_ts",
+      "module": "social",
+      "invocation": "/social ts",
+      "registration_path": "/social ts",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_hit",
+      "module": "social",
+      "invocation": "/social hit",
+      "registration_path": "/social hit",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_slap",
+      "module": "social",
+      "invocation": "/social slap",
+      "registration_path": "/social slap",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_pillow",
+      "module": "social",
+      "invocation": "/social pillow",
+      "registration_path": "/social pillow",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_cushion",
+      "module": "social",
+      "invocation": "/social cushion",
+      "registration_path": "/social cushion",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_stab",
+      "module": "social",
+      "invocation": "/social stab",
+      "registration_path": "/social stab",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_choke",
+      "module": "social",
+      "invocation": "/social choke",
+      "registration_path": "/social choke",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_shh",
+      "module": "social",
+      "invocation": "/social shh",
+      "registration_path": "/social shh",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_belittle",
+      "module": "social",
+      "invocation": "/social belittle",
+      "registration_path": "/social belittle",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_bonk",
+      "module": "social",
+      "invocation": "/social bonk",
+      "registration_path": "/social bonk",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_yeet",
+      "module": "social",
+      "invocation": "/social yeet",
+      "registration_path": "/social yeet",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_sit",
+      "module": "social",
+      "invocation": "/social sit",
+      "registration_path": "/social sit",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_standup",
+      "module": "social",
+      "invocation": "/social standup",
+      "registration_path": "/social standup",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_fold",
+      "module": "social",
+      "invocation": "/social fold",
+      "registration_path": "/social fold",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_recline",
+      "module": "social",
+      "invocation": "/social recline",
+      "registration_path": "/social recline",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_sideeye",
+      "module": "social",
+      "invocation": "/social sideeye",
+      "registration_path": "/social sideeye",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_judge",
+      "module": "social",
+      "invocation": "/social judge",
+      "registration_path": "/social judge",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_shame",
+      "module": "social",
+      "invocation": "/social shame",
+      "registration_path": "/social shame",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_boo",
+      "module": "social",
+      "invocation": "/social boo",
+      "registration_path": "/social boo",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_bruh",
+      "module": "social",
+      "invocation": "/social bruh",
+      "registration_path": "/social bruh",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_wtf",
+      "module": "social",
+      "invocation": "/social wtf",
+      "registration_path": "/social wtf",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_sus",
+      "module": "social",
+      "invocation": "/social sus",
+      "registration_path": "/social sus",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_yap",
+      "module": "social",
+      "invocation": "/social yap",
+      "registration_path": "/social yap",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_touchgrass",
+      "module": "social",
+      "invocation": "/social touchgrass",
+      "registration_path": "/social touchgrass",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_blame",
+      "module": "social",
+      "invocation": "/social blame",
+      "registration_path": "/social blame",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_disappoint",
+      "module": "social",
+      "invocation": "/social disappoint",
+      "registration_path": "/social disappoint",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_chaircheck",
+      "module": "social",
+      "invocation": "/social chaircheck",
+      "registration_path": "/social chaircheck",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_throwchair",
+      "module": "social",
+      "invocation": "/social throwchair",
+      "registration_path": "/social throwchair",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_getup",
+      "module": "social",
+      "invocation": "/social getup",
+      "registration_path": "/social getup",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_calmdown",
+      "module": "social",
+      "invocation": "/social calmdown",
+      "registration_path": "/social calmdown",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_absolutelynot",
+      "module": "social",
+      "invocation": "/social absolutelynot",
+      "registration_path": "/social absolutelynot",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_explainyourself",
+      "module": "social",
+      "invocation": "/social explainyourself",
+      "registration_path": "/social explainyourself",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_embarrassing",
+      "module": "social",
+      "invocation": "/social embarrassing",
+      "registration_path": "/social embarrassing",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_questionable",
+      "module": "social",
+      "invocation": "/social questionable",
+      "registration_path": "/social questionable",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_respect",
+      "module": "social",
+      "invocation": "/social respect",
+      "registration_path": "/social respect",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_compliment",
+      "module": "social",
+      "invocation": "/social compliment",
+      "registration_path": "/social compliment",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_wheresmyvape",
+      "module": "social",
+      "invocation": "/social wheresmyvape",
+      "registration_path": "/social wheresmyvape",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "social_hitthegeekbar",
+      "module": "social",
+      "invocation": "/social hitthegeekbar",
+      "registration_path": "/social hitthegeekbar",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "roast",
+      "module": "social",
+      "invocation": "/social roast",
+      "registration_path": "/social roast",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "notmad",
+      "module": "social",
+      "invocation": "/social notmad",
+      "registration_path": "/social notmad",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Primarily text/native reply; shared result shell only when a card is useful",
+      "status": "COVERED"
+    },
+    {
+      "id": "introduce",
+      "module": "introductions",
+      "invocation": "/introduce",
+      "registration_path": "/introduce",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "introduction",
+      "asset_refs": [
+        "production/runtime_templates/introduction/01_preview.svg",
+        "production/runtime_templates/introduction/02_published.svg"
+      ],
+      "interaction_contract": "Private modal/preview; bot-published introduction; config remains admin/staff control surface",
+      "status": "COVERED"
+    },
+    {
+      "id": "introduce_edit",
+      "module": "introductions",
+      "invocation": "/introduce edit",
+      "registration_path": "/introduce edit",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "introduction",
+      "asset_refs": [
+        "production/runtime_templates/introduction/01_preview.svg",
+        "production/runtime_templates/introduction/02_published.svg"
+      ],
+      "interaction_contract": "Private modal/preview; bot-published introduction; config remains admin/staff control surface",
+      "status": "COVERED"
+    },
+    {
+      "id": "introduce_preview",
+      "module": "introductions",
+      "invocation": "/introduce preview",
+      "registration_path": "/introduce preview",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "introduction",
+      "asset_refs": [
+        "production/runtime_templates/introduction/01_preview.svg",
+        "production/runtime_templates/introduction/02_published.svg"
+      ],
+      "interaction_contract": "Private modal/preview; bot-published introduction; config remains admin/staff control surface",
+      "status": "COVERED"
+    },
+    {
+      "id": "intro_config",
+      "module": "introductions",
+      "invocation": "/intro-config",
+      "registration_path": "/intro-config",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "introduction",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Private modal/preview; bot-published introduction; config remains admin/staff control surface",
+      "status": "COVERED"
+    },
+    {
+      "id": "rob",
+      "module": "crime",
+      "invocation": "/crime rob",
+      "registration_path": "/crime rob",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "crime",
+      "asset_refs": [
+        "production/atomic_assets/templates/crime.svg"
+      ],
+      "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "crime_911",
+      "module": "crime",
+      "invocation": "/crime 911",
+      "registration_path": "/crime 911",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "crime",
+      "asset_refs": [
+        "production/atomic_assets/templates/crime.svg"
+      ],
+      "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "crime_wanted",
+      "module": "crime",
+      "invocation": "/crime wanted",
+      "registration_path": "/crime wanted",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "crime",
+      "asset_refs": [
+        "production/atomic_assets/templates/crime.svg"
+      ],
+      "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "crime_bail",
+      "module": "crime",
+      "invocation": "/crime bail",
+      "registration_path": "/crime bail",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "crime",
+      "asset_refs": [
+        "production/atomic_assets/templates/crime.svg"
+      ],
+      "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_marry",
+      "module": "family",
+      "invocation": "/family marry",
+      "registration_path": "/family marry",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/runtime_templates/family/02_marriage_vote.svg"
+      ],
+      "interaction_contract": "Public authoritative marriage card + native \ud83d\udc4d/\ud83d\udc4e and View Family controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_divorce",
+      "module": "family",
+      "invocation": "/family divorce",
+      "registration_path": "/family divorce",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/atomic_assets/templates/family.svg"
+      ],
+      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_adopt",
+      "module": "family",
+      "invocation": "/family adopt",
+      "registration_path": "/family adopt",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/atomic_assets/templates/family.svg"
+      ],
+      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_disown",
+      "module": "family",
+      "invocation": "/family disown",
+      "registration_path": "/family disown",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/atomic_assets/templates/family.svg"
+      ],
+      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_emancipate",
+      "module": "family",
+      "invocation": "/family emancipate",
+      "registration_path": "/family emancipate",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/atomic_assets/templates/family.svg"
+      ],
+      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_familytree",
+      "module": "family",
+      "invocation": "/family familytree",
+      "registration_path": "/family familytree",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/runtime_templates/family/01_tree.svg"
+      ],
+      "interaction_contract": "Rendered family tree with native navigation",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_will",
+      "module": "family",
+      "invocation": "/family will",
+      "registration_path": "/family will",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/atomic_assets/templates/family.svg"
+      ],
+      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "family_familyauction",
+      "module": "family",
+      "invocation": "/family familyauction",
+      "registration_path": "/family familyauction",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "family",
+      "asset_refs": [
+        "production/atomic_assets/templates/family.svg"
+      ],
+      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "warn",
+      "module": "moderation",
+      "invocation": "/mod warn",
+      "registration_path": "/mod warn",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "timeout",
+      "module": "moderation",
+      "invocation": "/mod timeout",
+      "registration_path": "/mod timeout",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "untimeout",
+      "module": "moderation",
+      "invocation": "/mod untimeout",
+      "registration_path": "/mod untimeout",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "kick",
+      "module": "moderation",
+      "invocation": "/mod kick",
+      "registration_path": "/mod kick",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "ban",
+      "module": "moderation",
+      "invocation": "/mod ban",
+      "registration_path": "/mod ban",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "unban",
+      "module": "moderation",
+      "invocation": "/mod unban",
+      "registration_path": "/mod unban",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "purge",
+      "module": "moderation",
+      "invocation": "/mod purge",
+      "registration_path": "/mod purge",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "note",
+      "module": "moderation",
+      "invocation": "/mod note",
+      "registration_path": "/mod note",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "history_mod",
+      "module": "moderation",
+      "invocation": "/mod history",
+      "registration_path": "/mod history",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation_case",
+      "asset_refs": [
+        "production/runtime_templates/moderation/01_case.svg"
+      ],
+      "interaction_contract": "Ephemeral staff case/history surface; native edit/reverse controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "case_view",
+      "module": "moderation",
+      "invocation": "/mod case view",
+      "registration_path": "/mod case view",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation_case",
+      "asset_refs": [
+        "production/runtime_templates/moderation/01_case.svg"
+      ],
+      "interaction_contract": "Ephemeral staff case/history surface; native edit/reverse controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "case_edit",
+      "module": "moderation",
+      "invocation": "/mod case edit",
+      "registration_path": "/mod case edit",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation_case",
+      "asset_refs": [
+        "production/runtime_templates/moderation/01_case.svg"
+      ],
+      "interaction_contract": "Ephemeral staff case/history surface; native edit/reverse controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "case_reverse",
+      "module": "moderation",
+      "invocation": "/mod case reverse",
+      "registration_path": "/mod case reverse",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation_case",
+      "asset_refs": [
+        "production/runtime_templates/moderation/01_case.svg"
+      ],
+      "interaction_contract": "Ephemeral staff case/history surface; native edit/reverse controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "lock",
+      "module": "moderation",
+      "invocation": "/mod lock",
+      "registration_path": "/mod lock",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "unlock",
+      "module": "moderation",
+      "invocation": "/mod unlock",
+      "registration_path": "/mod unlock",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "slowmode",
+      "module": "moderation",
+      "invocation": "/mod slowmode",
+      "registration_path": "/mod slowmode",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "quarantine",
+      "module": "moderation",
+      "invocation": "/mod quarantine",
+      "registration_path": "/mod quarantine",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "staff_alert",
+      "module": "moderation",
+      "invocation": "/mod staff-alert",
+      "registration_path": "/mod staff-alert",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "moderation",
+      "asset_refs": [
+        "production/atomic_assets/templates/moderation_warning.svg"
+      ],
+      "interaction_contract": "Shared moderation action/result shell; native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "modstats",
+      "module": "moderation",
+      "invocation": "/mod modstats",
+      "registration_path": "/mod modstats",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "records",
+      "asset_refs": [
+        "production/atomic_assets/templates/records.svg"
+      ],
+      "interaction_contract": "Shared records/leaderboard renderer; native category selector where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_send",
+      "module": "jail",
+      "invocation": "/jail send",
+      "registration_path": "/jail send",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_release",
+      "module": "jail",
+      "invocation": "/jail release",
+      "registration_path": "/jail release",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_extend",
+      "module": "jail",
+      "invocation": "/jail extend",
+      "registration_path": "/jail extend",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_reduce",
+      "module": "jail",
+      "invocation": "/jail reduce",
+      "registration_path": "/jail reduce",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_reason",
+      "module": "jail",
+      "invocation": "/jail reason",
+      "registration_path": "/jail reason",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_history",
+      "module": "jail",
+      "invocation": "/jail history",
+      "registration_path": "/jail history",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_roster",
+      "module": "jail",
+      "invocation": "/jail roster",
+      "registration_path": "/jail roster",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "jail_status",
+      "module": "jail",
+      "invocation": "/jail status",
+      "registration_path": "/jail status",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "SHARED_RUNTIME",
+      "renderer_family": "hotseat",
+      "asset_refs": [
+        "production/runtime_templates/moderation/02_hotseat.svg"
+      ],
+      "interaction_contract": "Shared Hotseat/jail family; native staff controls and confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "panic_activate",
+      "module": "security",
+      "invocation": "/panic activate",
+      "registration_path": "/panic activate",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "panic",
+      "asset_refs": [
+        "production/runtime_templates/moderation/03_panic_active.svg"
+      ],
+      "interaction_contract": "Ephemeral Admin/owner control flow with native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "panic_deactivate",
+      "module": "security",
+      "invocation": "/panic deactivate",
+      "registration_path": "/panic deactivate",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "panic",
+      "asset_refs": [
+        "production/runtime_templates/moderation/03_panic_active.svg"
+      ],
+      "interaction_contract": "Ephemeral Admin/owner control flow with native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "panic_status",
+      "module": "security",
+      "invocation": "/panic status",
+      "registration_path": "/panic status",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "panic",
+      "asset_refs": [
+        "production/runtime_templates/moderation/03_panic_active.svg"
+      ],
+      "interaction_contract": "Ephemeral Admin/owner control flow with native confirmations",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_create",
+      "module": "custom_commands",
+      "invocation": "/custom-command create",
+      "registration_path": "/custom-command create",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_edit",
+      "module": "custom_commands",
+      "invocation": "/custom-command edit",
+      "registration_path": "/custom-command edit",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_delete",
+      "module": "custom_commands",
+      "invocation": "/custom-command delete",
+      "registration_path": "/custom-command delete",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_enable",
+      "module": "custom_commands",
+      "invocation": "/custom-command enable",
+      "registration_path": "/custom-command enable",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_disable",
+      "module": "custom_commands",
+      "invocation": "/custom-command disable",
+      "registration_path": "/custom-command disable",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_list",
+      "module": "custom_commands",
+      "invocation": "/custom-command list",
+      "registration_path": "/custom-command list",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_test",
+      "module": "custom_commands",
+      "invocation": "/custom-command test",
+      "registration_path": "/custom-command test",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_clone",
+      "module": "custom_commands",
+      "invocation": "/custom-command clone",
+      "registration_path": "/custom-command clone",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "custom_info",
+      "module": "custom_commands",
+      "invocation": "/custom-command info",
+      "registration_path": "/custom-command info",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "custom_commands",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Discord modals/selects for command ops; web dashboard is Admin-only",
+      "status": "COVERED"
+    },
+    {
+      "id": "setup",
+      "module": "bootstrap",
+      "invocation": "/setup",
+      "registration_path": "/setup",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "setup",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Private guided setup/health checklist",
+      "status": "COVERED"
+    },
+    {
+      "id": "setup_health",
+      "module": "bootstrap",
+      "invocation": "/setup health",
+      "registration_path": "/setup health",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "setup",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Private guided setup/health checklist",
+      "status": "COVERED"
+    },
+    {
+      "id": "chairism_context",
+      "module": "chairisms",
+      "invocation": "Create Chairism",
+      "registration_path": "Create Chairism",
+      "command_type": "context_message",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "chairism",
+      "asset_refs": [
+        "production/atomic_assets/templates/chairism_short.svg",
+        "production/atomic_assets/templates/chairism_long.svg",
+        "production/atomic_assets/templates/chairism_image.svg",
+        "production/atomic_assets/templates/chairism_reply.svg"
+      ],
+      "interaction_contract": "One Chairism renderer family; native context action where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "tldr_chat",
+      "module": "profile",
+      "invocation": "/tldr chat",
+      "registration_path": "/tldr chat",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "tldr",
+      "asset_refs": [
+        "production/runtime_templates/tldr/01_chat_2h.svg"
+      ],
+      "interaction_contract": "Ephemeral text summary; native dismiss/help only as needed",
+      "status": "COVERED"
+    },
+    {
+      "id": "tldr_events",
+      "module": "profile",
+      "invocation": "/tldr events",
+      "registration_path": "/tldr events",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "tldr",
+      "asset_refs": [
+        "production/runtime_templates/tldr/02_events_7d.svg"
+      ],
+      "interaction_contract": "Ephemeral event summary",
+      "status": "COVERED"
+    },
+    {
+      "id": "special_vc",
+      "module": "special_commands",
+      "invocation": "!vc",
+      "registration_path": "!vc",
+      "command_type": "special_text",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "special_callout",
+      "asset_refs": [
+        "production/atomic_assets/templates/announcement.svg"
+      ],
+      "interaction_contract": "Trigger deleted; randomized Angrier Jordan message + mapped role mention",
+      "status": "COVERED"
+    },
+    {
+      "id": "special_chess",
+      "module": "special_commands",
+      "invocation": "!chess",
+      "registration_path": "!chess",
+      "command_type": "special_text",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "special_callout",
+      "asset_refs": [
+        "production/atomic_assets/templates/announcement.svg"
+      ],
+      "interaction_contract": "Trigger deleted; randomized Angrier Jordan message + mapped role mention",
+      "status": "COVERED"
+    },
+    {
+      "id": "lore",
+      "module": "lore",
+      "invocation": "/lore",
+      "registration_path": "/lore",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "lore",
+      "asset_refs": [
+        "production/runtime_templates/lore/01_toc.svg",
+        "production/runtime_templates/lore/02_chapter.svg",
+        "production/runtime_templates/lore/03_complete.svg"
+      ],
+      "interaction_contract": "Ephemeral reader; native Previous/Next/Dismiss controls",
+      "status": "COVERED"
+    },
+    {
+      "id": "collection",
+      "module": "collections",
+      "invocation": "/collection",
+      "registration_path": "/collection",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "inventory_collection",
+      "asset_refs": [
+        "production/atomic_assets/templates/inventory.svg"
+      ],
+      "interaction_contract": "Rendered inventory/collection browser with native filters/actions",
+      "status": "COVERED"
+    },
+    {
+      "id": "leaderboard",
+      "module": "records",
+      "invocation": "/leaderboard",
+      "registration_path": "/leaderboard",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "records",
+      "asset_refs": [
+        "production/atomic_assets/templates/records.svg"
+      ],
+      "interaction_contract": "Shared records/leaderboard renderer; native category selector where applicable",
+      "status": "COVERED"
+    },
+    {
+      "id": "privacy_activity",
+      "module": "profile",
+      "invocation": "/privacy activity",
+      "registration_path": "/privacy activity",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "privacy",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Ephemeral toggle/selector; no dedicated art",
+      "status": "COVERED"
+    },
+    {
+      "id": "privacy_roast",
+      "module": "social",
+      "invocation": "/privacy roast",
+      "registration_path": "/privacy roast",
+      "command_type": "slash",
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "privacy",
+      "asset_refs": [
+        "production/atomic_assets/templates/system_state.svg"
+      ],
+      "interaction_contract": "Ephemeral toggle/selector; no dedicated art",
+      "status": "COVERED"
+    },
+    {
+      "id": "hangman",
+      "module": "solo_games",
+      "invocation": "/hangman",
+      "registration_path": "/hangman",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "solo_game",
+      "asset_refs": [
+        "production/atomic_assets/games/solo/hangman_panel.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
+      "status": "COVERED"
+    },
+    {
+      "id": "wordscramble",
+      "module": "solo_games",
+      "invocation": "/wordscramble",
+      "registration_path": "/wordscramble",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "solo_game",
+      "asset_refs": [
+        "production/atomic_assets/games/solo/word_scramble_panel.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
+      "status": "COVERED"
+    },
+    {
+      "id": "mastermind",
+      "module": "solo_games",
+      "invocation": "/mastermind",
+      "registration_path": "/mastermind",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "solo_game",
+      "asset_refs": [
+        "production/atomic_assets/games/solo/mastermind_panel.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
+      "status": "COVERED"
+    },
+    {
+      "id": "minesweeper",
+      "module": "solo_games",
+      "invocation": "/minesweeper",
+      "registration_path": "/minesweeper",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "DEDICATED_RUNTIME",
+      "renderer_family": "solo_game",
+      "asset_refs": [
+        "production/atomic_assets/games/solo/minesweeper_panel.png",
+        "production/atomic_assets/templates/result.svg"
+      ],
+      "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
+      "status": "COVERED"
+    },
+    {
+      "id": "haiku",
+      "module": "social",
+      "invocation": "/haiku",
+      "registration_path": "/haiku",
+      "command_type": "slash",
+      "visibility": "public",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "social_text",
+      "asset_refs": [],
+      "interaction_contract": "Fixed text response: \u201cWe use it for profiling purposes.\u201d",
+      "status": "COVERED"
+    }
+  ]
+}

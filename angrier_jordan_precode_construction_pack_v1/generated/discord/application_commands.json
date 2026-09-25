@@ -1,0 +1,2200 @@
+[
+  {
+    "type": 1,
+    "name": "help",
+    "description": "Quick command reference.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "tutorial",
+    "description": "Interactive guided tutorial.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "rules",
+    "description": "Show branded server rules.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "status",
+    "description": "Bot health and uptime.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "bug",
+    "description": "Report a bot issue.",
+    "options": [
+      {
+        "type": 3,
+        "name": "description",
+        "description": "description option",
+        "required": true
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "dms",
+    "description": "Enable or disable bot DMs.",
+    "options": [
+      {
+        "type": 3,
+        "name": "state",
+        "description": "state option",
+        "required": true,
+        "choices": [
+          {
+            "name": "on",
+            "value": "on"
+          },
+          {
+            "name": "off",
+            "value": "off"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "profile",
+    "description": "Show a member profile.",
+    "options": [
+      {
+        "type": 6,
+        "name": "member",
+        "description": "member option",
+        "required": false
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "records",
+    "description": "Show current live records.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "daily",
+    "description": "Open the private daily hub for Claim Daily, Daily Spin, and Fortune.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "weekly",
+    "description": "Claim weekly reward.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "scavenge",
+    "description": "Scavenge for loot.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "dig",
+    "description": "Dig for loot.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "fish",
+    "description": "Fish for loot.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "work",
+    "description": "Perform a work action.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "statement",
+    "description": "Show wallet, bank, and recent transactions.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "inventory",
+    "description": "Browse inventory.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "bank",
+    "description": "Open banking controls.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "shop",
+    "description": "Open the shop.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "craft",
+    "description": "Open Chair Building/crafting.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "repair",
+    "description": "Repair an equipped or owned tool.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "transfer",
+    "description": "Transfer Ottomans to another member.",
+    "options": [
+      {
+        "type": 6,
+        "name": "member",
+        "description": "member option",
+        "required": true
+      },
+      {
+        "type": 4,
+        "name": "amount",
+        "description": "amount option",
+        "required": true,
+        "min_value": 1
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "gift",
+    "description": "Gift an eligible item to another member.",
+    "options": [
+      {
+        "type": 6,
+        "name": "member",
+        "description": "member option",
+        "required": true
+      },
+      {
+        "type": 3,
+        "name": "item",
+        "description": "item option",
+        "required": true
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "unlock",
+    "description": "Angrier Jordan unlock commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "all",
+        "description": "Unlock all inventory locks.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "casino",
+    "description": "Angrier Jordan casino commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "blackjack",
+        "description": "Start blackjack.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "roulette",
+        "description": "Play roulette.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "slots",
+        "description": "Play the Chair slots.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "dice",
+        "description": "Play dice.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "coinflip",
+        "description": "Flip for Ottomans.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "lottery",
+    "description": "View/buy weekly lottery tickets.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "giveaway",
+    "description": "Create or manage a giveaway.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "fight",
+    "description": "Immediately start a 1v1 Robo Chair Fight against the named member with a 30-second betting window.",
+    "options": [
+      {
+        "type": 6,
+        "name": "member",
+        "description": "Opponent to fight.",
+        "required": true
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "game",
+    "description": "Angrier Jordan game commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "tictactoe",
+        "description": "Challenge a member to Tic-Tac-Toe.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 4,
+            "name": "wager",
+            "description": "wager option",
+            "required": false,
+            "min_value": 0
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "connectfour",
+        "description": "Challenge a member to Connect Four.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 4,
+            "name": "wager",
+            "description": "wager option",
+            "required": false,
+            "min_value": 0
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "battleship",
+        "description": "Challenge a member to Battleship.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 4,
+            "name": "wager",
+            "description": "wager option",
+            "required": false,
+            "min_value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "fmk",
+    "description": "Start a random-member FMK round.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "truthordare",
+    "description": "Start Truth or Dare.",
+    "options": [
+      {
+        "type": 6,
+        "name": "member",
+        "description": "member option",
+        "required": false
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "wyr",
+    "description": "Start Would You Rather.",
+    "options": [
+      {
+        "type": 3,
+        "name": "category",
+        "description": "category option",
+        "required": false,
+        "choices": [
+          {
+            "name": "Casual",
+            "value": "Casual"
+          },
+          {
+            "name": "Friends",
+            "value": "Friends"
+          },
+          {
+            "name": "Dating",
+            "value": "Dating"
+          },
+          {
+            "name": "Married",
+            "value": "Married"
+          },
+          {
+            "name": "Spicy",
+            "value": "Spicy"
+          },
+          {
+            "name": "Unhinged",
+            "value": "Unhinged"
+          },
+          {
+            "name": "Random",
+            "value": "Random"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "wwyd",
+    "description": "Start What Would You Do.",
+    "options": [
+      {
+        "type": 3,
+        "name": "category",
+        "description": "category option",
+        "required": false,
+        "choices": [
+          {
+            "name": "Casual",
+            "value": "Casual"
+          },
+          {
+            "name": "Friends",
+            "value": "Friends"
+          },
+          {
+            "name": "Dating",
+            "value": "Dating"
+          },
+          {
+            "name": "Married",
+            "value": "Married"
+          },
+          {
+            "name": "Spicy",
+            "value": "Spicy"
+          },
+          {
+            "name": "Unhinged",
+            "value": "Unhinged"
+          },
+          {
+            "name": "Random",
+            "value": "Random"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "finishsentence",
+    "description": "Start Finish the Sentence.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "onewordstory",
+    "description": "Start One Word Story.",
+    "options": [
+      {
+        "type": 4,
+        "name": "length",
+        "description": "length option",
+        "required": false,
+        "min_value": 10,
+        "max_value": 200
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "poll",
+    "description": "Create/manage a poll.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "superlatives",
+    "description": "Create/manage a superlatives season.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "suggest",
+    "description": "Submit a suggestion.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "ama",
+    "description": "Submit/manage AMA questions.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "roles",
+    "description": "Open the private self-role selection panel.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "quote",
+    "description": "Angrier Jordan quote commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "message",
+        "description": "Create Chairism from a message.",
+        "options": [
+          {
+            "type": 3,
+            "name": "message_link",
+            "description": "message_link option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "text",
+        "description": "Create Chairism from self-authored text.",
+        "options": [
+          {
+            "type": 3,
+            "name": "text",
+            "description": "text option",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "chairisms",
+    "description": "Angrier Jordan chairisms commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "recent",
+        "description": "Browse Chairisms: recent.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "member",
+        "description": "Browse Chairisms: member.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "random",
+        "description": "Browse Chairisms: random.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "play",
+    "description": "Music: play.",
+    "options": [
+      {
+        "type": 3,
+        "name": "query_or_link",
+        "description": "query_or_link option",
+        "required": true
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "music",
+    "description": "Angrier Jordan music commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "pause",
+        "description": "Music: pause.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "resume",
+        "description": "Music: resume.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "skip",
+        "description": "Music: skip.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "previous",
+        "description": "Music: previous.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "stop",
+        "description": "Music: stop.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "replay",
+        "description": "Music: replay.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "seek",
+        "description": "Music: seek.",
+        "options": [
+          {
+            "type": 3,
+            "name": "value",
+            "description": "value option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "queue",
+        "description": "Music: queue.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "remove",
+        "description": "Music: remove.",
+        "options": [
+          {
+            "type": 3,
+            "name": "value",
+            "description": "value option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "move",
+        "description": "Music: move.",
+        "options": [
+          {
+            "type": 3,
+            "name": "value",
+            "description": "value option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "clear",
+        "description": "Music: clear.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "shuffle",
+        "description": "Music: shuffle.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "jump",
+        "description": "Music: jump.",
+        "options": [
+          {
+            "type": 3,
+            "name": "value",
+            "description": "value option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "loop",
+        "description": "Music: loop.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "autoplay",
+        "description": "Music: autoplay.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "volume",
+        "description": "Music: volume.",
+        "options": [
+          {
+            "type": 3,
+            "name": "value",
+            "description": "value option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "nowplaying",
+        "description": "Music: nowplaying.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "history",
+        "description": "Music: history.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "join",
+        "description": "Music: join.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "leave",
+        "description": "Music: leave.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "help",
+        "description": "Show music-specific help.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "playlist",
+    "description": "Angrier Jordan playlist commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "create",
+        "description": "Playlist: create.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "add",
+        "description": "Playlist: add.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "remove",
+        "description": "Playlist: remove.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "play",
+        "description": "Playlist: play.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "rename",
+        "description": "Playlist: rename.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "delete",
+        "description": "Playlist: delete.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "view",
+        "description": "Playlist: view.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "social",
+    "description": "Angrier Jordan social commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "ts",
+        "description": "Social command: ts.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "hit",
+        "description": "Social command: hit.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "slap",
+        "description": "Social command: slap.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "pillow",
+        "description": "Social command: pillow.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "cushion",
+        "description": "Social command: cushion.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "stab",
+        "description": "Social command: stab.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "choke",
+        "description": "Social command: choke.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "shh",
+        "description": "Social command: shh.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "belittle",
+        "description": "Social command: belittle.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "bonk",
+        "description": "Social command: bonk.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "yeet",
+        "description": "Social command: yeet.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "sit",
+        "description": "Social command: sit.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "standup",
+        "description": "Social command: standup.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fold",
+        "description": "Social command: fold.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "recline",
+        "description": "Social command: recline.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "sideeye",
+        "description": "Social command: sideeye.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "judge",
+        "description": "Social command: judge.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "shame",
+        "description": "Social command: shame.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "boo",
+        "description": "Social command: boo.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "bruh",
+        "description": "Social command: bruh.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "wtf",
+        "description": "Social command: wtf.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "sus",
+        "description": "Social command: sus.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "yap",
+        "description": "Social command: yap.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "touchgrass",
+        "description": "Social command: touchgrass.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "blame",
+        "description": "Social command: blame.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "disappoint",
+        "description": "Social command: disappoint.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "chaircheck",
+        "description": "Social command: chaircheck.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "throwchair",
+        "description": "Social command: throwchair.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "getup",
+        "description": "Social command: getup.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "calmdown",
+        "description": "Social command: calmdown.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "absolutelynot",
+        "description": "Social command: absolutelynot.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "explainyourself",
+        "description": "Social command: explainyourself.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "embarrassing",
+        "description": "Social command: embarrassing.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "questionable",
+        "description": "Social command: questionable.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "respect",
+        "description": "Social command: respect.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "compliment",
+        "description": "Social command: compliment.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "wheresmyvape",
+        "description": "Social command: wheresmyvape.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "hitthegeekbar",
+        "description": "Social command: hitthegeekbar.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "roast",
+        "description": "Roast a member.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "notmad",
+        "description": "Owner-only disappointed response.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "introduce",
+    "description": "Create an introduction.",
+    "options": [
+      {
+        "type": 1,
+        "name": "edit",
+        "description": "Edit your introduction.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "preview",
+        "description": "Preview your introduction.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "intro-config",
+    "description": "Open introduction form builder.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "crime",
+    "description": "Angrier Jordan crime commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "rob",
+        "description": "Attempt to rob a member.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "911",
+        "description": "Crime system: 911.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "wanted",
+        "description": "Crime system: wanted.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "bail",
+        "description": "Crime system: bail.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "family",
+    "description": "Angrier Jordan family commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "marry",
+        "description": "Family system: marry.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "divorce",
+        "description": "Family system: divorce.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "adopt",
+        "description": "Family system: adopt.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "disown",
+        "description": "Family system: disown.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "emancipate",
+        "description": "Family system: emancipate.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "familytree",
+        "description": "Family system: familytree.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "will",
+        "description": "Family system: will.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "familyauction",
+        "description": "Family system: familyauction.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "mod",
+    "description": "Angrier Jordan mod commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "warn",
+        "description": "Moderation: warn.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "timeout",
+        "description": "Moderation: timeout.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "duration",
+            "description": "duration option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "untimeout",
+        "description": "Moderation: untimeout.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "kick",
+        "description": "Moderation: kick.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "ban",
+        "description": "Moderation: ban.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "duration",
+            "description": "duration option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "unban",
+        "description": "Moderation: unban.",
+        "options": [
+          {
+            "type": 3,
+            "name": "user_id",
+            "description": "user_id option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "purge",
+        "description": "Moderation: purge.",
+        "options": [
+          {
+            "type": 4,
+            "name": "count",
+            "description": "count option",
+            "required": true,
+            "min_value": 1,
+            "max_value": 100
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason for the cleanup.",
+            "required": true
+          },
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "note",
+        "description": "Moderation: note.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "text",
+            "description": "text option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "history",
+        "description": "Moderation: history_mod.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 2,
+        "name": "case",
+        "description": "case commands",
+        "options": [
+          {
+            "type": 1,
+            "name": "view",
+            "description": "Moderation: case_view.",
+            "options": [
+              {
+                "type": 4,
+                "name": "case_id",
+                "description": "case_id option",
+                "required": true
+              }
+            ]
+          },
+          {
+            "type": 1,
+            "name": "edit",
+            "description": "Moderation: case_edit.",
+            "options": [
+              {
+                "type": 4,
+                "name": "case_id",
+                "description": "case_id option",
+                "required": true
+              },
+              {
+                "type": 3,
+                "name": "reason",
+                "description": "reason option",
+                "required": true
+              }
+            ]
+          },
+          {
+            "type": 1,
+            "name": "reverse",
+            "description": "Moderation: case_reverse.",
+            "options": [
+              {
+                "type": 4,
+                "name": "case_id",
+                "description": "case_id option",
+                "required": true
+              },
+              {
+                "type": 3,
+                "name": "reason",
+                "description": "reason option",
+                "required": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "lock",
+        "description": "Moderation: lock.",
+        "options": [
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason for locking the channel.",
+            "required": true
+          },
+          {
+            "type": 7,
+            "name": "channel",
+            "description": "channel option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "unlock",
+        "description": "Moderation: unlock.",
+        "options": [
+          {
+            "type": 7,
+            "name": "channel",
+            "description": "channel option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "slowmode",
+        "description": "Set or disable channel slowmode while recording the previous value.",
+        "options": [
+          {
+            "type": 3,
+            "name": "duration",
+            "description": "duration option",
+            "required": true
+          },
+          {
+            "type": 7,
+            "name": "channel",
+            "description": "channel option",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "quarantine",
+        "description": "Remove a message from public view and preserve restricted staff evidence.",
+        "options": [
+          {
+            "type": 3,
+            "name": "message_link",
+            "description": "message_link option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason for quarantining the message.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "staff-alert",
+        "description": "Create a non-punitive internal staff alert for a member.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "member option",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "reason option",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "modstats",
+        "description": "Show operational moderation totals without ranking staff.",
+        "options": [
+          {
+            "type": 3,
+            "name": "period",
+            "description": "period option",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "jail",
+    "description": "Angrier Jordan jail commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "send",
+        "description": "Hotseat jail: send.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Member to place in moderation Hotseat.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "duration",
+            "description": "5m–30d or indefinite.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Moderation reason linked to the case.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "release",
+        "description": "Hotseat jail: release.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Jailed member to release.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason for release.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "extend",
+        "description": "Hotseat jail: extend.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Jailed member.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "duration",
+            "description": "Additional sentence time.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason for extension.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "reduce",
+        "description": "Hotseat jail: reduce.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Jailed member.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "duration",
+            "description": "Amount of time to subtract.",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason for reduction.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "reason",
+        "description": "Hotseat jail: reason.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Member to inspect; omit for yourself.",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "history",
+        "description": "Hotseat jail: history.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Member whose moderation Hotseat history to view.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "roster",
+        "description": "Hotseat jail: roster.",
+        "options": [
+          {
+            "type": 3,
+            "name": "type",
+            "description": "Filter active jail states.",
+            "required": false,
+            "choices": [
+              {
+                "name": "all",
+                "value": "all"
+              },
+              {
+                "name": "crime",
+                "value": "crime"
+              },
+              {
+                "name": "moderation",
+                "value": "moderation"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Hotseat jail: status.",
+        "options": [
+          {
+            "type": 6,
+            "name": "member",
+            "description": "Member to inspect; omit for yourself.",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "panic",
+    "description": "Angrier Jordan panic commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "activate",
+        "description": "Activate Panic Mode with an audited reason.",
+        "options": [
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Emergency reason recorded in the security audit.",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "deactivate",
+        "description": "Deactivate Panic Mode after confirmation and restore saved pre-panic state.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Panic Mode: status.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "custom-command",
+    "description": "Angrier Jordan custom-command commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "create",
+        "description": "Custom command: create.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "edit",
+        "description": "Custom command: edit.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "delete",
+        "description": "Custom command: delete.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "enable",
+        "description": "Custom command: enable.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "disable",
+        "description": "Custom command: disable.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "list",
+        "description": "Custom command: list.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "test",
+        "description": "Custom command: test.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "clone",
+        "description": "Custom command: clone.",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "info",
+        "description": "Custom command: info.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "setup",
+    "description": "Run guided server setup.",
+    "options": [
+      {
+        "type": 1,
+        "name": "health",
+        "description": "Run non-destructive server health checks.",
+        "options": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "tldr",
+    "description": "Angrier Jordan tldr commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "chat",
+        "description": "Privately summarize recent main-chat conversation.",
+        "options": [
+          {
+            "type": 3,
+            "name": "time",
+            "description": "Rolling chat window.",
+            "required": true,
+            "choices": [
+              {
+                "name": "1h",
+                "value": "1h"
+              },
+              {
+                "name": "2h",
+                "value": "2h"
+              },
+              {
+                "name": "4h",
+                "value": "4h"
+              },
+              {
+                "name": "8h",
+                "value": "8h"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "events",
+        "description": "Privately summarize recent structured Angrier Jordan events.",
+        "options": [
+          {
+            "type": 3,
+            "name": "time",
+            "description": "Rolling event window.",
+            "required": true,
+            "choices": [
+              {
+                "name": "1d",
+                "value": "1d"
+              },
+              {
+                "name": "7d",
+                "value": "7d"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "lore",
+    "description": "Open the private Chairs lore reader and resume saved progress.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "collection",
+    "description": "Open the collection browser.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "leaderboard",
+    "description": "Open leaderboards and choose a category.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "privacy",
+    "description": "Angrier Jordan privacy commands",
+    "options": [
+      {
+        "type": 1,
+        "name": "activity",
+        "description": "Set activity-stat visibility.",
+        "options": [
+          {
+            "type": 3,
+            "name": "state",
+            "description": "Activity visibility.",
+            "required": true,
+            "choices": [
+              {
+                "name": "visible",
+                "value": "visible"
+              },
+              {
+                "name": "hidden",
+                "value": "hidden"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "roast",
+        "description": "Allow or block roast targeting.",
+        "options": [
+          {
+            "type": 3,
+            "name": "state",
+            "description": "Roast targeting preference.",
+            "required": true,
+            "choices": [
+              {
+                "name": "allow",
+                "value": "allow"
+              },
+              {
+                "name": "block",
+                "value": "block"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "hangman",
+    "description": "Start Hangman.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "wordscramble",
+    "description": "Start Word Scramble.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "mastermind",
+    "description": "Start Mastermind.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "minesweeper",
+    "description": "Start Minesweeper.",
+    "options": []
+  },
+  {
+    "type": 1,
+    "name": "haiku",
+    "description": "Return the server haiku profiling joke.",
+    "options": []
+  },
+  {
+    "type": 3,
+    "name": "Create Chairism"
+  }
+]

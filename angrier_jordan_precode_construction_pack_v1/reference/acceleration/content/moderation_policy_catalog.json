@@ -1,0 +1,107 @@
+[
+  {
+    "id": "SPAM_FLOOD",
+    "name": "Spam / flooding",
+    "member_description": "Repeated or rapid disruptive messages",
+    "default_heat_weight": 15,
+    "enabled": true
+  },
+  {
+    "id": "DUPLICATE_SPAM",
+    "name": "Duplicate spam",
+    "member_description": "Repeated identical/substantially identical content",
+    "default_heat_weight": 10,
+    "enabled": true
+  },
+  {
+    "id": "MASS_MENTION",
+    "name": "Mass mentions",
+    "member_description": "Disruptive repeated or mass mentions",
+    "default_heat_weight": 20,
+    "enabled": true
+  },
+  {
+    "id": "MALICIOUS_LINK",
+    "name": "Malicious/phishing link",
+    "member_description": "Known or high-confidence malicious/deceptive URL",
+    "default_heat_weight": 70,
+    "enabled": true
+  },
+  {
+    "id": "SCAM",
+    "name": "Scam attempt",
+    "member_description": "Fraudulent or deceptive solicitation",
+    "default_heat_weight": 60,
+    "enabled": true
+  },
+  {
+    "id": "DOXXING",
+    "name": "Private information / doxxing",
+    "member_description": "Sharing private identifying/contact information without permission",
+    "default_heat_weight": 100,
+    "enabled": true
+  },
+  {
+    "id": "TARGETED_HARASSMENT",
+    "name": "Targeted harassment",
+    "member_description": "Repeated targeted hostile behavior beyond ordinary server banter",
+    "default_heat_weight": 40,
+    "enabled": true
+  },
+  {
+    "id": "CREDIBLE_THREAT",
+    "name": "Credible threat",
+    "member_description": "Credible threat of violence or harm",
+    "default_heat_weight": 100,
+    "enabled": true
+  },
+  {
+    "id": "HATE_SLUR",
+    "name": "Protected-class hate/slur",
+    "member_description": "Targeted protected-class hate content",
+    "default_heat_weight": 80,
+    "enabled": true
+  },
+  {
+    "id": "RAID",
+    "name": "Raid behavior",
+    "member_description": "Coordinated disruptive join/message behavior",
+    "default_heat_weight": 80,
+    "enabled": true
+  },
+  {
+    "id": "NUKE_ACTION",
+    "name": "Destructive privileged action",
+    "member_description": "Suspicious mass destructive admin action",
+    "default_heat_weight": 100,
+    "enabled": true
+  },
+  {
+    "id": "INVITE_POLICY",
+    "name": "Unauthorized invite",
+    "member_description": "Invite link violating configured invite policy",
+    "default_heat_weight": 10,
+    "enabled": true
+  },
+  {
+    "id": "OBFUSCATION",
+    "name": "Obfuscation/Zalgo abuse",
+    "member_description": "Deliberate unreadable/obfuscated spam or evasion",
+    "default_heat_weight": 10,
+    "enabled": true
+  },
+  {
+    "id": "ATTACHMENT_FLOOD",
+    "name": "Attachment flood",
+    "member_description": "Repeated image/file/sticker flooding",
+    "default_heat_weight": 15,
+    "enabled": true
+  },
+  {
+    "id": "IMPERSONATION",
+    "name": "Deceptive impersonation",
+    "member_description": "Misleading impersonation used for harm/scam",
+    "default_heat_weight": 50,
+    "enabled": true
+  }
+]

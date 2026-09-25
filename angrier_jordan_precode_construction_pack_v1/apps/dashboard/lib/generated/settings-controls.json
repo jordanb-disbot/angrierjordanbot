@@ -1,0 +1,2898 @@
+{
+  "count": 185,
+  "controls": [
+    {
+      "key": "server.timezone",
+      "section": "server",
+      "label": "Timezone",
+      "description": "IANA timezone for scheduled jobs.",
+      "kind": "text",
+      "defaultValue": "America/Denver",
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "server.daily_reset_hour",
+      "section": "server",
+      "label": "Daily Reset Hour",
+      "description": "Daily economy reset is fixed at 4:00 AM Mountain Time.",
+      "kind": "number",
+      "defaultValue": 4,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "min": 4,
+      "max": 4
+    },
+    {
+      "key": "server.weekly_reset_day",
+      "section": "server",
+      "label": "Weekly Reset Day",
+      "description": "",
+      "kind": "select",
+      "defaultValue": "MONDAY",
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "choices": [
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
+    },
+    {
+      "key": "server.weekly_reset_hour",
+      "section": "server",
+      "label": "Weekly Reset Hour",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 4,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "key": "core.dms_default",
+      "section": "core",
+      "label": "DMs Default",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "core.feature_flags",
+      "section": "core",
+      "label": "Feature Flags",
+      "description": "",
+      "kind": "json",
+      "defaultValue": {},
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "core.technical_throttle_ms",
+      "section": "core",
+      "label": "Technical Throttle Ms",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 1200,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 250,
+      "max": 10000
+    },
+    {
+      "key": "channels.main_chat",
+      "section": "channels_roles",
+      "label": "Main Chat",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.bot_channel",
+      "section": "channels_roles",
+      "label": "Bot Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.games_channel",
+      "section": "channels_roles",
+      "label": "Games Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.counting_channel",
+      "section": "channels_roles",
+      "label": "Counting Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.last_letter_channel",
+      "section": "channels_roles",
+      "label": "Last Letter Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.staff_log",
+      "section": "channels_roles",
+      "label": "Staff Log",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.chairisms_channel",
+      "section": "channels_roles",
+      "label": "Chairisms Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.introduction_channel",
+      "section": "channels_roles",
+      "label": "Introduction Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "channels.hotseat_channel",
+      "section": "channels_roles",
+      "label": "Hotseat Channel",
+      "description": "Resolved Discord channel ID.",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "roles.throne",
+      "section": "channels_roles",
+      "label": "Throne",
+      "description": "Resolved Discord role ID.",
+      "kind": "role",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "roles.chaise_lounge",
+      "section": "channels_roles",
+      "label": "Chaise Lounge",
+      "description": "Resolved Discord role ID.",
+      "kind": "role",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "roles.recliner",
+      "section": "channels_roles",
+      "label": "Recliner",
+      "description": "Resolved Discord role ID.",
+      "kind": "role",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "roles.jailed",
+      "section": "channels_roles",
+      "label": "Jailed",
+      "description": "Resolved Discord role ID.",
+      "kind": "role",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "race.join_seconds",
+      "section": "games",
+      "label": "Join Seconds",
+      "description": "Race join + betting window before optional extension.",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 15,
+      "max": 180
+    },
+    {
+      "key": "race.extension_seconds",
+      "section": "games",
+      "label": "Extension Seconds",
+      "description": "One-use host extension for both Race entry and betting.",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 30
+    },
+    {
+      "key": "party.vote_seconds",
+      "section": "games",
+      "label": "Vote Seconds",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 15,
+      "max": 300
+    },
+    {
+      "key": "party.extension_seconds",
+      "section": "games",
+      "label": "Extension Seconds",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 120
+    },
+    {
+      "key": "fmk.vote_seconds",
+      "section": "games",
+      "label": "Vote Seconds",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 180,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 30,
+      "max": 600
+    },
+    {
+      "key": "line.ready_seconds",
+      "section": "games",
+      "label": "Ready Seconds",
+      "description": "Line readiness/entry window.",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 15,
+      "max": 180
+    },
+    {
+      "key": "line.abandon_minutes",
+      "section": "games",
+      "label": "Abandon Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 15,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 2,
+      "max": 60
+    },
+    {
+      "key": "games.one_active_public_party_round",
+      "section": "games",
+      "label": "One Active Public Party Round",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "games.voting.hidden_totals_default",
+      "section": "games",
+      "label": "Hidden Totals Default",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "games.voting.allow_vote_edit",
+      "section": "games",
+      "label": "Allow Vote Edit",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.starter_ottomans",
+      "section": "economy",
+      "label": "Starter Ottomans",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 500,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 100000
+    },
+    {
+      "key": "economy.daily_base",
+      "section": "economy",
+      "label": "Daily Base",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 250,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 100000
+    },
+    {
+      "key": "economy.weekly_base",
+      "section": "economy",
+      "label": "Weekly Base",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 1500,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 500000
+    },
+    {
+      "key": "economy.bet_rake_percent",
+      "section": "economy",
+      "label": "Bet Rake Percent",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 5,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 20
+    },
+    {
+      "key": "lottery.max_tickets",
+      "section": "economy",
+      "label": "Max Tickets",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 20,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "economy.wallet_first_spending",
+      "section": "economy",
+      "label": "Wallet First Spending",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.bank_robbery_protected",
+      "section": "economy",
+      "label": "Bank Robbery Protected",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.transfers_fee_percent",
+      "section": "economy",
+      "label": "Transfers Fee Percent",
+      "description": "Direct Ottoman member transfers are free.",
+      "kind": "number",
+      "defaultValue": 0,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "min": 0,
+      "max": 0
+    },
+    {
+      "key": "moderation.evidence_retention_days",
+      "section": "moderation",
+      "label": "Evidence Retention Days",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 7,
+      "max": 180
+    },
+    {
+      "key": "moderation.ai_ambiguous_only",
+      "section": "moderation",
+      "label": "Ai Ambiguous Only",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.default_posture",
+      "section": "moderation",
+      "label": "Default Posture",
+      "description": "",
+      "kind": "select",
+      "defaultValue": "adult_permissive",
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "choices": [
+        "adult_permissive",
+        "balanced",
+        "strict"
+      ]
+    },
+    {
+      "key": "moderation.progressive_discipline_enabled",
+      "section": "moderation",
+      "label": "Progressive Discipline Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.heat_decay_hours",
+      "section": "moderation",
+      "label": "Heat Decay Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 72,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 720
+    },
+    {
+      "key": "moderation.appeal_reviewer_independence",
+      "section": "moderation",
+      "label": "Appeal Reviewer Independence",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.jail.default_minutes",
+      "section": "moderation",
+      "label": "Default Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 10080
+    },
+    {
+      "key": "moderation.jail.links_allowed",
+      "section": "moderation",
+      "label": "Links Allowed",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.jail.attachments_allowed",
+      "section": "moderation",
+      "label": "Attachments Allowed",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.jail.staff_role_suspension_enabled",
+      "section": "moderation",
+      "label": "Staff Role Suspension Enabled",
+      "description": "Allow Throne to temporarily suspend manageable Administrator-granting roles so moderation Hotseat can be effective.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.join_gate_enabled",
+      "section": "security",
+      "label": "Join Gate Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.anti_raid_enabled",
+      "section": "security",
+      "label": "Anti Raid Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.anti_nuke_enabled",
+      "section": "security",
+      "label": "Anti Nuke Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.panic_mode_enabled",
+      "section": "security",
+      "label": "Panic Mode Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "critical",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.raid.join_velocity_per_minute",
+      "section": "security",
+      "label": "Join Velocity Per Minute",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false,
+      "min": 2,
+      "max": 100
+    },
+    {
+      "key": "content.prompt_recent_game_exclusion",
+      "section": "content",
+      "label": "Prompt Recent Game Exclusion",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 250,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 25,
+      "max": 1000
+    },
+    {
+      "key": "content.prompt_recent_category_exclusion",
+      "section": "content",
+      "label": "Prompt Recent Category Exclusion",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 10,
+      "max": 500
+    },
+    {
+      "key": "content.prompt_prefer_underused",
+      "section": "content",
+      "label": "Prompt Prefer Underused",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "spotlight.post_channel",
+      "section": "spotlight",
+      "label": "Post Channel",
+      "description": "",
+      "kind": "channel",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "spotlight.fallback_post_hour",
+      "section": "spotlight",
+      "label": "Fallback Post Hour",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 19,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 17,
+      "max": 22
+    },
+    {
+      "key": "spotlight.ties_are_co_winners",
+      "section": "spotlight",
+      "label": "Ties Are Co Winners",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.enabled",
+      "section": "dashboard",
+      "label": "Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.session_hours",
+      "section": "dashboard",
+      "label": "Session Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 12,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 72
+    },
+    {
+      "key": "tutorial.enabled",
+      "section": "tutorial",
+      "label": "Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "custom_commands.enabled",
+      "section": "custom_commands",
+      "label": "Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "custom_commands.max_commands",
+      "section": "custom_commands",
+      "label": "Max Commands",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 500
+    },
+    {
+      "key": "custom_commands.max_actions",
+      "section": "custom_commands",
+      "label": "Max Actions",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 8,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 16
+    },
+    {
+      "key": "custom_commands.regex_enabled",
+      "section": "custom_commands",
+      "label": "Regex Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "music.enabled",
+      "section": "music",
+      "label": "Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "music.max_active_voice_channels",
+      "section": "music",
+      "label": "Max Active Voice Channels",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 1,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "min": 1,
+      "max": 1
+    },
+    {
+      "key": "music.default_volume",
+      "section": "music",
+      "label": "Default Volume",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 65,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "music.vote_skip_majority",
+      "section": "music",
+      "label": "Vote Skip Majority",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "introductions.one_active_per_member",
+      "section": "introductions",
+      "label": "One Active Per Member",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "introductions.normal_messages_locked",
+      "section": "introductions",
+      "label": "Normal Messages Locked",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "shop.refresh_hour",
+      "section": "shop",
+      "label": "Refresh Hour",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 4,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "key": "shop.personalized_bonus_slots",
+      "section": "shop",
+      "label": "Personalized Bonus Slots",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 2,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 4
+    },
+    {
+      "key": "shop.buyback_floor_percent",
+      "section": "shop",
+      "label": "Buyback Floor Percent",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 35,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 10,
+      "max": 90
+    },
+    {
+      "key": "shop.buyback_ceiling_percent",
+      "section": "shop",
+      "label": "Buyback Ceiling Percent",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 70,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 20,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.cheap_restore_min",
+      "section": "crafting",
+      "label": "Cheap Restore Min",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.cheap_restore_max",
+      "section": "crafting",
+      "label": "Cheap Restore Max",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 25,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.standard_restore_min",
+      "section": "crafting",
+      "label": "Standard Restore Min",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 25,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.standard_restore_max",
+      "section": "crafting",
+      "label": "Standard Restore Max",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 55,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.premium_restore_min",
+      "section": "crafting",
+      "label": "Premium Restore Min",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 50,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.premium_restore_max",
+      "section": "crafting",
+      "label": "Premium Restore Max",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crafting.failure_grants_skill",
+      "section": "crafting",
+      "label": "Failure Grants Skill",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "casino.min_bet",
+      "section": "casino",
+      "label": "Min Bet",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100000
+    },
+    {
+      "key": "casino.max_bet",
+      "section": "casino",
+      "label": "Max Bet",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 5000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 10,
+      "max": 1000000
+    },
+    {
+      "key": "casino.chair_pot_contribution_percent",
+      "section": "casino",
+      "label": "Chair Pot Contribution Percent",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 1,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 10
+    },
+    {
+      "key": "lottery.draw_weekday",
+      "section": "casino",
+      "label": "Draw Weekday",
+      "description": "",
+      "kind": "select",
+      "defaultValue": "FRIDAY",
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "choices": [
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
+    },
+    {
+      "key": "lottery.draw_hour",
+      "section": "casino",
+      "label": "Draw Hour",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 20,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "key": "lottery.rake_percent",
+      "section": "casino",
+      "label": "Rake Percent",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 0,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "min": 0,
+      "max": 0
+    },
+    {
+      "key": "crime.robber_cooldown_minutes",
+      "section": "crime",
+      "label": "Robber Cooldown Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 1440
+    },
+    {
+      "key": "crime.victim_protection_minutes",
+      "section": "crime",
+      "label": "Victim Protection Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 1440
+    },
+    {
+      "key": "crime.fight_back_seconds",
+      "section": "crime",
+      "label": "Fight Back Seconds",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 15,
+      "max": 300
+    },
+    {
+      "key": "crime.report_911_seconds",
+      "section": "crime",
+      "label": "Report 911 Seconds",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 180,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 30,
+      "max": 600
+    },
+    {
+      "key": "crime.jail_hours",
+      "section": "crime",
+      "label": "Jail Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 24,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 168
+    },
+    {
+      "key": "crime.bank_is_stealable",
+      "section": "crime",
+      "label": "Bank Is Stealable",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "family.max_spouses",
+      "section": "family",
+      "label": "Max Spouses",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 2,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "min": 1,
+      "max": 2
+    },
+    {
+      "key": "family.proposal_hours",
+      "section": "family",
+      "label": "Proposal Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 24,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 168
+    },
+    {
+      "key": "family.divorce_min_days",
+      "section": "family",
+      "label": "Divorce Min Days",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 3,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 30
+    },
+    {
+      "key": "family.same_pair_remarry_lock_days",
+      "section": "family",
+      "label": "Same Pair Remarry Lock Days",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 7,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 90
+    },
+    {
+      "key": "family.will_grace_hours",
+      "section": "family",
+      "label": "Will Grace Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 24,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 168
+    },
+    {
+      "key": "family.auction_min_hours",
+      "section": "family",
+      "label": "Auction Min Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 1,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 24
+    },
+    {
+      "key": "family.auction_max_hours",
+      "section": "family",
+      "label": "Auction Max Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 72,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 2,
+      "max": 168
+    },
+    {
+      "key": "family.adoption_slot_days",
+      "section": "family",
+      "label": "Adoption Slot Days",
+      "description": "",
+      "kind": "json",
+      "defaultValue": [
+        3,
+        7,
+        14,
+        30,
+        60
+      ],
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "giveaway.min_duration_minutes",
+      "section": "community",
+      "label": "Min Duration Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 10,
+      "max": 10080
+    },
+    {
+      "key": "giveaway.max_duration_minutes",
+      "section": "community",
+      "label": "Max Duration Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 10080,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 60,
+      "max": 43200
+    },
+    {
+      "key": "giveaway.max_winners",
+      "section": "community",
+      "label": "Max Winners",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 5,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 10
+    },
+    {
+      "key": "superlatives.nomination_hours",
+      "section": "community",
+      "label": "Nomination Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 48,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 168
+    },
+    {
+      "key": "superlatives.voting_hours",
+      "section": "community",
+      "label": "Voting Hours",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 48,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 168
+    },
+    {
+      "key": "superlatives.finalist_count",
+      "section": "community",
+      "label": "Finalist Count",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 5,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 2,
+      "max": 10
+    },
+    {
+      "key": "poll.max_choices",
+      "section": "community",
+      "label": "Max Choices",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 20,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 2,
+      "max": 25
+    },
+    {
+      "key": "activity.exclude_bot_channel",
+      "section": "activity",
+      "label": "Exclude Bot Channel",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "activity.exclude_games_channel",
+      "section": "activity",
+      "label": "Exclude Games Channel",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "activity.exclude_staff_channel",
+      "section": "activity",
+      "label": "Exclude Staff Channel",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "activity.vc_require_other_human",
+      "section": "activity",
+      "label": "Vc Require Other Human",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "activity.vc_exclude_self_muted",
+      "section": "activity",
+      "label": "Vc Exclude Self Muted",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "custom_commands.max_execution_seconds",
+      "section": "custom_commands",
+      "label": "Max Execution Seconds",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 5,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 10
+    },
+    {
+      "key": "custom_commands.max_response_chars",
+      "section": "custom_commands",
+      "label": "Max Response Chars",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 4000,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 100,
+      "max": 6000
+    },
+    {
+      "key": "tutorial.practice_mode_enabled",
+      "section": "tutorial",
+      "label": "Practice Mode Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "tutorial.progress_tracking",
+      "section": "tutorial",
+      "label": "Progress Tracking",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.audit_retention_days",
+      "section": "dashboard",
+      "label": "Audit Retention Days",
+      "description": "Rolling dashboard audit-log retention in days.",
+      "kind": "number",
+      "defaultValue": 365,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 30,
+      "max": 3650
+    },
+    {
+      "key": "music.queue_max_tracks",
+      "section": "music",
+      "label": "Queue Max Tracks",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 250,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 10,
+      "max": 1000
+    },
+    {
+      "key": "music.autoplay_default",
+      "section": "music",
+      "label": "Autoplay Default",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "music.loop_default",
+      "section": "music",
+      "label": "Loop Default",
+      "description": "",
+      "kind": "select",
+      "defaultValue": "off",
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "choices": [
+        "off",
+        "track",
+        "queue"
+      ]
+    },
+    {
+      "key": "music.controller_refresh_on_interaction",
+      "section": "music",
+      "label": "Controller Refresh On Interaction",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.heat.warning_threshold",
+      "section": "moderation",
+      "label": "Warning Threshold",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 20,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 200
+    },
+    {
+      "key": "moderation.heat.short_timeout_threshold",
+      "section": "moderation",
+      "label": "Short Timeout Threshold",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 40,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 300
+    },
+    {
+      "key": "moderation.heat.long_timeout_threshold",
+      "section": "moderation",
+      "label": "Long Timeout Threshold",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 70,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 400
+    },
+    {
+      "key": "moderation.heat.review_threshold",
+      "section": "moderation",
+      "label": "Review Threshold",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 500
+    },
+    {
+      "key": "security.verification_enabled",
+      "section": "security",
+      "label": "Verification Enabled",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.restricted_mode_auto_deescalate_minutes",
+      "section": "security",
+      "label": "Restricted Mode Auto Deescalate Minutes",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false,
+      "min": 5,
+      "max": 1440
+    },
+    {
+      "key": "introductions.reactions_allowed",
+      "section": "introductions",
+      "label": "Reactions Allowed",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "introductions.attachments_allowed",
+      "section": "introductions",
+      "label": "Attachments Allowed",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "introductions.max_pages",
+      "section": "introductions",
+      "label": "Max Pages",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 4,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 8
+    },
+    {
+      "key": "spotlight.learned_post_window_start_hour",
+      "section": "spotlight",
+      "label": "Learned Post Window Start Hour",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 17,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "key": "spotlight.learned_post_window_end_hour",
+      "section": "spotlight",
+      "label": "Learned Post Window End Hour",
+      "description": "",
+      "kind": "number",
+      "defaultValue": 22,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "key": "spotlight.triple_threat_permanent",
+      "section": "spotlight",
+      "label": "Triple Threat Permanent",
+      "description": "",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "fight.bet_seconds",
+      "section": "games",
+      "label": "Bet Seconds",
+      "description": "Fight betting window; there is no open fighter join phase.",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 15,
+      "max": 120
+    },
+    {
+      "key": "fight.extension_seconds",
+      "section": "games",
+      "label": "Extension Seconds",
+      "description": "One-use challenger extension for Fight betting only.",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 30
+    },
+    {
+      "key": "line.extension_seconds",
+      "section": "games",
+      "label": "Extension Seconds",
+      "description": "One-use host extension for Line readiness/entry.",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 30
+    },
+    {
+      "key": "roles.member_access",
+      "section": "channels_roles",
+      "label": "Member Access",
+      "description": "Normal member/access role granted after rules acknowledgment.",
+      "kind": "role",
+      "defaultValue": null,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "special_commands.enabled",
+      "section": "special_commands",
+      "label": "Enabled",
+      "description": "Enable built-in and configured Special Commands.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "special_commands.builtin_role_map",
+      "section": "special_commands",
+      "label": "Builtin Role Map",
+      "description": "Notification-role mappings for built-in Special Commands.",
+      "kind": "json",
+      "defaultValue": {
+        "!line": null,
+        "!race": null,
+        "!vc": null,
+        "!chess": null
+      },
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "special_commands.default_member_access",
+      "section": "special_commands",
+      "label": "Default Member Access",
+      "description": "Built-in Special Commands are usable by members unless individually role-restricted.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "special_commands.cooldown_enabled",
+      "section": "special_commands",
+      "label": "Cooldown Enabled",
+      "description": "Special Commands have no cooldown.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "roles_panel.enabled",
+      "section": "roles_panel",
+      "label": "Enabled",
+      "description": "Enable the ephemeral /roles selection panel.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "roles_panel.category_order",
+      "section": "roles_panel",
+      "label": "Category Order",
+      "description": "Initial category order; live category definitions are database-backed.",
+      "kind": "json",
+      "defaultValue": [
+        "Gender",
+        "Age",
+        "Regions",
+        "Vices",
+        "Personalities",
+        "Pings",
+        "DM Status"
+      ],
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "roles_panel.single_choice_categories",
+      "section": "roles_panel",
+      "label": "Single Choice Categories",
+      "description": "Categories that allow at most one selected option and may also be cleared.",
+      "kind": "json",
+      "defaultValue": [
+        "Gender",
+        "Age",
+        "Regions",
+        "DM Status"
+      ],
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "roles_panel.multi_choice_categories",
+      "section": "roles_panel",
+      "label": "Multi Choice Categories",
+      "description": "Categories that allow independent multi-selection with no product cap.",
+      "kind": "json",
+      "defaultValue": [
+        "Vices",
+        "Personalities",
+        "Pings"
+      ],
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "roles_panel.archive_restores_holders",
+      "section": "roles_panel",
+      "label": "Archive Restores Holders",
+      "description": "Re-enabling an archived option restores it to members who held it at archive time when eligible.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "onboarding.rules_ack_required",
+      "section": "onboarding",
+      "label": "Rules Ack Required",
+      "description": "Rules acknowledgment is the only required onboarding gate.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "onboarding.optional_steps",
+      "section": "onboarding",
+      "label": "Optional Steps",
+      "description": "Guided onboarding steps that may be skipped.",
+      "kind": "json",
+      "defaultValue": [
+        "roles",
+        "lore",
+        "introduce",
+        "tutorial"
+      ],
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "rejoin.require_rules_ack",
+      "section": "onboarding",
+      "label": "Require Rules Ack",
+      "description": "Returning members must acknowledge rules again before normal access is restored.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "rejoin.restore_self_roles",
+      "section": "onboarding",
+      "label": "Restore Self Roles",
+      "description": "Restore eligible prior self-selected roles after rejoin.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "rejoin.restore_manual_nonstaff_roles",
+      "section": "onboarding",
+      "label": "Restore Manual Nonstaff Roles",
+      "description": "Restore eligible prior non-staff manual/custom roles after rejoin.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "rejoin.restore_staff_roles",
+      "section": "onboarding",
+      "label": "Restore Staff Roles",
+      "description": "Staff roles require fresh staff approval after rejoin.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "rejoin.restore_nickname",
+      "section": "onboarding",
+      "label": "Restore Nickname",
+      "description": "Restore prior server nickname when permitted.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "rejoin.booster_role_source",
+      "section": "onboarding",
+      "label": "Booster Role Source",
+      "description": "Booster/Nitro role state is determined by current Discord boost status.",
+      "kind": "select",
+      "defaultValue": "discord",
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "choices": [
+        "discord"
+      ]
+    },
+    {
+      "key": "rejoin.temporary_role_timer_policy",
+      "section": "onboarding",
+      "label": "Temporary Role Timer Policy",
+      "description": "Temporary roles continue expiring while a member is absent.",
+      "kind": "select",
+      "defaultValue": "wall_clock",
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "choices": [
+        "wall_clock"
+      ]
+    },
+    {
+      "key": "rejoin.punishment_timer_policy",
+      "section": "onboarding",
+      "label": "Punishment Timer Policy",
+      "description": "Timed punishments pause while a member is absent and resume on return.",
+      "kind": "select",
+      "defaultValue": "pause_while_absent",
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "choices": [
+        "pause_while_absent"
+      ]
+    },
+    {
+      "key": "dashboard.single_global_draft",
+      "section": "dashboard",
+      "label": "Single Global Draft",
+      "description": "Only one shared dashboard draft may exist at a time.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.draft_lock_minutes",
+      "section": "dashboard",
+      "label": "Draft Lock Minutes",
+      "description": "Inactivity timeout for the active draft edit lock.",
+      "kind": "number",
+      "defaultValue": 15,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "min": 1,
+      "max": 60
+    },
+    {
+      "key": "dashboard.simple_live_save_allowed",
+      "section": "dashboard",
+      "label": "Simple Live Save Allowed",
+      "description": "Low-risk changes may save directly without a draft.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.high_impact_requires_draft",
+      "section": "dashboard",
+      "label": "High Impact Requires Draft",
+      "description": "High-impact/destructive/broad/dependency-sensitive changes require Draft → Preview → Publish.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.draft_scheduling_enabled",
+      "section": "dashboard",
+      "label": "Draft Scheduling Enabled",
+      "description": "Dashboard draft publishing cannot be scheduled.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.dependency_view_mode",
+      "section": "dashboard",
+      "label": "Dependency View Mode",
+      "description": "Draft preview displays direct dependencies only.",
+      "kind": "select",
+      "defaultValue": "direct",
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "choices": [
+        "direct"
+      ]
+    },
+    {
+      "key": "dashboard.dependency_autofix",
+      "section": "dashboard",
+      "label": "Dependency Autofix",
+      "description": "Dependency errors are flagged for manual correction; Angrier Jordan does not auto-rewrite dependent settings.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.audit_export_enabled",
+      "section": "dashboard",
+      "label": "Audit Export Enabled",
+      "description": "Authorized Admins may export retained dashboard audit history.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false
+    },
+    {
+      "key": "dashboard.access_policy",
+      "section": "dashboard",
+      "label": "Access Policy",
+      "description": "Dashboard access is limited to the server owner and users with current Discord Administrator permission.",
+      "kind": "select",
+      "defaultValue": "guild_owner_or_discord_administrator",
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "choices": [
+        "guild_owner_or_discord_administrator"
+      ]
+    },
+    {
+      "key": "moderation.automod_enabled",
+      "section": "moderation",
+      "label": "Automod Enabled",
+      "description": "Enable Angrier Jordan AutoMod message evaluation and progressive discipline.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.banned_phrases_csv",
+      "section": "moderation",
+      "label": "Banned Phrases Csv",
+      "description": "Comma-separated phrases handled by the configured AutoMod policy.",
+      "kind": "text",
+      "defaultValue": "",
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.trusted_domains_csv",
+      "section": "security",
+      "label": "Trusted Domains Csv",
+      "description": "Comma-separated domains trusted by link/phishing checks.",
+      "kind": "text",
+      "defaultValue": "",
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "moderation.heat.short_timeout_minutes",
+      "section": "moderation",
+      "label": "Short Timeout Minutes",
+      "description": "Default short timeout used by progressive discipline.",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 1440
+    },
+    {
+      "key": "moderation.heat.long_timeout_minutes",
+      "section": "moderation",
+      "label": "Long Timeout Minutes",
+      "description": "Default longer timeout used by progressive discipline.",
+      "kind": "number",
+      "defaultValue": 60,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 5,
+      "max": 10080
+    },
+    {
+      "key": "security.join.minimum_account_age_hours",
+      "section": "security",
+      "label": "Minimum Account Age Hours",
+      "description": "Account-age screening threshold for Join Gate; young accounts are not automatically treated as violations.",
+      "kind": "number",
+      "defaultValue": 72,
+      "risk": "high",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 8760
+    },
+    {
+      "key": "security.anti_nuke.events_per_minute",
+      "section": "security",
+      "label": "Events Per Minute",
+      "description": "Destructive privileged events per minute that trigger anti-nuke containment review.",
+      "kind": "number",
+      "defaultValue": 4,
+      "risk": "critical",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false,
+      "min": 2,
+      "max": 30
+    },
+    {
+      "key": "security.anti_nuke.lockdown_events_per_minute",
+      "section": "security",
+      "label": "Lockdown Events Per Minute",
+      "description": "Destructive privileged events per minute that can trigger Lockdown.",
+      "kind": "number",
+      "defaultValue": 7,
+      "risk": "critical",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false,
+      "min": 3,
+      "max": 50
+    },
+    {
+      "key": "security.trusted_users_csv",
+      "section": "security",
+      "label": "Trusted Users Csv",
+      "description": "Comma-separated Discord user IDs treated as explicitly trusted identities; monitoring remains active.",
+      "kind": "text",
+      "defaultValue": "",
+      "risk": "critical",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "security.trusted_bots_csv",
+      "section": "security",
+      "label": "Trusted Bots Csv",
+      "description": "Comma-separated bot user IDs permitted by Join Gate.",
+      "kind": "text",
+      "defaultValue": "",
+      "risk": "critical",
+      "editableBy": [
+        "throne"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.bank_tiers",
+      "section": "economy",
+      "label": "Bank Tiers",
+      "description": "Five bank tiers. Tiers 1–4 have capacities; Tier 5 is unlimited.",
+      "kind": "json",
+      "defaultValue": [
+        {
+          "tier": 1,
+          "cap": 5000,
+          "upgrade_cost": 1000
+        },
+        {
+          "tier": 2,
+          "cap": 25000,
+          "upgrade_cost": 5000
+        },
+        {
+          "tier": 3,
+          "cap": 100000,
+          "upgrade_cost": 20000
+        },
+        {
+          "tier": 4,
+          "cap": 500000,
+          "upgrade_cost": 75000
+        },
+        {
+          "tier": 5,
+          "cap": null,
+          "upgrade_cost": 0
+        }
+      ],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.bank_tier5_interest_bps",
+      "section": "economy",
+      "label": "Bank Tier5 Interest Bps",
+      "description": "Tier 5 weekly bank interest in basis points (100 = 1%).",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 500
+    },
+    {
+      "key": "economy.bank_tier5_interest_cap",
+      "section": "economy",
+      "label": "Bank Tier5 Interest Cap",
+      "description": "Maximum Tier 5 weekly interest paid to one member.",
+      "kind": "number",
+      "defaultValue": 100000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 0,
+      "max": 1000000
+    },
+    {
+      "key": "economy.daily_milestones",
+      "section": "economy",
+      "label": "Daily Milestones",
+      "description": "Exact Claim Daily streak milestone bonuses.",
+      "kind": "json",
+      "defaultValue": {
+        "7": 500,
+        "30": 2500,
+        "100": 10000,
+        "365": 50000
+      },
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.daily_spin_table",
+      "section": "economy",
+      "label": "Daily Spin Table",
+      "description": "Weighted Daily Spin reward table. Runtime hard bounds still apply.",
+      "kind": "json",
+      "defaultValue": [
+        {
+          "kind": "ottomans",
+          "weight": 35,
+          "amount": 100,
+          "label": "100 Ottomans"
+        },
+        {
+          "kind": "ottomans",
+          "weight": 30,
+          "amount": 250,
+          "label": "250 Ottomans"
+        },
+        {
+          "kind": "ottomans",
+          "weight": 15,
+          "amount": 500,
+          "label": "500 Ottomans"
+        },
+        {
+          "kind": "item",
+          "weight": 10,
+          "item_id": "junk.bent_screw",
+          "quantity": 1,
+          "label": "Bent Chair Screw"
+        },
+        {
+          "kind": "item",
+          "weight": 6,
+          "item_id": "sellable.brass_caster",
+          "quantity": 1,
+          "label": "Old Brass Caster"
+        },
+        {
+          "kind": "item",
+          "weight": 3,
+          "item_id": "collectible.lounge_token",
+          "quantity": 1,
+          "label": "Lounge Token"
+        },
+        {
+          "kind": "ottomans",
+          "weight": 1,
+          "amount": 1500,
+          "label": "1,500 Ottomans"
+        }
+      ],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "economy.grind_technical_throttle_ms",
+      "section": "economy",
+      "label": "Grind Technical Throttle Ms",
+      "description": "Small technical anti-spam throttle for repeatable grind commands; not a gameplay cooldown.",
+      "kind": "number",
+      "defaultValue": 1500,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 250,
+      "max": 5000
+    },
+    {
+      "key": "economy.grind_tables",
+      "section": "economy",
+      "label": "Grind Tables",
+      "description": "Bounded weighted outcome tables for /work, /fish, /dig and /scavenge.",
+      "kind": "json",
+      "defaultValue": {
+        "work": [
+          {
+            "outcome": "win",
+            "weight": 72,
+            "min": 80,
+            "max": 220
+          },
+          {
+            "outcome": "zero",
+            "weight": 14
+          },
+          {
+            "outcome": "loss",
+            "weight": 7,
+            "min": 20,
+            "max": 60
+          },
+          {
+            "outcome": "fine",
+            "weight": 5,
+            "min": 60,
+            "max": 120
+          },
+          {
+            "outcome": "tool_damage",
+            "weight": 2,
+            "tool_damage": 5
+          }
+        ],
+        "fish": [
+          {
+            "outcome": "win",
+            "weight": 65,
+            "min": 40,
+            "max": 130
+          },
+          {
+            "outcome": "mixed",
+            "weight": 18,
+            "min": 20,
+            "max": 80,
+            "item_id": "sellable.rusty_hook",
+            "quantity": 1
+          },
+          {
+            "outcome": "item",
+            "weight": 10,
+            "item_id": "sellable.rusty_hook",
+            "quantity": 1
+          },
+          {
+            "outcome": "zero",
+            "weight": 7
+          }
+        ],
+        "dig": [
+          {
+            "outcome": "win",
+            "weight": 60,
+            "min": 50,
+            "max": 150
+          },
+          {
+            "outcome": "mixed",
+            "weight": 20,
+            "min": 25,
+            "max": 90,
+            "item_id": "sellable.buried_coaster",
+            "quantity": 1
+          },
+          {
+            "outcome": "item",
+            "weight": 12,
+            "item_id": "sellable.buried_coaster",
+            "quantity": 1
+          },
+          {
+            "outcome": "zero",
+            "weight": 8
+          }
+        ],
+        "scavenge": [
+          {
+            "outcome": "win",
+            "weight": 55,
+            "min": 35,
+            "max": 120
+          },
+          {
+            "outcome": "mixed",
+            "weight": 25,
+            "min": 20,
+            "max": 70,
+            "item_id": "junk.loose_spring",
+            "quantity": 1
+          },
+          {
+            "outcome": "item",
+            "weight": 15,
+            "item_id": "junk.loose_spring",
+            "quantity": 1
+          },
+          {
+            "outcome": "zero",
+            "weight": 5
+          }
+        ]
+      },
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    }
+  ]
+}

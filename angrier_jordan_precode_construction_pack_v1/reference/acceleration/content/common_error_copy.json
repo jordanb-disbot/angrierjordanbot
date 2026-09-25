@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "messages": {
+    "wrong_channel": "That command does not live here. I can point you to the right channel.",
+    "missing_permission": "You do not have permission to do that.",
+    "jailed_restricted": "You are currently in the Hotseat. That feature is unavailable until the applicable sentence ends.",
+    "feature_disabled": "That feature is currently disabled.",
+    "session_conflict": "There is already an active session that conflicts with this one.",
+    "insufficient_ottomans": "You do not have enough Ottomans available for that.",
+    "stale_interaction": "That control belongs to an older state. Refresh or reopen the feature.",
+    "temporary_error": "Something failed safely. Nothing consequential was settled twice. Try again.",
+    "setup_unhealthy": "The server mapping or permissions need attention before this feature can run safely."
+  }
+}

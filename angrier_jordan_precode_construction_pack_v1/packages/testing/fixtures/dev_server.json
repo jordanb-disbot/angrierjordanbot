@@ -1,0 +1,72 @@
+{
+  "guild": {
+    "id": "100000000000000001",
+    "name": "Chairs Dev Lounge"
+  },
+  "roles": {
+    "throne": "200000000000000001",
+    "chaise_lounge": "200000000000000002",
+    "recliner": "200000000000000003",
+    "jailed": "200000000000000004"
+  },
+  "channels": {
+    "main_chat": "300000000000000001",
+    "bot": "300000000000000002",
+    "games": "300000000000000003",
+    "counting": "300000000000000004",
+    "last_letter": "300000000000000005",
+    "staff_log": "300000000000000006",
+    "chairisms": "300000000000000007",
+    "introductions": "300000000000000008",
+    "hotseat": "300000000000000009"
+  },
+  "members": [
+    {
+      "userId": "400000000000000001",
+      "name": "OwnerDev",
+      "role": "throne",
+      "wallet": 50000,
+      "bank": 250000
+    },
+    {
+      "userId": "400000000000000002",
+      "name": "AdminDev",
+      "role": "chaise_lounge",
+      "wallet": 20000,
+      "bank": 50000
+    },
+    {
+      "userId": "400000000000000003",
+      "name": "ModDev",
+      "role": "recliner",
+      "wallet": 10000,
+      "bank": 15000
+    },
+    {
+      "userId": "400000000000000004",
+      "name": "MemberA",
+      "role": "member",
+      "wallet": 5000,
+      "bank": 7000
+    },
+    {
+      "userId": "400000000000000005",
+      "name": "MemberB",
+      "role": "member",
+      "wallet": 3500,
+      "bank": 2500
+    },
+    {
+      "userId": "400000000000000006",
+      "name": "MemberC",
+      "role": "member",
+      "wallet": 900,
+      "bank": 100
+    }
+  ],
+  "scenarios": {
+    "jailed_user": "400000000000000006",
+    "moderation_case_user": "400000000000000005",
+    "triple_threat_user": "400000000000000004"
+  }
+}

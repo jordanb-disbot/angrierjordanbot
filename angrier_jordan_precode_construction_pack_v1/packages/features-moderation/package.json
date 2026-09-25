@@ -1,0 +1,8 @@
+{
+  "name": "@angrier-jordan/features-moderation",
+  "version": "0.0.0-implementation",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "dependencies": {}
+}

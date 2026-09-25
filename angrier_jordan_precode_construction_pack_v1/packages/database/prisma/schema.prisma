@@ -1,0 +1,1001 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+enum SessionState { DRAFT OPEN LOCKED SETTLING CLOSED CANCELLED }
+enum EscrowState { RESERVED SETTLED REFUNDED FORFEITED }
+enum CaseStatus { OPEN ACTIVE EXPIRED REVERSED APPEALED UPHELD MODIFIED }
+enum RelationStatus { PENDING ACTIVE ENDED }
+enum JailType { CRIME MODERATION }
+
+model Guild {
+  id String @id
+  name String?
+  createdAt DateTime @default(now())
+  configs ConfigValue[]
+  audits AuditEvent[]
+  sessions GameSession[]
+  cases ModerationCase[]
+}
+
+model ConfigValue {
+  id String @id @default(cuid())
+  guildId String
+  key String
+  value Json
+  source String @default("default")
+  version Int @default(1)
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+  guild Guild @relation(fields:[guildId], references:[id], onDelete:Cascade)
+  @@unique([guildId,key])
+  @@index([guildId,key])
+}
+
+model Member {
+  guildId String
+  userId String
+  alias String?
+  dmsEnabled Boolean @default(true)
+  activityVisible Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  economy EconomyAccount?
+  inventory InventoryEntry[]
+  achievements MemberAchievement[]
+  tutorials TutorialProgress[]
+  presence MemberPresenceState?
+  selfRoles SelfRoleSelection[]
+  roleSnapshots MemberRoleSnapshot[]
+  @@id([guildId,userId])
+}
+
+model MemberPresenceState {
+  guildId String
+  userId String
+  needsRulesAck Boolean @default(true)
+  rulesAcknowledgedAt DateTime?
+  joinedAt DateTime?
+  leftAt DateTime?
+  nickname String?
+  pendingRoleRestore Boolean @default(false)
+  roleSnapshotCapturedAt DateTime?
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@id([guildId,userId])
+  @@index([guildId,needsRulesAck])
+}
+
+model SelfRoleSelection {
+  guildId String
+  userId String
+  roleId String
+  categoryKey String
+  active Boolean @default(true)
+  selectedAt DateTime @default(now())
+  archivedAt DateTime?
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@id([guildId,userId,roleId])
+  @@index([guildId,userId,categoryKey,active])
+}
+
+model MemberRoleSnapshot {
+  guildId String
+  userId String
+  roleId String
+  kind String
+  expiresAt DateTime?
+  capturedAt DateTime @default(now())
+  metadata Json?
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@id([guildId,userId,roleId])
+  @@index([guildId,userId,kind])
+}
+
+model EconomyAccount {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  wallet BigInt @default(0)
+  bank BigInt @default(0)
+  bankTier Int @default(1)
+  version Int @default(0)
+  starterGrantedAt DateTime?
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@unique([guildId,userId])
+}
+
+model EconomyTransaction {
+  id String @id @default(cuid())
+  guildId String
+  idempotencyKey String @unique
+  kind String
+  reason String
+  metadata Json?
+  createdAt DateTime @default(now())
+  @@index([guildId,createdAt])
+}
+
+model LedgerEntry {
+  id String @id @default(cuid())
+  guildId String
+  transactionId String
+  userId String?
+  bucket String
+  amount BigInt
+  reason String
+  metadata Json?
+  createdAt DateTime @default(now())
+  @@index([guildId,userId,createdAt])
+  @@index([transactionId])
+}
+
+model Escrow {
+  id String @id @default(cuid())
+  guildId String
+  ownerUserId String?
+  kind String
+  amount BigInt?
+  itemRef String?
+  state EscrowState @default(RESERVED)
+  referenceType String
+  referenceId String
+  idempotencyKey String @unique
+  createdAt DateTime @default(now())
+  settledAt DateTime?
+  @@index([guildId,referenceType,referenceId])
+}
+
+model CatalogItem {
+  id String @id
+  type String
+  name String
+  rarity String
+  buyPrice BigInt?
+  sellValue BigInt?
+  giftable Boolean @default(true)
+  enabled Boolean @default(true)
+  metadata Json?
+}
+
+model InventoryEntry {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  itemId String
+  quantity Int @default(1)
+  locked Boolean @default(false)
+  metadata Json?
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@unique([guildId,userId,itemId])
+  @@index([guildId,userId,itemId])
+}
+
+model Recipe {
+  id String @id
+  name String
+  outputItemId String
+  rankRequirement String?
+  inputs Json
+  successConfig Json
+  enabled Boolean @default(true)
+}
+
+model OwnedRecipe {
+  guildId String
+  userId String
+  recipeId String
+  learnedAt DateTime @default(now())
+  @@id([guildId,userId,recipeId])
+}
+
+model ToolInstance {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  catalogItemId String
+  slot String
+  durability Int
+  maxDurability Int
+  equipped Boolean @default(false)
+  metadata Json?
+  @@index([guildId,userId,slot])
+}
+
+model CraftedChair {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  chairType String
+  quality String
+  createdAt DateTime @default(now())
+  metadata Json?
+  @@index([guildId,userId,chairType])
+}
+
+model ContentEntry {
+  id String @id
+  game String
+  category String?
+  intensity Int?
+  payload Json
+  tags String[]
+  enabled Boolean @default(true)
+  contentVersion Int @default(1)
+  useCount Int @default(0)
+  lastUsedAt DateTime?
+  @@index([game,category,enabled])
+}
+
+model GameSession {
+  id String @id @default(cuid())
+  guildId String
+  type String
+  channelId String
+  messageId String?
+  ownerUserId String?
+  state SessionState @default(DRAFT)
+  data Json
+  expiresAt DateTime?
+  extensionUsed Boolean @default(false)
+  version Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  guild Guild @relation(fields:[guildId], references:[id], onDelete:Cascade)
+  participants GameParticipant[]
+  votes Vote[]
+  wagers Wager[]
+  @@index([guildId,type,state])
+  @@index([expiresAt,state])
+}
+
+model GameParticipant {
+  sessionId String
+  userId String
+  role String?
+  data Json?
+  joinedAt DateTime @default(now())
+  session GameSession @relation(fields:[sessionId], references:[id], onDelete:Cascade)
+  @@id([sessionId,userId])
+}
+
+model Vote {
+  id String @id @default(cuid())
+  sessionId String
+  voterUserId String
+  questionKey String @default("main")
+  choiceKey String
+  anonymous Boolean @default(true)
+  updatedAt DateTime @updatedAt
+  session GameSession @relation(fields:[sessionId], references:[id], onDelete:Cascade)
+  @@unique([sessionId,voterUserId,questionKey])
+}
+
+model Wager {
+  id String @id @default(cuid())
+  sessionId String
+  userId String
+  selectionKey String
+  amount BigInt
+  escrowId String @unique
+  createdAt DateTime @default(now())
+  session GameSession @relation(fields:[sessionId], references:[id], onDelete:Cascade)
+  @@index([sessionId,userId])
+}
+
+model Achievement {
+  id String @id
+  name String
+  class String
+  criteria Json
+  enabled Boolean @default(true)
+}
+
+model MemberAchievement {
+  guildId String
+  userId String
+  achievementId String
+  earnedAt DateTime @default(now())
+  metadata Json?
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@id([guildId,userId,achievementId])
+}
+
+model ActivityDaily {
+  guildId String
+  userId String
+  date DateTime @db.Date
+  messages Int @default(0)
+  words Int @default(0)
+  vcSeconds Int @default(0)
+  wordCounts Json?
+  commandCounts Json?
+  @@id([guildId,userId,date])
+  @@index([guildId,date])
+}
+
+model WeeklySpotlight {
+  id String @id @default(cuid())
+  guildId String
+  weekStart DateTime
+  category String
+  userId String
+  winningValue BigInt
+  lifetimeWins Int
+  statusLabel String
+  postedMessageId String?
+  createdAt DateTime @default(now())
+  @@unique([guildId,weekStart,category,userId])
+}
+
+model ModerationCase {
+  id Int @id @default(autoincrement())
+  guildId String
+  subjectUserId String?
+  actionType String
+  reason String
+  category String?
+  actorUserId String?
+  actorType String @default("STAFF")
+  sourceChannelId String?
+  sourceMessageId String?
+  policyId String?
+  durationSeconds Int?
+  status CaseStatus @default(OPEN)
+  metadata Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  guild Guild @relation(fields:[guildId], references:[id], onDelete:Cascade)
+  evidence ModerationEvidence[]
+  appeals Appeal[]
+  events ModerationCaseEvent[]
+  @@index([guildId,subjectUserId,createdAt])
+}
+
+model ModerationCaseEvent {
+  id String @id @default(cuid())
+  caseId Int
+  kind String
+  actorUserId String?
+  before Json?
+  after Json?
+  reason String?
+  createdAt DateTime @default(now())
+  case ModerationCase @relation(fields:[caseId], references:[id], onDelete:Cascade)
+  @@index([caseId,createdAt])
+}
+
+model ModerationEvidence {
+  id String @id @default(cuid())
+  caseId Int
+  contentCiphertext String?
+  context Json?
+  expiresAt DateTime?
+  createdAt DateTime @default(now())
+  case ModerationCase @relation(fields:[caseId], references:[id], onDelete:Cascade)
+  @@index([expiresAt])
+}
+
+model Appeal {
+  id String @id @default(cuid())
+  caseId Int
+  requesterUserId String
+  reviewerUserId String?
+  status String @default("PENDING")
+  text String?
+  outcomeReason String?
+  createdAt DateTime @default(now())
+  resolvedAt DateTime?
+  case ModerationCase @relation(fields:[caseId], references:[id], onDelete:Cascade)
+}
+
+model ModNote {
+  id String @id @default(cuid())
+  guildId String
+  subjectUserId String
+  authorUserId String
+  text String
+  createdAt DateTime @default(now())
+  @@index([guildId,subjectUserId,createdAt])
+}
+
+
+model StaffAlert {
+  id String @id @default(cuid())
+  guildId String
+  subjectUserId String
+  actorUserId String
+  reason String
+  createdAt DateTime @default(now())
+  @@index([guildId,createdAt])
+  @@index([guildId,subjectUserId,createdAt])
+}
+
+model ChannelModerationState {
+  id String @id @default(cuid())
+  guildId String
+  channelId String
+  kind String
+  active Boolean @default(true)
+  snapshot Json
+  createdBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([guildId,channelId,kind])
+  @@index([guildId,active])
+}
+
+model BehaviorEvent {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  category String
+  weight Int
+  expiresAt DateTime?
+  sourceCaseId Int?
+  createdAt DateTime @default(now())
+  @@index([guildId,userId,expiresAt])
+}
+
+
+model SecurityModeState {
+  guildId String @id
+  mode String @default("NORMAL")
+  reason String?
+  source String @default("default")
+  updatedBy String?
+  panicActive Boolean @default(false)
+  snapshot Json?
+  expiresAt DateTime?
+  updatedAt DateTime @updatedAt
+}
+
+model SecurityEvent {
+  id String @id @default(cuid())
+  guildId String
+  userId String?
+  actorUserId String?
+  kind String
+  severity Int @default(1)
+  metadata Json?
+  createdAt DateTime @default(now())
+  @@index([guildId,kind,createdAt])
+  @@index([guildId,actorUserId,createdAt])
+  @@index([guildId,userId,createdAt])
+}
+
+model JailSentence {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  type JailType
+  caseId Int?
+  reason String
+  startedAt DateTime @default(now())
+  endsAt DateTime
+  endedAt DateTime?
+  active Boolean @default(true)
+  indefinite Boolean @default(false)
+  restoration Json?
+  pausedAt DateTime?
+  pausedRemainingSeconds Int?
+  releaseReason String?
+  releasedByUserId String?
+  @@index([guildId,userId,active])
+  @@index([endsAt,active])
+}
+
+model VerificationState {
+  guildId String
+  userId String
+  status String
+  reason String?
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model IntroductionForm {
+  id String @id @default(cuid())
+  guildId String
+  version Int @default(1)
+  title String
+  enabled Boolean @default(true)
+  prompts IntroductionPrompt[]
+  @@index([guildId,enabled])
+}
+
+model IntroductionPrompt {
+  id String @id @default(cuid())
+  formId String
+  sortOrder Int
+  label String
+  cardLabel String
+  placeholder String?
+  required Boolean @default(false)
+  maxLength Int @default(500)
+  enabled Boolean @default(true)
+  form IntroductionForm @relation(fields:[formId], references:[id], onDelete:Cascade)
+  @@index([formId,sortOrder])
+}
+
+model IntroductionSubmission {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  formVersion Int
+  answers Json
+  outputMessageId String?
+  updatedAt DateTime @updatedAt
+  @@unique([guildId,userId])
+}
+
+model CustomCommand {
+  id String @id @default(cuid())
+  guildId String
+  name String
+  enabled Boolean @default(false)
+  triggerType String
+  triggerValue String
+  caseSensitive Boolean @default(false)
+  conditions Json
+  actions Json
+  cooldowns Json
+  createdBy String
+  updatedBy String
+  usageCount Int @default(0)
+  lastUsedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([guildId,triggerType,triggerValue])
+}
+
+model Marriage {
+  id String @id @default(cuid())
+  guildId String
+  userA String
+  userB String
+  status RelationStatus @default(PENDING)
+  proposedAt DateTime @default(now())
+  startedAt DateTime?
+  endedAt DateTime?
+  metadata Json?
+  @@index([guildId,userA,status])
+  @@index([guildId,userB,status])
+}
+
+model Adoption {
+  id String @id @default(cuid())
+  guildId String
+  parentPairKey String
+  childUserId String
+  status RelationStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  endedAt DateTime?
+  @@index([guildId,childUserId,status])
+}
+
+model FamilyAuction {
+  id String @id @default(cuid())
+  guildId String
+  sellerUserId String
+  auctionType String
+  reserveAmount BigInt?
+  status String
+  endsAt DateTime
+  createdAt DateTime @default(now())
+  bids FamilyAuctionBid[]
+  @@index([guildId,status,endsAt])
+}
+
+model FamilyAuctionBid {
+  id String @id @default(cuid())
+  auctionId String
+  bidderUserId String
+  amount BigInt
+  escrowId String @unique
+  createdAt DateTime @default(now())
+  auction FamilyAuction @relation(fields:[auctionId], references:[id], onDelete:Cascade)
+  @@index([auctionId,amount])
+}
+
+model Will {
+  guildId String
+  userId String
+  beneficiaryUserId String
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model Chairism {
+  id Int @id @default(autoincrement())
+  guildId String
+  sourceUserId String
+  createdByUserId String
+  sourceMessageId String?
+  sourceChannelId String?
+  outputMessageId String
+  createdAt DateTime @default(now())
+  @@index([guildId,sourceUserId,createdAt])
+}
+
+model Playlist {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  name String
+  createdAt DateTime @default(now())
+  tracks PlaylistTrack[]
+  @@unique([guildId,userId,name])
+}
+
+model PlaylistTrack {
+  id String @id @default(cuid())
+  playlistId String
+  position Int
+  provider String
+  reference String
+  metadata Json
+  playlist Playlist @relation(fields:[playlistId], references:[id], onDelete:Cascade)
+  @@unique([playlistId,position])
+}
+
+model TutorialProgress {
+  guildId String
+  userId String
+  lessonId String
+  completedAt DateTime?
+  dismissed Boolean @default(false)
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@id([guildId,userId,lessonId])
+}
+
+model ScheduledJob {
+  id String @id @default(cuid())
+  guildId String
+  jobType String
+  executionKey String @unique
+  dueAt DateTime
+  status String @default("PENDING")
+  payload Json?
+  attempts Int @default(0)
+  lastError String?
+  completedAt DateTime?
+  @@index([status,dueAt])
+}
+
+model AuditEvent {
+  id String @id @default(cuid())
+  guildId String
+  actorUserId String?
+  source String
+  action String
+  targetType String?
+  targetId String?
+  before Json?
+  after Json?
+  reason String?
+  requestId String
+  createdAt DateTime @default(now())
+  guild Guild @relation(fields:[guildId], references:[id], onDelete:Cascade)
+  @@index([guildId,createdAt])
+  @@index([requestId])
+}
+
+
+model ConfigRevision {
+  id String @id @default(cuid())
+  guildId String
+  key String
+  version Int
+  value Json
+  source String
+  actorUserId String?
+  rollbackSafe Boolean @default(false)
+  createdAt DateTime @default(now())
+  @@unique([guildId,key,version])
+  @@index([guildId,key,createdAt])
+}
+
+model MemberClaimState {
+  guildId String
+  userId String
+  dailyLastClaimAt DateTime?
+  dailyStreak Int @default(0)
+  weeklyLastClaimAt DateTime?
+  dailySpinLastAt DateTime?
+  fortuneLastAt DateTime?
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model EconomyActivityStat {
+  guildId String
+  userId String
+  activity String
+  attempts Int @default(0)
+  wins Int @default(0)
+  zeroes Int @default(0)
+  losses Int @default(0)
+  fines Int @default(0)
+  itemsFound Int @default(0)
+  ottomansEarned BigInt @default(0)
+  ottomansLost BigInt @default(0)
+  lastAttemptAt DateTime?
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId,activity])
+  @@index([guildId,activity,attempts])
+}
+
+model EconomyActivityEvent {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  activity String
+  outcome String
+  ottomansDelta BigInt @default(0)
+  itemGrants Json
+  toolDamage Int @default(0)
+  idempotencyKey String @unique
+  metadata Json?
+  createdAt DateTime @default(now())
+  @@index([guildId,userId,activity,createdAt])
+}
+
+model EconomyActionThrottle {
+  guildId String
+  userId String
+  action String
+  nextAllowedAt DateTime
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId,action])
+  @@index([nextAllowedAt])
+}
+
+model MemberGameStats {
+  guildId String
+  userId String
+  gameKey String
+  wins Int @default(0)
+  losses Int @default(0)
+  draws Int @default(0)
+  plays Int @default(0)
+  metadata Json?
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId,gameKey])
+}
+
+model MemberCrimeState {
+  guildId String
+  userId String
+  wantedLevel String @default("CLEAN")
+  heatScore Int @default(0)
+  robberCooldownUntil DateTime?
+  victimProtectionUntil DateTime?
+  successfulRobs Int @default(0)
+  failedRobs Int @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model CraftingProgress {
+  guildId String
+  userId String
+  rank String @default("APPRENTICE")
+  skillPoints Int @default(0)
+  attempts Int @default(0)
+  successes Int @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model PityCounter {
+  guildId String
+  userId String
+  poolKey String
+  count Int @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId,poolKey])
+}
+
+model ShopRotation {
+  id String @id @default(cuid())
+  guildId String
+  rotationDate DateTime @db.Date
+  itemIds String[]
+  personalized Json?
+  generatedAt DateTime @default(now())
+  @@unique([guildId,rotationDate])
+}
+
+model CasinoPool {
+  guildId String
+  poolKey String
+  amount BigInt @default(0)
+  version Int @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([guildId,poolKey])
+}
+
+model LotteryRound {
+  id String @id @default(cuid())
+  guildId String
+  weekKey String
+  status String @default("OPEN")
+  pot BigInt @default(0)
+  winnerUserId String?
+  drawAt DateTime
+  drawnAt DateTime?
+  messageId String?
+  @@unique([guildId,weekKey])
+}
+
+model LotteryTicket {
+  roundId String
+  userId String
+  count Int @default(0)
+  paid BigInt @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([roundId,userId])
+}
+
+model Giveaway {
+  id String @id @default(cuid())
+  guildId String
+  creatorUserId String
+  prize String
+  winnerCount Int
+  entryCost BigInt @default(0)
+  status String @default("OPEN")
+  endsAt DateTime
+  outputMessageId String?
+  createdAt DateTime @default(now())
+  @@index([guildId,status,endsAt])
+}
+
+model GiveawayEntry {
+  giveawayId String
+  userId String
+  escrowId String?
+  enteredAt DateTime @default(now())
+  @@id([giveawayId,userId])
+}
+
+model ChannelGameState {
+  guildId String
+  channelId String
+  gameKey String
+  state Json
+  version Int @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([guildId,channelId,gameKey])
+}
+
+model RecordValue {
+  guildId String
+  recordKey String
+  scopeKey String @default("alltime")
+  userId String?
+  value Json
+  achievedAt DateTime
+  updatedAt DateTime @updatedAt
+  @@id([guildId,recordKey,scopeKey])
+}
+
+model SuperlativeSeason {
+  id String @id @default(cuid())
+  guildId String
+  seasonNumber Int
+  status String
+  config Json
+  nominationEndsAt DateTime?
+  votingEndsAt DateTime?
+  createdAt DateTime @default(now())
+  @@unique([guildId,seasonNumber])
+}
+
+model SuperlativeEntry {
+  id String @id @default(cuid())
+  seasonId String
+  categoryKey String
+  nomineeUserId String
+  nominatorUserId String?
+  voteCount Int @default(0)
+  finalist Boolean @default(false)
+  winner Boolean @default(false)
+  @@index([seasonId,categoryKey])
+}
+
+model Suggestion {
+  id String @id @default(cuid())
+  guildId String
+  submitterUserId String
+  anonymous Boolean @default(false)
+  text String
+  status String @default("OPEN")
+  outputMessageId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([guildId,status,createdAt])
+}
+
+model AmaQuestion {
+  id String @id @default(cuid())
+  guildId String
+  submitterUserId String
+  anonymous Boolean @default(false)
+  question String
+  status String @default("OPEN")
+  answer String?
+  answeredByUserId String?
+  upvotes Int @default(0)
+  createdAt DateTime @default(now())
+  answeredAt DateTime?
+  @@index([guildId,status,createdAt])
+}
+
+model SelfRolePanel {
+  id String @id @default(cuid())
+  guildId String
+  name String
+  channelId String?
+  messageId String?
+  config Json
+  enabled Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([guildId,name])
+}
+
+model MusicSession {
+  guildId String @id
+  voiceChannelId String
+  textChannelId String
+  controllerMessageId String?
+  state String
+  currentTrack Json?
+  queue Json
+  volume Int @default(100)
+  loopMode String @default("OFF")
+  autoplay Boolean @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+model MusicHistory {
+  id String @id @default(cuid())
+  guildId String
+  requesterUserId String?
+  provider String
+  reference String
+  metadata Json
+  playedAt DateTime @default(now())
+  @@index([guildId,playedAt])
+}
+
+model DashboardSession {
+  id String @id @default(cuid())
+  userId String
+  guildId String
+  sessionHash String @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([userId,guildId,expiresAt])
+}
+
+model RoleAlias {
+  guildId String
+  userId String
+  alias String
+  setByUserId String
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model ContentUseHistory {
+  id String @id @default(cuid())
+  guildId String
+  contentId String
+  game String
+  category String?
+  usedAt DateTime @default(now())
+  @@index([guildId,game,category,usedAt])
+  @@index([contentId,usedAt])
+}

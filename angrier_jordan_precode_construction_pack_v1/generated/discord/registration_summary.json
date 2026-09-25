@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "slash_interaction_records": 187,
+  "context_menu_records": 1,
+  "special_text_records": 4,
+  "top_level_chat_input_commands": 64,
+  "source": "master_command_registry.json v2"
+}

@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "file_count_including_manifest": 40,
+  "files": [
+    {
+      "path": "PACK_QA_REPORT.json",
+      "bytes": 334
+    },
+    {
+      "path": "README.md",
+      "bytes": 1424
+    },
+    {
+      "path": "architecture/IMPLEMENTATION_PHASES.md",
+      "bytes": 1587
+    },
+    {
+      "path": "architecture/PROJECT_STRUCTURE.md",
+      "bytes": 935
+    },
+    {
+      "path": "architecture/SERVICE_BOUNDARIES.md",
+      "bytes": 1182
+    },
+    {
+      "path": "architecture/SHARED_ENGINE_CONTRACTS.md",
+      "bytes": 2858
+    },
+    {
+      "path": "architecture/renderer_component_catalog.json",
+      "bytes": 3474
+    },
+    {
+      "path": "architecture/shared_types.ts",
+      "bytes": 1394
+    },
+    {
+      "path": "bootstrap/SERVER_SETUP_SPEC.md",
+      "bytes": 1480
+    },
+    {
+      "path": "bootstrap/YAGPDB_MIGRATION_CHECKLIST.md",
+      "bytes": 751
+    },
+    {
+      "path": "codex/CODEX_EXECUTION_CONTRACT.md",
+      "bytes": 1778
+    },
+    {
+      "path": "codex/CODEX_START_PROMPT.md",
+      "bytes": 654
+    },
+    {
+      "path": "content/CONTENT_QA_REPORT.json",
+      "bytes": 600
+    },
+    {
+      "path": "content/common_error_copy.json",
+      "bytes": 879
+    },
+    {
+      "path": "content/finish_sentence_500.json",
+      "bytes": 99682
+    },
+    {
+      "path": "content/fortune_300.json",
+      "bytes": 64598
+    },
+    {
+      "path": "content/haiku_complaints_60.json",
+      "bytes": 8102
+    },
+    {
+      "path": "content/line_shame_120.json",
+      "bytes": 18938
+    },
+    {
+      "path": "content/moderation_policy_catalog.json",
+      "bytes": 2931
+    },
+    {
+      "path": "content/npc_dialogue.json",
+      "bytes": 106470
+    },
+    {
+      "path": "content/roast_300.json",
+      "bytes": 63448
+    },
+    {
+      "path": "content/social_response_pools.json",
+      "bytes": 177759
+    },
+    {
+      "path": "content/superlatives_200.json",
+      "bytes": 32051
+    },
+    {
+      "path": "database/DATABASE_RULES.md",
+      "bytes": 591
+    },
+    {
+      "path": "database/schema.prisma",
+      "bytes": 12599
+    },
+    {
+      "path": "dev/.env.example",
+      "bytes": 280
+    },
+    {
+      "path": "dev/ci.yml",
+      "bytes": 549
+    },
+    {
+      "path": "dev/docker-compose.yml",
+      "bytes": 282
+    },
+    {
+      "path": "dev/package_scripts.json",
+      "bytes": 804
+    },
+    {
+      "path": "registries/capability_matrix.json",
+      "bytes": 2395
+    },
+    {
+      "path": "registries/command_registration_plan.json",
+      "bytes": 7534
+    },
+    {
+      "path": "registries/feature_dependency_graph.json",
+      "bytes": 2215
+    },
+    {
+      "path": "registries/master_command_registry.json",
+      "bytes": 123114
+    },
+    {
+      "path": "registries/master_settings_schema.json",
+      "bytes": 45296
+    },
+    {
+      "path": "source_updates/ANGRIER_JORDAN_CANONICAL_BUILD_SPEC.md",
+      "bytes": 78473
+    },
+    {
+      "path": "source_updates/ANGRIER_JORDAN_CODE_CONFIG_AUDIT.md",
+      "bytes": 20054
+    },
+    {
+      "path": "testing/TEST_STRATEGY.md",
+      "bytes": 380
+    },
+    {
+      "path": "testing/acceptance_test_matrix.json",
+      "bytes": 16606
+    },
+    {
+      "path": "testing/seed_fixtures.json",
+      "bytes": 2830
+    }
+  ],
+  "command_count": 180,
+  "top_level_registered_chat_commands": 57,
+  "setting_count": 136,
+  "acceptance_test_count": 68,
+  "authored_content_entries": 2985
+}

@@ -1,0 +1,1520 @@
+{
+  "version": 2,
+  "test_count": 73,
+  "tests": [
+    {
+      "id": "T001",
+      "module": "ledger",
+      "name": "Concurrent spend cannot make balance negative",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "ledger feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Concurrent spend cannot make balance negative",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T002",
+      "module": "ledger",
+      "name": "Retrying same idempotency key does not double-pay",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "ledger feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Retrying same idempotency key does not double-pay",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T003",
+      "module": "escrow",
+      "name": "Cancelled race refunds every wager exactly once",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "escrow feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Cancelled race refunds every wager exactly once",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T004",
+      "module": "session",
+      "name": "Open session survives restart and resumes",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "session feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Open session survives restart and resumes",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T005",
+      "module": "timer",
+      "name": "Overdue persisted timer runs once after restart",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "timer feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Overdue persisted timer runs once after restart",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T006",
+      "module": "voting",
+      "name": "One member has one editable ballot",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "voting feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: One member has one editable ballot",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T007",
+      "module": "permissions",
+      "name": "Member cannot invoke staff capability",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "permissions feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Member cannot invoke staff capability",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T008",
+      "module": "audit",
+      "name": "Every dashboard mutation creates audit event",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "audit feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Every dashboard mutation creates audit event",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T009",
+      "module": "config",
+      "name": "Out-of-bounds setting is rejected",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "config feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Out-of-bounds setting is rejected",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T010",
+      "module": "content",
+      "name": "Recent prompt exclusion prevents immediate repeats",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "content feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Recent prompt exclusion prevents immediate repeats",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T020",
+      "module": "economy",
+      "name": "Wallet then bank spending order",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "economy feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Wallet then bank spending order",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T021",
+      "module": "economy",
+      "name": "Bank remains robbery protected",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "economy feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Bank remains robbery protected",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T022",
+      "module": "daily",
+      "name": "Missed day resets streak",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "daily feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Missed day resets streak",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T023",
+      "module": "inventory",
+      "name": "Gift rejects tools and recipes",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "inventory feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Gift rejects tools and recipes",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T024",
+      "module": "crafting",
+      "name": "Craft failure consumes bounded materials and grants skill",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "crafting feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Craft failure consumes bounded materials and grants skill",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T025",
+      "module": "casino",
+      "name": "Casino settlement is atomic",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "casino feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Casino settlement is atomic",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T026",
+      "module": "race",
+      "name": "Race requires at least two entrants",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "race feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Race requires at least two entrants",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T027",
+      "module": "race",
+      "name": "Race betting closes before result",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "race feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Race betting closes before result",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T028",
+      "module": "fight",
+      "name": "Fight target leave before settlement cancels/refunds",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "fight feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Fight target leave before settlement cancels/refunds",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T029",
+      "module": "party_games",
+      "name": "Only one public party round active",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "party_games feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Only one public party round active",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T030",
+      "module": "fmk",
+      "name": "Chooser cannot vote",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "fmk feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Chooser cannot vote",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T031",
+      "module": "fmk",
+      "name": "Exact 50/50 returns Split Decision",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "fmk feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Exact 50/50 returns Split Decision",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T032",
+      "module": "line",
+      "name": "Countdown renders exactly 5 through 0",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "line feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Countdown renders exactly 5 through 0",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T033",
+      "module": "counting",
+      "name": "Wrong count resets and restore is audited",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "counting feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Wrong count resets and restore is audited",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T034",
+      "module": "last_letter",
+      "name": "Duplicate word is rejected without breaking chain",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "last_letter feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Duplicate word is rejected without breaking chain",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T040",
+      "module": "moderation",
+      "name": "Warn creates permanent case ID",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "moderation feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Warn creates permanent case ID",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T041",
+      "module": "moderation",
+      "name": "Appeal cannot be solely reviewed by acting moderator",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "moderation feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Appeal cannot be solely reviewed by acting moderator",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T042",
+      "module": "moderation",
+      "name": "Evidence expires while case metadata remains",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "moderation feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Evidence expires while case metadata remains",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T043",
+      "module": "jail",
+      "name": "Moderation jail persists through rejoin",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "jail feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Moderation jail persists through rejoin",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T044",
+      "module": "jail",
+      "name": "Crime bail cannot clear moderation jail",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "jail feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Crime bail cannot clear moderation jail",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T045",
+      "module": "security",
+      "name": "Panic mode stores exact restoration state",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "security feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Panic mode stores exact restoration state",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T046",
+      "module": "security",
+      "name": "Deactivating panic restores prior permissions exactly",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "security feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Deactivating panic restores prior permissions exactly",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T047",
+      "module": "security",
+      "name": "Administrator bypass is surfaced, not falsely claimed jailed",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "security feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Administrator bypass is surfaced, not falsely claimed jailed",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T048",
+      "module": "automod",
+      "name": "Adult profanity alone does not trigger punishment",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "automod feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Adult profanity alone does not trigger punishment",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T049",
+      "module": "automod",
+      "name": "Phishing link follows configured high-severity path",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "automod feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Phishing link follows configured high-severity path",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T050",
+      "module": "anti_raid",
+      "name": "Join velocity can enter Restricted state",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "anti_raid feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Join velocity can enter Restricted state",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T051",
+      "module": "anti_nuke",
+      "name": "Protected owner is never auto-stripped by generic containment",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "anti_nuke feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Protected owner is never auto-stripped by generic containment",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T060",
+      "module": "introductions",
+      "name": "Member gets one active introduction",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "introductions feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Member gets one active introduction",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T061",
+      "module": "introductions",
+      "name": "Editing updates existing post instead of reposting",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "introductions feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Editing updates existing post instead of reposting",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T062",
+      "module": "dashboard",
+      "name": "Unauthorized OAuth user cannot access guild settings",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "dashboard feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Unauthorized OAuth user cannot access guild settings",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T063",
+      "module": "dashboard",
+      "name": "Setting edit reaches bot without deploy",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "dashboard feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Setting edit reaches bot without deploy",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T064",
+      "module": "custom_commands",
+      "name": "Custom role action cannot grant protected role",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "custom_commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Custom role action cannot grant protected role",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T065",
+      "module": "custom_commands",
+      "name": "Recursive command invocation is blocked",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "custom_commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Recursive command invocation is blocked",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T066",
+      "module": "tutorial",
+      "name": "Practice moderation cannot create real case",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "tutorial feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Practice moderation cannot create real case",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T067",
+      "module": "tutorial",
+      "name": "Every registry command has help metadata",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "tutorial feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Every registry command has help metadata",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T068",
+      "module": "music",
+      "name": "Only one active voice session per guild",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "music feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Only one active voice session per guild",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T069",
+      "module": "music",
+      "name": "Normal text-channel play request is rejected",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "music feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Normal text-channel play request is rejected",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T070",
+      "module": "chairisms",
+      "name": "Private/staff source message cannot become public Chairism",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "chairisms feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Private/staff source message cannot become public Chairism",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T080",
+      "module": "recovery",
+      "name": "Restart during lottery settlement is idempotent",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "recovery feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Restart during lottery settlement is idempotent",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T081",
+      "module": "recovery",
+      "name": "Restart during timed punishment does not lose expiry",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "recovery feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Restart during timed punishment does not lose expiry",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T082",
+      "module": "recovery",
+      "name": "Restart during auction preserves bids/escrow",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "recovery feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Restart during auction preserves bids/escrow",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T083",
+      "module": "recovery",
+      "name": "Duplicate Discord interaction is not processed twice",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "recovery feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Duplicate Discord interaction is not processed twice",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T084",
+      "module": "recovery",
+      "name": "Deleted mapped channel surfaces setup-health warning",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "recovery feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Deleted mapped channel surfaces setup-health warning",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T085",
+      "module": "commands",
+      "name": "Registered top-level chat commands remain within configured budget",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Registered top-level chat commands remain within configured budget",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T086",
+      "module": "commands",
+      "name": "Every registration_path is unique at the leaf path",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Every registration_path is unique at the leaf path",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T087",
+      "module": "commands",
+      "name": "Required options precede optional options",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Required options precede optional options",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T088",
+      "module": "dashboard",
+      "name": "Generic settings page can render every mutable schema type",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "dashboard feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Generic settings page can render every mutable schema type",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T089",
+      "module": "dashboard",
+      "name": "Immutable settings cannot be changed through dashboard or Discord config",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "dashboard feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Immutable settings cannot be changed through dashboard or Discord config",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T090",
+      "module": "rendering",
+      "name": "Every major feature maps to an existing renderer shell or documented exception",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "rendering feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Every major feature maps to an existing renderer shell or documented exception",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T091",
+      "module": "content",
+      "name": "Disabled content is never selected",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "content feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Disabled content is never selected",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T092",
+      "module": "content",
+      "name": "Skip returns a different content ID",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "content feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Skip returns a different content ID",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T093",
+      "module": "setup",
+      "name": "Setup health detects missing mapped channel",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "setup feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Setup health detects missing mapped channel",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T094",
+      "module": "setup",
+      "name": "Setup health detects bot role below Jailed role",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "setup feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Setup health detects bot role below Jailed role",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T095",
+      "module": "security",
+      "name": "Dashboard cannot expose any environment secret",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "security feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Dashboard cannot expose any environment secret",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T096",
+      "module": "backup",
+      "name": "Database restore drill preserves balances/cases/config",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "backup feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Database restore drill preserves balances/cases/config",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T097",
+      "module": "custom_commands",
+      "name": "Legacy YAGPDB alias delegates to native race workflow",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "custom_commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Legacy YAGPDB alias delegates to native race workflow",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T098",
+      "module": "custom_commands",
+      "name": "Legacy line alias delegates to native line workflow",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "custom_commands feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Legacy line alias delegates to native line workflow",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T099",
+      "module": "help",
+      "name": "Command registry drives help fields and example generation",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "help feature dependencies are available",
+        "test guild fixture loaded"
+      ],
+      "steps": [
+        "Execute scenario: Command registry drives help fields and example generation",
+        "Repeat/retry the critical action when applicable",
+        "Inspect persistent state and audit output"
+      ],
+      "expected": [
+        "No invariant is violated",
+        "Persistent state is internally consistent",
+        "Any retry is idempotent or safely rejected"
+      ]
+    },
+    {
+      "id": "T069",
+      "module": "wyr",
+      "name": "Vote edit replaces prior anonymous ballot",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "open WYR session"
+      ],
+      "steps": [
+        "Member votes A",
+        "same member votes B"
+      ],
+      "expected": [
+        "one ballot exists",
+        "choice is B",
+        "public state does not expose voter identity"
+      ]
+    },
+    {
+      "id": "T070",
+      "module": "wyr",
+      "name": "WYR extension may be used only once",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "open 60s WYR session"
+      ],
+      "steps": [
+        "owner extends 30s",
+        "owner attempts second extension"
+      ],
+      "expected": [
+        "expiry moves by 30s exactly once",
+        "second extension rejected"
+      ]
+    },
+    {
+      "id": "T071",
+      "module": "setup",
+      "name": "Setup rerun does not duplicate managed resources",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "setup completed once"
+      ],
+      "steps": [
+        "run setup again"
+      ],
+      "expected": [
+        "no duplicate roles/panels/jobs",
+        "health report remains stable"
+      ]
+    },
+    {
+      "id": "T072",
+      "module": "config",
+      "name": "Dashboard and Discord config use identical validation bounds",
+      "kind": "contract",
+      "priority": "P0",
+      "preconditions": [
+        "settings schema loaded"
+      ],
+      "steps": [
+        "submit below-min value through each adapter"
+      ],
+      "expected": [
+        "both reject with same validation code"
+      ]
+    },
+    {
+      "id": "T073",
+      "module": "commands",
+      "name": "Generated registration stays within Discord top-level command budget",
+      "kind": "contract",
+      "priority": "P0",
+      "preconditions": [
+        "registry loaded"
+      ],
+      "steps": [
+        "generate application commands"
+      ],
+      "expected": [
+        "top-level chat-input command count <= 100"
+      ]
+    }
+  ]
+}

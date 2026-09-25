@@ -1,0 +1,2187 @@
+ANGRIER JORDAN
+FEATURE FLOW REFERENCE - TEXT ONLY
+Transition Baseline: Checkpoint 08
+Date: 2026-09-21
+
+PURPOSE
+This document is the owner-review and Codex handoff reference for what every major Angrier Jordan feature does and how the member/staff flow works from start to finish.
+
+SOURCE PRIORITY USED FOR THIS DOCUMENT
+1. Latest user decisions through 2026-09-21.
+2. ANGRIER_JORDAN_CANONICAL_BUILD_SPEC_2026-09-21.md.
+3. Latest focused specs/audits and the final command-to-presentation audit.
+4. Implementation Checkpoints 01-08 for behavior already implemented.
+
+BUILD STATUS AT TRANSITION
+- Checkpoints 01-08 are complete at the code/scaffold level.
+- Moderation/security and the first Ottoman economy foundation are implemented behind live-smoke gates where credentials are still required.
+- Checkpoint 09 onward is the Codex implementation phase.
+- The feature behavior below is the intended final product behavior even when the feature is not yet implemented.
+
+GLOBAL RULES THAT APPLY TO ALL FLOWS
+- Bot display name: Angrier Jordan.
+- Bot Discord role: The Chairman.
+- Human hierarchy: Throne > Chaise Lounge > Recliner.
+- User-facing language says server/member, not guild, except internal Discord/API code may still use guild identifiers.
+- Discord IDs/role IDs, not display names, are authoritative for permissions.
+- Important financial/social timers are persisted and restart-safe.
+- Currency/inventory movement is transactional, idempotent, and ledger-backed.
+- Wagers and auctions use escrow before settlement.
+- Feature flags can disable modules without deleting stored member data.
+- Moderation-Hotseat members cannot bypass restrictions with stale buttons or components.
+- Runtime visuals are deterministic templates using real Discord/database state; AI image generation is not used during normal runtime.
+- The approved visual system is the dark Discord-native Angrier Jordan/Chairs style with navy, teal/emerald, gold, readable typography, and feature-specific accent variation.
+
+======================================================================
+1. SERVER SETUP AND HEALTH
+======================================================================
+
+Commands: /setup, /setup health
+
+Purpose:
+Initialize and validate the one-server Angrier Jordan installation.
+
+Flow:
+1. An authorized owner/admin starts /setup.
+2. Angrier Jordan validates required server configuration, mapped channels, mapped roles, role hierarchy, and enabled-module permissions.
+3. The bot checks that The Chairman can manage the roles/members/channels required by enabled features.
+4. The bot identifies missing or unsafe configuration instead of silently pretending the feature will work.
+5. Configuration is saved through the shared configuration service/database, not by editing deployed JSON.
+6. /setup health can be used later to re-run configuration and capability checks.
+7. Health output is private/ephemeral and lists actionable problems.
+
+End state:
+The server has a validated configuration baseline. Features with unmet requirements remain safely unavailable rather than partially functioning.
+
+======================================================================
+2. RULES AND ONBOARDING
+======================================================================
+
+Command: /rules
+Related optional next steps: /roles, /lore, /introduce, /tutorial
+
+Purpose:
+Make server-rules acknowledgment the only mandatory onboarding gate.
+
+New-member flow:
+1. A new member joins.
+2. Angrier Jordan presents or makes available the rules acknowledgment experience.
+3. The member reads the rules and acknowledges them.
+4. Angrier Jordan checks whether the member has an active punishment that must be restored.
+5. If there is no active punishment, Angrier Jordan grants the configured normal member/access role.
+6. If there is an active punishment, the punishment state is restored instead of normal member access.
+7. The member is offered /roles, /lore, /introduce, and /tutorial as optional/skippable next steps.
+8. Those optional features remain available permanently after onboarding.
+
+Rejoin flow:
+1. A former member rejoins.
+2. The member must acknowledge rules again before normal access is restored.
+3. Persistent Angrier Jordan data remains intact: profile, economy, inventory, collections, family/social state, achievements, game records, privacy, cosmetics, and showcase state.
+4. Eligible prior self-selected roles and eligible non-staff manual/custom roles are restored when the Discord role still exists and Angrier Jordan can assign it.
+5. Staff roles are never auto-restored; current staff must reapprove them.
+6. Booster/Nitro roles are determined by Discord's current boost state.
+7. Temporary roles keep aging while the member is gone and are restored only if still valid.
+8. The old server nickname is restored when permissions allow.
+9. Restoration failures are logged but do not block the member from rejoining.
+
+Punishment-on-rejoin flow:
+1. If the member left with an active punishment, that state persists.
+2. Finite punishment time pauses while the member is absent.
+3. The member acknowledges rules after returning.
+4. The remaining punishment is resumed and the Jailed/restricted state is applied.
+5. Normal access is restored only when the punishment independently ends.
+
+======================================================================
+3. SELF-SELECT ROLES
+======================================================================
+
+Command: /roles
+
+Purpose:
+Give members one private role-selection panel with no administrative controls.
+
+Member flow:
+1. Member runs /roles.
+2. Angrier Jordan opens one ephemeral/private role panel.
+3. Categories appear in configured order: Gender, Age, Regions, Vices, Personalities, Pings, DM Status.
+4. Existing selections are preselected.
+5. Gender, Age, Regions, and DM Status are single-choice but clearable.
+6. Selecting a new option in a single-choice category removes the previous option immediately.
+7. Vices and Personalities are multi-select with no product-level cap; Discord-safe menus may be split internally if needed.
+8. Pings are independent multi-select roles, including Line, Race, Chess, and VC.
+9. Every change applies immediately; there is no Save button.
+10. Angrier Jordan refuses to assign mapped roles that have Discord permissions, are managed, are above the bot's manageable hierarchy, or otherwise fail safety checks.
+
+Dashboard archive/restore flow:
+1. Admin archives/disables a role option in the dashboard.
+2. The option disappears from /roles immediately.
+3. The underlying role is removed from current holders.
+4. Angrier Jordan remembers which eligible members held it.
+5. Admin later re-enables the option.
+6. Angrier Jordan automatically restores the role to prior holders who are still eligible.
+
+Option delete flow:
+1. Admin deletes one role option.
+2. The role is removed from members.
+3. The underlying Discord role is deleted.
+4. Mappings/configuration are removed.
+5. The action is audited.
+
+Category delete flow:
+1. Admin selects category deletion.
+2. Because this is destructive, explicit confirmation is required.
+3. All roles belonging to that category are removed from members.
+4. Underlying Discord roles and mappings are deleted.
+5. The action is audited.
+
+======================================================================
+4. HELP AND INTERACTIVE TUTORIAL
+======================================================================
+
+Commands: /help, /tutorial and tutorial subflows
+
+/help flow:
+1. Member runs /help or searches for a command.
+2. Angrier Jordan filters results to commands/features that member is actually authorized to see.
+3. It shows the exact current command path, not a retired alias.
+4. It explains command purpose, required/optional fields, and at least one complete example.
+5. Complex commands expose Walk Me Through It / contextual help when a tutorial exists.
+6. Enabled Special Commands (!line, !race, !vc, !chess, plus authorized custom Special Commands) appear in help where relevant.
+
+/tutorial flow:
+1. Member opens /tutorial or a Show Me Around / How This Works entry point.
+2. Angrier Jordan shows permission-appropriate tutorial paths.
+3. Member selects a path or specific command lesson.
+4. Each lesson presents a short purpose, 2-5 steps, relevant commands, field explanations, and an example.
+5. Practice is offered when it can be simulated safely.
+6. Practice mode never changes real balances, roles, wagers, moderation state, security state, or other protected data.
+7. Progress is stored privately with stable lesson IDs.
+8. Member may continue, inspect progress, restart a path, or exit.
+9. Tutorial completion gives no Ottomans, badge, or gameplay progression reward.
+
+======================================================================
+5. LORE
+======================================================================
+
+Command: /lore
+Achievement: Chair Historian
+
+Flow:
+1. Member runs /lore or chooses Read the Lore during onboarding.
+2. Angrier Jordan opens an ephemeral table of contents.
+3. Chapters are: The Story Behind the "not"; Why the Server Is Called Chairs; The Story of Angrier Jordan.
+4. Member uses Previous/Next/Dismiss to navigate.
+5. Long chapters split only at natural paragraph/section boundaries.
+6. Reading progress is saved per member.
+7. A chapter is marked complete only when the member reaches its final page.
+8. On a later visit, the member can return to the table of contents or resume.
+9. When all three chapters have been completed, Chair Historian unlocks exactly once.
+10. Chair Historian is permanent and has no default Ottoman reward.
+
+======================================================================
+6. CORE UTILITY COMMANDS
+======================================================================
+
+/status
+1. Member runs /status.
+2. Angrier Jordan returns current bot health, uptime, and recent outages/errors only.
+3. It does not become a changelog or project-roadmap command.
+
+/bug
+1. Member runs /bug.
+2. The bot accepts a bot-issue report through the registered report flow.
+3. The issue is recorded/routed for staff/developer review according to implementation settings.
+4. The user receives a concise confirmation/error ID where applicable.
+Note: the source locks the command purpose but does not prescribe a detailed public bug-tracker workflow.
+
+/dms
+1. Member runs /dms to control bot DM delivery.
+2. New members default to DMs ON.
+3. The preference is persisted.
+4. Features that attempt optional DMs respect the preference, while Discord delivery failure is handled gracefully.
+
+======================================================================
+7. PROFILE, SHOWCASE, ACTIVITY, AND PRIVACY
+======================================================================
+
+Commands: /profile, /privacy activity, /privacy roast
+No standalone /showcase command.
+
+/profile flow:
+1. Member opens /profile.
+2. The public profile renders available member statistics and progression, including game records, achievements, collections, Chair Building rank, family counters, gifting/work stats, wanted status, and Weekly Spotlight area.
+3. Activity metrics may show month/all-time messages, words, VC time, most-used word, and most-used bot command when activity privacy is visible.
+4. Member may use Edit Showcase privately from the profile.
+5. Edit Showcase lets the member choose allowed featured collectibles/badges/cosmetic presentation.
+6. Changes update the stored profile/showcase state.
+7. There is no separate /showcase slash command.
+
+/privacy activity flow:
+1. Member opens /privacy activity.
+2. The member toggles one global activity-visibility setting.
+3. Hidden mode hides message count, word count, VC time, most-used word, and most-used command from routine profile display.
+4. Game/economy/achievement/collection/record statistics stay public.
+5. Weekly award-winning totals remain public in Weekly Spotlight announcements even when routine activity stats are hidden.
+
+/privacy roast flow:
+1. Member opens /privacy roast.
+2. Member enables or disables being targeted by /social roast.
+3. The preference is persisted and checked before a roast target is accepted.
+
+Passive activity-tracking flow:
+1. Angrier Jordan observes qualifying main/community activity.
+2. Bot messages, commands, bot/game/staff channels, URL-only, mention-only, and emoji-only messages are excluded from profile message/word counts.
+3. Qualifying messages increment message count.
+4. Natural-language words are counted after stripping URLs/mentions/standalone emoji tokens.
+5. Stop words count toward total words but are excluded from most-used-word ranking.
+6. VC time counts only in non-AFK voice, with at least one other non-bot member present, and while the member is not self-muted or self-deafened.
+7. Monthly and all-time counters are maintained separately.
+
+======================================================================
+8. WEEKLY SPOTLIGHT
+======================================================================
+
+Passive weekly feature.
+Badges: The Loudest Chair, The Wordsmith, Voice of the Lounge, Triple Threat.
+
+Flow:
+1. The weekly measurement period runs until Monday 4:00 AM Mountain Time.
+2. Angrier Jordan freezes qualifying statistics for the completed week.
+3. It determines co-winners for most qualifying messages, most qualifying words, and most qualifying VC time.
+4. Ties produce co-winners; each receives the active rotating badge and historical win credit.
+5. If one member holds all three titles in the same weekly result, Triple Threat unlocks permanently.
+6. Once Triple Threat is earned, it permanently occupies that premium profile showcase slot even though future weekly wins still increment historical counters.
+7. Angrier Jordan builds one Weekly Spotlight announcement for main chat beginning with @everyone.
+8. The announcement uses actual avatars/names, winning totals, lifetime category wins, status labels, and server totals.
+9. The result is posted during a learned high-engagement Monday evening window, approximately 5-10 PM MT, with 7 PM fallback if history is insufficient.
+10. Only one announcement is sent per weekly result.
+
+======================================================================
+9. ACHIEVEMENTS AND BADGES
+======================================================================
+
+Feature types: Achievement, Mastery Badge, Legacy Badge.
+
+Flow:
+1. A member performs actions across supported systems.
+2. Angrier Jordan evaluates data-driven achievement conditions.
+3. When a condition is met, the achievement unlocks idempotently.
+4. Mastery badges unlock when the defined series/set is completed.
+5. Legacy badges represent very rare cross-system completion.
+6. Earned badges become available for profile display/feature slots according to badge type.
+7. Mastery/Legacy badges receive stronger visual treatment than normal achievements.
+8. Weekly Spotlight/Triple Threat remains a distinct premium profile area.
+
+Examples of defined families include Built Different, The House Has a Problem, Repeat Offender, Socially Questionable, Seat Collector, Chairman's Toolbox, Family Business, Against Better Judgment, The Whole Damn Lounge, and The Furniture. Exact thresholds are data-driven.
+
+======================================================================
+10. OTTOMAN WALLET, BANK, TRANSFERS, AND STATEMENT
+======================================================================
+
+Commands: /statement, /bank, /transfer
+Currency: Ottomans
+Balances: Wallet + Bank
+
+Starter balance flow:
+1. New eligible member account is initialized.
+2. A small one-time starter balance is granted.
+3. starterGrantedAt prevents duplicate starter grants after rejoin/bootstrap retries.
+
+Spending rule:
+1. A feature requests an Ottoman charge.
+2. The ledger spends from Wallet first.
+3. If Wallet is insufficient, the remainder is pulled from Bank.
+4. If combined funds are insufficient, the transaction fails without moving funds.
+5. Idempotency keys prevent duplicate interaction settlement.
+
+/bank flow:
+1. Member opens /bank.
+2. Angrier Jordan shows wallet/bank state, current bank tier/capacity, and available bank actions.
+3. Wallet-bank transfers are immediate and free.
+4. Bank upgrades are offered under current tier rules.
+5. For tiers 1-4, the current tier must be full before the upgrade charge can be applied.
+6. Upgrade charge uses the normal wallet-first spending rule.
+7. Tier 5 is the top tier and is unlimited.
+8. Tier 5 interest posts Monday 4:00 AM MT, once per weekly cycle, within configured basis-point and payout caps.
+
+/transfer flow:
+1. Member selects another eligible member and Ottoman amount.
+2. Self-transfer or invalid targets are rejected where nonsensical.
+3. Balance and restrictions are validated.
+4. Sender pays wallet first, then bank remainder if needed.
+5. Recipient receives the funds in Wallet.
+6. Direct member transfers have no fee.
+7. The ledger records both sides atomically.
+
+/statement flow:
+1. Member runs /statement.
+2. Bot displays wallet, bank, liquid net worth, and recent transactions/reasons.
+3. Internal accounting remains more detailed than the member-facing statement.
+
+Hidden economy balancing flow:
+1. Angrier Jordan monitors aggregate wealth/distribution, shop spend, sell volume, casino, and bank growth.
+2. Within hard bounds, it may gradually tune safe configuration values such as work payouts, loot sell values, shop prices, bet limits, odds, and drop rates.
+3. It does not show members an economy-state meter or price-history feed.
+4. Rare-item prestige is protected; corrections are gradual rather than sudden.
+
+======================================================================
+11. DAILY HUB
+======================================================================
+
+Command: /daily
+Standalone /spin and /fortune do not exist.
+Reset: 4:00 AM Mountain Time.
+
+Flow:
+1. Member runs /daily.
+2. Angrier Jordan opens a private/ephemeral hub.
+3. The hub shows Claim Daily, Daily Spin, and Fortune with used/available state for the current cycle.
+4. Member chooses one action.
+5. The bot revalidates that action has not already been used this cycle.
+6. The selected action resolves.
+7. Only that action becomes unavailable until reset; the other daily actions remain usable if not claimed.
+
+Claim Daily:
+1. Guaranteed Ottoman reward is granted.
+2. Streak is checked against the immediately prior daily cycle.
+3. Missing a cycle resets the streak to 1.
+4. Milestone rewards are evaluated at 7, 30, 100, and 365 days.
+
+Daily Spin:
+1. Bot rolls once against the configured weighted table.
+2. Reward may be Ottomans, junk, sellables, tools, mystery boxes, rare collectibles, or other bounded configured rewards.
+3. Reward is settled atomically.
+4. Extra spins cannot be purchased.
+
+Fortune:
+1. Bot selects one authored fortune/effect from the fortune bank.
+2. It presents the fortune with Angrier Jordan flavor.
+3. Small effects/items/rare surprises may occur within economy bounds.
+
+======================================================================
+12. WEEKLY REWARD
+======================================================================
+
+Command: /weekly
+Reset: Monday 4:00 AM Mountain Time.
+
+Flow:
+1. Member runs /weekly.
+2. The bot checks whether the member has already claimed in the current weekly cycle.
+3. If available, it grants the guaranteed larger weekly reward.
+4. It records the claim idempotently.
+5. If already claimed, it returns the next-reset state.
+
+There is no monthly claim feature.
+
+======================================================================
+13. REPEATABLE GRIND
+======================================================================
+
+Commands: /work, /fish, /dig, /scavenge
+
+Shared flow:
+1. Member invokes an activity.
+2. Technical anti-spam/idempotency checks run; there is no gameplay cooldown for the basic grind commands.
+3. Tool requirements are checked where applicable.
+4. Activity outcome is rolled from configured bounded tables.
+5. Ottoman/item/tool-durability effects are applied atomically.
+6. Negative outcomes can never drive combined liquid balances below zero.
+7. Activity lifetime statistics are updated.
+
+/work:
+1. Requires no tool.
+2. Pays Ottomans only; the runtime rejects item-drop configuration for /work.
+3. Outcomes may be positive, zero, small loss/fine, or workshop-tool damage.
+4. There is no /work jackpot.
+
+/fish:
+1. Requires an equipped usable fishing rod.
+2. If equipped rod is broken, it auto-unequips and the best usable same-slot fallback is equipped if available.
+3. With no usable rod, fishing is blocked.
+4. Outcome may include configured Ottomans/items and durability change.
+
+/dig:
+Same structure as /fish, using the shovel slot.
+
+/scavenge:
+Same structure as /fish, using the scavenging-tool slot.
+
+======================================================================
+14. SHOP
+======================================================================
+
+Command: /shop
+
+Flow:
+1. Member opens /shop.
+2. Bot loads the current daily rotation.
+3. Core essentials always remain available.
+4. Premium items, collectibles, and tools rotate.
+5. The member sees the shared core inventory plus 1-2 personalized bonus slots where configured.
+6. All current items are visible even if the member cannot afford them.
+7. Locked/unavailable items show their exact gating requirement.
+8. Member chooses an item and quantity where supported.
+9. Bot validates feature eligibility, price, requirements, and balance.
+10. Ottoman spend and inventory grant settle atomically.
+11. There is no limited stock race; shop stock is not globally depleted.
+12. Shop refresh occurs daily at 4:00 AM MT.
+
+Buyback pricing is dynamic but bounded. There is no public price-history feature.
+
+======================================================================
+15. INVENTORY AND SELLING
+======================================================================
+
+Command: /inventory
+No standalone /sell command.
+
+Flow:
+1. Member opens /inventory.
+2. Bot loads owned item stacks and item metadata.
+3. Member can sort/filter by rarity, type, quality, lock state, sell value, and newness, and search by name.
+4. Member may inspect an item, lock/unlock it, equip eligible tools, open eligible boxes, or choose a supported sell action.
+5. Sell Item validates ownership, lock/gift/craft restrictions, and current bounded buyback value.
+6. Confirmation is required where appropriate.
+7. Item removal and Ottoman credit happen atomically.
+8. Sell All Junk sells eligible junk while respecting locks and protected items.
+9. Sell Duplicates preserves one normal copy; for crafted chairs it preserves the highest-quality copy.
+10. /unlock all removes member inventory locks in one action.
+
+======================================================================
+16. GIFTING
+======================================================================
+
+Command: /gift
+
+Flow:
+1. Member chooses another eligible member and a giftable owned item/box.
+2. Anonymous gifting is not offered; all gifts are named.
+3. Bot validates ownership, recipient, and giftability.
+4. Giftable examples: eligible collectibles/items, unopened mystery boxes, unopened gift boxes.
+5. Tools, crafted chairs, and recipes are not giftable.
+6. The item moves atomically from sender inventory to recipient inventory.
+7. Gifting statistics update where tracked.
+
+======================================================================
+17. COLLECTIONS AND MYSTERY BOXES
+======================================================================
+
+Command: /collection
+
+Collection flow:
+1. Member opens /collection or views another member where allowed.
+2. Bot shows standard discovered sets and eligible completion information.
+3. Hidden sets stay hidden until the member finds the first piece.
+4. Once a hidden set is discovered, found pieces are shown while undiscovered pieces stay hidden.
+5. Completion percentage excludes limited/event-only items.
+6. Completing a set may unlock profile/prestige/badges but no direct economic advantage.
+7. Global collection completion can appear in leaderboard categories.
+
+Mystery box flow:
+1. Member obtains/purchases a supported box.
+2. Opening validates ownership and lock state.
+3. Box is consumed exactly once.
+4. Reward is rolled from that box type's table.
+5. Hidden pity protection is updated per box type.
+6. Pity persists across shop rotations and resets on a qualifying high-rarity pull.
+7. Reward is added atomically to inventory/economy.
+
+======================================================================
+18. TOOLS, EQUIPMENT, AND REPAIR
+======================================================================
+
+Command: /repair
+Tool slots: fishing rod, shovel, scavenging tool, workshop tool.
+
+Equip flow:
+1. Member opens inventory/tool controls.
+2. Member chooses a usable owned tool for its slot.
+3. Tool becomes the equipped item for that slot.
+4. If it later breaks, it automatically unequips.
+5. Bot equips the best usable same-slot fallback when available.
+6. If an activity requires a tool and none is usable, that activity is blocked.
+
+/repair flow:
+1. Member chooses an owned/equipped tool at any damage level.
+2. Member selects cheap, standard, or premium repair tier.
+3. Bot validates cost/requirements.
+4. Repair amount is randomized within the configured tier bounds.
+5. Repair never destroys the tool.
+6. Repair never reduces permanent maximum durability.
+7. Ottoman/material cost and durability restoration settle atomically.
+8. Result is immediate.
+
+======================================================================
+19. CHAIR BUILDING / CRAFTING
+======================================================================
+
+Command: /craft
+Progression: Folding Chair -> Barstool -> Recliner -> Chaise Lounge -> Throne.
+Ranks: Apprentice -> Craftsman -> Chairwright -> Master Chairwright -> Grand Chairwright.
+Quality: Standard -> Fine -> Exceptional -> Masterwork -> Perfect.
+
+Flow:
+1. Member opens /craft.
+2. Bot shows recipes the account owns and currently meets prerequisites for.
+3. Recipe ownership, not rank alone, gates access.
+4. Member selects recipe.
+5. Bot validates recipe ownership, required materials, any prior crafted-chair input, workshop tool, and other prerequisites.
+6. Materials are reserved/consumed under a transactional craft attempt.
+7. Success/failure and quality are resolved using skill rank, recipe rules, and tool modifiers.
+8. On success, the crafted chair is created as a permanent collectible with rolled quality.
+9. On failure, some materials are consumed, skill progress still increases, and scrap may be produced.
+10. Perfect quality is impossible at lower ranks, tiny at Master, and highest at Grand.
+11. The visible rank changes when hidden skill thresholds are crossed; there is no numeric progress bar.
+12. Duplicates are allowed and sellable.
+13. Higher recipes may consume an earlier crafted chair.
+
+Rare bot crafting orders may exist, but cooperative/hired-player crafting does not.
+
+======================================================================
+20. CASINO - SHARED RULES
+======================================================================
+
+Commands: /casino blackjack, /casino roulette, /casino slots, /casino dice, /casino coinflip
+
+Shared flow:
+1. Member starts a casino game and chooses the required wager/options.
+2. Bot validates balance, min/max bet, jail/security restrictions, and feature availability.
+3. Wager is committed through the ledger/escrow-safe casino path.
+4. Game resolves using code-controlled RNG and the game's rules.
+5. Payout/loss settles atomically in Ottomans only.
+6. Statistics/records update.
+7. Completed result card offers Play Again.
+8. Play Again creates a new round; it may reuse the previous wager/secondary selection by default, but balance/limits/eligibility are revalidated before money is committed.
+9. If the previous option is no longer valid, the bot opens/returns the appropriate selector instead of silently substituting.
+
+Blackjack:
+1. Wager is validated.
+2. Cards are dealt under standard blackjack rules.
+3. Member may Hit or Stand, and may Double or Split when legal.
+4. Hand(s) resolve against the house.
+5. Result and payout settle.
+6. Play Again starts a fresh hand.
+
+Roulette:
+1. Member chooses wager and a supported roulette table selection.
+2. Bet is validated/committed.
+3. Roulette result is rolled.
+4. Winning selection is compared to the member's bet.
+5. Payout/loss settles.
+6. Play Again may preserve the prior wager/selection after revalidation.
+Note: the canonical sources lock the roulette feature but do not enumerate the final roulette bet-menu catalog in this document.
+
+Slots:
+1. Member chooses a supported wager size.
+2. A small configured portion of qualifying bets contributes to the persistent Chair Pot.
+3. Three chair-symbol reels resolve.
+4. Ordinary combinations pay according to the slot table.
+5. The ultra-rare matching-chair combination triggers Chair Pot.
+6. Chair Pot jackpot result is public and may set casino records.
+7. Play Again starts a new spin after normal validation.
+
+Dice:
+1. Member chooses wager and the offered dice choice/mode.
+2. Bet is validated/committed.
+3. Bot-vs-player dice result is rolled.
+4. Outcome settles.
+5. Play Again may preserve harmless prior choices after validation.
+Note: the exact final dice choice catalog is not specified in the canonical source excerpt and should stay data/config driven.
+
+Coinflip:
+1. Member chooses Heads or Tails and wager.
+2. Bet is validated/committed.
+3. Coin result is rolled.
+4. Win/loss settles.
+5. Play Again may reuse the prior side and wager after validation.
+
+======================================================================
+21. WEEKLY LOTTERY AND CHAIR POT
+======================================================================
+
+Command: /lottery
+Draw: Friday 8:00 PM Mountain Time.
+
+Lottery purchase flow:
+1. Member opens /lottery.
+2. Bot shows current ticket price, ticket count, pot, and member's weekly count.
+3. Member chooses ticket quantity up to the 20-ticket/member/week cap.
+4. Cost is charged and tickets are recorded atomically.
+5. Ticket sales fund the pot; there is no house/system-funded pot.
+
+Draw flow:
+1. At Friday 8:00 PM MT, the persisted draw job runs once.
+2. If zero tickets were sold, the drawing is skipped.
+3. If tickets exist, one winner is selected fairly from ticket entries.
+4. The winner receives the full ticket-funded pot.
+5. There is no rake and no system-funded rollover.
+6. A public branded result is posted and records update.
+7. Lottery has no Play Again button because it is a scheduled weekly event.
+
+Chair Pot flow is part of Slots:
+1. Qualifying slot bets add a small configured contribution.
+2. Pot persists server-wide.
+3. Ultra-rare required slot result triggers the jackpot.
+4. Jackpot settles atomically and posts a major public result.
+
+======================================================================
+22. GIVEAWAYS
+======================================================================
+
+Command: /giveaway
+Admin-created only; Chaise Lounge or Throne by default.
+
+Flow:
+1. Authorized admin starts giveaway creation.
+2. Admin chooses 1-5 winners, duration from 1 hour to 7 days, prize, and free/paid entry.
+3. Prize may be Ottomans, item, collectible, recipe, tool, or custom reward.
+4. Paid entry fee must remain inside economy bounds.
+5. Bot validates the configuration and posts the giveaway in the bot/community channel.
+6. Each member may enter once.
+7. For paid giveaways, entry fee is charged and removed from circulation.
+8. At close, eligible entrants are frozen.
+9. Bot selects the configured number of winners.
+10. Built-in prizes settle atomically; custom reward fulfillment is recorded for staff where needed.
+11. Result is posted and event closes.
+
+======================================================================
+23. CHAIR RACE
+======================================================================
+
+Trigger: !race
+Retired: /race
+Channel: main chat
+Participants: 2-6 racers
+Betting/entry window: 60 seconds, one host +30-second extension.
+
+Flow:
+1. Member types !race.
+2. Trigger message is deleted.
+3. Permission restrictions are checked; unauthorized triggers are deleted silently.
+4. Angrier Jordan posts a randomized Race callout, pings the configured opt-in Race role, and opens the native Race card.
+5. Starter automatically becomes Racer #1.
+6. Other members use Join Race first-come/first-served until six racers or entry lock.
+7. Each racer gets a distinct temporary race-chair visual; visuals never affect real odds.
+8. The same initial 60-second timer covers BOTH racer entry and betting.
+9. Host may use +30 Seconds once, extending BOTH entry and betting to 90 seconds maximum.
+10. If all six racer slots fill, entry closes but betting continues until the active timer ends.
+11. Bettor selects a racer from the public card.
+12. Discord opens a private wager modal.
+13. Bettor enters Ottoman amount.
+14. Bot validates balance, limits, eligibility, and event state.
+15. On confirmation, wager is committed and the one authoritative public Race card updates.
+16. One racer selection per member per event; selection cannot switch after commitment.
+17. Wager may be increased while betting is open and within limits.
+18. Racers are allowed to bet.
+19. If fewer than two racers exist at close, event cancels and all wagers refund safely.
+20. Otherwise entry/betting lock and the race begins automatically.
+21. One continuous sprint runs about 15-20 seconds. There are NO LAPS anywhere.
+22. Each racer has one authoritative 0-100% progress value that also drives chair position, progress bar, standing, and finish detection.
+23. The same Discord Race message is edited throughout the sprint.
+24. Winner is resolved from code-controlled equal racer probabilities.
+25. 5% rake is retained; 95% of the betting pool is distributed proportionally among winning bettors.
+26. The same message becomes the final result card.
+27. Race win statistics update.
+28. There is no Play Again/Rematch; another event requires another !race trigger.
+
+======================================================================
+24. ROBO CHAIR FIGHT
+======================================================================
+
+Command: /fight @member
+Channel: main chat
+Exactly two fighters.
+
+Flow:
+1. Challenger runs /fight and must name an eligible member.
+2. Self-fight is rejected.
+3. There is no target Accept/Decline and no Join Fight state.
+4. Fight starts immediately against the named target.
+5. A 30-second betting window opens immediately.
+6. Bettor selects one of the two fighters on the public card.
+7. Discord opens a private Ottoman wager modal.
+8. Bot validates balance, limits, eligibility, and event state.
+9. Confirmed wager commits and the one authoritative Fight card updates.
+10. One fighter selection per bettor per event; it cannot switch after commitment.
+11. Wager may increase while betting is open.
+12. Challenger has one use of +30 Seconds; it extends BETTING ONLY.
+13. At betting close, combat starts automatically.
+14. A winner is preselected by strict 50/50 code-controlled RNG.
+15. Both fighters begin at 100 HP.
+16. Turns alternate for roughly 22-28 seconds, with a hard 30-second cap.
+17. If acting fighter is below 100 HP, there is a 10% chance to heal instead of attack; heal rolls at full HP reroll as attacks.
+18. Attack outcomes: 68% normal hit, 10% miss, 12% blocked, 10% critical hit.
+19. Blocked damage is 25-45% of base; critical is 1.65-1.90x base.
+20. Heals are randomized and HP is clamped 0-100.
+21. Action text, damage/heal amount, numeric HP, health bars, and KO all derive from the same state update.
+22. Move flavor uses the locked pool of 100 attacks and 36 heals, avoids repeats within the fight, and suppresses recently used moves when possible.
+23. Pacing guardrails ensure the selected loser reaches 0 first and combat ends by 30 seconds without changing the preselected winner.
+24. One Discord message is edited through combat and becomes the final result.
+25. 5% rake is retained; 95% distributes proportionally to winning bettors.
+26. Fight win stats update.
+27. There is no Play Again/Rematch.
+28. If a fighter leaves before settlement, the event cancels/refunds according to escrow rules.
+
+======================================================================
+25. DIRECT PVP SKILL GAMES
+======================================================================
+
+Commands: /game tictactoe, /game connectfour, /game battleship
+
+Shared challenge flow:
+1. Challenger targets another member.
+2. Optional Ottoman wager is chosen before acceptance; free is default.
+3. Bot posts/sends the challenge to the target.
+4. Target has up to 2 minutes to accept.
+5. Before acceptance, challenger may cancel.
+6. On acceptance, both wager amounts are revalidated and escrowed if a wager exists.
+7. Member may only have one active skill-game match at a time.
+8. Turns proceed under the specific game rules.
+9. Active-turn timeout is 5 minutes; timeout is a forfeit.
+10. After acceptance, Forfeit Match requires confirmation.
+11. A wagered forfeit awards the escrowed pot to the opponent.
+12. A draw refunds wagers.
+13. Winner gets the full pot; there is no house rake.
+14. Game-specific win and combined Skill Game Wins statistics update.
+15. Completed match offers Play Again against the same opponent.
+16. Play Again creates a fresh challenge/match and never silently recommits the previous wager; wager must be freshly accepted/revalidated.
+
+Battleship placement:
+1. After challenge acceptance, player chooses Auto Place or Place Manually.
+2. Both fleets must be valid before combat begins.
+3. Normal Battleship turn flow then proceeds.
+
+The source defines the challenge/settlement rules but does not redefine standard board-game movement/win rules for Tic-Tac-Toe, Connect Four, or Battleship.
+
+======================================================================
+26. SOLO GAMES
+======================================================================
+
+Commands: /hangman, /wordscramble, /mastermind, /minesweeper
+
+Shared flow:
+1. Member starts the specific solo game and any supported harmless settings are selected.
+2. Bot generates a new word/puzzle/code/board.
+3. Member plays through the game's standard interaction flow.
+4. Result is recorded and any small Ottoman payout is settled.
+5. Solo-game profitability is intentionally below normal grind profitability.
+6. Result card offers Play Again.
+7. Play Again generates a new puzzle while preserving harmless settings such as category/difficulty/board size when valid.
+
+Tracked records:
+- Hangman: total wins + longest streak.
+- Word Scramble: total wins + fastest solve.
+- Mastermind: total wins + fewest guesses.
+- Minesweeper: wins + fastest clear by board size.
+
+The canonical source fixes the games, replay contract, payouts, and records but does not re-specify the full textbook rules of each puzzle.
+
+======================================================================
+27. CRIME, ROBBERY, WANTED, 911, FIGHT BACK, AND CRIME JAIL
+======================================================================
+
+Commands: /crime rob, /crime 911, /crime wanted, /crime bail
+Crime jail is separate from moderation Hotseat.
+
+Robbery flow:
+1. Robber uses /crime rob on another eligible member.
+2. Self-rob and invalid targets are rejected.
+3. Robber 30-minute cooldown and victim 60-minute protection are checked.
+4. Only victim Wallet is at risk; Bank is protected.
+5. Attempt resolves using configured crime probabilities and bounded theft percentage.
+6. Every attempt increases Wanted; successful robbery increases it more.
+7. On success, stolen Ottomans move from victim Wallet to robber Wallet atomically.
+8. Successful robbery card gives the victim a 60-second Fight Back control.
+9. It also exposes a 911 witness-report control for eligible witnesses for 3 minutes.
+
+Fight Back flow:
+1. Only the robbery victim may use Fight Back.
+2. Victim responds within 60 seconds.
+3. If Fight Back succeeds, 100% of the stolen funds are returned to the victim and robber arrest risk increases.
+4. If Fight Back fails, no extra penalty is added to the victim.
+
+911 flow:
+1. Eligible witness uses the incident's 911 control or the corresponding /crime 911 flow.
+2. Victim cannot report their own incident.
+3. Each member may report an incident once.
+4. Reports must arrive within the 3-minute window.
+5. Multiple reports increase catch risk up to a configured cap.
+
+Wanted flow:
+1. Wanted increases through crime activity.
+2. State is displayed as Clean -> Suspicious -> Wanted -> Most Wanted -> Public Enemy.
+3. Wanted decays automatically over time.
+4. Arrest resets Wanted to Clean.
+5. /crime wanted shows the member's relevant wanted state.
+
+If robber is caught:
+1. Stolen funds are returned.
+2. Bail is randomized from Wanted, amount stolen, and randomness.
+3. Robber enters 24-hour crime jail/full bot-command lockout unless bailed.
+4. Public mugshot/arrest card is posted.
+5. Bail may be paid by the jailed member or another member.
+
+/crime bail flow:
+1. Payer selects the eligible crime-jailed member.
+2. Bot validates bail amount and payer balance.
+3. Payment settles atomically.
+4. Crime jail is cleared.
+5. Moderation Hotseat, if also active, remains fully active.
+
+While crime-jailed:
+- Member cannot initiate ordinary bot commands.
+- Member may still receive transfers/items/inheritance/passive effects and bail.
+
+No bounties, insurance, jailbreak, or bribes.
+
+======================================================================
+28. FAMILY - MARRIAGE
+======================================================================
+
+Command: /family marry
+Default maximum: one spouse; maximum two active spouses with Blessing requirement.
+
+Proposal flow:
+1. Proposer chooses an eligible member.
+2. Normal proposal requires a Ring.
+3. Proposal is created and expires after 24 hours if unresolved.
+4. Proposed member decides whether to accept/reject unless the Wedding Sack rule applies.
+5. For a second active spouse, The Blessing of Angrier Jordan is required and consumed for that specific second marriage.
+6. Wedding Sack is an expensive luxury sink that guarantees a yes within the bot, but a second spouse still requires the Blessing.
+7. Finances remain separate after marriage.
+
+Successful marriage flow:
+1. Marriage record is created.
+2. Bot calculates/stores a deterministic pair Compatibility Score using an order-independent pair seed plus server-side secret/salt; it does not inspect personal traits or infer private data.
+3. Bot generates/stores a separate Success Chance correlated with, but not identical to, compatibility.
+4. One authoritative public marriage card posts in the bot/community channel.
+5. Card shows both members, date, proposal item, spouse count where relevant, Blessing use, compatibility, success chance, and View Family.
+6. Eligible community members may vote thumbs up/down for 3 hours.
+7. Spouses cannot vote on their own marriage card.
+8. Each eligible voter has one active vote and may switch while voting is open.
+9. Voting state survives restarts.
+10. At close, the same card freezes totals/approval percentage and disables voting.
+11. If approval is strictly greater than 80% AND at least 5 unique eligible members voted, the normal wait for the first child slot on that marriage is waived.
+12. Only the first child slot is affected; later child timing remains normal.
+13. Completed card remains server history by default; optional TTL may remove the post without deleting stored marriage/history.
+
+======================================================================
+29. FAMILY - DIVORCE
+======================================================================
+
+Command: /family divorce
+
+Flow:
+1. Member requests divorce from an active spouse relationship.
+2. Marriage must be at least 3 days old.
+3. Bot validates relationship and family cooldown rules.
+4. One spouse is randomly chosen as payer.
+5. Payer transfers 50% of their liquid Ottomans to the other spouse atomically.
+6. Items remain untouched.
+7. Marriage becomes inactive and active family tree updates.
+8. Same pair cannot remarry for 7 days.
+9. Recent family-event activity can scale cooldowns, which decay after a quiet period.
+10. If the former member later wants a second-spouse slot again, a new Blessing is required.
+
+======================================================================
+30. FAMILY - ADOPTION, DISOWN, AND EMANCIPATION
+======================================================================
+
+Commands: /family adopt, /family disown, /family emancipate
+
+Adoption requirements:
+- Parents must be married.
+- Child acceptance is required.
+- One parent may initiate; spouse approval is not required.
+
+Child-slot schedule per marriage:
+0-2 days: 0
+3 days: 1
+7 days: 2
+14 days: 3
+30 days: 4
+60 days: 5 maximum
+
+Adoption flow:
+1. Parent selects an eligible member to adopt.
+2. Bot checks active marriage, open child slot, cooldown/eligibility, and target rules.
+3. If several spouse pairs are eligible, oldest eligible marriage with an open slot is used.
+4. Target receives adoption request and must accept.
+5. On acceptance, target becomes child of that parent pair.
+6. The spouse tied to that marriage is automatically added as second parent.
+7. Child belongs to one parent pair.
+8. Active family tree updates.
+
+Disown/emancipation:
+1. Relevant parent/child invokes the appropriate relationship-ending flow.
+2. Relationship must be at least 3 days old.
+3. Bot validates authority/relationship rules.
+4. Link becomes inactive/removed from active tree.
+5. Ended relationship identity history is not exposed in the active family tree.
+
+======================================================================
+31. FAMILY TREE AND LARGEST FAMILY RECORD
+======================================================================
+
+Command: /family familytree
+
+Flow:
+1. Member opens family tree.
+2. Bot resolves active spouse/parent/child relationships.
+3. It renders only active links in the current family view.
+4. Ended relationships are not exposed as identity history in the active tree.
+
+Largest Family record:
+1. Bot continuously evaluates active relationship counts/family grouping.
+2. One current server record exists.
+3. When record changes, old record family loses its premium non-inflationary perk.
+4. New record family receives one randomized premium non-inflationary perk.
+5. Perk rerolls whenever the record changes.
+
+======================================================================
+32. FAMILY AUCTIONS
+======================================================================
+
+Command: /family familyauction
+
+Purpose:
+Roleplay auction where a member auctions themselves as spouse/adopted-child roleplay; there is no general item marketplace.
+
+Flow:
+1. Member creates self-auction and chooses supported roleplay type, optional reserve, and duration from 1-72 hours.
+2. Bot publishes the auction.
+3. Eligible members place sealed bids.
+4. Bids are escrowed.
+5. A bidder may increase a bid but may not decrease or withdraw it.
+6. At close, bot evaluates the highest valid bid.
+7. If reserve exists and is not met, auction closes without finalization and escrow returns safely.
+8. If reserve is met, highest valid bid auto-finalizes.
+9. Winning proceeds are paid directly to the person auctioned.
+10. Relationship/roleplay result is created under applicable family eligibility rules.
+11. Auction result is a major public event.
+
+======================================================================
+33. WILLS, ESTATES, AND INHERITANCE
+======================================================================
+
+Command: /family will
+
+Will setup:
+1. Member chooses one eligible beneficiary.
+2. Beneficiary is stored as the active will target.
+
+Estate trigger flow:
+1. Leave/kick/ban/unavailable state starts a 24-hour grace period when estate rules apply.
+2. If member rejoins during grace, estate execution is canceled.
+3. After grace, eligibility is rechecked.
+4. If named beneficiary is eligible, they inherit all eligible assets/items.
+5. If beneficiary is ineligible and member has active family, bot randomly chooses one eligible active spouse/child from the whole pool and transfers all eligible inheritance.
+6. If there is no eligible heir, wallet+bank are removed from circulation and eligible inventory is auctioned item-by-item.
+7. System estate auctions default to 24 hours.
+8. Estate execution is atomic and exactly once.
+9. Once executed, inheritance is irreversible.
+10. A later rejoin starts fresh; estate state is not restored and starter funds are not regranted.
+
+======================================================================
+34. PARTY-GAME SHARED VOTING
+======================================================================
+
+Reusable system name: Voting. No Crown Vote terminology.
+
+Flow for creative party-game voting:
+1. A qualifying game reaches its voting phase.
+2. Eligible choices/contestants are frozen.
+3. Each eligible member gets one vote.
+4. Contestants may vote for others but cannot self-vote.
+5. Voter may change vote until close.
+6. Totals are hidden until close by default.
+7. At close, votes are tallied.
+8. If tied, a 30-second runoff begins.
+9. If runoff also ties, deterministic server RNG selects among tied choices and explicitly discloses that random resolution.
+10. When a true game winner exists, that game's win stat and aggregate Party Game Wins increment.
+11. Voting itself pays no Ottomans.
+
+The engine can also support standard, blind, ranked, timed, participant-only, server-wide, hidden totals, and live totals where configured.
+
+======================================================================
+35. FMK
+======================================================================
+
+Command: /fmk
+
+Flow:
+1. Chooser runs /fmk with no target arguments.
+2. Bot randomly selects exactly three distinct eligible current non-bot server members.
+3. There is no FMK opt-out.
+4. Chooser privately assigns one Fuck and one Marry; the remaining subject becomes Kill.
+5. Each subject is used exactly once.
+6. Choices stay private until submission.
+7. On completion, each selected subject permanently receives exactly one lifetime Fucked/Married/Killed counter increment.
+8. Completed public card shows all three assignments and lifetime counters.
+9. Audience vote asks only: Do you agree with this FMK? Agree or Disagree.
+10. Chooser cannot vote on own result; other eligible members can.
+11. Ballots are anonymous, changeable until close, and totals stay hidden until close.
+12. Vote runs 3 minutes with one optional +30-second extension.
+13. At close, totals and percentages are shown.
+14. Exact 50/50 is Split Decision; there is no runoff and no FMK winner.
+15. Chooser stats update: rounds played, average agreement, highest agreement, lowest agreement.
+16. Result card offers Play Again.
+17. Play Again creates a brand-new random trio; old result and audience vote remain intact.
+
+======================================================================
+36. TRUTH OR DARE
+======================================================================
+
+Command: /truthordare [@member]
+
+Flow:
+1. Invoker starts the game and may optionally target another member; no target means self.
+2. Target acceptance is not required.
+3. Card offers Truth or Dare.
+4. Target may also Skip.
+5. Bot selects the appropriate authored prompt.
+6. Target answers through a free-text modal.
+7. Answer is rendered into the game card with named attribution.
+8. Round completes and records any relevant game stats.
+9. Play Again starts a fresh prompt/round; same target is preserved by default when still eligible.
+
+======================================================================
+37. WOULD YOU RATHER
+======================================================================
+
+Command: /wyr
+Golden Feature visual/interaction reference.
+
+Flow:
+1. Member starts /wyr in the game context and selects any supported category/settings.
+2. Bot posts one server-wide prompt with exactly two choices.
+3. Voting opens for 60 seconds.
+4. Host has one-use +30-second extension where exposed by the flow.
+5. Eligible members vote once and may follow the Voting rules for that mode.
+6. At close, the card changes to results with totals/percentages.
+7. Completed card offers Play Again.
+8. Play Again starts a fresh question and preserves harmless category settings when valid.
+
+======================================================================
+38. WHAT WOULD YOU DO
+======================================================================
+
+Command: /wwyd
+
+Flow:
+1. Member starts /wwyd.
+2. Bot selects/presents a scenario, typically with four authored choices.
+3. Server-wide voting opens for 60 seconds.
+4. Host has one-use +30-second extension.
+5. Members vote.
+6. At close, totals/percentages are shown.
+7. Result offers Play Again.
+8. Replay creates a fresh scenario while preserving harmless category settings when valid.
+
+======================================================================
+39. FINISH THE SENTENCE
+======================================================================
+
+Command: /finishsentence
+
+Flow:
+1. Host starts the game.
+2. Host chooses Random Prompt or Write My Own.
+3. If Write My Own, a modal collects the custom prompt.
+4. Bot opens a 60-second submission phase.
+5. Host has one-use +30-second extension.
+6. Each member may submit once and revise until close.
+7. Submissions lock at close.
+8. Shared Voting begins on eligible submissions.
+9. Voting resolves ties under the shared Voting rules.
+10. Winner receives game-specific win plus aggregate Party Game Win.
+11. Result offers Play Again.
+12. Random mode gets a fresh prompt; Custom mode opens a new prompt modal rather than silently reusing the old text.
+
+======================================================================
+40. ONE WORD STORY
+======================================================================
+
+Command: /onewordstory
+
+Flow:
+1. Host chooses target story length preset 25/50/75/100/150/200 or safe custom value 10-200; default is 50.
+2. Story starts empty.
+3. Members add exactly one word per valid turn.
+4. The same member cannot immediately follow themselves.
+5. Story continues until target word count is reached.
+6. Bot opens a 60-second hidden vote for favorite contribution/member.
+7. Vote closes and winner is determined under Voting rules.
+8. Winner gains game-specific win and Party Game Win.
+9. Result offers Play Again with the same target length by default.
+
+======================================================================
+41. LINE TIME
+======================================================================
+
+Trigger: !line
+Retired: /line
+Channel: main chat
+No participant maximum.
+
+Flow:
+1. Member types !line.
+2. Trigger is deleted.
+3. Permission restriction is checked; unauthorized trigger is deleted silently.
+4. Angrier Jordan posts randomized Line callout, pings configured Line opt-in role, and opens one authoritative Line card.
+5. Starter becomes host and is automatically marked I'm In.
+6. Members choose I'm In or I Need a Second.
+7. Readiness/entry window is 60 seconds.
+8. Host may use +30 Seconds once, extending entry/readiness to 90 seconds maximum.
+9. Host may start early.
+10. When 60/90-second window closes, new entries lock.
+11. Existing readiness states remain visible after lock.
+12. After lock, only host may Start Countdown or Cancel Line.
+13. Host may override I Need a Second members with configured authored shame lines.
+14. Countdown runs inside the authoritative frame exactly 5 -> 4 -> 3 -> 2 -> 1.
+15. Zero is never displayed.
+16. Immediately after 1, the center transitions to the bounded white-powder/dust explosion with brief chair debris.
+17. Event completes.
+18. There is no Play Again; another event requires another !line trigger.
+19. Line may coexist with an active Race or Fight.
+
+======================================================================
+42. PERSISTENT CHANNEL GAME - COUNTING
+======================================================================
+
+Channel: counting channel. No slash command required for normal play.
+
+Flow:
+1. Members post the next integer in sequence.
+2. Same member cannot make two consecutive valid posts.
+3. Correct number becomes the new last valid count.
+4. Every exact 100 milestone gives the poster +1 Counting Win.
+5. Count continues after the milestone; it does not reset at 100.
+6. Wrong number publicly identifies the breaker and previous valid count, then resets sequence to 1.
+7. Recliner+ may restore the last valid count when staff determines intentional sabotage.
+8. Restoration is logged.
+9. Counting is continuous and has no Play Again control.
+
+======================================================================
+43. PERSISTENT CHANNEL GAME - LAST LETTER
+======================================================================
+
+Channel: last-leg channel. No slash command required for normal play.
+
+Flow:
+1. A valid word must begin with the last letter of the previous valid word.
+2. Normal English, common slang, and adult/profane words are allowed.
+3. Proper names, usernames, abbreviations, made-up words, and duplicate words within the round are rejected.
+4. Same member cannot make two consecutive valid turns.
+5. Invalid word does not break the chain and scores -1 for that member.
+6. Valid word scores +1.
+7. A valid word whose first and last letter are the same scores +2.
+8. Scores may go negative.
+9. First member to 50 wins the round and gains +1 Last Letter Win.
+10. Round/chain resets and a fresh round begins automatically.
+11. There is no Play Again button.
+
+======================================================================
+44. POLLS
+======================================================================
+
+Command: /poll
+
+Flow:
+1. Authorized member creates a poll with supported choices/settings.
+2. Creator chooses timed or manual close and supported result visibility mode.
+3. Poll may be anonymous and may use ranked-choice where configured.
+4. Each eligible member receives one ballot according to the chosen mode.
+5. Votes persist for the life of the poll.
+6. Poll closes by timer or authorized manual close.
+7. Final result is shown under the selected visibility rules.
+
+======================================================================
+45. SUPERLATIVES
+======================================================================
+
+Command: /superlatives
+Admin-started numbered seasons.
+
+Flow:
+1. Authorized admin creates/starts a numbered Superlatives season with category names.
+2. Nomination phase opens for 48 hours.
+3. Members may nominate once per category and cannot self-nominate.
+4. Nominations remain anonymous to ordinary members.
+5. At nomination close, top five finalists per category are determined using deterministic tie handling at the cutoff.
+6. Voting phase opens for 48 hours.
+7. Votes remain anonymous to ordinary members.
+8. Restrained reminders may be sent.
+9. At close, one winner per category is determined.
+10. Winner receives a permanent season badge.
+11. No Ottoman prize is granted by default.
+12. Major winners use the Superlative result presentation.
+
+======================================================================
+46. SUGGESTIONS
+======================================================================
+
+Command: /suggest
+
+Flow:
+1. Member submits a suggestion; submitter anonymity may be offered/configured.
+2. Bot creates a tracked suggestion record.
+3. Community voting is attached according to configured suggestion rules.
+4. Staff may update status over time.
+5. Suggestion remains in a searchable archive.
+6. Member-facing status reflects current disposition without exposing private staff-only data.
+
+======================================================================
+47. AMA
+======================================================================
+
+Command: /ama
+
+Flow:
+1. Member submits a question and chooses named/anonymous mode when available.
+2. Bot stores the question for admin handling.
+3. Community may upvote; downvotes are not part of this feature.
+4. Admins can sort/review questions.
+5. Admin answers or declines.
+6. If answered, response is published through the AMA flow.
+7. If declined, the public question may disappear while the submitter receives private status where possible.
+
+======================================================================
+48. CHAIRISMS / QUOTE CREATION
+======================================================================
+
+Commands: /quote message, /quote text, /chairisms recent, /chairisms member, /chairisms random
+Context action: Message -> Apps -> Create Chairism
+Output channel: Chairisms channel.
+
+Create Chairism from message:
+1. Member opens Apps -> Create Chairism on a real source message, or uses /quote message with a message link.
+2. Bot validates source accessibility/safety.
+3. Source is rejected if it is from staff/private channels, moderation/quarantine evidence, DMs, deleted/unavailable content, or disallowed bot/system messages.
+4. Creator chooses This Message, Include Replied Message, and Include Image when applicable.
+5. Bot captures allowed quote data and renders deterministic Chairism card.
+6. Finished card posts to the Chairisms output channel.
+7. Creator receives a small confirmation with jump link.
+8. Lightweight metadata is stored: Chairism ID, source member, creator, source message ID, created timestamp, output message ID.
+9. Later deletion of original source does not automatically delete an already-created Chairism.
+
+/quote text:
+1. Member supplies custom quote text.
+2. It is attributed to the invoking member unless an authorized staff override path is used.
+3. Bot renders/posts it through the same Chairism system.
+
+Browse flows:
+- /chairisms recent: browse latest stored Chairisms.
+- /chairisms member: browse quotes associated with a specified member.
+- /chairisms random: return a random eligible Chairism.
+
+======================================================================
+49. CONFIGURABLE INTRODUCTIONS
+======================================================================
+
+Commands: /introduce, /introduce edit, /introduce preview
+Primary channel: configured pull-up-a-chair channel.
+
+Channel behavior:
+- Members can view history, react, and use interactions.
+- Normal member posting is disabled.
+- Angrier Jordan publishes standardized introduction cards.
+
+Create flow:
+1. Member chooses persistent Create Introduction panel or runs /introduce.
+2. Bot loads the current owner-configured prompt set.
+3. Member completes the modal flow; if prompts exceed one Discord modal, the flow continues across multiple pages/modals.
+4. Required/optional validation and length limits are enforced.
+5. Member can preview before publication.
+6. On publish, bot creates the standardized introduction post in the configured channel.
+7. One active introduction is stored per member.
+
+Edit flow:
+1. Member runs /introduce edit or Edit My Introduction.
+2. Existing answers load.
+3. Member changes their own answers only.
+4. Bot validates the updated data.
+5. Existing bot-published introduction post is edited in place when possible.
+
+Preview flow:
+1. Member runs /introduce preview.
+2. Bot renders the current draft/current introduction privately without publishing changes.
+
+Prompt labels/order/required state/placeholders/limits/card display fields are configurable from admin systems without code deployment.
+
+======================================================================
+50. MUSIC - SESSION START AND CONTROLLER
+======================================================================
+
+Commands: /play and /music ... plus /playlist ...
+Restriction: music commands work only from the embedded text chat associated with a voice channel.
+One active music voice channel per server in v1.
+
+Start flow:
+1. Member is in/uses the text chat associated with a voice channel.
+2. Member runs /play and types search text or pastes a supported link.
+3. While typing search text, autocomplete returns track matches.
+4. Selecting a result fills the command; pasted URLs bypass search resolution.
+5. Provider adapter resolves metadata/reference and a playable audio source separately.
+6. If another VC already owns the active music session, bot does not silently move; it identifies the owning VC. DJ/admin can explicitly stop/move/release.
+7. If idle and valid, Angrier Jordan joins the voice channel and starts playback immediately.
+8. If music is already playing in that session, the track is appended to queue.
+9. One authoritative controller message is created/pinned in the voice-channel chat.
+10. Controller is edited as state changes and may be refreshed to a recent position after meaningful interactions without spammy delete/repost loops.
+11. Idle controller remains visible with THE JUKEBOX IS EMPTY prompt.
+
+Supported references include Spotify, Apple Music, YouTube, SoundCloud, and supported direct audio sources, subject to lawful/provider-compatible playback architecture. The system must not assume unauthorized extraction/rebroadcast of protected provider streams.
+
+======================================================================
+51. MUSIC - QUEUE AND PLAYBACK CONTROLS
+======================================================================
+
+Commands:
+/music pause, resume, skip, previous, stop, replay, seek, queue, remove, move, clear, shuffle, jump, loop, autoplay, volume, nowplaying, history, join, leave, help
+
+Queue flow:
+1. New /play while idle starts immediately.
+2. Otherwise the item appends.
+3. Album/playlist links add available tracks in bulk.
+4. Duplicate detection warns/asks confirmation where required.
+5. Unavailable items are skipped cleanly with explanation.
+6. Queue state should be recoverable after restart where practical.
+
+Skip flow:
+1. Requester may skip their own current song immediately.
+2. DJ staff may force skip.
+3. Otherwise Vote Skip starts among eligible current listeners.
+4. Majority threshold determines skip.
+
+DJ authority:
+- Throne, Chaise Lounge, Recliner automatically have DJ authority.
+- Optional dedicated DJ role may be configured.
+- DJ can force skip, stop, clear, move/remove anyone's queue entries, change volume, loop/autoplay, move/release player, and control optional 24/7 mode.
+
+Other controller commands perform their named operation after validating current session ownership/authority and edit the single authoritative controller to reflect the new state.
+
+======================================================================
+52. MUSIC - PERSONAL PLAYLISTS
+======================================================================
+
+Commands: /playlist create, add, remove, play, rename, delete, view
+
+Flow:
+1. Member creates a named personal playlist.
+2. Member adds track searches/references.
+3. Stored playlist preserves resolved metadata/reference information as supported by provider architecture.
+4. Member may view, rename, or remove entries.
+5. /playlist play sends the available playlist entries through the normal music queue rules.
+6. Deleting a playlist removes that saved playlist state only; it does not retroactively alter tracks already queued/played.
+
+======================================================================
+53. SPECIAL COMMANDS
+======================================================================
+
+Built-ins: !line, !race, !vc, !chess
+No cooldowns.
+
+Shared trigger flow:
+1. Member sends the trigger.
+2. Bot checks whether it is enabled and whether member is allowed by configured role restrictions.
+3. If unauthorized, original trigger is deleted silently.
+4. If authorized, original trigger is deleted.
+5. Bot chooses a randomized authored Angrier Jordan response from the configured pool.
+6. Bot mentions the configured opt-in notification role.
+7. For !line, native Line Time state machine starts.
+8. For !race, native Chair Race state machine starts.
+9. !vc posts only the voice invitation/notification flow.
+10. !chess posts only the chess challenge/notification flow; it is not an Angrier Jordan chess engine.
+
+Dashboard-created Special Commands:
+1. Admin defines !trigger, notification role, randomized response pool, enabled state, and allowed roles.
+2. Member uses trigger.
+3. Same authorization/deletion behavior runs.
+4. Bot sends the configured notification/message.
+5. Custom Special Commands cannot launch or impersonate native Race/Line state machines.
+
+======================================================================
+54. SAFE CUSTOM COMMAND BUILDER
+======================================================================
+
+Commands: /custom-command create, edit, delete, enable, disable, list, test, clone, info
+Primary management: Admin dashboard.
+
+Creation flow:
+1. Authorized staff opens builder.
+2. Selects supported trigger type: exact, prefix, bounded contains, safe-regex, or approved native shortcut/alias.
+3. Selects safe conditions and one or more supported actions.
+4. Supported actions include send/reply/DM bot text/cards, configured reactions, bounded delete-trigger behavior, safe add/remove/toggle of allowlisted self roles, show role panel, approved workflow delegation, randomized response pools, and validated variables.
+5. Bot validates regex/action count/execution-time/response-size limits, role allowlist, hierarchy, and recursion rules.
+6. Command is saved to database/configuration state and mutation is audited.
+7. /custom-command test runs it in a safe test context.
+8. Enable/disable controls whether it can fire.
+
+Execution flow:
+1. Incoming trigger matches a configured command.
+2. Bot rechecks member/channel permissions, Hotseat/security restrictions, and current role hierarchy.
+3. Bot executes only allowed actions.
+4. Native Race/Line/economy/moderation state machines are never duplicated inside custom commands; approved delegation calls the native workflow.
+
+Hard prohibitions:
+- No arbitrary JavaScript/Go templates/shell/SQL.
+- No arbitrary HTTP callbacks in v1.
+- No recursive custom-command loops.
+- No secrets/environment access.
+- No assignment of protected/staff/bot-managed roles through generic role actions.
+
+======================================================================
+55. SOCIAL COMMAND FAMILY
+======================================================================
+
+Commands:
+/social ts, hit, slap, pillow, cushion, stab, choke, shh, belittle, bonk, yeet, sit, standup, fold, recline, sideeye, judge, shame, boo, bruh, wtf, sus, yap, touchgrass, blame, disappoint, chaircheck, throwchair, getup, calmdown, absolutelynot, explainyourself, embarrassing, questionable, respect, compliment, wheresmyvape, hitthegeekbar
+
+Shared flow:
+1. Member runs a social command, optionally with a target where that command supports it.
+2. Bot applies a small technical anti-spam throttle.
+3. Bot selects a line from the command's large prewritten response pool.
+4. It posts the themed social response in the allowed social context.
+5. No AI call is required.
+6. Fictional aggression commands such as stab/choke remain comedic/cartoon and non-gory.
+
+/social ts always includes the phrase "Type Shit" in the response.
+
+======================================================================
+56. ROAST, NOTMAD, AND HAIKU
+======================================================================
+
+/social roast:
+1. Invoker targets an eligible member.
+2. Bot checks target's /privacy roast preference.
+3. Bot internally chooses mild/angry/brutal/nuclear intensity; user does not choose the intensity.
+4. Roast may use bot-owned stats for personalization but does not inspect private/raw messages for material.
+5. Target receives one Roast Back opportunity that can bypass normal cooldown once.
+
+/social notmad:
+1. Only Throne/server owner may invoke.
+2. Optional member target may be supplied.
+3. Response is always exactly: "I am not mad. I'm just disappointed."
+4. No variation.
+
+Passive haiku detector:
+1. Bot watches qualifying main-chat messages for a valid haiku pattern.
+2. It does not respond every time.
+3. On some valid detections, it posts a sarcastic comment about haikus not being allowed.
+
+/haiku:
+1. Member runs /haiku.
+2. Bot returns exactly: "We use it for profiling purposes."
+3. It does not generate haikus, explain haikus, or expose statistics/profiling data.
+
+======================================================================
+57. TLDR CHAT AND EVENTS
+======================================================================
+
+Commands: /tldr chat time:1h|2h|4h|8h and /tldr events time:1d|7d
+Both are ephemeral/private.
+
+/tldr chat:
+1. Must be used in main chat.
+2. Member chooses 1h, 2h, 4h, or 8h.
+3. Bot fetches the immediately preceding main-chat history on demand.
+4. Bot removes bots, slash-command invocations, system messages, and non-conversational noise from the source set.
+5. Bot summarizes human conversation from main chat only.
+6. It does not create a permanent archive of ordinary chat solely for TLDR.
+7. If language-model provider is unavailable, it fails gracefully or returns a limited deterministic activity snapshot rather than inventing content.
+8. Summary is shown only to requester.
+
+/tldr events:
+1. Must be used in bot/economy channel.
+2. Member chooses 1 day or 7 days.
+3. Bot reads structured Angrier Jordan event/history data rather than scraped chat.
+4. It includes meaningful game results, major wins/losses, rare drops, crime/family events, auctions, jackpots, achievements, builds, major records, Race/Fight, Weekly Spotlight, and similar significant activity.
+5. Routine transactions, ordinary transfers, routine daily rewards, and ledger noise are excluded.
+6. Summary is shown only to requester.
+
+Wrong-channel use is rejected privately with the correct channel indicated.
+
+======================================================================
+58. RECORDS AND LEADERBOARDS
+======================================================================
+
+Commands: /records, /leaderboard
+
+/records flow:
+1. Member opens /records.
+2. Bot shows current live record categories.
+3. Monthly records reset on the 1st at 4:00 AM MT.
+4. All-time records never reset.
+5. When a record breaks, Angrier Jordan posts a record-break card in the bot/economy channel.
+6. Card shows old record, new record, and how long the previous record stood.
+7. There is no permanent Hall of Fame feature.
+
+Casino raw records may include biggest single win, biggest bet, biggest loss, longest win streak, biggest Chair Pot, biggest lottery jackpot.
+
+/leaderboard flow:
+1. Member opens one leaderboard surface.
+2. Member chooses a category interactively.
+3. Categories may include wealth, collections, crafting, gambling, crime, and Weekly Spotlight history.
+4. Seasonal categories reset when their season rules say; lifetime profile stats remain.
+5. Wealth equals Wallet + Bank.
+6. There is no fish/dig/scavenge leaderboard.
+
+======================================================================
+59. MANUAL MODERATION
+======================================================================
+
+Commands: /mod warn, timeout, untimeout, kick, ban, unban, purge, note, history, case view, case edit, case reverse, lock, unlock, slowmode, quarantine, staff-alert, modstats
+
+Shared punitive action flow:
+1. Staff runs the action with required fields/reason.
+2. Bot checks staff capability, target protection, Discord hierarchy, and whether The Chairman can perform the action.
+3. For case-producing actions, a permanent numbered case is prepared before Discord enforcement.
+4. Bot sends the Discord moderation action.
+5. Bot does not report success until Discord confirms the external action.
+6. If Discord enforcement fails, case remains with an enforcement-failed/reversed transition rather than falsely recording success.
+7. Successful action records transition/audit history.
+8. Where appropriate, affected member receives private explanation with action, policy category, duration, case ID, and Request Review.
+9. Staff/security log receives the event.
+
+/mod warn:
+- Creates a documented warning case.
+- Reversal can mark warning case reversed.
+
+/mod timeout:
+- Supports Discord timeout from 10 seconds through 28 days.
+- Temporary expiry is persisted/restart-safe.
+- Case remains auditable after expiry.
+
+/mod untimeout:
+- Ends an active timeout early when authorized and records the reason.
+
+/mod kick:
+- Removes member without banning rejoin.
+- Kick cannot be automatically reversed because Discord cannot restore a kicked member.
+
+/mod ban:
+- Supports temporary ban from 1 minute through 365 days and permanent ban.
+- Optional bounded recent-message deletion window may be used.
+- Temporary unban job is persisted/restart-safe.
+
+/mod unban:
+- Removes an existing ban using Discord user ID and reason.
+
+/mod purge:
+1. Staff chooses bounded count and optional member/content filter plus required reason.
+2. Bot validates API constraints.
+3. Eligible messages are deleted.
+4. Action/case/audit record is created as appropriate.
+5. Deleted messages are not automatically reversible.
+
+/mod note:
+- Adds relevant staff-only note to member moderation history; never shown to member.
+
+/mod history:
+- Searches/returns member moderation history under staff permissions.
+
+/mod case view:
+- Shows numbered case, action, subject, reason, actor, timestamps, evidence refs, status, edits, and appeal history.
+
+/mod case edit:
+- Corrects permitted case reason/metadata while preserving before/after audit history.
+
+/mod case reverse:
+1. Staff requests reversal with reason.
+2. Bot verifies action is technically reversible.
+3. Warning: marks reversed; timeout: removes timeout then reverses; ban: unbans then reverses.
+4. Kick and purge cannot be reconstructed and are not auto-reversed.
+5. Reversal is appended to case history.
+
+/mod lock and /mod unlock:
+1. Lock snapshots the previous bot-owned Send Messages state.
+2. Bot applies locked state.
+3. Unlock restores the exact saved state rather than guessed defaults.
+4. Unrelated permission changes made by staff while locked are not trampled.
+
+/mod slowmode:
+- Sets channel slowmode after capability/channel validation and audits it.
+
+/mod staff-alert:
+- Creates a non-punitive internal flag for staff attention; it is not itself discipline.
+
+/mod modstats:
+- Shows operational moderation totals for a period; it is not a punitive staff leaderboard.
+
+======================================================================
+60. QUARANTINE, EVIDENCE, AND APPEALS
+======================================================================
+
+/mod quarantine flow:
+1. Staff selects a message.
+2. Bot captures bounded surrounding context needed to understand the incident.
+3. Public message is deleted when Discord allows it.
+4. Restricted evidence is stored for authorized staff; current implementation uses encrypted retained evidence.
+5. Evidence content is retained 30 days by default, then content is purged while non-content audit metadata may remain.
+6. Quarantine/case is logged.
+
+Request Review / appeal flow:
+1. Eligible moderation notice exposes Request Review.
+2. Subject requests review for their own case.
+3. Case transitions to appealed while temporary action clocks continue running.
+4. Appeal routes to staff review.
+5. Original acting moderator may provide context but cannot be sole reviewer of their own action.
+6. Reviewer chooses Uphold, Modify, or Reverse and provides rationale.
+7. Modify applies supported changes, such as adjusted timeout/ban duration, when technically valid.
+8. Reverse safely undoes reversible actions.
+9. Outcome/rationale appends to permanent case history.
+
+======================================================================
+61. AUTO PURGE / CHANNEL CLEANUP
+======================================================================
+
+Dashboard feature: Moderation -> Cleanup -> Auto Purge
+Default: disabled until a rule exists and is enabled.
+
+Flow:
+1. Admin creates per-channel cleanup rule.
+2. Rule may set retention age, run interval, max messages per pass, bot/webhook exclusion, excluded members/roles, and supported content filters.
+3. Pinned messages are always excluded.
+4. Scheduled job wakes at rule interval.
+5. Bot finds eligible old messages within safe Discord API constraints.
+6. Messages are deleted up to the pass limit.
+7. If anything was deleted, one summarized cleanup audit/log entry is written.
+8. Auto Purge does not create a moderation case for every deleted housekeeping message.
+9. Partial/failure is recorded and retried at the next scheduled run, not in an aggressive loop.
+10. Execution is restart-safe/idempotent.
+
+======================================================================
+62. AUTOMOD
+======================================================================
+
+Passive moderation feature.
+
+Flow:
+1. New message/event enters deterministic filter evaluation.
+2. Configured exemptions/trusted domains/users/roles/channels are applied where appropriate.
+3. Filters may detect repeated spam, flooding, duplicate text, excessive caps/newlines/emoji/stickers/attachments/mentions, invite/general links, phishing/malicious URLs, masked links, shorteners, banned phrases, protected-class hate/slurs, Unicode/Zalgo obfuscation, spoiler abuse, oversized-message abuse, and detectable webhook/bot spam patterns.
+4. Obvious deterministic matches follow their configured action path.
+5. AI review is used only after a relevant trigger when context is genuinely ambiguous; the system does not AI-classify every message.
+6. Action may be log only, warn, delete, quarantine/review, timeout, or progressive-discipline escalation.
+7. Serious interventions create/link a moderation case and staff log.
+8. Member notification/appeal path is provided when appropriate.
+
+======================================================================
+63. PROGRESSIVE DISCIPLINE / BEHAVIOR HEAT
+======================================================================
+
+Flow:
+1. Relevant moderation events add configured bounded weight to recent behavior score.
+2. Score decays over time.
+3. Repeated similar violations may escalate faster.
+4. Staff can inspect why the score is elevated.
+5. Score alone never causes punishment; enforcement requires configured threshold plus rule context.
+6. Severe incidents may skip low stages.
+7. Default conceptual path: log/soft warning -> warning -> short timeout -> longer timeout -> staff review/restricted state -> kick/ban when configured/approved.
+8. Authorized staff may adjust/clear with audit trail.
+
+======================================================================
+64. JOIN GATE AND VERIFICATION
+======================================================================
+
+Passive new-member security.
+
+Join Gate flow:
+1. Member joins.
+2. Bot evaluates configured risk signals such as account age, join velocity, suspicious/default-profile patterns, suspicious names, immediate scam patterns, unauthorized bot additions, join/leave cycling, and prior case history.
+3. An alt account is not automatically treated as wrongdoing.
+4. Depending on confidence/config, member is allowed, flagged, required to verify, temporarily restricted, first-message quarantined, or rejected/kicked only under configured high-confidence rules.
+5. Staff/security logs update.
+
+Verification flow:
+1. If verification is required, member receives a simple interaction/button challenge by default.
+2. Verification state is persisted.
+3. Successful verification clears the configured restriction and onboarding continues.
+4. Failure/timeout follows configured restricted-state policy.
+5. No unnecessary personal identity information is collected.
+
+======================================================================
+65. ANTI-RAID
+======================================================================
+
+Flow:
+1. Bot continuously evaluates raid signals: join velocity, clusters of young accounts, repeated messages, mass mentions, invite/link spam, channel flooding, and many new accounts triggering the same serious rule.
+2. Security state begins at Normal.
+3. Threshold crossing can escalate to Alert: staff warning + enhanced logging.
+4. Further threshold can escalate to Restricted: tighter new-member limits/verification.
+5. Severe/continued threshold can escalate to Lockdown: temporary emergency restrictions.
+6. State changes are logged/cased where appropriate.
+7. Authorized staff may manually enter/leave states.
+8. Automatic de-escalation follows configured thresholds/timers.
+
+======================================================================
+66. ANTI-NUKE
+======================================================================
+
+Flow:
+1. Bot monitors Discord events/audit-log data for destructive privileged actions.
+2. Signals include mass channel/role create/delete, repeated kicks/bans, dangerous permission escalation, webhook abuse, unauthorized bot additions, large-scale permission changes, server configuration changes, and mass role changes.
+3. Holding a staff role does not automatically exempt an actor from monitoring.
+4. Explicit trusted identities may be configured, but destructive monitoring remains active.
+5. On dangerous activity, bot can immediately alert staff and create an emergency case.
+6. Within Discord role/permission limits it may remove dangerous roles/permissions, quarantine/restrict actor, enter Restricted/Lockdown, and disable vulnerable bot-admin features.
+7. Bot records what it actually changed and never pretends it can undo Discord actions that already occurred.
+8. Recovery helpers use saved known state where possible.
+
+======================================================================
+67. PANIC MODE
+======================================================================
+
+Commands: /panic activate, /panic status, /panic deactivate
+Throne-only activation by default.
+
+Activate flow:
+1. Throne runs /panic activate with explicit reason.
+2. Bot snapshots the relevant pre-panic security/channel state.
+3. Bot enters Lockdown.
+4. Ordinary member sends are restricted in configured public channels.
+5. New-member posting is stopped or verification is required.
+6. Invite suspension is attempted only where it can be done safely/appropriately; system never promises lossless invite recreation.
+7. Vulnerable bot features such as wagers, transfers, and custom-command creation are disabled.
+8. AutoMod switches to emergency sensitivity profile.
+9. Security context is persisted and an emergency card is posted to staff log.
+10. Activation is audited.
+
+Status flow:
+1. /panic status lists the protections actually active.
+
+Deactivate flow:
+1. Authorized user requests /panic deactivate.
+2. Explicit Confirm Restore is required.
+3. Bot restores the exact saved pre-panic Send Messages/security state rather than guessed defaults.
+4. Any restoration issues are surfaced/audited.
+5. Deactivation is audited.
+
+======================================================================
+68. MODERATION HOTSEAT
+======================================================================
+
+Commands: /jail send, release, extend, reduce, reason, history, roster, status
+Moderation jail is separate from crime jail.
+Default role: Jailed. Default channel: hotseat.
+
+/jail send flow:
+1. Staff chooses member, duration, and reason.
+2. Duration supports 5 minutes-30 days plus indefinite manual release.
+3. Bot validates moderator authority, target protection, hierarchy, Administrator bypass, and whether confinement can actually work.
+4. Normal role-only jail is refused for a member who still has Administrator unless the separately enabled Throne-only staff-role suspension path can safely remove that bypass.
+5. Bot creates/links numbered JAIL moderation case.
+6. Bot snapshots only role/access data needed for safe restoration.
+7. Jailed role and configured safe suspensions are applied.
+8. Active wager/game participation that could bypass confinement is canceled/blocked and safely refunded/settled according to the originating system.
+9. Bot verifies effective containment before claiming success.
+10. Jail-entry card posts in Hotseat with member, reason, sentence, case ID, release time, and allowed controls.
+11. Private explanation is attempted when DMs are allowed.
+12. Action logs to staff channel.
+13. Expiry job is persisted and restart-safe for finite sentences.
+
+While moderation-jailed:
+- Allowed: /jail status, /jail reason, /rules, limited /help, Request Review, and configured Hotseat text/reactions.
+- Blocked by default: economy, gambling, games, social, music controls, custom commands, family, transfer, gifting, shop, crafting, robbery, Race/Fight, and ordinary community commands.
+- Passive receipts already in motion may settle safely.
+
+Extend/reduce flow:
+1. Staff invokes /jail extend or /jail reduce with reason.
+2. Bot checks capability and active sentence.
+3. New remaining/end state is calculated within hard bounds.
+4. Persisted expiry job is updated idempotently.
+5. Same case receives an audit transition.
+6. Public/staff/member card/state updates.
+
+Release flow:
+1. Release can occur by expiry, /jail release, successful appeal/reversal, or case modification.
+2. Bot removes only restrictions it owns.
+3. Only explicitly suspended roles are considered for restoration.
+4. Unrelated role changes made while jailed are preserved.
+5. If database transition fails mid-release, Discord state is rolled back where needed so the bot does not accidentally free an active sentence.
+6. Role restoration failures do not block sentence closure when safe.
+7. Normal member access restoration occurs only when no active jail/punishment state remains.
+8. Crime jail is not cleared by moderation release.
+
+Leave/rejoin while jailed:
+1. Sentence persists.
+2. Finite sentence pauses while absent under the current rejoin contract.
+3. On return, member acknowledges rules.
+4. Remaining moderation jail is reapplied/resumed rather than granting normal access.
+
+/jail roster labels CRIME, MODERATION, or BOTH.
+Bail never clears moderation jail.
+
+======================================================================
+69. DASHBOARD
+======================================================================
+
+Access:
+- Server owner always.
+- Otherwise current Discord Administrator permission is required.
+- No separate dashboard whitelist.
+- Losing Administrator removes access on next auth/session validation.
+
+General direct-save flow:
+1. Admin signs in with Discord OAuth2.
+2. Bot/dashboard validates current server membership and Administrator/owner status.
+3. Admin opens a settings page.
+4. For simple low-risk setting, admin edits value.
+5. Shared ConfigService validates it.
+6. Change saves live.
+7. Every mutation records immutable audit entry with actor, timestamp, object/setting, old value, new value, and relevant Discord IDs.
+
+High-impact Draft flow:
+1. Admin makes a destructive, broad-member, high-impact, or dependency-sensitive change.
+2. System requires Draft Mode.
+3. Only one global shared draft exists at a time and may span multiple dashboard sections.
+4. All Admins can view it, but only one Admin may edit at a time.
+5. Edit lock auto-releases after 15 minutes inactivity.
+6. Server owner may force-unlock/take over early; takeover is audited.
+7. Admin runs Preview.
+8. Preview groups changes by section and shows direct dependencies/affected objects/members where practical.
+9. Broken direct dependencies block publication.
+10. Bot does not auto-rewrite dependent settings; admin must resolve each flagged issue.
+11. If any staged item fails validation, entire draft is blocked; no partial publish.
+12. Any one authorized Admin may publish the valid draft; second approval is not required.
+13. Draft publication cannot be scheduled.
+14. Publish writes live configuration and immutable audit entries.
+
+Rollback flow:
+1. Admin selects retained configuration history.
+2. System validates rollback safety/dependencies.
+3. Rollback creates a new mutation/audit event; old history is never rewritten.
+4. If a deleted Discord object must be recreated, a new Discord ID is expected and bot updates its mappings.
+5. External references that cannot be safely repaired are flagged.
+
+Audit retention:
+- 365 days rolling by default.
+- Admins may export retained history.
+
+Dashboard launch pages include Home, Server Settings, Channels & Roles, Moderation, Jail/Hotseat, AutoMod, Raid & Anti-Nuke, Economy, Shop & Crafting, Games & Activities, Onboarding & Roles, Introduction System, Special Commands, Social Commands, Custom Commands, Content Library, Tutorial & Help, Weekly Spotlight, Community Features, User Management, Audit Logs, Bot Status.
+
+======================================================================
+70. FEATURE FLAGS
+======================================================================
+
+Passive/admin configuration feature.
+
+Flow:
+1. Admin enables/disables a major module in dashboard/config.
+2. Shared ConfigService validates the change and dependencies.
+3. Disabled module disappears from help/autocomplete where practical.
+4. Direct invocation is rejected cleanly.
+5. Existing stored member data is retained unless an explicit destructive migration/reset is separately authorized.
+6. Re-enabling restores normal access to the preserved state.
+
+Major flags include profiles, activity tracking, Weekly Spotlight, economy, shop, crafting, casino, lottery, race, fight, crime, family, party games, FMK, channel games, community tools, Chairisms, music, moderation AI, social commands, introductions, and haiku detector.
+
+======================================================================
+71. BACKUPS, RESTART SAFETY, AND SETTLEMENT SAFETY
+======================================================================
+
+System-wide behavior:
+1. Consequential state changes are written to PostgreSQL, not memory only.
+2. Currency/inventory uses transactions, ledger lines, idempotency keys, and unique settlement constraints.
+3. Wagers/auctions use escrow.
+4. Timers/jobs with financial/social importance persist through restart.
+5. On startup, reconciliation checks unfinished/expired sessions and resumes or closes them idempotently.
+6. Duplicate job execution cannot pay/charge twice.
+7. Automatic backups are used; there is no public backup command.
+8. Production hardening includes migration testing, structured logs, backup/restore drills, restart tests, concurrency tests, settlement tests, permission/abuse tests, and renderer regression screenshots.
+
+======================================================================
+72. ASSET / PRESENTATION RULES FOR FEATURE FLOWS
+======================================================================
+
+This document is text-only, but the implementation must follow these presentation rules:
+1. Interactive controls stay Discord-native where possible; rendered images/cards present information/state.
+2. Do not create one-off decorative art for every simple command.
+3. Major custom event cards are expected for marriage, divorce, inheritance, Superlative win, auction win, major casino win, arrest/mugshot, lottery, Chair Pot, major records, Race/Fight, FMK, Weekly Spotlight, and major Voting results where appropriate.
+4. Normal rare drops, ordinary chair crafts, and gift-box opening do not require full custom image cards.
+5. WYR is the approved reference for interactive non-economic visual quality.
+6. Angrier Jordan must appear as sender; do not label the sender "Server Bot".
+7. The large background should not reuse the Angrier Jordan face as hero art; use the bot avatar/logo for identity and a refined chair/lounging environment or clean background.
+8. Remove/avoid prominent red Angrier Jordan wall signage; red/black styling is reserved for moderation/rage/arrest moments.
+9. Feature accent colors may alternate within the approved palette while maintaining one coherent product system.
+
+======================================================================
+APPENDIX A - CURRENT REGISTERED COMMAND / INTERACTION SURFACE
+======================================================================
+
+[BOOTSTRAP]
+/setup
+/setup health
+
+[CASINO]
+/casino blackjack
+/casino roulette
+/casino slots
+/casino dice
+/casino coinflip
+/lottery
+
+[CHAIRISMS]
+/quote message
+/quote text
+/chairisms recent
+/chairisms member
+/chairisms random
+Create Chairism
+
+[COLLECTIONS]
+/collection
+
+[COMMUNITY]
+/giveaway
+/poll
+/superlatives
+/suggest
+/ama
+
+[CORE]
+/help
+/rules
+/status
+/bug
+/dms
+
+[CRIME]
+/crime rob
+/crime 911
+/crime wanted
+/crime bail
+
+[CUSTOM_COMMANDS]
+/custom-command create
+/custom-command edit
+/custom-command delete
+/custom-command enable
+/custom-command disable
+/custom-command list
+/custom-command test
+/custom-command clone
+/custom-command info
+
+[ECONOMY]
+/daily
+/weekly
+/scavenge
+/dig
+/fish
+/work
+/statement
+/inventory
+/bank
+/shop
+/craft
+/repair
+/transfer
+/gift
+/unlock all
+
+[FAMILY]
+/family marry
+/family divorce
+/family adopt
+/family disown
+/family emancipate
+/family familytree
+/family will
+/family familyauction
+
+[FIGHT]
+/fight @member
+
+[INTRODUCTIONS]
+/introduce
+/introduce edit
+/introduce preview
+/intro-config
+
+[JAIL]
+/jail send
+/jail release
+/jail extend
+/jail reduce
+/jail reason
+/jail history
+/jail roster
+/jail status
+
+[LORE]
+/lore
+
+[MODERATION]
+/mod warn
+/mod timeout
+/mod untimeout
+/mod kick
+/mod ban
+/mod unban
+/mod purge
+/mod note
+/mod history
+/mod case view
+/mod case edit
+/mod case reverse
+/mod lock
+/mod unlock
+/mod slowmode
+/mod quarantine
+/mod staff-alert
+/mod modstats
+
+[MUSIC]
+/play
+/music pause
+/music resume
+/music skip
+/music previous
+/music stop
+/music replay
+/music seek
+/music queue
+/music remove
+/music move
+/music clear
+/music shuffle
+/music jump
+/music loop
+/music autoplay
+/music volume
+/music nowplaying
+/music history
+/music join
+/music leave
+/playlist create
+/playlist add
+/playlist remove
+/playlist play
+/playlist rename
+/playlist delete
+/playlist view
+/music help
+
+[PARTY_GAMES]
+/fmk
+/truthordare
+/wyr
+/wwyd
+/finishsentence
+/onewordstory
+
+[PROFILE]
+/profile
+/records
+/tldr chat
+/tldr events
+/privacy activity
+
+[PVP]
+/game tictactoe
+/game connectfour
+/game battleship
+
+[RECORDS]
+/leaderboard
+
+[ROLES]
+/roles
+
+[SECURITY]
+/panic activate
+/panic deactivate
+/panic status
+
+[SOCIAL]
+/social ts
+/social hit
+/social slap
+/social pillow
+/social cushion
+/social stab
+/social choke
+/social shh
+/social belittle
+/social bonk
+/social yeet
+/social sit
+/social standup
+/social fold
+/social recline
+/social sideeye
+/social judge
+/social shame
+/social boo
+/social bruh
+/social wtf
+/social sus
+/social yap
+/social touchgrass
+/social blame
+/social disappoint
+/social chaircheck
+/social throwchair
+/social getup
+/social calmdown
+/social absolutelynot
+/social explainyourself
+/social embarrassing
+/social questionable
+/social respect
+/social compliment
+/social wheresmyvape
+/social hitthegeekbar
+/social roast
+/social notmad
+/privacy roast
+/haiku
+
+[SOLO_GAMES]
+/hangman
+/wordscramble
+/mastermind
+/minesweeper
+
+[SPECIAL_COMMANDS]
+!race
+!line
+!vc
+!chess
+
+[TUTORIAL]
+/tutorial
+
+======================================================================
+APPENDIX B - COMMANDS / PATHS EXPLICITLY RETIRED OR FOLDED INTO OTHER FLOWS
+======================================================================
+
+- /race is retired; use !race.
+- /line is retired; use !line.
+- /spin is retired; Daily Spin lives inside /daily.
+- /fortune is retired; Fortune lives inside /daily.
+- /showcase is retired; use /profile -> Edit Showcase.
+- /sell is retired; selling lives inside /inventory.
+- Bare /fight is invalid; /fight requires @member.
+- !fight does not exist.
+- !chess is a notification/challenge callout, not a chess engine.
+- /tldr daily|weekly is retired; use /tldr chat and /tldr events with the current time options.
+
+======================================================================
+APPENDIX C - OWNER REVIEW CHECKPOINTS BEFORE FINAL PRODUCTION
+======================================================================
+
+The implementation can continue without owner input for ordinary engineering decisions. Owner review is specifically useful when one of these reaches a real working state:
+1. Race/Fight live function and visual review.
+2. Major family-event behavior and cards.
+3. Major casino/lottery/Chair Pot event presentation.
+4. Profile/Weekly Spotlight/major-record visuals.
+5. Chairism final card treatment.
+6. Music controller behavior.
+7. Admin dashboard function/visual review.
+8. Final cross-feature visual pass.
+9. Credentials, server IDs, deployment, and live server acceptance.
+
+END OF DOCUMENT

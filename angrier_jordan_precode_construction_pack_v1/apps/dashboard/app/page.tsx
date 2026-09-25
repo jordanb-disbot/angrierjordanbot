@@ -1,0 +1,1 @@
+export default function Page(){return <main style={{padding:32}}><h1>Angrier Jordan Control Center</h1><p>Scaffold only. Settings pages should be generated from the canonical settings schema; complex editors get custom pages.</p></main>}

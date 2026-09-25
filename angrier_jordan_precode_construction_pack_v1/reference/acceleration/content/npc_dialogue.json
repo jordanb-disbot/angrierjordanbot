@@ -1,0 +1,3254 @@
+{
+  "banker": [
+    {
+      "id": "NPC-BANKER-001",
+      "context": "greeting",
+      "text": "Your Ottomans are safe. Your decisions are another matter.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-002",
+      "context": "success",
+      "text": "The vault is open. Try not to make this complicated.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-003",
+      "context": "failure",
+      "text": "I have reviewed your balance and developed concerns.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-004",
+      "context": "warning",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-005",
+      "context": "idle",
+      "text": "Interest is not affection. Stop looking at the vault like that.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-006",
+      "context": "transaction",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-007",
+      "context": "greeting",
+      "text": "The vault is open. Try not to make this complicated. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-008",
+      "context": "success",
+      "text": "I have reviewed your balance and developed concerns. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-009",
+      "context": "failure",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-010",
+      "context": "warning",
+      "text": "Interest is not affection. Stop looking at the vault like that. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-011",
+      "context": "idle",
+      "text": "Your Ottomans are safe. Your decisions are another matter. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-012",
+      "context": "transaction",
+      "text": "The vault is open. Try not to make this complicated. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-013",
+      "context": "greeting",
+      "text": "I have reviewed your balance and developed concerns. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-014",
+      "context": "success",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-015",
+      "context": "failure",
+      "text": "Interest is not affection. Stop looking at the vault like that. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-016",
+      "context": "warning",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-017",
+      "context": "idle",
+      "text": "The vault is open. Try not to make this complicated. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-018",
+      "context": "transaction",
+      "text": "I have reviewed your balance and developed concerns. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-019",
+      "context": "greeting",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-020",
+      "context": "success",
+      "text": "Interest is not affection. Stop looking at the vault like that. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-021",
+      "context": "failure",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-022",
+      "context": "warning",
+      "text": "The vault is open. Try not to make this complicated. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-023",
+      "context": "idle",
+      "text": "I have reviewed your balance and developed concerns. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-024",
+      "context": "transaction",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-025",
+      "context": "greeting",
+      "text": "Interest is not affection. Stop looking at the vault like that. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-026",
+      "context": "success",
+      "text": "Your Ottomans are safe. Your decisions are another matter. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-027",
+      "context": "failure",
+      "text": "The vault is open. Try not to make this complicated. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-028",
+      "context": "warning",
+      "text": "I have reviewed your balance and developed concerns. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-029",
+      "context": "idle",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-030",
+      "context": "transaction",
+      "text": "Interest is not affection. Stop looking at the vault like that. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-031",
+      "context": "greeting",
+      "text": "Your Ottomans are safe. Your decisions are another matter. [31]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-032",
+      "context": "success",
+      "text": "The vault is open. Try not to make this complicated. [32]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-033",
+      "context": "failure",
+      "text": "I have reviewed your balance and developed concerns. [33]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-034",
+      "context": "warning",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. [34]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-035",
+      "context": "idle",
+      "text": "Interest is not affection. Stop looking at the vault like that. [35]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-036",
+      "context": "transaction",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Get on with it. [36]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-037",
+      "context": "greeting",
+      "text": "The vault is open. Try not to make this complicated. Get on with it. [37]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-038",
+      "context": "success",
+      "text": "I have reviewed your balance and developed concerns. Get on with it. [38]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-039",
+      "context": "failure",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Get on with it. [39]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-040",
+      "context": "warning",
+      "text": "Interest is not affection. Stop looking at the vault like that. Get on with it. [40]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-041",
+      "context": "idle",
+      "text": "Your Ottomans are safe. Your decisions are another matter. The paperwork agrees. [41]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-042",
+      "context": "transaction",
+      "text": "The vault is open. Try not to make this complicated. The paperwork agrees. [42]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-043",
+      "context": "greeting",
+      "text": "I have reviewed your balance and developed concerns. The paperwork agrees. [43]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-044",
+      "context": "success",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. The paperwork agrees. [44]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-045",
+      "context": "failure",
+      "text": "Interest is not affection. Stop looking at the vault like that. The paperwork agrees. [45]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-046",
+      "context": "warning",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Do not make me explain this twice. [46]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-047",
+      "context": "idle",
+      "text": "The vault is open. Try not to make this complicated. Do not make me explain this twice. [47]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-048",
+      "context": "transaction",
+      "text": "I have reviewed your balance and developed concerns. Do not make me explain this twice. [48]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-049",
+      "context": "greeting",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Do not make me explain this twice. [49]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-050",
+      "context": "success",
+      "text": "Interest is not affection. Stop looking at the vault like that. Do not make me explain this twice. [50]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-051",
+      "context": "failure",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Surprisingly, this is still your best option. [51]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-052",
+      "context": "warning",
+      "text": "The vault is open. Try not to make this complicated. Surprisingly, this is still your best option. [52]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-053",
+      "context": "idle",
+      "text": "I have reviewed your balance and developed concerns. Surprisingly, this is still your best option. [53]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-054",
+      "context": "transaction",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Surprisingly, this is still your best option. [54]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-055",
+      "context": "greeting",
+      "text": "Interest is not affection. Stop looking at the vault like that. Surprisingly, this is still your best option. [55]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-056",
+      "context": "success",
+      "text": "Your Ottomans are safe. Your decisions are another matter. The chairs are watching. [56]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-057",
+      "context": "failure",
+      "text": "The vault is open. Try not to make this complicated. The chairs are watching. [57]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-058",
+      "context": "warning",
+      "text": "I have reviewed your balance and developed concerns. The chairs are watching. [58]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-059",
+      "context": "idle",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. The chairs are watching. [59]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-060",
+      "context": "transaction",
+      "text": "Interest is not affection. Stop looking at the vault like that. The chairs are watching. [60]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-061",
+      "context": "greeting",
+      "text": "Your Ottomans are safe. Your decisions are another matter. [61]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-062",
+      "context": "success",
+      "text": "The vault is open. Try not to make this complicated. [62]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-063",
+      "context": "failure",
+      "text": "I have reviewed your balance and developed concerns. [63]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-064",
+      "context": "warning",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. [64]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-065",
+      "context": "idle",
+      "text": "Interest is not affection. Stop looking at the vault like that. [65]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-066",
+      "context": "transaction",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Get on with it. [66]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-067",
+      "context": "greeting",
+      "text": "The vault is open. Try not to make this complicated. Get on with it. [67]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-068",
+      "context": "success",
+      "text": "I have reviewed your balance and developed concerns. Get on with it. [68]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-069",
+      "context": "failure",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Get on with it. [69]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-070",
+      "context": "warning",
+      "text": "Interest is not affection. Stop looking at the vault like that. Get on with it. [70]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-071",
+      "context": "idle",
+      "text": "Your Ottomans are safe. Your decisions are another matter. The paperwork agrees. [71]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-072",
+      "context": "transaction",
+      "text": "The vault is open. Try not to make this complicated. The paperwork agrees. [72]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-073",
+      "context": "greeting",
+      "text": "I have reviewed your balance and developed concerns. The paperwork agrees. [73]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-074",
+      "context": "success",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. The paperwork agrees. [74]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-075",
+      "context": "failure",
+      "text": "Interest is not affection. Stop looking at the vault like that. The paperwork agrees. [75]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-076",
+      "context": "warning",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Do not make me explain this twice. [76]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-077",
+      "context": "idle",
+      "text": "The vault is open. Try not to make this complicated. Do not make me explain this twice. [77]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-078",
+      "context": "transaction",
+      "text": "I have reviewed your balance and developed concerns. Do not make me explain this twice. [78]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-079",
+      "context": "greeting",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Do not make me explain this twice. [79]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-080",
+      "context": "success",
+      "text": "Interest is not affection. Stop looking at the vault like that. Do not make me explain this twice. [80]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-081",
+      "context": "failure",
+      "text": "Your Ottomans are safe. Your decisions are another matter. Surprisingly, this is still your best option. [81]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-082",
+      "context": "warning",
+      "text": "The vault is open. Try not to make this complicated. Surprisingly, this is still your best option. [82]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-083",
+      "context": "idle",
+      "text": "I have reviewed your balance and developed concerns. Surprisingly, this is still your best option. [83]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-084",
+      "context": "transaction",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. Surprisingly, this is still your best option. [84]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-085",
+      "context": "greeting",
+      "text": "Interest is not affection. Stop looking at the vault like that. Surprisingly, this is still your best option. [85]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-086",
+      "context": "success",
+      "text": "Your Ottomans are safe. Your decisions are another matter. The chairs are watching. [86]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-087",
+      "context": "failure",
+      "text": "The vault is open. Try not to make this complicated. The chairs are watching. [87]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-088",
+      "context": "warning",
+      "text": "I have reviewed your balance and developed concerns. The chairs are watching. [88]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-089",
+      "context": "idle",
+      "text": "Deposit, withdraw, transfer. Pick one before I retire. The chairs are watching. [89]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BANKER-090",
+      "context": "transaction",
+      "text": "Interest is not affection. Stop looking at the vault like that. The chairs are watching. [90]",
+      "enabled": true
+    }
+  ],
+  "shopkeeper": [
+    {
+      "id": "NPC-SHOPKEEPER-001",
+      "context": "greeting",
+      "text": "Welcome back. I assume you are here to buy something unnecessary.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-002",
+      "context": "success",
+      "text": "Everything has a price. Your dignity remains unsellable.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-003",
+      "context": "failure",
+      "text": "Look with your eyes. Pay with Ottomans.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-004",
+      "context": "warning",
+      "text": "The good stuff rotates. The bad decisions are permanent.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-005",
+      "context": "idle",
+      "text": "No, staring at it does not lower the price.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-006",
+      "context": "transaction",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-007",
+      "context": "greeting",
+      "text": "Everything has a price. Your dignity remains unsellable. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-008",
+      "context": "success",
+      "text": "Look with your eyes. Pay with Ottomans. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-009",
+      "context": "failure",
+      "text": "The good stuff rotates. The bad decisions are permanent. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-010",
+      "context": "warning",
+      "text": "No, staring at it does not lower the price. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-011",
+      "context": "idle",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-012",
+      "context": "transaction",
+      "text": "Everything has a price. Your dignity remains unsellable. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-013",
+      "context": "greeting",
+      "text": "Look with your eyes. Pay with Ottomans. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-014",
+      "context": "success",
+      "text": "The good stuff rotates. The bad decisions are permanent. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-015",
+      "context": "failure",
+      "text": "No, staring at it does not lower the price. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-016",
+      "context": "warning",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-017",
+      "context": "idle",
+      "text": "Everything has a price. Your dignity remains unsellable. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-018",
+      "context": "transaction",
+      "text": "Look with your eyes. Pay with Ottomans. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-019",
+      "context": "greeting",
+      "text": "The good stuff rotates. The bad decisions are permanent. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-020",
+      "context": "success",
+      "text": "No, staring at it does not lower the price. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-021",
+      "context": "failure",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-022",
+      "context": "warning",
+      "text": "Everything has a price. Your dignity remains unsellable. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-023",
+      "context": "idle",
+      "text": "Look with your eyes. Pay with Ottomans. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-024",
+      "context": "transaction",
+      "text": "The good stuff rotates. The bad decisions are permanent. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-025",
+      "context": "greeting",
+      "text": "No, staring at it does not lower the price. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-026",
+      "context": "success",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-027",
+      "context": "failure",
+      "text": "Everything has a price. Your dignity remains unsellable. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-028",
+      "context": "warning",
+      "text": "Look with your eyes. Pay with Ottomans. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-029",
+      "context": "idle",
+      "text": "The good stuff rotates. The bad decisions are permanent. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-030",
+      "context": "transaction",
+      "text": "No, staring at it does not lower the price. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-031",
+      "context": "greeting",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. [31]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-032",
+      "context": "success",
+      "text": "Everything has a price. Your dignity remains unsellable. [32]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-033",
+      "context": "failure",
+      "text": "Look with your eyes. Pay with Ottomans. [33]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-034",
+      "context": "warning",
+      "text": "The good stuff rotates. The bad decisions are permanent. [34]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-035",
+      "context": "idle",
+      "text": "No, staring at it does not lower the price. [35]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-036",
+      "context": "transaction",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Get on with it. [36]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-037",
+      "context": "greeting",
+      "text": "Everything has a price. Your dignity remains unsellable. Get on with it. [37]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-038",
+      "context": "success",
+      "text": "Look with your eyes. Pay with Ottomans. Get on with it. [38]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-039",
+      "context": "failure",
+      "text": "The good stuff rotates. The bad decisions are permanent. Get on with it. [39]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-040",
+      "context": "warning",
+      "text": "No, staring at it does not lower the price. Get on with it. [40]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-041",
+      "context": "idle",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. The paperwork agrees. [41]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-042",
+      "context": "transaction",
+      "text": "Everything has a price. Your dignity remains unsellable. The paperwork agrees. [42]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-043",
+      "context": "greeting",
+      "text": "Look with your eyes. Pay with Ottomans. The paperwork agrees. [43]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-044",
+      "context": "success",
+      "text": "The good stuff rotates. The bad decisions are permanent. The paperwork agrees. [44]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-045",
+      "context": "failure",
+      "text": "No, staring at it does not lower the price. The paperwork agrees. [45]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-046",
+      "context": "warning",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Do not make me explain this twice. [46]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-047",
+      "context": "idle",
+      "text": "Everything has a price. Your dignity remains unsellable. Do not make me explain this twice. [47]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-048",
+      "context": "transaction",
+      "text": "Look with your eyes. Pay with Ottomans. Do not make me explain this twice. [48]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-049",
+      "context": "greeting",
+      "text": "The good stuff rotates. The bad decisions are permanent. Do not make me explain this twice. [49]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-050",
+      "context": "success",
+      "text": "No, staring at it does not lower the price. Do not make me explain this twice. [50]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-051",
+      "context": "failure",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Surprisingly, this is still your best option. [51]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-052",
+      "context": "warning",
+      "text": "Everything has a price. Your dignity remains unsellable. Surprisingly, this is still your best option. [52]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-053",
+      "context": "idle",
+      "text": "Look with your eyes. Pay with Ottomans. Surprisingly, this is still your best option. [53]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-054",
+      "context": "transaction",
+      "text": "The good stuff rotates. The bad decisions are permanent. Surprisingly, this is still your best option. [54]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-055",
+      "context": "greeting",
+      "text": "No, staring at it does not lower the price. Surprisingly, this is still your best option. [55]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-056",
+      "context": "success",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. The chairs are watching. [56]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-057",
+      "context": "failure",
+      "text": "Everything has a price. Your dignity remains unsellable. The chairs are watching. [57]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-058",
+      "context": "warning",
+      "text": "Look with your eyes. Pay with Ottomans. The chairs are watching. [58]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-059",
+      "context": "idle",
+      "text": "The good stuff rotates. The bad decisions are permanent. The chairs are watching. [59]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-060",
+      "context": "transaction",
+      "text": "No, staring at it does not lower the price. The chairs are watching. [60]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-061",
+      "context": "greeting",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. [61]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-062",
+      "context": "success",
+      "text": "Everything has a price. Your dignity remains unsellable. [62]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-063",
+      "context": "failure",
+      "text": "Look with your eyes. Pay with Ottomans. [63]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-064",
+      "context": "warning",
+      "text": "The good stuff rotates. The bad decisions are permanent. [64]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-065",
+      "context": "idle",
+      "text": "No, staring at it does not lower the price. [65]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-066",
+      "context": "transaction",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Get on with it. [66]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-067",
+      "context": "greeting",
+      "text": "Everything has a price. Your dignity remains unsellable. Get on with it. [67]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-068",
+      "context": "success",
+      "text": "Look with your eyes. Pay with Ottomans. Get on with it. [68]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-069",
+      "context": "failure",
+      "text": "The good stuff rotates. The bad decisions are permanent. Get on with it. [69]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-070",
+      "context": "warning",
+      "text": "No, staring at it does not lower the price. Get on with it. [70]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-071",
+      "context": "idle",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. The paperwork agrees. [71]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-072",
+      "context": "transaction",
+      "text": "Everything has a price. Your dignity remains unsellable. The paperwork agrees. [72]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-073",
+      "context": "greeting",
+      "text": "Look with your eyes. Pay with Ottomans. The paperwork agrees. [73]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-074",
+      "context": "success",
+      "text": "The good stuff rotates. The bad decisions are permanent. The paperwork agrees. [74]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-075",
+      "context": "failure",
+      "text": "No, staring at it does not lower the price. The paperwork agrees. [75]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-076",
+      "context": "warning",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Do not make me explain this twice. [76]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-077",
+      "context": "idle",
+      "text": "Everything has a price. Your dignity remains unsellable. Do not make me explain this twice. [77]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-078",
+      "context": "transaction",
+      "text": "Look with your eyes. Pay with Ottomans. Do not make me explain this twice. [78]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-079",
+      "context": "greeting",
+      "text": "The good stuff rotates. The bad decisions are permanent. Do not make me explain this twice. [79]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-080",
+      "context": "success",
+      "text": "No, staring at it does not lower the price. Do not make me explain this twice. [80]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-081",
+      "context": "failure",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. Surprisingly, this is still your best option. [81]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-082",
+      "context": "warning",
+      "text": "Everything has a price. Your dignity remains unsellable. Surprisingly, this is still your best option. [82]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-083",
+      "context": "idle",
+      "text": "Look with your eyes. Pay with Ottomans. Surprisingly, this is still your best option. [83]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-084",
+      "context": "transaction",
+      "text": "The good stuff rotates. The bad decisions are permanent. Surprisingly, this is still your best option. [84]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-085",
+      "context": "greeting",
+      "text": "No, staring at it does not lower the price. Surprisingly, this is still your best option. [85]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-086",
+      "context": "success",
+      "text": "Welcome back. I assume you are here to buy something unnecessary. The chairs are watching. [86]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-087",
+      "context": "failure",
+      "text": "Everything has a price. Your dignity remains unsellable. The chairs are watching. [87]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-088",
+      "context": "warning",
+      "text": "Look with your eyes. Pay with Ottomans. The chairs are watching. [88]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-089",
+      "context": "idle",
+      "text": "The good stuff rotates. The bad decisions are permanent. The chairs are watching. [89]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SHOPKEEPER-090",
+      "context": "transaction",
+      "text": "No, staring at it does not lower the price. The chairs are watching. [90]",
+      "enabled": true
+    }
+  ],
+  "bailiff": [
+    {
+      "id": "NPC-BAILIFF-001",
+      "context": "greeting",
+      "text": "Order in the lounge. Yes, somehow this counts as order.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-002",
+      "context": "success",
+      "text": "Your case is noted. Your excuses are not compelling.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-003",
+      "context": "failure",
+      "text": "The Hotseat is not a vacation package.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-004",
+      "context": "warning",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-005",
+      "context": "idle",
+      "text": "I have heard better defenses from folding chairs.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-006",
+      "context": "transaction",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-007",
+      "context": "greeting",
+      "text": "Your case is noted. Your excuses are not compelling. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-008",
+      "context": "success",
+      "text": "The Hotseat is not a vacation package. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-009",
+      "context": "failure",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-010",
+      "context": "warning",
+      "text": "I have heard better defenses from folding chairs. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-011",
+      "context": "idle",
+      "text": "Order in the lounge. Yes, somehow this counts as order. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-012",
+      "context": "transaction",
+      "text": "Your case is noted. Your excuses are not compelling. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-013",
+      "context": "greeting",
+      "text": "The Hotseat is not a vacation package. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-014",
+      "context": "success",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-015",
+      "context": "failure",
+      "text": "I have heard better defenses from folding chairs. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-016",
+      "context": "warning",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-017",
+      "context": "idle",
+      "text": "Your case is noted. Your excuses are not compelling. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-018",
+      "context": "transaction",
+      "text": "The Hotseat is not a vacation package. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-019",
+      "context": "greeting",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-020",
+      "context": "success",
+      "text": "I have heard better defenses from folding chairs. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-021",
+      "context": "failure",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-022",
+      "context": "warning",
+      "text": "Your case is noted. Your excuses are not compelling. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-023",
+      "context": "idle",
+      "text": "The Hotseat is not a vacation package. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-024",
+      "context": "transaction",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-025",
+      "context": "greeting",
+      "text": "I have heard better defenses from folding chairs. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-026",
+      "context": "success",
+      "text": "Order in the lounge. Yes, somehow this counts as order. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-027",
+      "context": "failure",
+      "text": "Your case is noted. Your excuses are not compelling. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-028",
+      "context": "warning",
+      "text": "The Hotseat is not a vacation package. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-029",
+      "context": "idle",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-030",
+      "context": "transaction",
+      "text": "I have heard better defenses from folding chairs. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-031",
+      "context": "greeting",
+      "text": "Order in the lounge. Yes, somehow this counts as order. [31]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-032",
+      "context": "success",
+      "text": "Your case is noted. Your excuses are not compelling. [32]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-033",
+      "context": "failure",
+      "text": "The Hotseat is not a vacation package. [33]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-034",
+      "context": "warning",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. [34]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-035",
+      "context": "idle",
+      "text": "I have heard better defenses from folding chairs. [35]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-036",
+      "context": "transaction",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Get on with it. [36]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-037",
+      "context": "greeting",
+      "text": "Your case is noted. Your excuses are not compelling. Get on with it. [37]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-038",
+      "context": "success",
+      "text": "The Hotseat is not a vacation package. Get on with it. [38]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-039",
+      "context": "failure",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Get on with it. [39]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-040",
+      "context": "warning",
+      "text": "I have heard better defenses from folding chairs. Get on with it. [40]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-041",
+      "context": "idle",
+      "text": "Order in the lounge. Yes, somehow this counts as order. The paperwork agrees. [41]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-042",
+      "context": "transaction",
+      "text": "Your case is noted. Your excuses are not compelling. The paperwork agrees. [42]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-043",
+      "context": "greeting",
+      "text": "The Hotseat is not a vacation package. The paperwork agrees. [43]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-044",
+      "context": "success",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. The paperwork agrees. [44]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-045",
+      "context": "failure",
+      "text": "I have heard better defenses from folding chairs. The paperwork agrees. [45]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-046",
+      "context": "warning",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Do not make me explain this twice. [46]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-047",
+      "context": "idle",
+      "text": "Your case is noted. Your excuses are not compelling. Do not make me explain this twice. [47]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-048",
+      "context": "transaction",
+      "text": "The Hotseat is not a vacation package. Do not make me explain this twice. [48]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-049",
+      "context": "greeting",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Do not make me explain this twice. [49]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-050",
+      "context": "success",
+      "text": "I have heard better defenses from folding chairs. Do not make me explain this twice. [50]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-051",
+      "context": "failure",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Surprisingly, this is still your best option. [51]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-052",
+      "context": "warning",
+      "text": "Your case is noted. Your excuses are not compelling. Surprisingly, this is still your best option. [52]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-053",
+      "context": "idle",
+      "text": "The Hotseat is not a vacation package. Surprisingly, this is still your best option. [53]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-054",
+      "context": "transaction",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Surprisingly, this is still your best option. [54]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-055",
+      "context": "greeting",
+      "text": "I have heard better defenses from folding chairs. Surprisingly, this is still your best option. [55]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-056",
+      "context": "success",
+      "text": "Order in the lounge. Yes, somehow this counts as order. The chairs are watching. [56]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-057",
+      "context": "failure",
+      "text": "Your case is noted. Your excuses are not compelling. The chairs are watching. [57]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-058",
+      "context": "warning",
+      "text": "The Hotseat is not a vacation package. The chairs are watching. [58]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-059",
+      "context": "idle",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. The chairs are watching. [59]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-060",
+      "context": "transaction",
+      "text": "I have heard better defenses from folding chairs. The chairs are watching. [60]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-061",
+      "context": "greeting",
+      "text": "Order in the lounge. Yes, somehow this counts as order. [61]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-062",
+      "context": "success",
+      "text": "Your case is noted. Your excuses are not compelling. [62]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-063",
+      "context": "failure",
+      "text": "The Hotseat is not a vacation package. [63]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-064",
+      "context": "warning",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. [64]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-065",
+      "context": "idle",
+      "text": "I have heard better defenses from folding chairs. [65]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-066",
+      "context": "transaction",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Get on with it. [66]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-067",
+      "context": "greeting",
+      "text": "Your case is noted. Your excuses are not compelling. Get on with it. [67]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-068",
+      "context": "success",
+      "text": "The Hotseat is not a vacation package. Get on with it. [68]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-069",
+      "context": "failure",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Get on with it. [69]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-070",
+      "context": "warning",
+      "text": "I have heard better defenses from folding chairs. Get on with it. [70]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-071",
+      "context": "idle",
+      "text": "Order in the lounge. Yes, somehow this counts as order. The paperwork agrees. [71]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-072",
+      "context": "transaction",
+      "text": "Your case is noted. Your excuses are not compelling. The paperwork agrees. [72]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-073",
+      "context": "greeting",
+      "text": "The Hotseat is not a vacation package. The paperwork agrees. [73]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-074",
+      "context": "success",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. The paperwork agrees. [74]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-075",
+      "context": "failure",
+      "text": "I have heard better defenses from folding chairs. The paperwork agrees. [75]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-076",
+      "context": "warning",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Do not make me explain this twice. [76]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-077",
+      "context": "idle",
+      "text": "Your case is noted. Your excuses are not compelling. Do not make me explain this twice. [77]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-078",
+      "context": "transaction",
+      "text": "The Hotseat is not a vacation package. Do not make me explain this twice. [78]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-079",
+      "context": "greeting",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Do not make me explain this twice. [79]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-080",
+      "context": "success",
+      "text": "I have heard better defenses from folding chairs. Do not make me explain this twice. [80]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-081",
+      "context": "failure",
+      "text": "Order in the lounge. Yes, somehow this counts as order. Surprisingly, this is still your best option. [81]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-082",
+      "context": "warning",
+      "text": "Your case is noted. Your excuses are not compelling. Surprisingly, this is still your best option. [82]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-083",
+      "context": "idle",
+      "text": "The Hotseat is not a vacation package. Surprisingly, this is still your best option. [83]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-084",
+      "context": "transaction",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. Surprisingly, this is still your best option. [84]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-085",
+      "context": "greeting",
+      "text": "I have heard better defenses from folding chairs. Surprisingly, this is still your best option. [85]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-086",
+      "context": "success",
+      "text": "Order in the lounge. Yes, somehow this counts as order. The chairs are watching. [86]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-087",
+      "context": "failure",
+      "text": "Your case is noted. Your excuses are not compelling. The chairs are watching. [87]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-088",
+      "context": "warning",
+      "text": "The Hotseat is not a vacation package. The chairs are watching. [88]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-089",
+      "context": "idle",
+      "text": "Bail clears crime jail, not staff consequences. Read carefully. The chairs are watching. [89]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-BAILIFF-090",
+      "context": "transaction",
+      "text": "I have heard better defenses from folding chairs. The chairs are watching. [90]",
+      "enabled": true
+    }
+  ],
+  "fisherman": [
+    {
+      "id": "NPC-FISHERMAN-001",
+      "context": "greeting",
+      "text": "The water is calm. Your technique is not.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-002",
+      "context": "success",
+      "text": "Cast it out and pretend you know what you are doing.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-003",
+      "context": "failure",
+      "text": "Somewhere beneath the surface is either treasure or disappointment.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-004",
+      "context": "warning",
+      "text": "A good rod helps. So does luck. You currently need both.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-005",
+      "context": "idle",
+      "text": "You caught something. Whether you wanted it is another question.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-006",
+      "context": "transaction",
+      "text": "The water is calm. Your technique is not. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-007",
+      "context": "greeting",
+      "text": "Cast it out and pretend you know what you are doing. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-008",
+      "context": "success",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-009",
+      "context": "failure",
+      "text": "A good rod helps. So does luck. You currently need both. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-010",
+      "context": "warning",
+      "text": "You caught something. Whether you wanted it is another question. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-011",
+      "context": "idle",
+      "text": "The water is calm. Your technique is not. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-012",
+      "context": "transaction",
+      "text": "Cast it out and pretend you know what you are doing. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-013",
+      "context": "greeting",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-014",
+      "context": "success",
+      "text": "A good rod helps. So does luck. You currently need both. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-015",
+      "context": "failure",
+      "text": "You caught something. Whether you wanted it is another question. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-016",
+      "context": "warning",
+      "text": "The water is calm. Your technique is not. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-017",
+      "context": "idle",
+      "text": "Cast it out and pretend you know what you are doing. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-018",
+      "context": "transaction",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-019",
+      "context": "greeting",
+      "text": "A good rod helps. So does luck. You currently need both. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-020",
+      "context": "success",
+      "text": "You caught something. Whether you wanted it is another question. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-021",
+      "context": "failure",
+      "text": "The water is calm. Your technique is not. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-022",
+      "context": "warning",
+      "text": "Cast it out and pretend you know what you are doing. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-023",
+      "context": "idle",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-024",
+      "context": "transaction",
+      "text": "A good rod helps. So does luck. You currently need both. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-025",
+      "context": "greeting",
+      "text": "You caught something. Whether you wanted it is another question. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-026",
+      "context": "success",
+      "text": "The water is calm. Your technique is not. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-027",
+      "context": "failure",
+      "text": "Cast it out and pretend you know what you are doing. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-028",
+      "context": "warning",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-029",
+      "context": "idle",
+      "text": "A good rod helps. So does luck. You currently need both. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-030",
+      "context": "transaction",
+      "text": "You caught something. Whether you wanted it is another question. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-031",
+      "context": "greeting",
+      "text": "The water is calm. Your technique is not. [31]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-032",
+      "context": "success",
+      "text": "Cast it out and pretend you know what you are doing. [32]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-033",
+      "context": "failure",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. [33]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-034",
+      "context": "warning",
+      "text": "A good rod helps. So does luck. You currently need both. [34]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-035",
+      "context": "idle",
+      "text": "You caught something. Whether you wanted it is another question. [35]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-036",
+      "context": "transaction",
+      "text": "The water is calm. Your technique is not. Get on with it. [36]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-037",
+      "context": "greeting",
+      "text": "Cast it out and pretend you know what you are doing. Get on with it. [37]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-038",
+      "context": "success",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Get on with it. [38]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-039",
+      "context": "failure",
+      "text": "A good rod helps. So does luck. You currently need both. Get on with it. [39]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-040",
+      "context": "warning",
+      "text": "You caught something. Whether you wanted it is another question. Get on with it. [40]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-041",
+      "context": "idle",
+      "text": "The water is calm. Your technique is not. The paperwork agrees. [41]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-042",
+      "context": "transaction",
+      "text": "Cast it out and pretend you know what you are doing. The paperwork agrees. [42]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-043",
+      "context": "greeting",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. The paperwork agrees. [43]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-044",
+      "context": "success",
+      "text": "A good rod helps. So does luck. You currently need both. The paperwork agrees. [44]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-045",
+      "context": "failure",
+      "text": "You caught something. Whether you wanted it is another question. The paperwork agrees. [45]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-046",
+      "context": "warning",
+      "text": "The water is calm. Your technique is not. Do not make me explain this twice. [46]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-047",
+      "context": "idle",
+      "text": "Cast it out and pretend you know what you are doing. Do not make me explain this twice. [47]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-048",
+      "context": "transaction",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Do not make me explain this twice. [48]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-049",
+      "context": "greeting",
+      "text": "A good rod helps. So does luck. You currently need both. Do not make me explain this twice. [49]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-050",
+      "context": "success",
+      "text": "You caught something. Whether you wanted it is another question. Do not make me explain this twice. [50]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-051",
+      "context": "failure",
+      "text": "The water is calm. Your technique is not. Surprisingly, this is still your best option. [51]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-052",
+      "context": "warning",
+      "text": "Cast it out and pretend you know what you are doing. Surprisingly, this is still your best option. [52]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-053",
+      "context": "idle",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Surprisingly, this is still your best option. [53]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-054",
+      "context": "transaction",
+      "text": "A good rod helps. So does luck. You currently need both. Surprisingly, this is still your best option. [54]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-055",
+      "context": "greeting",
+      "text": "You caught something. Whether you wanted it is another question. Surprisingly, this is still your best option. [55]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-056",
+      "context": "success",
+      "text": "The water is calm. Your technique is not. The chairs are watching. [56]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-057",
+      "context": "failure",
+      "text": "Cast it out and pretend you know what you are doing. The chairs are watching. [57]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-058",
+      "context": "warning",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. The chairs are watching. [58]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-059",
+      "context": "idle",
+      "text": "A good rod helps. So does luck. You currently need both. The chairs are watching. [59]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-060",
+      "context": "transaction",
+      "text": "You caught something. Whether you wanted it is another question. The chairs are watching. [60]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-061",
+      "context": "greeting",
+      "text": "The water is calm. Your technique is not. [61]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-062",
+      "context": "success",
+      "text": "Cast it out and pretend you know what you are doing. [62]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-063",
+      "context": "failure",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. [63]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-064",
+      "context": "warning",
+      "text": "A good rod helps. So does luck. You currently need both. [64]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-065",
+      "context": "idle",
+      "text": "You caught something. Whether you wanted it is another question. [65]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-066",
+      "context": "transaction",
+      "text": "The water is calm. Your technique is not. Get on with it. [66]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-067",
+      "context": "greeting",
+      "text": "Cast it out and pretend you know what you are doing. Get on with it. [67]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-068",
+      "context": "success",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Get on with it. [68]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-069",
+      "context": "failure",
+      "text": "A good rod helps. So does luck. You currently need both. Get on with it. [69]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-070",
+      "context": "warning",
+      "text": "You caught something. Whether you wanted it is another question. Get on with it. [70]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-071",
+      "context": "idle",
+      "text": "The water is calm. Your technique is not. The paperwork agrees. [71]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-072",
+      "context": "transaction",
+      "text": "Cast it out and pretend you know what you are doing. The paperwork agrees. [72]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-073",
+      "context": "greeting",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. The paperwork agrees. [73]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-074",
+      "context": "success",
+      "text": "A good rod helps. So does luck. You currently need both. The paperwork agrees. [74]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-075",
+      "context": "failure",
+      "text": "You caught something. Whether you wanted it is another question. The paperwork agrees. [75]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-076",
+      "context": "warning",
+      "text": "The water is calm. Your technique is not. Do not make me explain this twice. [76]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-077",
+      "context": "idle",
+      "text": "Cast it out and pretend you know what you are doing. Do not make me explain this twice. [77]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-078",
+      "context": "transaction",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Do not make me explain this twice. [78]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-079",
+      "context": "greeting",
+      "text": "A good rod helps. So does luck. You currently need both. Do not make me explain this twice. [79]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-080",
+      "context": "success",
+      "text": "You caught something. Whether you wanted it is another question. Do not make me explain this twice. [80]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-081",
+      "context": "failure",
+      "text": "The water is calm. Your technique is not. Surprisingly, this is still your best option. [81]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-082",
+      "context": "warning",
+      "text": "Cast it out and pretend you know what you are doing. Surprisingly, this is still your best option. [82]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-083",
+      "context": "idle",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. Surprisingly, this is still your best option. [83]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-084",
+      "context": "transaction",
+      "text": "A good rod helps. So does luck. You currently need both. Surprisingly, this is still your best option. [84]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-085",
+      "context": "greeting",
+      "text": "You caught something. Whether you wanted it is another question. Surprisingly, this is still your best option. [85]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-086",
+      "context": "success",
+      "text": "The water is calm. Your technique is not. The chairs are watching. [86]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-087",
+      "context": "failure",
+      "text": "Cast it out and pretend you know what you are doing. The chairs are watching. [87]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-088",
+      "context": "warning",
+      "text": "Somewhere beneath the surface is either treasure or disappointment. The chairs are watching. [88]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-089",
+      "context": "idle",
+      "text": "A good rod helps. So does luck. You currently need both. The chairs are watching. [89]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-FISHERMAN-090",
+      "context": "transaction",
+      "text": "You caught something. Whether you wanted it is another question. The chairs are watching. [90]",
+      "enabled": true
+    }
+  ],
+  "scavenger": [
+    {
+      "id": "NPC-SCAVENGER-001",
+      "context": "greeting",
+      "text": "There is always something useful in the trash if your standards are flexible enough.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-002",
+      "context": "success",
+      "text": "Dig around. Try not to think about where this came from.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-003",
+      "context": "failure",
+      "text": "One person’s junk is another person’s oddly specific crafting material.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-004",
+      "context": "warning",
+      "text": "You found something. I am legally not calling it treasure.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-005",
+      "context": "idle",
+      "text": "The lounge throws away surprisingly valuable nonsense.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-006",
+      "context": "transaction",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-007",
+      "context": "greeting",
+      "text": "Dig around. Try not to think about where this came from. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-008",
+      "context": "success",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-009",
+      "context": "failure",
+      "text": "You found something. I am legally not calling it treasure. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-010",
+      "context": "warning",
+      "text": "The lounge throws away surprisingly valuable nonsense. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-011",
+      "context": "idle",
+      "text": "There is always something useful in the trash if your standards are flexible enough. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-012",
+      "context": "transaction",
+      "text": "Dig around. Try not to think about where this came from. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-013",
+      "context": "greeting",
+      "text": "One person’s junk is another person’s oddly specific crafting material. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-014",
+      "context": "success",
+      "text": "You found something. I am legally not calling it treasure. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-015",
+      "context": "failure",
+      "text": "The lounge throws away surprisingly valuable nonsense. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-016",
+      "context": "warning",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-017",
+      "context": "idle",
+      "text": "Dig around. Try not to think about where this came from. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-018",
+      "context": "transaction",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-019",
+      "context": "greeting",
+      "text": "You found something. I am legally not calling it treasure. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-020",
+      "context": "success",
+      "text": "The lounge throws away surprisingly valuable nonsense. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-021",
+      "context": "failure",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-022",
+      "context": "warning",
+      "text": "Dig around. Try not to think about where this came from. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-023",
+      "context": "idle",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-024",
+      "context": "transaction",
+      "text": "You found something. I am legally not calling it treasure. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-025",
+      "context": "greeting",
+      "text": "The lounge throws away surprisingly valuable nonsense. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-026",
+      "context": "success",
+      "text": "There is always something useful in the trash if your standards are flexible enough. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-027",
+      "context": "failure",
+      "text": "Dig around. Try not to think about where this came from. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-028",
+      "context": "warning",
+      "text": "One person’s junk is another person’s oddly specific crafting material. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-029",
+      "context": "idle",
+      "text": "You found something. I am legally not calling it treasure. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-030",
+      "context": "transaction",
+      "text": "The lounge throws away surprisingly valuable nonsense. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-031",
+      "context": "greeting",
+      "text": "There is always something useful in the trash if your standards are flexible enough. [31]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-032",
+      "context": "success",
+      "text": "Dig around. Try not to think about where this came from. [32]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-033",
+      "context": "failure",
+      "text": "One person’s junk is another person’s oddly specific crafting material. [33]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-034",
+      "context": "warning",
+      "text": "You found something. I am legally not calling it treasure. [34]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-035",
+      "context": "idle",
+      "text": "The lounge throws away surprisingly valuable nonsense. [35]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-036",
+      "context": "transaction",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Get on with it. [36]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-037",
+      "context": "greeting",
+      "text": "Dig around. Try not to think about where this came from. Get on with it. [37]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-038",
+      "context": "success",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Get on with it. [38]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-039",
+      "context": "failure",
+      "text": "You found something. I am legally not calling it treasure. Get on with it. [39]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-040",
+      "context": "warning",
+      "text": "The lounge throws away surprisingly valuable nonsense. Get on with it. [40]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-041",
+      "context": "idle",
+      "text": "There is always something useful in the trash if your standards are flexible enough. The paperwork agrees. [41]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-042",
+      "context": "transaction",
+      "text": "Dig around. Try not to think about where this came from. The paperwork agrees. [42]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-043",
+      "context": "greeting",
+      "text": "One person’s junk is another person’s oddly specific crafting material. The paperwork agrees. [43]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-044",
+      "context": "success",
+      "text": "You found something. I am legally not calling it treasure. The paperwork agrees. [44]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-045",
+      "context": "failure",
+      "text": "The lounge throws away surprisingly valuable nonsense. The paperwork agrees. [45]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-046",
+      "context": "warning",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Do not make me explain this twice. [46]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-047",
+      "context": "idle",
+      "text": "Dig around. Try not to think about where this came from. Do not make me explain this twice. [47]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-048",
+      "context": "transaction",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Do not make me explain this twice. [48]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-049",
+      "context": "greeting",
+      "text": "You found something. I am legally not calling it treasure. Do not make me explain this twice. [49]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-050",
+      "context": "success",
+      "text": "The lounge throws away surprisingly valuable nonsense. Do not make me explain this twice. [50]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-051",
+      "context": "failure",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Surprisingly, this is still your best option. [51]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-052",
+      "context": "warning",
+      "text": "Dig around. Try not to think about where this came from. Surprisingly, this is still your best option. [52]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-053",
+      "context": "idle",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Surprisingly, this is still your best option. [53]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-054",
+      "context": "transaction",
+      "text": "You found something. I am legally not calling it treasure. Surprisingly, this is still your best option. [54]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-055",
+      "context": "greeting",
+      "text": "The lounge throws away surprisingly valuable nonsense. Surprisingly, this is still your best option. [55]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-056",
+      "context": "success",
+      "text": "There is always something useful in the trash if your standards are flexible enough. The chairs are watching. [56]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-057",
+      "context": "failure",
+      "text": "Dig around. Try not to think about where this came from. The chairs are watching. [57]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-058",
+      "context": "warning",
+      "text": "One person’s junk is another person’s oddly specific crafting material. The chairs are watching. [58]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-059",
+      "context": "idle",
+      "text": "You found something. I am legally not calling it treasure. The chairs are watching. [59]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-060",
+      "context": "transaction",
+      "text": "The lounge throws away surprisingly valuable nonsense. The chairs are watching. [60]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-061",
+      "context": "greeting",
+      "text": "There is always something useful in the trash if your standards are flexible enough. [61]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-062",
+      "context": "success",
+      "text": "Dig around. Try not to think about where this came from. [62]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-063",
+      "context": "failure",
+      "text": "One person’s junk is another person’s oddly specific crafting material. [63]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-064",
+      "context": "warning",
+      "text": "You found something. I am legally not calling it treasure. [64]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-065",
+      "context": "idle",
+      "text": "The lounge throws away surprisingly valuable nonsense. [65]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-066",
+      "context": "transaction",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Get on with it. [66]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-067",
+      "context": "greeting",
+      "text": "Dig around. Try not to think about where this came from. Get on with it. [67]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-068",
+      "context": "success",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Get on with it. [68]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-069",
+      "context": "failure",
+      "text": "You found something. I am legally not calling it treasure. Get on with it. [69]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-070",
+      "context": "warning",
+      "text": "The lounge throws away surprisingly valuable nonsense. Get on with it. [70]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-071",
+      "context": "idle",
+      "text": "There is always something useful in the trash if your standards are flexible enough. The paperwork agrees. [71]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-072",
+      "context": "transaction",
+      "text": "Dig around. Try not to think about where this came from. The paperwork agrees. [72]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-073",
+      "context": "greeting",
+      "text": "One person’s junk is another person’s oddly specific crafting material. The paperwork agrees. [73]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-074",
+      "context": "success",
+      "text": "You found something. I am legally not calling it treasure. The paperwork agrees. [74]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-075",
+      "context": "failure",
+      "text": "The lounge throws away surprisingly valuable nonsense. The paperwork agrees. [75]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-076",
+      "context": "warning",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Do not make me explain this twice. [76]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-077",
+      "context": "idle",
+      "text": "Dig around. Try not to think about where this came from. Do not make me explain this twice. [77]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-078",
+      "context": "transaction",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Do not make me explain this twice. [78]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-079",
+      "context": "greeting",
+      "text": "You found something. I am legally not calling it treasure. Do not make me explain this twice. [79]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-080",
+      "context": "success",
+      "text": "The lounge throws away surprisingly valuable nonsense. Do not make me explain this twice. [80]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-081",
+      "context": "failure",
+      "text": "There is always something useful in the trash if your standards are flexible enough. Surprisingly, this is still your best option. [81]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-082",
+      "context": "warning",
+      "text": "Dig around. Try not to think about where this came from. Surprisingly, this is still your best option. [82]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-083",
+      "context": "idle",
+      "text": "One person’s junk is another person’s oddly specific crafting material. Surprisingly, this is still your best option. [83]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-084",
+      "context": "transaction",
+      "text": "You found something. I am legally not calling it treasure. Surprisingly, this is still your best option. [84]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-085",
+      "context": "greeting",
+      "text": "The lounge throws away surprisingly valuable nonsense. Surprisingly, this is still your best option. [85]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-086",
+      "context": "success",
+      "text": "There is always something useful in the trash if your standards are flexible enough. The chairs are watching. [86]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-087",
+      "context": "failure",
+      "text": "Dig around. Try not to think about where this came from. The chairs are watching. [87]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-088",
+      "context": "warning",
+      "text": "One person’s junk is another person’s oddly specific crafting material. The chairs are watching. [88]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-089",
+      "context": "idle",
+      "text": "You found something. I am legally not calling it treasure. The chairs are watching. [89]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-SCAVENGER-090",
+      "context": "transaction",
+      "text": "The lounge throws away surprisingly valuable nonsense. The chairs are watching. [90]",
+      "enabled": true
+    }
+  ],
+  "chairwright": [
+    {
+      "id": "NPC-CHAIRWRIGHT-001",
+      "context": "greeting",
+      "text": "Measure twice. Blame the recipe once.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-002",
+      "context": "success",
+      "text": "A proper chair is built, not wished into existence.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-003",
+      "context": "failure",
+      "text": "Perfect quality is earned. Mostly through suffering.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-004",
+      "context": "warning",
+      "text": "Bring materials, bring a tool, and lower your expectations.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-005",
+      "context": "idle",
+      "text": "The workshop does not care about confidence. It cares about inputs.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-006",
+      "context": "transaction",
+      "text": "Measure twice. Blame the recipe once. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-007",
+      "context": "greeting",
+      "text": "A proper chair is built, not wished into existence. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-008",
+      "context": "success",
+      "text": "Perfect quality is earned. Mostly through suffering. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-009",
+      "context": "failure",
+      "text": "Bring materials, bring a tool, and lower your expectations. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-010",
+      "context": "warning",
+      "text": "The workshop does not care about confidence. It cares about inputs. Get on with it.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-011",
+      "context": "idle",
+      "text": "Measure twice. Blame the recipe once. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-012",
+      "context": "transaction",
+      "text": "A proper chair is built, not wished into existence. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-013",
+      "context": "greeting",
+      "text": "Perfect quality is earned. Mostly through suffering. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-014",
+      "context": "success",
+      "text": "Bring materials, bring a tool, and lower your expectations. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-015",
+      "context": "failure",
+      "text": "The workshop does not care about confidence. It cares about inputs. The paperwork agrees.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-016",
+      "context": "warning",
+      "text": "Measure twice. Blame the recipe once. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-017",
+      "context": "idle",
+      "text": "A proper chair is built, not wished into existence. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-018",
+      "context": "transaction",
+      "text": "Perfect quality is earned. Mostly through suffering. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-019",
+      "context": "greeting",
+      "text": "Bring materials, bring a tool, and lower your expectations. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-020",
+      "context": "success",
+      "text": "The workshop does not care about confidence. It cares about inputs. Do not make me explain this twice.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-021",
+      "context": "failure",
+      "text": "Measure twice. Blame the recipe once. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-022",
+      "context": "warning",
+      "text": "A proper chair is built, not wished into existence. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-023",
+      "context": "idle",
+      "text": "Perfect quality is earned. Mostly through suffering. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-024",
+      "context": "transaction",
+      "text": "Bring materials, bring a tool, and lower your expectations. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-025",
+      "context": "greeting",
+      "text": "The workshop does not care about confidence. It cares about inputs. Surprisingly, this is still your best option.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-026",
+      "context": "success",
+      "text": "Measure twice. Blame the recipe once. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-027",
+      "context": "failure",
+      "text": "A proper chair is built, not wished into existence. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-028",
+      "context": "warning",
+      "text": "Perfect quality is earned. Mostly through suffering. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-029",
+      "context": "idle",
+      "text": "Bring materials, bring a tool, and lower your expectations. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-030",
+      "context": "transaction",
+      "text": "The workshop does not care about confidence. It cares about inputs. The chairs are watching.",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-031",
+      "context": "greeting",
+      "text": "Measure twice. Blame the recipe once. [31]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-032",
+      "context": "success",
+      "text": "A proper chair is built, not wished into existence. [32]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-033",
+      "context": "failure",
+      "text": "Perfect quality is earned. Mostly through suffering. [33]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-034",
+      "context": "warning",
+      "text": "Bring materials, bring a tool, and lower your expectations. [34]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-035",
+      "context": "idle",
+      "text": "The workshop does not care about confidence. It cares about inputs. [35]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-036",
+      "context": "transaction",
+      "text": "Measure twice. Blame the recipe once. Get on with it. [36]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-037",
+      "context": "greeting",
+      "text": "A proper chair is built, not wished into existence. Get on with it. [37]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-038",
+      "context": "success",
+      "text": "Perfect quality is earned. Mostly through suffering. Get on with it. [38]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-039",
+      "context": "failure",
+      "text": "Bring materials, bring a tool, and lower your expectations. Get on with it. [39]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-040",
+      "context": "warning",
+      "text": "The workshop does not care about confidence. It cares about inputs. Get on with it. [40]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-041",
+      "context": "idle",
+      "text": "Measure twice. Blame the recipe once. The paperwork agrees. [41]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-042",
+      "context": "transaction",
+      "text": "A proper chair is built, not wished into existence. The paperwork agrees. [42]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-043",
+      "context": "greeting",
+      "text": "Perfect quality is earned. Mostly through suffering. The paperwork agrees. [43]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-044",
+      "context": "success",
+      "text": "Bring materials, bring a tool, and lower your expectations. The paperwork agrees. [44]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-045",
+      "context": "failure",
+      "text": "The workshop does not care about confidence. It cares about inputs. The paperwork agrees. [45]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-046",
+      "context": "warning",
+      "text": "Measure twice. Blame the recipe once. Do not make me explain this twice. [46]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-047",
+      "context": "idle",
+      "text": "A proper chair is built, not wished into existence. Do not make me explain this twice. [47]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-048",
+      "context": "transaction",
+      "text": "Perfect quality is earned. Mostly through suffering. Do not make me explain this twice. [48]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-049",
+      "context": "greeting",
+      "text": "Bring materials, bring a tool, and lower your expectations. Do not make me explain this twice. [49]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-050",
+      "context": "success",
+      "text": "The workshop does not care about confidence. It cares about inputs. Do not make me explain this twice. [50]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-051",
+      "context": "failure",
+      "text": "Measure twice. Blame the recipe once. Surprisingly, this is still your best option. [51]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-052",
+      "context": "warning",
+      "text": "A proper chair is built, not wished into existence. Surprisingly, this is still your best option. [52]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-053",
+      "context": "idle",
+      "text": "Perfect quality is earned. Mostly through suffering. Surprisingly, this is still your best option. [53]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-054",
+      "context": "transaction",
+      "text": "Bring materials, bring a tool, and lower your expectations. Surprisingly, this is still your best option. [54]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-055",
+      "context": "greeting",
+      "text": "The workshop does not care about confidence. It cares about inputs. Surprisingly, this is still your best option. [55]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-056",
+      "context": "success",
+      "text": "Measure twice. Blame the recipe once. The chairs are watching. [56]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-057",
+      "context": "failure",
+      "text": "A proper chair is built, not wished into existence. The chairs are watching. [57]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-058",
+      "context": "warning",
+      "text": "Perfect quality is earned. Mostly through suffering. The chairs are watching. [58]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-059",
+      "context": "idle",
+      "text": "Bring materials, bring a tool, and lower your expectations. The chairs are watching. [59]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-060",
+      "context": "transaction",
+      "text": "The workshop does not care about confidence. It cares about inputs. The chairs are watching. [60]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-061",
+      "context": "greeting",
+      "text": "Measure twice. Blame the recipe once. [61]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-062",
+      "context": "success",
+      "text": "A proper chair is built, not wished into existence. [62]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-063",
+      "context": "failure",
+      "text": "Perfect quality is earned. Mostly through suffering. [63]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-064",
+      "context": "warning",
+      "text": "Bring materials, bring a tool, and lower your expectations. [64]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-065",
+      "context": "idle",
+      "text": "The workshop does not care about confidence. It cares about inputs. [65]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-066",
+      "context": "transaction",
+      "text": "Measure twice. Blame the recipe once. Get on with it. [66]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-067",
+      "context": "greeting",
+      "text": "A proper chair is built, not wished into existence. Get on with it. [67]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-068",
+      "context": "success",
+      "text": "Perfect quality is earned. Mostly through suffering. Get on with it. [68]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-069",
+      "context": "failure",
+      "text": "Bring materials, bring a tool, and lower your expectations. Get on with it. [69]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-070",
+      "context": "warning",
+      "text": "The workshop does not care about confidence. It cares about inputs. Get on with it. [70]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-071",
+      "context": "idle",
+      "text": "Measure twice. Blame the recipe once. The paperwork agrees. [71]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-072",
+      "context": "transaction",
+      "text": "A proper chair is built, not wished into existence. The paperwork agrees. [72]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-073",
+      "context": "greeting",
+      "text": "Perfect quality is earned. Mostly through suffering. The paperwork agrees. [73]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-074",
+      "context": "success",
+      "text": "Bring materials, bring a tool, and lower your expectations. The paperwork agrees. [74]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-075",
+      "context": "failure",
+      "text": "The workshop does not care about confidence. It cares about inputs. The paperwork agrees. [75]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-076",
+      "context": "warning",
+      "text": "Measure twice. Blame the recipe once. Do not make me explain this twice. [76]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-077",
+      "context": "idle",
+      "text": "A proper chair is built, not wished into existence. Do not make me explain this twice. [77]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-078",
+      "context": "transaction",
+      "text": "Perfect quality is earned. Mostly through suffering. Do not make me explain this twice. [78]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-079",
+      "context": "greeting",
+      "text": "Bring materials, bring a tool, and lower your expectations. Do not make me explain this twice. [79]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-080",
+      "context": "success",
+      "text": "The workshop does not care about confidence. It cares about inputs. Do not make me explain this twice. [80]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-081",
+      "context": "failure",
+      "text": "Measure twice. Blame the recipe once. Surprisingly, this is still your best option. [81]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-082",
+      "context": "warning",
+      "text": "A proper chair is built, not wished into existence. Surprisingly, this is still your best option. [82]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-083",
+      "context": "idle",
+      "text": "Perfect quality is earned. Mostly through suffering. Surprisingly, this is still your best option. [83]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-084",
+      "context": "transaction",
+      "text": "Bring materials, bring a tool, and lower your expectations. Surprisingly, this is still your best option. [84]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-085",
+      "context": "greeting",
+      "text": "The workshop does not care about confidence. It cares about inputs. Surprisingly, this is still your best option. [85]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-086",
+      "context": "success",
+      "text": "Measure twice. Blame the recipe once. The chairs are watching. [86]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-087",
+      "context": "failure",
+      "text": "A proper chair is built, not wished into existence. The chairs are watching. [87]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-088",
+      "context": "warning",
+      "text": "Perfect quality is earned. Mostly through suffering. The chairs are watching. [88]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-089",
+      "context": "idle",
+      "text": "Bring materials, bring a tool, and lower your expectations. The chairs are watching. [89]",
+      "enabled": true
+    },
+    {
+      "id": "NPC-CHAIRWRIGHT-090",
+      "context": "transaction",
+      "text": "The workshop does not care about confidence. It cares about inputs. The chairs are watching. [90]",
+      "enabled": true
+    }
+  ]
+}

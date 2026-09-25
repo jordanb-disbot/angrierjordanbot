@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "components": [
+    {
+      "id": "shell.standard",
+      "use": "Base dark emerald/gold card shell",
+      "asset_categories": [
+        "ui.frames",
+        "templates"
+      ]
+    },
+    {
+      "id": "shell.rage",
+      "use": "Red/black Angrier Jordan warning/arrest shell",
+      "asset_categories": [
+        "ui.states",
+        "ui.events"
+      ]
+    },
+    {
+      "id": "card.profile",
+      "use": "Member profile and records",
+      "functional": [
+        "avatar",
+        "name",
+        "stats",
+        "badges"
+      ],
+      "asset_categories": [
+        "templates",
+        "badges.special",
+        "badges.weekly"
+      ]
+    },
+    {
+      "id": "card.event_lobby",
+      "use": "Race/Fight/party/game waiting state",
+      "functional": [
+        "host",
+        "participants",
+        "timer",
+        "wagers"
+      ],
+      "asset_categories": [
+        "race_fight",
+        "templates"
+      ]
+    },
+    {
+      "id": "card.vote",
+      "use": "Generic voting state",
+      "functional": [
+        "prompt",
+        "choices",
+        "timer",
+        "eligibility"
+      ],
+      "asset_categories": [
+        "templates",
+        "ui"
+      ]
+    },
+    {
+      "id": "card.result",
+      "use": "Generic result state",
+      "functional": [
+        "winner",
+        "totals",
+        "percentages",
+        "settlement"
+      ],
+      "asset_categories": [
+        "templates",
+        "ui.events"
+      ]
+    },
+    {
+      "id": "card.economy",
+      "use": "Balance/shop/reward/transaction cards",
+      "functional": [
+        "wallet",
+        "bank",
+        "amount",
+        "item"
+      ],
+      "asset_categories": [
+        "economy",
+        "materials",
+        "tools"
+      ]
+    },
+    {
+      "id": "card.moderation",
+      "use": "Case/action/Hotseat cards",
+      "functional": [
+        "case_id",
+        "action",
+        "subject",
+        "duration",
+        "reason"
+      ],
+      "asset_categories": [
+        "crime_family",
+        "ui.states"
+      ]
+    },
+    {
+      "id": "card.leaderboard",
+      "use": "Weekly/records/community leaderboards",
+      "functional": [
+        "rank",
+        "avatar",
+        "name",
+        "metric"
+      ],
+      "asset_categories": [
+        "templates",
+        "badges.weekly"
+      ]
+    },
+    {
+      "id": "card.introduction",
+      "use": "Standardized member introduction",
+      "functional": [
+        "avatar",
+        "display_name",
+        "answers"
+      ],
+      "asset_categories": [
+        "templates",
+        "ui.frames"
+      ]
+    },
+    {
+      "id": "card.music_controller",
+      "use": "Persistent music controller",
+      "functional": [
+        "artwork",
+        "track",
+        "artist",
+        "progress",
+        "queue",
+        "volume"
+      ],
+      "asset_categories": [
+        "music_community",
+        "ui"
+      ]
+    },
+    {
+      "id": "card.confirmation",
+      "use": "High-impact confirmation",
+      "functional": [
+        "action",
+        "scope",
+        "actor"
+      ],
+      "asset_categories": [
+        "templates",
+        "ui.states"
+      ]
+    },
+    {
+      "id": "card.empty_error",
+      "use": "Empty/loading/error states",
+      "functional": [
+        "message",
+        "recovery_action"
+      ],
+      "asset_categories": [
+        "ui.states"
+      ]
+    }
+  ],
+  "rule": "New features must compose an existing shell/component before requesting a new visual template."
+}
