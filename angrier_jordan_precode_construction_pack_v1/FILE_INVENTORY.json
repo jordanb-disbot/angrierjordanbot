@@ -1,7 +1,7 @@
 {
   "checkpoint": 8,
   "updated_at": "2026-09-25",
-  "files": 695,
+  "files": 696,
   "inventory_self_hash_omitted": true,
   "items": [
     {
@@ -316,8 +316,13 @@
     },
     {
       "path": "docs/OWNER_DECISIONS_2026-09-25.md",
-      "bytes": 803,
-      "sha256": "124422109142def72d22c2068feaca15a5f2dce7498fb49aea46f5f73a55c13d"
+      "bytes": 1626,
+      "sha256": "e23f8e86a5ffeae92375fb23e7053af3e1ad44c5e4ac6748324c35b6e756763e"
+    },
+    {
+      "path": "docs/RAILWAY_AFTER_GATE_A.md",
+      "bytes": 1903,
+      "sha256": "5a6f3d74f23ee6f7c896242207b0695c24d9bab40ad7012b07989556707e2162"
     },
     {
       "path": "docs/TEST_HARNESS.md",
@@ -346,8 +351,8 @@
     },
     {
       "path": "IMPLEMENTATION_STATUS.json",
-      "bytes": 5031,
-      "sha256": "9778eac06e5c8ba83635ae060f81daf55e973b93b7d206146c165d4f2f9f8560"
+      "bytes": 5282,
+      "sha256": "4c5f238871a3aa0d7477f5519e9ccfc0981c5b49ed4496ca665a6bc968c0b7b5"
     },
     {
       "path": "infra/Dockerfile.bot",

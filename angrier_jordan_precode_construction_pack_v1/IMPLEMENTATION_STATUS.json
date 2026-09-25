@@ -106,7 +106,7 @@
   },
   "phase_12": {
     "race": "Domain, persisted repository, gated Discord adapter, production renderer, database acceptance and fixture runtime review renders implemented",
-    "fight": "Blocked on missing canonical approved move pool and full combat-system source; kept disabled",
+    "fight": "Awaiting owner-supplied approved move pool and combat specification confirmed omitted from workspace; kept disabled",
     "owner_policy": "NO_WINNING_BETS_REFUND: full source-aware refunds, no rake, normal result recorded",
     "review_gate_a": "NOT_READY",
     "remaining": [
@@ -114,5 +114,13 @@
       "Fight runtime, persistence, tests and review artifacts",
       "Live Discord acceptance"
     ]
-  }
+  },
+  "deferred_work": [
+    {
+      "id": "railway-production-readiness",
+      "status": "QUEUED_AFTER_REVIEW_GATE_A_APPROVAL",
+      "requirements": "docs/RAILWAY_AFTER_GATE_A.md",
+      "deployment_authorized": false
+    }
+  ]
 }
