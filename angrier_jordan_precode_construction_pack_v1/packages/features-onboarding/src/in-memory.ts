@@ -13,7 +13,7 @@ export class InMemoryOnboardingRepository implements OnboardingRepository {
   panel:SelfRolePanelDefinition|null=null;
   async ensureMember(g:string,u:string){this.members.add(key(g,u));if(!this.presences.has(key(g,u)))this.presences.set(key(g,u),{guildId:g,userId:u,needsRulesAck:true,pendingRoleRestore:false});}
   async getPresence(g:string,u:string){const x=this.presences.get(key(g,u));return x?clonePresence(x):null;}
-  async markJoined(g:string,u:string,now:Date){await this.ensureMember(g,u);const p=this.presences.get(key(g,u))!;Object.assign(p,{needsRulesAck:true,joinedAt:now});return clonePresence(p);}
+  async markJoined(g:string,u:string,now:Date){await this.ensureMember(g,u);const p=this.presences.get(key(g,u))!;Object.assign(p,{needsRulesAck:true,joinedAt:now});delete p.leftAt;return clonePresence(p);}
   async markLeft(input:{guildId:string;userId:string;nickname?:string;now:Date}){await this.ensureMember(input.guildId,input.userId);const p=this.presences.get(key(input.guildId,input.userId))!;p.leftAt=input.now;p.pendingRoleRestore=true;if(input.nickname!==undefined)p.nickname=input.nickname;return clonePresence(p);}
   async acknowledgeRules(g:string,u:string,now:Date){await this.ensureMember(g,u);const p=this.presences.get(key(g,u))!;p.needsRulesAck=false;p.rulesAcknowledgedAt=now;return clonePresence(p);}
   async setRoleSnapshots(g:string,u:string,roles:readonly RoleSnapshot[],now:Date){this.snapshots.set(key(g,u),roles.map(cloneRole));const p=this.presences.get(key(g,u));if(p)p.roleSnapshotCapturedAt=now;}

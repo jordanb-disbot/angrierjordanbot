@@ -1,4 +1,4 @@
-import { DomainError, TimerEngine, invariant, type Clock } from '../../core/src/index.js';
+import { DomainError, TimerEngine, VotingEngine, invariant, type Clock } from '../../core/src/index.js';
 import { renderWyrOpen, renderWyrResults } from './render.js';
 import { WYR_CATEGORIES, type WyrCategory, type WyrCategoryInput, type WyrChoice, type WyrResults, type WyrRuntimeSession } from './types.js';
 import type { WyrPromptRepository, WyrSessionRepository } from './repository.js';
@@ -15,6 +15,8 @@ export interface StartWyrInput {
   durationSeconds?:number;
   extensionSeconds?:number;
   enforceSinglePublicRound?:boolean;
+  excludedPromptId?:string;
+  messageId?:string;
 }
 
 export interface ClosedWyrRound { session:WyrRuntimeSession;results:WyrResults;svg:string; }
@@ -39,11 +41,11 @@ export class WyrService {
     }
     const category=this.resolveCategory(input.category);
     const recent=await this.prompts.recent(input.guildId,category,100);
-    const prompt=await this.prompts.pick(category,recent);
+    const prompt=await this.prompts.pick(category,recent,input.excludedPromptId?[input.excludedPromptId]:[]);
     const now=this.clock.now();
     const timer=TimerEngine.create(now,duration);
     const session:WyrRuntimeSession={
-      id:this.ids.next('wyr'),guildId:input.guildId,channelId:input.channelId,ownerUserId:input.ownerUserId,state:'OPEN',
+      id:this.ids.next('wyr'),guildId:input.guildId,channelId:input.channelId,ownerUserId:input.ownerUserId,state:'OPEN',...(input.messageId?{messageId:input.messageId}:{}),
       data:{promptId:prompt.id,category,question:prompt.text,optionA:prompt.optionA,optionB:prompt.optionB,durationSeconds:duration,extensionSeconds:extension},
       openedAt:now,expiresAt:timer.expiresAt,extensionUsed:false,votes:[],version:0,
     };
@@ -57,15 +59,15 @@ export class WyrService {
     return this.updateOpen(sessionId,s=>{
       invariant(this.clock.now()<s.expiresAt,'ROUND_EXPIRED','Voting has ended.');
       const now=this.clock.now();
-      const existing=s.votes.find(v=>v.userId===userId);
-      if(existing){existing.choice=choice;existing.updatedAt=now;}else{s.votes.push({userId,choice,updatedAt:now});}
+      const voting=this.voting(s);voting.cast(userId,choice,now);
+      s.votes=voting.snapshotForPersistence().map(v=>({userId:v.voterUserId,choice:v.choiceKey as WyrChoice,updatedAt:v.updatedAt}));
       return s;
     });
   }
 
   async extend(sessionId:string,actorUserId:string,isStaff=false):Promise<WyrRuntimeSession>{
     return this.updateOpen(sessionId,s=>{
-      invariant(actorUserId===s.ownerUserId||isStaff,'NOT_ALLOWED','Only the starter or staff may extend the round.');
+      invariant(actorUserId===s.ownerUserId,'NOT_ALLOWED','Only the host may extend the round.');
       invariant(s.data.extensionSeconds>0,'EXTENSION_DISABLED','This round does not allow an extension.');
       const t=TimerEngine.extendOnce({openedAt:s.openedAt,expiresAt:s.expiresAt,extensionUsed:s.extensionUsed},s.data.extensionSeconds,this.clock.now());
       s.expiresAt=t.expiresAt;s.extensionUsed=t.extensionUsed;return s;
@@ -78,19 +80,22 @@ export class WyrService {
       if(!current)throw new DomainError('SESSION_NOT_FOUND','WYR session not found.');
       if(current.state==='CLOSED')return this.closedView(current);
       invariant(current.state==='OPEN','ROUND_CLOSED','This WYR round is not open.');
+      invariant(this.clock.now()>=current.expiresAt,'NOT_DUE','Voting remains open.');
       const next=this.clone(current);next.state='CLOSED';next.version=current.version+1;
       if(await this.sessions.compareAndSwap(sessionId,current.version,next))return this.closedView(next);
     }
     throw new DomainError('SESSION_CONFLICT','WYR round changed concurrently. Retry the operation.');
   }
 
-  async replay(sourceSessionId:string,actorUserId:string):Promise<WyrRuntimeSession>{
+  async replay(sourceSessionId:string,actorUserId:string,messageId?:string):Promise<WyrRuntimeSession>{
     const source=await this.sessions.get(sourceSessionId);
     if(!source)throw new DomainError('SESSION_NOT_FOUND','WYR session not found.');
     invariant(source.state==='CLOSED','ROUND_NOT_COMPLETE','Play Again is available after results close.');
     return this.start({
       guildId:source.guildId,channelId:source.channelId,ownerUserId:actorUserId,category:source.data.category,
       durationSeconds:source.data.durationSeconds,extensionSeconds:source.data.extensionSeconds,enforceSinglePublicRound:true,
+      excludedPromptId:source.data.promptId,
+      ...(messageId?{messageId}:{}),
     });
   }
 
@@ -125,7 +130,7 @@ export class WyrService {
   }
 
   results(session:WyrRuntimeSession):WyrResults{
-    const A=session.votes.filter(v=>v.choice==='A').length;const B=session.votes.filter(v=>v.choice==='B').length;const total=A+B;
+    const counts=this.voting(session).results(),A=counts.A??0,B=counts.B??0,total=A+B;
     return {A,B,total,winner:total===0?'NONE':A===B?'TIE':A>B?'A':'B'};
   }
 
@@ -134,6 +139,8 @@ export class WyrService {
     const svg=renderWyrResults(session,results);
     return {session,results,svg};
   }
+
+  private voting(session:WyrRuntimeSession){const engine=new VotingEngine({anonymous:true,editable:true,hiddenUntilClose:true,eligibleChoices:['A','B']});for(const v of session.votes)engine.cast(v.userId,v.choice,v.updatedAt);return engine;}
 
   private resolveCategory(input:WyrCategoryInput):WyrCategory{
     if(input!=='Random')return input;

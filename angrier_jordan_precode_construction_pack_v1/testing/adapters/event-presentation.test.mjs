@@ -22,3 +22,9 @@ test('Fight combat frames keep a stable canvas while escaped names and approved 
  const racers=reviewMembers.slice(0,2).map((r,i)=>({...r,name:i?'Alex':'<script>& Jordan'}));
  for(const elapsed of [0,3000,12000,22000]){const svg=renderFight({...common,type:'fight',racers,combat:fightSnapshot(reviewPlans.fight,elapsed,racers)});assert.match(svg,/width="440" height="790"/);assert.doesNotMatch(svg,/<script>/);assert.match(svg,/&lt;script&gt;&amp;/);}
 });
+import {rasterizeSvg} from '../../dist/packages/renderer/src/raster.js';
+test('event typography uses bundled Space Grotesk and Inter rather than the retired event font pairing',async()=>{
+ const glyphs=family=>rasterizeSvg(`<svg xmlns="http://www.w3.org/2000/svg" width="440" height="80"><text x="10" y="55" font-family="${family}" font-size="36">Angrier Jordan 123</text></svg>`);
+ const [inter,space,poppins,cinzel]=await Promise.all(['Inter','Space Grotesk','Poppins','Cinzel'].map(glyphs));assert.notDeepEqual(inter,poppins);assert.notDeepEqual(space,cinzel);assert.notDeepEqual(space,inter);
+ const svg=renderFight({...common,type:'fight',racers:reviewMembers.slice(0,2),combat:fightSnapshot(reviewPlans.fight,12000,reviewMembers.slice(0,2))});assert.match(svg,/font-family="Inter"/);assert.match(svg,/font-family="Space Grotesk"/);assert.doesNotMatch(svg,/Poppins|Cinzel/);
+});

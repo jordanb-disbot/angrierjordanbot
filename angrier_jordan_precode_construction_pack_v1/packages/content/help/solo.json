@@ -1,0 +1,10 @@
+{
+  "id":"solo_games",
+  "classification":"guided",
+  "commands":["hangman","wordscramble","mastermind","minesweeper"],
+  "title":"Solo games",
+  "body":"Play in the configured games channel. Only the member who started a puzzle can control it. There is no entry fee. Wins earn a small configured Ottoman reward within a shared rolling 24-hour cap. Rounds expire at the shown time. Play Again creates a new puzzle and result, preserves valid board settings and never changes the previous result.",
+  "games":{"hangman":"Guess letters; six incorrect letters ends the round. Repeated guesses do not consume a turn.","wordscramble":"Unscramble the word in six guesses. Submit the whole word.","mastermind":"Find four digits from 1–6 in ten guesses. Repeated digits are allowed. Exact and misplaced feedback never reveals the hidden code.","minesweeper":"Reveal every safe cell. Choose size 4 for 4×4 with three mines, or size 5 for 5×5 with five mines. First reveal is safe. Toggle flags before revealing protected cells."},
+  "fields":{"size":"Optional Minesweeper board width: 4 or 5.","guess":"Enter the letter, word or code requested by the current game.","cell":"Enter the numbered cell shown on the board."},
+  "tutorial":{"lesson_id":"games.solo","steps":["Choose a solo game in the games channel.","Read Rules and the expiry time.","Use Guess, Reveal Cell or Toggle Flag.","View the saved result and bounded reward.","Choose Play Again for a fresh puzzle."]}
+}

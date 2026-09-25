@@ -1,6 +1,6 @@
 import {Prisma,type PrismaClient} from '@prisma/client';
 import {createHash} from 'node:crypto';
-import {DomainError,LedgerEngine,type LedgerRepository,type LedgerTransaction} from '../../core/src/index.js';
+import {DomainError,LedgerEngine,spendableWallet,type LedgerRepository,type LedgerTransaction} from '../../core/src/index.js';
 
 /** Ledger adapter bound to the caller's transaction: item/session changes and money commit together. */
 export class TransactionLedgerRepository implements LedgerRepository {
@@ -15,7 +15,11 @@ export class TransactionLedgerRepository implements LedgerRepository {
     for(const [userId,version] of [...versions].sort(([a],[b])=>a.localeCompare(b))){
       const delta=(bucket:string)=>input.lines.filter(l=>l.userId===userId&&l.bucket===bucket).reduce((n,l)=>n+l.amount,0n);
       const wallet=delta('wallet'),bank=delta('bank');
-      const result=await this.tx.economyAccount.updateMany({where:{guildId:input.guildId,userId,version,wallet:{gte:wallet<0n?-wallet:0n},bank:{gte:bank<0n?-bank:0n}},data:{wallet:{increment:wallet},bank:{increment:bank},version:{increment:1}}});
+      const account=await this.tx.economyAccount.findUnique({where:{guildId_userId:{guildId:input.guildId,userId}}});
+      if(!account||account.version!==version)throw new DomainError('LEDGER_CONFLICT','Balance changed; retry the operation.');
+      if(spendableWallet(account)+wallet<0n)throw new DomainError('WALLET_FUNDS_HELD','These wallet funds are reserved until the active transaction resolves.');
+      const reserved=account.reservedWallet??0n;
+      const result=await this.tx.economyAccount.updateMany({where:{guildId:input.guildId,userId,version,wallet:{gte:reserved+(wallet<0n?-wallet:0n)},bank:{gte:bank<0n?-bank:0n}},data:{wallet:{increment:wallet},bank:{increment:bank},version:{increment:1}}});
       if(result.count!==1)throw new DomainError('LEDGER_CONFLICT','Balance changed; retry the operation.');
     }
     await this.tx.ledgerEntry.createMany({data:input.lines.map(l=>({guildId:input.guildId,transactionId:header.id,userId:l.userId??null,bucket:l.bucket,amount:l.amount,reason:l.reason,metadata:l.metadata?JSON.parse(JSON.stringify(l.metadata)):Prisma.JsonNull}))});

@@ -23,8 +23,16 @@ export function earnedAchievements(rules:AchievementRule[],metrics:Record<string
 
 /** Mountain-time 4 AM boundaries match the shared economy calendar, including DST. */
 export const recordMonth=(at:Date)=>dailyCycle(at).key.slice(0,7);
-export function compareRecord(value:bigint,previous:{value:string;achievedAt:string}|null,at:Date){
+export function recordDirection(key:string):'min'|'max'{
+ return /^solo\.(?:wordscramble|minesweeper\.[45])\.fastest_ms$/.test(key)||key==='solo.mastermind.fewest_guesses'?'min':'max';
+}
+export function fmkSummary(rows:readonly {gameKey:string;plays:number;metadata:unknown}[]){
+ const chooser=rows.find(row=>row.gameKey==='fmk'),subject=rows.find(row=>row.gameKey==='fmk_subject');
+ const value=(row:typeof chooser,key:string)=>{const metadata=row?.metadata;if(!metadata||typeof metadata!=='object'||Array.isArray(metadata))return 0;const n=(metadata as Record<string,unknown>)[key];return typeof n==='number'&&Number.isFinite(n)?Math.max(0,n):0;};
+ return{played:chooser?.plays??0,fucked:value(subject,'fucked'),married:value(subject,'married'),killed:value(subject,'killed'),agreementRounds:value(chooser,'agreementRounds'),averageAgreement:value(chooser,'averageAgreement'),highestAgreement:value(chooser,'highestAgreement'),lowestAgreement:value(chooser,'lowestAgreement')};
+}
+export function compareRecord(value:bigint,previous:{value:string;achievedAt:string}|null,at:Date,direction:'min'|'max'='max'){
  if(value<0n)throw new Error('Record values must be nonnegative.');
- if(previous&&value<=BigInt(previous.value))return null;
+ if(previous&&(direction==='min'?value>=BigInt(previous.value):value<=BigInt(previous.value)))return null;
  return{oldValue:previous?.value??'0',newValue:value.toString(),heldMs:previous?Math.max(0,at.getTime()-new Date(previous.achievedAt).getTime()):0,achievedAt:at.toISOString()};
 }

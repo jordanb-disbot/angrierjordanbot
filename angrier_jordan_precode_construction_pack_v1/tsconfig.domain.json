@@ -18,7 +18,14 @@
     "apps/bot/src/features/**/*.ts",
     "packages/features-profiles/src/**/*.ts",
     "packages/features-casino/src/**/*.ts",
-    "packages/features-events/src/**/*.ts"
+    "packages/features-events/src/**/*.ts",
+    "packages/features-special/src/**/*.ts",
+    "packages/features-solo/src/**/*.ts",
+    "packages/features-dashboard/src/**/*.ts",
+    "packages/features-pvp/src/**/*.ts",
+    "packages/features-party/src/**/*.ts",
+    "packages/features-channel-games/src/**/*.ts",
+    "packages/features-crime/src/**/*.ts"
   ],
   "exclude": [
     "apps/bot/src/discord/**/*.ts",

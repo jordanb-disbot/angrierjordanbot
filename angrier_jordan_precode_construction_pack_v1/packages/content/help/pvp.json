@@ -1,0 +1,10 @@
+{
+  "id":"skill_games",
+  "classification":"guided",
+  "commands":["tictactoe","connectfour","battleship"],
+  "title":"Skill games",
+  "body":"Use /game in the configured games channel. Challenge another eligible member for free or an optional matching Ottoman wager. The opponent has two minutes to accept. Both stakes enter escrow only upon acceptance. Turns have five-minute deadlines; a timeout forfeits. The winner receives the full pot without rake; draws refund both stakes. One active skill-game challenge or match per member. Play Again creates a fresh challenge requiring consent again.",
+  "games":{"tictactoe":"Alternate placing X and O. Three in a row wins; a full board without a winner is a draw.","connectfour":"Choose a column to drop a piece. Four in a row wins; a full board without a winner is a draw.","battleship":"Place ships of length 5, 4, 3, 3 and 2 on a 10×10 board. Fleets remain private. Use Your Board to place ships or fire. Turns alternate after every shot. Sink the opposing fleet to win."},
+  "fields":{"member":"The other member, who must accept before play or escrow begins.","wager":"Optional amount each member stakes. Omit for a free match."},
+  "tutorial":{"lesson_id":"games.pvp","steps":["Choose a game and another member in the games channel.","Read the proposed stakes before accepting.","Use the board on your turn; Battleship uses private controls.","Confirm Forfeit Match only if you intend to concede.","Review the saved result. Play Again requires new acceptance."]}
+}

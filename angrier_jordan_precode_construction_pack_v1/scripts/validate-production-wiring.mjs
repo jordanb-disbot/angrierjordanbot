@@ -166,7 +166,7 @@ for (const requiredFragment of [
 const economyServiceSource = fs.readFileSync(new URL('packages/features-economy/src/service.ts', root), 'utf8');
 for (const requiredFragment of [
   'starterAmount',
-  'wallet+source.bank',
+  'spendableWallet(source)+source.bank',
   'dailyCycle',
   "'America/Denver'",
   'applyTier5Interest',

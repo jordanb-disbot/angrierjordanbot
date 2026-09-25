@@ -1,6 +1,6 @@
 import {Prisma,type PrismaClient} from '@prisma/client';
 import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atomic-operations.js';
-import {DomainError} from '../../core/src/index.js';
+import {DomainError,spendableWallet} from '../../core/src/index.js';
 import type {ItemContext,ItemMember,ItemOutcome,ItemRepository,ItemState,ItemUnit} from './items-types.js';
 const object=(value:unknown)=>value&&typeof value==='object'&&!Array.isArray(value)?value as Record<string,unknown>:{};
 
@@ -10,7 +10,7 @@ async function load(db:Prisma.TransactionClient,guildId:string,userIds:string[])
   db.catalogItem.findMany(),db.recipe.findMany(),db.collectionSet.findMany({where:{enabled:true}}),db.economyAccount.findMany({where}),db.inventoryEntry.findMany({where}),db.toolInstance.findMany({where}),db.craftedChair.findMany({where}),db.ownedRecipe.findMany({where}),db.collectionDiscovery.findMany({where}),db.inventoryCategoryLock.findMany({where}),db.pityCounter.findMany({where}),db.craftingProgress.findMany({where}),db.memberAchievement.findMany({where})
  ]);
  return{guildId,catalog:catalog.map(i=>({id:i.id,type:i.type,name:i.name,rarity:i.rarity,giftable:i.giftable,enabled:i.enabled,...(i.buyPrice===null?{}:{buyPrice:i.buyPrice}),...(i.sellValue===null?{}:{sellValue:i.sellValue}),metadata:object(i.metadata)})),recipes:recipes.map(r=>{const config=object(r.successConfig);return{id:r.id,name:r.name,outputItemId:r.outputItemId,inputs:object(r.inputs) as Record<string,number>,success:Number(config.success??.7),enabled:r.enabled,...(typeof config.chairInput==='string'?{chairInput:config.chairInput}:{})};}),collections,
- members:userIds.map(userId=>{const a=accounts.find(a=>a.userId===userId);return{userId,wallet:a?.wallet??0n,bank:a?.bank??0n,stacks:stacks.filter(s=>s.userId===userId),tools:tools.filter(t=>t.userId===userId).map(t=>({...t,metadata:object(t.metadata)})),chairs:chairs.filter(c=>c.userId===userId),recipes:owned.filter(r=>r.userId===userId).map(r=>r.recipeId),discoveries:[...new Set([...discoveries.filter(d=>d.userId===userId).map(d=>d.itemId),...stacks.filter(s=>s.userId===userId&&s.quantity>0).map(s=>s.itemId),...tools.filter(t=>t.userId===userId).map(t=>t.catalogItemId),...chairs.filter(c=>c.userId===userId).map(c=>c.chairType)])],categoryLocks:locks.filter(l=>l.userId===userId).map(l=>l.category),pity:Object.fromEntries(pity.filter(p=>p.userId===userId).map(p=>[p.poolKey,p.count])),progress:progress.find(p=>p.userId===userId)??{rank:'Apprentice',skillPoints:0,attempts:0,successes:0},achievements:achievements.filter(a=>a.userId===userId).map(a=>a.achievementId)};})};
+ members:userIds.map(userId=>{const a=accounts.find(a=>a.userId===userId);return{userId,wallet:a?.wallet??0n,reservedWallet:a?.reservedWallet??0n,bank:a?.bank??0n,stacks:stacks.filter(s=>s.userId===userId),tools:tools.filter(t=>t.userId===userId).map(t=>({...t,metadata:object(t.metadata)})),chairs:chairs.filter(c=>c.userId===userId),recipes:owned.filter(r=>r.userId===userId).map(r=>r.recipeId),discoveries:[...new Set([...discoveries.filter(d=>d.userId===userId).map(d=>d.itemId),...stacks.filter(s=>s.userId===userId&&s.quantity>0).map(s=>s.itemId),...tools.filter(t=>t.userId===userId).map(t=>t.catalogItemId),...chairs.filter(c=>c.userId===userId).map(c=>c.chairType)])],categoryLocks:locks.filter(l=>l.userId===userId).map(l=>l.category),pity:Object.fromEntries(pity.filter(p=>p.userId===userId).map(p=>[p.poolKey,p.count])),progress:progress.find(p=>p.userId===userId)??{rank:'Apprentice',skillPoints:0,attempts:0,successes:0},achievements:achievements.filter(a=>a.userId===userId).map(a=>a.achievementId)};})};
 }
 async function save(tx:Prisma.TransactionClient,guildId:string,m:ItemMember){
  const userId=m.userId,where={guildId,userId};
@@ -38,8 +38,8 @@ export class PrismaItemRepository implements ItemRepository {
    const state=await load(tx,c.guildId,userIds);let ordinal=0;const gifts:{senderId:string;recipientId:string;itemId:string;quantity:number}[]=[];
    const move=async(userId:string,amount:bigint,reason:string)=>{
     const m=state.members.find(m=>m.userId===userId)!;
-    if(amount<0n&&m.wallet+m.bank < -amount)throw new DomainError('INSUFFICIENT_FUNDS','You do not have enough Ottomans.');
-    const wallet=amount>=0n?amount:m.wallet>=-amount?amount:-m.wallet,bank=amount-wallet;
+    if(amount<0n&&spendableWallet(m)+m.bank < -amount)throw new DomainError('INSUFFICIENT_FUNDS','You do not have enough Ottomans.');
+    const wallet=amount>=0n?amount:spendableWallet(m)>=-amount?amount:-spendableWallet(m),bank=amount-wallet;
     await ledger.apply({guildId:c.guildId,idempotencyKey:`items:${c.guildId}:${c.requestKey}:${ordinal++}`,lines:[{userId,bucket:'wallet',amount:wallet,reason},...(bank?[{userId,bucket:'bank' as const,amount:bank,reason}]:[]),{bucket:'system',amount:-amount,reason}]});m.wallet+=wallet;m.bank+=bank;
    };
    const result=await operation({state,spend:(u,n,r)=>move(u,-n,r),reward:move,gift:(senderId,recipientId,itemId,quantity)=>gifts.push({senderId,recipientId,itemId,quantity})});

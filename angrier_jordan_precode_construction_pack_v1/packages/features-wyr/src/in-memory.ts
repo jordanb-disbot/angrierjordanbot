@@ -13,8 +13,8 @@ const cloneSession=(s:WyrRuntimeSession):WyrRuntimeSession=>({
 export class InMemoryWyrPromptRepository implements WyrPromptRepository {
   private readonly history:{guildId:string;promptId:string;category:WyrCategory;usedAt:number}[]=[];
   constructor(private readonly prompts:readonly WyrPrompt[]){}
-  async pick(category:WyrCategory,excludedIds:readonly string[]):Promise<WyrPrompt>{
-    const enabled=this.prompts.filter(p=>p.enabled&&p.category===category);
+  async pick(category:WyrCategory,excludedIds:readonly string[],requiredExclusions:readonly string[]=[]):Promise<WyrPrompt>{
+    const enabled=this.prompts.filter(p=>p.enabled&&p.category===category&&!requiredExclusions.includes(p.id));
     if(enabled.length===0)throw new DomainError('NO_WYR_PROMPTS',`No enabled WYR prompts exist for ${category}.`);
     const excluded=new Set(excludedIds);
     return enabled.find(p=>!excluded.has(p.id)) ?? enabled[0]!;

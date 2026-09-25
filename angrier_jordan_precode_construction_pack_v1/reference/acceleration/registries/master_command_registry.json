@@ -4333,7 +4333,7 @@
           "name": "duration",
           "type": "string",
           "required": true,
-          "description": "5m\u201330d or indefinite."
+          "description": "5m–30d or indefinite."
         },
         {
           "name": "reason",
@@ -5310,7 +5310,16 @@
       "channels": [
         "games_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "size",
+          "type": "integer",
+          "required": false,
+          "description": "Board width: 4 for a 4×4 board, or 5 for a 5×5 board.",
+          "min": 4,
+          "max": 5
+        }
+      ],
       "handler": "solo_games.minesweeper",
       "feature_flag": "solo_games",
       "ephemeral_default": false,

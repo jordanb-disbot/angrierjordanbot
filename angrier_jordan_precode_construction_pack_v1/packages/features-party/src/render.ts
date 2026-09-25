@@ -1,0 +1,20 @@
+import {shell,heading,panel,text,ink,lines} from '../../features-events/src/visual.js';
+import type {PartyGame} from './domain.js';
+import type {PartyView} from './prisma-repository.js';
+export const PARTY_TITLES:Record<PartyGame,string>={truthordare:'Truth or Dare',wwyd:'What Would You Do',finishsentence:'Finish the Sentence',onewordstory:'One Word Story',fmk:'Fuck, Marry, Kill'};
+export function partyTranscript(v:PartyView){const out=[PARTY_TITLES[v.game],v.prompt??''];if(v.target)out.push('Target: '+v.target.name);if(v.answer)out.push(v.target?.name+': '+v.answer);if(v.skipped)out.push('Skipped by the target.');if(v.words.length)out.push(v.words.map(w=>w.word).join(' '),'Contributions:',...v.words.map((w,n)=>`${n+1}. ${w.name}: ${w.word}`));if(v.phase!=='submissions')out.push(...Object.entries(v.submissions).map(([id,s])=>`${s.name} (${id}): ${s.text}`));if(v.assignments)for(const[key,id]of Object.entries(v.assignments)){const name=v.trio?.find(m=>m.userId===id)?.name??'Member',counts=v.subjectCounters?.[id];out.push(`${key.toUpperCase()}: ${name} · Fucked ${counts?.fucked??0} · Married ${counts?.married??0} · Killed ${counts?.killed??0}`);}if(v.result){out.push(v.result.label);for(const o of v.options)out.push(`${o.text}: ${v.result.totals[o.id]??0} (${v.result.percentages[o.id]??0}%)`);}return out.filter(Boolean).join('\n');}
+/** Approved lounge materials and typography; every answer/count comes from the public projection. */
+export function renderParty(v:PartyView){let body=heading('ANGRIER JORDAN · PARTY',PARTY_TITLES[v.game],v.state==='CLOSED'?'The round is complete':v.phase==='runoff'?'Voting · 30-second runoff':v.phase==='vote'?'Voting · totals hidden until close':'The lounge is making a little history');body+=panel(18,137,404,472);let y=167,clipped=false;
+ const add=(value:string,color=ink.white,size=17)=>{for(const line of lines(value,40)){if(y>573){clipped=true;return;}body+=text(32,y,line,size,color);y+=25;}y+=10;};
+ if(v.state==='DRAFT')add('Private choices belong to the chooser.');else{
+ if(v.prompt)add(v.prompt,ink.warm,19);if(v.target)add('Target: '+v.target.name,ink.emerald);
+ if(v.game==='truthordare')add(v.skipped?'Skipped by the target.':v.answer??(v.phase==='choose'?'Truth, Dare, or Skip?':'The target can answer using the button below.'));
+ if(v.game==='finishsentence'&&v.phase==='choose')add('Host: choose Random Prompt or Write My Own.');
+ if(v.phase==='submissions')add(`${v.submissionCount} submissions saved. Answers stay private until submissions close.`);
+ if(v.words.length)add(v.words.map(w=>w.word).join(' '));if(v.game==='onewordstory')add(`${v.words.length} / ${v.targetLength} words · one word each turn`,ink.emerald,16);
+ if(v.assignments){for(const[key,id]of Object.entries(v.assignments)){add(`${key.toUpperCase()} · ${v.trio?.find(m=>m.userId===id)?.name??'Member'}`,ink.warm,19);const c=v.subjectCounters?.[id];add(`Fucked ${c?.fucked??0} · Married ${c?.married??0} · Killed ${c?.killed??0}`,ink.muted,13);}if(v.result)for(const o of v.options)add(`${o.text}: ${v.result.totals[o.id]??0} (${v.result.percentages[o.id]??0}%)`,ink.emerald,15);}
+ else if(['vote','runoff','done'].includes(v.phase))for(const o of v.options.slice(0,5)){add(o.text,ink.white,16);if(v.result)add(`${v.result.totals[o.id]??0} votes · ${v.result.percentages[o.id]??0}%`,ink.emerald,14);}
+ if(clipped||v.answer&&v.answer.length>500||v.options.length>5||v.words.length>35)body+=text(32,592,'Full text and choices: use Details below.',12,ink.muted);
+ }
+ body+=panel(18,628,404,98,ink.gold);const footer=v.result?.label??(v.phase==='submissions'?'Submit once · revise until close':v.phase==='vote'||v.phase==='runoff'?v.game==='fmk'?'Do you agree with this FMK?':'One vote · change until close':v.game==='onewordstory'?'Let another member follow your word.':'Use the controls below.');for(const[n,line]of lines(footer,44).slice(0,2).entries())body+=text(32,657+n*23,line,15,ink.warm);body+=text(32,710,v.result?.winnerId?'Winner recorded · no Ottomans':v.state==='CLOSED'?'Play Again starts a fresh round.':'Named contributions · anonymous ballots',12,ink.muted);return shell(746,body);
+}

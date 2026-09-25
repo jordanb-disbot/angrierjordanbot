@@ -41,6 +41,10 @@ test('Phase 10 PostgreSQL privacy, records and Spotlight recovery',async t=>{
    const p=await repo.profile('profiles','a',new Date('2026-10-06T12:00:00Z'));assert.ok(p.state.tripleThreatAt);assert.equal(p.spotlight.length,0);
    await assert.rejects(()=>repo.showcase('profiles','a',['not-earned'],undefined),{code:'SHOWCASE_OWNERSHIP'});
   });
+  await t.test('overall wins count individual games without double-counting category aggregates',async()=>{
+   for(const [gameKey,wins] of [['tictactoe',2],['connectfour',1],['skill_games',3],['wwyd',4],['party_games',4]])await db.memberGameStats.create({data:{guildId:'profiles',userId:'a',gameKey,wins}});
+   assert.equal((await repo.leaderboard('profiles','wins')).find(row=>row.userId==='a').value,7);
+  });
   await t.test('record improvements serialize, preserve exact integers and separate monthly periods',async()=>{
    await Promise.all([repo.record('profiles','a','casino.biggest_win',9007199254740993n,'record-a',at),repo.record('profiles','b','casino.biggest_win',9007199254740994n,'record-b',at)]);
    assert.equal((await repo.records('profiles','alltime',at))[0].value.amount,'9007199254740994');assert.equal((await repo.records('profiles','monthly',new Date('2026-10-01T10:00:00Z'))).length,0);

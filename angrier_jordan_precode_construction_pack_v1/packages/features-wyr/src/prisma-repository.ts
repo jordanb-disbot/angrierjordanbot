@@ -9,8 +9,9 @@ interface SessionRow { id:string;guildId:string;channelId:string;ownerUserId:str
 interface UpdateManyResult { count:number; }
 
 interface PrismaTxLike {
-  gameSession:{updateMany(args:unknown):Promise<UpdateManyResult>};
+  gameSession:{create(args:unknown):Promise<unknown>;updateMany(args:unknown):Promise<UpdateManyResult>};
   vote:{upsert(args:unknown):Promise<unknown>};
+  scheduledJob:{create(args:unknown):Promise<unknown>;updateMany(args:unknown):Promise<UpdateManyResult>};
 }
 export interface WyrPrismaLike extends PrismaTxLike {
   contentEntry:{findMany(args:unknown):Promise<ContentRow[]>;update(args:unknown):Promise<unknown>};
@@ -30,10 +31,10 @@ const asString=(value:unknown,key:string):string=>{if(typeof value!=='string'||v
 
 export class PrismaWyrPromptRepository implements WyrPromptRepository {
   constructor(private readonly db:WyrPrismaLike,private readonly random:()=>number=()=>Math.random()){}
-  async pick(category:WyrCategory,excludedIds:readonly string[]):Promise<WyrPrompt>{
+  async pick(category:WyrCategory,excludedIds:readonly string[],requiredExclusions:readonly string[]=[]):Promise<WyrPrompt>{
     const base={game:'wyr',category,enabled:true};
-    let rows=await this.db.contentEntry.findMany({where:{...base,...(excludedIds.length?{id:{notIn:[...excludedIds]}}:{})},orderBy:{id:'asc'}});
-    if(rows.length===0&&excludedIds.length)rows=await this.db.contentEntry.findMany({where:base,orderBy:{id:'asc'}});
+    let rows=await this.db.contentEntry.findMany({where:{...base,id:{notIn:[...excludedIds,...requiredExclusions]}},orderBy:{id:'asc'}});
+    if(rows.length===0&&excludedIds.length)rows=await this.db.contentEntry.findMany({where:{...base,...(requiredExclusions.length?{id:{notIn:[...requiredExclusions]}}:{})},orderBy:{id:'asc'}});
     if(rows.length===0)throw new DomainError('NO_WYR_PROMPTS',`No enabled WYR prompts exist for ${category}.`);
     const raw=this.random();const index=Math.floor(Math.max(0,Math.min(0.999999999,Number.isFinite(raw)?raw:0))*rows.length);
     const row=rows[index]!;const payload=asObject(row.payload);
@@ -52,19 +53,20 @@ export class PrismaWyrPromptRepository implements WyrPromptRepository {
 export class PrismaWyrSessionRepository implements WyrSessionRepository {
   constructor(private readonly db:WyrPrismaLike){}
   async create(session:WyrRuntimeSession):Promise<void>{
-    await this.db.gameSession.create({data:{
+    await this.db.$transaction(async tx=>{await tx.gameSession.create({data:{
       id:session.id,guildId:session.guildId,type:'wyr',channelId:session.channelId,ownerUserId:session.ownerUserId,...(session.messageId===undefined?{}:{messageId:session.messageId}),state:session.state,
       data:{...session.data,openedAt:session.openedAt.toISOString()},expiresAt:session.expiresAt,extensionUsed:session.extensionUsed,version:session.version,
-    }});
+    }});await tx.scheduledJob.create({data:{guildId:session.guildId,jobType:'wyr.close',executionKey:'wyr:close:'+session.id,dueAt:session.expiresAt,payload:{guildId:session.guildId,sessionId:session.id}}});await tx.scheduledJob.create({data:{guildId:session.guildId,jobType:'wyr.publish',executionKey:'wyr:publish:'+session.id,dueAt:session.openedAt,payload:{guildId:session.guildId,channelId:session.channelId,sessionId:session.id,deliveryState:'PENDING'}}});});
   }
   async get(id:string):Promise<WyrRuntimeSession|null>{
-    const row=await this.db.gameSession.findUnique({where:{id},include:{votes:{where:{questionKey:'main'},orderBy:{updatedAt:'asc'}}}});
+    const row=await this.db.gameSession.findUnique({where:{id,type:'wyr'},include:{votes:{where:{questionKey:'main'},orderBy:{updatedAt:'asc'}}}});
     return row?this.map(row):null;
   }
   async compareAndSwap(id:string,expectedVersion:number,next:WyrRuntimeSession):Promise<boolean>{
     return this.db.$transaction(async tx=>{
       const updated=await tx.gameSession.updateMany({where:{id,version:expectedVersion},data:{state:next.state,data:{...next.data,openedAt:next.openedAt.toISOString()},expiresAt:next.expiresAt,extensionUsed:next.extensionUsed,version:next.version}});
       if(updated.count!==1)return false;
+      if(next.state==='OPEN')await tx.scheduledJob.updateMany({where:{executionKey:'wyr:close:'+id},data:{dueAt:next.expiresAt}});
       for(const vote of next.votes){
         await tx.vote.upsert({where:{sessionId_voterUserId_questionKey:{sessionId:id,voterUserId:vote.userId,questionKey:'main'}},create:{sessionId:id,voterUserId:vote.userId,questionKey:'main',choiceKey:vote.choice,anonymous:true,updatedAt:vote.updatedAt},update:{choiceKey:vote.choice,anonymous:true,updatedAt:vote.updatedAt}});
       }

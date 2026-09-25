@@ -1,1 +1,5 @@
-export default function RootLayout({children}:{children:React.ReactNode}){return <html><body style={{margin:0,background:'#102225',color:'#f4f0e6',fontFamily:'system-ui'}}>{children}</body></html>}
+import './globals.css';
+export const metadata = { title: 'Angrier Jordan · Control Center', robots: { index: false, follow: false } };
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <html lang="en"><body>{children}</body></html>;
+}

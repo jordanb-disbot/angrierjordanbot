@@ -1,0 +1,6 @@
+import {readFileSync} from 'node:fs';
+import {Prisma,type PrismaClient} from '@prisma/client';
+interface Authored {id:string;category:string;intensity?:number;text?:string;scenario?:string;option_a?:string;option_b?:string;options?:{id:string;text:string}[];tags?:string[];enabled:boolean;content_version:number;}
+const sources=[['truth','truth_1500.json'],['dare','dare_1200.json'],['wwyd','wwyd_1500.json'],['finishsentence','finish_sentence_500.json'],['wyr','wyr_continuation_WYR-0461_to_2000.json']] as const;
+/** Seed only missing authored entries; dashboard disablements and edits remain authoritative. */
+export async function seedPartyContent(db:PrismaClient){for(const[game,file]of sources){const rows=JSON.parse(readFileSync(new URL('../content/'+file,import.meta.url),'utf8')) as Authored[];for(let offset=0;offset<rows.length;offset+=250)await db.contentEntry.createMany({data:rows.slice(offset,offset+250).map(row=>({id:row.id,game,category:row.category,intensity:row.intensity??1,payload:{text:row.text??row.scenario,...(row.options?{options:row.options}:{}),...(game==='wyr'?{optionA:row.option_a,optionB:row.option_b}:{})} as Prisma.InputJsonObject,tags:row.tags??[],enabled:row.enabled,contentVersion:row.content_version})),skipDuplicates:true});}}

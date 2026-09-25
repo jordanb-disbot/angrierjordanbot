@@ -1,0 +1,8 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+const dir=new URL('../docs/approved_visuals/locked-2026-09-25/',import.meta.url);
+const manifest=JSON.parse(fs.readFileSync(new URL('manifest.json',dir),'utf8'));
+for(const entry of manifest.files){if(createHash('sha256').update(fs.readFileSync(new URL(entry.file,dir))).digest('hex')!==entry.sha256)throw new Error('Approved visual reference changed: '+entry.file);}
+const theme=JSON.parse(fs.readFileSync(new URL('../production/theme/brand.json',import.meta.url),'utf8'));
+if(theme.typography.heading!=='Space Grotesk'||theme.typography.body!=='Inter')throw new Error('Approved typography changed');
+console.log('Approved visual reference lock PASS: '+manifest.files.length+' immutable files.');

@@ -3,7 +3,7 @@ export type DailyAction='daily'|'spin'|'fortune';
 export type GrindActivity='work'|'fish'|'dig'|'scavenge';
 export type ActivityOutcome='win'|'zero'|'loss'|'fine'|'item'|'mixed'|'tool_damage';
 
-export interface EconomyAccountRecord {guildId:string;userId:string;wallet:bigint;bank:bigint;bankTier:number;version:number;starterGrantedAt?:Date;}
+export interface EconomyAccountRecord {guildId:string;userId:string;wallet:bigint;reservedWallet?:bigint;bank:bigint;bankTier:number;version:number;starterGrantedAt?:Date;}
 export interface EconomyTransactionRecord {id:string;guildId:string;idempotencyKey:string;kind:string;reason:string;metadata?:Record<string,unknown>;createdAt:Date;}
 export interface EconomyLedgerEntryRecord {id:string;guildId:string;transactionId:string;userId?:string;bucket:EconomyBucket|'system';amount:bigint;reason:string;metadata?:Record<string,unknown>;createdAt:Date;}
 export interface MemberClaimStateRecord {guildId:string;userId:string;dailyLastClaimAt?:Date;dailyStreak:number;weeklyLastClaimAt?:Date;dailySpinLastAt?:Date;fortuneLastAt?:Date;updatedAt:Date;}

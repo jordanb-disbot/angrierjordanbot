@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "test_count": 75,
+  "test_count": 79,
   "tests": [
     {
       "id": "T001",
@@ -1559,6 +1559,106 @@
         "One announcement per frozen result",
         "Monthly records reset logically, all-time retained",
         "Unauthorized showcase edits rejected"
+      ]
+    },
+    {
+      "id": "T076",
+      "module": "special",
+      "name": "Line persistent check-ins, timers, delivery and restart",
+      "kind": "integration",
+      "priority": "P0",
+      "automated_files": [
+        "testing/postgres/special.test.mjs",
+        "testing/adapters/special.test.mjs"
+      ],
+      "preconditions": [
+        "Dedicated disposable test database where required",
+        "Production feature flags remain off"
+      ],
+      "steps": [
+        "Run linked targeted suites",
+        "Run combined regression before release",
+        "Execute corresponding live Discord checklist when authorized"
+      ],
+      "expected": [
+        "No duplicate financial effects or private state exposure",
+        "Persisted state recovers after restart",
+        "Live acceptance is recorded separately"
+      ]
+    },
+    {
+      "id": "T077",
+      "module": "solo",
+      "name": "Private puzzle state, concurrent controls, capped reward and recovery",
+      "kind": "integration",
+      "priority": "P0",
+      "automated_files": [
+        "testing/postgres/solo.test.mjs",
+        "testing/runtime/solo.test.mjs"
+      ],
+      "preconditions": [
+        "Dedicated disposable test database where required",
+        "Production feature flags remain off"
+      ],
+      "steps": [
+        "Run linked targeted suites",
+        "Run combined regression before release",
+        "Execute corresponding live Discord checklist when authorized"
+      ],
+      "expected": [
+        "No duplicate financial effects or private state exposure",
+        "Persisted state recovers after restart",
+        "Live acceptance is recorded separately"
+      ]
+    },
+    {
+      "id": "T078",
+      "module": "pvp",
+      "name": "Consent, atomic escrow, privacy and exactly-once settlement",
+      "kind": "integration",
+      "priority": "P0",
+      "automated_files": [
+        "testing/postgres/pvp.test.mjs",
+        "testing/adapters/pvp.test.mjs"
+      ],
+      "preconditions": [
+        "Dedicated disposable test database where required",
+        "Production feature flags remain off"
+      ],
+      "steps": [
+        "Run linked targeted suites",
+        "Run combined regression before release",
+        "Execute corresponding live Discord checklist when authorized"
+      ],
+      "expected": [
+        "No duplicate financial effects or private state exposure",
+        "Persisted state recovers after restart",
+        "Live acceptance is recorded separately"
+      ]
+    },
+    {
+      "id": "T079",
+      "module": "dashboard",
+      "name": "OAuth authorization, shared draft locks, atomic publish/audit and rollback",
+      "kind": "integration",
+      "priority": "P0",
+      "automated_files": [
+        "testing/adapters/dashboard-security.test.mjs",
+        "testing/postgres/dashboard.test.mjs"
+      ],
+      "preconditions": [
+        "Dedicated disposable test database where required",
+        "Production feature flags remain off"
+      ],
+      "steps": [
+        "Run linked targeted suites",
+        "Run combined regression before release",
+        "Execute corresponding live Discord checklist when authorized"
+      ],
+      "expected": [
+        "No duplicate financial effects or private state exposure",
+        "Persisted state recovers after restart",
+        "Live acceptance is recorded separately"
       ]
     }
   ]

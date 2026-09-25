@@ -1,0 +1,20 @@
+{
+  "!line": [
+    "The Chairs are gathering. Check in when you’re ready.",
+    "One community. One countdown. Chairs, gather around.",
+    "The lounge is open. Who’s in for Line Time?",
+    "Your chair is waiting. Let’s get the room together."
+  ],
+  "!vc": [
+    "Chairs, pull up a seat in voice chat.",
+    "The lounge could use a few voices. Anyone joining VC?",
+    "A voice-chat invitation for the Chairs. Come say hello.",
+    "Text has had its turn. Who’s up for a chat in VC?"
+  ],
+  "!chess": [
+    "Chairs, anyone up for a game of chess?",
+    "A chess challenge for the lounge. Who wants a match?",
+    "Pull up a chair and find a chess opponent.",
+    "The Chairs have been called to the board. Any chess takers?"
+  ]
+}

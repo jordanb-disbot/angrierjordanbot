@@ -12,7 +12,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "IANA timezone for scheduled jobs.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "server.daily_reset_hour",
@@ -25,7 +27,9 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 4,
     "max": 4,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "server.weekly_reset_day",
@@ -48,7 +52,9 @@ export const SETTINGS = [
       "SATURDAY",
       "SUNDAY"
     ],
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "server.weekly_reset_hour",
@@ -64,7 +70,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 0,
     "max": 23,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "core.dms_default",
@@ -78,7 +86,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "live",
+    "depends_on": []
   },
   {
     "key": "core.feature_flags",
@@ -92,7 +102,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "core.technical_throttle_ms",
@@ -108,7 +120,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 250,
     "max": 10000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.main_chat",
@@ -122,7 +136,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.bot_channel",
@@ -136,7 +152,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.games_channel",
@@ -150,7 +168,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.counting_channel",
@@ -164,7 +184,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.last_letter_channel",
@@ -178,7 +200,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.staff_log",
@@ -192,7 +216,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.chairisms_channel",
@@ -206,7 +232,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.introduction_channel",
@@ -220,7 +248,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "channels.hotseat_channel",
@@ -234,7 +264,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord channel ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "roles.throne",
@@ -248,7 +280,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord role ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "roles.chaise_lounge",
@@ -262,7 +296,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord role ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "roles.recliner",
@@ -276,7 +312,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord role ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "roles.jailed",
@@ -290,7 +328,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Resolved Discord role ID.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "race.join_seconds",
@@ -303,7 +343,9 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 60,
     "max": 60,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "race.extension_seconds",
@@ -316,71 +358,69 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 30,
     "max": 30,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "party.vote_seconds",
     "section": "games",
     "type": "integer",
     "default": 60,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "",
-    "risk": "normal",
+    "risk": "locked",
     "min": 15,
     "max": 300,
-    "mutable": true
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "party.extension_seconds",
     "section": "games",
     "type": "integer",
     "default": 30,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "",
-    "risk": "normal",
+    "risk": "locked",
     "min": 0,
     "max": 120,
-    "mutable": true
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "fmk.vote_seconds",
     "section": "games",
     "type": "integer",
     "default": 180,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "",
-    "risk": "normal",
+    "risk": "locked",
     "min": 30,
     "max": 600,
-    "mutable": true
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "line.ready_seconds",
     "section": "games",
     "type": "integer",
     "default": 60,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
-    "description": "Line readiness/entry window.",
-    "risk": "normal",
-    "min": 15,
-    "max": 180,
-    "mutable": true
+    "description": "Canonical fixed 60-second readiness window.",
+    "risk": "locked",
+    "min": 60,
+    "max": 60,
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "line.abandon_minutes",
@@ -396,21 +436,22 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 2,
     "max": 60,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "games.one_active_public_party_round",
     "section": "games",
     "type": "boolean",
     "default": true,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "",
-    "risk": "normal",
-    "mutable": true
+    "risk": "locked",
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "games.voting.hidden_totals_default",
@@ -424,7 +465,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "games.voting.allow_vote_edit",
@@ -438,7 +481,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.starter_ottomans",
@@ -454,7 +499,9 @@ export const SETTINGS = [
     "risk": "financial",
     "min": 0,
     "max": 100000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.daily_base",
@@ -470,7 +517,9 @@ export const SETTINGS = [
     "risk": "financial",
     "min": 0,
     "max": 100000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.weekly_base",
@@ -486,7 +535,9 @@ export const SETTINGS = [
     "risk": "financial",
     "min": 0,
     "max": 500000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.bet_rake_percent",
@@ -499,7 +550,9 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 5,
     "max": 5,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "lottery.max_tickets",
@@ -512,7 +565,9 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 20,
     "max": 20,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "economy.wallet_first_spending",
@@ -523,7 +578,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "economy.bank_robbery_protected",
@@ -534,7 +591,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "economy.transfers_fee_percent",
@@ -547,7 +606,9 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 0,
     "max": 0,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "moderation.evidence_retention_days",
@@ -563,7 +624,9 @@ export const SETTINGS = [
     "risk": "security",
     "min": 7,
     "max": 180,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.ai_ambiguous_only",
@@ -574,7 +637,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "moderation.default_posture",
@@ -593,7 +658,9 @@ export const SETTINGS = [
       "balanced",
       "strict"
     ],
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.progressive_discipline_enabled",
@@ -607,7 +674,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat_decay_hours",
@@ -623,7 +692,9 @@ export const SETTINGS = [
     "risk": "security",
     "min": 1,
     "max": 720,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.appeal_reviewer_independence",
@@ -634,7 +705,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "moderation.jail.default_minutes",
@@ -650,7 +723,9 @@ export const SETTINGS = [
     "risk": "security",
     "min": 1,
     "max": 10080,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.jail.links_allowed",
@@ -664,7 +739,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.jail.attachments_allowed",
@@ -678,7 +755,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.jail.staff_role_suspension_enabled",
@@ -691,7 +770,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Allow Throne to temporarily suspend manageable Administrator-granting roles so moderation Hotseat can be effective.",
     "risk": "high",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.join_gate_enabled",
@@ -704,7 +785,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "high",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.anti_raid_enabled",
@@ -717,7 +800,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "high",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.anti_nuke_enabled",
@@ -730,7 +815,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "high",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.panic_mode_enabled",
@@ -743,7 +830,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "critical",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.raid.join_velocity_per_minute",
@@ -758,7 +847,9 @@ export const SETTINGS = [
     "risk": "high",
     "min": 2,
     "max": 100,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "content.prompt_recent_game_exclusion",
@@ -774,7 +865,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 25,
     "max": 1000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "content.prompt_recent_category_exclusion",
@@ -790,7 +883,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 10,
     "max": 500,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "content.prompt_prefer_underused",
@@ -804,7 +899,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "live",
+    "depends_on": []
   },
   {
     "key": "spotlight.post_channel",
@@ -818,7 +915,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "spotlight.fallback_post_hour",
@@ -834,7 +933,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 17,
     "max": 22,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "spotlight.ties_are_co_winners",
@@ -845,7 +946,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.enabled",
@@ -859,7 +962,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "dashboard.session_hours",
@@ -875,7 +980,9 @@ export const SETTINGS = [
     "risk": "security",
     "min": 1,
     "max": 72,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "tutorial.enabled",
@@ -889,7 +996,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "live",
+    "depends_on": []
   },
   {
     "key": "custom_commands.enabled",
@@ -903,7 +1012,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "custom_commands.max_commands",
@@ -919,7 +1030,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 1,
     "max": 500,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "custom_commands.max_actions",
@@ -935,7 +1048,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 1,
     "max": 16,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "custom_commands.regex_enabled",
@@ -949,7 +1064,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.enabled",
@@ -963,7 +1080,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.max_active_voice_channels",
@@ -976,7 +1095,9 @@ export const SETTINGS = [
     "risk": "locked",
     "min": 1,
     "max": 1,
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "music.default_volume",
@@ -992,7 +1113,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 1,
     "max": 100,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.vote_skip_majority",
@@ -1006,7 +1129,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "introductions.one_active_per_member",
@@ -1020,7 +1145,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "introductions.normal_messages_locked",
@@ -1034,7 +1161,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "shop.refresh_hour",
@@ -1047,7 +1176,9 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 4,
-    "max": 4
+    "max": 4,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "shop.personalized_bonus_slots",
@@ -1063,7 +1194,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 2
+    "max": 2,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "shop.buyback_floor_percent",
@@ -1079,7 +1212,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 10,
-    "max": 90
+    "max": 90,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "shop.buyback_ceiling_percent",
@@ -1095,7 +1230,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 20,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crafting.repair.cheap_restore_min",
@@ -1111,7 +1248,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crafting.repair.cheap_restore_max"
+    ]
   },
   {
     "key": "crafting.repair.cheap_restore_max",
@@ -1127,7 +1268,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crafting.repair.cheap_restore_min"
+    ]
   },
   {
     "key": "crafting.repair.standard_restore_min",
@@ -1143,7 +1288,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crafting.repair.standard_restore_max"
+    ]
   },
   {
     "key": "crafting.repair.standard_restore_max",
@@ -1159,7 +1308,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crafting.repair.standard_restore_min"
+    ]
   },
   {
     "key": "crafting.repair.premium_restore_min",
@@ -1175,7 +1328,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crafting.repair.premium_restore_max"
+    ]
   },
   {
     "key": "crafting.repair.premium_restore_max",
@@ -1191,7 +1348,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crafting.repair.premium_restore_min"
+    ]
   },
   {
     "key": "crafting.failure_grants_skill",
@@ -1202,7 +1363,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "casino.min_bet",
@@ -1218,7 +1381,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 100000
+    "max": 100000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "casino.max_bet",
@@ -1234,7 +1399,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 10,
-    "max": 1000000
+    "max": 1000000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "casino.chair_pot_contribution_percent",
@@ -1250,7 +1417,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 0,
-    "max": 10
+    "max": 10,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "lottery.draw_weekday",
@@ -1270,7 +1439,9 @@ export const SETTINGS = [
       "FRIDAY",
       "SATURDAY",
       "SUNDAY"
-    ]
+    ],
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "lottery.draw_hour",
@@ -1283,7 +1454,9 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 20,
-    "max": 20
+    "max": 20,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "lottery.rake_percent",
@@ -1296,7 +1469,9 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 0,
-    "max": 0
+    "max": 0,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "crime.robber_cooldown_minutes",
@@ -1312,7 +1487,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 1440
+    "max": 1440,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crime.victim_protection_minutes",
@@ -1328,7 +1505,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 1440
+    "max": 1440,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crime.fight_back_seconds",
@@ -1344,7 +1523,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 15,
-    "max": 300
+    "max": 300,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crime.report_911_seconds",
@@ -1360,7 +1541,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 30,
-    "max": 600
+    "max": 600,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crime.jail_hours",
@@ -1376,7 +1559,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 168
+    "max": 168,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crime.bank_is_stealable",
@@ -1387,7 +1572,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "family.max_spouses",
@@ -1400,7 +1587,9 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 1,
-    "max": 2
+    "max": 2,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "family.proposal_hours",
@@ -1416,7 +1605,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 168
+    "max": 168,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "family.divorce_min_days",
@@ -1432,7 +1623,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 0,
-    "max": 30
+    "max": 30,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "family.same_pair_remarry_lock_days",
@@ -1448,7 +1641,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 0,
-    "max": 90
+    "max": 90,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "family.will_grace_hours",
@@ -1464,7 +1659,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 168
+    "max": 168,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "family.auction_min_hours",
@@ -1480,7 +1677,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 24
+    "max": 24,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "family.auction_max_hours",
@@ -1496,7 +1695,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 2,
-    "max": 168
+    "max": 168,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "family.adoption_slot_days",
@@ -1516,7 +1717,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "giveaway.min_duration_minutes",
@@ -1531,8 +1734,12 @@ export const SETTINGS = [
     "description": "",
     "risk": "normal",
     "mutable": true,
-    "min": 10,
-    "max": 10080
+    "min": 60,
+    "max": 10080,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "giveaway.max_duration_minutes"
+    ]
   },
   {
     "key": "giveaway.max_duration_minutes",
@@ -1548,7 +1755,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 60,
-    "max": 43200
+    "max": 10080,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "giveaway.min_duration_minutes"
+    ]
   },
   {
     "key": "giveaway.max_winners",
@@ -1564,7 +1775,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 10
+    "max": 5,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "superlatives.nomination_hours",
@@ -1580,7 +1793,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 168
+    "max": 168,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "superlatives.voting_hours",
@@ -1596,7 +1811,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 168
+    "max": 168,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "superlatives.finalist_count",
@@ -1612,7 +1829,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 2,
-    "max": 10
+    "max": 10,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "poll.max_choices",
@@ -1628,7 +1847,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 2,
-    "max": 25
+    "max": 25,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "activity.exclude_bot_channel",
@@ -1642,7 +1863,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "activity.exclude_games_channel",
@@ -1656,7 +1879,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "activity.exclude_staff_channel",
@@ -1670,7 +1895,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "activity.vc_require_other_human",
@@ -1681,7 +1908,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "activity.vc_exclude_self_muted",
@@ -1692,7 +1921,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "custom_commands.max_execution_seconds",
@@ -1708,7 +1939,9 @@ export const SETTINGS = [
     "risk": "security",
     "mutable": true,
     "min": 1,
-    "max": 10
+    "max": 10,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "custom_commands.max_response_chars",
@@ -1724,7 +1957,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 100,
-    "max": 6000
+    "max": 6000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "tutorial.practice_mode_enabled",
@@ -1738,7 +1973,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "live",
+    "depends_on": []
   },
   {
     "key": "tutorial.progress_tracking",
@@ -1752,7 +1989,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "live",
+    "depends_on": []
   },
   {
     "key": "dashboard.audit_retention_days",
@@ -1768,7 +2007,9 @@ export const SETTINGS = [
     "risk": "security",
     "mutable": true,
     "min": 30,
-    "max": 3650
+    "max": 3650,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.queue_max_tracks",
@@ -1784,7 +2025,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 10,
-    "max": 1000
+    "max": 1000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.autoplay_default",
@@ -1798,7 +2041,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.loop_default",
@@ -1817,7 +2062,9 @@ export const SETTINGS = [
       "off",
       "track",
       "queue"
-    ]
+    ],
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "music.controller_refresh_on_interaction",
@@ -1831,7 +2078,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat.warning_threshold",
@@ -1847,7 +2096,9 @@ export const SETTINGS = [
     "risk": "security",
     "mutable": true,
     "min": 1,
-    "max": 200
+    "max": 200,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat.short_timeout_threshold",
@@ -1863,7 +2114,9 @@ export const SETTINGS = [
     "risk": "security",
     "mutable": true,
     "min": 1,
-    "max": 300
+    "max": 300,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat.long_timeout_threshold",
@@ -1879,7 +2132,9 @@ export const SETTINGS = [
     "risk": "security",
     "mutable": true,
     "min": 1,
-    "max": 400
+    "max": 400,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat.review_threshold",
@@ -1895,7 +2150,9 @@ export const SETTINGS = [
     "risk": "security",
     "mutable": true,
     "min": 1,
-    "max": 500
+    "max": 500,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.verification_enabled",
@@ -1908,7 +2165,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "high",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.restricted_mode_auto_deescalate_minutes",
@@ -1923,7 +2182,9 @@ export const SETTINGS = [
     "risk": "high",
     "mutable": true,
     "min": 5,
-    "max": 1440
+    "max": 1440,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "introductions.reactions_allowed",
@@ -1937,7 +2198,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "introductions.attachments_allowed",
@@ -1951,7 +2214,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "introductions.max_pages",
@@ -1967,7 +2232,9 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 1,
-    "max": 8
+    "max": 8,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "spotlight.learned_post_window_start_hour",
@@ -1983,7 +2250,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 0,
-    "max": 23
+    "max": 23,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "spotlight.learned_post_window_end_hour"
+    ]
   },
   {
     "key": "spotlight.learned_post_window_end_hour",
@@ -1999,7 +2270,11 @@ export const SETTINGS = [
     "risk": "normal",
     "mutable": true,
     "min": 0,
-    "max": 23
+    "max": 23,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "spotlight.learned_post_window_start_hour"
+    ]
   },
   {
     "key": "spotlight.triple_threat_permanent",
@@ -2010,7 +2285,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "fight.bet_seconds",
@@ -2023,7 +2300,9 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 30,
-    "max": 30
+    "max": 30,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "fight.extension_seconds",
@@ -2036,23 +2315,24 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 30,
-    "max": 30
+    "max": 30,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "line.extension_seconds",
     "section": "games",
     "type": "integer",
     "default": 30,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
-    "description": "One-use host extension for Line readiness/entry.",
-    "risk": "normal",
-    "mutable": true,
-    "min": 0,
-    "max": 30
+    "description": "Canonical fixed one-use 30-second extension.",
+    "risk": "locked",
+    "mutable": false,
+    "min": 30,
+    "max": 30,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "roles.member_access",
@@ -2066,7 +2346,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Normal member/access role granted after rules acknowledgment.",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "special_commands.enabled",
@@ -2080,7 +2362,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable built-in and configured Special Commands.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "special_commands.builtin_role_map",
@@ -2099,7 +2383,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Notification-role mappings for built-in Special Commands.",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "special_commands.default_member_access",
@@ -2110,7 +2396,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Built-in Special Commands are usable by members unless individually role-restricted.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "special_commands.cooldown_enabled",
@@ -2121,7 +2409,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Special Commands have no cooldown.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "roles_panel.enabled",
@@ -2135,7 +2425,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable the ephemeral /roles selection panel.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "roles_panel.category_order",
@@ -2157,7 +2449,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Initial category order; live category definitions are database-backed.",
     "risk": "normal",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "roles_panel.single_choice_categories",
@@ -2173,7 +2467,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Categories that allow at most one selected option and may also be cleared.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "roles_panel.multi_choice_categories",
@@ -2188,7 +2484,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Categories that allow independent multi-selection with no product cap.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "roles_panel.archive_restores_holders",
@@ -2199,7 +2497,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Re-enabling an archived option restores it to members who held it at archive time when eligible.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "onboarding.rules_ack_required",
@@ -2210,7 +2510,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Rules acknowledgment is the only required onboarding gate.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "onboarding.optional_steps",
@@ -2226,7 +2528,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Guided onboarding steps that may be skipped.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.require_rules_ack",
@@ -2237,7 +2541,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Returning members must acknowledge rules again before normal access is restored.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.restore_self_roles",
@@ -2248,7 +2554,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Restore eligible prior self-selected roles after rejoin.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.restore_manual_nonstaff_roles",
@@ -2259,7 +2567,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Restore eligible prior non-staff manual/custom roles after rejoin.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.restore_staff_roles",
@@ -2270,7 +2580,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Staff roles require fresh staff approval after rejoin.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.restore_nickname",
@@ -2281,7 +2593,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Restore prior server nickname when permitted.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.booster_role_source",
@@ -2295,7 +2609,9 @@ export const SETTINGS = [
     "mutable": false,
     "choices": [
       "discord"
-    ]
+    ],
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.temporary_role_timer_policy",
@@ -2309,7 +2625,9 @@ export const SETTINGS = [
     "mutable": false,
     "choices": [
       "wall_clock"
-    ]
+    ],
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "rejoin.punishment_timer_policy",
@@ -2323,7 +2641,9 @@ export const SETTINGS = [
     "mutable": false,
     "choices": [
       "pause_while_absent"
-    ]
+    ],
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.single_global_draft",
@@ -2334,7 +2654,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Only one shared dashboard draft may exist at a time.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.draft_lock_minutes",
@@ -2347,7 +2669,9 @@ export const SETTINGS = [
     "risk": "locked",
     "mutable": false,
     "min": 1,
-    "max": 60
+    "max": 60,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.simple_live_save_allowed",
@@ -2358,7 +2682,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Low-risk changes may save directly without a draft.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.high_impact_requires_draft",
@@ -2369,7 +2695,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "High-impact/destructive/broad/dependency-sensitive changes require Draft → Preview → Publish.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.draft_scheduling_enabled",
@@ -2380,7 +2708,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Dashboard draft publishing cannot be scheduled.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.dependency_view_mode",
@@ -2394,7 +2724,9 @@ export const SETTINGS = [
     "mutable": false,
     "choices": [
       "direct"
-    ]
+    ],
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.dependency_autofix",
@@ -2405,7 +2737,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Dependency errors are flagged for manual correction; Angrier Jordan does not auto-rewrite dependent settings.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.audit_export_enabled",
@@ -2416,7 +2750,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Authorized Admins may export retained dashboard audit history.",
     "risk": "locked",
-    "mutable": false
+    "mutable": false,
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "dashboard.access_policy",
@@ -2430,7 +2766,9 @@ export const SETTINGS = [
     "mutable": false,
     "choices": [
       "guild_owner_or_discord_administrator"
-    ]
+    ],
+    "dashboard_write": "blocked",
+    "depends_on": []
   },
   {
     "key": "moderation.automod_enabled",
@@ -2444,7 +2782,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable Angrier Jordan AutoMod message evaluation and progressive discipline.",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.banned_phrases_csv",
@@ -2458,7 +2798,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Comma-separated phrases handled by the configured AutoMod policy.",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.trusted_domains_csv",
@@ -2472,7 +2814,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Comma-separated domains trusted by link/phishing checks.",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat.short_timeout_minutes",
@@ -2488,7 +2832,9 @@ export const SETTINGS = [
     "risk": "security",
     "min": 1,
     "max": 1440,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "moderation.heat.long_timeout_minutes",
@@ -2504,7 +2850,9 @@ export const SETTINGS = [
     "risk": "security",
     "min": 5,
     "max": 10080,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.join.minimum_account_age_hours",
@@ -2519,7 +2867,9 @@ export const SETTINGS = [
     "risk": "high",
     "min": 0,
     "max": 8760,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.anti_nuke.events_per_minute",
@@ -2534,7 +2884,9 @@ export const SETTINGS = [
     "risk": "critical",
     "min": 2,
     "max": 30,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.anti_nuke.lockdown_events_per_minute",
@@ -2549,7 +2901,9 @@ export const SETTINGS = [
     "risk": "critical",
     "min": 3,
     "max": 50,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.trusted_users_csv",
@@ -2562,7 +2916,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Comma-separated Discord user IDs treated as explicitly trusted identities; monitoring remains active.",
     "risk": "critical",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "security.trusted_bots_csv",
@@ -2575,7 +2931,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Comma-separated bot user IDs permitted by Join Gate.",
     "risk": "critical",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.bank_tiers",
@@ -2615,7 +2973,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Five bank tiers. Tiers 1–4 have capacities; Tier 5 is unlimited.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.bank_tier5_interest_bps",
@@ -2631,7 +2991,9 @@ export const SETTINGS = [
     "risk": "financial",
     "min": 0,
     "max": 500,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.bank_tier5_interest_cap",
@@ -2647,7 +3009,9 @@ export const SETTINGS = [
     "risk": "financial",
     "min": 0,
     "max": 1000000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.daily_milestones",
@@ -2666,7 +3030,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Exact Claim Daily streak milestone bonuses.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.daily_spin_table",
@@ -2726,7 +3092,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Weighted Daily Spin reward table. Runtime hard bounds still apply.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.grind_technical_throttle_ms",
@@ -2742,7 +3110,9 @@ export const SETTINGS = [
     "risk": "normal",
     "min": 250,
     "max": 5000,
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "economy.grind_tables",
@@ -2864,7 +3234,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Bounded weighted outcome tables for /work, /fish, /dig and /scavenge.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.items",
@@ -2878,7 +3250,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Phase 09 runtime; keep disabled until acceptance.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "shop.buyback_percent",
@@ -2894,7 +3268,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 10,
-    "max": 100
+    "max": 100,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crafting.repair.cheap_cost",
@@ -2910,7 +3286,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 10000
+    "max": 10000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crafting.repair.standard_cost",
@@ -2926,7 +3304,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 10000
+    "max": 10000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "crafting.repair.premium_cost",
@@ -2942,7 +3322,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 10000
+    "max": 10000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.profiles",
@@ -2956,7 +3338,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable accepted profiles runtime flows. Keep disabled until acceptance passes.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.activity",
@@ -2970,7 +3354,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable accepted activity runtime flows. Keep disabled until acceptance passes.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.spotlight",
@@ -2984,7 +3370,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable accepted spotlight runtime flows. Keep disabled until acceptance passes.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.casino",
@@ -2998,7 +3386,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable accepted casino flows; keep off until acceptance passes.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.lottery",
@@ -3012,7 +3402,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Enable accepted lottery flows; keep off until acceptance passes.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "casino.chair_symbols",
@@ -3058,7 +3450,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Three chair-symbol reels. Matching triples pay the configured gross multiplier; matching Throne triggers Chair Pot.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "casino.slots_wagers",
@@ -3079,7 +3473,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Supported slot wagers; every replay also rechecks global bet limits.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "casino.roulette_choices",
@@ -3137,7 +3533,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Single-zero roulette selections. Straight numbers pay 36× gross; even-money choices pay 2× gross.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "casino.dice_choices",
@@ -3153,7 +3551,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Available dice modes. High compares one member die to one house die; ties return the wager.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "lottery.ticket_price",
@@ -3169,7 +3569,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 100000
+    "max": 100000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.race",
@@ -3183,7 +3585,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Keep off until event acceptance and Review Gate A pass.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "features.fight",
@@ -3197,7 +3601,9 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Keep off until approved combat sources, acceptance and Review Gate A pass.",
     "risk": "financial",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "events.min_bet",
@@ -3213,7 +3619,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 100000
+    "max": 100000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "events.max_bet",
@@ -3229,7 +3637,9 @@ export const SETTINGS = [
     "risk": "financial",
     "mutable": true,
     "min": 1,
-    "max": 100000
+    "max": 100000,
+    "dashboard_write": "draft",
+    "depends_on": []
   },
   {
     "key": "special_commands.access_roles",
@@ -3248,6 +3658,570 @@ export const SETTINGS = [
     "restart_required": false,
     "description": "Empty permits members; otherwise require one of these roles. Separate from notification roles.",
     "risk": "security",
-    "mutable": true
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "features.line",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted Line runtime. Remains off until live acceptance.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "special_commands.enabled",
+      "features.special_commands",
+      "channels.main_chat",
+      "special_commands.builtin_role_map"
+    ]
+  },
+  {
+    "key": "features.special_commands",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted Line/VC/Chess/custom Special Command handlers.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "special_commands.custom_commands",
+    "section": "special_commands",
+    "type": "json",
+    "default": [],
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Notification-only Special Commands: trigger, notificationRoleId, responsePool, enabled, allowedRoleIds. Native triggers cannot be replaced.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "special_commands.builtin_response_pools",
+    "section": "special_commands",
+    "type": "json",
+    "default": {
+      "!line": [],
+      "!race": [],
+      "!vc": [],
+      "!chess": []
+    },
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Authored built-in callout overrides. Empty uses the packaged pool; mention permissions remain enforced.",
+    "risk": "normal",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "line.shame_enabled",
+    "section": "games",
+    "type": "boolean",
+    "default": true,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Use the approved rotating shame pool when the host starts with waiting members.",
+    "risk": "normal",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "features.solo_games",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted solo games; keep off until acceptance.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "channels.games_channel",
+      "solo.reward",
+      "solo.daily_reward_cap"
+    ]
+  },
+  {
+    "key": "solo.reward",
+    "section": "games",
+    "type": "integer",
+    "default": 1,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Small reward for a solo win; below normal grind income.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 0,
+    "max": 5,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "solo.daily_reward_cap"
+    ]
+  },
+  {
+    "key": "solo.daily_reward_cap",
+    "section": "games",
+    "type": "integer",
+    "default": 10,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Rolling 24-hour solo reward cap across all four games.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 0,
+    "max": 20,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "solo.reward"
+    ]
+  },
+  {
+    "key": "solo.timeout_seconds",
+    "section": "games",
+    "type": "integer",
+    "default": 600,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Persistent idle round expiry in seconds.",
+    "risk": "normal",
+    "mutable": true,
+    "min": 60,
+    "max": 1800,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "features.pvp",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted PvP skill games; keep off until acceptance.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "channels.games_channel",
+      "pvp.min_wager",
+      "pvp.max_wager"
+    ]
+  },
+  {
+    "key": "pvp.min_wager",
+    "section": "games",
+    "type": "integer",
+    "default": 1,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Skill-game wager bound in Ottomans.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "pvp.max_wager"
+    ],
+    "min": 1,
+    "max": 1000000
+  },
+  {
+    "key": "pvp.max_wager",
+    "section": "games",
+    "type": "integer",
+    "default": 1000000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Skill-game wager bound in Ottomans.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "pvp.min_wager"
+    ],
+    "min": 1,
+    "max": 1000000
+  },
+  {
+    "key": "features.party_games",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted party_games runtime. Keep off until acceptance.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "channels.games_channel"
+    ]
+  },
+  {
+    "key": "features.channel_games",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted channel_games runtime. Keep off until acceptance.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "channels.counting_channel",
+      "channels.last_letter_channel"
+    ]
+  },
+  {
+    "key": "crime.success_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 4500,
+    "min": 0,
+    "max": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime success bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.theft_min_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 1000,
+    "min": 1,
+    "max": 5000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime theft min bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crime.theft_max_bp"
+    ]
+  },
+  {
+    "key": "crime.theft_max_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 2500,
+    "min": 1,
+    "max": 5000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime theft max bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crime.theft_min_bp"
+    ]
+  },
+  {
+    "key": "crime.fight_back_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 5000,
+    "min": 0,
+    "max": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime fight back bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.catch_base_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 1000,
+    "min": 0,
+    "max": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime catch base bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crime.catch_cap_bp"
+    ]
+  },
+  {
+    "key": "crime.report_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 1000,
+    "min": 0,
+    "max": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime report bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.catch_cap_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 8500,
+    "min": 0,
+    "max": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime catch cap bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "crime.catch_base_bp"
+    ]
+  },
+  {
+    "key": "crime.fight_back_risk_bp",
+    "section": "crime",
+    "type": "integer",
+    "default": 1500,
+    "min": 0,
+    "max": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime fight back risk bp in basis points.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.attempt_heat",
+    "section": "crime",
+    "type": "integer",
+    "default": 10,
+    "min": 1,
+    "max": 100,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime attempt heat.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.success_heat",
+    "section": "crime",
+    "type": "integer",
+    "default": 10,
+    "min": 1,
+    "max": 100,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime success heat.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.decay_per_hour",
+    "section": "crime",
+    "type": "integer",
+    "default": 10,
+    "min": 1,
+    "max": 100,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime decay per hour.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.bail_base",
+    "section": "crime",
+    "type": "integer",
+    "default": 100,
+    "min": 0,
+    "max": 1000000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime bail base.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.bail_per_heat",
+    "section": "crime",
+    "type": "integer",
+    "default": 2,
+    "min": 0,
+    "max": 1000000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime bail per heat.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "crime.bail_random_max",
+    "section": "crime",
+    "type": "integer",
+    "default": 100,
+    "min": 0,
+    "max": 1000000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Crime bail random max.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "features.crime",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted Crime runtime; keep off until acceptance.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "channels.bot_channel",
+      "crime.robber_cooldown_minutes",
+      "crime.victim_protection_minutes",
+      "crime.fight_back_seconds",
+      "crime.report_911_seconds",
+      "crime.jail_hours",
+      "crime.success_bp",
+      "crime.theft_min_bp",
+      "crime.theft_max_bp",
+      "crime.fight_back_bp",
+      "crime.catch_base_bp",
+      "crime.report_bp",
+      "crime.catch_cap_bp",
+      "crime.fight_back_risk_bp",
+      "crime.attempt_heat",
+      "crime.success_heat",
+      "crime.decay_per_hour",
+      "crime.bail_base",
+      "crime.bail_per_heat",
+      "crime.bail_random_max"
+    ]
   }
 ] as const satisfies readonly SettingContract[];

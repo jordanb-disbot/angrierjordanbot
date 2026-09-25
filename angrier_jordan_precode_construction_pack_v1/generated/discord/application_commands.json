@@ -2185,7 +2185,16 @@
     "type": 1,
     "name": "minesweeper",
     "description": "Start Minesweeper.",
-    "options": []
+    "options": [
+      {
+        "type": 4,
+        "name": "size",
+        "description": "Board width: 4 for a 4×4 board, or 5 for a 5×5 board.",
+        "required": false,
+        "min_value": 4,
+        "max_value": 5
+      }
+    ]
   },
   {
     "type": 1,

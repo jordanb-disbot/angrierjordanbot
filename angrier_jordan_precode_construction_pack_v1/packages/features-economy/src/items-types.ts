@@ -8,7 +8,7 @@ export interface ItemChair {id:string;userId:string;chairType:string;quality:str
 export interface ItemRecipe {id:string;name:string;outputItemId:string;inputs:Record<string,number>;chairInput?:string;success:number;enabled:boolean;}
 export interface ItemCollection {id:string;name:string;hidden:boolean;itemIds:string[];badgeId:string;}
 export interface ItemMember {
- userId:string;wallet:bigint;bank:bigint;stacks:ItemStack[];tools:ItemTool[];chairs:ItemChair[];recipes:string[];discoveries:string[];categoryLocks:string[];pity:Record<string,number>;
+ userId:string;wallet:bigint;reservedWallet?:bigint;bank:bigint;stacks:ItemStack[];tools:ItemTool[];chairs:ItemChair[];recipes:string[];discoveries:string[];categoryLocks:string[];pity:Record<string,number>;
  progress:{rank:string;skillPoints:number;attempts:number;successes:number};achievements:string[];
 }
 export interface ItemState {guildId:string;catalog:CatalogItemRecord[];recipes:ItemRecipe[];collections:ItemCollection[];members:ItemMember[];}

@@ -1,4 +1,20 @@
+import {DiscordCrimeCoordinator} from './discord/crime-coordinator.js';
+import {PrismaCrimeRepository} from '../../../packages/features-crime/src/prisma-repository.js';
+import {isCrimeBailRequest} from '../../../packages/features-crime/src/domain.js';
+import {DiscordPartyCoordinator,PARTY_COMMANDS} from './discord/party-coordinator.js';
+import {PrismaPartyRepository} from '../../../packages/features-party/src/prisma-repository.js';
+import {seedPartyContent} from '../../../packages/features-party/src/content.js';
+import {DiscordChannelGamesCoordinator} from './discord/channel-games-coordinator.js';
+import {PrismaChannelGamesRepository} from '../../../packages/features-channel-games/src/prisma-repository.js';
+import {DiscordPvpCoordinator} from './discord/pvp-coordinator.js';
+import {PrismaPvpRepository} from '../../../packages/features-pvp/src/prisma-repository.js';
 import {DiscordEventsCoordinator} from './discord/events-coordinator.js';
+import {DiscordSpecialCoordinator} from './discord/special-coordinator.js';
+import {PrismaSpecialRepository} from '../../../packages/features-special/src/prisma-repository.js';
+import {DiscordSoloCoordinator,SOLO_COMMANDS} from './discord/solo-coordinator.js';
+import {PrismaSoloRepository} from '../../../packages/features-solo/src/prisma-repository.js';
+import {PermissionEngine} from '../../../packages/core/src/permissions.js';
+import {CAPABILITY_MATRIX} from '../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaEventsRepository} from '../../../packages/features-events/src/prisma-repository.js';
 import {DiscordCasinoCoordinator,CASINO_COMMANDS} from './discord/casino-coordinator.js';
 import {DiscordCasinoAnnouncements} from './discord/casino-announcements.js';
@@ -10,7 +26,10 @@ import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/
 import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
 import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
-import { Client, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
+import { Client, Events, GatewayIntentBits, REST, Routes, type ClientEvents } from 'discord.js';
+import {validateRuntimeEnvironment} from '../../../packages/core/src/runtime-environment.js';
+import {RuntimeLifecycle} from '../../../packages/core/src/runtime-lifecycle.js';
+import {startRuntimeHealth} from './runtime-health.js';
 import { AuditService, ConfigService, HealthService, IdempotentScheduler, SchedulerWorker } from '../../../packages/core/src/index.js';
 import { SETTINGS } from '../../../packages/contracts/src/generated/settings.js';
 import { PrismaAuditSink, PrismaConfigRepository, PrismaJobRepository, createPrismaHealthProbe } from '../../../packages/database/src/prisma-adapters.js';
@@ -20,7 +39,7 @@ import { PrismaModerationRepository, ModerationService } from '../../../packages
 import { PrismaSecurityRepository, SecurityService } from '../../../packages/features-security/src/index.js';
 import { PrismaEconomyRepository, EconomyService, type FortuneEntry } from '../../../packages/features-economy/src/index.js';
 import { getPrismaClient, disconnectPrisma } from '../../../packages/database/src/client.js';
-import { PrismaWyrPromptRepository, PrismaWyrSessionRepository, WyrService } from '../../../packages/features-wyr/src/index.js';
+import { PrismaWyrPromptRepository, PrismaWyrSessionRepository, PrismaWyrPublicationRepository, WyrService } from '../../../packages/features-wyr/src/index.js';
 import { SystemClock } from '../../../packages/core/src/time.js';
 import { DiscordWyrCoordinator } from './discord/wyr-coordinator.js';
 import { DiscordOnboardingCoordinator } from './discord/onboarding-coordinator.js';
@@ -34,6 +53,9 @@ const required=(name:string)=>{const value=process.env[name];if(!value)throw new
 const ECONOMY_COMMANDS=new Set(['daily','weekly','work','fish','dig','scavenge','statement','inventory','bank','transfer']);
 
 export async function startProductionBot():Promise<void>{
+  const runtime=validateRuntimeEnvironment(process.env,'worker');
+  const lifecycle=new RuntimeLifecycle();
+  let initialized=false;
   const token=required('DISCORD_TOKEN');const applicationId=required('DISCORD_APPLICATION_ID');const guildId=required('DISCORD_GUILD_ID');
   const enableWyrSmoke=process.env.ENABLE_WYR_SMOKE==='true';
   const enableOnboardingSmoke=process.env.ENABLE_ONBOARDING_SMOKE==='true';
@@ -41,6 +63,12 @@ export async function startProductionBot():Promise<void>{
   const enableModerationSmoke=process.env.ENABLE_MODERATION_SMOKE==='true';
   const enableSecuritySmoke=process.env.ENABLE_SECURITY_SMOKE==='true';
   const enableEventsSmoke=process.env.ENABLE_EVENTS_SMOKE==='true';
+  const enableSpecialSmoke=process.env.ENABLE_SPECIAL_SMOKE==='true';
+  const enableCrimeSmoke=process.env.ENABLE_CRIME_SMOKE==='true';
+  const enablePartySmoke=process.env.ENABLE_PARTY_SMOKE==='true';
+  const enableChannelGamesSmoke=process.env.ENABLE_CHANNEL_GAMES_SMOKE==='true';
+  const enablePvpSmoke=process.env.ENABLE_PVP_SMOKE==='true';
+  const enableSoloSmoke=process.env.ENABLE_SOLO_SMOKE==='true';
   const enableCasinoSmoke=process.env.ENABLE_CASINO_SMOKE==='true';
   const enableProfilesSmoke=process.env.ENABLE_PROFILES_SMOKE==='true';
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
@@ -48,13 +76,16 @@ export async function startProductionBot():Promise<void>{
   const db=getPrismaClient();
   const audit=new AuditService(new PrismaAuditSink(db));
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
-  const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:'ok' as const})]);
   const jobRepo=new PrismaJobRepository(db);
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration]});
+  const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const})]);
+  const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
+    client.on(event,(...args)=>lifecycle.run(()=>listener(...args),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
+  };
   const promptRepo=new PrismaWyrPromptRepository(db);
   const sessionRepo=new PrismaWyrSessionRepository(db);
   const wyrService=new WyrService(promptRepo,sessionRepo,new SystemClock(),new CuidLikeIds());
-  const wyr=new DiscordWyrCoordinator(wyrService);
+  const wyr=new DiscordWyrCoordinator(wyrService,config,(g,u)=>eligibleGame(g,u,'events.use'),new PrismaWyrPublicationRepository(db));
   const onboardingService=new OnboardingService(new PrismaOnboardingRepository(db),audit,new SystemClock());
   const onboarding=new DiscordOnboardingCoordinator(onboardingService,config);
   const jailService=new JailService(new PrismaJailRepository(db),audit,new SystemClock());
@@ -66,19 +97,43 @@ export async function startProductionBot():Promise<void>{
   const fortunes=JSON.parse(fs.readFileSync(new URL('../../../packages/content/economy/fortune_300.json',import.meta.url),'utf8')) as FortuneEntry[];
   const economyService=new EconomyService(new PrismaEconomyRepository(db),audit,new SystemClock(),undefined,fortunes);
   const economy=new DiscordEconomyCoordinator(economyService,config);
+  const crimeRepo=new PrismaCrimeRepository(db);
   const items=new DiscordItemsCoordinator(new PrismaItemRepository(db),config,async(g,u)=>{
-    if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;
+    if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;
     const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';
   });
   const profileRepo=new PrismaProfilesRepository(db);
-  const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u));
+  const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u)&&!await crimeRepo.isJailed(g,u));
   const recordAnnouncements=new DiscordRecordAnnouncements(db,config);
   const casinoRepo=new PrismaCasinoRepository(db),lotteryRepo=new PrismaLotteryRepository(db);
-  const casino=new DiscordCasinoCoordinator(casinoRepo,lotteryRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
+  const casino=new DiscordCasinoCoordinator(casinoRepo,lotteryRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
   const casinoAnnouncements=new DiscordCasinoAnnouncements(db,config);
   const eventsRepo=new PrismaEventsRepository(db);
-  const events=new DiscordEventsCoordinator(eventsRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
+  const events=new DiscordEventsCoordinator(eventsRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
+  const eligibleGame=async(g:string,u:string,capability:string)=>{if(!new PermissionEngine(CAPABILITY_MATRIX.capabilities).can('member',capability)||await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';};
+  const special=new DiscordSpecialCoordinator(new PrismaSpecialRepository(db),config,(g,u)=>eligibleGame(g,u,'special.use'));
+  const soloRepo=new PrismaSoloRepository(db),solo=new DiscordSoloCoordinator(soloRepo,config,(g,u)=>eligibleGame(g,u,'solo.use'));
+  const pvp=new DiscordPvpCoordinator(new PrismaPvpRepository(db),config,(g,u)=>eligibleGame(g,u,'pvp.play'));
+  const party=new DiscordPartyCoordinator(new PrismaPartyRepository(db),config,(g,u)=>eligibleGame(g,u,'events.use'));
+  const channelGames=new DiscordChannelGamesCoordinator(new PrismaChannelGamesRepository(db),config,(g,u)=>eligibleGame(g,u,'channel_games.play'));
+  const crime=new DiscordCrimeCoordinator(crimeRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
   const scheduler=new IdempotentScheduler(jobRepo,{
+    'special.callout':async job=>{if(!enableSpecialSmoke)throw new Error('Special Commands disabled; retain pending delivery.');await special.deliver(client,job.id);},
+    'special.line_lock':async job=>{const p=job.payload as {guildId:string;sessionId:string};await special.advance(client,p.guildId,p.sessionId,false);},
+    'special.line_complete':async job=>{const p=job.payload as {guildId:string;sessionId:string};await special.advance(client,p.guildId,p.sessionId,true);},
+    'crime.refresh':async job=>{const p=job.payload as {sessionId:string};await crime.refresh(client,p.sessionId);},
+    'crime.publish':async job=>{await crime.deliver(client,job.id);},
+    'crime.close':async job=>{const p=job.payload as {guildId:string;sessionId:string};await crime.advance(client,p.guildId,p.sessionId);},
+    'crime.release':async job=>{const p=job.payload as {guildId:string;sentenceId:string};await crimeRepo.release(p.guildId,p.sentenceId);},
+    'crime.decay':async job=>{const p=job.payload as {guildId:string;userId:string};await crimeRepo.decay(p.guildId,p.userId,await crime.policy(p.guildId));},
+    'crime.records':async job=>{const p=job.payload as {guildId:string;sessionId:string};await crimeRepo.records(p.guildId,p.sessionId);},
+    'channelgame.announce':async job=>{await channelGames.deliver(client,job.id);},
+    'party.publish':async job=>{await party.publish(client,job.id);},
+    'party.advance':async job=>{const p=job.payload as {guildId:string;sessionId:string;round:number};await party.advance(client,p.guildId,p.sessionId,p.round);},
+    'wyr.publish':async job=>{const p=job.payload as {sessionId:string};await wyr.publish(client,p.sessionId);},
+    'wyr.close':async job=>{const p=job.payload as {sessionId:string};await wyr.advance(client,p.sessionId);},
+    'pvp.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string;version:number};await pvp.advance(client,p.guildId,p.sessionId,p.version);},
+    'solo.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string};await soloRepo.expire(p.guildId,p.sessionId);await solo.refresh(client,p.sessionId);},
     'events.close_betting':async job=>{const p=job.payload as {guildId:string;sessionId:string};await events.advance(client,p.guildId,p.sessionId,false);},
     'events.settle':async job=>{const p=job.payload as {guildId:string;sessionId:string};await events.advance(client,p.guildId,p.sessionId,true);},
     'casino.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string};await casinoRepo.expire(p.guildId,p.sessionId);await casino.refresh(client,p.sessionId);},
@@ -101,30 +156,61 @@ export async function startProductionBot():Promise<void>{
   let eventSweep:ReturnType<typeof setInterval>|undefined;
   let voiceSweep:ReturnType<typeof setInterval>|undefined;
   let wyrSweep:ReturnType<typeof setInterval>|undefined;
+  let specialSweep:ReturnType<typeof setInterval>|undefined;
+  let crimeSweep:ReturnType<typeof setInterval>|undefined;
+  let partySweep:ReturnType<typeof setInterval>|undefined;
+  let pvpSweep:ReturnType<typeof setInterval>|undefined;
+  let soloSweep:ReturnType<typeof setInterval>|undefined;
 
-  client.once(Events.ClientReady,async ready=>{
+  client.once(Events.ClientReady,ready=>lifecycle.run(async()=>{
+    if(enablePartySmoke||enableWyrSmoke)await seedPartyContent(db);
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableEventsSmoke&&c.name==='fight')||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&c.name==='fight')||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});
-    if(enableProfilesSmoke){await profileRepo.resetVoiceAfterRestart(guildId);await profiles.reconcile(guildId);await profiles.sampleVoice(ready,guildId);voiceSweep=setInterval(()=>{void profiles.sampleVoice(ready,guildId).catch(()=>console.error('Activity voice sampling failed.'));},30_000);}
+    if(enableProfilesSmoke){await profileRepo.resetVoiceAfterRestart(guildId);await profiles.reconcile(guildId);await profiles.sampleVoice(ready,guildId);if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>profiles.sampleVoice(ready,guildId),()=>console.error('Activity voice sampling failed.')),30_000);}
     if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await lotteryRepo.schedule(guildId);
-    const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);await worker.runOnce();worker.start();
-    await events.sweep(ready);eventSweep=setInterval(()=>{void events.sweep(ready).catch(()=>console.error('Event recovery or rendering failed; durable jobs retained.'));},1500);
-    wyrSweep=setInterval(()=>{void wyr.closeDue(ready);},5_000);
+    const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);if(lifecycle.isStopping)return;await worker.runOnce();if(lifecycle.isStopping)return;worker.start();
+    await events.sweep(ready);if(lifecycle.isStopping)return;
+    eventSweep=setInterval(()=>lifecycle.run(()=>events.sweep(ready),()=>console.error('Event recovery or rendering failed; durable jobs retained.')),1500);
+    wyrSweep=setInterval(()=>lifecycle.run(()=>wyr.closeDue(ready),()=>console.error('WYR close failed; persisted recovery retained.')),5_000);
+    await special.sweep(ready);await solo.recover(ready);await pvp.sweep(ready);await party.sweep(ready);await crime.sweep(ready);if(lifecycle.isStopping)return;
+    specialSweep=setInterval(()=>lifecycle.run(()=>special.sweep(ready),()=>console.error('Line recovery pending.')),1000);
+    soloSweep=setInterval(()=>lifecycle.run(()=>solo.recover(ready),()=>console.error('Solo recovery pending.')),10_000);
+    pvpSweep=setInterval(()=>lifecycle.run(()=>pvp.sweep(ready),()=>console.error('Skill-game recovery pending.')),10_000);
+    partySweep=setInterval(()=>lifecycle.run(()=>party.sweep(ready),()=>console.error('Party recovery pending.')),5000);
+    crimeSweep=setInterval(()=>lifecycle.run(()=>crime.sweep(ready),()=>console.error('Crime recovery pending.')),5000);
     const snapshot=await health.check();
     console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
-  });
+    initialized=true;
+  },()=>{console.error('Bot initialization failed; readiness remains unavailable.');process.exitCode=1;void shutdown();}));
 
-  client.on(Events.GuildMemberAdd,member=>{if(enableOnboardingSmoke)void onboarding.handleMemberAdd(member).catch(error=>console.error('Onboarding join failed',error));if(enableSecuritySmoke)void security.handleMemberAdd(member).catch(error=>console.error('Join Gate failed',error));if(enableEconomySmoke)void economy.handleMemberAdd(member).catch(error=>console.error('Economy starter grant failed',error));});
-  client.on(Events.GuildMemberRemove,member=>{void events.memberLeft(client,member.guild.id,member.id).catch(()=>console.error('Fight departure reconciliation failed; persisted recovery remains active.'));if(enableOnboardingSmoke)void onboarding.handleMemberRemove(member).catch(error=>console.error('Onboarding leave snapshot failed',error));});
-  client.on(Events.ChannelCreate,channel=>{if(enableJailSmoke)void jail.reconcileNewChannel(channel).catch(error=>console.error('Hotseat channel reconciliation failed',error));});
-  client.on(Events.MessageCreate,message=>{if(enableEventsSmoke)void events.message(message).catch(()=>console.error('Race trigger failed.'));if(enableProfilesSmoke)void profiles.message(message).catch(()=>console.error('Activity message recording failed.'));if(enableSecuritySmoke)void security.handleMessage(message).catch(error=>console.error('AutoMod failed',error));});
-  client.on(Events.GuildAuditLogEntryCreate,(entry,guild)=>{if(enableSecuritySmoke)void security.handleAuditEntry(entry,guild).catch(error=>console.error('Anti-nuke evaluation failed',error));});
+  const settleHandlers=async(tasks:Promise<unknown>[])=>{const results=await Promise.allSettled(tasks);if(results.some(result=>result.status==='rejected'))console.error('A Discord feature handler failed; durable recovery remains available.');};
+  on(Events.GuildMemberAdd,async member=>{await settleHandlers([...(enableOnboardingSmoke?[onboarding.handleMemberAdd(member)]:[]),...(enableSecuritySmoke?[security.handleMemberAdd(member)]:[]),...(enableEconomySmoke?[economy.handleMemberAdd(member)]:[])]);});
+  on(Events.GuildMemberRemove,async member=>{await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);});
+  on(Events.ChannelCreate,async channel=>{if(enableJailSmoke)await jail.reconcileNewChannel(channel);});
+  on(Events.MessageCreate,async message=>{await settleHandlers([...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  on(Events.GuildAuditLogEntryCreate,async(entry,guild)=>{if(enableSecuritySmoke)await security.handleAuditEntry(entry,guild);});
 
-  client.on(Events.VoiceStateUpdate,(_before,after)=>{if(enableProfilesSmoke)void profiles.sampleVoice(client,after.guild.id).catch(()=>console.error('Activity voice transition failed.'));});
-  client.on(Events.InteractionCreate,async interaction=>{
+  on(Events.VoiceStateUpdate,async(_before,after)=>{if(enableProfilesSmoke)await profiles.sampleVoice(client,after.guild.id);});
+  on(Events.InteractionCreate,async interaction=>{
     try{
-      if(enableProfilesSmoke&&interaction.isChatInputCommand())void profiles.recordCommand(interaction).catch(()=>console.error('Command activity recording failed.'));
+      if(interaction.guildId&&interaction.isRepliable()){
+        const command=interaction.isChatInputCommand()?interaction.commandName:undefined;
+        const subcommand=interaction.isChatInputCommand()?interaction.options.getSubcommand(false)??undefined:undefined;
+        const component='customId' in interaction?interaction.customId:undefined;
+        const moderationSafe=component==='onboard:ack_rules'||command==='rules'||command==='help'||(command==='jail'&&(subcommand==='status'||subcommand==='reason'));
+        if(!moderationSafe&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are currently in moderation Hotseat. Only jail-safe commands are available until release.'});return;}
+        if(command!=='rules'&&component!=='onboard:ack_rules'&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are in crime jail. Use /crime bail, or ask another member to pay your bail.'});return;}
+      }
+      if((interaction.isChatInputCommand()&&interaction.commandName==='crime')||((interaction.isButton()||interaction.isStringSelectMenu()||interaction.isUserSelectMenu())&&interaction.customId.startsWith('crime:'))){if(!enableCrimeSmoke){await interaction.reply({ephemeral:true,content:'Crime controls are not enabled yet.'});return;}await crime.handle(interaction);return;}
+
+      if(enableProfilesSmoke&&interaction.isChatInputCommand())lifecycle.run(()=>profiles.recordCommand(interaction),()=>console.error('Command activity recording failed.'));
+      if(interaction.isButton()&&interaction.customId.startsWith('channelgame:')){if(!enableChannelGamesSmoke){await interaction.reply({ephemeral:true,content:'Channel games are not enabled yet.'});return;}await channelGames.handle(interaction);return;}
+      if((interaction.isChatInputCommand()&&PARTY_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('party:'))){if(!enablePartySmoke){await interaction.reply({ephemeral:true,content:'Party games are not enabled yet.'});return;}await party.handle(interaction);return;}
+      if((interaction.isChatInputCommand()&&interaction.commandName==='game')||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('pvp:'))){if(!enablePvpSmoke){await interaction.reply({ephemeral:true,content:'Skill games are not enabled yet.'});return;}await pvp.handle(interaction);return;}
+      if(interaction.isButton()&&interaction.customId.startsWith('line:')){if(!enableSpecialSmoke){await interaction.reply({ephemeral:true,content:'Line controls are not enabled yet.'});return;}await special.handle(interaction);return;}
+      if((interaction.isChatInputCommand()&&SOLO_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('solo:'))){if(!enableSoloSmoke){await interaction.reply({ephemeral:true,content:'Solo games are not enabled yet.'});return;}await solo.handle(interaction);return;}
+
       if((interaction.isButton()||interaction.isModalSubmit())&&(interaction.customId.startsWith('event:')||interaction.customId.startsWith('fight:'))){if(!enableEventsSmoke){await interaction.reply({ephemeral:true,content:'Event controls are not enabled yet.'});return;}await events.handle(interaction);return;}
       if(interaction.isChatInputCommand()&&interaction.commandName==='fight'){if(!enableEventsSmoke){await interaction.reply({ephemeral:true,content:'Fight is not enabled yet.'});return;}await events.startFight(interaction);return;}
       if((interaction.isChatInputCommand()&&CASINO_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('casino:'))){if(!enableCasinoSmoke){await interaction.reply({ephemeral:true,content:'Casino controls are not enabled yet.'});return;}await casino.handle(interaction);return;}
@@ -178,7 +264,7 @@ export async function startProductionBot():Promise<void>{
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='onboard:ack_rules'){await onboarding.handleRulesAck(interaction);if(enableJailSmoke&&interaction.guildId)await jail.reconcileMember(interaction.guildId,interaction.user.id);if(enableSecuritySmoke&&interaction.guild){const member=await interaction.guild.members.fetch(interaction.user.id);await security.enforceAfterRulesAck(member,interaction);}return;}
       if(enableOnboardingSmoke&&interaction.isStringSelectMenu()&&interaction.customId.startsWith('roles:select:')){await onboarding.handleRoleSelect(interaction);return;}
     }catch(error){
-      console.error('Interaction failed',error);
+      console.error('Interaction failed; response withheld or marked unsuccessful.');
       const content='That action could not be completed. Angrier Jordan logged the failure.';
       if(interaction.isRepliable()){
         if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
@@ -187,7 +273,18 @@ export async function startProductionBot():Promise<void>{
     }
   });
 
-  const shutdown=async()=>{worker.stop();if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);client.destroy();await disconnectPrisma();};
+  const server=await startRuntimeHealth(runtime.port,()=>initialized&&client.isReady()&&!lifecycle.isStopping,()=>db.$queryRaw`SELECT 1`);
+  let shutdownPromise:Promise<void>|undefined;
+  const shutdown=()=>shutdownPromise??(shutdownPromise=(async()=>{
+    lifecycle.stopAdmission();initialized=false;worker.stop();
+    if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);
+    if(crimeSweep)clearInterval(crimeSweep);if(partySweep)clearInterval(partySweep);if(pvpSweep)clearInterval(pvpSweep);if(specialSweep)clearInterval(specialSweep);if(soloSweep)clearInterval(soloSweep);
+    const deadline=setTimeout(()=>{console.error('Shutdown deadline reached; durable work will recover on restart.');process.exit(1);},25_000);deadline.unref();
+    try{
+      await Promise.allSettled([lifecycle.drain(20_000),worker.stopAndDrain()]);
+      client.destroy();await new Promise<void>(resolve=>server.close(()=>resolve()));await disconnectPrisma();
+    }finally{clearTimeout(deadline);}
+  })());
   process.once('SIGINT',()=>{void shutdown();});process.once('SIGTERM',()=>{void shutdown();});
-  await client.login(token);
+  try{await client.login(token);}catch{await shutdown();throw new Error('Discord login failed.');}
 }

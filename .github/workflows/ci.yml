@@ -1,0 +1,86 @@
+name: Build and acceptance
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: angrier_jordan_precode_construction_pack_v1
+    services:
+      postgres:
+        image: postgres:16-bookworm
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: disposable-ci-only
+          POSTGRES_DB: angrier_jordan_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ci -d angrier_jordan_test"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: angrier_jordan_precode_construction_pack_v1/package-lock.json
+      - run: npm install --global npm@11.6.0
+      - run: npm ci
+      - run: npm run build
+      - run: npm run preflight
+      - name: Write disposable database setting to the ignored test file
+        run: |
+          git check-ignore -q .env.test.local
+          node --input-type=module -e "import fs from 'node:fs'; fs.writeFileSync('.env.test.local', 'TEST_DATABASE_URL=postgresql://ci:disposable-ci-only@127.0.0.1:5432/angrier_jordan_test\n', {mode: 0o600});"
+      - run: npm run test:postgres
+      - name: Remove disposable test setting
+        if: always()
+        run: node --input-type=module -e "import fs from 'node:fs'; fs.rmSync('.env.test.local', {force:true});"
+      - name: Verify generated tracked files are current
+        run: git diff --exit-code -- generated apps/dashboard/lib/generated packages/contracts/src/generated
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add a local-only sentinel to verify context exclusion
+        working-directory: angrier_jordan_precode_construction_pack_v1
+        run: touch .env.test.local apps/dashboard/.env.local
+      - name: Build both service roles and migration CLI
+        run: docker build --build-arg RAILWAY_GIT_COMMIT_SHA="$GITHUB_SHA" -t angrier-jordan:ci angrier_jordan_precode_construction_pack_v1
+      - name: Verify image content and non-root runtime without credentials
+        run: |
+          docker run --rm --network none --entrypoint node angrier-jordan:ci --input-type=module -e '
+          import assert from "node:assert/strict";
+          import fs from "node:fs";
+          import {createRequire} from "node:module";
+          assert.notEqual(process.getuid(),0);
+          assert.match(fs.readFileSync("RELEASE_SHA","utf8").trim(),/^[a-f0-9]{40}$/i);
+          for(const p of ["dist/apps/bot/src/index.js","scripts/start-dashboard.mjs","scripts/migrate-production.mjs","apps/dashboard/.next/BUILD_ID","packages/database/prisma/schema.prisma"]) assert.ok(fs.existsSync(p),p);
+          for(const p of [".env.test.local","apps/dashboard/.env.local",".git"]) assert.ok(!fs.existsSync(p),p);
+          const require=createRequire(new URL("file:///app/packages/database/package.json"));
+          assert.ok(require.resolve("prisma/build/index.js"));
+          const {rasterizeSvg}=await import("/app/dist/packages/renderer/src/raster.js");
+          const png=await rasterizeSvg("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\"><text y=\"20\" font-family=\"Inter\">AJ</text></svg>");
+          assert.equal(png.subarray(1,4).toString(),"PNG");
+          console.log("Image content smoke passed");'
+      - name: Verify all roles fail closed without runtime credentials
+        run: |
+          for role in dist/apps/bot/src/index.js scripts/start-dashboard.mjs scripts/migrate-production.mjs; do
+            set +e
+            output=$(docker run --rm --network none --entrypoint node angrier-jordan:ci "$role" 2>&1)
+            status=$?
+            set -e
+            test "$status" -eq 1
+            printf '%s' "$output" | grep -q 'Invalid runtime configuration:'
+          done

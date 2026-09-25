@@ -36,26 +36,26 @@ export class OnboardingService {
     await this.repository.acknowledgeRules(guildId,userId,now);
     const resumed=await this.repository.resumePausedPunishments(guildId,userId,now);
     const active=await this.repository.listActivePunishments(guildId,userId,now);
-    const punished=active.length>0;
+    const punished=active.some(p=>p.kind==='MODERATION');
     const presence=await this.repository.getPresence(guildId,userId);
     const snapshots=await this.repository.listRoleSnapshots(guildId,userId);
     const rolesToRestore=punished?[]:snapshots.filter(role=>allowedRestore(role,now));
     const plan:RestorePlan={
-      guildId,userId,grantMemberAccess:!punished,applyJailedRole:punished,rolesToRestore,
+      guildId,userId,grantMemberAccess:!punished,applyJailedRole:punished,crimeCommandRestricted:active.some(p=>p.kind==='CRIME'),rolesToRestore,
       ...(presence?.nickname?{nickname:presence.nickname}:{}),punishmentIds:active.map(x=>x.id),deferredBecausePunished:punished,
     };
-    await this.audit.record({guildId,actorUserId:userId,source:'discord',action:'onboarding.rules_acknowledged',targetType:'member',targetId:userId,after:{grantMemberAccess:plan.grantMemberAccess,applyJailedRole:plan.applyJailedRole,restoreRoleCount:rolesToRestore.length,resumedPunishmentIds:resumed.map(x=>x.id)},requestId:`rules:${guildId}:${userId}:${now.getTime()}`,createdAt:now});
+    await this.audit.record({guildId,actorUserId:userId,source:'discord',action:'onboarding.rules_acknowledged',targetType:'member',targetId:userId,after:{grantMemberAccess:plan.grantMemberAccess,applyJailedRole:plan.applyJailedRole,crimeCommandRestricted:plan.crimeCommandRestricted,restoreRoleCount:rolesToRestore.length,resumedPunishmentIds:resumed.map(x=>x.id)},requestId:`rules:${guildId}:${userId}:${now.getTime()}`,createdAt:now});
     return plan;
   }
 
   async buildPostPunishmentRestorePlan(guildId:string,userId:string):Promise<RestorePlan>{
     const now=this.clock.now();
     const active=await this.repository.listActivePunishments(guildId,userId,now);
-    if(active.length)throw new DomainError('PUNISHMENT_ACTIVE','Member still has an active punishment.');
+    if(active.some(p=>p.kind==='MODERATION'))throw new DomainError('PUNISHMENT_ACTIVE','Member still has an active moderation Hotseat sentence.');
     const presence=await this.repository.getPresence(guildId,userId);
     if(!presence||presence.needsRulesAck)throw new DomainError('RULES_ACK_REQUIRED','Rules must be acknowledged before access is restored.');
     const snapshots=await this.repository.listRoleSnapshots(guildId,userId);
-    return {guildId,userId,grantMemberAccess:true,applyJailedRole:false,rolesToRestore:snapshots.filter(role=>allowedRestore(role,now)),...(presence.nickname?{nickname:presence.nickname}:{}),punishmentIds:[],deferredBecausePunished:false};
+    return {guildId,userId,grantMemberAccess:true,applyJailedRole:false,crimeCommandRestricted:active.some(p=>p.kind==='CRIME'),rolesToRestore:snapshots.filter(role=>allowedRestore(role,now)),...(presence.nickname?{nickname:presence.nickname}:{}),punishmentIds:active.map(p=>p.id),deferredBecausePunished:false};
   }
 
   async completeRoleRestore(guildId:string,userId:string,input:{restoredRoleIds:readonly string[];failed:readonly {roleId:string;reason:string}[];nicknameRestored:boolean;nicknameFailure?:string}):Promise<void>{

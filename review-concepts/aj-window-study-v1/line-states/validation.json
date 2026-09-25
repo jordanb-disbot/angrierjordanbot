@@ -1,0 +1,74 @@
+{
+  "stateCount": 13,
+  "dimensions": "650x996",
+  "countdown": [
+    5,
+    4,
+    3,
+    2,
+    1
+  ],
+  "visibleZero": false,
+  "terminalButtons": false,
+  "animationFrames": 37,
+  "animationDurationMs": 8000,
+  "animationPlays": 1,
+  "shameSource": "LINE-SHAME-001",
+  "productionChanges": false,
+  "states": [
+    {
+      "id": "01-opened",
+      "sha256": "d8c892f3b8d2bd45d4c2d34a0531fe23c3fc30cd922962ff619f0e9c85d1b191"
+    },
+    {
+      "id": "02-checking-in",
+      "sha256": "d13ae7ea92d3f52d70f44eb7fcb0642e7739d4a73720372132cd5ebe6cc98cff"
+    },
+    {
+      "id": "03-all-ready",
+      "sha256": "4590629504907c8769620d282f458a4482956510507f6d7ffa779bee6b144007"
+    },
+    {
+      "id": "04-extended",
+      "sha256": "827d2612f5dcb29c252a292209b5d5bd61a467c3b9c136eafc5b8a93c5383937"
+    },
+    {
+      "id": "05-locked",
+      "sha256": "d09cfc8d282ea78fb1731f531f07d989c697487520f23e671cad638f0b3b4aac"
+    },
+    {
+      "id": "06-countdown-5",
+      "sha256": "8ea464861187645641e4ad91ead3de1f37420cd7d4792b8a78e6080c0905db64"
+    },
+    {
+      "id": "07-countdown-4",
+      "sha256": "cd8c90bcb3ae4ecac287d796ed533ce8ebadb1133d9876ce54ee3f262f5e0618"
+    },
+    {
+      "id": "08-countdown-3",
+      "sha256": "5a08ade782430a73d8fbb425a5926d708b42236a06026aa1cc38790930529de6"
+    },
+    {
+      "id": "09-countdown-2",
+      "sha256": "8f179a96f82c422749b74f21c38c07f5b06d3e9cb52264e554134de36dc9086b"
+    },
+    {
+      "id": "10-countdown-1",
+      "sha256": "4428363e659f19eef64e4748cc2b09b0ffd2644c9051d0a05760fa819d0152ac"
+    },
+    {
+      "id": "11-powder-burst",
+      "sha256": "ca297697bc85384328a921314d4d0cd970e99dcd4c5f3680469f89cf583ed7a6"
+    },
+    {
+      "id": "12-complete",
+      "sha256": "580b36e4652eff4c65e7bef085e5de4addf9f505e78a341294e6fd07f5dfb1de"
+    },
+    {
+      "id": "13-cancelled",
+      "sha256": "9733a4606039016c758b9c6c428dac4b8308ddc430af6b2c45e95bf8752d3cea"
+    }
+  ],
+  "deterministicRaster": "PASS",
+  "stableCountdownFrame": "PASS"
+}

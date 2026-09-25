@@ -10,3 +10,12 @@ dist/
 coverage/
 *.log
 *.tsbuildinfo
+__pycache__/
+*.pyc
+.cache/
+.railway/
+*.pem
+*.key
+credentials.json
+tokens.json
+*.tmp

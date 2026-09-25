@@ -54,8 +54,8 @@ export class DiscordOnboardingCoordinator {
     const member=await interaction.guild.members.fetch(interaction.user.id);
     const plan=await this.service.acknowledgeRules(interaction.guildId,interaction.user.id);
     const result=await this.applyRestorePlan(member,plan);
-    const accessText=plan.applyJailedRole?'Your rules acknowledgment is complete. Your previous punishment has resumed; normal access returns when it ends.':'Rules acknowledged. Your normal server access has been restored.';
-    const optional='Optional next steps: `/roles`, `/lore`, `/introduce`, `/tutorial`.';
+    const accessText=plan.applyJailedRole?'Your rules acknowledgment is complete. Your moderation Hotseat has resumed; normal access returns when it ends.':'Rules acknowledged. Your normal server access has been restored.';
+    const optional=plan.crimeCommandRestricted?(plan.applyJailedRole?'Crime jail also remains active. Another eligible member may pay your crime bail; moderation Hotseat remains separate.':'Crime jail still blocks ordinary bot commands. Use `/crime bail`, or another member may pay it for you.'):'Optional next steps: `/roles`, `/lore`, `/introduce`, `/tutorial`.';
     const failed=result.failed.length?`\n${result.failed.length} prior role(s) could not be restored and were logged.`:'';
     await interaction.editReply({content:`${accessText}\n${optional}${failed}`});
   }
@@ -127,10 +127,10 @@ export class DiscordOnboardingCoordinator {
     const [access,jailed]=await Promise.all([roleId(this.config,member.guild.id,'roles.member_access'),roleId(this.config,member.guild.id,'roles.jailed')]);
     const restored:string[]=[];const failed:{roleId:string;reason:string}[]=[];
     if(plan.applyJailedRole){
-      if(access&&member.roles.cache.has(access))await member.roles.remove(access,'Active punishment restored after rejoin.').catch(()=>undefined);
-      if(jailed){try{await member.roles.add(jailed,'Active punishment restored after rejoin.');restored.push(jailed);}catch(error){failed.push({roleId:jailed,reason:safeError(error)});}}
+      if(access&&member.roles.cache.has(access))await member.roles.remove(access,'Active moderation Hotseat restored after rejoin.').catch(()=>undefined);
+      if(jailed){try{await member.roles.add(jailed,'Active moderation Hotseat restored after rejoin.');restored.push(jailed);}catch(error){failed.push({roleId:jailed,reason:safeError(error)});}}
     }else{
-      if(jailed&&member.roles.cache.has(jailed))await member.roles.remove(jailed,'No active punishment after rules acknowledgment.').catch(()=>undefined);
+      if(jailed&&member.roles.cache.has(jailed))await member.roles.remove(jailed,'No active moderation Hotseat after rules acknowledgment.').catch(()=>undefined);
       if(access){try{await member.roles.add(access,'Rules acknowledged.');restored.push(access);}catch(error){failed.push({roleId:access,reason:safeError(error)});}}
       for(const snapshot of plan.rolesToRestore){
         const role=member.guild.roles.cache.get(snapshot.roleId);

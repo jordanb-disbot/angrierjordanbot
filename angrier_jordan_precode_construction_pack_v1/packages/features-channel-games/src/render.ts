@@ -1,0 +1,2 @@
+import {shell,heading,panel,text,ink} from '../../features-events/src/visual.js';
+export function renderChannelGame(title:string,status:string,detail:string){return shell(310,heading('CHAIRS • CHANNEL GAMES',title,'One community. Keep it going.')+panel(18,130,404,156,ink.teal)+text(32,170,status.slice(0,38),22,ink.warm)+text(32,210,detail.slice(0,52),13,ink.white)+text(32,252,'SIT. PLAY. BELONG.',11,ink.muted));}

@@ -215,6 +215,42 @@
       "recliner",
       "chaise_lounge",
       "throne"
+    ],
+    "special.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
+    ],
+    "solo.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
+    ],
+    "pvp.play": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne",
+      "discord_administrator",
+      "guild_owner"
+    ],
+    "channel_games.play": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne",
+      "discord_administrator",
+      "guild_owner"
+    ],
+    "crime.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne",
+      "discord_administrator",
+      "guild_owner"
     ]
   },
   "rules": [

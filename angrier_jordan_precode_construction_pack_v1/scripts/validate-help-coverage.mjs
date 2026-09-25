@@ -18,3 +18,9 @@ const events=JSON.parse(fs.readFileSync('packages/content/help/events.json','utf
 for(const id of events.commands)if(!r.commands.some(c=>c.id===id&&c.help_id))throw new Error('Unknown event help command '+id);
 if(!events.fields.amount||!events.fields.selection||!events.fields.member||!events.tutorial.steps.length)throw new Error('Incomplete event help');
 console.log('Race/Fight help and owner-confirmed refund policy present.');
+for(const family of ['special','solo','pvp','party','channel-games','crime']){
+ const content=JSON.parse(fs.readFileSync('packages/content/help/'+family+'.json','utf8'));
+ for(const id of content.commands)if(!r.commands.some(c=>c.id===id&&c.help_id&&c.tutorial_id))throw new Error('Missing contextual help registry link '+id);
+ if(!Object.keys(content.fields).length||!content.tutorial.steps.length)throw new Error('Missing contextual tutorial '+family);
+}
+console.log('Line/Special Command and solo rules/tutorial metadata valid.');

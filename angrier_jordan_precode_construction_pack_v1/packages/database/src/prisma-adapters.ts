@@ -1,4 +1,5 @@
 import {randomUUID} from 'node:crypto';
+import { Prisma } from '@prisma/client';
 import type { AuditEvent, AuditSink, ConfigRecord, ConfigRepository, ConfigRevisionRecord, JobRepository, ScheduledJob } from '../../core/src/index.js';
 import { DomainError } from '../../core/src/index.js';
 
@@ -7,13 +8,15 @@ interface ConfigRevisionRow { guildId:string;key:string;version:number;value:unk
 interface ScheduledJobRow { leaseToken?:string|null;leaseUntil?:Date|null;retryAt?:Date|null; id:string;guildId:string;jobType:string;executionKey:string;dueAt:Date;status:string;payload:unknown;attempts:number;lastError:string|null;completedAt:Date|null; }
 interface UpdateManyResult { count:number; }
 
-interface ConfigTxLike {
+export interface ConfigTxLike {
   configValue:{
     findUnique(args:unknown):Promise<ConfigValueRow|null>;
     create(args:unknown):Promise<ConfigValueRow>;
     update(args:unknown):Promise<ConfigValueRow>;
   };
   configRevision:{create(args:unknown):Promise<unknown>};
+  auditEvent?:{create(args:unknown):Promise<unknown>};
+  $queryRawUnsafe?<T=unknown>(query:string,...values:unknown[]):Promise<T>;
 }
 
 interface JobTxLike {
@@ -50,21 +53,18 @@ export class PrismaConfigRepository implements ConfigRepository {
   }
   async set(input:{guildId:string;key:string;value:unknown;source:string;actorUserId?:string;expectedVersion?:number;rollbackSafe:boolean}):Promise<ConfigRecord>{
     return this.db.$transaction(async tx=>{
-      const current=await tx.configValue.findUnique({where:{guildId_key:{guildId:input.guildId,key:input.key}}});
-      const actualVersion=current?.version??0;
-      if(input.expectedVersion!==undefined&&input.expectedVersion!==actualVersion){
-        throw new DomainError('CONFIG_CONFLICT',`Setting ${input.key} changed from version ${input.expectedVersion} to ${actualVersion}.`);
-      }
-      const nextVersion=actualVersion+1;
-      const data={value:input.value,source:input.source,version:nextVersion,updatedBy:input.actorUserId??null};
-      const next=current
-        ?await tx.configValue.update({where:{guildId_key:{guildId:input.guildId,key:input.key}},data})
-        :await tx.configValue.create({data:{guildId:input.guildId,key:input.key,...data}});
-      await tx.configRevision.create({data:{
-        guildId:input.guildId,key:input.key,version:nextVersion,value:input.value,source:input.source,
-        actorUserId:input.actorUserId??null,rollbackSafe:input.rollbackSafe,
-      }});
-      return configRecord(next);
+      await lockConfigServer(tx,input.guildId);
+      return writeConfig(tx,input);
+    });
+  }
+  async setAudited(input:Parameters<PrismaConfigRepository['set']>[0],event:(before:ConfigRecord|null,after:ConfigRecord)=>AuditEvent):Promise<ConfigRecord>{
+    return this.db.$transaction(async tx=>{
+      await lockConfigServer(tx,input.guildId);
+      if(!tx.auditEvent)throw new DomainError('ATOMIC_AUDIT_UNAVAILABLE','Configuration changes require transactional audit.');
+      const previous=await tx.configValue.findUnique({where:{guildId_key:{guildId:input.guildId,key:input.key}}});
+      const row=await writeConfig(tx,input);
+      await new PrismaAuditSink({auditEvent:tx.auditEvent}).write(event(previous?configRecord(previous):null,row));
+      return row;
     });
   }
   async revisions(guildId:string,key:string,limit=50):Promise<ConfigRevisionRecord[]>{
@@ -76,8 +76,32 @@ export class PrismaConfigRepository implements ConfigRepository {
   }
 }
 
+/** Same lock is used by live saves and draft publish; protects default/missing rows too. */
+export async function lockConfigServer(tx:ConfigTxLike,guildId:string):Promise<void>{
+  if(tx.$queryRawUnsafe)await tx.$queryRawUnsafe('SELECT pg_advisory_xact_lock(hashtextextended($1, 0))::text',`aj-config:${guildId}`);
+}
+
+export async function writeConfig(tx:ConfigTxLike,input:{guildId:string;key:string;value:unknown;source:string;actorUserId?:string;expectedVersion?:number;rollbackSafe:boolean}):Promise<ConfigRecord>{
+      const current=await tx.configValue.findUnique({where:{guildId_key:{guildId:input.guildId,key:input.key}}});
+      const actualVersion=current?.version??0;
+      if(input.expectedVersion!==undefined&&input.expectedVersion!==actualVersion){
+        throw new DomainError('CONFIG_CONFLICT',`Setting ${input.key} changed from version ${input.expectedVersion} to ${actualVersion}.`);
+      }
+      const nextVersion=actualVersion+1;
+      const value=input.value===null?Prisma.JsonNull:input.value;
+      const data={value,source:input.source,version:nextVersion,updatedBy:input.actorUserId??null};
+      const next=current
+        ?await tx.configValue.update({where:{guildId_key:{guildId:input.guildId,key:input.key}},data})
+        :await tx.configValue.create({data:{guildId:input.guildId,key:input.key,...data}});
+      await tx.configRevision.create({data:{
+        guildId:input.guildId,key:input.key,version:nextVersion,value,source:input.source,
+        actorUserId:input.actorUserId??null,rollbackSafe:input.rollbackSafe,
+      }});
+      return configRecord(next);
+}
+
 export class PrismaAuditSink implements AuditSink {
-  constructor(private readonly db:FoundationPrismaLike){}
+  constructor(private readonly db:Pick<FoundationPrismaLike,'auditEvent'>){}
   async write(event:AuditEvent):Promise<void>{
     await this.db.auditEvent.create({data:{
       guildId:event.guildId,actorUserId:event.actorUserId??null,source:event.source,action:event.action,

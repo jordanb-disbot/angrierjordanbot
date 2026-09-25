@@ -1,0 +1,7 @@
+// Merge into schema.prisma; one shared draft across all sections of the configured server.
+model DashboardDraft {
+  guildId String @id
+  revision Int @default(0)
+  state Json
+  updatedAt DateTime @updatedAt
+}

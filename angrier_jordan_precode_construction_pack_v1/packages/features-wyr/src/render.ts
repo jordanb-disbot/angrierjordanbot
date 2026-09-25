@@ -6,8 +6,8 @@ const C={
 };
 const esc=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]??c));
 const wrap=(s:string,max:number)=>{const out:string[]=[];let line='';for(const w of s.split(/\s+/)){const n=line?`${line} ${w}`:w;if(n.length>max&&line){out.push(line);line=w;}else line=n;}if(line)out.push(line);return out;};
-const text=(value:string,x:number,y:number,size:number,weight=500,fill=C.text,anchor:'start'|'middle'|'end'='start',family='Poppins, Arial, sans-serif')=>`<text x="${x}" y="${y}" font-family="${family}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${esc(value)}</text>`;
-const tspanLines=(lines:string[],x:number,startY:number,size:number,lineHeight:number,weight=600,fill=C.text,anchor:'start'|'middle'|'end'='middle',family='Poppins, Arial, sans-serif')=>lines.map((line,i)=>text(line,x,startY+i*lineHeight,size,weight,fill,anchor,family)).join('');
+const text=(value:string,x:number,y:number,size:number,weight=500,fill=C.text,anchor:'start'|'middle'|'end'='start',family='Inter, Arial, sans-serif')=>`<text x="${x}" y="${y}" font-family="${family}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${esc(value)}</text>`;
+const tspanLines=(lines:string[],x:number,startY:number,size:number,lineHeight:number,weight=600,fill=C.text,anchor:'start'|'middle'|'end'='middle',family='Inter, Arial, sans-serif')=>lines.map((line,i)=>text(line,x,startY+i*lineHeight,size,weight,fill,anchor,family)).join('');
 const frame=(body:string)=>`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
 <defs>
   <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${C.bg}"/><stop offset="0.6" stop-color="${C.navy}"/><stop offset="1" stop-color="#07101D"/></linearGradient>
@@ -43,7 +43,7 @@ export function renderWyrOpen(session:WyrRuntimeSession,remainingSeconds:number)
   const total=session.data.durationSeconds+(session.extensionUsed?session.data.extensionSeconds:0);
   const ratio=Math.max(0,Math.min(1,remainingSeconds/Math.max(1,total)));
   return frame(`
-    ${text('WOULD YOU RATHER',600,92,42,700,C.text,'middle','Cinzel, Georgia, serif')}
+    ${text('WOULD YOU RATHER',600,92,42,700,C.text,'middle','Space Grotesk, Arial, sans-serif')}
     ${text(session.data.category.toUpperCase(),600,126,15,700,C.gold,'middle')}
     ${tspanLines(wrap(session.data.question,62).slice(0,2),600,174,23,30,650,C.text,'middle')}
     ${optionCard(92,238,470,230,'A',session.data.optionA)}
@@ -59,7 +59,7 @@ export function renderWyrOpen(session:WyrRuntimeSession,remainingSeconds:number)
 export function renderWyrResults(session:WyrRuntimeSession,results:WyrResults):string{
   const winner=results.winner==='NONE'?'No votes were cast.':results.winner==='TIE'?'The room is split.':`Most people chose: ${results.winner==='A'?session.data.optionA:session.data.optionB}`;
   return frame(`
-    ${text('WOULD YOU RATHER',600,92,42,700,C.text,'middle','Cinzel, Georgia, serif')}
+    ${text('WOULD YOU RATHER',600,92,42,700,C.text,'middle','Space Grotesk, Arial, sans-serif')}
     ${text(`${session.data.category.toUpperCase()} • RESULTS`,600,126,15,700,C.gold,'middle')}
     ${tspanLines(wrap(session.data.question,62).slice(0,2),600,174,23,30,650,C.text,'middle')}
     ${optionCard(92,238,470,250,'A',session.data.optionA,results.A,results.total)}

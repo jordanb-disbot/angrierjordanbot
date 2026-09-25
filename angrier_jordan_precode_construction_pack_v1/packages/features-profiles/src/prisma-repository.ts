@@ -2,7 +2,7 @@ import {Prisma,type PrismaClient} from '@prisma/client';
 import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atomic-operations.js';
 import {DomainError} from '../../core/src/index.js';
 import {dailyCycle,weeklyCycle,zonedDateTimeToUtc} from '../../features-economy/src/service.js';
-import {recordMonth,compareRecord,earnedAchievements,learnedSpotlightHour,qualifyMessage,spotlightWinners,type ActivityTotal,type AchievementRule,type MessageObservation} from './domain.js';
+import {fmkSummary,recordMonth,compareRecord,recordDirection,earnedAchievements,learnedSpotlightHour,qualifyMessage,spotlightWinners,type ActivityTotal,type AchievementRule,type MessageObservation} from './domain.js';
 const dict=(v:unknown)=>v&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,number>:{};
 const dateOf=(key:string)=>new Date(key+'T00:00:00Z');
 const merge=(a:unknown,b:Record<string,number>)=>{const out={...dict(a)};for(const [k,n] of Object.entries(b))out[k]=(Object.hasOwn(out,k)?out[k]??0:0)+n;return out;};
@@ -64,7 +64,8 @@ export class PrismaProfilesRepository {
   if(category==='spotlight'){const rows=await this.db.weeklySpotlight.findMany({where:{guildId}}),map=new Map<string,number>();for(const r of rows)map.set(r.userId,(map.get(r.userId)??0)+1);return[...map].map(([userId,value])=>({userId,value})).sort((a,b)=>b.value-a.value);}
   if(category==='crime')return(await this.db.memberCrimeState.findMany({where:{guildId},orderBy:{successfulRobs:'desc'}})).map(r=>({userId:r.userId,value:r.successfulRobs}));
   if(category==='gambling'){const rows=await this.db.memberGameStats.findMany({where:{guildId,gameKey:{in:['blackjack','roulette','slots','dice','coinflip','lottery']}}}),map=new Map<string,number>();for(const r of rows)map.set(r.userId,(map.get(r.userId)??0)+r.wins);return[...map].map(([userId,value])=>({userId,value})).sort((a,b)=>b.value-a.value);}
-  if(category==='wins'){const rows=await this.db.memberGameStats.findMany({where:{guildId}}),map=new Map<string,number>();for(const r of rows)map.set(r.userId,(map.get(r.userId)??0)+r.wins);return[...map].map(([userId,value])=>({userId,value})).sort((a,b)=>b.value-a.value);}
+  if(category==='wins'){const rows=await this.db.memberGameStats.findMany({where:{guildId,gameKey:{notIn:['skill_games','party_games']}}}),map=new Map<string,number>();for(const r of rows)map.set(r.userId,(map.get(r.userId)??0)+r.wins);return[...map].map(([userId,value])=>({userId,value})).sort((a,b)=>b.value-a.value);}
+  if(['fmk_fucked','fmk_married','fmk_killed','fmk_agreement'].includes(category)){const key=category==='fmk_agreement'?'averageAgreement':category.slice(4),rows=await this.db.memberGameStats.findMany({where:{guildId,gameKey:category==='fmk_agreement'?'fmk':'fmk_subject'}});return rows.map(row=>({userId:row.userId,summary:fmkSummary([row])})).filter(row=>category!=='fmk_agreement'||row.summary.agreementRounds>0).map(row=>({userId:row.userId,value:row.summary[key as 'fucked'|'married'|'killed'|'averageAgreement']})).sort((a,b)=>b.value-a.value||a.userId.localeCompare(b.userId));}
   if(category==='crafting'){return(await this.db.craftingProgress.findMany({where:{guildId},orderBy:{successes:'desc'}})).map(r=>({userId:r.userId,value:r.successes}));}
   if(category==='collections'){const [sets,catalog,found]=await Promise.all([this.db.collectionSet.findMany({where:{enabled:true}}),this.db.catalogItem.findMany(),this.db.collectionDiscovery.findMany({where:{guildId}})]);const eligible=new Set(sets.flatMap(s=>s.itemIds).filter(id=>{const i=catalog.find(i=>i.id===id),meta=i?.metadata as Record<string,unknown>|null;return i&&meta?.limited!==true&&meta?.eventOnly!==true;}));const map=new Map<string,Set<string>>();for(const f of found)if(eligible.has(f.itemId)){const ids=map.get(f.userId)??new Set<string>();ids.add(f.itemId);map.set(f.userId,ids);}return[...map].map(([userId,ids])=>({userId,value:eligible.size?Math.floor(100*ids.size/eligible.size):0})).sort((a,b)=>b.value-a.value);}
   if(!['messages','words','voice'].includes(category))throw new DomainError('LEADERBOARD_CATEGORY','Choose a supported leaderboard category.');
@@ -79,7 +80,7 @@ export class PrismaProfilesRepository {
    for(const scopeKey of ['alltime',recordMonth(at)]){
     const where={guildId_recordKey_scopeKey:{guildId,recordKey,scopeKey}},old=await tx.recordValue.findUnique({where});
     const oldData=old?.value as {amount?:string}|undefined;
-    const change=compareRecord(value,old&&oldData?.amount?{value:oldData.amount,achievedAt:old.achievedAt.toISOString()}:null,at);
+    const change=compareRecord(value,old&&oldData?.amount?{value:oldData.amount,achievedAt:old.achievedAt.toISOString()}:null,at,recordDirection(recordKey));
     if(!change)continue;
     await tx.recordValue.upsert({where,create:{guildId,recordKey,scopeKey,userId,value:{amount:value.toString()},achievedAt:at},update:{userId,value:{amount:value.toString()},achievedAt:at}});
     const executionKey='record:announce:'+guildId+':'+requestKey+':'+scopeKey;

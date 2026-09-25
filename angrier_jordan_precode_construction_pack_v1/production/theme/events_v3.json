@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "authority": "Direct owner instruction and supplied Brand Style Guide; overrides earlier event typography",
+  "palette": {
+    "midnight": "#0B1220",
+    "navy": "#051822",
+    "slate": "#374151",
+    "teal": "#0EA5A6",
+    "emerald": "#10B981",
+    "gold": "#F4C542",
+    "warm": "#FFE29A",
+    "white": "#E6EAF0",
+    "muted": "#B4C8CA"
+  },
+  "typography": {
+    "heading": "Space Grotesk",
+    "body": "Inter"
+  },
+  "style": {
+    "environment": "Upscale leather lounge, warm brass, deep teal shadows",
+    "panels": "Inset translucent charcoal with thin teal edge and warm gold highlights",
+    "art": "Fixed packaged raster artwork; no runtime generation"
+  },
+  "scope": "Race/Fight presentation only; other families remain unchanged pending their review"
+}

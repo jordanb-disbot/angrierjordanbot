@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "authority": "Owner Gate A and visual-system approval, 2026-09-25",
+  "palette": {
+    "midnight": "#0B1220",
+    "navy": "#051822",
+    "slate": "#374151",
+    "teal": "#0EA5A6",
+    "emerald": "#10B981",
+    "gold": "#F4C542",
+    "warm": "#FFE29A",
+    "white": "#E6EAF0",
+    "muted": "#B4C8CA"
+  },
+  "typography": {
+    "heading": "Space Grotesk",
+    "body": "Inter"
+  },
+  "style": {
+    "environment": "Upscale leather lounge, warm brass, deep teal shadows",
+    "panels": "Inset translucent charcoal with thin teal edge and warm gold highlights",
+    "art": "Fixed packaged raster artwork; no runtime generation"
+  },
+  "scope": "Permanent Angrier Jordan visual system for all future features",
+  "components": {
+    "windowRadius": 18,
+    "panelRadius": 12,
+    "buttonRadius": 9,
+    "contentInset": 24,
+    "panelGap": 20,
+    "headingFont": "Space Grotesk",
+    "bodyFont": "Inter",
+    "lineAccent": "#A469E2",
+    "fixedFrameDuringAnimation": true
+  },
+  "references": "docs/approved_visuals/locked-2026-09-25/manifest.json"
+}

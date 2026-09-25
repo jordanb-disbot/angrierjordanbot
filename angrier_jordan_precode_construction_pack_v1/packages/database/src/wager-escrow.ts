@@ -1,5 +1,5 @@
 import type {Prisma} from '@prisma/client';
-import {DomainError,EscrowStateMachine,type LedgerEngine} from '../../core/src/index.js';
+import {DomainError,EscrowStateMachine,spendableWallet,type LedgerEngine} from '../../core/src/index.js';
 /** Transaction-scoped shared wager funding; feature state and escrow commit with the ledger. */
 export class PrismaWagerEscrow {
  constructor(private readonly tx:Prisma.TransactionClient,private readonly ledger:LedgerEngine){}
@@ -8,8 +8,8 @@ export class PrismaWagerEscrow {
   const old=await this.tx.escrow.findUnique({where:{idempotencyKey:input.key}});
   if(old){if(old.guildId!==input.guildId||old.ownerUserId!==input.userId||old.amount!==input.amount||old.referenceType!==input.referenceType||old.referenceId!==input.referenceId)throw new DomainError('REPLAY_MISMATCH','Wager request belongs to another action.');return old;}
   const account=await this.tx.economyAccount.findUnique({where:{guildId_userId:{guildId:input.guildId,userId:input.userId}}});
-  if(!account||account.wallet+account.bank<input.amount)throw new DomainError('INSUFFICIENT_FUNDS','You do not have enough Ottomans.');
-  const wallet=account.wallet<input.amount?account.wallet:input.amount,bank=input.amount-wallet;
+  if(!account||spendableWallet(account)+account.bank<input.amount)throw new DomainError('INSUFFICIENT_FUNDS','You do not have enough Ottomans.');
+  const wallet=spendableWallet(account)<input.amount?spendableWallet(account):input.amount,bank=input.amount-wallet;
   await this.ledger.apply({guildId:input.guildId,idempotencyKey:input.key+':reserve',lines:[{userId:input.userId,bucket:'wallet',amount:-wallet,reason:'Wager reserved'},{userId:input.userId,bucket:'bank',amount:-bank,reason:'Wager reserved'},{bucket:'system',amount:input.amount,reason:'Escrow funding'}]});
   return this.tx.escrow.create({data:{guildId:input.guildId,ownerUserId:input.userId,kind:'OTTOMANS',amount:input.amount,walletAmount:wallet,bankAmount:bank,referenceType:input.referenceType,referenceId:input.referenceId,idempotencyKey:input.key}});
  }

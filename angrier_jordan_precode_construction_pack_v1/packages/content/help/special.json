@@ -1,0 +1,13 @@
+{
+  "id":"special_commands",
+  "classification":"guided",
+  "commands":["line","special_vc","special_chess"],
+  "title":"Line and Special Commands",
+  "body":"Use enabled Special Commands in main chat. The trigger is removed. Only the configured opt-in role can be notified. Your available commands depend on current server settings and your current roles; there is no command cooldown.",
+  "line":"Use !line. The host is automatically in. Members choose I’m In or I Need a Second during 60 seconds of readiness. The host can add 30 seconds once, or start early. When entries lock, check-ins remain visible and only the host can Start Countdown or Cancel Line. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, powder burst, complete. No zero, rematch or Play Again.",
+  "vc":"!vc sends a voice-chat invitation to the configured opt-in role.",
+  "chess":"!chess sends a chess invitation; it does not start a native chess game.",
+  "custom":"Authorized enabled custom Special Commands appear in the command list. They send notifications/messages only and cannot replace native Line or Race workflows.",
+  "fields":{"check_in":"I’m In means ready; I Need a Second means waiting. These remain visible after entry closes.","host":"Only the host can extend once, start or cancel."},
+  "tutorial":{"lesson_id":"special_commands.line","steps":["Open the authorized Special Command list.","Start !line in main chat.","Choose your readiness state.","The host extends, starts or cancels.","Watch the shared countdown and completed card."]}
+}

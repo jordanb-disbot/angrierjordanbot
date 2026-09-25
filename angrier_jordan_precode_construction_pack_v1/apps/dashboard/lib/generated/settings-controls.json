@@ -1,5 +1,5 @@
 {
-  "count": 205,
+  "count": 234,
   "controls": [
     {
       "key": "server.timezone",
@@ -13,7 +13,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "server.daily_reset_hour",
@@ -25,6 +28,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 4,
       "max": 4
     },
@@ -41,6 +47,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "choices": [
         "MONDAY",
         "TUESDAY",
@@ -64,6 +73,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 23
     },
@@ -79,7 +91,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "live",
+      "dependsOn": []
     },
     {
       "key": "core.feature_flags",
@@ -93,7 +108,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "core.technical_throttle_ms",
@@ -108,6 +126,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 250,
       "max": 10000
     },
@@ -123,7 +144,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.bot_channel",
@@ -137,7 +161,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.games_channel",
@@ -151,7 +178,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.counting_channel",
@@ -165,7 +195,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.last_letter_channel",
@@ -179,7 +212,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.staff_log",
@@ -193,7 +229,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.chairisms_channel",
@@ -207,7 +246,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.introduction_channel",
@@ -221,7 +263,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "channels.hotseat_channel",
@@ -235,7 +280,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "roles.throne",
@@ -249,7 +297,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "roles.chaise_lounge",
@@ -263,7 +314,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "roles.recliner",
@@ -277,7 +331,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "roles.jailed",
@@ -291,7 +348,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "race.join_seconds",
@@ -303,6 +363,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 60,
       "max": 60
     },
@@ -316,6 +379,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 30,
       "max": 30
     },
@@ -326,12 +392,12 @@
       "description": "",
       "kind": "number",
       "defaultValue": 60,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 15,
       "max": 300
     },
@@ -342,12 +408,12 @@
       "description": "",
       "kind": "number",
       "defaultValue": 30,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 0,
       "max": 120
     },
@@ -358,12 +424,12 @@
       "description": "",
       "kind": "number",
       "defaultValue": 180,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 30,
       "max": 600
     },
@@ -371,17 +437,17 @@
       "key": "line.ready_seconds",
       "section": "games",
       "label": "Ready Seconds",
-      "description": "Line readiness/entry window.",
+      "description": "Canonical fixed 60-second readiness window.",
       "kind": "number",
       "defaultValue": 60,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 15,
-      "max": 180
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
+      "min": 60,
+      "max": 60
     },
     {
       "key": "line.abandon_minutes",
@@ -396,6 +462,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 2,
       "max": 60
     },
@@ -406,12 +475,12 @@
       "description": "",
       "kind": "toggle",
       "defaultValue": true,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false
+      "risk": "locked",
+      "editableBy": [],
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "games.voting.hidden_totals_default",
@@ -425,7 +494,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "games.voting.allow_vote_edit",
@@ -439,7 +511,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "economy.starter_ottomans",
@@ -454,6 +529,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 100000
     },
@@ -470,6 +548,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 100000
     },
@@ -486,6 +567,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 500000
     },
@@ -499,6 +583,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 5,
       "max": 5
     },
@@ -512,6 +599,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 20,
       "max": 20
     },
@@ -524,7 +614,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "economy.bank_robbery_protected",
@@ -535,7 +628,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "economy.transfers_fee_percent",
@@ -547,6 +643,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 0,
       "max": 0
     },
@@ -563,6 +662,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 7,
       "max": 180
     },
@@ -575,7 +677,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "moderation.default_posture",
@@ -590,6 +695,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "choices": [
         "adult_permissive",
         "balanced",
@@ -608,7 +716,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "moderation.heat_decay_hours",
@@ -623,6 +734,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 720
     },
@@ -635,7 +749,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "moderation.jail.default_minutes",
@@ -650,6 +767,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 10080
     },
@@ -665,7 +785,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "moderation.jail.attachments_allowed",
@@ -679,7 +802,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "moderation.jail.staff_role_suspension_enabled",
@@ -692,7 +818,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.join_gate_enabled",
@@ -705,7 +834,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.anti_raid_enabled",
@@ -718,7 +850,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.anti_nuke_enabled",
@@ -731,7 +866,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.panic_mode_enabled",
@@ -744,7 +882,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.raid.join_velocity_per_minute",
@@ -758,6 +899,9 @@
         "throne"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 2,
       "max": 100
     },
@@ -774,6 +918,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 25,
       "max": 1000
     },
@@ -790,6 +937,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 10,
       "max": 500
     },
@@ -805,7 +955,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "live",
+      "dependsOn": []
     },
     {
       "key": "spotlight.post_channel",
@@ -819,7 +972,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "spotlight.fallback_post_hour",
@@ -834,6 +990,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 17,
       "max": 22
     },
@@ -846,7 +1005,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.enabled",
@@ -860,7 +1022,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "dashboard.session_hours",
@@ -875,6 +1040,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 72
     },
@@ -890,7 +1058,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "live",
+      "dependsOn": []
     },
     {
       "key": "custom_commands.enabled",
@@ -904,7 +1075,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "custom_commands.max_commands",
@@ -919,6 +1093,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 500
     },
@@ -935,6 +1112,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 16
     },
@@ -950,7 +1130,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "music.enabled",
@@ -964,7 +1147,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "music.max_active_voice_channels",
@@ -976,6 +1162,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 1,
       "max": 1
     },
@@ -992,6 +1181,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 100
     },
@@ -1007,7 +1199,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "introductions.one_active_per_member",
@@ -1021,7 +1216,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "introductions.normal_messages_locked",
@@ -1035,7 +1233,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "shop.refresh_hour",
@@ -1047,6 +1248,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 4,
       "max": 4
     },
@@ -1063,6 +1267,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 2
     },
@@ -1079,6 +1286,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 10,
       "max": 90
     },
@@ -1095,6 +1305,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 20,
       "max": 100
     },
@@ -1111,6 +1324,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crafting.repair.cheap_restore_max"
+      ],
       "min": 1,
       "max": 100
     },
@@ -1127,6 +1345,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crafting.repair.cheap_restore_min"
+      ],
       "min": 1,
       "max": 100
     },
@@ -1143,6 +1366,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crafting.repair.standard_restore_max"
+      ],
       "min": 1,
       "max": 100
     },
@@ -1159,6 +1387,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crafting.repair.standard_restore_min"
+      ],
       "min": 1,
       "max": 100
     },
@@ -1175,6 +1408,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crafting.repair.premium_restore_max"
+      ],
       "min": 1,
       "max": 100
     },
@@ -1191,6 +1429,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crafting.repair.premium_restore_min"
+      ],
       "min": 1,
       "max": 100
     },
@@ -1203,7 +1446,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "casino.min_bet",
@@ -1218,6 +1464,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 100000
     },
@@ -1234,6 +1483,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 10,
       "max": 1000000
     },
@@ -1250,6 +1502,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 10
     },
@@ -1263,6 +1518,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "choices": [
         "MONDAY",
         "TUESDAY",
@@ -1283,6 +1541,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 20,
       "max": 20
     },
@@ -1296,6 +1557,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 0,
       "max": 0
     },
@@ -1312,6 +1576,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 1440
     },
@@ -1328,6 +1595,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 1440
     },
@@ -1344,6 +1614,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 15,
       "max": 300
     },
@@ -1360,6 +1633,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 30,
       "max": 600
     },
@@ -1376,6 +1652,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 168
     },
@@ -1388,7 +1667,10 @@
       "defaultValue": false,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "family.max_spouses",
@@ -1400,6 +1682,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 1,
       "max": 2
     },
@@ -1416,6 +1701,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 168
     },
@@ -1432,6 +1720,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 30
     },
@@ -1448,6 +1739,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 90
     },
@@ -1464,6 +1758,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 168
     },
@@ -1480,6 +1777,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 24
     },
@@ -1496,6 +1796,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 2,
       "max": 168
     },
@@ -1517,7 +1820,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "giveaway.min_duration_minutes",
@@ -1532,7 +1838,12 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
-      "min": 10,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "giveaway.max_duration_minutes"
+      ],
+      "min": 60,
       "max": 10080
     },
     {
@@ -1548,8 +1859,13 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "giveaway.min_duration_minutes"
+      ],
       "min": 60,
-      "max": 43200
+      "max": 10080
     },
     {
       "key": "giveaway.max_winners",
@@ -1564,8 +1880,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
-      "max": 10
+      "max": 5
     },
     {
       "key": "superlatives.nomination_hours",
@@ -1580,6 +1899,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 168
     },
@@ -1596,6 +1918,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 168
     },
@@ -1612,6 +1937,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 2,
       "max": 10
     },
@@ -1628,6 +1956,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 2,
       "max": 25
     },
@@ -1643,7 +1974,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "activity.exclude_games_channel",
@@ -1657,7 +1991,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "activity.exclude_staff_channel",
@@ -1671,7 +2008,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "activity.vc_require_other_human",
@@ -1682,7 +2022,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "activity.vc_exclude_self_muted",
@@ -1693,7 +2036,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "custom_commands.max_execution_seconds",
@@ -1708,6 +2054,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 10
     },
@@ -1724,6 +2073,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 100,
       "max": 6000
     },
@@ -1739,7 +2091,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "live",
+      "dependsOn": []
     },
     {
       "key": "tutorial.progress_tracking",
@@ -1753,7 +2108,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "live",
+      "dependsOn": []
     },
     {
       "key": "dashboard.audit_retention_days",
@@ -1768,6 +2126,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 30,
       "max": 3650
     },
@@ -1784,6 +2145,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 10,
       "max": 1000
     },
@@ -1799,7 +2163,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "music.loop_default",
@@ -1814,6 +2181,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "choices": [
         "off",
         "track",
@@ -1832,7 +2202,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "moderation.heat.warning_threshold",
@@ -1847,6 +2220,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 200
     },
@@ -1863,6 +2239,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 300
     },
@@ -1879,6 +2258,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 400
     },
@@ -1895,6 +2277,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 500
     },
@@ -1909,7 +2294,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.restricted_mode_auto_deescalate_minutes",
@@ -1923,6 +2311,9 @@
         "throne"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 5,
       "max": 1440
     },
@@ -1938,7 +2329,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "introductions.attachments_allowed",
@@ -1952,7 +2346,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "introductions.max_pages",
@@ -1967,6 +2364,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 8
     },
@@ -1983,6 +2383,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "spotlight.learned_post_window_end_hour"
+      ],
       "min": 0,
       "max": 23
     },
@@ -1999,6 +2404,11 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "spotlight.learned_post_window_start_hour"
+      ],
       "min": 0,
       "max": 23
     },
@@ -2011,7 +2421,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "fight.bet_seconds",
@@ -2023,6 +2436,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 30,
       "max": 30
     },
@@ -2036,6 +2452,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 30,
       "max": 30
     },
@@ -2043,16 +2462,16 @@
       "key": "line.extension_seconds",
       "section": "games",
       "label": "Extension Seconds",
-      "description": "One-use host extension for Line readiness/entry.",
+      "description": "Canonical fixed one-use 30-second extension.",
       "kind": "number",
       "defaultValue": 30,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 0,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
+      "min": 30,
       "max": 30
     },
     {
@@ -2067,7 +2486,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "special_commands.enabled",
@@ -2081,7 +2503,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "special_commands.builtin_role_map",
@@ -2100,7 +2525,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "special_commands.default_member_access",
@@ -2111,7 +2539,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "special_commands.cooldown_enabled",
@@ -2122,7 +2553,10 @@
       "defaultValue": false,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "roles_panel.enabled",
@@ -2136,7 +2570,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "roles_panel.category_order",
@@ -2158,7 +2595,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "roles_panel.single_choice_categories",
@@ -2174,7 +2614,10 @@
       ],
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "roles_panel.multi_choice_categories",
@@ -2189,7 +2632,10 @@
       ],
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "roles_panel.archive_restores_holders",
@@ -2200,7 +2646,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "onboarding.rules_ack_required",
@@ -2211,7 +2660,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "onboarding.optional_steps",
@@ -2227,7 +2679,10 @@
       ],
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "rejoin.require_rules_ack",
@@ -2238,7 +2693,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "rejoin.restore_self_roles",
@@ -2249,7 +2707,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "rejoin.restore_manual_nonstaff_roles",
@@ -2260,7 +2721,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "rejoin.restore_staff_roles",
@@ -2271,7 +2735,10 @@
       "defaultValue": false,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "rejoin.restore_nickname",
@@ -2282,7 +2749,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "rejoin.booster_role_source",
@@ -2294,6 +2764,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "choices": [
         "discord"
       ]
@@ -2308,6 +2781,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "choices": [
         "wall_clock"
       ]
@@ -2322,6 +2798,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "choices": [
         "pause_while_absent"
       ]
@@ -2335,7 +2814,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.draft_lock_minutes",
@@ -2347,6 +2829,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "min": 1,
       "max": 60
     },
@@ -2359,7 +2844,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.high_impact_requires_draft",
@@ -2370,7 +2858,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.draft_scheduling_enabled",
@@ -2381,7 +2872,10 @@
       "defaultValue": false,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.dependency_view_mode",
@@ -2393,6 +2887,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "choices": [
         "direct"
       ]
@@ -2406,7 +2903,10 @@
       "defaultValue": false,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.audit_export_enabled",
@@ -2417,7 +2917,10 @@
       "defaultValue": true,
       "risk": "locked",
       "editableBy": [],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     },
     {
       "key": "dashboard.access_policy",
@@ -2429,6 +2932,9 @@
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
+      "mutable": false,
+      "dashboardWrite": "blocked",
+      "dependsOn": [],
       "choices": [
         "guild_owner_or_discord_administrator"
       ]
@@ -2445,7 +2951,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "moderation.banned_phrases_csv",
@@ -2459,7 +2968,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.trusted_domains_csv",
@@ -2473,7 +2985,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "moderation.heat.short_timeout_minutes",
@@ -2488,6 +3003,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 1440
     },
@@ -2504,6 +3022,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 5,
       "max": 10080
     },
@@ -2519,6 +3040,9 @@
         "throne"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 8760
     },
@@ -2534,6 +3058,9 @@
         "throne"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 2,
       "max": 30
     },
@@ -2549,6 +3076,9 @@
         "throne"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 3,
       "max": 50
     },
@@ -2563,7 +3093,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "security.trusted_bots_csv",
@@ -2576,7 +3109,10 @@
       "editableBy": [
         "throne"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "economy.bank_tiers",
@@ -2616,7 +3152,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "economy.bank_tier5_interest_bps",
@@ -2631,6 +3170,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 500
     },
@@ -2647,6 +3189,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 0,
       "max": 1000000
     },
@@ -2667,7 +3212,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "economy.daily_spin_table",
@@ -2727,7 +3275,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "economy.grind_technical_throttle_ms",
@@ -2742,6 +3293,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 250,
       "max": 5000
     },
@@ -2865,7 +3419,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "features.items",
@@ -2879,7 +3436,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "shop.buyback_percent",
@@ -2894,6 +3454,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 10,
       "max": 100
     },
@@ -2910,6 +3473,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 10000
     },
@@ -2926,6 +3492,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 10000
     },
@@ -2942,6 +3511,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 10000
     },
@@ -2957,7 +3529,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "features.activity",
@@ -2971,7 +3546,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "features.spotlight",
@@ -2985,7 +3563,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "features.casino",
@@ -2999,7 +3580,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "features.lottery",
@@ -3013,7 +3597,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "casino.chair_symbols",
@@ -3059,7 +3646,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "casino.slots_wagers",
@@ -3080,7 +3670,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "casino.roulette_choices",
@@ -3138,7 +3731,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "casino.dice_choices",
@@ -3154,7 +3750,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "lottery.ticket_price",
@@ -3169,6 +3768,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 100000
     },
@@ -3184,7 +3786,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "features.fight",
@@ -3198,7 +3803,10 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "events.min_bet",
@@ -3213,6 +3821,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 100000
     },
@@ -3229,6 +3840,9 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
       "min": 1,
       "max": 100000
     },
@@ -3249,7 +3863,601 @@
         "throne",
         "chaise_lounge"
       ],
-      "restartRequired": false
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.line",
+      "section": "features",
+      "label": "Line",
+      "description": "Enable accepted Line runtime. Remains off until live acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "special_commands.enabled",
+        "features.special_commands",
+        "channels.main_chat",
+        "special_commands.builtin_role_map"
+      ]
+    },
+    {
+      "key": "features.special_commands",
+      "section": "features",
+      "label": "Special Commands",
+      "description": "Enable accepted Line/VC/Chess/custom Special Command handlers.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "special_commands.custom_commands",
+      "section": "special_commands",
+      "label": "Custom Commands",
+      "description": "Notification-only Special Commands: trigger, notificationRoleId, responsePool, enabled, allowedRoleIds. Native triggers cannot be replaced.",
+      "kind": "json",
+      "defaultValue": [],
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "special_commands.builtin_response_pools",
+      "section": "special_commands",
+      "label": "Builtin Response Pools",
+      "description": "Authored built-in callout overrides. Empty uses the packaged pool; mention permissions remain enforced.",
+      "kind": "json",
+      "defaultValue": {
+        "!line": [],
+        "!race": [],
+        "!vc": [],
+        "!chess": []
+      },
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "line.shame_enabled",
+      "section": "games",
+      "label": "Shame Enabled",
+      "description": "Use the approved rotating shame pool when the host starts with waiting members.",
+      "kind": "toggle",
+      "defaultValue": true,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.solo_games",
+      "section": "features",
+      "label": "Solo Games",
+      "description": "Enable accepted solo games; keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.games_channel",
+        "solo.reward",
+        "solo.daily_reward_cap"
+      ]
+    },
+    {
+      "key": "solo.reward",
+      "section": "games",
+      "label": "Reward",
+      "description": "Small reward for a solo win; below normal grind income.",
+      "kind": "number",
+      "defaultValue": 1,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "solo.daily_reward_cap"
+      ],
+      "min": 0,
+      "max": 5
+    },
+    {
+      "key": "solo.daily_reward_cap",
+      "section": "games",
+      "label": "Daily Reward Cap",
+      "description": "Rolling 24-hour solo reward cap across all four games.",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "solo.reward"
+      ],
+      "min": 0,
+      "max": 20
+    },
+    {
+      "key": "solo.timeout_seconds",
+      "section": "games",
+      "label": "Timeout Seconds",
+      "description": "Persistent idle round expiry in seconds.",
+      "kind": "number",
+      "defaultValue": 600,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 60,
+      "max": 1800
+    },
+    {
+      "key": "features.pvp",
+      "section": "features",
+      "label": "Pvp",
+      "description": "Enable accepted PvP skill games; keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.games_channel",
+        "pvp.min_wager",
+        "pvp.max_wager"
+      ]
+    },
+    {
+      "key": "pvp.min_wager",
+      "section": "games",
+      "label": "Min Wager",
+      "description": "Skill-game wager bound in Ottomans.",
+      "kind": "number",
+      "defaultValue": 1,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "pvp.max_wager"
+      ],
+      "min": 1,
+      "max": 1000000
+    },
+    {
+      "key": "pvp.max_wager",
+      "section": "games",
+      "label": "Max Wager",
+      "description": "Skill-game wager bound in Ottomans.",
+      "kind": "number",
+      "defaultValue": 1000000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "pvp.min_wager"
+      ],
+      "min": 1,
+      "max": 1000000
+    },
+    {
+      "key": "features.party_games",
+      "section": "features",
+      "label": "Party Games",
+      "description": "Enable accepted party_games runtime. Keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.games_channel"
+      ]
+    },
+    {
+      "key": "features.channel_games",
+      "section": "features",
+      "label": "Channel Games",
+      "description": "Enable accepted channel_games runtime. Keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.counting_channel",
+        "channels.last_letter_channel"
+      ]
+    },
+    {
+      "key": "crime.success_bp",
+      "section": "crime",
+      "label": "Success Bp",
+      "description": "Crime success bp in basis points.",
+      "kind": "number",
+      "defaultValue": 4500,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "crime.theft_min_bp",
+      "section": "crime",
+      "label": "Theft Min Bp",
+      "description": "Crime theft min bp in basis points.",
+      "kind": "number",
+      "defaultValue": 1000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crime.theft_max_bp"
+      ],
+      "min": 1,
+      "max": 5000
+    },
+    {
+      "key": "crime.theft_max_bp",
+      "section": "crime",
+      "label": "Theft Max Bp",
+      "description": "Crime theft max bp in basis points.",
+      "kind": "number",
+      "defaultValue": 2500,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crime.theft_min_bp"
+      ],
+      "min": 1,
+      "max": 5000
+    },
+    {
+      "key": "crime.fight_back_bp",
+      "section": "crime",
+      "label": "Fight Back Bp",
+      "description": "Crime fight back bp in basis points.",
+      "kind": "number",
+      "defaultValue": 5000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "crime.catch_base_bp",
+      "section": "crime",
+      "label": "Catch Base Bp",
+      "description": "Crime catch base bp in basis points.",
+      "kind": "number",
+      "defaultValue": 1000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crime.catch_cap_bp"
+      ],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "crime.report_bp",
+      "section": "crime",
+      "label": "Report Bp",
+      "description": "Crime report bp in basis points.",
+      "kind": "number",
+      "defaultValue": 1000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "crime.catch_cap_bp",
+      "section": "crime",
+      "label": "Catch Cap Bp",
+      "description": "Crime catch cap bp in basis points.",
+      "kind": "number",
+      "defaultValue": 8500,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "crime.catch_base_bp"
+      ],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "crime.fight_back_risk_bp",
+      "section": "crime",
+      "label": "Fight Back Risk Bp",
+      "description": "Crime fight back risk bp in basis points.",
+      "kind": "number",
+      "defaultValue": 1500,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "crime.attempt_heat",
+      "section": "crime",
+      "label": "Attempt Heat",
+      "description": "Crime attempt heat.",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crime.success_heat",
+      "section": "crime",
+      "label": "Success Heat",
+      "description": "Crime success heat.",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crime.decay_per_hour",
+      "section": "crime",
+      "label": "Decay Per Hour",
+      "description": "Crime decay per hour.",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "crime.bail_base",
+      "section": "crime",
+      "label": "Bail Base",
+      "description": "Crime bail base.",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 1000000
+    },
+    {
+      "key": "crime.bail_per_heat",
+      "section": "crime",
+      "label": "Bail Per Heat",
+      "description": "Crime bail per heat.",
+      "kind": "number",
+      "defaultValue": 2,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 1000000
+    },
+    {
+      "key": "crime.bail_random_max",
+      "section": "crime",
+      "label": "Bail Random Max",
+      "description": "Crime bail random max.",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 1000000
+    },
+    {
+      "key": "features.crime",
+      "section": "features",
+      "label": "Crime",
+      "description": "Enable accepted Crime runtime; keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.bot_channel",
+        "crime.robber_cooldown_minutes",
+        "crime.victim_protection_minutes",
+        "crime.fight_back_seconds",
+        "crime.report_911_seconds",
+        "crime.jail_hours",
+        "crime.success_bp",
+        "crime.theft_min_bp",
+        "crime.theft_max_bp",
+        "crime.fight_back_bp",
+        "crime.catch_base_bp",
+        "crime.report_bp",
+        "crime.catch_cap_bp",
+        "crime.fight_back_risk_bp",
+        "crime.attempt_heat",
+        "crime.success_heat",
+        "crime.decay_per_hour",
+        "crime.bail_base",
+        "crime.bail_per_heat",
+        "crime.bail_random_max"
+      ]
     }
   ]
 }

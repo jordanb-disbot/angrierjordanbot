@@ -41,5 +41,6 @@ export interface SettingContract {
   min?: number;
   max?: number;
   choices?: string[];
+  dashboard_write?: 'live'|'draft'|'blocked';
+  depends_on?: string[];
 }
-

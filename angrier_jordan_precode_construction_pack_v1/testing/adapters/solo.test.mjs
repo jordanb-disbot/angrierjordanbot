@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {parseSoloCell,DiscordSoloCoordinator} from '../../dist/apps/bot/src/discord/solo-coordinator.js';
+import {createPuzzle,puzzleView} from '../../dist/packages/features-solo/src/domain.js';
+import {renderSolo,soloDescription} from '../../dist/packages/features-solo/src/render.js';
+test('Solo numbered cell parser rejects out-of-board and malformed input',()=>{assert.equal(parseSoloCell('25',5),24);for(const value of ['0','26','1.2','-1','x'])assert.throws(()=>parseSoloCell(value,5),{code:'SOLO_CELL'});});
+test('Solo render uses approved shared window and never includes a live answer',()=>{const puzzle=createPuzzle('mastermind',{},()=>5),view={id:'round',ownerId:'member',puzzle:puzzleView(puzzle),paid:'0'};const svg=renderSolo(view);assert.match(svg,/Space Grotesk/);assert.match(svg,/font-family="Inter"/);assert.match(svg,/ANGRIER JORDAN/);assert.match(svg,/data:image\/png;base64/);assert.ok(!soloDescription(view).includes('6666'));assert.ok(!svg.includes('Code:'));});
+test('Solo coordinator checks disablement and eligibility before repository effects',async()=>{let calls=0;const repo=new Proxy({}, {get:()=>()=>{calls++;throw Error('Repository must not run');}}),sent=[];const i={guildId:'g',guild:{},channelId:'c',user:{id:'u'},reply:async p=>sent.push(p),isChatInputCommand:()=>true};await new DiscordSoloCoordinator(repo,{get:async()=>false},async()=>true).handle(i);assert.equal(calls,0);assert.match(sent[0].content,/not enabled/);sent.length=0;await new DiscordSoloCoordinator(repo,{get:async()=>true},async()=>false).handle(i);assert.equal(calls,0);assert.match(sent[0].content,/restricted/);});

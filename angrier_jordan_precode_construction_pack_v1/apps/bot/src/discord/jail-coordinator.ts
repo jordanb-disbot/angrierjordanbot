@@ -144,7 +144,7 @@ export class DiscordJailCoordinator {
 
       if (member) {
         const others = await this.service.status(server.id, member.id);
-        if (!others.length) await this.onboarding.restoreAfterPunishment(member).catch(() => undefined);
+        if (!others.some(s=>s.type==='MODERATION')) await this.onboarding.restoreAfterPunishment(member).catch(() => undefined);
         await this.postHotseatCard(member, result.sentence, result.caseRecord.id, 'released').catch(() => undefined);
       }
     } catch (error) {
@@ -238,7 +238,7 @@ export class DiscordJailCoordinator {
     }
 
     const remaining = await this.service.status(target.guild.id, target.id);
-    if (!remaining.length) await this.onboarding.restoreAfterPunishment(target).catch(() => undefined);
+    if (!remaining.some(s=>s.type==='MODERATION')) await this.onboarding.restoreAfterPunishment(target).catch(() => undefined);
     await this.postHotseatCard(target, result.sentence, result.caseRecord.id, 'released').catch(() => undefined);
     await interaction.reply({ ephemeral: true, content: `${target} was released from moderation Hotseat. Case #${result.caseRecord.id}.` });
   }
@@ -297,8 +297,6 @@ export class DiscordJailCoordinator {
   }
 
   private async handleRoster(interaction: ChatInputCommandInteraction) {
-    const actor = await interaction.guild!.members.fetch(interaction.user.id);
-    await this.requireStaff(actor, 'recliner');
     const raw = interaction.options.getString('type', false) ?? 'all';
     const type = (['all', 'crime', 'moderation'].includes(raw) ? raw : 'all') as 'all' | 'crime' | 'moderation';
     const rows = await this.service.roster(interaction.guild!.id, type);
@@ -353,7 +351,7 @@ export class DiscordJailCoordinator {
 
   private async removeDiscordJailState(member: GuildMember, sentence: JailSentenceRecord, reason: string): Promise<DiscordReleaseMutation> {
     const jailedId = await roleId(this.config, member.guild.id, 'roles.jailed');
-    const otherPunishment = await this.service.hasOtherActivePunishment(member.guild.id, member.id, sentence.id);
+    const otherPunishment = (await this.service.status(member.guild.id, member.id)).some(s=>s.id!==sentence.id&&s.type==='MODERATION');
     const mutation: DiscordReleaseMutation = { removedJailedRole: false, restoredRoleIds: [] };
 
     if (jailedId && !otherPunishment && member.roles.cache.has(jailedId)) {

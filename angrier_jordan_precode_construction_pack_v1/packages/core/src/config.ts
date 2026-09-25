@@ -1,5 +1,6 @@
 export interface SettingDefinition {
   key: string; type: string; default: unknown; mutable: boolean; min?: number; max?: number; choices?: readonly string[];
+  section?:string;risk?:string;dashboard_write?:'live'|'draft'|'blocked';depends_on?:readonly string[];
 }
 export interface ValidationResult { ok: boolean; value?: unknown; error?: string; }
 export class ConfigValidator {

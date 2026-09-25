@@ -7,3 +7,4 @@ export * from './in-memory.js';
 export * from './prisma-repository.js';
 export * from './discord-adapter-contract.js';
 export * from './render.js';
+export * from './publication.js';

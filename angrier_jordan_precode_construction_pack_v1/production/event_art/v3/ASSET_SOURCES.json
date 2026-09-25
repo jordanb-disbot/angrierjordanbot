@@ -1,0 +1,24 @@
+{
+  "revision": 3,
+  "status": "PENDING_OWNER_VISUAL_REVIEW",
+  "method": "Built-in imagegen used offline for fixed packaged artwork. Runtime never generates images.",
+  "references": [
+    "docs/approved_visuals/gate-a-v3/window-reference.png",
+    "docs/approved_visuals/gate-a-v3/brand-reference.png"
+  ],
+  "assets": [
+    {
+      "file": "lounge-source.png",
+      "prompt": "Use case: stylized-concept. Asset type: fixed background plate for premium Angrier Jordan Discord event windows. Reference image 1 establishes the upscale warm leather lounge world and deep near-black teal panels; reference image 2 establishes midnight navy/deep teal/emerald/gold color balance. Generate a polished cinematic high-detail lounge interior background, portrait 2:3, no UI, no words, no letters, no logos, no people, no crown. Dark navy/deep teal paneled walls and velvet curtains, a warm shaded brass floor lamp in the upper right, elegant green foliage in the upper left and edges, a beautifully detailed tufted dark leather armchair partially visible at right edge, polished dark wood floor in the lower third. Center 65 percent quiet and dark for UI overlays, light concentrated at edges, teal reflections in polished dark wood, warm gold highlights on brass, tactile leather and subtle grain. Match the photoreal painterly luxury finish of the reference boards, not flat vectors, not sci-fi, not a spaceship. This is static offline game art to be packaged, no runtime image generation."
+    },
+    {
+      "file": "race-atlas.png",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent production sprite atlas, six premium racing lounge armchairs, exactly three columns by two rows, equally sized grid cells, every chair fully contained with generous transparent padding. Reference images are style references only: use their luxurious leather, rich emerald/deep teal, warm brass/gold, realistic material detail and sophisticated club atmosphere. Each chair is a distinctive premium upholstered lounge armchair on refined small racing casters, beautifully crafted, three-quarter front view facing slightly right, consistent camera and floor baseline. Top row: emerald tufted brass-trim chair; deep teal modern wingback with polished walnut; black Chesterfield leather with brass nailheads. Bottom row: warm cognac leather club chair; midnight velvet with sculpted brass base; ivory upholstered chair with dark walnut and gold details. Expensive miniature product render quality, dimensional leather grain, seams, tufts, highlights, believable shadows, stylized photoreal art matching the reference, not flat vector. Keep each object separate, no overlap. Genuine alpha transparent background, no floor plate or room, no rectangles, no checkerboard, no text, no numbers, no logos, no crown, no people. Output a landscape 3:2 sheet with exactly six chairs in clean 3x2 grid for deterministic extraction. These are fixed offline assets for the Angrier Jordan event, never generated at runtime."
+    },
+    {
+      "file": "fight-atlas.png",
+      "prompt": "Use case: stylized-concept. Asset type: fixed transparent PNG sprite atlas for Angrier Jordan Robo Chair Fight. Reference 1 is the approved luxury club visual family; reference 2 is brand palette/materials; reference 3 shows the premium lounge chair product rendering to match. Create exactly FOUR refined mechanized lounge armchairs in a clean two-column two-row grid. Every chair fully visible with transparent spacing around it, equal camera and scale. These are beautiful expensive armchairs adapted for a playful lounge arena: tufted leather/velvet chair backs and seats stay the main subject; discreet articulated polished-brass arms emerge beneath the upholstered armrests with padded leather glove ends; short sturdy brass/walnut mechanical legs under the seat. NO humanoid robot heads, faces, robot helmets, guns, weapons, screens, spacecraft or generic sci-fi armor. Top-left emerald tufted leather/brass; top-right warm black Chesterfield/brass; bottom-left deep teal wingback/walnut; bottom-right cognac club chair/brass. Three-quarter front poses, premium detailed game product art, same lifelike luxurious material finish as the reference, warm gold highlights and subtle emerald rim light. Genuinely transparent background with alpha, no room, no gradient backdrop, no floor rectangle, no typography, no numbers, no logos, no crown. Objects isolated for deterministic extraction and animation; exactly 2x2 grid."
+    }
+  ],
+  "processing": "Deterministic rectangular sprite extraction, resizing and encoding; original alpha preserved. Source artwork is retained."
+}

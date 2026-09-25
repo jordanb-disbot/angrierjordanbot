@@ -4549,7 +4549,16 @@ export const COMMANDS = [
     "channels": [
       "games_channel"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "size",
+        "type": "integer",
+        "required": false,
+        "description": "Board width: 4 for a 4×4 board, or 5 for a 5×5 board.",
+        "min": 4,
+        "max": 5
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "minesweeper",
     "tutorialId": "games"

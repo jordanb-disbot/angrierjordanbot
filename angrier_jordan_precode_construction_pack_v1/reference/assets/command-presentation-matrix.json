@@ -506,20 +506,22 @@
       "presentation_type": "SPECIAL_EVENT_RUNTIME",
       "renderer_family": "race",
       "asset_refs": [
-        "production/event_art/race_chair_1.svg",
-        "production/event_art/race_chair_2.svg",
-        "production/event_art/race_chair_3.svg",
-        "production/event_art/race_chair_4.svg",
-        "production/event_art/race_chair_5.svg",
-        "production/event_art/race_chair_6.svg"
+        "production/event_art/v3/race_chair_1.png",
+        "production/event_art/v3/race_chair_2.png",
+        "production/event_art/v3/race_chair_3.png",
+        "production/event_art/v3/race_chair_4.png",
+        "production/event_art/v3/race_chair_5.png",
+        "production/event_art/v3/race_chair_6.png",
+        "production/event_art/v3/lounge.png"
       ],
       "interaction_contract": "!race trigger; native Join/Bet/+30 controls; no Play Again",
       "status": "COVERED",
       "runtime_adapter": "apps/bot/src/discord/events-coordinator.ts",
       "runtime_renderer": "packages/features-events/src/render.ts",
       "runtime_status": "Implemented behind flags; 10 PostgreSQL acceptance tests passed; fixture desktop/mobile runtime renders available; live Discord review pending",
-      "presentation_revision": "02; functional approval retained; visual approval pending",
-      "animation": "Bounded cosmetic GIF loop from production renderer; authoritative snapshot unchanged"
+      "presentation_revision": "03; functional approval retained; visual approval pending",
+      "animation": "Bounded cosmetic GIF loop from production renderer; authoritative snapshot unchanged",
+      "theme": "production/theme/events_v3.json"
     },
     {
       "id": "fight",
@@ -531,18 +533,20 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "fight",
       "asset_refs": [
-        "production/event_art/robo_fighter_1.svg",
-        "production/event_art/robo_fighter_2.svg",
-        "production/event_art/robo_fighter_3.svg",
-        "production/event_art/robo_fighter_4.svg"
+        "production/event_art/v3/robo_fighter_1.png",
+        "production/event_art/v3/robo_fighter_2.png",
+        "production/event_art/v3/robo_fighter_3.png",
+        "production/event_art/v3/robo_fighter_4.png",
+        "production/event_art/v3/lounge.png"
       ],
       "interaction_contract": "/fight @member only; native wager modal/+30; no accept/join/rematch",
       "status": "COVERED",
       "runtime_status": "Implemented behind flags; approved sources hash-verified unchanged; PostgreSQL acceptance passed; Gate A fixture runtime renders prepared",
       "runtime_adapter": "apps/bot/src/discord/events-coordinator.ts",
       "runtime_renderer": "packages/features-events/src/fight-render.ts",
-      "presentation_revision": "02; functional approval retained; visual approval pending",
-      "animation": "Bounded cosmetic GIF loop from production renderer; authoritative snapshot unchanged"
+      "presentation_revision": "03; functional approval retained; visual approval pending",
+      "animation": "Bounded cosmetic GIF loop from production renderer; authoritative snapshot unchanged",
+      "theme": "production/theme/events_v3.json"
     },
     {
       "id": "tictactoe",
@@ -554,12 +558,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "pvp",
       "asset_refs": [
-        "production/atomic_assets/games/pvp/tictactoe_panel.png",
-        "production/atomic_assets/games/pvp/pvp_state_banners.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native challenge/turn controls; completed match supports same-opponent Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-pvp/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "connectfour",
@@ -571,12 +576,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "pvp",
       "asset_refs": [
-        "production/atomic_assets/games/pvp/connect_four_panel.png",
-        "production/atomic_assets/games/pvp/pvp_state_banners.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native challenge/turn controls; completed match supports same-opponent Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-pvp/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "battleship",
@@ -588,12 +594,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "pvp",
       "asset_refs": [
-        "production/atomic_assets/games/pvp/battleship_panel.png",
-        "production/atomic_assets/games/pvp/pvp_state_banners.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native challenge/turn controls; completed match supports same-opponent Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-pvp/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "fmk",
@@ -605,10 +612,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "fmk",
       "asset_refs": [
-        "production/atomic_assets/templates/fmk.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Sequential chooser + final native Agree/Disagree vote; Play Again creates a new trio",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-party/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "truthordare",
@@ -620,10 +630,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "party",
       "asset_refs": [
-        "production/runtime_templates/party/02_truth_dare.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-party/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "wyr",
@@ -650,10 +663,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "party",
       "asset_refs": [
-        "production/runtime_templates/party/03_wwyd.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-party/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "finish",
@@ -665,10 +681,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "party",
       "asset_refs": [
-        "production/runtime_templates/party/04_finish_sentence.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-party/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "onewordstory",
@@ -680,10 +699,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "party",
       "asset_refs": [
-        "production/runtime_templates/party/05_one_word_story.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Native answer/vote controls; completed discrete rounds expose Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-party/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "line",
@@ -695,14 +717,13 @@
       "presentation_type": "SPECIAL_EVENT_RUNTIME",
       "renderer_family": "line",
       "asset_refs": [
-        "production/atomic_assets/templates/event_states/line/01_readiness_open.svg",
-        "production/atomic_assets/templates/event_states/line/02_entry_locked.svg",
-        "production/atomic_assets/templates/event_states/line/03_countdown.svg",
-        "production/atomic_assets/templates/event_states/line/04_burst.svg",
-        "production/atomic_assets/animations/line_countdown.apng"
+        "packages/features-special/assets/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "!line trigger; native readiness/host controls; 5→1→burst; no 0",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-special/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "poll",
@@ -1977,10 +1998,13 @@
       "presentation_type": "SHARED_RUNTIME",
       "renderer_family": "crime",
       "asset_refs": [
-        "production/atomic_assets/templates/crime.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-crime/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "crime_911",
@@ -1992,10 +2016,13 @@
       "presentation_type": "SHARED_RUNTIME",
       "renderer_family": "crime",
       "asset_refs": [
-        "production/atomic_assets/templates/crime.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-crime/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "crime_wanted",
@@ -2007,10 +2034,13 @@
       "presentation_type": "SHARED_RUNTIME",
       "renderer_family": "crime",
       "asset_refs": [
-        "production/atomic_assets/templates/crime.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-crime/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "crime_bail",
@@ -2022,10 +2052,13 @@
       "presentation_type": "SHARED_RUNTIME",
       "renderer_family": "crime",
       "asset_refs": [
-        "production/atomic_assets/templates/crime.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Shared crime/wanted/bail renderer + native incident controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-crime/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_marry",
@@ -2921,11 +2954,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "solo_game",
       "asset_refs": [
-        "production/atomic_assets/games/solo/hangman_panel.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-solo/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "wordscramble",
@@ -2937,11 +2972,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "solo_game",
       "asset_refs": [
-        "production/atomic_assets/games/solo/word_scramble_panel.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-solo/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "mastermind",
@@ -2953,11 +2990,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "solo_game",
       "asset_refs": [
-        "production/atomic_assets/games/solo/mastermind_panel.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-solo/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "minesweeper",
@@ -2969,11 +3008,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "solo_game",
       "asset_refs": [
-        "production/atomic_assets/games/solo/minesweeper_panel.png",
-        "production/atomic_assets/templates/result.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Game-specific board + shared result; Play Again starts fresh puzzle/board",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-solo/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "haiku",

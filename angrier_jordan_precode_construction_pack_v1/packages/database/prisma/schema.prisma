@@ -123,6 +123,7 @@ model MemberRoleSnapshot {
 }
 
 model EconomyAccount {
+  reservedWallet BigInt @default(0)
   id String @id @default(cuid())
   guildId String
   userId String
@@ -805,6 +806,7 @@ model MemberGameStats {
 }
 
 model MemberCrimeState {
+  heatDecayedAt DateTime @default(now())
   guildId String
   userId String
   wantedLevel String @default("CLEAN")
@@ -1127,4 +1129,25 @@ model SpotlightFreeze {
   messageId String?
   deliveryState String @default("PENDING")
   @@id([guildId,weekKey])
+}
+
+// Merge into schema.prisma; one shared draft across all sections of the configured server.
+model DashboardDraft {
+  guildId String @id
+  revision Int @default(0)
+  state Json
+  updatedAt DateTime @updatedAt
+}
+model WalletHold {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  referenceType String
+  referenceId String
+  amount BigInt
+  state String @default("ACTIVE")
+  createdAt DateTime @default(now())
+  releasedAt DateTime?
+  @@unique([guildId,userId,referenceType,referenceId])
+  @@index([guildId,userId,state])
 }

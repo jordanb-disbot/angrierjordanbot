@@ -21,3 +21,7 @@ Fighter departure cancels during betting or combat. Durable membership state and
 ## Gate A visual revision 02
 
 Functional behavior has owner approval; presentation remains pending. Only renderers, deterministic art, animated attachment encoding and review materials changed. Production mapping and asset hashes are synchronized. Revised review includes desktop betting, mobile live and desktop result for both events, full renderer timelines and actual bounded ambient GIF attachments. No database, escrow, combat planner, timers, commands, permission policy or approved source content changed. Railway readiness remains blocked on visual approval.
+
+## Gate A visual revision 03
+
+The owner supplied two concrete visual references and explicitly replaced event typography with Space Grotesk/Inter. Reference copies, font licenses and hashes, fixed lounge/chair artwork and exact image-generation prompts are retained. Race/Fight windows now use this visual family; no behavioral files or approved Fight sources changed. The production asset map selects V3 assets and marks V2 artwork superseded. Renderer timelines and actual Discord GIF attachments are separately labeled. Functional approval is retained; visual approval remains pending.

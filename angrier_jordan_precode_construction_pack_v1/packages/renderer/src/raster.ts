@@ -34,3 +34,9 @@ export function rasterizeLoop(frames:string[],delayMs=50):Promise<Buffer>{
  if(frames.length<2||frames.length>32)throw new Error('Animation frame limit exceeded.');
  return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,delayMs},error=>{if(error)child.kill();});});
 }
+
+/** One authoritative sequence, played once. Used by Line; never restarts a countdown. */
+export function rasterizeSequence(frames:string[],delaysMs:number[]):Promise<Buffer>{
+ if(frames.length<2||frames.length>64||frames.length!==delaysMs.length||delaysMs.some(n=>!Number.isInteger(n)||n<10||n>60_000||n%10!==0))throw new Error('Invalid one-shot animation sequence.');
+ return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,delaysMs,oneShot:true},error=>{if(error)child.kill();});});
+}

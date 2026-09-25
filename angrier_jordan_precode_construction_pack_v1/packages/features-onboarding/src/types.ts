@@ -67,6 +67,8 @@ export interface RestorePlan {
   userId:string;
   grantMemberAccess:boolean;
   applyJailedRole:boolean;
+  /** Crime confines bot commands, independently of moderation channel/role restrictions. */
+  crimeCommandRestricted:boolean;
   rolesToRestore:RoleSnapshot[];
   nickname?:string;
   punishmentIds:string[];

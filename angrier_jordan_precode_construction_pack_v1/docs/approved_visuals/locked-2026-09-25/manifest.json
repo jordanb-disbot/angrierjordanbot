@@ -1,0 +1,160 @@
+{
+  "approvedBy": "Owner direct instruction, 2026-09-25",
+  "status": "PERMANENT_PRODUCTION_VISUAL_REFERENCE",
+  "authority": "Gate A and visual-system approval; supersedes earlier pending/rejected status",
+  "notes": "Line remains a visual reference, not an implemented runtime feature. Race trigger remains !race.",
+  "files": [
+    {
+      "file": "line-01-opened.png",
+      "sha256": "d8c892f3b8d2bd45d4c2d34a0531fe23c3fc30cd922962ff619f0e9c85d1b191"
+    },
+    {
+      "file": "line-02-checking-in.png",
+      "sha256": "d13ae7ea92d3f52d70f44eb7fcb0642e7739d4a73720372132cd5ebe6cc98cff"
+    },
+    {
+      "file": "line-03-all-ready.png",
+      "sha256": "4590629504907c8769620d282f458a4482956510507f6d7ffa779bee6b144007"
+    },
+    {
+      "file": "line-04-extended.png",
+      "sha256": "827d2612f5dcb29c252a292209b5d5bd61a467c3b9c136eafc5b8a93c5383937"
+    },
+    {
+      "file": "line-05-locked.png",
+      "sha256": "d09cfc8d282ea78fb1731f531f07d989c697487520f23e671cad638f0b3b4aac"
+    },
+    {
+      "file": "line-06-countdown-5.png",
+      "sha256": "8ea464861187645641e4ad91ead3de1f37420cd7d4792b8a78e6080c0905db64"
+    },
+    {
+      "file": "line-07-countdown-4.png",
+      "sha256": "cd8c90bcb3ae4ecac287d796ed533ce8ebadb1133d9876ce54ee3f262f5e0618"
+    },
+    {
+      "file": "line-08-countdown-3.png",
+      "sha256": "5a08ade782430a73d8fbb425a5926d708b42236a06026aa1cc38790930529de6"
+    },
+    {
+      "file": "line-09-countdown-2.png",
+      "sha256": "8f179a96f82c422749b74f21c38c07f5b06d3e9cb52264e554134de36dc9086b"
+    },
+    {
+      "file": "line-10-countdown-1.png",
+      "sha256": "4428363e659f19eef64e4748cc2b09b0ffd2644c9051d0a05760fa819d0152ac"
+    },
+    {
+      "file": "line-11-powder-burst.png",
+      "sha256": "ca297697bc85384328a921314d4d0cd970e99dcd4c5f3680469f89cf583ed7a6"
+    },
+    {
+      "file": "line-12-complete.png",
+      "sha256": "580b36e4652eff4c65e7bef085e5de4addf9f505e78a341294e6fd07f5dfb1de"
+    },
+    {
+      "file": "line-13-cancelled.png",
+      "sha256": "9733a4606039016c758b9c6c428dac4b8308ddc430af6b2c45e95bf8752d3cea"
+    },
+    {
+      "file": "line-animation.webp",
+      "sha256": "85a0456a067b520e6fdc73aee33cc0b01e9af1f5cc19b931549bc2c6bf049c0f"
+    },
+    {
+      "file": "standard-window.png",
+      "sha256": "d5eaba17a37c895a4d33a7c670fbfca6215dddeeb36221b72698c502d82b28a5"
+    },
+    {
+      "file": "race-betting-card.png",
+      "sha256": "4cb65ad64b6e34dfc2c29a68269f5e7cb3d886c6331d708b8049a91b2c38cf11"
+    },
+    {
+      "file": "race-betting-desktop.png",
+      "sha256": "1e342621a7c6aacfae6cf154d9e0211b2d4945d6de881b015efd9f5799fa44a6"
+    },
+    {
+      "file": "race-betting-mobile.png",
+      "sha256": "585d86043e7fb3c89254da7a2f39082ed2021af74668bb207284e6573993d26b"
+    },
+    {
+      "file": "race-entry-card.png",
+      "sha256": "068cb97da8a28c9c91a6f3c332730da07db8ba7e2893dce8981c72f0cd8bc42a"
+    },
+    {
+      "file": "race-entry-desktop.png",
+      "sha256": "b5bb933c0e7401192a5fc6872f76f369f31370f097a9256f069bb51e6f178da3"
+    },
+    {
+      "file": "race-entry-mobile.png",
+      "sha256": "e0eae7f9903179e09928a5f221a0dd31572feb4cedc357fd97bc4ae300cfac60"
+    },
+    {
+      "file": "race-live-card.png",
+      "sha256": "0538b131678ebea45ec7ce09d43770099f82288a1fe6a7e4908cff6e00f053b3"
+    },
+    {
+      "file": "race-live-desktop.png",
+      "sha256": "f974f7a93308952fd9429cb06fe4accfcf4cceaa3652b122254c5d7c7bc68fa0"
+    },
+    {
+      "file": "race-live-discord.gif",
+      "sha256": "c8469691b5ff1ca8d70e4b475b471f0a568f667e53f0cdaaa4d09c995a4334cb"
+    },
+    {
+      "file": "race-live-mobile.png",
+      "sha256": "14503eb8bd1f1fbe90a8c621aed088c06b13b146c066d3b6dc4c2c3cf5cb8e8b"
+    },
+    {
+      "file": "race-result-card.png",
+      "sha256": "1a39a6763c7097e8f8f6cdf5137ca8e6f45f4834c0080e73a1b49fbf53a3256a"
+    },
+    {
+      "file": "race-result-desktop.png",
+      "sha256": "4308f4a2c4b8620e15ea7928e72a0878f6889bb6f2530186428f706fe521bb93"
+    },
+    {
+      "file": "race-result-mobile.png",
+      "sha256": "1a22b7708c5b47e56ec3470e1e25ae582d5c6dceb36f34a682dc91fe058bd5d4"
+    },
+    {
+      "file": "fight-betting-card.png",
+      "sha256": "7d78dd505e956bc9a0241fbcb54e3b91dc4140a80d19e621189b4e86d6a8e7ef"
+    },
+    {
+      "file": "fight-betting-desktop.png",
+      "sha256": "5a37dbe3b688112d5c39020ce55c048ee35da8bb940cdaafd369904d9b113096"
+    },
+    {
+      "file": "fight-betting-mobile.png",
+      "sha256": "67b56def4dc1cab08117445e1a8f9d69f41e532a518ebba1cdb91b1cbe5c70b2"
+    },
+    {
+      "file": "fight-combat-card.png",
+      "sha256": "2a26ac7bc5077648273797efc3cc1f65ea0ecc50cc7886d36137a599241545d8"
+    },
+    {
+      "file": "fight-combat-desktop.png",
+      "sha256": "7802bd5daed8e7edc36eb66c9c52ee41937ddb9166b22fdb4276560308c9de8c"
+    },
+    {
+      "file": "fight-combat-mobile.png",
+      "sha256": "17679eba17d93947e34729d1fcf31de5c47bd7c6cc2e77f9c59511d02418bdcf"
+    },
+    {
+      "file": "fight-live-discord.gif",
+      "sha256": "2c5eae98d806dc94418742101fffce81062615065a9c46342e525afa7e99f2df"
+    },
+    {
+      "file": "fight-result-card.png",
+      "sha256": "a2049f8a5e355c1c219c78a884302eda4ec24c231c3eab8be2aa477d14aa372a"
+    },
+    {
+      "file": "fight-result-desktop.png",
+      "sha256": "cd9ea42f182d167d4ad60830505998f95dece3005ec1222a1a29c794695b1c04"
+    },
+    {
+      "file": "fight-result-mobile.png",
+      "sha256": "5b0712dfa6d129f6b20cd82b0965284684f194e665fb84499b826264c0430bc4"
+    }
+  ]
+}

@@ -1,6 +1,12 @@
 import { invariant } from './errors.js';
 export type BalanceBucket = 'wallet'|'bank';
-export interface LedgerAccount { guildId: string; userId: string; wallet: bigint; bank: bigint; version: number; }
+export interface LedgerAccount { guildId: string; userId: string; wallet: bigint; reservedWallet?:bigint; bank: bigint; version: number; }
+/** Wallet remains the displayed owned balance; temporary holds reduce only spendability. */
+export function spendableWallet(account:{wallet:bigint;reservedWallet?:bigint}):bigint {
+  const reserved=account.reservedWallet??0n;
+  invariant(reserved>=0n&&reserved<=account.wallet,'WALLET_HOLD_INVARIANT','Wallet holds must be within the owned wallet balance.');
+  return account.wallet-reserved;
+}
 export interface LedgerLine { userId?: string; bucket: BalanceBucket|'system'; amount: bigint; reason: string; metadata?: Record<string,unknown>; }
 export interface LedgerTransaction { idempotencyKey: string; guildId: string; lines: readonly LedgerLine[]; }
 export interface LedgerRepository {
@@ -21,6 +27,7 @@ export class LedgerEngine {
       const walletDelta=tx.lines.filter(l=>l.userId===a.userId&&l.bucket==='wallet').reduce((s,l)=>s+l.amount,0n);
       const bankDelta=tx.lines.filter(l=>l.userId===a.userId&&l.bucket==='bank').reduce((s,l)=>s+l.amount,0n);
       invariant(a.wallet+walletDelta>=0n,'NEGATIVE_WALLET','Wallet cannot go negative.');
+      invariant(spendableWallet(a)+walletDelta>=0n,'WALLET_FUNDS_HELD','These wallet funds are reserved until the active transaction resolves.');
       invariant(a.bank+bankDelta>=0n,'NEGATIVE_BANK','Bank cannot go negative.');
     }
     const ok=await this.repo.commit(tx,expected); invariant(ok,'LEDGER_CONFLICT','Concurrent balance change; retry transaction.');

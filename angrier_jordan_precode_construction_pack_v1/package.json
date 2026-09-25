@@ -30,8 +30,16 @@
     "test:postgres": "npm run db:generate && node scripts/compile-domain-tests.mjs && node scripts/run-postgres-tests.mjs",
     "test:adapters": "npm --workspace @angrier-jordan/bot run build && node scripts/copy-runtime-data.mjs && node --test testing/adapters/*.test.mjs",
     "validate:fight-sources": "node scripts/validate-fight-sources.mjs",
-    "review:events": "node scripts/render-race-review.mjs && node scripts/render-fight-review.mjs && node scripts/render-gate-a.mjs"
+    "review:events": "node scripts/render-race-review.mjs && node scripts/render-fight-review.mjs && node scripts/render-gate-a.mjs",
+    "validate:visual-lock": "node scripts/validate-visual-lock.mjs",
+    "start:worker": "node dist/apps/bot/src/index.js",
+    "start:dashboard": "node scripts/start-dashboard.mjs",
+    "db:migrate:production": "node scripts/migrate-production.mjs"
   },
   "type": "module",
-  "packageManager": "npm@11.6.0"
+  "packageManager": "npm@11.6.0",
+  "dependencies": {
+    "dictionary-en": "4.0.0",
+    "nspell": "2.1.5"
+  }
 }

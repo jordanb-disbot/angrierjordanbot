@@ -5,7 +5,7 @@ import { FixedClock } from '../../.test-build/packages/core/src/index.js';
 import { DomainError } from '../../.test-build/packages/core/src/index.js';
 import { InMemoryWyrPromptRepository, InMemoryWyrSessionRepository, SequentialIdGenerator, WyrController, WyrService } from '../../.test-build/packages/features-wyr/src/index.js';
 
-const prompts=JSON.parse(fs.readFileSync(new URL('../../packages/content/golden/wyr_sample.json',import.meta.url),'utf8'));
+const prompts=[...JSON.parse(fs.readFileSync(new URL('../../packages/content/golden/wyr_sample.json',import.meta.url),'utf8')),...JSON.parse(fs.readFileSync(new URL('../../packages/features-party/content/wyr_continuation_WYR-0461_to_2000.json',import.meta.url),'utf8')).slice(0,12).map(p=>({...p,optionA:p.option_a,optionB:p.option_b}))];
 const make=({random=0}={})=>{
   const clock=new FixedClock(new Date('2026-09-21T12:00:00Z'));
   const promptRepo=new InMemoryWyrPromptRepository(prompts);
@@ -37,10 +37,11 @@ test('WYR voting is anonymous and editable without duplicate ballots',async()=>{
   assert.equal(session.votes[0].choice,'B');
 });
 
-test('WYR permits one host/staff extension and blocks a second',async()=>{
+test('WYR permits one host extension, rejects staff override, and blocks a second',async()=>{
   const {controller,service}=make();
   const open=await controller.start({guildId:'g1',channelId:'games',userId:'host',category:'Casual'});
   await assert.rejects(()=>controller.handleComponent(`wyr:extend:${open.sessionId}`,'random-user'),e=>e instanceof DomainError&&e.code==='NOT_ALLOWED');
+  await assert.rejects(()=>controller.handleComponent(`wyr:extend:${open.sessionId}`,'staff',true),e=>e instanceof DomainError&&e.code==='NOT_ALLOWED');
   const extended=await controller.handleComponent(`wyr:extend:${open.sessionId}`,'host');
   assert.match(extended.content,/Voting closes/);
   const session=await service.get(open.sessionId);
@@ -48,13 +49,13 @@ test('WYR permits one host/staff extension and blocks a second',async()=>{
   await assert.rejects(()=>controller.handleComponent(`wyr:extend:${open.sessionId}`,'host'),e=>e instanceof DomainError&&e.code==='EXTENSION_ALREADY_USED');
 });
 
-test('WYR results reveal totals and Play Again creates a fresh round',async()=>{
-  const {controller,service}=make();
+test('WYR results reveal totals only after deadline and Play Again creates a fresh prompt',async()=>{
+  const {controller,service,clock}=make();
   const open=await controller.start({guildId:'g1',channelId:'games',userId:'host',category:'Casual'});
   await controller.handleComponent(`wyr:vote:A:${open.sessionId}`,'u2');
   await controller.handleComponent(`wyr:vote:A:${open.sessionId}`,'u3');
   await controller.handleComponent(`wyr:vote:B:${open.sessionId}`,'u4');
-  const closed=await controller.close(open.sessionId);
+  await assert.rejects(()=>controller.close(open.sessionId),{code:'NOT_DUE'});clock.advanceMs(60000);const closed=await controller.close(open.sessionId);
   assert.equal(closed.components[0].label,'Play Again');
   assert.match(closed.renderAsset,/3 total votes/);
   const original=await service.get(open.sessionId);
@@ -64,6 +65,7 @@ test('WYR results reveal totals and Play Again creates a fresh round',async()=>{
   const fresh=await service.get(replay.sessionId);
   assert.equal(fresh.ownerUserId,'u5');
   assert.equal(fresh.data.category,'Casual');
+  assert.notEqual(fresh.data.promptId,original.data.promptId);
 });
 
 test('WYR recovery closes expired rounds and leaves active rounds open',async()=>{
