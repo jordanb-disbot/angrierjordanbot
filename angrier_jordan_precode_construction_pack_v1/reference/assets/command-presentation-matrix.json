@@ -251,7 +251,10 @@
         "production/atomic_assets/templates/inventory.svg"
       ],
       "interaction_contract": "Rendered inventory/collection browser with native filters/actions",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "bank",
@@ -283,7 +286,10 @@
         "production/atomic_assets/templates/shop.svg"
       ],
       "interaction_contract": "Rendered shop with native purchase/navigation controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "craft",
@@ -300,7 +306,10 @@
         "production/runtime_templates/crafting/03_failure.svg"
       ],
       "interaction_contract": "Native selectors/confirmations around rendered craft result",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "repair",
@@ -316,7 +325,10 @@
         "production/runtime_templates/repair/02_result.svg"
       ],
       "interaction_contract": "Native repair-tier selection; rendered result",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "transfer",
@@ -346,7 +358,10 @@
         "production/atomic_assets/templates/result.svg"
       ],
       "interaction_contract": "Native confirmation/result flow; no unique illustration",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "unlock_all",
@@ -361,7 +376,10 @@
         "production/atomic_assets/templates/result.svg"
       ],
       "interaction_contract": "Native confirmation/result flow; no unique illustration",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "blackjack",
@@ -663,7 +681,7 @@
         "production/atomic_assets/templates/event_states/line/04_burst.svg",
         "production/atomic_assets/animations/line_countdown.apng"
       ],
-      "interaction_contract": "!line trigger; native readiness/host controls; 5\u21921\u2192burst; no 0",
+      "interaction_contract": "!line trigger; native readiness/host controls; 5→1→burst; no 0",
       "status": "COVERED"
     },
     {
@@ -2001,7 +2019,7 @@
       "asset_refs": [
         "production/runtime_templates/family/02_marriage_vote.svg"
       ],
-      "interaction_contract": "Public authoritative marriage card + native \ud83d\udc4d/\ud83d\udc4e and View Family controls",
+      "interaction_contract": "Public authoritative marriage card + native 👍/👎 and View Family controls",
       "status": "COVERED"
     },
     {
@@ -2817,7 +2835,10 @@
         "production/atomic_assets/templates/inventory.svg"
       ],
       "interaction_contract": "Rendered inventory/collection browser with native filters/actions",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/items-coordinator.ts",
+      "runtime_rendering": "Deterministic Discord embeds, menus and private modals; Angrier Jordan sender",
+      "acceptance_status": "OFFLINE_IMPLEMENTED_POSTGRES_AND_DISCORD_PENDING"
     },
     {
       "id": "leaderboard",
@@ -2938,7 +2959,7 @@
       "presentation_type": "NATIVE_DISCORD",
       "renderer_family": "social_text",
       "asset_refs": [],
-      "interaction_contract": "Fixed text response: \u201cWe use it for profiling purposes.\u201d",
+      "interaction_contract": "Fixed text response: “We use it for profiling purposes.”",
       "status": "COVERED"
     }
   ]

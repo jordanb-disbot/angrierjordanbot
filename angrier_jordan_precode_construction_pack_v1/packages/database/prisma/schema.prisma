@@ -195,6 +195,7 @@ model InventoryEntry {
   itemId String
   quantity Int @default(1)
   locked Boolean @default(false)
+  acquiredAt DateTime @default(now())
   metadata Json?
   member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
   @@unique([guildId,userId,itemId])
@@ -228,6 +229,7 @@ model ToolInstance {
   durability Int
   maxDurability Int
   equipped Boolean @default(false)
+  locked Boolean @default(false)
   metadata Json?
   @@index([guildId,userId,slot])
 }
@@ -236,6 +238,7 @@ model CraftedChair {
   id String @id @default(cuid())
   guildId String
   userId String
+  locked Boolean @default(false)
   chairType String
   quality String
   createdAt DateTime @default(now())
@@ -1030,4 +1033,50 @@ model ContentUseHistory {
   usedAt DateTime @default(now())
   @@index([guildId,game,category,usedAt])
   @@index([contentId,usedAt])
+}
+
+// Phase 09: durable operation receipts bind replay keys to the original request.
+model OperationReceipt {
+  guildId String
+  key String
+  fingerprint String
+  result Json
+  createdAt DateTime @default(now())
+  @@id([guildId,key])
+}
+
+model InventoryCategoryLock {
+  guildId String
+  userId String
+  category String
+  @@id([guildId,userId,category])
+}
+
+model CollectionSet {
+  id String @id
+  name String
+  hidden Boolean @default(false)
+  itemIds String[]
+  badgeId String
+  enabled Boolean @default(true)
+}
+
+model CollectionDiscovery {
+  guildId String
+  userId String
+  itemId String
+  foundAt DateTime @default(now())
+  @@id([guildId,userId,itemId])
+}
+
+model GiftRecord {
+  id String @id
+  guildId String
+  senderId String
+  recipientId String
+  itemId String
+  quantity Int
+  createdAt DateTime @default(now())
+  @@index([guildId,senderId])
+  @@index([guildId,recipientId])
 }

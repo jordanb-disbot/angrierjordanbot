@@ -11,3 +11,5 @@ coverage/
 
 .test-build/
 *.tsbuildinfo
+
+.env.test.local

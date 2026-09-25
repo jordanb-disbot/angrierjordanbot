@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "test_count": 73,
+  "test_count": 74,
   "tests": [
     {
       "id": "T001",
@@ -1515,6 +1515,25 @@
       "expected": [
         "top-level chat-input command count <= 100"
       ]
+    },
+    {
+      "id": "PH09-ATOMIC",
+      "module": "items",
+      "name": "Concurrent purchase, sale/gift race, replay, restart and ledger rollback",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "TEST_DATABASE_URL points to disposable PostgreSQL"
+      ],
+      "steps": [
+        "npm run test:postgres"
+      ],
+      "expected": [
+        "No double charge or grant",
+        "No negative balance or double consumption",
+        "Failed operations leave no receipt or ledger movement"
+      ],
+      "status": "PENDING_TEST_DATABASE_URL"
     }
   ]
 }

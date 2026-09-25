@@ -1,5 +1,5 @@
 {
-  "count": 185,
+  "count": 190,
   "controls": [
     {
       "key": "server.timezone",
@@ -1053,23 +1053,20 @@
       "key": "shop.refresh_hour",
       "section": "shop",
       "label": "Refresh Hour",
-      "description": "",
+      "description": "Shop refresh is locked to 4 AM Mountain Time.",
       "kind": "number",
       "defaultValue": 4,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 0,
-      "max": 23
+      "min": 4,
+      "max": 4
     },
     {
       "key": "shop.personalized_bonus_slots",
       "section": "shop",
       "label": "Personalized Bonus Slots",
-      "description": "",
+      "description": "One or two personalized daily bonus slots.",
       "kind": "number",
       "defaultValue": 2,
       "risk": "normal",
@@ -1078,8 +1075,8 @@
         "chaise_lounge"
       ],
       "restartRequired": false,
-      "min": 0,
-      "max": 4
+      "min": 1,
+      "max": 2
     },
     {
       "key": "shop.buyback_floor_percent",
@@ -2893,6 +2890,84 @@
         "chaise_lounge"
       ],
       "restartRequired": false
+    },
+    {
+      "key": "features.items",
+      "section": "features",
+      "label": "Items",
+      "description": "Phase 09 runtime; keep disabled until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "shop.buyback_percent",
+      "section": "shop",
+      "label": "Buyback Percent",
+      "description": "Bounded Phase 09 economy configuration.",
+      "kind": "number",
+      "defaultValue": 50,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 10,
+      "max": 100
+    },
+    {
+      "key": "crafting.repair.cheap_cost",
+      "section": "crafting",
+      "label": "Cheap Cost",
+      "description": "Bounded Phase 09 economy configuration.",
+      "kind": "number",
+      "defaultValue": 25,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 10000
+    },
+    {
+      "key": "crafting.repair.standard_cost",
+      "section": "crafting",
+      "label": "Standard Cost",
+      "description": "Bounded Phase 09 economy configuration.",
+      "kind": "number",
+      "defaultValue": 75,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 10000
+    },
+    {
+      "key": "crafting.repair.premium_cost",
+      "section": "crafting",
+      "label": "Premium Cost",
+      "description": "Bounded Phase 09 economy configuration.",
+      "kind": "number",
+      "defaultValue": 150,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 10000
     }
   ]
 }

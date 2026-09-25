@@ -1053,16 +1053,13 @@ export const SETTINGS = [
     "section": "shop",
     "type": "integer",
     "default": 4,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
-    "min": 0,
-    "max": 23
+    "description": "Shop refresh is locked to 4 AM Mountain Time.",
+    "risk": "locked",
+    "mutable": false,
+    "min": 4,
+    "max": 4
   },
   {
     "key": "shop.personalized_bonus_slots",
@@ -1074,11 +1071,11 @@ export const SETTINGS = [
       "chaise_lounge"
     ],
     "restart_required": false,
-    "description": "",
+    "description": "One or two personalized daily bonus slots.",
     "risk": "normal",
     "mutable": true,
-    "min": 0,
-    "max": 4
+    "min": 1,
+    "max": 2
   },
   {
     "key": "shop.buyback_floor_percent",
@@ -2892,5 +2889,83 @@ export const SETTINGS = [
     "description": "Bounded weighted outcome tables for /work, /fish, /dig and /scavenge.",
     "risk": "financial",
     "mutable": true
+  },
+  {
+    "key": "features.items",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Phase 09 runtime; keep disabled until acceptance.",
+    "risk": "financial",
+    "mutable": true
+  },
+  {
+    "key": "shop.buyback_percent",
+    "section": "shop",
+    "type": "integer",
+    "default": 50,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Bounded Phase 09 economy configuration.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 10,
+    "max": 100
+  },
+  {
+    "key": "crafting.repair.cheap_cost",
+    "section": "crafting",
+    "type": "integer",
+    "default": 25,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Bounded Phase 09 economy configuration.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 1,
+    "max": 10000
+  },
+  {
+    "key": "crafting.repair.standard_cost",
+    "section": "crafting",
+    "type": "integer",
+    "default": 75,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Bounded Phase 09 economy configuration.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 1,
+    "max": 10000
+  },
+  {
+    "key": "crafting.repair.premium_cost",
+    "section": "crafting",
+    "type": "integer",
+    "default": 150,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Bounded Phase 09 economy configuration.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 1,
+    "max": 10000
   }
 ] as const satisfies readonly SettingContract[];

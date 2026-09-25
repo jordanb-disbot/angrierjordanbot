@@ -161,6 +161,13 @@
       "dashboard",
       "audit",
       "config_service"
+    ],
+    "items": [
+      "database",
+      "config_service",
+      "capabilities",
+      "ledger",
+      "audit"
     ]
   }
 }

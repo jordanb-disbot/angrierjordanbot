@@ -1,0 +1,46 @@
+{
+  "id": "items",
+  "classification": "guided",
+  "commands": [
+    "shop",
+    "inventory",
+    "gift",
+    "unlock_all",
+    "repair",
+    "craft",
+    "collection"
+  ],
+  "title": "How Item Controls Work",
+  "body": "Shop purchases spend wallet first, then bank. Essentials are always available; bonus slots rotate daily at 4 AM Mountain. Items have unlimited stock. Gated items remain visible. Recipes are account-bound; tools must be manually equipped. Selling shows a confirmation and respects item/category locks. Sell Duplicates keeps one normal copy or the highest-quality crafted chair. Gifts are named; tools, crafted chairs and recipes cannot be gifted. Crafting may fail, consume some materials and produce scrap; every attempt grants hidden skill progress. Collections give prestige only. Opening a box consumes it once and atomically grants its reward.",
+  "fields": {
+    "gift": {
+      "member": "An eligible server member who receives the named gift.",
+      "item": "Copy the owned item ID from Inventory."
+    },
+    "inventory_filters": {
+      "search": "Optional name text.",
+      "filter": "Comma-separated type, rarity, quality, lock: for example material,,,locked. Leave blank fields to include any.",
+      "sort": "newness, rarity, type, quality, lock, or sell value.",
+      "page": "Page number, starting at 1."
+    }
+  },
+  "examples": [
+    "/shop",
+    "/gift member:@Jordan item:<owned-item-id>",
+    "/unlock all",
+    "/inventory → Sell Duplicates → Confirm Sale",
+    "/craft → owned recipe"
+  ],
+  "tutorial": {
+    "lesson_id": "economy.items",
+    "steps": [
+      "Open /shop and inspect price and gating requirements.",
+      "Buy an essential tool, then equip it from /inventory.",
+      "Use Search / Sort / Filter and inspect a locked item.",
+      "Review a Sell Duplicates confirmation; Cancel keeps everything.",
+      "Learn a recipe and inspect materials in /craft.",
+      "Open /collection to browse discovered sets."
+    ],
+    "practice_has_side_effects": false
+  }
+}

@@ -1,1 +1,12 @@
 .tooling/
+.env
+.env.*
+!.env.example
+.env.*.local
+node_modules/
+.next/
+dist/
+.test-build/
+coverage/
+*.log
+*.tsbuildinfo

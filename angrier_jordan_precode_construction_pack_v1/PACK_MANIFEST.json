@@ -1,23 +1,23 @@
 {
   "pack": "Angrier Jordan Active Implementation Repository",
-  "version": "0.8.0-checkpoint-08-2026-09-21",
+  "version": "0.9.0-phase09-acceptance-pending",
   "created_at": "2026-09-21",
   "current_checkpoint": 8,
   "core_counts": {
     "conceptual_interactions": 192,
-    "settings": 185,
-    "capabilities": 40,
+    "settings": 190,
+    "capabilities": 41,
     "generated_application_commands": 65,
     "top_level_chat_input_commands": 64,
     "golden_wyr_prompts": 6,
     "production_assets_and_templates": 348,
-    "prisma_models": 79
+    "prisma_models": 84
   },
   "architecture": {
     "workspace": "npm workspaces",
     "runtime": "Node.js 22 + TypeScript",
     "database": "PostgreSQL + Prisma",
-    "database_schema_version": "0008_economy_foundation",
+    "database_schema_version": "0009_item_transactions",
     "bot": "discord.js adapter",
     "dashboard": "Next.js adapter",
     "shared_engine_package": "packages/core",

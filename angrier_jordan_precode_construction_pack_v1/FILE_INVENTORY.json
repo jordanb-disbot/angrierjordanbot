@@ -1,18 +1,18 @@
 {
   "checkpoint": 8,
   "updated_at": "2026-09-25",
-  "files": 602,
+  "files": 616,
   "inventory_self_hash_omitted": true,
   "items": [
     {
       "path": ".env.example",
-      "bytes": 797,
-      "sha256": "418421d960ae0cf296a981d611a465da4cbae3194d1ae9a476c2cea82fc1781c"
+      "bytes": 848,
+      "sha256": "ac6f1550797fec9e104b72730788495c91339bc2f6a26ec17be9364080040256"
     },
     {
       "path": ".gitignore",
-      "bytes": 117,
-      "sha256": "ff6b2899e1ed86a59d1589b21a037ceaad1eb55816669a2e06efd00a738dfdb6"
+      "bytes": 135,
+      "sha256": "33e82ff39b5b03177e5a16bc45c4a2532b0a9baa784a09357f5e1c77cedab161"
     },
     {
       "path": "apps/bot/package.json",
@@ -43,6 +43,11 @@
       "path": "apps/bot/src/discord/economy-coordinator.ts",
       "bytes": 16834,
       "sha256": "a4475ea6d68149400f144a1095a6d9961e650efa4ea35bf36f939489ddbf9969"
+    },
+    {
+      "path": "apps/bot/src/discord/items-coordinator.ts",
+      "bytes": 12417,
+      "sha256": "94037de1a877e181b385ebc5564a5389b48b2ca7ee486ac62f5afc0071a1ae39"
     },
     {
       "path": "apps/bot/src/discord/jail-coordinator.ts",
@@ -86,8 +91,8 @@
     },
     {
       "path": "apps/bot/src/production.ts",
-      "bytes": 16410,
-      "sha256": "144f3c1bb3fddf088e3cbd4091607189aede4a12c63fe44dfabb1a950a116c58"
+      "bytes": 17471,
+      "sha256": "655db3ffd084dffec35ed9217af4a8d68202b344873f30481e9d6d0fb07fbdfc"
     },
     {
       "path": "apps/bot/tsconfig.json",
@@ -111,8 +116,8 @@
     },
     {
       "path": "apps/dashboard/lib/generated/settings-controls.json",
-      "bytes": 70771,
-      "sha256": "593a82f534b062fad3983893f4eee36142c17b8f63fca28837529f26655b8035"
+      "bytes": 72748,
+      "sha256": "5d41c9666c9a5d078a1471bc5c9053d560720540a9d8a93676b2483ddceee27d"
     },
     {
       "path": "apps/dashboard/next-env.d.ts",
@@ -230,6 +235,11 @@
       "sha256": "8029a8f508807afee3e9fae9f68bf185034e8e414edd17d8842bf8eb4366742a"
     },
     {
+      "path": "docs/IMPLEMENTATION_PHASE_09.md",
+      "bytes": 1961,
+      "sha256": "471c8872ebe651c41c88c678c8f811094eaeb49f059be5d341808c38b91ff3cc"
+    },
+    {
       "path": "docs/implementation_previews/wyr_open.png",
       "bytes": 103134,
       "sha256": "32f2f0291dae0ab36d4a74b45dc98ea00957ffbea9f6ba3bab22ca315596a096"
@@ -291,8 +301,8 @@
     },
     {
       "path": "IMPLEMENTATION_STATUS.json",
-      "bytes": 2732,
-      "sha256": "081a672884d1be9e6a8475a4e2f49a2a989b29ef5f40daaf2fd8c698881c077c"
+      "bytes": 3104,
+      "sha256": "17e66d4f13829f41b7f16bcc5bd6cb022605d88034f6f95be7efdb6329346f10"
     },
     {
       "path": "infra/Dockerfile.bot",
@@ -316,8 +326,8 @@
     },
     {
       "path": "KNOWN_ISSUES.md",
-      "bytes": 396,
-      "sha256": "2c942fa69195c1aaf5b0debdd94d5f99d5ca2d65973bb7bcc880b69cce13731d"
+      "bytes": 472,
+      "sha256": "205b120b4c5093bcdfa1a7d59a7ae88875fe1fcef185a91bfbc35ebf05c0bebd"
     },
     {
       "path": "LIVE_VALIDATION_CHECKLIST.md",
@@ -326,8 +336,8 @@
     },
     {
       "path": "PACK_MANIFEST.json",
-      "bytes": 1506,
-      "sha256": "a6e176a9e9ce20ca0f670982d76b83fa609cbcd9c1734b5618ff69c1477a5678"
+      "bytes": 1507,
+      "sha256": "1f7d61b07fa8770afb22a49bcc2f9b194f9e6efce42473d1a9d7e13e06b8b101"
     },
     {
       "path": "PACK_QA_REPORT.json",
@@ -341,8 +351,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 1712,
-      "sha256": "8380e5750e3da567475764f327d9afc2c9a3a22a4be314b4f55fad4479feeee5"
+      "bytes": 1987,
+      "sha256": "376c3cfae902e26a2d4afdbfdef751a94e1529cf178e5693df1dbfe7ecf0701f"
     },
     {
       "path": "packages/content/economy/fortune_300.json",
@@ -353,6 +363,11 @@
       "path": "packages/content/golden/wyr_sample.json",
       "bytes": 1801,
       "sha256": "35c47784665a03c3104ed0f3863acd7915223f8c79ed872b58c435d2cea87256"
+    },
+    {
+      "path": "packages/content/help/items.json",
+      "bytes": 2031,
+      "sha256": "276c8bff05fbbcb62b7b137af97f19c634ef9c7bf3ba64e368c63530513cd120"
     },
     {
       "path": "packages/content/package.json",
@@ -366,8 +381,8 @@
     },
     {
       "path": "packages/contracts/src/generated/capabilities.ts",
-      "bytes": 4104,
-      "sha256": "4549eba9a9927ad17e3bae1536c95cda2b0cb8100b31d141bc67fbeae4cad2ec"
+      "bytes": 4202,
+      "sha256": "bd5556914f7e3afd86116e4944236feb0583c98a04cd2a8ef1bf0ab6bd29b8e1"
     },
     {
       "path": "packages/contracts/src/generated/commands.ts",
@@ -381,8 +396,8 @@
     },
     {
       "path": "packages/contracts/src/generated/settings.ts",
-      "bytes": 62315,
-      "sha256": "ae923e44aad2b6361f1e7ac9ba793754b0aa5eca6ea072d9a3c83bd67ccfcb16"
+      "bytes": 64098,
+      "sha256": "f334a8d7d799542ea3a4362d978499eb933362aae4a2873e0371bbd838ae1cae"
     },
     {
       "path": "packages/contracts/src/index.ts",
@@ -525,14 +540,24 @@
       "sha256": "e8283629c646c96d305396f68f539309778b12f5a3c955d3147f896c8faf610f"
     },
     {
+      "path": "packages/database/prisma/migrations/0009_item_transactions/migration.sql",
+      "bytes": 12975,
+      "sha256": "eb0f6e864101709338febb6b2a8a2a47ea8b35b33e9987e84ab8a4f6ad1afc1c"
+    },
+    {
       "path": "packages/database/prisma/schema.prisma",
-      "bytes": 22611,
-      "sha256": "62b0f2dfe6f7dc54ea8109a08a9655065b3e91c94d1f86b6dbfc8d62bc5b3e34"
+      "bytes": 23597,
+      "sha256": "9a9d327510e9494dae3b569a3e01c17fcff6697597c7edf8127ea8505496a9bc"
     },
     {
       "path": "packages/database/prisma/seed.ts",
       "bytes": 1768,
       "sha256": "3837b024cdc4c0a7cb364af009d0c14430b1666b8aa561dd5f342d42723237d7"
+    },
+    {
+      "path": "packages/database/src/atomic-operations.ts",
+      "bytes": 3553,
+      "sha256": "86fce1c8fcd84a914493ebba9f50d1e65016136e9bde64e79acf400eff4fa929"
     },
     {
       "path": "packages/database/src/client.ts",
@@ -541,8 +566,8 @@
     },
     {
       "path": "packages/database/src/index.ts",
-      "bytes": 275,
-      "sha256": "9f8a5ec3123484465613489de8cf734e48438e68c73196c5df0d52581898f45d"
+      "bytes": 274,
+      "sha256": "d0f660ad62747a4c74ca783f3c8ac0e73defbc65e145b85264e08a78697580cf"
     },
     {
       "path": "packages/database/src/prisma-adapters.ts",
@@ -555,6 +580,11 @@
       "sha256": "1debbe0468f27086dd6b4b685430462cbb0c51baf1142294baf9907b52e4bcf0"
     },
     {
+      "path": "packages/features-economy/src/catalog-grants.ts",
+      "bytes": 2095,
+      "sha256": "f2b2f936e9e0814c3f50a445febd9598ba3fcc77e05c0b3afc4b60455a79c03c"
+    },
+    {
       "path": "packages/features-economy/src/in-memory.ts",
       "bytes": 14844,
       "sha256": "dc597bab9d8ad487bf12cb8d6207b9269db36293193648b4c64c75a1e8fcc048"
@@ -565,9 +595,29 @@
       "sha256": "cc205a294bd803fcf81354d5f65e5eec262429a4df5a8cb30de46f9b19c7964f"
     },
     {
+      "path": "packages/features-economy/src/items-memory.ts",
+      "bytes": 2367,
+      "sha256": "446071530894c694635c002cc3fee7457653e59f052a9fd438b7e76e1b7eb391"
+    },
+    {
+      "path": "packages/features-economy/src/items-prisma.ts",
+      "bytes": 6807,
+      "sha256": "71f5e2d66964670d7ad07a012378a086d38318c5bd3d90486d8caee397fc39e6"
+    },
+    {
+      "path": "packages/features-economy/src/items-service.ts",
+      "bytes": 15463,
+      "sha256": "a7f0790d8e38beb78a7a8c4fc6ab3317649a0a4f5e03e98c38478431ec724130"
+    },
+    {
+      "path": "packages/features-economy/src/items-types.ts",
+      "bytes": 2166,
+      "sha256": "71cdbc55885ec1ee923c01dd722b23ba25a9346d88e4e8007648016419696439"
+    },
+    {
       "path": "packages/features-economy/src/prisma-repository.ts",
-      "bytes": 24058,
-      "sha256": "6dab5a28de08fc745675d1aea0570613327f5a166f1563390b91801f9e51695c"
+      "bytes": 24672,
+      "sha256": "a9421eccdc737515bc415890749ace1cbd856fda119059cd43f1047fb1751e9b"
     },
     {
       "path": "packages/features-economy/src/repository.ts",
@@ -2761,8 +2811,8 @@
     },
     {
       "path": "reference/acceleration/registries/capability_matrix.json",
-      "bytes": 4061,
-      "sha256": "9418d631f761d77529cfd4ded5393ebd90b83e9aab01088983f9e75ca4c3d744"
+      "bytes": 4159,
+      "sha256": "6e7e2656e2d094cd9b0854b9c435203b5a8a667a2c8dbd8ea246d78e3d63b91f"
     },
     {
       "path": "reference/acceleration/registries/command_registration_plan.json",
@@ -2771,8 +2821,8 @@
     },
     {
       "path": "reference/acceleration/registries/feature_dependency_graph.json",
-      "bytes": 2788,
-      "sha256": "cfa6992475de79bc2b6b359382d9fb2337adf59c8f7f56617d57789e3c01fb6b"
+      "bytes": 2904,
+      "sha256": "d65fb99c1efac4e25164741c09997ef8c4a698a2b01e202d4dac1de5cef25b1b"
     },
     {
       "path": "reference/acceleration/registries/master_command_registry.json",
@@ -2781,8 +2831,8 @@
     },
     {
       "path": "reference/acceleration/registries/master_settings_schema.json",
-      "bytes": 68138,
-      "sha256": "f6b4db1a98c7c5b7bfefeae79dbaeac31ce017afb3498d8c67bba0ca50aef7a6"
+      "bytes": 70062,
+      "sha256": "6bbf7a7e9b9b13cf74b9452f12839c13ab827a08aef92b96da1b99cd4690ab34"
     },
     {
       "path": "reference/acceleration/source_updates/ANGRIER_JORDAN_CANONICAL_BUILD_SPEC.md",
@@ -2816,8 +2866,8 @@
     },
     {
       "path": "reference/assets/command-presentation-matrix.json",
-      "bytes": 102165,
-      "sha256": "2b299a89a12f9064c6657dc7b2ec697d67d386d1710be6b251f2e0edf1b7eacc"
+      "bytes": 103937,
+      "sha256": "2bce4a9f9ca532f0a9af2fe5e7e2aa6df48c0630acea98b969da50e7c6466fbd"
     },
     {
       "path": "reference/assets/final-production-visual-manifest.json",
@@ -2881,8 +2931,8 @@
     },
     {
       "path": "scripts/copy-runtime-data.mjs",
-      "bytes": 316,
-      "sha256": "200e3d0ac71fe4358f653e6ce517e7f2908d50b0d6831418c49c244ab400aab8"
+      "bytes": 308,
+      "sha256": "4939b47dc726eab1ce22f673090d94b4daeed9cdea3e17d6c028110670b6a27c"
     },
     {
       "path": "scripts/generate-command-registration.mjs",
@@ -2911,8 +2961,13 @@
     },
     {
       "path": "scripts/preflight.mjs",
-      "bytes": 583,
-      "sha256": "e5e06bd0ea4a5def88d7ea86e1486b3a9b76b9a2e3591a40f78805516db136d3"
+      "bytes": 599,
+      "sha256": "3dbd41256c21ca5e0366419d334594906fa8d552400173e65639298209267fcc"
+    },
+    {
+      "path": "scripts/run-postgres-tests.mjs",
+      "bytes": 1382,
+      "sha256": "225b812254fa9eceddcd3e732df0d13e1a838301eb98944bd6ae76b314b17250"
     },
     {
       "path": "scripts/update-file-inventory.mjs",
@@ -2936,8 +2991,8 @@
     },
     {
       "path": "scripts/validate-help-coverage.mjs",
-      "bytes": 384,
-      "sha256": "bdbf47eb8678490ef06f376e17785390102aa4a83429735226ca217ba74a96ad"
+      "bytes": 835,
+      "sha256": "19d0a8c950fcbab5847406db56239978844239aafc78e1c5babcae84be55b4a2"
     },
     {
       "path": "scripts/validate-production-wiring.mjs",
@@ -2951,8 +3006,18 @@
     },
     {
       "path": "testing/acceptance_test_matrix_enriched.json",
-      "bytes": 48647,
-      "sha256": "e4a655970678c0d555b6630e076391481dcadc512873e027d94fcdd1ad54853b"
+      "bytes": 49234,
+      "sha256": "ffa073d4690e1f3a3458b23cd0005dddfdb8c02460a62d270494b7b1a1e4ddc8"
+    },
+    {
+      "path": "testing/adapters/items.test.mjs",
+      "bytes": 2451,
+      "sha256": "3ddb8a9a5e129071595f986367333b2a4bb3cf5a8ccc8678f5bfdfd245345369"
+    },
+    {
+      "path": "testing/postgres/items.test.mjs",
+      "bytes": 5573,
+      "sha256": "ae9ef949f456da613b7b99ba541d6bd74140fa319ebbc09447f06178b6049d53"
     },
     {
       "path": "testing/runtime/economy-implementation.test.mjs",
@@ -2968,6 +3033,11 @@
       "path": "testing/runtime/golden-wyr.test.mjs",
       "bytes": 763,
       "sha256": "269facfcf3cb5e4692a2421052604bf810ebe5613eb1e02da40c2a623003720a"
+    },
+    {
+      "path": "testing/runtime/items-implementation.test.mjs",
+      "bytes": 7044,
+      "sha256": "4bcf483ed3e39ba3439aaa0039eb4f1af5801e1d5046919bc299d068032ddcc2"
     },
     {
       "path": "testing/runtime/jail-implementation.test.mjs",

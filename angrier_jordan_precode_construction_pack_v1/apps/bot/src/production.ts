@@ -1,3 +1,5 @@
+import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
+import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
 import { Client, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
 import { AuditService, ConfigService, HealthService, IdempotentScheduler, SchedulerWorker } from '../../../packages/core/src/index.js';
@@ -29,6 +31,7 @@ export async function startProductionBot():Promise<void>{
   const enableJailSmoke=process.env.ENABLE_JAIL_SMOKE==='true';
   const enableModerationSmoke=process.env.ENABLE_MODERATION_SMOKE==='true';
   const enableSecuritySmoke=process.env.ENABLE_SECURITY_SMOKE==='true';
+  const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
   const enableEconomySmoke=process.env.ENABLE_ECONOMY_SMOKE==='true';
   const db=getPrismaClient();
   const audit=new AuditService(new PrismaAuditSink(db));
@@ -51,6 +54,10 @@ export async function startProductionBot():Promise<void>{
   const fortunes=JSON.parse(fs.readFileSync(new URL('../../../packages/content/economy/fortune_300.json',import.meta.url),'utf8')) as FortuneEntry[];
   const economyService=new EconomyService(new PrismaEconomyRepository(db),audit,new SystemClock(),undefined,fortunes);
   const economy=new DiscordEconomyCoordinator(economyService,config);
+  const items=new DiscordItemsCoordinator(new PrismaItemRepository(db),config,async(g,u)=>{
+    if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;
+    const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';
+  });
   const scheduler=new IdempotentScheduler(jobRepo,{
     'wyr.close_due':async()=>{await wyr.closeDue(client);},
     'jail.expire':async job=>{await jail.handleExpiryJob(client,job.payload);},
@@ -65,7 +72,7 @@ export async function startProductionBot():Promise<void>{
 
   client.once(Events.ClientReady,async ready=>{
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});
     const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);await worker.runOnce();worker.start();
     wyrSweep=setInterval(()=>{void wyr.closeDue(ready);},5_000);
@@ -81,6 +88,10 @@ export async function startProductionBot():Promise<void>{
 
   client.on(Events.InteractionCreate,async interaction=>{
     try{
+      if((interaction.isChatInputCommand()&&ITEM_COMMANDS.has(interaction.commandName)&&(interaction.commandName!=='inventory'||enableItemsSmoke))||((interaction.isButton()||interaction.isStringSelectMenu()||interaction.isModalSubmit())&&interaction.customId.startsWith('items:'))){
+        if(!enableItemsSmoke){await interaction.reply({ephemeral:true,content:'Item controls are not enabled yet.'});return;}
+        await items.handle(interaction);return;
+      }
       if(interaction.isChatInputCommand()){
         if(enableJailSmoke&&interaction.guildId){
           const active=await jail.isModerationJailed(interaction.guildId,interaction.user.id);

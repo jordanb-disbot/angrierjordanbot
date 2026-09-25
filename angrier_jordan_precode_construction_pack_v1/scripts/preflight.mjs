@@ -1,5 +1,5 @@
 import {spawnSync} from 'node:child_process';
-const steps=['validate:registries','validate:content','validate:assets','validate:help','validate:golden','validate:production-wiring','typecheck:domain','typecheck:workspace','test:domain'];
+const steps=['validate:registries','validate:content','validate:assets','validate:help','validate:golden','validate:production-wiring','typecheck:domain','typecheck:workspace','test:domain','test:adapters'];
 if(!process.env.npm_execpath) throw new Error('Run preflight through npm run preflight.');
 for(const step of steps){
   const result=spawnSync(process.execPath,[process.env.npm_execpath,'run',step],{stdio:'inherit'});

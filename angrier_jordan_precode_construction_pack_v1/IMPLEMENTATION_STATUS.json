@@ -3,17 +3,17 @@
   "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
   "checkpoint": 8,
   "checkpoint_name": "Economy Foundation — ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
-  "status": "PASS",
+  "status": "PHASE_09_ACCEPTANCE_PENDING",
   "registry": {
     "interactions": 192,
-    "settings": 185,
-    "capabilities": 40,
+    "settings": 190,
+    "capabilities": 41,
     "generated_application_commands": 65,
     "top_level_chat_input_commands": 64
   },
   "database": {
-    "schema_version": "0008_economy_foundation",
-    "prisma_models": 79
+    "schema_version": "0009_item_transactions",
+    "prisma_models": 84
   },
   "visual_library": {
     "assets_and_templates": 348,
@@ -38,7 +38,7 @@
   ],
   "verification": {
     "preflight": "PASS",
-    "domain_tests": 68,
+    "domain_tests": 78,
     "domain_tests_failed": 0,
     "typescript_domain_typecheck": "PASS",
     "production_wiring_structure": "PASS",
@@ -50,7 +50,9 @@
     "full_bot_typecheck": "PASS",
     "full_workspace_typecheck": "PASS",
     "dashboard_production_build": "PASS",
-    "dependency_lockfile": "package-lock.json"
+    "dependency_lockfile": "package-lock.json",
+    "adapter_tests": 5,
+    "postgres_item_acceptance": "PENDING_RESOLVED_TEST_DATABASE_URL"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",
@@ -59,7 +61,14 @@
     "ENABLE_JAIL_SMOKE": false,
     "ENABLE_MODERATION_SMOKE": false,
     "ENABLE_SECURITY_SMOKE": false,
-    "ENABLE_ECONOMY_SMOKE": false
+    "ENABLE_ECONOMY_SMOKE": false,
+    "ENABLE_ITEMS_SMOKE": false,
+    "features.items": false
   },
-  "next_checkpoint": "Shop / inventory / tools / crafting / collections before escrow-heavy games and wagering"
+  "next_checkpoint": "Shop / inventory / tools / crafting / collections before escrow-heavy games and wagering",
+  "phase_09": {
+    "implementation": "domain, PostgreSQL adapter and Discord controls present",
+    "acceptance": "pending PostgreSQL and live Discord",
+    "review_gate_a": "not reached"
+  }
 }

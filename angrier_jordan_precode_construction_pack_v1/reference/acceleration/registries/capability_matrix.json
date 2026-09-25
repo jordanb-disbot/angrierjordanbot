@@ -185,6 +185,12 @@
     "security.heat_adjust": [
       "chaise_lounge",
       "throne"
+    ],
+    "items.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
     ]
   },
   "rules": [

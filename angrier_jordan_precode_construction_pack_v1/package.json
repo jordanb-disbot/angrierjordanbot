@@ -26,7 +26,9 @@
     "db:migrate": "npm --workspace @angrier-jordan/database run migrate",
     "db:seed": "npm --workspace @angrier-jordan/database run seed",
     "validate:production-wiring": "node scripts/validate-production-wiring.mjs",
-    "typecheck:workspace": "tsc -p apps/bot/tsconfig.json --noEmit && tsc -p apps/dashboard/tsconfig.json --noEmit"
+    "typecheck:workspace": "tsc -p apps/bot/tsconfig.json --noEmit && tsc -p apps/dashboard/tsconfig.json --noEmit",
+    "test:postgres": "npm run db:generate && node scripts/compile-domain-tests.mjs && node scripts/run-postgres-tests.mjs",
+    "test:adapters": "npm --workspace @angrier-jordan/bot run build && node scripts/copy-runtime-data.mjs && node --test testing/adapters/*.test.mjs"
   },
   "type": "module",
   "packageManager": "npm@11.6.0"
