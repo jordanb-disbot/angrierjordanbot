@@ -114,7 +114,9 @@
         "production/atomic_assets/templates/profile.svg"
       ],
       "interaction_contract": "Rendered profile; native Edit Showcase and pagination controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
+      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
     },
     {
       "id": "records",
@@ -129,7 +131,9 @@
         "production/atomic_assets/templates/records.svg"
       ],
       "interaction_contract": "Shared records/leaderboard renderer; native category selector where applicable",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
+      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
     },
     {
       "id": "daily",
@@ -2853,7 +2857,9 @@
         "production/atomic_assets/templates/records.svg"
       ],
       "interaction_contract": "Shared records/leaderboard renderer; native category selector where applicable",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
+      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
     },
     {
       "id": "privacy_activity",
@@ -2868,7 +2874,9 @@
         "production/atomic_assets/templates/system_state.svg"
       ],
       "interaction_contract": "Ephemeral toggle/selector; no dedicated art",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
+      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
     },
     {
       "id": "privacy_roast",
@@ -2883,7 +2891,9 @@
         "production/atomic_assets/templates/system_state.svg"
       ],
       "interaction_contract": "Ephemeral toggle/selector; no dedicated art",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
+      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
     },
     {
       "id": "hangman",

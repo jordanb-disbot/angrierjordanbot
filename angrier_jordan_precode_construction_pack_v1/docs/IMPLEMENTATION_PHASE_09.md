@@ -8,6 +8,6 @@ Shared infrastructure: LedgerEngine inside serializable Prisma transactions, dur
 
 Discord: private item controls use the Angrier Jordan sender, dark native embeds and labeled buttons/menus/modals. Each mutation rechecks ownership and containment. Item module requires ENABLE_ITEMS_SMOKE plus features.items; both default off.
 
-Validation: 78 domain tests and 5 real Discord-adapter tests pass. Full strict workspace typecheck passes. PostgreSQL integration suite exists but remains pending a resolved disposable TEST_DATABASE_URL. It loads only .env.test.local, creates a uniquely named test schema, applies all migrations, tests concurrency/replay/restart/rollback and drops only that schema. No production database fallback.
+Validation: 90 domain tests and 11 Discord-adapter/renderer tests pass. Full strict workspace typecheck passes. PostgreSQL integration suite passed all 11 tests against the owner-confirmed disposable Railway database. It loads only .env.test.local, creates a uniquely named test schema, applies all migrations, tests concurrency/replay/restart/rollback and drops only that schema. No production database fallback.
 
-Not yet accepted: real PostgreSQL migrations/concurrency suite; live Discord smoke/readability; final live integration. Phase 09 is not marked acceptance-complete and wagering remains blocked behind this gate. Gate A has not been reached.
+Database gate passed: duplicate/distinct purchases, sale versus gift, rollback, equip exclusivity, craft consumption, repair replay, box pity and ledger balance. Live Discord smoke/readability and final live integration remain pending. Flags stay off. The handoff permits proceeding to wagering after this database gate. Gate A has not been reached.

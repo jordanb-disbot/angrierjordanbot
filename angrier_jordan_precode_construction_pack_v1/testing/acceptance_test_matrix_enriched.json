@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "test_count": 74,
+  "test_count": 75,
   "tests": [
     {
       "id": "T001",
@@ -1533,7 +1533,33 @@
         "No negative balance or double consumption",
         "Failed operations leave no receipt or ledger movement"
       ],
-      "status": "PENDING_TEST_DATABASE_URL"
+      "status": "PASS_POSTGRES_11_TESTS"
+    },
+    {
+      "id": "PH10-PROFILES",
+      "module": "profiles",
+      "name": "Privacy, permanent Triple Threat, monthly records and restart recovery",
+      "kind": "integration",
+      "priority": "P0",
+      "status": "PASS_POSTGRES_6_TESTS_LIVE_DISCORD_PENDING",
+      "preconditions": [
+        "Disposable test PostgreSQL only",
+        "Profiles/activity/Spotlight flags enabled in isolated fixture"
+      ],
+      "steps": [
+        "Replay message and command IDs concurrently",
+        "Cross Monday and monthly 4 AM Mountain boundaries including DST",
+        "Freeze tied results twice and recover after restart",
+        "Hide activity while preserving public economy and awards",
+        "Attempt foreign-owner and unearned showcase changes"
+      ],
+      "expected": [
+        "No duplicate counts or titles",
+        "Triple Threat never replaced",
+        "One announcement per frozen result",
+        "Monthly records reset logically, all-time retained",
+        "Unauthorized showcase edits rejected"
+      ]
     }
   ]
 }

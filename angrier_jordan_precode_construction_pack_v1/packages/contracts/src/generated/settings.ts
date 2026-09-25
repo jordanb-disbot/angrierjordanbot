@@ -2967,5 +2967,47 @@ export const SETTINGS = [
     "mutable": true,
     "min": 1,
     "max": 10000
+  },
+  {
+    "key": "features.profiles",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted profiles runtime flows. Keep disabled until acceptance passes.",
+    "risk": "financial",
+    "mutable": true
+  },
+  {
+    "key": "features.activity",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted activity runtime flows. Keep disabled until acceptance passes.",
+    "risk": "financial",
+    "mutable": true
+  },
+  {
+    "key": "features.spotlight",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Enable accepted spotlight runtime flows. Keep disabled until acceptance passes.",
+    "risk": "financial",
+    "mutable": true
   }
 ] as const satisfies readonly SettingContract[];

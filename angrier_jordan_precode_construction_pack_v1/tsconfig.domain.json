@@ -15,7 +15,8 @@
     "packages/features-economy/src/**/*.ts",
     "packages/database/src/**/*.ts",
     "apps/bot/src/architecture/**/*.ts",
-    "apps/bot/src/features/**/*.ts"
+    "apps/bot/src/features/**/*.ts",
+    "packages/features-profiles/src/**/*.ts"
   ],
   "exclude": [
     "apps/bot/src/discord/**/*.ts",

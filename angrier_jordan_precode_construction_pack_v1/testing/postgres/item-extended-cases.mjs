@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {ItemService} from '../../.test-build/packages/features-economy/src/items-service.js';
+import {PrismaItemRepository} from '../../.test-build/packages/features-economy/src/items-prisma.js';
+export async function itemExtendedCases(t,db,economy,policy){
+ await economy.grantStarter({guildId:'g',userId:'craft',amount:5000n,idempotencyKey:'starter:craft',now:new Date()});
+ const svc=new ItemService(new PrismaItemRepository(db),policy,()=>new Date(),()=>0.5),c=key=>({guildId:'g',userId:'craft',requestKey:key});
+ await svc.buy(c('tool1'),'tool.basic_workshop_tool',1);await svc.buy(c('tool2'),'tool.basic_workshop_tool',1);
+ const tools=await db.toolInstance.findMany({where:{guildId:'g',userId:'craft'}});
+ await t.test('concurrent equip leaves exactly one usable tool equipped',async()=>{const results=await Promise.allSettled(tools.map((tool,n)=>svc.equip(c('equip'+n),tool.id)));assert.ok(results.some(r=>r.status==='fulfilled'));assert.equal(await db.toolInstance.count({where:{guildId:'g',userId:'craft',equipped:true}}),1);});
+ await svc.buy(c('recipe'),'recipe.folding_chair',1);
+ for(const [id,n] of [['material.wood',4],['material.fabric',2],['material.brass',1]])await svc.buy(c(id),id,n);
+ await t.test('concurrent crafting consumes one recipe input set only once',async()=>{const results=await Promise.allSettled([svc.craft(c('craft1'),'folding_chair'),svc.craft(c('craft2'),'folding_chair')]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);assert.equal(await db.craftedChair.count({where:{guildId:'g',userId:'craft'}}),1);const progress=await db.craftingProgress.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'craft'}}});assert.equal(progress.attempts,1);assert.equal(progress.successes,1);for(const row of await db.inventoryEntry.findMany({where:{guildId:'g',userId:'craft'}}))assert.equal(row.quantity,0);});
+ await t.test('repair receipt survives restart and charges exactly once',async()=>{const tool=await db.toolInstance.findFirstOrThrow({where:{guildId:'g',userId:'craft',equipped:true}}),before=await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'craft'}}});const first=await svc.repair(c('repair'),tool.id,'cheap');const restart=new ItemService(new PrismaItemRepository(db),policy);assert.deepEqual(await restart.repair(c('repair'),tool.id,'cheap'),first);assert.equal((await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'craft'}}})).wallet,before.wallet-25n);assert.equal((await db.toolInstance.findUniqueOrThrow({where:{id:tool.id}})).durability,100);});
+ // Test fixture grants are limited to this generated schema; currency still uses the shared ledger.
+ const box=await db.inventoryEntry.create({data:{guildId:'g',userId:'craft',itemId:'box.mystery_basic',quantity:1}});
+ await db.pityCounter.create({data:{guildId:'g',userId:'craft',poolKey:'basic',count:19}});
+ await t.test('concurrent box opening grants the pity reward once and resets persisted pity',async()=>{const results=await Promise.allSettled([svc.open(c('box1'),box.id),svc.open(c('box2'),box.id)]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);assert.equal((await db.inventoryEntry.findUniqueOrThrow({where:{id:box.id}})).quantity,0);assert.equal((await db.inventoryEntry.findUniqueOrThrow({where:{guildId_userId_itemId:{guildId:'g',userId:'craft',itemId:'collectible.lounge_8'}}})).quantity,1);assert.equal((await db.pityCounter.findUniqueOrThrow({where:{guildId_userId_poolKey:{guildId:'g',userId:'craft',poolKey:'basic'}}})).count,0);});
+}

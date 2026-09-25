@@ -1,3 +1,6 @@
+import {DiscordRecordAnnouncements} from './discord/record-announcements.js';
+import {DiscordProfilesCoordinator,PROFILE_COMMANDS} from './discord/profiles-coordinator.js';
+import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/prisma-repository.js';
 import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
 import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
@@ -31,6 +34,7 @@ export async function startProductionBot():Promise<void>{
   const enableJailSmoke=process.env.ENABLE_JAIL_SMOKE==='true';
   const enableModerationSmoke=process.env.ENABLE_MODERATION_SMOKE==='true';
   const enableSecuritySmoke=process.env.ENABLE_SECURITY_SMOKE==='true';
+  const enableProfilesSmoke=process.env.ENABLE_PROFILES_SMOKE==='true';
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
   const enableEconomySmoke=process.env.ENABLE_ECONOMY_SMOKE==='true';
   const db=getPrismaClient();
@@ -58,7 +62,13 @@ export async function startProductionBot():Promise<void>{
     if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;
     const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';
   });
+  const profileRepo=new PrismaProfilesRepository(db);
+  const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u));
+  const recordAnnouncements=new DiscordRecordAnnouncements(db,config);
   const scheduler=new IdempotentScheduler(jobRepo,{
+    'record.announce':async job=>{if(!enableProfilesSmoke)throw new Error('Record runtime disabled; retain job.');await recordAnnouncements.deliver(client,job);},
+    'spotlight.freeze':async job=>{const p=job.payload as {guildId?:unknown};if(typeof p?.guildId!=='string')throw new Error('Invalid Spotlight job.');if(!enableProfilesSmoke)throw new Error('Spotlight runtime disabled; retain job for retry.');await profiles.freeze(client,p.guildId,job.dueAt);},
+    'spotlight.announce':async job=>{const p=job.payload as {guildId?:unknown;weekKey?:unknown};if(typeof p?.guildId!=='string'||typeof p.weekKey!=='string')throw new Error('Invalid Spotlight job.');if(!enableProfilesSmoke)throw new Error('Spotlight runtime disabled; retain job for retry.');await profiles.announce(client,p.guildId,p.weekKey);},
     'wyr.close_due':async()=>{await wyr.closeDue(client);},
     'jail.expire':async job=>{await jail.handleExpiryJob(client,job.payload);},
     'moderation.timeout_expire':async job=>{await moderation.handleExpiryJob(client,job.jobType,job.payload);},
@@ -68,12 +78,14 @@ export async function startProductionBot():Promise<void>{
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
   });
   const worker=new SchedulerWorker(scheduler,5_000);
+  let voiceSweep:ReturnType<typeof setInterval>|undefined;
   let wyrSweep:ReturnType<typeof setInterval>|undefined;
 
   client.once(Events.ClientReady,async ready=>{
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});
+    if(enableProfilesSmoke){await profileRepo.resetVoiceAfterRestart(guildId);await profiles.reconcile(guildId);await profiles.sampleVoice(ready,guildId);voiceSweep=setInterval(()=>{void profiles.sampleVoice(ready,guildId).catch(()=>console.error('Activity voice sampling failed.'));},30_000);}
     const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);await worker.runOnce();worker.start();
     wyrSweep=setInterval(()=>{void wyr.closeDue(ready);},5_000);
     const snapshot=await health.check();
@@ -83,11 +95,17 @@ export async function startProductionBot():Promise<void>{
   client.on(Events.GuildMemberAdd,member=>{if(enableOnboardingSmoke)void onboarding.handleMemberAdd(member).catch(error=>console.error('Onboarding join failed',error));if(enableSecuritySmoke)void security.handleMemberAdd(member).catch(error=>console.error('Join Gate failed',error));if(enableEconomySmoke)void economy.handleMemberAdd(member).catch(error=>console.error('Economy starter grant failed',error));});
   client.on(Events.GuildMemberRemove,member=>{if(enableOnboardingSmoke)void onboarding.handleMemberRemove(member).catch(error=>console.error('Onboarding leave snapshot failed',error));});
   client.on(Events.ChannelCreate,channel=>{if(enableJailSmoke)void jail.reconcileNewChannel(channel).catch(error=>console.error('Hotseat channel reconciliation failed',error));});
-  client.on(Events.MessageCreate,message=>{if(enableSecuritySmoke)void security.handleMessage(message).catch(error=>console.error('AutoMod failed',error));});
+  client.on(Events.MessageCreate,message=>{if(enableProfilesSmoke)void profiles.message(message).catch(()=>console.error('Activity message recording failed.'));if(enableSecuritySmoke)void security.handleMessage(message).catch(error=>console.error('AutoMod failed',error));});
   client.on(Events.GuildAuditLogEntryCreate,(entry,guild)=>{if(enableSecuritySmoke)void security.handleAuditEntry(entry,guild).catch(error=>console.error('Anti-nuke evaluation failed',error));});
 
+  client.on(Events.VoiceStateUpdate,(_before,after)=>{if(enableProfilesSmoke)void profiles.sampleVoice(client,after.guild.id).catch(()=>console.error('Activity voice transition failed.'));});
   client.on(Events.InteractionCreate,async interaction=>{
     try{
+      if(enableProfilesSmoke&&interaction.isChatInputCommand())void profiles.recordCommand(interaction).catch(()=>console.error('Command activity recording failed.'));
+      if((interaction.isChatInputCommand()&&PROFILE_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('profile:'))){
+        if(!enableProfilesSmoke){await interaction.reply({ephemeral:true,content:'Profile controls are not enabled yet.'});return;}
+        await profiles.handle(interaction);return;
+      }
       if((interaction.isChatInputCommand()&&ITEM_COMMANDS.has(interaction.commandName)&&(interaction.commandName!=='inventory'||enableItemsSmoke))||((interaction.isButton()||interaction.isStringSelectMenu()||interaction.isModalSubmit())&&interaction.customId.startsWith('items:'))){
         if(!enableItemsSmoke){await interaction.reply({ephemeral:true,content:'Item controls are not enabled yet.'});return;}
         await items.handle(interaction);return;
@@ -143,7 +161,7 @@ export async function startProductionBot():Promise<void>{
     }
   });
 
-  const shutdown=async()=>{worker.stop();if(wyrSweep)clearInterval(wyrSweep);client.destroy();await disconnectPrisma();};
+  const shutdown=async()=>{worker.stop();if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);client.destroy();await disconnectPrisma();};
   process.once('SIGINT',()=>{void shutdown();});process.once('SIGTERM',()=>{void shutdown();});
   await client.login(token);
 }

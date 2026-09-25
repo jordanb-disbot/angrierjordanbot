@@ -1,5 +1,5 @@
 {
-  "count": 190,
+  "count": 193,
   "controls": [
     {
       "key": "server.timezone",
@@ -2968,6 +2968,48 @@
       "restartRequired": false,
       "min": 1,
       "max": 10000
+    },
+    {
+      "key": "features.profiles",
+      "section": "features",
+      "label": "Profiles",
+      "description": "Enable accepted profiles runtime flows. Keep disabled until acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "features.activity",
+      "section": "features",
+      "label": "Activity",
+      "description": "Enable accepted activity runtime flows. Keep disabled until acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "features.spotlight",
+      "section": "features",
+      "label": "Spotlight",
+      "description": "Enable accepted spotlight runtime flows. Keep disabled until acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
     }
   ]
 }

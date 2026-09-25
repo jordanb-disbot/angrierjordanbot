@@ -1,3 +1,4 @@
+import {itemExtendedCases} from './item-extended-cases.mjs';
 import {readFileSync} from 'node:fs';
 import {parseEnv} from 'node:util';
 import test from 'node:test';
@@ -20,7 +21,9 @@ const db=new PrismaClient({datasourceUrl:url.toString()});
 const policy={bonusSlots:2,buybackPercent:50,repairs:{cheap:{cost:25n,min:10,max:25},standard:{cost:75n,min:25,max:55},premium:{cost:150n,min:50,max:100}}};
 const context=(key,userId='a')=>({guildId:'g',userId,requestKey:key});
 test('Phase 09 PostgreSQL transactions and restart recovery',async t=>{
+ let connected=false;
  try{
+  await db.$connect();connected=true;
   const migrate=spawnSync(process.execPath,[require.resolve('prisma/build/index.js'),'migrate','deploy','--schema','packages/database/prisma/schema.prisma'],{env:{...process.env,DATABASE_URL:url.toString()},encoding:'utf8'});
   assert.equal(migrate.status,0,`Migration failed: ${migrate.stderr.replaceAll(url.toString(),'[redacted]').replaceAll(base,'[redacted]')}`);
   await db.guild.create({data:{id:'g',name:'Test Chairs'}});
@@ -29,11 +32,16 @@ test('Phase 09 PostgreSQL transactions and restart recovery',async t=>{
   const svc=new ItemService(new PrismaItemRepository(db),policy);
   await t.test('simultaneous buys reserve money and grant items exactly once per receipt',async()=>{
    const results=await Promise.allSettled(Array.from({length:16},()=>svc.buy(context('one'),'material.wood',1)));
-   assert.ok(results.some(r=>r.status==='fulfilled'));
+   assert.equal(results.filter(r=>r.status==='fulfilled').length,16,'Every duplicate request should return its persisted outcome.');
    const account=await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'a'}}});assert.equal(account.wallet,450n);
    const owned=await db.inventoryEntry.findUniqueOrThrow({where:{guildId_userId_itemId:{guildId:'g',userId:'a',itemId:'material.wood'}}});assert.equal(owned.quantity,1);
    const restarted=new ItemService(new PrismaItemRepository(db),policy);await restarted.buy(context('one'),'material.wood',1);
    assert.equal((await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'a'}}})).wallet,450n);
+  });
+  await t.test('a persisted request cannot be reused with changed purchase arguments',async()=>{
+   const before=await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'a'}}});
+   await assert.rejects(()=>svc.buy(context('one'),'material.wood',2),{code:'REPLAY_MISMATCH'});
+   assert.equal((await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'g',userId:'a'}}})).wallet,before.wallet);
   });
   await t.test('concurrent distinct purchases never overdraw funds',async()=>{
    await Promise.allSettled(Array.from({length:24},(_,i)=>svc.buy(context('spend'+i),'material.fabric',1)));
@@ -52,11 +60,11 @@ test('Phase 09 PostgreSQL transactions and restart recovery',async t=>{
    assert.equal(await db.economyTransaction.findUnique({where:{idempotencyKey:'fail-ledger'}}),null);
    assert.equal(await db.operationReceipt.findUnique({where:{guildId_key:{guildId:'g',key:'fail'}}}),null);
   });
+  await itemExtendedCases(t,db,economy,policy);
   await t.test('ledger is balanced after all concurrent transactions',async()=>{const lines=await db.ledgerEntry.findMany({where:{guildId:'g'}});const totals=new Map();for(const l of lines)totals.set(l.transactionId,(totals.get(l.transactionId)??0n)+l.amount);for(const n of totals.values())assert.equal(n,0n);});
  }finally{
   // The target identifier is generated here, never supplied by the connection string or caller.
   assert.match(schema,/^aj_items_test_[0-9a-f]{32}$/);
-  await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
-  await db.$disconnect();
+  try{if(connected)await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);}finally{await db.$disconnect();}
  }
 });

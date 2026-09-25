@@ -1,7 +1,7 @@
 {
   "version": 3,
   "source_of_truth": "Canonical Build Specification v2026-09-21 + PostgreSQL live config",
-  "setting_count": 190,
+  "setting_count": 193,
   "settings": [
     {
       "key": "server.timezone",
@@ -2970,6 +2970,48 @@
       "mutable": true,
       "min": 1,
       "max": 10000
+    },
+    {
+      "key": "features.profiles",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Enable accepted profiles runtime flows. Keep disabled until acceptance passes.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "features.activity",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Enable accepted activity runtime flows. Keep disabled until acceptance passes.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "features.spotlight",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Enable accepted spotlight runtime flows. Keep disabled until acceptance passes.",
+      "risk": "financial",
+      "mutable": true
     }
   ]
 }

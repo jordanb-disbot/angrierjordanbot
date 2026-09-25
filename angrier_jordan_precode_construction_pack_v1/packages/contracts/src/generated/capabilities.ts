@@ -191,6 +191,12 @@ export const CAPABILITY_MATRIX = {
       "recliner",
       "chaise_lounge",
       "throne"
+    ],
+    "profiles.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
     ]
   },
   "rules": [

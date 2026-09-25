@@ -1,0 +1,30 @@
+{
+  "id": "profiles",
+  "classification": "guided",
+  "commands": [
+    "profile",
+    "privacy_activity",
+    "privacy_roast",
+    "records",
+    "leaderboard"
+  ],
+  "title": "Profiles, Privacy and Records",
+  "body": "Profiles are public. Edit Showcase opens private controls for earned badges and owned collectibles. Activity visibility hides message, word, voice and most-used statistics together; game, economy and achievement statistics remain public. Weekly ties award each co-winner. Triple Threat permanently occupies the premium showcase slot once earned. Records have monthly and all-time periods; monthly records reset on the first at 4 AM Mountain.",
+  "examples": [
+    "/profile → Edit Showcase",
+    "/privacy activity state:hidden",
+    "/privacy roast state:block",
+    "/records → This month",
+    "/leaderboard → Choose a category"
+  ],
+  "tutorial": {
+    "lesson_id": "community.profiles",
+    "steps": [
+      "Open your profile.",
+      "Edit your earned showcase privately.",
+      "Choose activity and roast preferences independently.",
+      "Compare current records by period."
+    ]
+  },
+  "acceptance": "IN_PROGRESS_FLAGS_OFF"
+}

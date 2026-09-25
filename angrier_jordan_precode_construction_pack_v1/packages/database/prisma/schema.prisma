@@ -683,6 +683,9 @@ model TutorialProgress {
 }
 
 model ScheduledJob {
+  leaseToken String?
+  leaseUntil DateTime?
+  retryAt DateTime?
   id String @id @default(cuid())
   guildId String
   jobType String
@@ -694,6 +697,8 @@ model ScheduledJob {
   lastError String?
   completedAt DateTime?
   @@index([status,dueAt])
+  @@index([status,leaseUntil])
+  @@index([status,retryAt])
 }
 
 model AuditEvent {
@@ -1079,4 +1084,45 @@ model GiftRecord {
   createdAt DateTime @default(now())
   @@index([guildId,senderId])
   @@index([guildId,recipientId])
+}
+
+model ProfileState {
+  guildId String
+  userId String
+  roastEnabled Boolean @default(true)
+  featuredAchievements String[] @default([])
+  featuredItems String[] @default([])
+  tripleThreatAt DateTime?
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
+model ActivityObservation {
+  id String @id
+  guildId String
+  userId String
+  kind String
+  occurredAt DateTime
+  hourMt Int
+  @@index([guildId,occurredAt,hourMt])
+}
+
+model VoicePresence {
+  guildId String
+  userId String
+  channelId String
+  qualified Boolean
+  observedAt DateTime
+  @@id([guildId,userId])
+}
+
+model SpotlightFreeze {
+  guildId String
+  weekKey String
+  frozenAt DateTime
+  snapshot Json
+  announceAt DateTime
+  messageId String?
+  deliveryState String @default("PENDING")
+  @@id([guildId,weekKey])
 }

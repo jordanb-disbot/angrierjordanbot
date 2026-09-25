@@ -13,3 +13,4 @@ export * from './config-service.js';
 export * from './health.js';
 export * from './scheduler-worker.js';
 export * from './in-memory-foundation.js';
+export * from './delivery.js';

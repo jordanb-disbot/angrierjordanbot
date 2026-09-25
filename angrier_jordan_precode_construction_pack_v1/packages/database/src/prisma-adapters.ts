@@ -1,9 +1,10 @@
+import {randomUUID} from 'node:crypto';
 import type { AuditEvent, AuditSink, ConfigRecord, ConfigRepository, ConfigRevisionRecord, JobRepository, ScheduledJob } from '../../core/src/index.js';
 import { DomainError } from '../../core/src/index.js';
 
 interface ConfigValueRow { guildId:string;key:string;value:unknown;source:string;version:number;updatedBy:string|null;updatedAt:Date; }
 interface ConfigRevisionRow { guildId:string;key:string;version:number;value:unknown;source:string;actorUserId:string|null;rollbackSafe:boolean;createdAt:Date; }
-interface ScheduledJobRow { id:string;guildId:string;jobType:string;executionKey:string;dueAt:Date;status:string;payload:unknown;attempts:number;lastError:string|null;completedAt:Date|null; }
+interface ScheduledJobRow { leaseToken?:string|null;leaseUntil?:Date|null;retryAt?:Date|null; id:string;guildId:string;jobType:string;executionKey:string;dueAt:Date;status:string;payload:unknown;attempts:number;lastError:string|null;completedAt:Date|null; }
 interface UpdateManyResult { count:number; }
 
 interface ConfigTxLike {
@@ -88,27 +89,32 @@ export class PrismaAuditSink implements AuditSink {
 
 const scheduledJob=(row:ScheduledJobRow):ScheduledJob=>({
   id:row.id,guildId:row.guildId,jobType:row.jobType,executionKey:row.executionKey,dueAt:row.dueAt,
-  status:row.status as ScheduledJob['status'],...(row.payload===null?{}:{payload:row.payload}),attempts:row.attempts,
+  ...(row.leaseToken?{leaseToken:row.leaseToken}:{}),status:row.status as ScheduledJob['status'],...(row.payload===null?{}:{payload:row.payload}),attempts:row.attempts,
 });
 
 export class PrismaJobRepository implements JobRepository {
   constructor(private readonly db:FoundationPrismaLike){}
   async claimDue(now:Date,limit:number):Promise<ScheduledJob[]>{
     return this.db.$transaction(async tx=>{
-      const due=await tx.scheduledJob.findMany({where:{status:'PENDING',dueAt:{lte:now}},orderBy:{dueAt:'asc'},take:limit});
+      const available={OR:[{status:'PENDING',dueAt:{lte:now}},{status:'FAILED',retryAt:{lte:now}},{status:'RUNNING',OR:[{leaseUntil:{lte:now}},{leaseUntil:null}]}]};
+      const due=await tx.scheduledJob.findMany({where:available,orderBy:{dueAt:'asc'},take:limit});
       const claimed:ScheduledJob[]=[];
       for(const row of due){
-        const result=await tx.scheduledJob.updateMany({where:{id:row.id,status:'PENDING'},data:{status:'RUNNING',attempts:{increment:1}}});
-        if(result.count===1)claimed.push(scheduledJob({...row,status:'RUNNING',attempts:row.attempts+1}));
+        const leaseToken=randomUUID();
+        const result=await tx.scheduledJob.updateMany({where:{id:row.id,status:row.status,leaseToken:row.leaseToken??null,...available},data:{status:'RUNNING',attempts:{increment:1},leaseToken,leaseUntil:new Date(now.getTime()+120_000)}});
+        if(result.count===1)claimed.push(scheduledJob({...row,status:'RUNNING',attempts:row.attempts+1,leaseToken}));
       }
       return claimed;
     });
   }
-  async complete(id:string):Promise<void>{
-    await this.db.scheduledJob.update({where:{id},data:{status:'COMPLETED',completedAt:new Date(),lastError:null}});
+  async renew(id:string,leaseToken:string):Promise<boolean>{return(await this.db.scheduledJob.updateMany({where:{id,status:'RUNNING',leaseToken},data:{leaseUntil:new Date(Date.now()+120_000)}})).count===1;}
+  async complete(id:string,leaseToken?:string):Promise<void>{
+    await this.db.scheduledJob.updateMany({where:{id,...(leaseToken?{leaseToken}:{})},data:{status:'COMPLETED',completedAt:new Date(),lastError:null,leaseToken:null,leaseUntil:null,retryAt:null}});
   }
-  async fail(id:string,error:string):Promise<void>{
-    await this.db.scheduledJob.update({where:{id},data:{status:'FAILED',lastError:error}});
+  async fail(id:string,error:string,leaseToken?:string):Promise<void>{
+    const row=await this.db.scheduledJob.findUnique({where:{id}});if(!row)return;
+    const delay=Math.min(3600,5*2**Math.min(10,row.attempts))*1000;
+    await this.db.scheduledJob.updateMany({where:{id,...(leaseToken?{leaseToken}:{})},data:{status:'FAILED',lastError:error,leaseToken:null,leaseUntil:null,retryAt:new Date(Date.now()+delay)}});
   }
   async wasExecuted(executionKey:string):Promise<boolean>{
     const row=await this.db.scheduledJob.findUnique({where:{executionKey}});
