@@ -1,7 +1,7 @@
 {
   "version": 3,
   "source_of_truth": "Canonical Build Specification v2026-09-21 + PostgreSQL live config",
-  "setting_count": 193,
+  "setting_count": 200,
   "settings": [
     {
       "key": "server.timezone",
@@ -518,16 +518,13 @@
       "section": "economy",
       "type": "integer",
       "default": 20,
-      "editable_by": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "editable_by": [],
       "restart_required": false,
       "description": "",
-      "risk": "financial",
-      "min": 1,
-      "max": 100,
-      "mutable": true
+      "risk": "locked",
+      "min": 20,
+      "max": 20,
+      "mutable": false
     },
     {
       "key": "economy.wallet_first_spending",
@@ -1272,14 +1269,11 @@
       "section": "casino",
       "type": "choice",
       "default": "FRIDAY",
-      "editable_by": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "editable_by": [],
       "restart_required": false,
       "description": "",
-      "risk": "normal",
-      "mutable": true,
+      "risk": "locked",
+      "mutable": false,
       "choices": [
         "MONDAY",
         "TUESDAY",
@@ -1295,16 +1289,13 @@
       "section": "casino",
       "type": "integer",
       "default": 20,
-      "editable_by": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "editable_by": [],
       "restart_required": false,
       "description": "",
-      "risk": "normal",
-      "mutable": true,
-      "min": 0,
-      "max": 23
+      "risk": "locked",
+      "mutable": false,
+      "min": 20,
+      "max": 20
     },
     {
       "key": "lottery.rake_percent",
@@ -3012,6 +3003,191 @@
       "description": "Enable accepted spotlight runtime flows. Keep disabled until acceptance passes.",
       "risk": "financial",
       "mutable": true
+    },
+    {
+      "key": "features.casino",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Enable accepted casino flows; keep off until acceptance passes.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "features.lottery",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Enable accepted lottery flows; keep off until acceptance passes.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "casino.chair_symbols",
+      "section": "casino",
+      "type": "json",
+      "default": [
+        {
+          "id": "folding_chair",
+          "name": "Folding Chair",
+          "weight": 50,
+          "multiplier": 4
+        },
+        {
+          "id": "barstool",
+          "name": "Barstool",
+          "weight": 30,
+          "multiplier": 8
+        },
+        {
+          "id": "recliner",
+          "name": "Recliner",
+          "weight": 15,
+          "multiplier": 20
+        },
+        {
+          "id": "chaise_lounge",
+          "name": "Chaise Lounge",
+          "weight": 4,
+          "multiplier": 100
+        },
+        {
+          "id": "throne",
+          "name": "Throne",
+          "weight": 1,
+          "multiplier": 0,
+          "jackpot": true
+        }
+      ],
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Three chair-symbol reels. Matching triples pay the configured gross multiplier; matching Throne triggers Chair Pot.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "casino.slots_wagers",
+      "section": "casino",
+      "type": "json",
+      "default": [
+        10,
+        50,
+        100,
+        500,
+        1000,
+        5000
+      ],
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Supported slot wagers; every replay also rechecks global bet limits.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "casino.roulette_choices",
+      "section": "casino",
+      "type": "json",
+      "default": [
+        "red",
+        "black",
+        "odd",
+        "even",
+        "low",
+        "high",
+        "number:0",
+        "number:1",
+        "number:2",
+        "number:3",
+        "number:4",
+        "number:5",
+        "number:6",
+        "number:7",
+        "number:8",
+        "number:9",
+        "number:10",
+        "number:11",
+        "number:12",
+        "number:13",
+        "number:14",
+        "number:15",
+        "number:16",
+        "number:17",
+        "number:18",
+        "number:19",
+        "number:20",
+        "number:21",
+        "number:22",
+        "number:23",
+        "number:24",
+        "number:25",
+        "number:26",
+        "number:27",
+        "number:28",
+        "number:29",
+        "number:30",
+        "number:31",
+        "number:32",
+        "number:33",
+        "number:34",
+        "number:35",
+        "number:36"
+      ],
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Single-zero roulette selections. Straight numbers pay 36× gross; even-money choices pay 2× gross.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "casino.dice_choices",
+      "section": "casino",
+      "type": "json",
+      "default": [
+        "high"
+      ],
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Available dice modes. High compares one member die to one house die; ties return the wager.",
+      "risk": "financial",
+      "mutable": true
+    },
+    {
+      "key": "lottery.ticket_price",
+      "section": "lottery",
+      "type": "integer",
+      "default": 100,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Ottoman price per lottery ticket.",
+      "risk": "financial",
+      "mutable": true,
+      "min": 1,
+      "max": 100000
     }
   ]
 }

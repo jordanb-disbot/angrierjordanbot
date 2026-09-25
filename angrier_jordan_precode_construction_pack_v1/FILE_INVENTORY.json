@@ -1,13 +1,13 @@
 {
   "checkpoint": 8,
   "updated_at": "2026-09-25",
-  "files": 637,
+  "files": 663,
   "inventory_self_hash_omitted": true,
   "items": [
     {
       "path": ".env.example",
-      "bytes": 935,
-      "sha256": "b6cec6690cac02ee1df0749eda1dabe42d9e06c6365e2427dca2883e7508510c"
+      "bytes": 1013,
+      "sha256": "51606686be990077ab6158d23ea3969f6b8c6897eb57ef902c866bf926f20809"
     },
     {
       "path": ".gitignore",
@@ -40,6 +40,16 @@
       "sha256": "6d0fabbec27d7b40e2cfc7cbdd1503ee3bf665691582cdc29b1e246c824cbe97"
     },
     {
+      "path": "apps/bot/src/discord/casino-announcements.ts",
+      "bytes": 2163,
+      "sha256": "f0c3e5dbe9389260a75d65dd71e71e595e80e928cdf7b17f4375a37701f7b413"
+    },
+    {
+      "path": "apps/bot/src/discord/casino-coordinator.ts",
+      "bytes": 9831,
+      "sha256": "f0e43ec98b44e465a8bb81c0e0066b383b7919cf6c3ee207a06a569930dd05fb"
+    },
+    {
       "path": "apps/bot/src/discord/economy-coordinator.ts",
       "bytes": 16834,
       "sha256": "a4475ea6d68149400f144a1095a6d9961e650efa4ea35bf36f939489ddbf9969"
@@ -66,8 +76,8 @@
     },
     {
       "path": "apps/bot/src/discord/profiles-coordinator.ts",
-      "bytes": 14579,
-      "sha256": "3e70b6d59c8e5222bff3bb3a6faeec6f8d329cf53c354758ce2f9bb98cefc157"
+      "bytes": 14603,
+      "sha256": "040cf77d0c5c98380f7b141e27635106f0a52f64c3ef0a6629f872e99e6bbaeb"
     },
     {
       "path": "apps/bot/src/discord/record-announcements.ts",
@@ -81,8 +91,8 @@
     },
     {
       "path": "apps/bot/src/discord/wyr-coordinator.ts",
-      "bytes": 6375,
-      "sha256": "1cefbf873349f0e7eb0343bd19853810f93983e13293ebe245251fb4e0c02bb5"
+      "bytes": 6399,
+      "sha256": "b227e3631a5f4a3ebcb2c7b24b6c2bcd0009b03d621c3e18a62e1f5c605d4d1d"
     },
     {
       "path": "apps/bot/src/features/status-handler.ts",
@@ -101,8 +111,8 @@
     },
     {
       "path": "apps/bot/src/production.ts",
-      "bytes": 20235,
-      "sha256": "bdbcedd2e53e5d022717d5496330dbc7442ad9f22d68dacd38ea233f50222533"
+      "bytes": 22696,
+      "sha256": "a2ca8bc862f929eb7b2ee5c4ae20045911fcf125c4cd030d5e149ad2adfb59b8"
     },
     {
       "path": "apps/bot/tsconfig.json",
@@ -126,8 +136,8 @@
     },
     {
       "path": "apps/dashboard/lib/generated/settings-controls.json",
-      "bytes": 73921,
-      "sha256": "209f7009d3cf20b5715256b70f66f08de9cf817bc003e21c35be6ac1c1ccb4dd"
+      "bytes": 78198,
+      "sha256": "35aa65d560d4018541fbb87ecae6bc852bdf3f11dd23d14e1bd50a72b7502fde"
     },
     {
       "path": "apps/dashboard/next-env.d.ts",
@@ -255,6 +265,11 @@
       "sha256": "aeca83cfa1ea81dbf11c8de98413e7533d3b61283764fb1f57eb9277def67f2b"
     },
     {
+      "path": "docs/IMPLEMENTATION_PHASE_11.md",
+      "bytes": 1781,
+      "sha256": "fddb8cfa7f3d845bf3a0c2990095759c906677ec62b31eb64f44eb9a3c0ddf91"
+    },
+    {
       "path": "docs/implementation_previews/wyr_open.png",
       "bytes": 103134,
       "sha256": "32f2f0291dae0ab36d4a74b45dc98ea00957ffbea9f6ba3bab22ca315596a096"
@@ -316,8 +331,8 @@
     },
     {
       "path": "IMPLEMENTATION_STATUS.json",
-      "bytes": 3886,
-      "sha256": "a4b778a47d12455b65e47c1a6d9bcf871e63a098b1798f80d4cbd115621fef89"
+      "bytes": 4296,
+      "sha256": "58dd020dbe07ffd0d3ac1f21dc0db0fa19df01e9384ee73e31fe70757c1c0324"
     },
     {
       "path": "infra/Dockerfile.bot",
@@ -341,13 +356,13 @@
     },
     {
       "path": "KNOWN_ISSUES.md",
-      "bytes": 776,
-      "sha256": "b600d7c532f323ca149f689dbea3c27a5793fc9930012f84825a536f03bbb9bd"
+      "bytes": 783,
+      "sha256": "9eb57bcc8ede1be28fb3d03b6072cd101ce764d8b7f905940d98fa65bb149903"
     },
     {
       "path": "LIVE_VALIDATION_CHECKLIST.md",
-      "bytes": 589,
-      "sha256": "b3011685e96cbaaa07ed92ed7999dfcaf0a2082cd1e7db6d872bcc6710783617"
+      "bytes": 661,
+      "sha256": "e1944f2dac16b61e985502fcd0cf5c7e665025351916425a78e4ce6dc03ca0e7"
     },
     {
       "path": "PACK_MANIFEST.json",
@@ -361,8 +376,8 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 77726,
-      "sha256": "6ee565a36fe2cdc7998c5ff0a01b213ab37f5d73045989f9db9f153e847050b3"
+      "bytes": 78026,
+      "sha256": "07285a0cd18dc5527aeb57c69e5d36d44f835cd281d134cad5f1d4dcdca43c5f"
     },
     {
       "path": "package.json",
@@ -378,6 +393,11 @@
       "path": "packages/content/golden/wyr_sample.json",
       "bytes": 1801,
       "sha256": "35c47784665a03c3104ed0f3863acd7915223f8c79ed872b58c435d2cea87256"
+    },
+    {
+      "path": "packages/content/help/casino.json",
+      "bytes": 2340,
+      "sha256": "1352a1f11f30efbf0e19f743b6c6d4667e60847c2aaa416178e81acaec568bae"
     },
     {
       "path": "packages/content/help/items.json",
@@ -401,8 +421,8 @@
     },
     {
       "path": "packages/contracts/src/generated/capabilities.ts",
-      "bytes": 4303,
-      "sha256": "94e80fb13266c202fbc658130493ebf26858206b00954d69350ed2ee9cce66a1"
+      "bytes": 4502,
+      "sha256": "994df59221b67e9273f6c604eb8fed5df2a67bd1322d8c88e30ebc04c73382c3"
     },
     {
       "path": "packages/contracts/src/generated/commands.ts",
@@ -416,8 +436,8 @@
     },
     {
       "path": "packages/contracts/src/generated/settings.ts",
-      "bytes": 65168,
-      "sha256": "3c1608f3d7ff74defbee8804f776812b4425ae04ea8d95a946f0591bc0561635"
+      "bytes": 69028,
+      "sha256": "7ad0f0bf8fd2ba901bc4716acef8167a27b90af22d42cb8a96f853e00cffb451"
     },
     {
       "path": "packages/contracts/src/index.ts",
@@ -580,14 +600,19 @@
       "sha256": "dd88ab0ba3069d9491be7724d19f8873847b16747d77d23e4133de35c5469e10"
     },
     {
+      "path": "packages/database/prisma/migrations/0012_wager_escrow/migration.sql",
+      "bytes": 668,
+      "sha256": "02a65d857df5bcb968b76fc67a865006893c13bd99a7cbb7ddf073e244fc4302"
+    },
+    {
       "path": "packages/database/prisma/migrations/migration_lock.toml",
       "bytes": 25,
       "sha256": "e0f301404b533bea819cafbc56ca2a9d9bcc2cf97d6350473e3a008f0637cc12"
     },
     {
       "path": "packages/database/prisma/schema.prisma",
-      "bytes": 24501,
-      "sha256": "e7f7fe339e6f64cb41e2dc534cc4fe34f532214862eccf4c093d8dbb6c846d3e"
+      "bytes": 24567,
+      "sha256": "fb5c0fdf62fbf65fc5766b0c9c38304ad0621cef5fd3214c8947524d359d68e0"
     },
     {
       "path": "packages/database/prisma/seed.ts",
@@ -618,6 +643,41 @@
       "path": "packages/database/src/prisma-adapters.ts",
       "bytes": 7607,
       "sha256": "4e291addef35168acf468e320f5f50f13dc2c23a1012be8cc20ab2e53aa138c0"
+    },
+    {
+      "path": "packages/database/src/transaction-sessions.ts",
+      "bytes": 1527,
+      "sha256": "1f8ec77b3f9aff1f33024b9e49de4d4e16523eca4626b8ab210cc1c5944016ca"
+    },
+    {
+      "path": "packages/database/src/wager-escrow.ts",
+      "bytes": 3949,
+      "sha256": "ffa6b0f7bd6fd189f356f22fc750ec3dfd5ec136a76ed079d43d0e65822d55b5"
+    },
+    {
+      "path": "packages/features-casino/package.json",
+      "bytes": 137,
+      "sha256": "325105b66d4c88b1514db3413972c3ead6fac2d6799d7321462e498160d62c1e"
+    },
+    {
+      "path": "packages/features-casino/src/domain.ts",
+      "bytes": 6581,
+      "sha256": "8a4887a213c80d6b043381a993d21260e76d2a4f1a2c66833c4b646e7062f93c"
+    },
+    {
+      "path": "packages/features-casino/src/index.ts",
+      "bytes": 30,
+      "sha256": "ed6a1565320e2b925bdae9326399bbe8e5cfe5a0f02bc7bd94e4eddd65beb3bd"
+    },
+    {
+      "path": "packages/features-casino/src/lottery-repository.ts",
+      "bytes": 5785,
+      "sha256": "13d92a3691590a07ae53ef4febedafb996522c2de008081cae76c01e56391219"
+    },
+    {
+      "path": "packages/features-casino/src/prisma-repository.ts",
+      "bytes": 9441,
+      "sha256": "b1d81fea689fc8c37539337cb8df4ef6d6632cc4a5db5f137edc6da4a4678dfd"
     },
     {
       "path": "packages/features-economy/package.json",
@@ -900,9 +960,54 @@
       "sha256": "5a0d509f0c712cfdbbbd1dd5a4908a5575d656009e556e6cc27ed2dc5e953cab"
     },
     {
+      "path": "packages/renderer/fonts/cinzel-OFL.txt",
+      "bytes": 4383,
+      "sha256": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83"
+    },
+    {
+      "path": "packages/renderer/fonts/Cinzel-Variable.ttf",
+      "bytes": 125468,
+      "sha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34"
+    },
+    {
+      "path": "packages/renderer/fonts/manifest.json",
+      "bytes": 2228,
+      "sha256": "4dc268e287ada1cfab0b491e1a74c8fd76053d6a94c07196d55db96e942e0359"
+    },
+    {
+      "path": "packages/renderer/fonts/Poppins-Bold.ttf",
+      "bytes": 155996,
+      "sha256": "983676516167748b74de6f4771fb384c664fd913acb8b471122ecacf5da5ea6c"
+    },
+    {
+      "path": "packages/renderer/fonts/Poppins-ExtraBold.ttf",
+      "bytes": 154836,
+      "sha256": "f2ab17c1a63a0ecc12c2461848fc8a469395e3cd2d641803e889c643d9f958e1"
+    },
+    {
+      "path": "packages/renderer/fonts/Poppins-Medium.ttf",
+      "bytes": 158576,
+      "sha256": "90373e7d838d32468438fc3e152dca0bdb12edcab99ea639f158790b1ba1fd05"
+    },
+    {
+      "path": "packages/renderer/fonts/poppins-OFL.txt",
+      "bytes": 4385,
+      "sha256": "6be04893d770899a015649c7aa3b582f871b272f8747a92b78b17c3e5c8b2573"
+    },
+    {
+      "path": "packages/renderer/fonts/Poppins-Regular.ttf",
+      "bytes": 160316,
+      "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba"
+    },
+    {
+      "path": "packages/renderer/fonts/Poppins-SemiBold.ttf",
+      "bytes": 157312,
+      "sha256": "d3bf1bdaf0550e83da9ac0b1d1d9fe6db086835a83aa28578e609a394b9a0286"
+    },
+    {
       "path": "packages/renderer/package.json",
-      "bytes": 160,
-      "sha256": "93b5c919075e7e1cb65c71393187c75f008390a29ed517b54ac6b1d6807b9166"
+      "bytes": 185,
+      "sha256": "942bf46fdea59e30dc37b8baddf940d042d91f56dce6059173ad49d6dc34774b"
     },
     {
       "path": "packages/renderer/src/components.ts",
@@ -918,6 +1023,16 @@
       "path": "packages/renderer/src/index.ts",
       "bytes": 85,
       "sha256": "87d14ae3d7d10cb6603101722c3f3df0c68ea902b3d506b9da25153de05ea61c"
+    },
+    {
+      "path": "packages/renderer/src/raster-worker.ts",
+      "bytes": 345,
+      "sha256": "d10108a457dad3810ddbc4eac3b9abb9c548c0d491c98fec0b8427fd21d9305f"
+    },
+    {
+      "path": "packages/renderer/src/raster.ts",
+      "bytes": 2702,
+      "sha256": "3165ad89c8726a7f7f6d79ae7469c6945cc73d1cde6de9c960df137fa6400920"
     },
     {
       "path": "packages/renderer/src/svg.ts",
@@ -2881,8 +2996,8 @@
     },
     {
       "path": "reference/acceleration/registries/capability_matrix.json",
-      "bytes": 4260,
-      "sha256": "ec347bd7e1eaffdaabc3ab0043432e008815e336679388dbf390cf81f1a4888c"
+      "bytes": 4459,
+      "sha256": "2e29f90888ded830aff948ef6256cb57804137fd1de9a181c1a267034021a8cc"
     },
     {
       "path": "reference/acceleration/registries/command_registration_plan.json",
@@ -2891,8 +3006,8 @@
     },
     {
       "path": "reference/acceleration/registries/feature_dependency_graph.json",
-      "bytes": 2904,
-      "sha256": "d65fb99c1efac4e25164741c09997ef8c4a698a2b01e202d4dac1de5cef25b1b"
+      "bytes": 3092,
+      "sha256": "f34439e8109bd8bffee88bdd0a0aff9e6fed8df1f043342819fa9a12209f0ff6"
     },
     {
       "path": "reference/acceleration/registries/master_command_registry.json",
@@ -2901,8 +3016,8 @@
     },
     {
       "path": "reference/acceleration/registries/master_settings_schema.json",
-      "bytes": 71216,
-      "sha256": "ed8eea58cf380d8930c058e1f4772d39d803cd1bfddb5e7384c85d3266cc9107"
+      "bytes": 75428,
+      "sha256": "44e82418182543c6e0bfe2cf9fb5fc2c71157efa44a4d2a49833bd560cf58be0"
     },
     {
       "path": "reference/acceleration/source_updates/ANGRIER_JORDAN_CANONICAL_BUILD_SPEC.md",
@@ -2916,8 +3031,8 @@
     },
     {
       "path": "reference/acceleration/testing/acceptance_test_matrix.json",
-      "bytes": 16606,
-      "sha256": "f95e02192d0791772074ba908567c2ee85d5f36c0702f334e7093145c6e378d8"
+      "bytes": 17417,
+      "sha256": "da9dd5d8ed6033d58bb517a979c40578fdfbccd175c7cfb4582ed83bd256ca66"
     },
     {
       "path": "reference/acceleration/testing/seed_fixtures.json",
@@ -2936,8 +3051,8 @@
     },
     {
       "path": "reference/assets/command-presentation-matrix.json",
-      "bytes": 104762,
-      "sha256": "6762fde45f243674006b1aa3f953045e24e1e8ee4ada051a423fee0792aaed4c"
+      "bytes": 104914,
+      "sha256": "7b015b3f3534c2aeee1edff08bd7cd9a4075d6fadc2786167791ca3f0b4d8220"
     },
     {
       "path": "reference/assets/final-production-visual-manifest.json",
@@ -3001,8 +3116,8 @@
     },
     {
       "path": "scripts/copy-runtime-data.mjs",
-      "bytes": 308,
-      "sha256": "4939b47dc726eab1ce22f673090d94b4daeed9cdea3e17d6c028110670b6a27c"
+      "bytes": 334,
+      "sha256": "10ee85cfee4563e2e014c60e499c0f1efa45f26e29bcbd0495fe6bcbef172907"
     },
     {
       "path": "scripts/generate-command-registration.mjs",
@@ -3036,8 +3151,8 @@
     },
     {
       "path": "scripts/run-postgres-tests.mjs",
-      "bytes": 1649,
-      "sha256": "137e638d551ed86c944a000cdefcb731f9cd42b8534e6734f02c08942f014f3c"
+      "bytes": 1667,
+      "sha256": "6648d068e73e1bf4835654152a7ef08bb485f7c40783b23327e8fb0c03cb69d3"
     },
     {
       "path": "scripts/update-file-inventory.mjs",
@@ -3061,13 +3176,13 @@
     },
     {
       "path": "scripts/validate-help-coverage.mjs",
-      "bytes": 835,
-      "sha256": "19d0a8c950fcbab5847406db56239978844239aafc78e1c5babcae84be55b4a2"
+      "bytes": 1400,
+      "sha256": "b571b8cd0279dc51b60a5acf5339f16c15d35e5f3e3440409744eb7baeaa9962"
     },
     {
       "path": "scripts/validate-production-wiring.mjs",
-      "bytes": 8472,
-      "sha256": "e673da776a87ea01276191e80ec60edca1eb6739bb2dfe340b560f49aa38339e"
+      "bytes": 8612,
+      "sha256": "fd2a7ff73b1ee9db974bd7fae44b822cec4e4efae29c8c76fcd566116136595e"
     },
     {
       "path": "scripts/validate-registries.mjs",
@@ -3078,6 +3193,11 @@
       "path": "testing/acceptance_test_matrix_enriched.json",
       "bytes": 50266,
       "sha256": "8bc611d416557767ec69484121ea76893d561fdd73d7f3831b5b7724ec88d76d"
+    },
+    {
+      "path": "testing/adapters/casino.test.mjs",
+      "bytes": 1932,
+      "sha256": "547fd34607fcbed3bf7e7016f50b00587f29dc9e1e9a6e9b79fec97438a30cb1"
     },
     {
       "path": "testing/adapters/items.test.mjs",
@@ -3091,8 +3211,13 @@
     },
     {
       "path": "testing/adapters/renderer.test.mjs",
-      "bytes": 2264,
-      "sha256": "a30b9f7bdd3ca5e5b83fd399c1411223189d03dd634b8b24b579e4ba359a9dd5"
+      "bytes": 2706,
+      "sha256": "b9383a8936cb0fe87363fe027cf9652f14041c015d89b9a86aac1d28d6524116"
+    },
+    {
+      "path": "testing/postgres/casino.test.mjs",
+      "bytes": 9065,
+      "sha256": "8380db33c7227bc1a72d2239435150f68070fc6d7f33e5ca1da9ef1f06e2f8d4"
     },
     {
       "path": "testing/postgres/item-extended-cases.mjs",
@@ -3113,6 +3238,11 @@
       "path": "testing/postgres/profiles.test.mjs",
       "bytes": 5084,
       "sha256": "f2ebd31ee024286b283c70fe57a9616824d871316b48d4bf496bc8bd127cb766"
+    },
+    {
+      "path": "testing/runtime/casino.test.mjs",
+      "bytes": 2833,
+      "sha256": "d54a36fe66aba1cf506b1a56a5ad74b4bc12a508b0246f1f9b65d2deec9bbd40"
     },
     {
       "path": "testing/runtime/delivery.test.mjs",
@@ -3181,8 +3311,8 @@
     },
     {
       "path": "tsconfig.domain.json",
-      "bytes": 802,
-      "sha256": "c289d1bb79eaae0ef1bd14ec5154fdc9fa3ac3cb0a1eb11f0a88c67f35196572"
+      "bytes": 846,
+      "sha256": "875a22baf58e6f7ee0bfe7b75d06f3a3becf4d4cace7d9ec23425a5d367636d5"
     },
     {
       "path": "tsconfig.runtime-tests.json",

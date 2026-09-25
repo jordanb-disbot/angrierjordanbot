@@ -161,6 +161,8 @@ model LedgerEntry {
 }
 
 model Escrow {
+  walletAmount BigInt @default(0)
+  bankAmount BigInt @default(0)
   id String @id @default(cuid())
   guildId String
   ownerUserId String?

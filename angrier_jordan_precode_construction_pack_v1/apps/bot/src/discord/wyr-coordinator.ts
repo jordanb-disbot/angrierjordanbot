@@ -1,10 +1,10 @@
 import { AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, type ButtonInteraction, type ChatInputCommandInteraction, type Client } from 'discord.js';
-import sharp from 'sharp';
+import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import { DomainError } from '../../../../packages/core/src/index.js';
 import type { WyrCategoryInput, WyrService } from '../../../../packages/features-wyr/src/index.js';
 
 const validCategories=new Set<WyrCategoryInput>(['Random','Casual','Friends','Dating','Married','Spicy','Unhinged']);
-const png=async(svg:string)=>sharp(Buffer.from(svg)).png().toBuffer();
+const png=async(svg:string)=>rasterizeSvg(svg);
 const file=(buffer:Buffer,name='wyr.png')=>new AttachmentBuilder(buffer,{name});
 const openRow=(sessionId:string,extensionSeconds:number,extensionUsed:boolean)=>new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setCustomId(`wyr:vote:A:${sessionId}`).setLabel('Choose Left').setStyle(ButtonStyle.Primary),

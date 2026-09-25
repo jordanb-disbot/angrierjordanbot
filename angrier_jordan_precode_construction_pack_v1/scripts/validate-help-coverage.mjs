@@ -7,3 +7,9 @@ const help=JSON.parse(fs.readFileSync('packages/content/help/items.json','utf8')
 for(const id of help.commands){if(!r.commands.some(c=>c.id===id&&c.help_id))throw new Error('Unknown item help command '+id);}
 if(!help.fields.gift.member||!help.fields.gift.item||!help.tutorial.steps.length)throw new Error('Incomplete item tutorial metadata');
 console.log('Phase 09 contextual help and tutorial coverage valid.');
+
+const casino=JSON.parse(fs.readFileSync('packages/content/help/casino.json','utf8'));
+for(const id of casino.commands)if(!r.commands.some(c=>c.id===id&&c.help_id))throw new Error('Unknown casino help command '+id);
+for(const game of ['blackjack','roulette','slots','dice','coinflip','lottery'])if(!casino.games[game])throw new Error('Missing casino rules '+game);
+if(!casino.fields.amount||!casino.fields.selection||!casino.tutorial.steps.length)throw new Error('Incomplete casino tutorial');
+console.log('Phase 11 contextual rules and tutorial coverage valid.');

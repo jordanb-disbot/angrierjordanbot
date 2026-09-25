@@ -681,6 +681,29 @@
       "preconditions": [],
       "steps": [],
       "expected": []
+    },
+    {
+      "id": "PH11-DB",
+      "module": "casino",
+      "name": "Persistent casino and lottery concurrency, restart and escrow acceptance",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "Disposable TEST_DATABASE_URL from ignored .env.test.local only"
+      ],
+      "steps": [
+        "Run node scripts/run-postgres-tests.mjs casino"
+      ],
+      "expected": [
+        "Duplicate wagers return one saved outcome",
+        "Concurrent double commits once",
+        "Blackjack timeout survives restart",
+        "Concurrent jackpots cannot share the prior pot",
+        "Lottery ticket cap and one full-pot payout",
+        "Empty drawing skips",
+        "Refund restores original funding buckets",
+        "Balanced ledger and no negative balances"
+      ]
     }
   ]
 }

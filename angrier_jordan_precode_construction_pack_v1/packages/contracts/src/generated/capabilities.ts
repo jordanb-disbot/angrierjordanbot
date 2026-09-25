@@ -197,6 +197,18 @@ export const CAPABILITY_MATRIX = {
       "recliner",
       "chaise_lounge",
       "throne"
+    ],
+    "casino.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
+    ],
+    "lottery.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
     ]
   },
   "rules": [

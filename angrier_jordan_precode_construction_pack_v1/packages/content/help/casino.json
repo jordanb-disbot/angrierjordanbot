@@ -1,0 +1,41 @@
+{
+  "id": "casino",
+  "classification": "guided",
+  "commands": [
+    "blackjack",
+    "roulette",
+    "slots",
+    "dice",
+    "coinflip",
+    "lottery"
+  ],
+  "title": "Casino and Lottery",
+  "body": "Wagers spend wallet first, then bank. Every round and replay rechecks balance, limits, restrictions and availability. Play Again creates a fresh round; completed results stay unchanged. Payouts are Ottomans only.",
+  "games": {
+    "blackjack": "Dealer stands on soft 17. A natural blackjack returns 2.5× the wager, rounded down to whole Ottomans. Hit or Stand; Double on two cards; Split matching ranks up to four hands. Split aces receive one card each and do not pay a natural-blackjack bonus. Total committed stake must remain within the configured maximum. A five-minute timeout stands all remaining hands.",
+    "roulette": "Single-zero wheel. Red, black, odd, even, low (1–18), or high (19–36) return 2× on a win. number:0 through number:36 return 36× on a win. Zero loses all even-money bets. Availability follows the current table configuration.",
+    "slots": "Choose a configured wager size. Three matching chair symbols pay the configured gross multiplier. A matching Throne trio wins Chair Pot. A configured portion of qualifying wagers funds the persistent pot.",
+    "dice": "High mode rolls one six-sided die for you and one for the house. Higher wins return 2×; ties return the wager.",
+    "coinflip": "Choose heads or tails. A matching result returns 2× the wager.",
+    "lottery": "Friday at 8 PM Mountain. Buy up to 20 tickets per week. One winner receives the full ticket-funded pot with no rake. Empty drawings skip; no system-funded rollover and no Play Again."
+  },
+  "fields": {
+    "amount": "Whole Ottoman wager, or whole ticket quantity for lottery.",
+    "selection": "Choose one of the currently supported selections."
+  },
+  "examples": [
+    "/casino blackjack → wager → Hit/Stand/Double/Split",
+    "/casino roulette → number:17",
+    "/casino coinflip → heads",
+    "/lottery → Buy Tickets"
+  ],
+  "tutorial": {
+    "lesson_id": "economy.casino",
+    "steps": [
+      "Read the wager and current rules.",
+      "Commit a wager only after choosing your selection.",
+      "Use current controls until settlement.",
+      "Replay creates a new round with fresh validation."
+    ]
+  }
+}

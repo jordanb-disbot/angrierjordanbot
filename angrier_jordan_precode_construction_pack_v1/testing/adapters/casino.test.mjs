@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {DiscordCasinoCoordinator} from '../../dist/apps/bot/src/discord/casino-coordinator.js';
+const forbidden=new Proxy({},{get:()=>()=>{throw new Error('Repository must not be reached');}});
+const config=enabled=>({get:async(_g,k)=>k.startsWith('features.')?enabled:k==='channels.bot_channel'?'bot':null});
+const interaction=()=>({guildId:'g',guild:{},channelId:'bot',user:{id:'member'},customId:'casino:again:member:round',calls:[],deferred:false,isChatInputCommand:()=>false,isButton:()=>true,isModalSubmit:()=>false,reply:async function(p){this.calls.push(p)},editReply:async function(p){this.calls.push(p)},deferReply:async function(){this.deferred=true}});
+test('casino flag blocks stale replay controls before any wager',async()=>{const i=interaction();await new DiscordCasinoCoordinator(forbidden,forbidden,config(false),async()=>true).handle(i);assert.match(i.calls[0].content,/not enabled/)});
+test('casino replay enforces current containment and owner',async()=>{for(const restricted of [true,false]){const i=interaction();if(!restricted)i.customId='casino:again:other:round';await new DiscordCasinoCoordinator(forbidden,forbidden,config(true),async()=>!restricted).handle(i);assert.match(i.calls[0].content,restricted?/restricted/:/own wager/);}});
+test('lottery modal is independently flag gated',async()=>{const i=interaction();i.customId='casino:tickets:member:lottery';i.isButton=()=>false;i.isModalSubmit=()=>true;await new DiscordCasinoCoordinator(forbidden,forbidden,config(false),async()=>true).handle(i);assert.match(i.calls[0].content,/Lottery controls are not enabled/)});
+test('casino commands require the configured bot channel',async()=>{const i=interaction();i.channelId='main';await new DiscordCasinoCoordinator(forbidden,forbidden,config(true),async()=>true).handle(i);assert.match(i.calls[0].content,/configured bot channel/)});

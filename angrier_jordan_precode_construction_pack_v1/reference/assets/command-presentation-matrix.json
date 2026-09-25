@@ -477,7 +477,9 @@
         "production/atomic_assets/casino/lottery_ticket.png"
       ],
       "interaction_contract": "Scheduled/ticket UI uses shared result shell; no Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/casino-coordinator.ts",
+      "runtime_acceptance": "IMPLEMENTED_FLAGS_OFF_POSTGRES_ACCEPTANCE_RUNNING"
     },
     {
       "id": "giveaway",

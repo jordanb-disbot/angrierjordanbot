@@ -3,16 +3,16 @@
   "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
   "checkpoint": 8,
   "checkpoint_name": "Economy Foundation — ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
-  "status": "PHASE_09_ACCEPTANCE_PENDING",
+  "status": "PHASE_11_OFFLINE_AND_DATABASE_GATES_PASSED",
   "registry": {
     "interactions": 192,
-    "settings": 193,
-    "capabilities": 42,
+    "settings": 200,
+    "capabilities": 44,
     "generated_application_commands": 65,
     "top_level_chat_input_commands": 64
   },
   "database": {
-    "schema_version": "0011_shared_job_recovery",
+    "schema_version": "0012_wager_escrow",
     "prisma_models": 88
   },
   "visual_library": {
@@ -38,7 +38,7 @@
   ],
   "verification": {
     "preflight": "PASS",
-    "domain_tests": 90,
+    "domain_tests": 98,
     "domain_tests_failed": 0,
     "typescript_domain_typecheck": "PASS",
     "production_wiring_structure": "PASS",
@@ -51,13 +51,14 @@
     "full_workspace_typecheck": "PASS",
     "dashboard_production_build": "PASS",
     "dependency_lockfile": "package-lock.json",
-    "adapter_tests": 11,
+    "adapter_tests": 16,
     "postgres_item_acceptance": "PASS_11_TESTS",
     "full_build": "PASS",
-    "postgres_migrations": "PASS_0001_THROUGH_0011_IN_ISOLATED_TEST_SCHEMAS",
+    "postgres_migrations": "PASS_0001_THROUGH_0012_IN_ISOLATED_TEST_SCHEMAS",
     "test_database": "Owner-confirmed disposable Railway Postgres; public TCP proxy; credentials only in ignored .env.test.local",
     "postgres_profiles_acceptance": "PASS_6_TESTS",
-    "postgres_scheduler_acceptance": "PASS_3_TESTS"
+    "postgres_scheduler_acceptance": "PASS_3_TESTS",
+    "postgres_casino_acceptance": "PASS_10_TESTS"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",
@@ -72,20 +73,31 @@
     "ENABLE_PROFILES_SMOKE": false,
     "features.profiles": false,
     "features.activity": false,
-    "features.spotlight": false
+    "features.spotlight": false,
+    "ENABLE_CASINO_SMOKE": false,
+    "features.casino": false,
+    "features.lottery": false
   },
-  "next_checkpoint": "Shop / inventory / tools / crafting / collections before escrow-heavy games and wagering",
+  "next_checkpoint": "Phase 12 Race/Fight, then STOP at Review Gate A",
   "phase_09": {
     "implementation": "domain, PostgreSQL adapter and Discord controls present",
     "acceptance": "PostgreSQL concurrency/idempotency/restart gate passed; live Discord pending",
     "review_gate_a": "not reached"
   },
   "phase_10": {
-    "implementation": "IN_PROGRESS: profiles/activity/records domain and repository, guarded Discord adapter; not accepted",
+    "implementation": "Domain, persistence, guarded Discord adapter and database acceptance implemented; live acceptance pending",
     "remaining": [
       "Live Discord acceptance",
       "Approved visual review",
       "Record producers for later feature phases"
+    ]
+  },
+  "phase_11": {
+    "implementation": "Reusable source-aware wager escrow, casino, lottery, records and restart recovery; flags off",
+    "acceptance": "PASS_10_POSTGRES_TESTS; live Discord pending",
+    "remaining": [
+      "Live Discord acceptance",
+      "Owner visual review"
     ]
   }
 }

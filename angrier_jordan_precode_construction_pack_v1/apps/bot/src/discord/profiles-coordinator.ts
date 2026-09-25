@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {renderSpotlight} from '../../../../packages/features-profiles/src/render.js';
 import {weeklyCycle} from '../../../../packages/features-economy/src/service.js';
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
@@ -64,7 +64,7 @@ export class DiscordProfilesCoordinator {
   for(const userId of new Set(awards.map(a=>a.userId))){const member=await guild.members.fetch(userId).catch(()=>null),user=member?.user??await client.users.fetch(userId);const response=await fetch(member?member.displayAvatarURL({extension:'png',size:128}):user.displayAvatarURL({extension:'png',size:128}),{signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error('Spotlight avatar is unavailable.');const avatarData='data:image/png;base64,'+Buffer.from(await response.arrayBuffer()).toString('base64');identities.set(userId,{name:member?.displayName??user.displayName,avatarData});}
   const end=weeklyCycle(new Date(weekKey+'T12:00:00Z')).next;
   const svg=renderSpotlight({weekStart:weekKey,weekEnd:new Intl.DateTimeFormat('en-CA',{timeZone:'America/Denver',year:'numeric',month:'2-digit',day:'2-digit'}).format(end),activeMembers:result.activeMembers,messages:result.totals.messages??0,words:result.totals.words??0,voiceSeconds:result.totals.vcSeconds??0,categories:result.winners.map(w=>({title:names[w.category]??w.category,winners:awards.filter(a=>a.category===w.category).map(a=>({...identities.get(a.userId)!,total:a.winningValue.toString(),lifetimeWins:a.lifetimeWins,status:a.statusLabel,tripleThreat:result.tripleThreat.includes(a.userId)}))}))});
-  const png=await sharp(Buffer.from(svg)).png().toBuffer();
+  const png=await rasterizeSvg(svg);
   await new DeliveryEngine({
    read:async()=>{const row=await this.repo.announcement(guildId,weekKey);return{state:row?.deliveryState==='SENT'?'SENT':row?.deliveryState==='SENDING'?'SENDING':'PENDING',...(row?.messageId?{messageId:row.messageId}:{})};},
    claim:()=>this.repo.claimAnnouncement(guildId,weekKey),complete:id=>this.repo.delivered(guildId,weekKey,id)

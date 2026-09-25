@@ -1,5 +1,5 @@
 {
-  "count": 193,
+  "count": 200,
   "controls": [
     {
       "key": "server.timezone",
@@ -518,14 +518,11 @@
       "description": "",
       "kind": "number",
       "defaultValue": 20,
-      "risk": "financial",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 1,
-      "max": 100
+      "min": 20,
+      "max": 20
     },
     {
       "key": "economy.wallet_first_spending",
@@ -1272,11 +1269,8 @@
       "description": "",
       "kind": "select",
       "defaultValue": "FRIDAY",
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
       "choices": [
         "MONDAY",
@@ -1295,14 +1289,11 @@
       "description": "",
       "kind": "number",
       "defaultValue": 20,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 0,
-      "max": 23
+      "min": 20,
+      "max": 20
     },
     {
       "key": "lottery.rake_percent",
@@ -3010,6 +3001,191 @@
         "chaise_lounge"
       ],
       "restartRequired": false
+    },
+    {
+      "key": "features.casino",
+      "section": "features",
+      "label": "Casino",
+      "description": "Enable accepted casino flows; keep off until acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "features.lottery",
+      "section": "features",
+      "label": "Lottery",
+      "description": "Enable accepted lottery flows; keep off until acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "casino.chair_symbols",
+      "section": "casino",
+      "label": "Chair Symbols",
+      "description": "Three chair-symbol reels. Matching triples pay the configured gross multiplier; matching Throne triggers Chair Pot.",
+      "kind": "json",
+      "defaultValue": [
+        {
+          "id": "folding_chair",
+          "name": "Folding Chair",
+          "weight": 50,
+          "multiplier": 4
+        },
+        {
+          "id": "barstool",
+          "name": "Barstool",
+          "weight": 30,
+          "multiplier": 8
+        },
+        {
+          "id": "recliner",
+          "name": "Recliner",
+          "weight": 15,
+          "multiplier": 20
+        },
+        {
+          "id": "chaise_lounge",
+          "name": "Chaise Lounge",
+          "weight": 4,
+          "multiplier": 100
+        },
+        {
+          "id": "throne",
+          "name": "Throne",
+          "weight": 1,
+          "multiplier": 0,
+          "jackpot": true
+        }
+      ],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "casino.slots_wagers",
+      "section": "casino",
+      "label": "Slots Wagers",
+      "description": "Supported slot wagers; every replay also rechecks global bet limits.",
+      "kind": "json",
+      "defaultValue": [
+        10,
+        50,
+        100,
+        500,
+        1000,
+        5000
+      ],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "casino.roulette_choices",
+      "section": "casino",
+      "label": "Roulette Choices",
+      "description": "Single-zero roulette selections. Straight numbers pay 36× gross; even-money choices pay 2× gross.",
+      "kind": "json",
+      "defaultValue": [
+        "red",
+        "black",
+        "odd",
+        "even",
+        "low",
+        "high",
+        "number:0",
+        "number:1",
+        "number:2",
+        "number:3",
+        "number:4",
+        "number:5",
+        "number:6",
+        "number:7",
+        "number:8",
+        "number:9",
+        "number:10",
+        "number:11",
+        "number:12",
+        "number:13",
+        "number:14",
+        "number:15",
+        "number:16",
+        "number:17",
+        "number:18",
+        "number:19",
+        "number:20",
+        "number:21",
+        "number:22",
+        "number:23",
+        "number:24",
+        "number:25",
+        "number:26",
+        "number:27",
+        "number:28",
+        "number:29",
+        "number:30",
+        "number:31",
+        "number:32",
+        "number:33",
+        "number:34",
+        "number:35",
+        "number:36"
+      ],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "casino.dice_choices",
+      "section": "casino",
+      "label": "Dice Choices",
+      "description": "Available dice modes. High compares one member die to one house die; ties return the wager.",
+      "kind": "json",
+      "defaultValue": [
+        "high"
+      ],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "lottery.ticket_price",
+      "section": "lottery",
+      "label": "Ticket Price",
+      "description": "Ottoman price per lottery ticket.",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100000
     }
   ]
 }

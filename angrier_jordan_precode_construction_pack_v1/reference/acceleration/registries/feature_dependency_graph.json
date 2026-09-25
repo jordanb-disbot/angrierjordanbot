@@ -64,6 +64,9 @@
       "economy",
       "escrow",
       "session_engine",
+      "scheduler",
+      "config_service",
+      "capabilities",
       "rendering"
     ],
     "race_fight": [
@@ -168,6 +171,14 @@
       "capabilities",
       "ledger",
       "audit"
+    ],
+    "lottery": [
+      "casino",
+      "timer_engine",
+      "scheduler"
+    ],
+    "scheduler": [
+      "database"
     ]
   }
 }

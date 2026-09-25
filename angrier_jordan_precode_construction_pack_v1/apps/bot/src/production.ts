@@ -1,3 +1,7 @@
+import {DiscordCasinoCoordinator,CASINO_COMMANDS} from './discord/casino-coordinator.js';
+import {DiscordCasinoAnnouncements} from './discord/casino-announcements.js';
+import {PrismaCasinoRepository} from '../../../packages/features-casino/src/prisma-repository.js';
+import {PrismaLotteryRepository} from '../../../packages/features-casino/src/lottery-repository.js';
 import {DiscordRecordAnnouncements} from './discord/record-announcements.js';
 import {DiscordProfilesCoordinator,PROFILE_COMMANDS} from './discord/profiles-coordinator.js';
 import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/prisma-repository.js';
@@ -34,6 +38,7 @@ export async function startProductionBot():Promise<void>{
   const enableJailSmoke=process.env.ENABLE_JAIL_SMOKE==='true';
   const enableModerationSmoke=process.env.ENABLE_MODERATION_SMOKE==='true';
   const enableSecuritySmoke=process.env.ENABLE_SECURITY_SMOKE==='true';
+  const enableCasinoSmoke=process.env.ENABLE_CASINO_SMOKE==='true';
   const enableProfilesSmoke=process.env.ENABLE_PROFILES_SMOKE==='true';
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
   const enableEconomySmoke=process.env.ENABLE_ECONOMY_SMOKE==='true';
@@ -65,7 +70,15 @@ export async function startProductionBot():Promise<void>{
   const profileRepo=new PrismaProfilesRepository(db);
   const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u));
   const recordAnnouncements=new DiscordRecordAnnouncements(db,config);
+  const casinoRepo=new PrismaCasinoRepository(db),lotteryRepo=new PrismaLotteryRepository(db);
+  const casino=new DiscordCasinoCoordinator(casinoRepo,lotteryRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
+  const casinoAnnouncements=new DiscordCasinoAnnouncements(db,config);
   const scheduler=new IdempotentScheduler(jobRepo,{
+    'casino.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string};await casinoRepo.expire(p.guildId,p.sessionId);await casino.refresh(client,p.sessionId);},
+    'lottery.draw':async job=>{const p=job.payload as {guildId:string;roundId:string};await lotteryRepo.draw(p.guildId,p.roundId);if(enableCasinoSmoke&&await config.get(p.guildId,'features.lottery')===true)await lotteryRepo.schedule(p.guildId);},
+    'casino.jackpot_announce':async job=>{await casinoAnnouncements.deliver(client,job);},
+    'lottery.announce':async job=>{await casinoAnnouncements.deliver(client,job);},
+    'records.observe':async job=>{const p=job.payload as {guildId:string;userId:string;records:Record<string,string>;occurredAt:string};if(p.guildId!==job.guildId)throw new Error('Record server mismatch.');for(const [key,value] of Object.entries(p.records)){if(BigInt(value)>0n)await profileRepo.record(p.guildId,p.userId,key,BigInt(value),job.executionKey+':'+key,new Date(p.occurredAt));}await profileRepo.refreshAchievements(p.guildId,p.userId);},
     'record.announce':async job=>{if(!enableProfilesSmoke)throw new Error('Record runtime disabled; retain job.');await recordAnnouncements.deliver(client,job);},
     'spotlight.freeze':async job=>{const p=job.payload as {guildId?:unknown};if(typeof p?.guildId!=='string')throw new Error('Invalid Spotlight job.');if(!enableProfilesSmoke)throw new Error('Spotlight runtime disabled; retain job for retry.');await profiles.freeze(client,p.guildId,job.dueAt);},
     'spotlight.announce':async job=>{const p=job.payload as {guildId?:unknown;weekKey?:unknown};if(typeof p?.guildId!=='string'||typeof p.weekKey!=='string')throw new Error('Invalid Spotlight job.');if(!enableProfilesSmoke)throw new Error('Spotlight runtime disabled; retain job for retry.');await profiles.announce(client,p.guildId,p.weekKey);},
@@ -83,9 +96,10 @@ export async function startProductionBot():Promise<void>{
 
   client.once(Events.ClientReady,async ready=>{
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>c.type===1&&(c.name==='status'||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});
     if(enableProfilesSmoke){await profileRepo.resetVoiceAfterRestart(guildId);await profiles.reconcile(guildId);await profiles.sampleVoice(ready,guildId);voiceSweep=setInterval(()=>{void profiles.sampleVoice(ready,guildId).catch(()=>console.error('Activity voice sampling failed.'));},30_000);}
+    if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await lotteryRepo.schedule(guildId);
     const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);await worker.runOnce();worker.start();
     wyrSweep=setInterval(()=>{void wyr.closeDue(ready);},5_000);
     const snapshot=await health.check();
@@ -102,6 +116,7 @@ export async function startProductionBot():Promise<void>{
   client.on(Events.InteractionCreate,async interaction=>{
     try{
       if(enableProfilesSmoke&&interaction.isChatInputCommand())void profiles.recordCommand(interaction).catch(()=>console.error('Command activity recording failed.'));
+      if((interaction.isChatInputCommand()&&CASINO_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('casino:'))){if(!enableCasinoSmoke){await interaction.reply({ephemeral:true,content:'Casino controls are not enabled yet.'});return;}await casino.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&PROFILE_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('profile:'))){
         if(!enableProfilesSmoke){await interaction.reply({ephemeral:true,content:'Profile controls are not enabled yet.'});return;}
         await profiles.handle(interaction);return;
