@@ -209,6 +209,12 @@
       "recliner",
       "chaise_lounge",
       "throne"
+    ],
+    "events.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
     ]
   },
   "rules": [

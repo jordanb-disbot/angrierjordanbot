@@ -17,7 +17,8 @@
     "apps/bot/src/architecture/**/*.ts",
     "apps/bot/src/features/**/*.ts",
     "packages/features-profiles/src/**/*.ts",
-    "packages/features-casino/src/**/*.ts"
+    "packages/features-casino/src/**/*.ts",
+    "packages/features-events/src/**/*.ts"
   ],
   "exclude": [
     "apps/bot/src/discord/**/*.ts",

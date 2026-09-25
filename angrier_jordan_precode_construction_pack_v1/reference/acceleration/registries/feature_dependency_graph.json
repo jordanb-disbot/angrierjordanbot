@@ -73,6 +73,9 @@
       "escrow",
       "session_engine",
       "timer_engine",
+      "scheduler",
+      "capabilities",
+      "config_service",
       "rendering"
     ],
     "party_games": [

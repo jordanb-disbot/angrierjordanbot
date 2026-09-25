@@ -1,0 +1,39 @@
+{
+  "source": "Actual DiscordEventsCoordinator.payload and production renderer, using explicit fixture members. Host frames are review renders, not live Discord screenshots.",
+  "timing": {
+    "entryAndBettingSeconds": 60,
+    "hostExtensionSeconds": 30,
+    "extensionUses": 1,
+    "sprintMs": 18505
+  },
+  "states": [
+    {
+      "state": "entry",
+      "card": "entry-card.png",
+      "desktop": "entry-desktop.png",
+      "mobile": "entry-mobile.png",
+      "payload": "entry-payload.json"
+    },
+    {
+      "state": "betting",
+      "card": "betting-card.png",
+      "desktop": "betting-desktop.png",
+      "mobile": "betting-mobile.png",
+      "payload": "betting-payload.json"
+    },
+    {
+      "state": "live",
+      "card": "live-card.png",
+      "desktop": "live-desktop.png",
+      "mobile": "live-mobile.png",
+      "payload": "live-payload.json"
+    },
+    {
+      "state": "result",
+      "card": "result-card.png",
+      "desktop": "result-desktop.png",
+      "mobile": "result-mobile.png",
+      "payload": "result-payload.json"
+    }
+  ]
+}

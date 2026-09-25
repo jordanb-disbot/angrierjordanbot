@@ -297,32 +297,26 @@ export const SETTINGS = [
     "section": "games",
     "type": "integer",
     "default": 60,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "Race join + betting window before optional extension.",
-    "risk": "normal",
-    "min": 15,
-    "max": 180,
-    "mutable": true
+    "risk": "locked",
+    "min": 60,
+    "max": 60,
+    "mutable": false
   },
   {
     "key": "race.extension_seconds",
     "section": "games",
     "type": "integer",
     "default": 30,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "One-use host extension for both Race entry and betting.",
-    "risk": "normal",
-    "min": 0,
+    "risk": "locked",
+    "min": 30,
     "max": 30,
-    "mutable": true
+    "mutable": false
   },
   {
     "key": "party.vote_seconds",
@@ -499,16 +493,13 @@ export const SETTINGS = [
     "section": "economy",
     "type": "integer",
     "default": 5,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "",
-    "risk": "financial",
-    "min": 0,
-    "max": 20,
-    "mutable": true
+    "risk": "locked",
+    "min": 5,
+    "max": 5,
+    "mutable": false
   },
   {
     "key": "lottery.max_tickets",
@@ -2026,31 +2017,25 @@ export const SETTINGS = [
     "section": "games",
     "type": "integer",
     "default": 30,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "Fight betting window; there is no open fighter join phase.",
-    "risk": "financial",
-    "mutable": true,
-    "min": 15,
-    "max": 120
+    "risk": "locked",
+    "mutable": false,
+    "min": 30,
+    "max": 30
   },
   {
     "key": "fight.extension_seconds",
     "section": "games",
     "type": "integer",
     "default": 30,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
+    "editable_by": [],
     "restart_required": false,
     "description": "One-use challenger extension for Fight betting only.",
-    "risk": "financial",
-    "mutable": true,
-    "min": 0,
+    "risk": "locked",
+    "mutable": false,
+    "min": 30,
     "max": 30
   },
   {
@@ -3185,5 +3170,84 @@ export const SETTINGS = [
     "mutable": true,
     "min": 1,
     "max": 100000
+  },
+  {
+    "key": "features.race",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Keep off until event acceptance and Review Gate A pass.",
+    "risk": "financial",
+    "mutable": true
+  },
+  {
+    "key": "features.fight",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Keep off until approved combat sources, acceptance and Review Gate A pass.",
+    "risk": "financial",
+    "mutable": true
+  },
+  {
+    "key": "events.min_bet",
+    "section": "events",
+    "type": "integer",
+    "default": 10,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Minimum total event wager.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 1,
+    "max": 100000
+  },
+  {
+    "key": "events.max_bet",
+    "section": "events",
+    "type": "integer",
+    "default": 5000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Maximum cumulative member wager per event.",
+    "risk": "financial",
+    "mutable": true,
+    "min": 1,
+    "max": 100000
+  },
+  {
+    "key": "special_commands.access_roles",
+    "section": "special_commands",
+    "type": "json",
+    "default": {
+      "!race": [],
+      "!line": [],
+      "!vc": [],
+      "!chess": []
+    },
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Empty permits members; otherwise require one of these roles. Separate from notification roles.",
+    "risk": "security",
+    "mutable": true
   }
 ] as const satisfies readonly SettingContract[];

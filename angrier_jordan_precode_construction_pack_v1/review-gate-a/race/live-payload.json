@@ -1,0 +1,20 @@
+{
+  "embed": {
+    "author": {
+      "name": "Angrier Jordan"
+    },
+    "title": "Chair Race",
+    "description": "The sprint is live. Betting is locked.",
+    "color": 1357990,
+    "image": {
+      "url": "attachment://race.png"
+    },
+    "footer": {
+      "text": "race:runtime-review-race"
+    }
+  },
+  "rows": [],
+  "mentions": {
+    "parse": []
+  }
+}

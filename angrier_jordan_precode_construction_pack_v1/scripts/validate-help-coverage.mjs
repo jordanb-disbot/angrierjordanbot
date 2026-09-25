@@ -13,3 +13,8 @@ for(const id of casino.commands)if(!r.commands.some(c=>c.id===id&&c.help_id))thr
 for(const game of ['blackjack','roulette','slots','dice','coinflip','lottery'])if(!casino.games[game])throw new Error('Missing casino rules '+game);
 if(!casino.fields.amount||!casino.fields.selection||!casino.tutorial.steps.length)throw new Error('Incomplete casino tutorial');
 console.log('Phase 11 contextual rules and tutorial coverage valid.');
+
+const events=JSON.parse(fs.readFileSync('packages/content/help/events.json','utf8'));
+for(const id of events.commands)if(!r.commands.some(c=>c.id===id&&c.help_id))throw new Error('Unknown event help command '+id);
+if(!events.fields.amount||!events.fields.selection||!events.fields.member||!events.tutorial.steps.length)throw new Error('Incomplete event help');
+console.log('Race/Fight help and owner-confirmed refund policy present.');

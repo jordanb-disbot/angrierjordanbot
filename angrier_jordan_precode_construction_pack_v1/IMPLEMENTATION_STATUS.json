@@ -3,16 +3,16 @@
   "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
   "checkpoint": 8,
   "checkpoint_name": "Economy Foundation — ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
-  "status": "PHASE_11_OFFLINE_AND_DATABASE_GATES_PASSED",
+  "status": "PHASE_12_RACE_VERIFIED_FIGHT_SOURCES_REQUIRED",
   "registry": {
     "interactions": 192,
-    "settings": 200,
-    "capabilities": 44,
+    "settings": 205,
+    "capabilities": 45,
     "generated_application_commands": 65,
     "top_level_chat_input_commands": 64
   },
   "database": {
-    "schema_version": "0012_wager_escrow",
+    "schema_version": "0013_event_exclusivity",
     "prisma_models": 88
   },
   "visual_library": {
@@ -38,7 +38,7 @@
   ],
   "verification": {
     "preflight": "PASS",
-    "domain_tests": 98,
+    "domain_tests": 102,
     "domain_tests_failed": 0,
     "typescript_domain_typecheck": "PASS",
     "production_wiring_structure": "PASS",
@@ -51,14 +51,15 @@
     "full_workspace_typecheck": "PASS",
     "dashboard_production_build": "PASS",
     "dependency_lockfile": "package-lock.json",
-    "adapter_tests": 16,
+    "adapter_tests": 20,
     "postgres_item_acceptance": "PASS_11_TESTS",
     "full_build": "PASS",
-    "postgres_migrations": "PASS_0001_THROUGH_0012_IN_ISOLATED_TEST_SCHEMAS",
+    "postgres_migrations": "PASS_0001_THROUGH_0013_IN_ISOLATED_TEST_SCHEMAS",
     "test_database": "Owner-confirmed disposable Railway Postgres; public TCP proxy; credentials only in ignored .env.test.local",
     "postgres_profiles_acceptance": "PASS_6_TESTS",
     "postgres_scheduler_acceptance": "PASS_3_TESTS",
-    "postgres_casino_acceptance": "PASS_10_TESTS"
+    "postgres_casino_acceptance": "PASS_10_TESTS",
+    "postgres_events_acceptance": "PASS_10_TESTS"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",
@@ -76,7 +77,10 @@
     "features.spotlight": false,
     "ENABLE_CASINO_SMOKE": false,
     "features.casino": false,
-    "features.lottery": false
+    "features.lottery": false,
+    "ENABLE_EVENTS_SMOKE": false,
+    "features.race": false,
+    "features.fight": false
   },
   "next_checkpoint": "Phase 12 Race/Fight, then STOP at Review Gate A",
   "phase_09": {
@@ -98,6 +102,17 @@
     "remaining": [
       "Live Discord acceptance",
       "Owner visual review"
+    ]
+  },
+  "phase_12": {
+    "race": "Domain, persisted repository, gated Discord adapter, production renderer, database acceptance and fixture runtime review renders implemented",
+    "fight": "Blocked on missing canonical approved move pool and full combat-system source; kept disabled",
+    "owner_policy": "NO_WINNING_BETS_REFUND: full source-aware refunds, no rake, normal result recorded",
+    "review_gate_a": "NOT_READY",
+    "remaining": [
+      "Approved Fight source files",
+      "Fight runtime, persistence, tests and review artifacts",
+      "Live Discord acceptance"
     ]
   }
 }

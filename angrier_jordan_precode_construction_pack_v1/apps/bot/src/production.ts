@@ -1,3 +1,5 @@
+import {DiscordEventsCoordinator} from './discord/events-coordinator.js';
+import {PrismaEventsRepository} from '../../../packages/features-events/src/prisma-repository.js';
 import {DiscordCasinoCoordinator,CASINO_COMMANDS} from './discord/casino-coordinator.js';
 import {DiscordCasinoAnnouncements} from './discord/casino-announcements.js';
 import {PrismaCasinoRepository} from '../../../packages/features-casino/src/prisma-repository.js';
@@ -38,6 +40,7 @@ export async function startProductionBot():Promise<void>{
   const enableJailSmoke=process.env.ENABLE_JAIL_SMOKE==='true';
   const enableModerationSmoke=process.env.ENABLE_MODERATION_SMOKE==='true';
   const enableSecuritySmoke=process.env.ENABLE_SECURITY_SMOKE==='true';
+  const enableEventsSmoke=process.env.ENABLE_EVENTS_SMOKE==='true';
   const enableCasinoSmoke=process.env.ENABLE_CASINO_SMOKE==='true';
   const enableProfilesSmoke=process.env.ENABLE_PROFILES_SMOKE==='true';
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
@@ -73,7 +76,11 @@ export async function startProductionBot():Promise<void>{
   const casinoRepo=new PrismaCasinoRepository(db),lotteryRepo=new PrismaLotteryRepository(db);
   const casino=new DiscordCasinoCoordinator(casinoRepo,lotteryRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
   const casinoAnnouncements=new DiscordCasinoAnnouncements(db,config);
+  const eventsRepo=new PrismaEventsRepository(db);
+  const events=new DiscordEventsCoordinator(eventsRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
   const scheduler=new IdempotentScheduler(jobRepo,{
+    'events.close_betting':async job=>{const p=job.payload as {guildId:string;sessionId:string};await eventsRepo.closeBetting(p.guildId,p.sessionId);await events.refresh(client,p.sessionId);},
+    'events.settle':async job=>{const p=job.payload as {guildId:string;sessionId:string};await eventsRepo.settle(p.guildId,p.sessionId,await events.policy(p.guildId));await events.refresh(client,p.sessionId);},
     'casino.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string};await casinoRepo.expire(p.guildId,p.sessionId);await casino.refresh(client,p.sessionId);},
     'lottery.draw':async job=>{const p=job.payload as {guildId:string;roundId:string};await lotteryRepo.draw(p.guildId,p.roundId);if(enableCasinoSmoke&&await config.get(p.guildId,'features.lottery')===true)await lotteryRepo.schedule(p.guildId);},
     'casino.jackpot_announce':async job=>{await casinoAnnouncements.deliver(client,job);},
@@ -91,6 +98,7 @@ export async function startProductionBot():Promise<void>{
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
   });
   const worker=new SchedulerWorker(scheduler,5_000);
+  let eventSweep:ReturnType<typeof setInterval>|undefined;
   let voiceSweep:ReturnType<typeof setInterval>|undefined;
   let wyrSweep:ReturnType<typeof setInterval>|undefined;
 
@@ -101,6 +109,7 @@ export async function startProductionBot():Promise<void>{
     if(enableProfilesSmoke){await profileRepo.resetVoiceAfterRestart(guildId);await profiles.reconcile(guildId);await profiles.sampleVoice(ready,guildId);voiceSweep=setInterval(()=>{void profiles.sampleVoice(ready,guildId).catch(()=>console.error('Activity voice sampling failed.'));},30_000);}
     if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await lotteryRepo.schedule(guildId);
     const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);await worker.runOnce();worker.start();
+    await events.sweep(ready);eventSweep=setInterval(()=>{void events.sweep(ready).catch(()=>console.error('Event recovery or rendering failed; durable jobs retained.'));},1500);
     wyrSweep=setInterval(()=>{void wyr.closeDue(ready);},5_000);
     const snapshot=await health.check();
     console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
@@ -109,12 +118,13 @@ export async function startProductionBot():Promise<void>{
   client.on(Events.GuildMemberAdd,member=>{if(enableOnboardingSmoke)void onboarding.handleMemberAdd(member).catch(error=>console.error('Onboarding join failed',error));if(enableSecuritySmoke)void security.handleMemberAdd(member).catch(error=>console.error('Join Gate failed',error));if(enableEconomySmoke)void economy.handleMemberAdd(member).catch(error=>console.error('Economy starter grant failed',error));});
   client.on(Events.GuildMemberRemove,member=>{if(enableOnboardingSmoke)void onboarding.handleMemberRemove(member).catch(error=>console.error('Onboarding leave snapshot failed',error));});
   client.on(Events.ChannelCreate,channel=>{if(enableJailSmoke)void jail.reconcileNewChannel(channel).catch(error=>console.error('Hotseat channel reconciliation failed',error));});
-  client.on(Events.MessageCreate,message=>{if(enableProfilesSmoke)void profiles.message(message).catch(()=>console.error('Activity message recording failed.'));if(enableSecuritySmoke)void security.handleMessage(message).catch(error=>console.error('AutoMod failed',error));});
+  client.on(Events.MessageCreate,message=>{if(enableEventsSmoke)void events.message(message).catch(()=>console.error('Race trigger failed.'));if(enableProfilesSmoke)void profiles.message(message).catch(()=>console.error('Activity message recording failed.'));if(enableSecuritySmoke)void security.handleMessage(message).catch(error=>console.error('AutoMod failed',error));});
   client.on(Events.GuildAuditLogEntryCreate,(entry,guild)=>{if(enableSecuritySmoke)void security.handleAuditEntry(entry,guild).catch(error=>console.error('Anti-nuke evaluation failed',error));});
 
   client.on(Events.VoiceStateUpdate,(_before,after)=>{if(enableProfilesSmoke)void profiles.sampleVoice(client,after.guild.id).catch(()=>console.error('Activity voice transition failed.'));});
   client.on(Events.InteractionCreate,async interaction=>{
     try{
+      if((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('event:')){if(!enableEventsSmoke){await interaction.reply({ephemeral:true,content:'Event controls are not enabled yet.'});return;}await events.handle(interaction);return;}
       if(enableProfilesSmoke&&interaction.isChatInputCommand())void profiles.recordCommand(interaction).catch(()=>console.error('Command activity recording failed.'));
       if((interaction.isChatInputCommand()&&CASINO_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('casino:'))){if(!enableCasinoSmoke){await interaction.reply({ephemeral:true,content:'Casino controls are not enabled yet.'});return;}await casino.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&PROFILE_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('profile:'))){
@@ -176,7 +186,7 @@ export async function startProductionBot():Promise<void>{
     }
   });
 
-  const shutdown=async()=>{worker.stop();if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);client.destroy();await disconnectPrisma();};
+  const shutdown=async()=>{worker.stop();if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);client.destroy();await disconnectPrisma();};
   process.once('SIGINT',()=>{void shutdown();});process.once('SIGTERM',()=>{void shutdown();});
   await client.login(token);
 }

@@ -511,7 +511,10 @@
         "production/atomic_assets/templates/event_states/race/03_result.svg"
       ],
       "interaction_contract": "!race trigger; native Join/Bet/+30 controls; no Play Again",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_adapter": "apps/bot/src/discord/events-coordinator.ts",
+      "runtime_renderer": "packages/features-events/src/render.ts",
+      "runtime_status": "Implemented behind flags; 10 PostgreSQL acceptance tests passed; fixture desktop/mobile runtime renders available; live Discord review pending"
     },
     {
       "id": "fight",
@@ -528,7 +531,8 @@
         "production/atomic_assets/templates/event_states/fight/03_result.svg"
       ],
       "interaction_contract": "/fight @member only; native wager modal/+30; no accept/join/rematch",
-      "status": "COVERED"
+      "status": "COVERED",
+      "runtime_status": "Disabled; approved move pool and combat specification missing"
     },
     {
       "id": "tictactoe",

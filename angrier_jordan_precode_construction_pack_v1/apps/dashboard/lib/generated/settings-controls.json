@@ -1,5 +1,5 @@
 {
-  "count": 200,
+  "count": 205,
   "controls": [
     {
       "key": "server.timezone",
@@ -300,14 +300,11 @@
       "description": "Race join + betting window before optional extension.",
       "kind": "number",
       "defaultValue": 60,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 15,
-      "max": 180
+      "min": 60,
+      "max": 60
     },
     {
       "key": "race.extension_seconds",
@@ -316,13 +313,10 @@
       "description": "One-use host extension for both Race entry and betting.",
       "kind": "number",
       "defaultValue": 30,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 0,
+      "min": 30,
       "max": 30
     },
     {
@@ -502,14 +496,11 @@
       "description": "",
       "kind": "number",
       "defaultValue": 5,
-      "risk": "financial",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 0,
-      "max": 20
+      "min": 5,
+      "max": 5
     },
     {
       "key": "lottery.max_tickets",
@@ -2029,14 +2020,11 @@
       "description": "Fight betting window; there is no open fighter join phase.",
       "kind": "number",
       "defaultValue": 30,
-      "risk": "financial",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 15,
-      "max": 120
+      "min": 30,
+      "max": 30
     },
     {
       "key": "fight.extension_seconds",
@@ -2045,13 +2033,10 @@
       "description": "One-use challenger extension for Fight betting only.",
       "kind": "number",
       "defaultValue": 30,
-      "risk": "financial",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "min": 0,
+      "min": 30,
       "max": 30
     },
     {
@@ -3186,6 +3171,85 @@
       "restartRequired": false,
       "min": 1,
       "max": 100000
+    },
+    {
+      "key": "features.race",
+      "section": "features",
+      "label": "Race",
+      "description": "Keep off until event acceptance and Review Gate A pass.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "features.fight",
+      "section": "features",
+      "label": "Fight",
+      "description": "Keep off until approved combat sources, acceptance and Review Gate A pass.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
+    },
+    {
+      "key": "events.min_bet",
+      "section": "events",
+      "label": "Min Bet",
+      "description": "Minimum total event wager.",
+      "kind": "number",
+      "defaultValue": 10,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100000
+    },
+    {
+      "key": "events.max_bet",
+      "section": "events",
+      "label": "Max Bet",
+      "description": "Maximum cumulative member wager per event.",
+      "kind": "number",
+      "defaultValue": 5000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "min": 1,
+      "max": 100000
+    },
+    {
+      "key": "special_commands.access_roles",
+      "section": "special_commands",
+      "label": "Access Roles",
+      "description": "Empty permits members; otherwise require one of these roles. Separate from notification roles.",
+      "kind": "json",
+      "defaultValue": {
+        "!race": [],
+        "!line": [],
+        "!vc": [],
+        "!chess": []
+      },
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false
     }
   ]
 }

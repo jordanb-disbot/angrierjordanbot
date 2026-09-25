@@ -1,0 +1,81 @@
+{
+  "embed": {
+    "author": {
+      "name": "Angrier Jordan"
+    },
+    "title": "Chair Race",
+    "description": "Entry and betting close <t:1790337660:R>.\nChoose a racer to open a private wager modal. Selection locks after your first wager.",
+    "color": 1357990,
+    "image": {
+      "url": "attachment://race.png"
+    },
+    "footer": {
+      "text": "race:runtime-review-race"
+    }
+  },
+  "rows": [
+    [
+      {
+        "label": "Join Race",
+        "disabled": true,
+        "style": 1,
+        "customId": "event:join:runtime-review-race"
+      },
+      {
+        "label": "+30 Seconds",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:extend:runtime-review-race"
+      },
+      {
+        "label": "Rules",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:rules:runtime-review-race"
+      }
+    ],
+    [
+      {
+        "label": "Bet · Jordan",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:bet:runtime-review-race:fixture-0"
+      },
+      {
+        "label": "Bet · Alex",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:bet:runtime-review-race:fixture-1"
+      },
+      {
+        "label": "Bet · Sam",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:bet:runtime-review-race:fixture-2"
+      }
+    ],
+    [
+      {
+        "label": "Bet · Morgan",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:bet:runtime-review-race:fixture-3"
+      },
+      {
+        "label": "Bet · Taylor",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:bet:runtime-review-race:fixture-4"
+      },
+      {
+        "label": "Bet · Casey",
+        "disabled": false,
+        "style": 2,
+        "customId": "event:bet:runtime-review-race:fixture-5"
+      }
+    ]
+  ],
+  "mentions": {
+    "parse": []
+  }
+}
