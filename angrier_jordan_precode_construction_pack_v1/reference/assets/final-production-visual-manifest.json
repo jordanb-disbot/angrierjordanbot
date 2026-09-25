@@ -5999,7 +5999,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "04eb053c881093add618b7bcba24041351c5fae71fa0bfb455cb4f55e8433be7"
+      "sha256": "594565f0640bfdae2330a6d6c47927c39823450ff5b7a811c27403f6799f05a9"
     },
     {
       "id": "pvp.runtime.renderer",

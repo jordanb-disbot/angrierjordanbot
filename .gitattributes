@@ -3,3 +3,6 @@
 **/ANGRIER_JORDAN_FIGHT_COMBAT_SYSTEM_SPEC.md -text
 angrier_jordan_precode_construction_pack_v1/production/event_art/*.svg -text
 angrier_jordan_precode_construction_pack_v1/packages/renderer/fonts/*-OFL.txt -text
+# Hashed runtime source/theme assets must reproduce byte-for-byte on Linux and Windows.
+angrier_jordan_precode_construction_pack_v1/packages/features-*/src/*render.ts text eol=lf
+angrier_jordan_precode_construction_pack_v1/production/theme/*.json text eol=lf
