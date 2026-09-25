@@ -19,13 +19,15 @@
     "validate:golden": "node scripts/validate-golden-wyr.mjs",
     "test:domain": "node scripts/compile-domain-tests.mjs && node --test testing/runtime/*.test.mjs",
     "typecheck:domain": "tsc -p tsconfig.domain.json --noEmit",
-    "build": "npm run codegen && npm run typecheck:domain",
+    "build": "npm run codegen && npm run db:generate && npm run typecheck:workspace && npm --workspace @angrier-jordan/bot run build && node scripts/copy-runtime-data.mjs && npm --workspace @angrier-jordan/dashboard run build",
     "dev:bot": "npm --workspace @angrier-jordan/bot run dev",
     "dev:dashboard": "npm --workspace @angrier-jordan/dashboard run dev",
     "db:generate": "npm --workspace @angrier-jordan/database run generate",
     "db:migrate": "npm --workspace @angrier-jordan/database run migrate",
     "db:seed": "npm --workspace @angrier-jordan/database run seed",
-    "validate:production-wiring": "node scripts/validate-production-wiring.mjs"
+    "validate:production-wiring": "node scripts/validate-production-wiring.mjs",
+    "typecheck:workspace": "tsc -p apps/bot/tsconfig.json --noEmit && tsc -p apps/dashboard/tsconfig.json --noEmit"
   },
-  "type": "module"
+  "type": "module",
+  "packageManager": "npm@11.6.0"
 }

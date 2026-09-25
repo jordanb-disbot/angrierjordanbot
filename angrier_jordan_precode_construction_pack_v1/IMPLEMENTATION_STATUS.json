@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-21",
-  "source_of_truth": "2026-09-21 reconciled build",
+  "date": "2026-09-25",
+  "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
   "checkpoint": 8,
-  "checkpoint_name": "Economy Foundation \u2014 ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
+  "checkpoint_name": "Economy Foundation — ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
   "status": "PASS",
   "registry": {
     "interactions": 192,
@@ -46,8 +46,11 @@
     "help_coverage": "PASS",
     "asset_validation": "PASS",
     "live_discord_postgres_smoke_test": "PENDING_CREDENTIALS",
-    "prisma_client_regeneration": "PENDING_DEPENDENCY_INSTALL",
-    "full_bot_typecheck": "PENDING_WORKSPACE_DEPENDENCY_INSTALL"
+    "prisma_client_regeneration": "PASS",
+    "full_bot_typecheck": "PASS",
+    "full_workspace_typecheck": "PASS",
+    "dashboard_production_build": "PASS",
+    "dependency_lockfile": "package-lock.json"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",

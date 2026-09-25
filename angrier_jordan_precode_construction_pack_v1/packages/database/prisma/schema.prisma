@@ -1,11 +1,43 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
 
-enum SessionState { DRAFT OPEN LOCKED SETTLING CLOSED CANCELLED }
-enum EscrowState { RESERVED SETTLED REFUNDED FORFEITED }
-enum CaseStatus { OPEN ACTIVE EXPIRED REVERSED APPEALED UPHELD MODIFIED }
-enum RelationStatus { PENDING ACTIVE ENDED }
-enum JailType { CRIME MODERATION }
+enum SessionState {
+  DRAFT
+  OPEN
+  LOCKED
+  SETTLING
+  CLOSED
+  CANCELLED
+}
+enum EscrowState {
+  RESERVED
+  SETTLED
+  REFUNDED
+  FORFEITED
+}
+enum CaseStatus {
+  OPEN
+  ACTIVE
+  EXPIRED
+  REVERSED
+  APPEALED
+  UPHELD
+  MODIFIED
+}
+enum RelationStatus {
+  PENDING
+  ACTIVE
+  ENDED
+}
+enum JailType {
+  CRIME
+  MODERATION
+}
 
 model Guild {
   id String @id

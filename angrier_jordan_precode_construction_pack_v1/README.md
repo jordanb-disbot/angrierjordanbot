@@ -25,3 +25,11 @@ This repository began as the pre-code construction pack and is now the active im
 4. Continue with **Checkpoint 09 — Shop / Inventory / Tools / Crafting / Collections** in `docs/BUILD_ORDER.md`.
 
 Unfinished modules remain behind feature flags until their acceptance gates pass. Live Discord/PostgreSQL validation requires the user's credentials and installed workspace dependencies.
+
+## Reproducible installed build
+
+Use Node.js 22+ and npm 11.6.0. Run `npm ci`, `npm run build`, then `npm run preflight`.
+The build generates Prisma, checks every workspace/adaptor, compiles the bot and builds the dashboard.
+Start the compiled bot with `npm --workspace @angrier-jordan/bot start` after configuring local secrets.
+See `docs/INSTALLED_BASELINE_2026-09-25.md` for the baseline repair record.
+The handoff controller in the sibling `ANGRIER_JORDAN_CODEX_HANDOFF_2026-09-25` directory takes precedence over older internal notes.

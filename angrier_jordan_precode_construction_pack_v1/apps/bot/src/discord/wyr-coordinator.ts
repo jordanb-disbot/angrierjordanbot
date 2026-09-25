@@ -79,7 +79,9 @@ export class DiscordWyrCoordinator {
     const guild=await client.guilds.fetch(guildId);const channel=await guild.channels.fetch(channelId);
     if(!channel?.isTextBased()||!('messages' in channel))return;
     const message=await channel.messages.fetch(messageId);const buffer=await png(svg);
-    await message.edit({attachments:[],content:components[0]?.components?.[0]?.data?.custom_id?.includes(':play:')?'Results are in.':undefined,files:[file(buffer)],components});
+    const first=components[0]?.components[0]?.data;
+    const isResult=first && 'custom_id' in first && first.custom_id?.includes(':play:');
+    await message.edit({attachments:[],...(isResult?{content:'Results are in.'}:{}),files:[file(buffer)],components});
   }
 
   private async replyError(interaction:ChatInputCommandInteraction|ButtonInteraction,error:unknown):Promise<void>{

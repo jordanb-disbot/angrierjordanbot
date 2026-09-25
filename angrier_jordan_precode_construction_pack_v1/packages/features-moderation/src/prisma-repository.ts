@@ -17,7 +17,7 @@ interface DbLike {
   appeal:{create(args:any):Promise<AppealRow>;findUnique(args:any):Promise<AppealRow|null>;findFirst(args:any):Promise<AppealRow|null>;findMany(args:any):Promise<AppealRow[]>;update(args:any):Promise<AppealRow>};
   staffAlert:{create(args:any):Promise<AlertRow>;count(args:any):Promise<number>};
   channelModerationState:{upsert(args:any):Promise<StateRow>;findFirst(args:any):Promise<StateRow|null>;updateMany(args:any):Promise<{count:number}>};
-  $transaction<T>(fn:(tx:DbLike)=>Promise<T>):Promise<T>;
+  $transaction<T>(fn:(tx:Omit<DbLike,'$transaction'>)=>Promise<T>):Promise<T>;
 }
 const record=(r:Row):ModerationCaseRecord=>({id:r.id,guildId:r.guildId,...(r.subjectUserId?{subjectUserId:r.subjectUserId}:{}),actionType:r.actionType,reason:r.reason,...(r.category?{category:r.category}:{}),...(r.policyId?{policyId:r.policyId}:{}),...(r.actorUserId?{actorUserId:r.actorUserId}:{}),actorType:r.actorType,...(r.sourceChannelId?{sourceChannelId:r.sourceChannelId}:{}),...(r.sourceMessageId?{sourceMessageId:r.sourceMessageId}:{}),...(r.durationSeconds===null?{}:{durationSeconds:r.durationSeconds}),status:r.status as ModerationCaseRecord['status'],...(r.metadata&&typeof r.metadata==='object'?{metadata:r.metadata as Record<string,unknown>} : {}),createdAt:r.createdAt,updatedAt:r.updatedAt});
 const event=(r:EventRow):ModerationCaseEventRecord=>({id:r.id,caseId:r.caseId,kind:r.kind,...(r.actorUserId?{actorUserId:r.actorUserId}:{}),...(r.before===null?{}:{before:r.before}),...(r.after===null?{}:{after:r.after}),...(r.reason?{reason:r.reason}:{}),createdAt:r.createdAt});

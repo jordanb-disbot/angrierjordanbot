@@ -1,6 +1,6 @@
 import {
   ActionRowBuilder,ButtonBuilder,ButtonStyle,ContainerBuilder,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
-  type ButtonInteraction,type ChatInputCommandInteraction,type GuildMember,type StringSelectMenuInteraction,
+  type ButtonInteraction,type ChatInputCommandInteraction,type GuildMember,type PartialGuildMember,type StringSelectMenuInteraction,
 } from 'discord.js';
 import type { ConfigService } from '../../../../packages/core/src/index.js';
 import { DomainError } from '../../../../packages/core/src/index.js';
@@ -22,7 +22,7 @@ export class DiscordOnboardingCoordinator {
     await member.send({content:'Welcome back to Chairs. Please review `/rules` and acknowledge them before normal server access is restored.'}).catch(()=>undefined);
   }
 
-  async handleMemberRemove(member:GuildMember):Promise<void>{
+  async handleMemberRemove(member:GuildMember|PartialGuildMember):Promise<void>{
     const guildId=member.guild.id;
     const [throne,chaise,recliner,access,jailed]=await Promise.all(['roles.throne','roles.chaise_lounge','roles.recliner','roles.member_access','roles.jailed'].map(k=>roleId(this.config,guildId,k)));
     const staff=new Set([throne,chaise,recliner].filter((x):x is string=>Boolean(x)));
