@@ -1,9 +1,9 @@
 {
-  "version": "5.0.1",
+  "version": "5.1-gate-a-visual-revision-02",
   "date": "2026-09-21",
   "status": "FINAL_INTEGRATED_PRODUCTION_VISUAL_MANIFEST",
   "style_source": "Approved second Angrier Jordan visual system only",
-  "asset_count": 348,
+  "asset_count": 358,
   "phase3_asset_count": 312,
   "phase4_runtime_template_count": 36,
   "assets": [
@@ -21,7 +21,7 @@
       "transparent": true,
       "source": "approved canonical weekly_spotlight_badges",
       "notes": "Do not replace with later AI contact-sheet variants. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -38,7 +38,7 @@
       "transparent": true,
       "source": "approved canonical weekly_spotlight_badges",
       "notes": "Do not replace with later AI contact-sheet variants. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -55,7 +55,7 @@
       "transparent": true,
       "source": "approved canonical weekly_spotlight_badges",
       "notes": "Do not replace with later AI contact-sheet variants. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -72,7 +72,7 @@
       "transparent": true,
       "source": "approved canonical weekly_spotlight_badges",
       "notes": "Do not replace with later AI contact-sheet variants. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -88,7 +88,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -105,7 +105,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -122,7 +122,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -139,7 +139,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -156,7 +156,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -173,7 +173,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -190,7 +190,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -207,7 +207,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -224,7 +224,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -241,7 +241,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_royal_chair_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -258,7 +258,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -275,7 +275,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -292,7 +292,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -309,7 +309,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -326,7 +326,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -343,7 +343,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -360,7 +360,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -377,7 +377,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -394,7 +394,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -411,7 +411,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -428,7 +428,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -445,7 +445,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -462,7 +462,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -479,7 +479,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -496,7 +496,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -513,7 +513,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -530,7 +530,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -547,7 +547,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -564,7 +564,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -581,7 +581,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -598,7 +598,7 @@
       ],
       "transparent": true,
       "source": "fantasy_luxury_game_asset_icon_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -615,7 +615,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -632,7 +632,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -649,7 +649,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -666,7 +666,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -683,7 +683,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -691,7 +691,7 @@
       "id": "economy.bank_tier_1",
       "file": "production/atomic_assets/economy/bank_tier_1.png",
       "category": "economy",
-      "usage": "Canonical Bank Tier I\u2013V vault asset",
+      "usage": "Canonical Bank Tier I–V vault asset",
       "canonical": true,
       "sha256": "186ce5376a9d20c75cf82885619bdb36af22f3c93eee1273eed03cc32daad1c9",
       "dimensions": [
@@ -701,14 +701,14 @@
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
       "notes": "Replaces earlier numbered crest placeholder. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "economy.bank_tier_2",
       "file": "production/atomic_assets/economy/bank_tier_2.png",
       "category": "economy",
-      "usage": "Canonical Bank Tier I\u2013V vault asset",
+      "usage": "Canonical Bank Tier I–V vault asset",
       "canonical": true,
       "sha256": "d527df8b27e640b6805ba4c286518611bd0b5bad9a239cb3e24084400e9eec1c",
       "dimensions": [
@@ -718,14 +718,14 @@
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
       "notes": "Replaces earlier numbered crest placeholder. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "economy.bank_tier_3",
       "file": "production/atomic_assets/economy/bank_tier_3.png",
       "category": "economy",
-      "usage": "Canonical Bank Tier I\u2013V vault asset",
+      "usage": "Canonical Bank Tier I–V vault asset",
       "canonical": true,
       "sha256": "f19003bcb19cc7a271ff63e930a19eba5874aceea3a0ff18c88f3a8264dee051",
       "dimensions": [
@@ -735,14 +735,14 @@
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
       "notes": "Replaces earlier numbered crest placeholder. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "economy.bank_tier_4",
       "file": "production/atomic_assets/economy/bank_tier_4.png",
       "category": "economy",
-      "usage": "Canonical Bank Tier I\u2013V vault asset",
+      "usage": "Canonical Bank Tier I–V vault asset",
       "canonical": true,
       "sha256": "dd13bfb3db5164d2fd154be517429e13ce54ab4db034cb1f56fe5e51091b70ac",
       "dimensions": [
@@ -752,14 +752,14 @@
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
       "notes": "Replaces earlier numbered crest placeholder. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "economy.bank_tier_5",
       "file": "production/atomic_assets/economy/bank_tier_5.png",
       "category": "economy",
-      "usage": "Canonical Bank Tier I\u2013V vault asset",
+      "usage": "Canonical Bank Tier I–V vault asset",
       "canonical": true,
       "sha256": "4ad38f7bf5bfee2c669213813a6b2edc7cd9a5e0bff28575fab22338bdaebd73",
       "dimensions": [
@@ -769,7 +769,7 @@
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
       "notes": "Replaces earlier numbered crest placeholder. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -785,7 +785,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -802,7 +802,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -819,7 +819,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -836,7 +836,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -853,7 +853,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -870,7 +870,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -887,7 +887,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -904,7 +904,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -921,7 +921,7 @@
       ],
       "transparent": true,
       "source": "luxury_gold_emerald_banking_icon_set.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -938,7 +938,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -955,7 +955,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -972,7 +972,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -989,7 +989,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1006,7 +1006,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1023,7 +1023,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1040,7 +1040,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1057,7 +1057,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1074,7 +1074,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1091,7 +1091,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1108,7 +1108,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1125,7 +1125,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1142,7 +1142,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1159,7 +1159,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1176,7 +1176,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1193,7 +1193,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1210,7 +1210,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1227,7 +1227,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1244,7 +1244,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1261,7 +1261,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1278,7 +1278,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_casino_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1295,7 +1295,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1312,7 +1312,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1329,7 +1329,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1346,7 +1346,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1363,7 +1363,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1380,7 +1380,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1397,7 +1397,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1414,7 +1414,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1431,7 +1431,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1448,7 +1448,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1465,7 +1465,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1482,7 +1482,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1499,7 +1499,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1516,7 +1516,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1533,7 +1533,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1550,7 +1550,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1567,7 +1567,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1584,7 +1584,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1601,7 +1601,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1618,7 +1618,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1635,7 +1635,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_throne_chaos_ui_pack.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1652,7 +1652,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1669,7 +1669,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1686,7 +1686,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1703,7 +1703,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1720,7 +1720,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1737,7 +1737,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1754,7 +1754,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1771,7 +1771,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1788,7 +1788,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1805,7 +1805,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1822,7 +1822,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1839,7 +1839,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1856,7 +1856,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1873,7 +1873,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1890,7 +1890,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1907,7 +1907,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1924,7 +1924,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1941,7 +1941,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1958,7 +1958,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1975,7 +1975,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -1992,7 +1992,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2009,7 +2009,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2026,7 +2026,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2043,7 +2043,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2060,7 +2060,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2077,7 +2077,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2094,7 +2094,7 @@
       ],
       "transparent": true,
       "source": "emerald_gold_chairs_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2111,7 +2111,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2128,7 +2128,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2145,7 +2145,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2162,7 +2162,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2179,7 +2179,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2196,7 +2196,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2213,7 +2213,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2230,7 +2230,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2247,7 +2247,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2264,7 +2264,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2281,7 +2281,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2298,7 +2298,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2315,7 +2315,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2332,7 +2332,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2349,7 +2349,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2366,7 +2366,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2383,7 +2383,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2400,7 +2400,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2417,7 +2417,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2434,7 +2434,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2451,7 +2451,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2468,7 +2468,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2485,7 +2485,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2502,7 +2502,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2519,7 +2519,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2536,7 +2536,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2553,7 +2553,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2570,7 +2570,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_gold_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2587,7 +2587,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2604,7 +2604,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2621,7 +2621,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2638,7 +2638,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2655,7 +2655,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2672,7 +2672,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2689,7 +2689,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2706,7 +2706,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2723,7 +2723,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2740,7 +2740,7 @@
       ],
       "transparent": true,
       "source": "luxury_emerald_lounge_badge_collection.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2757,7 +2757,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2774,7 +2774,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2791,7 +2791,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2808,7 +2808,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2825,7 +2825,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2842,7 +2842,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2859,7 +2859,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2876,7 +2876,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2893,7 +2893,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2910,7 +2910,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2927,7 +2927,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2944,7 +2944,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2961,7 +2961,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2978,7 +2978,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -2995,7 +2995,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3012,7 +3012,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3029,7 +3029,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3046,7 +3046,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3063,7 +3063,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3080,7 +3080,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3097,7 +3097,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3114,7 +3114,7 @@
       ],
       "transparent": true,
       "source": "gilded_mafia_estate_ui_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3131,7 +3131,7 @@
       ],
       "transparent": false,
       "source": "emerald_gold_discord_game_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3148,7 +3148,7 @@
       ],
       "transparent": false,
       "source": "emerald_gold_discord_game_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3165,7 +3165,7 @@
       ],
       "transparent": false,
       "source": "emerald_gold_discord_game_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3182,7 +3182,7 @@
       ],
       "transparent": false,
       "source": "emerald_gold_discord_game_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3199,7 +3199,7 @@
       ],
       "transparent": false,
       "source": "luxury_royal_game_ui_asset_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3216,7 +3216,7 @@
       ],
       "transparent": false,
       "source": "luxury_royal_game_ui_asset_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3233,7 +3233,7 @@
       ],
       "transparent": false,
       "source": "luxury_royal_game_ui_asset_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3250,7 +3250,7 @@
       ],
       "transparent": false,
       "source": "luxury_royal_game_ui_asset_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3267,7 +3267,7 @@
       ],
       "transparent": false,
       "source": "luxury_royal_game_ui_asset_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3285,7 +3285,7 @@
       "transparent": false,
       "source": "luxurious_weekly_spotlight_lounge_leaderboard.png",
       "notes": "Dynamic data must be overlaid at runtime; do not use fake example values. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3300,7 +3300,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3315,7 +3315,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3330,7 +3330,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3345,7 +3345,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3360,7 +3360,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3375,7 +3375,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3390,7 +3390,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3405,7 +3405,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3420,7 +3420,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3435,7 +3435,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3450,7 +3450,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3465,7 +3465,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3480,7 +3480,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3495,14 +3495,14 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "templates.fmk",
       "file": "production/atomic_assets/templates/fmk.svg",
       "category": "templates",
-      "usage": "Scalable runtime renderer template: FUCK \u2022 MARRY \u2022 KILL",
+      "usage": "Scalable runtime renderer template: FUCK • MARRY • KILL",
       "canonical": true,
       "sha256": "e552157d2f858ce00566af680dd450824d2e6c34dfa38d0ae902c0b13ec00563",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
@@ -3510,7 +3510,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3525,7 +3525,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3540,7 +3540,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3555,7 +3555,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3570,7 +3570,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3585,7 +3585,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3600,7 +3600,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3615,7 +3615,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3630,7 +3630,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3645,7 +3645,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3660,7 +3660,7 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3675,14 +3675,14 @@
         1200,
         675
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "animations.line_countdown",
       "file": "production/atomic_assets/animations/line_countdown.apng",
       "category": "animations",
-      "usage": "!line 5\u21924\u21923\u21922\u21921 countdown followed by in-frame white-powder burst; no 0 state",
+      "usage": "!line 5→4→3→2→1 countdown followed by in-frame white-powder burst; no 0 state",
       "canonical": true,
       "sha256": "e984e7787663ffef1b2ed82eab986ecc11c8ddb83e80ed0844ed1c646add7702",
       "dimensions": [
@@ -3691,14 +3691,14 @@
       ],
       "transparent": true,
       "notes": "Six-frame v2 animation: 5, 4, 3, 2, 1, burst. No visible 0.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "animations.line_countdown_gif",
       "file": "production/atomic_assets/animations/line_countdown.gif",
       "category": "animations",
-      "usage": "GIF review/fallback for !line 5\u21921 countdown and burst; no 0 state",
+      "usage": "GIF review/fallback for !line 5→1 countdown and burst; no 0 state",
       "canonical": true,
       "sha256": "839185261f32428594b48f2c0267c7c003b636cec1951f64dfae7884323d5187",
       "dimensions": [
@@ -3706,7 +3706,7 @@
         450
       ],
       "transparent": false,
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "No visible 0.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3722,7 +3722,7 @@
         420,
         84
       ],
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3738,7 +3738,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3755,7 +3755,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3772,7 +3772,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3789,7 +3789,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3806,7 +3806,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3823,7 +3823,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3840,7 +3840,7 @@
       ],
       "transparent": false,
       "source": "luxury_emerald_economy_assets_board.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -3858,7 +3858,7 @@
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
       "notes": "Runtime label is canonical; icon crop intentionally excludes generated label text. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3875,7 +3875,7 @@
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
       "notes": "Runtime label is canonical; icon crop intentionally excludes generated label text. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3892,7 +3892,7 @@
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
       "notes": "Runtime label is canonical; icon crop intentionally excludes generated label text. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3909,7 +3909,7 @@
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
       "notes": "Runtime label is canonical; icon crop intentionally excludes generated label text. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3926,7 +3926,7 @@
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
       "notes": "Runtime label is canonical; icon crop intentionally excludes generated label text. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3942,8 +3942,8 @@
       ],
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
-      "notes": "Canonical rank order: Apprentice \u2192 Craftsman \u2192 Chairwright \u2192 Master Chairwright \u2192 Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "notes": "Canonical rank order: Apprentice → Craftsman → Chairwright → Master Chairwright → Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3959,8 +3959,8 @@
       ],
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
-      "notes": "Canonical rank order: Apprentice \u2192 Craftsman \u2192 Chairwright \u2192 Master Chairwright \u2192 Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "notes": "Canonical rank order: Apprentice → Craftsman → Chairwright → Master Chairwright → Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3976,8 +3976,8 @@
       ],
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
-      "notes": "Canonical rank order: Apprentice \u2192 Craftsman \u2192 Chairwright \u2192 Master Chairwright \u2192 Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "notes": "Canonical rank order: Apprentice → Craftsman → Chairwright → Master Chairwright → Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -3993,8 +3993,8 @@
       ],
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
-      "notes": "Canonical rank order: Apprentice \u2192 Craftsman \u2192 Chairwright \u2192 Master Chairwright \u2192 Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "notes": "Canonical rank order: Apprentice → Craftsman → Chairwright → Master Chairwright → Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4010,8 +4010,8 @@
       ],
       "transparent": false,
       "source": "gilded_chaircraft_ui_asset_board.png",
-      "notes": "Canonical rank order: Apprentice \u2192 Craftsman \u2192 Chairwright \u2192 Master Chairwright \u2192 Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "notes": "Canonical rank order: Apprentice → Craftsman → Chairwright → Master Chairwright → Grand Chairwright. Runtime text only. Refreshed for v2 palette/style while preserving semantic identity.",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4027,7 +4027,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4044,7 +4044,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4061,7 +4061,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4078,7 +4078,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4095,7 +4095,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4112,7 +4112,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4129,7 +4129,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4146,7 +4146,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4163,7 +4163,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4180,7 +4180,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4197,7 +4197,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4214,7 +4214,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4231,7 +4231,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4248,7 +4248,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4265,7 +4265,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4282,7 +4282,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4299,7 +4299,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4316,7 +4316,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4333,7 +4333,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4350,7 +4350,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4367,7 +4367,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4384,7 +4384,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4401,7 +4401,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4418,7 +4418,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4435,7 +4435,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4452,7 +4452,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4469,7 +4469,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4486,7 +4486,7 @@
       ],
       "transparent": false,
       "source": "emerald_crown_achievement_asset_sheet.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4503,7 +4503,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4520,7 +4520,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4537,7 +4537,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4554,7 +4554,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4571,7 +4571,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4588,7 +4588,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4605,7 +4605,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4622,7 +4622,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4639,7 +4639,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4656,7 +4656,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4673,7 +4673,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4690,7 +4690,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4707,7 +4707,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4724,7 +4724,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4741,7 +4741,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4758,7 +4758,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4775,7 +4775,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4792,7 +4792,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4809,7 +4809,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4826,7 +4826,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4843,7 +4843,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4860,7 +4860,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4877,7 +4877,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4894,7 +4894,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4911,7 +4911,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4928,7 +4928,7 @@
       ],
       "transparent": false,
       "source": "luxury_chaos_system_states_events.png",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
@@ -4946,7 +4946,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4963,7 +4963,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4980,7 +4980,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4997,7 +4997,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5014,7 +5014,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5031,7 +5031,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5048,7 +5048,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5065,7 +5065,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5082,7 +5082,7 @@
       "transparent": false,
       "source": "emerald_gold_discord_ui_asset_board.png",
       "notes": "Example text in reference crop is not authoritative; runtime SVG/template should render live content. Refreshed for v2 palette/style while preserving semantic identity.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5098,7 +5098,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5114,7 +5114,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5130,7 +5130,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5146,7 +5146,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5162,7 +5162,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5178,7 +5178,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5194,7 +5194,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5210,14 +5210,14 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
       "id": "templates.event_states.line.03_countdown",
       "file": "production/atomic_assets/templates/event_states/line/03_countdown.svg",
       "category": "templates.event_states.line",
-      "usage": "!line 5\u21921; no 0",
+      "usage": "!line 5→1; no 0",
       "canonical": true,
       "sha256": "9471c7124c90dc161717db0bcef8332f96f335f4ea4a7f0013af562e8d671473",
       "dimensions": [
@@ -5226,7 +5226,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5242,7 +5242,7 @@
       ],
       "source": "Visual Refresh Phase 2 final behavior state template",
       "notes": "Runtime SVG; native Discord components remain native.",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide",
+      "visual_system": "AJ Visual System v2 — approved second style guide",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -5253,7 +5253,7 @@
       "canonical": true,
       "sha256": "9dd381f8663e41558f1412015d5b7150152fd214a33eebe7e98c5d1c232e7bfa",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.casino.02_blackjack_result",
@@ -5263,7 +5263,7 @@
       "canonical": true,
       "sha256": "c934ec185177a848af429baecf035de097a91d02bcf36b1b708ab1c5a656abda",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.casino.03_roulette_result",
@@ -5273,7 +5273,7 @@
       "canonical": true,
       "sha256": "f42c381260a9e98b91dfcb85ce704d0bbae37fe4855583d2f5d3c70d2caa4329",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.casino.04_slots_result",
@@ -5283,7 +5283,7 @@
       "canonical": true,
       "sha256": "97cca749a3ae052111baa78ffbe8b9dd4cd793ed69cb4e649a0e4e9d000d5c94",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.casino.05_dice_result",
@@ -5293,7 +5293,7 @@
       "canonical": true,
       "sha256": "5b3256f18d874878e85a476091c126a4791e841edac3eea2088f63e297d6f908",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.casino.06_coinflip_result",
@@ -5303,7 +5303,7 @@
       "canonical": true,
       "sha256": "74c40c5bf95dcba37c5d7a82fd91119e6c7c88939123db1193407e8974093f6e",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.casino.07_chair_pot",
@@ -5313,7 +5313,7 @@
       "canonical": true,
       "sha256": "fc950453558316069e5ee25a5ef90f24a5c5ff2f499aa0acbe16431c09a4f85e",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.crafting.01_recipe",
@@ -5323,7 +5323,7 @@
       "canonical": true,
       "sha256": "2aabeeec3fae1137b31ac0bd4230d270ceaefe37f231df4970653e748fbb4808",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.crafting.02_success",
@@ -5333,7 +5333,7 @@
       "canonical": true,
       "sha256": "c57da72ea274b362cf6ca0879797dc217f8ea0c39cd51296cbbc0f2bfdc4c5f7",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.crafting.03_failure",
@@ -5343,7 +5343,7 @@
       "canonical": true,
       "sha256": "ff0d944ec09f51a35e843a10cdd8e59dd0ba7de6a49b022d64fef693b32d93db",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.daily.01_ready",
@@ -5353,7 +5353,7 @@
       "canonical": true,
       "sha256": "b1374e7a2d7827579c984193d57c0122528fea09cb248568fb2277e5e1ee0f31",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.daily.02_partial",
@@ -5363,7 +5363,7 @@
       "canonical": true,
       "sha256": "a2fb2c4f80acadcb4fe2df3540b5136104f6c879739b597cc35b9faa432b07dd",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.daily.03_complete",
@@ -5373,7 +5373,7 @@
       "canonical": true,
       "sha256": "aa7c243e163c4bf583a0563f64a997fc8f4d2780c1aefa9801ed35fb2f08dcc6",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.family.01_tree",
@@ -5383,7 +5383,7 @@
       "canonical": true,
       "sha256": "68331d05720f57a377ee9c15b71400041dbd8710a07d2ee3d1daaae4108abd71",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.family.02_marriage_vote",
@@ -5393,7 +5393,7 @@
       "canonical": true,
       "sha256": "a570a89b1ab434b34d15e9e1fb542e55cf9ce52420fa6bc724306b8f42577888",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.introduction.01_preview",
@@ -5403,7 +5403,7 @@
       "canonical": true,
       "sha256": "9d37780d85eb62d199bc21b2b038ab8921e087cb7b71dd5e38ed9b132e296c28",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.introduction.02_published",
@@ -5413,7 +5413,7 @@
       "canonical": true,
       "sha256": "0b971c7b742eda406635b4fb16bf86751c69ae885122b3bf191f7b3ec0749eb0",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.lore.01_toc",
@@ -5423,7 +5423,7 @@
       "canonical": true,
       "sha256": "69d80b66faa121548bf6aeefcb3dc209f5e47a9c8b2ac92fd5adaf20ef31546a",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.lore.02_chapter",
@@ -5433,7 +5433,7 @@
       "canonical": true,
       "sha256": "a705ef988f37fdf14f0d368d6df4cc62759af810f7073dfac1787f1bc5dadcc4",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.lore.03_complete",
@@ -5443,7 +5443,7 @@
       "canonical": true,
       "sha256": "a81dae767ff3e30cc46338144e12034d621a0e887d44a0ae12e65ade136651ed",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.moderation.01_case",
@@ -5453,7 +5453,7 @@
       "canonical": true,
       "sha256": "1bc9c9b37ea52e2fd06349005456001821aba3226e979b8a0f8b7f843a753636",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.moderation.02_hotseat",
@@ -5463,7 +5463,7 @@
       "canonical": true,
       "sha256": "429350eae910c090c64b0385a6c4b8cd0958b1c81222e6837e6773d97321ed13",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.moderation.03_panic_active",
@@ -5473,7 +5473,7 @@
       "canonical": true,
       "sha256": "65b1ea37c838e540cddaa6fa48e613f3790194ee90a7349e807b1cb20ad7c6c1",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.moderation.04_autopurge",
@@ -5483,7 +5483,7 @@
       "canonical": true,
       "sha256": "267acc0554d4945443e1a821f7836c3a1f816cfb9d3650204f42c55fc12f20d5",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.onboarding.01_rules_gate",
@@ -5493,7 +5493,7 @@
       "canonical": true,
       "sha256": "6d0eafc4b26f9861b9388672d3326d369c0f39feee2e8f38d692303795475714",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.onboarding.02_optional_steps",
@@ -5503,7 +5503,7 @@
       "canonical": true,
       "sha256": "64b30bed514d3a7abc3a342c6c5453cd2c9c721f8e307fcb3990748141dd19e9",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.party.01_wyr",
@@ -5513,7 +5513,7 @@
       "canonical": true,
       "sha256": "3077afceeddcf641563eeffe7d2133c01cb4b2c368bbec9a5227e29f26a7f642",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.party.02_truth_dare",
@@ -5523,7 +5523,7 @@
       "canonical": true,
       "sha256": "743d5333e4b3412a013a7aa73c1698459056a583c04b40d11c1cd7f5b1ead743",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.party.03_wwyd",
@@ -5533,7 +5533,7 @@
       "canonical": true,
       "sha256": "248bfe870c64541261edaeab719053d6901185f3e49ba86d80e5cfab82a1b973",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.party.04_finish_sentence",
@@ -5543,7 +5543,7 @@
       "canonical": true,
       "sha256": "d6e34220ac1db09bd1064617a8e87d05d0f11f9dbdf6873972d2003c6b69c39d",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.party.05_one_word_story",
@@ -5553,7 +5553,7 @@
       "canonical": true,
       "sha256": "7f23854b6afd57b8ae08bb4bb31187b62b2c0f672773e110ba8574d674844474",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.repair.01_options",
@@ -5563,7 +5563,7 @@
       "canonical": true,
       "sha256": "6bf288d9bf504e7d73a8bb824151d858051d752cf692403b2063b8ddc161ee1a",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.repair.02_result",
@@ -5573,7 +5573,7 @@
       "canonical": true,
       "sha256": "1575c223a656c687247bccfdb0cb1845d3403553b6a717d78846a9961c042797",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.roles.01_panel",
@@ -5583,7 +5583,7 @@
       "canonical": true,
       "sha256": "ad49d3135d45f0be43ce8f48869ebae22438a57b18d25ee0259bf2919033818f",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.tldr.01_chat_2h",
@@ -5593,7 +5593,7 @@
       "canonical": true,
       "sha256": "cbbbd6902771ab2fd8b1f6bb5825a55fadb0f8820cf8f6fe610fbf7cd447450e",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
     },
     {
       "id": "runtime.tldr.02_events_7d",
@@ -5603,7 +5603,147 @@
       "canonical": true,
       "sha256": "b339f6622edf1ede20fdaf802e939cd2cd2db64726ce0ddcc0c1825b1e49e2b9",
       "origin": "Visual Refresh Phase 4",
-      "visual_system": "AJ Visual System v2 \u2014 approved second style guide"
+      "visual_system": "AJ Visual System v2 — approved second style guide"
+    },
+    {
+      "id": "events.v2.race_chair_1",
+      "file": "production/event_art/race_chair_1.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "57235e181b3fe720f67c3f2f9ef1217923ec70d8a9b7221f9e87e0f48190cd37",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.race_chair_2",
+      "file": "production/event_art/race_chair_2.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "0043079717ed6e64d4ac94cda5c16fd384ebefd405d74fda7b786c8f8ab520a8",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.race_chair_3",
+      "file": "production/event_art/race_chair_3.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "bea11b36fb431338df9906a4c700d3927865ec26b7ae0eeddeb46529c34f5cb9",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.race_chair_4",
+      "file": "production/event_art/race_chair_4.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "d58aeb1e7b6576e760a5298d7c815ebf98a91ee460d51c60234e8133bc357c45",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.race_chair_5",
+      "file": "production/event_art/race_chair_5.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "9756edbd9e05b2e935de76cb871fbc4bb65b802ff340cde179e2ce0bee0738e2",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.race_chair_6",
+      "file": "production/event_art/race_chair_6.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "33a6c63a082b7bfdf884db9938b530aee7174b6792de2b0356896f5425e5f6b4",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.robo_fighter_1",
+      "file": "production/event_art/robo_fighter_1.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "a78a26968ec178f7fa1f3b02ed7fbc9e85ff598b8cdd8ef55ff646add95dda50",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.robo_fighter_2",
+      "file": "production/event_art/robo_fighter_2.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "2105a1929b9a92c3023f6655d7f09a06fe65a1949498273d37227c97c1b0da62",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.robo_fighter_3",
+      "file": "production/event_art/robo_fighter_3.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "c94f7f5b21ff01a867e0b2aef954fa51b04aaef70fd3d726e17287946ea515db",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
+    },
+    {
+      "id": "events.v2.robo_fighter_4",
+      "file": "production/event_art/robo_fighter_4.svg",
+      "category": "events.presentation",
+      "usage": "Race/Fight visual revision 02; deterministic runtime art",
+      "canonical": true,
+      "sha256": "54894026350f8cb0761087ed2ef23726629fde6853723d56aa15c8ae140f1f01",
+      "dimensions": [
+        240,
+        260
+      ],
+      "transparent": true,
+      "source": "scripts/build-event-art.mjs; visual approval pending"
     }
   ]
 }

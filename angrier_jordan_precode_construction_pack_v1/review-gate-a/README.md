@@ -1,12 +1,16 @@
-# Review Gate A
+# Gate A — visual revision 02
 
-Open `index.html` for production-renderer Race/Fight playback at actual planned timing, a scrubber, the timing table, and links to desktop/mobile images.
+Functionality is owner-approved. Presentation is awaiting review. Railway readiness remains on hold.
 
-- Race: entry, betting, live sprint and result.
-- Fight: betting, live combat and result using the unchanged approved 100-attack/36-heal pool.
-- Private wagers, one-use extensions, normal settlement and full no-winning-bet refunds are implemented and tested.
-- No rematch or Play Again controls on either event.
+Open [the interactive review](index.html) for the revised production-rendered sequences and these six requested screens:
 
-The member identities are fixtures. Host frames are review renders, not live Discord screenshots. Feature flags remain off. See `VALIDATION.md` for the final validation result and review boundary.
+| Event | Desktop betting | Mobile live | Desktop result | Discord ambient animation |
+| --- | --- | --- | --- | --- |
+| Race | [Betting](race/betting-desktop.png) | [Live](race/live-mobile.png) | [Result](race/result-desktop.png) | [GIF](race/live-discord.gif) |
+| Fight | [Betting](fight/betting-desktop.png) | [Live](fight/combat-mobile.png) | [Result](fight/result-desktop.png) | [GIF](fight/live-discord.gif) |
 
-Owner decision: approve the Race/Fight flow and presentation, or identify specific changes. No production deployment is requested. Further implementation and Railway readiness wait for Gate A approval.
+Revision 02 uses deterministic lounge-chair artwork, midnight/navy surfaces, teal/emerald accents, warm gold winner emphasis, Poppins and Cinzel, environmental framing, a compact Race betting grid and stable Fight combat layout. No AI-generated assets are used.
+
+The full timeline player samples the production frame renderer at 20 fps. Discord attachments use 24-frame ambient loops between authoritative message updates; they do not reveal future combat or interpolate HP. The player is not a claim of Discord streaming at 20 fps.
+
+Member identities and host frames are fixtures, not live Discord screenshots. See [validation](VALIDATION.md). Owner decision: approve this visual revision or identify specific presentation changes.

@@ -1,16 +1,16 @@
-import {readFileSync} from 'node:fs';
 import type {RaceView} from './prisma-repository.js';
-const escape=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-const robots=new Map<number,string>();
-const robot=(n:number)=>{if(!robots.has(n))robots.set(n,'data:image/png;base64,'+readFileSync(new URL(`../../../production/atomic_assets/race_fight/robo_fighter_${n}.png`,import.meta.url)).toString('base64'));return robots.get(n)!;};
-const wrap=(s:string,max=38)=>{const result:string[]=[];let line='';for(const word of s.split(/\s+/)){if(line.length+word.length>max){result.push(line);line='';}line+=(line?' ':'')+word;}if(line)result.push(line);return result;};
-/** Numeric HP, health fill and action text consume the same persisted combat beat. */
-export function renderFight(view:RaceView){
- const hp=view.combat?.hp??[100,100],closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED';
- const log=view.combat?.log??['Betting is open. Choose a fighter below.'];
- const lines=log.flatMap(text=>wrap(text)).slice(-9),height=450+lines.length*25;
- const fighters=view.racers.map((f,i)=>{const x=20+i*210,value=hp[i]??100;return`<rect x="${x}" y="99" width="190" height="236" rx="12" fill="${i?'#222333':'#102b30'}"/><text x="${x+95}" y="125" text-anchor="middle" font-size="17" font-weight="600" fill="#f2eee5">${escape(f.name.slice(0,19))}</text><image href="${robot(f.chair)}" x="${x+30}" y="137" width="130" height="130"/><text x="${x+95}" y="288" text-anchor="middle" font-size="21" font-weight="600" fill="#f2eee5">${value} HP</text><rect x="${x+14}" y="304" width="162" height="12" rx="6" fill="#364252"/><rect x="${x+14}" y="304" width="${162*value/100}" height="12" rx="6" fill="${i?'#d1af70':'#21c6a5'}"/>`;}).join('');
- const title=cancelled?'FIGHT CANCELLED':closed?'KNOCKOUT':'ROBO CHAIR FIGHT',subtitle=closed?`${view.racers.find(f=>f.userId===view.winnerId)?.name??'Winner'} wins`:cancelled?'All wagers refunded.':view.state==='OPEN'?'Two fighters. Equal odds.':'Combat live · betting locked';
- const footer=closed?view.result?.refunded?'Full refunds · no winning wagers':`Pool ${view.result?.pool??0} · Rake ${view.result?.rake??0}`:`Pool ${view.pool} Ottomans · 5% rake`;
- return`<svg xmlns="http://www.w3.org/2000/svg" width="440" height="${height}" viewBox="0 0 440 ${height}"><rect width="440" height="${height}" rx="16" fill="#091520"/><g font-family="Poppins"><text x="20" y="36" font-family="Cinzel" font-size="23" font-weight="700" fill="#e2c786">${title}</text><text x="20" y="70" font-size="17" fill="#e1e8ea">${escape(subtitle.slice(0,39))}</text>${fighters}<text x="20" y="367" font-size="14" font-weight="600" fill="#d9be7b">${closed?'FINAL EXCHANGE':'LATEST EXCHANGES'}</text>${lines.map((line,i)=>`<text x="20" y="${397+i*25}" font-size="18" fill="#e1e8ea">${escape(line)}</text>`).join('')}<text x="20" y="${height-18}" font-size="16" fill="#a8bac5">${escape(footer)}</text></g></svg>`;
+import {art,footer,heading,ink,lines,shell,text,type EventMotion} from './visual.js';
+/** HP labels, bars and combat log share one authoritative saved beat; ambient motion is cosmetic. */
+export function renderFight(view:RaceView,motion:EventMotion={}){
+ const hp=view.combat?.hp??[100,100],closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',live=view.state==='LOCKED',phase=motion.phase??0;
+ const logs=view.combat?.log??['Choose a fighter below to place a private wager.'],wrapped=logs.map(s=>lines(s,37)),logHeight=255,height=790;
+ const winner=view.racers.find(f=>f.userId===view.winnerId);
+ let body=heading(closed?'CHAIRS / OFFICIAL RESULT':live?'CHAIRS / ARENA LIVE':'CHAIRS / THE LOUNGE ARENA',cancelled?'Fight cancelled':closed?'Knockout':'Robo Chair Fight',cancelled?'All wagers refunded.':closed?`${winner?.name??'Winner'} wins`.slice(0,37):live?'Combat live. Betting is locked.':'Two fighters. One winner. Equal odds.');
+ body+=`<path d="M24 322 220 280 416 322 220 362Z" fill="#0F1E3A" stroke="#64748b" stroke-opacity=".4"/><ellipse cx="220" cy="324" rx="177" ry="25" fill="none" stroke="#14B8A6" stroke-opacity="${.18+Math.sin(phase*Math.PI)*.08}"/><path d="M60 327H380M95 345H345" stroke="#14B8A6" stroke-opacity=".12"/>`;
+ body+=view.racers.map((f,i)=>{const x=24+i*210,value=hp[i]??100,win=closed&&f.userId===view.winnerId,bob=live?Math.sin(phase*2*Math.PI+i)*1.6:0;
+ return `<rect x="${x}" y="120" width="182" height="43" rx="7" fill="url(#glass)" stroke="${win?ink.warm:'#354357'}"/>`+text(x+91,147,f.name.slice(0,15),18,ink.white,'text-anchor="middle" font-weight="600"')+`<image href="${art('robo_fighter',f.chair)}" x="${x-2}" y="${163+bob}" width="190" height="183"/>`+text(x+91,372,`${value} HP`,20,value===0?ink.muted:ink.white,'text-anchor="middle" font-weight="600"')+`<rect x="${x+10}" y="385" width="162" height="9" rx="4.5" fill="#1E293B"/><rect x="${x+10}" y="385" width="${162*value/100}" height="9" rx="4.5" fill="${i?'url(#gold)':'url(#rail)'}"/>`+text(x+91,416,win?'WINNER':closed?'FIGHT COMPLETE':`FIGHTER ${String(i+1).padStart(2,'0')}`,10,win?ink.warm:ink.muted,'text-anchor="middle" letter-spacing="1.4"');}).join('');
+ body+=`<circle cx="220" cy="245" r="20" fill="#0B1220" stroke="#64748b" stroke-opacity=".5"/>`+text(220,251,closed?'KO':'VS',13,ink.warm,'text-anchor="middle" font-weight="600"');
+ body+=`<rect x="20" y="437" width="400" height="${logHeight+26}" rx="10" fill="url(#glass)" stroke="#354357"/>`;
+ let y=463;wrapped.forEach((rows,i)=>{body+=`<rect x="32" y="${y-13}" width="3" height="${rows.length*24-5}" rx="1.5" fill="${i===wrapped.length-1?ink.teal:ink.slate}"/>`;rows.forEach(line=>{body+=text(45,y,line,17,i===wrapped.length-1?ink.white:ink.muted);y+=24;});y+=15;});
+ body+=footer(height-53,view.result?.pool??view.pool,closed?view.result?.refunded?'FULL REFUND · NO RAKE':`RAKE ${view.result?.rake??0}`:'5% RAKE');return shell(height,body);
 }

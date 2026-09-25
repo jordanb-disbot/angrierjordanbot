@@ -506,15 +506,20 @@
       "presentation_type": "SPECIAL_EVENT_RUNTIME",
       "renderer_family": "race",
       "asset_refs": [
-        "production/atomic_assets/templates/event_states/race/01_join_betting.svg",
-        "production/atomic_assets/templates/event_states/race/02_sprint_live.svg",
-        "production/atomic_assets/templates/event_states/race/03_result.svg"
+        "production/event_art/race_chair_1.svg",
+        "production/event_art/race_chair_2.svg",
+        "production/event_art/race_chair_3.svg",
+        "production/event_art/race_chair_4.svg",
+        "production/event_art/race_chair_5.svg",
+        "production/event_art/race_chair_6.svg"
       ],
       "interaction_contract": "!race trigger; native Join/Bet/+30 controls; no Play Again",
       "status": "COVERED",
       "runtime_adapter": "apps/bot/src/discord/events-coordinator.ts",
       "runtime_renderer": "packages/features-events/src/render.ts",
-      "runtime_status": "Implemented behind flags; 10 PostgreSQL acceptance tests passed; fixture desktop/mobile runtime renders available; live Discord review pending"
+      "runtime_status": "Implemented behind flags; 10 PostgreSQL acceptance tests passed; fixture desktop/mobile runtime renders available; live Discord review pending",
+      "presentation_revision": "02; functional approval retained; visual approval pending",
+      "animation": "Bounded cosmetic GIF loop from production renderer; authoritative snapshot unchanged"
     },
     {
       "id": "fight",
@@ -526,15 +531,18 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "fight",
       "asset_refs": [
-        "production/atomic_assets/templates/event_states/fight/01_betting.svg",
-        "production/atomic_assets/templates/event_states/fight/02_combat_live.svg",
-        "production/atomic_assets/templates/event_states/fight/03_result.svg"
+        "production/event_art/robo_fighter_1.svg",
+        "production/event_art/robo_fighter_2.svg",
+        "production/event_art/robo_fighter_3.svg",
+        "production/event_art/robo_fighter_4.svg"
       ],
       "interaction_contract": "/fight @member only; native wager modal/+30; no accept/join/rematch",
       "status": "COVERED",
       "runtime_status": "Implemented behind flags; approved sources hash-verified unchanged; PostgreSQL acceptance passed; Gate A fixture runtime renders prepared",
       "runtime_adapter": "apps/bot/src/discord/events-coordinator.ts",
-      "runtime_renderer": "packages/features-events/src/fight-render.ts"
+      "runtime_renderer": "packages/features-events/src/fight-render.ts",
+      "presentation_revision": "02; functional approval retained; visual approval pending",
+      "animation": "Bounded cosmetic GIF loop from production renderer; authoritative snapshot unchanged"
     },
     {
       "id": "tictactoe",

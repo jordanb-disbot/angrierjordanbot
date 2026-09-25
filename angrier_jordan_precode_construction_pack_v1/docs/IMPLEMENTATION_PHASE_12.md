@@ -17,3 +17,7 @@ Fighter departure cancels during betting or combat. Durable membership state and
 ## Review and validation
 
 `review-gate-a/index.html` contains production-renderer playback and links to desktop/mobile entry, betting, live/combat and result renders. Fixture identities are labeled; these are not live Discord screenshots. No Race/Fight result has rematch or Play Again controls. The validation report records final test totals. Live Discord acceptance remains pending; Gate A is a functional/visual review, not production deployment approval.
+
+## Gate A visual revision 02
+
+Functional behavior has owner approval; presentation remains pending. Only renderers, deterministic art, animated attachment encoding and review materials changed. Production mapping and asset hashes are synchronized. Revised review includes desktop betting, mobile live and desktop result for both events, full renderer timelines and actual bounded ambient GIF attachments. No database, escrow, combat planner, timers, commands, permission policy or approved source content changed. Railway readiness remains blocked on visual approval.

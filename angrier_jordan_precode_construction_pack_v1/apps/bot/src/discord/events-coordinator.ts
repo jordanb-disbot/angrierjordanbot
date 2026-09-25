@@ -5,7 +5,7 @@ import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/ca
 import {PrismaEventsRepository,type EventContext,type EventPolicy,type RaceView} from '../../../../packages/features-events/src/prisma-repository.js';
 import {eventRandom} from '../../../../packages/features-events/src/domain.js';
 import {renderRace} from '../../../../packages/features-events/src/render.js';
-import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+import {rasterizeSvg,rasterizeLoop} from '../../../../packages/renderer/src/raster.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
 export class DiscordEventsCoordinator {
@@ -71,13 +71,13 @@ export class DiscordEventsCoordinator {
   await i.editReply({content});
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public card refresh is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
- async payload(view:RaceView){
-  const fight=view.type==='fight',prefix=fight?'fight':'event',image=await rasterizeSvg(fight?renderFight(view):renderRace(view)),open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
+ async payload(view:RaceView,options:{animate?:boolean}={}){
+  const fight=view.type==='fight',prefix=fight?'fight':'event',animated=view.state==='LOCKED'&&options.animate!==false,filename=animated?'event.gif':'race.png',image=animated?await rasterizeLoop(Array.from({length:24},(_,i)=>fight?renderFight(view,{phase:i/24}):renderRace(view,'compact',{phase:i/24}))):await rasterizeSvg(fight?renderFight(view):renderRace(view)),open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
   if(open){components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...(fight?[]:[new ButtonBuilder().setCustomId('event:join:'+view.id).setLabel('Join Race').setStyle(ButtonStyle.Primary).setDisabled(view.racers.length>=6)]),new ButtonBuilder().setCustomId(prefix+':extend:'+view.id).setLabel('+30 Seconds').setStyle(ButtonStyle.Secondary).setDisabled(view.extensionUsed),new ButtonBuilder().setCustomId(prefix+':rules:'+view.id).setLabel('Rules').setStyle(ButtonStyle.Secondary)));
    for(let start=0;start<view.racers.length;start+=3)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...view.racers.slice(start,start+3).map(r=>new ButtonBuilder().setCustomId(`${prefix}:bet:${view.id}:${r.userId}`).setLabel(`Bet · ${r.name}`.slice(0,80)).setStyle(ButtonStyle.Secondary))));
   }
   const result=view.result,description=open?`${fight?'Betting closes':'Entry and betting close'} <t:${Math.floor(view.expiresAt!.getTime()/1000)}:R>.\nChoose a contestant to open a private wager modal. Selection locks after your first wager.`:view.state==='CANCELLED'?view.cancelReason:view.state==='CLOSED'?`Winner: <@${view.winnerId}>\n${result?.refunded?'All wagers refunded.':`Pool: ${result?.pool??0} · Rake: ${result?.rake??0} Ottomans`}`:fight?'Combat is live. Betting is locked.':'The sprint is live. Betting is locked.';
-  return{embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle(fight?'Robo Chair Fight':'Chair Race').setDescription(description??'').setColor(0x14b8a6).setImage('attachment://race.png').setFooter({text:(fight?'fight:':'race:')+view.id})],files:[new AttachmentBuilder(image,{name:'race.png'})],attachments:[],components,allowedMentions:{parse:[] as never[]}};
+  return{embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle(fight?'Robo Chair Fight':'Chair Race').setDescription(description??'').setColor(0x14b8a6).setImage('attachment://'+filename).setFooter({text:(fight?'fight:':'race:')+view.id})],files:[new AttachmentBuilder(image,{name:filename})],attachments:[],components,allowedMentions:{parse:[] as never[]}};
  }
  async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{const view=await this.repo.publicView(id);if(!view.messageId)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');await message.edit(await this.payload(view));});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
  async sweep(client:Client){if(this.sweeping)return;this.sweeping=true;try{for(const event of await this.repo.active()){

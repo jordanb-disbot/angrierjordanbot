@@ -11,14 +11,14 @@ const states={entry:{...base,racers:racers.slice(0,2),pool:'0'},betting:base,liv
 const coordinator=new DiscordEventsCoordinator({}, {},async()=>true);
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const wrap=(s,max)=>{const out=[];let line='';for(const word of s.split(/\s+/)){if(line.length+word.length>max){out.push(line);line='';}line+=(line?' ':'')+word;}if(line)out.push(line);return out;};
-const manifest={source:'Actual DiscordEventsCoordinator.payload and production renderer, using explicit fixture members. Host frames are review renders, not live Discord screenshots.',timing:{entryAndBettingSeconds:60,hostExtensionSeconds:30,extensionUses:1,sprintMs:plan.durationMs},states:[]};
+const manifest={presentationRevision:2,visualApproval:'PENDING',animation:{file:'live-discord.gif',frames:24,frameDelayMs:50,kind:'cosmetic loop; input state remains authoritative'},source:'Actual DiscordEventsCoordinator.payload and production renderer, using explicit fixture members. Host frames are review renders, not live Discord screenshots.',timing:{entryAndBettingSeconds:60,hostExtensionSeconds:30,extensionUses:1,sprintMs:plan.durationMs},states:[]};
 for(const [name,view] of Object.entries(states)){
- const payload=await coordinator.payload(view),embed=payload.embeds[0].toJSON(),card=payload.files[0].attachment;
+ const payload=await coordinator.payload(view,{animate:false}),embed=payload.embeds[0].toJSON(),card=payload.files[0].attachment;
  fs.writeFileSync(path.join(output,name+'-card.png'),card);
  const rows=payload.components.map(r=>r.toJSON().components.map(c=>({label:c.label,disabled:c.disabled??false,style:c.style,customId:c.custom_id})));
  fs.writeFileSync(path.join(output,name+'-payload.json'),JSON.stringify({embed,rows,mentions:payload.allowedMentions},null,2)+'\n');
  for(const size of ['desktop','mobile']){
-  const mobile=size==='mobile',width=mobile?390:900,left=mobile?16:90,cardWidth=mobile?358:440,cardHeight=(170+view.racers.length*128)*cardWidth/440;
+  const mobile=size==='mobile',width=mobile?390:900,left=mobile?16:90,cardWidth=mobile?358:440,cardHeight=card.readUInt32BE(20)*cardWidth/440;
   const description=(embed.description??'').replace(/<t:\d+:R>/g,'in 1 minute').replace(/<@([^>]+)>/g,(_,id)=>racers.find(r=>r.userId===id)?.name??id);
   const lines=wrap(description,mobile?38:53);const top=126+lines.length*22,height=Math.ceil(top+cardHeight+rows.length*46+66);
   let controls='';for(let r=0;r<rows.length;r++){const row=rows[r],buttonWidth=(cardWidth-(row.length-1)*8)/row.length;for(let i=0;i<row.length;i++){const b=row[i],x=left+i*(buttonWidth+8),y=top+cardHeight+12+r*46;controls+=`<rect x="${x}" y="${y}" width="${buttonWidth}" height="36" rx="5" fill="${b.style===1?'#5865f2':'#4e5058'}" opacity="${b.disabled?.5:1}"/><text x="${x+buttonWidth/2}" y="${y+23}" text-anchor="middle" font-size="${mobile?12:14}" fill="#ffffff" opacity="${b.disabled?.5:1}">${escape(b.label)}</text>`;}}

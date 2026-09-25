@@ -165,5 +165,13 @@
       "mobile": "result-mobile.png",
       "payload": "result-payload.json"
     }
-  ]
+  ],
+  "presentationRevision": 2,
+  "visualApproval": "PENDING",
+  "animation": {
+    "file": "live-discord.gif",
+    "frames": 24,
+    "frameDelayMs": 50,
+    "kind": "cosmetic loop; input state remains authoritative"
+  }
 }

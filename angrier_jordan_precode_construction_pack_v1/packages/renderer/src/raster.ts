@@ -28,3 +28,9 @@ function rendererWorker(){
 export function rasterizeSvg(svg:string):Promise<Buffer>{
  return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,svg},error=>{if(error)child.kill();});});
 }
+
+/** Bounded cosmetic loops only; authoritative values are identical in every frame. */
+export function rasterizeLoop(frames:string[],delayMs=50):Promise<Buffer>{
+ if(frames.length<2||frames.length>32)throw new Error('Animation frame limit exceeded.');
+ return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,delayMs},error=>{if(error)child.kill();});});
+}

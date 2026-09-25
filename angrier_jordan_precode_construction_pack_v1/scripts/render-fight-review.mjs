@@ -11,9 +11,9 @@ const states={betting:base,combat:{...base,state:'LOCKED',combat:fightSnapshot(p
 const coordinator=new DiscordEventsCoordinator({}, {},async()=>true);
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const wrap=(s,max)=>{const out=[];let line='';for(const word of s.split(/\s+/)){if(line.length+word.length>max){out.push(line);line='';}line+=(line?' ':'')+word;}if(line)out.push(line);return out;};
-const manifest={source:'Actual DiscordEventsCoordinator.payload and production renderer, using explicit fixture members. Host frames are review renders, not live Discord screenshots.',timing:{bettingSeconds:30,hostExtensionSeconds:30,extensionUses:1,combatMs:plan.durationMs,beats:plan.beats.map(b=>({atMs:b.atMs,outcome:b.outcome,amount:b.amount,hp:b.hp}))},states:[]};
+const manifest={presentationRevision:2,visualApproval:'PENDING',animation:{file:'live-discord.gif',frames:24,frameDelayMs:50,kind:'cosmetic loop; input state remains authoritative'},source:'Actual DiscordEventsCoordinator.payload and production renderer, using explicit fixture members. Host frames are review renders, not live Discord screenshots.',timing:{bettingSeconds:30,hostExtensionSeconds:30,extensionUses:1,combatMs:plan.durationMs,beats:plan.beats.map(b=>({atMs:b.atMs,outcome:b.outcome,amount:b.amount,hp:b.hp}))},states:[]};
 for(const [name,view] of Object.entries(states)){
- const payload=await coordinator.payload(view),embed=payload.embeds[0].toJSON(),card=payload.files[0].attachment;
+ const payload=await coordinator.payload(view,{animate:false}),embed=payload.embeds[0].toJSON(),card=payload.files[0].attachment;
  fs.writeFileSync(path.join(output,name+'-card.png'),card);
  const rows=payload.components.map(r=>r.toJSON().components.map(c=>({label:c.label,disabled:c.disabled??false,style:c.style,customId:c.custom_id})));
  fs.writeFileSync(path.join(output,name+'-payload.json'),JSON.stringify({embed,rows,mentions:payload.allowedMentions},null,2)+'\n');
