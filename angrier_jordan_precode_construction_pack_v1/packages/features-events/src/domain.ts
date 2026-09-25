@@ -2,7 +2,7 @@ import {randomInt} from 'node:crypto';
 import {DomainError} from '../../core/src/errors.js';
 export type EventRandom=(max:number)=>number;
 export const eventRandom:EventRandom=max=>randomInt(max);
-export interface Racer {userId:string;name:string;avatarUrl?:string;chair:number;}
+export interface Racer {userId:string;name:string;avatarUrl?:string;joinedAt?:string;chair:number;}
 export interface RacePlan {durationMs:number;winnerId:string;tracks:{userId:string;points:number[]}[];}
 /** Winner is drawn first, independently of decoration and motion. Store this plan privately. */
 export function planRace(racers:readonly Racer[],rng:EventRandom=eventRandom):RacePlan{

@@ -1,7 +1,7 @@
 {
   "checkpoint": 8,
   "updated_at": "2026-09-25",
-  "files": 696,
+  "files": 725,
   "inventory_self_hash_omitted": true,
   "items": [
     {
@@ -56,8 +56,8 @@
     },
     {
       "path": "apps/bot/src/discord/events-coordinator.ts",
-      "bytes": 10324,
-      "sha256": "091c7c0ee975cfaec6ba115fd4a9969f458e1f32e9e7cd95620c2f0c4b5755c0"
+      "bytes": 13771,
+      "sha256": "bf7990ad2a03e9349a79aaa92f425ab208f2d3a279f44f55d294b47729233d23"
     },
     {
       "path": "apps/bot/src/discord/items-coordinator.ts",
@@ -116,8 +116,8 @@
     },
     {
       "path": "apps/bot/src/production.ts",
-      "bytes": 24295,
-      "sha256": "a51254309d4ab72ead9caf6226886500769860c09497c6eb32d3ba128d437b48"
+      "bytes": 24671,
+      "sha256": "4b8d5dcb5b614e8badc5c5c2eed8788688965881a46d047365ff108c25caa681"
     },
     {
       "path": "apps/bot/tsconfig.json",
@@ -163,6 +163,11 @@
       "path": "apps/dashboard/tsconfig.json",
       "bytes": 447,
       "sha256": "4e7c3728deafd5ef5ef758c1e9fd2faf4d8bfec4a034c151a4465ff7facdd7a2"
+    },
+    {
+      "path": "content/fight/angrier_jordan_fight_move_pool_v1.json",
+      "bytes": 25869,
+      "sha256": "eb60c22f152ba5cb8e34cefb9154d701e0aa93ca899d30a869dbd089356999fe"
     },
     {
       "path": "docker-compose.yml",
@@ -276,8 +281,8 @@
     },
     {
       "path": "docs/IMPLEMENTATION_PHASE_12.md",
-      "bytes": 1702,
-      "sha256": "c6fe923ed5ad62524342b563f883822acee83e816c40908135594972c851ac73"
+      "bytes": 2729,
+      "sha256": "8d7235acaace461c678d3196b66e3bc2ed91cfd6eed24a17a4503c440d850a58"
     },
     {
       "path": "docs/implementation_previews/wyr_open.png",
@@ -316,13 +321,18 @@
     },
     {
       "path": "docs/OWNER_DECISIONS_2026-09-25.md",
-      "bytes": 1626,
-      "sha256": "e23f8e86a5ffeae92375fb23e7053af3e1ad44c5e4ac6748324c35b6e756763e"
+      "bytes": 1698,
+      "sha256": "00c9c8e76e36e916b9058874a883a64fa4cb97ccd95a7966c1d0725ffd6915dc"
     },
     {
       "path": "docs/RAILWAY_AFTER_GATE_A.md",
       "bytes": 1903,
       "sha256": "5a6f3d74f23ee6f7c896242207b0695c24d9bab40ad7012b07989556707e2162"
+    },
+    {
+      "path": "docs/specs/ANGRIER_JORDAN_FIGHT_COMBAT_SYSTEM_SPEC.md",
+      "bytes": 3393,
+      "sha256": "82233226c0f3457dc536953f9a6af7c834a4536fcffcdab4ca0d09ac19c2da48"
     },
     {
       "path": "docs/TEST_HARNESS.md",
@@ -351,8 +361,8 @@
     },
     {
       "path": "IMPLEMENTATION_STATUS.json",
-      "bytes": 5282,
-      "sha256": "4c5f238871a3aa0d7477f5519e9ccfc0981c5b49ed4496ca665a6bc968c0b7b5"
+      "bytes": 5425,
+      "sha256": "c65d88ffedaacc8abe133c52d9294db43741f22ed73f8eb42b62428b14a17947"
     },
     {
       "path": "infra/Dockerfile.bot",
@@ -376,13 +386,13 @@
     },
     {
       "path": "KNOWN_ISSUES.md",
-      "bytes": 830,
-      "sha256": "d2d4978608ff22e9f88cd9f0eaed73c5076ce0b84ad05b7b1de64eb80e4522fd"
+      "bytes": 713,
+      "sha256": "3bb7fece45759541849ed059106bd8973586fd576651f2bcc0be9a6eece8d06f"
     },
     {
       "path": "LIVE_VALIDATION_CHECKLIST.md",
-      "bytes": 749,
-      "sha256": "688403b83a3954470fd137ff9d529407e8fe6e2bef30e1a060bb025fc2c06d4b"
+      "bytes": 1112,
+      "sha256": "63bfdf787a7013abaa2803f882b6643153a2a87be675bb25ab53b13e9b07819e"
     },
     {
       "path": "PACK_MANIFEST.json",
@@ -401,8 +411,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 1987,
-      "sha256": "376c3cfae902e26a2d4afdbfdef751a94e1529cf178e5693df1dbfe7ecf0701f"
+      "bytes": 2194,
+      "sha256": "5702c1a2d02f56f08fc0a5304da66634b8087bced2bdfb1a2ec47b41da8baa54"
     },
     {
       "path": "packages/content/economy/fortune_300.json",
@@ -421,8 +431,8 @@
     },
     {
       "path": "packages/content/help/events.json",
-      "bytes": 1690,
-      "sha256": "78c2e1ea7a0586fca7319e06f6fe3593e64380fc93b60d6a9ef498943337c051"
+      "bytes": 1860,
+      "sha256": "3fc013fdbc6a8db077f401c3cd82023aec000c33a1057f9a44dcaac4753dd2e3"
     },
     {
       "path": "packages/content/help/items.json",
@@ -651,8 +661,8 @@
     },
     {
       "path": "packages/database/src/atomic-operations.ts",
-      "bytes": 3553,
-      "sha256": "86fce1c8fcd84a914493ebba9f50d1e65016136e9bde64e79acf400eff4fa929"
+      "bytes": 4145,
+      "sha256": "3447bebea80b6de13882e9557777d0a2e90e2f041ab519ea132215e51759d81a"
     },
     {
       "path": "packages/database/src/client.ts",
@@ -776,8 +786,18 @@
     },
     {
       "path": "packages/features-events/src/domain.ts",
-      "bytes": 3044,
-      "sha256": "437a51d86c4d94ce9052741d1ab3bd42377e34775687d259e8622623b4c80966"
+      "bytes": 3061,
+      "sha256": "39d62e52c0432e439bf0bfdde2ba7629614fa4e5fbc05f927b6854a155bc8360"
+    },
+    {
+      "path": "packages/features-events/src/fight-render.ts",
+      "bytes": 2984,
+      "sha256": "e67f84e4b0aee728c23b37b2e9382351bf9f1e24162f10f6fa8689e5943ecf40"
+    },
+    {
+      "path": "packages/features-events/src/fight.ts",
+      "bytes": 5246,
+      "sha256": "ae30996c2f6478d9e7c23dcad5c5066b36622491f7481a55a66807082f438712"
     },
     {
       "path": "packages/features-events/src/index.ts",
@@ -786,8 +806,8 @@
     },
     {
       "path": "packages/features-events/src/prisma-repository.ts",
-      "bytes": 10929,
-      "sha256": "9ba954858f4d798ca0729602f8d47a5b4fb8b427edaa35465b78af5e0fbc22df"
+      "bytes": 14992,
+      "sha256": "dce983bd3dcafaeb5cbc18f22f587ac0a4c3eb9502f9b976ca0b4cc5f5763811"
     },
     {
       "path": "packages/features-events/src/render.ts",
@@ -3086,8 +3106,8 @@
     },
     {
       "path": "reference/acceleration/testing/acceptance_test_matrix.json",
-      "bytes": 18243,
-      "sha256": "3050a7769bc39dceac208ee27f3b5cbd6a955d55e191618567dd7ae5c8f4f4fe"
+      "bytes": 19204,
+      "sha256": "2c94ffc430668d6363982d8ae71dbc21a6371f3085c01aa3dc7735d7d9124343"
     },
     {
       "path": "reference/acceleration/testing/seed_fixtures.json",
@@ -3106,8 +3126,8 @@
     },
     {
       "path": "reference/assets/command-presentation-matrix.json",
-      "bytes": 105312,
-      "sha256": "da406f2458ed4549a6754df1cb5bab06b1e5947f3acad02625360c03af5ab0f4"
+      "bytes": 105533,
+      "sha256": "5ab03ef55a7fb01565b4ae878d562de1a0349b30a241b235d8eeb1f9b1e9986c"
     },
     {
       "path": "reference/assets/final-production-visual-manifest.json",
@@ -3165,24 +3185,99 @@
       "sha256": "0e85e5d7ed4c039d427c4b128684165e7bdda58b0c18013e8ae9c12315949d90"
     },
     {
+      "path": "review-gate-a/fight/betting-card.png",
+      "bytes": 61849,
+      "sha256": "844b21f194a52e908964a0ca42e53070c2e6a61d878608a56c7e25554ce2bde3"
+    },
+    {
+      "path": "review-gate-a/fight/betting-desktop.png",
+      "bytes": 104915,
+      "sha256": "62bf0940acc4b849f00e97ae6350df5edc62dcadf507905bf8496770bc498d34"
+    },
+    {
+      "path": "review-gate-a/fight/betting-mobile.png",
+      "bytes": 80274,
+      "sha256": "1c52f5b2b1c381e30893c9c91fa5ae240beb6dfd2d849009e0a43e4036fb85f6"
+    },
+    {
+      "path": "review-gate-a/fight/betting-payload.json",
+      "bytes": 1095,
+      "sha256": "e6d2169a57c90ff548f355ab70672c7d987962685af168ab9ecd6d8a23d38820"
+    },
+    {
+      "path": "review-gate-a/fight/combat-card.png",
+      "bytes": 72329,
+      "sha256": "7426b7b9fefbd8055d190e568e8c269c99dbc3c464f85d029404faeac5dc0bbc"
+    },
+    {
+      "path": "review-gate-a/fight/combat-desktop.png",
+      "bytes": 101964,
+      "sha256": "06b264a53a22f986d1c277f540fd750688d14175c88b009957935da3be92b134"
+    },
+    {
+      "path": "review-gate-a/fight/combat-mobile.png",
+      "bytes": 79799,
+      "sha256": "efc79fb6d8f75666adfcb4ea52c39ec78ae07ca59659972873179d54bc57efc6"
+    },
+    {
+      "path": "review-gate-a/fight/combat-payload.json",
+      "bytes": 362,
+      "sha256": "a7468e0650167a6247be58e47734c7ed7f3396e9926073609e9483842eaaa571"
+    },
+    {
+      "path": "review-gate-a/fight/manifest.json",
+      "bytes": 3050,
+      "sha256": "502b8c9b9acfa8d5694844aba06aa867fb182b797995a1d8517db12bf1c3114e"
+    },
+    {
+      "path": "review-gate-a/fight/README.md",
+      "bytes": 373,
+      "sha256": "2a82e81338e7218be50134dffb0b0078dfa3d594bb0d6d320a61bf11a127031e"
+    },
+    {
+      "path": "review-gate-a/fight/result-card.png",
+      "bytes": 69905,
+      "sha256": "d284f075adf3a155187c3442d92e1bb5a68e3abb53302700d6842fc42367ac45"
+    },
+    {
+      "path": "review-gate-a/fight/result-desktop.png",
+      "bytes": 100770,
+      "sha256": "a411e4231d5ec12e83c4c51f954d44141b8723dd6e5bee889ec73955e020cd4c"
+    },
+    {
+      "path": "review-gate-a/fight/result-mobile.png",
+      "bytes": 77624,
+      "sha256": "51e743cb666d9da963764a340702c2fc739be4ef537dbcc914257d53444c363c"
+    },
+    {
+      "path": "review-gate-a/fight/result-payload.json",
+      "bytes": 381,
+      "sha256": "60b49800be23456fce0ddd32b83500194a63e098c0800c275fe7a88d9f088be0"
+    },
+    {
+      "path": "review-gate-a/index.html",
+      "bytes": 3421933,
+      "sha256": "4cffa76c8624d4bf36ab42b210eed0be995ebad4ec806eecfad49a5b7f0c7b2f"
+    },
+    {
       "path": "review-gate-a/race/betting-card.png",
       "bytes": 59344,
       "sha256": "6607ee74383765ee0048ab82ad07254c1a7fe71d8cd158bae53278ffe1259362"
     },
     {
       "path": "review-gate-a/race/betting-desktop.png",
-      "bytes": 115416,
-      "sha256": "692498c701026c4a4d3f156131dc2daec3c9454b452b7044e45c6c9bffca22b8"
+      "bytes": 115963,
+      "sha256": "5a4f33da2223939ec007015f7883d31436d5ed8215d78ff695b7e6be812708ec"
     },
     {
       "path": "review-gate-a/race/betting-mobile.png",
-      "bytes": 87427,
-      "sha256": "bf007fa9635406fb3b8c8ecda6faff2e1b5f680370277603172cef63c3668a37"
+      "bytes": 87924,
+      "sha256": "ac84e127ccece241efab5b00e60c35e71b3769fda4379c9d952cb4a0465b2f1b"
     },
     {
       "path": "review-gate-a/race/betting-payload.json",
-      "bytes": 1881,
-      "sha256": "66a33ddfa8ea7c6ec386476887325c3277ea075b90e9b71a1823478dff66883c"
+      "bytes": 1886,
+      "sha256": "d966a76f311bd1516151dd1f290b36ef35e69d3872cd9d525b9105968ef3891a"
     },
     {
       "path": "review-gate-a/race/entry-card.png",
@@ -3191,33 +3286,33 @@
     },
     {
       "path": "review-gate-a/race/entry-desktop.png",
-      "bytes": 72369,
-      "sha256": "a0a6e29c3299df22d94eb09a5b19153733523ef9d4a081751e8b76c0a87584cb"
+      "bytes": 72982,
+      "sha256": "5194453b3014e97b2539830bfab500edb19fddde23b449586076b14e8035490d"
     },
     {
       "path": "review-gate-a/race/entry-mobile.png",
-      "bytes": 57893,
-      "sha256": "3584a54a6056d2962c60d9f9e77f61ca4883502afafdc534b442115ffdd4d88e"
+      "bytes": 58339,
+      "sha256": "28ec23a4004018af61b5bc99defbee083eba1c72465cc4d583db39d67b005385"
     },
     {
       "path": "review-gate-a/race/entry-payload.json",
-      "bytes": 1234,
-      "sha256": "9a43c49d393d257e974891fb55ddcde97fd3ca919571519c5e0d9057e9e531e4"
+      "bytes": 1239,
+      "sha256": "dc40a987d3d0040e2c1796745221bcb98ab5314ee5c2a9906a416026aaffe307"
     },
     {
       "path": "review-gate-a/race/live-card.png",
-      "bytes": 62739,
-      "sha256": "f14f2d90ea30ff65c1b636ee8b157ddb132079319ddfddbccd4ef55238a8f134"
+      "bytes": 62855,
+      "sha256": "8f79e92337f60514edea14677eb51a056df9e9063c0f75bfe17b846fa65ae7c4"
     },
     {
       "path": "review-gate-a/race/live-desktop.png",
-      "bytes": 96375,
-      "sha256": "b390b18d53733ae670b0e6912c882e1c26ceee9f733891503a4fd9323154df9c"
+      "bytes": 96419,
+      "sha256": "ed90239a76102ea48e9e16ad59cbee7a44bea5d5151b5abedfeae2dbec1b20d8"
     },
     {
       "path": "review-gate-a/race/live-mobile.png",
-      "bytes": 72993,
-      "sha256": "11a6d8f44e60f984e7890c5e9176ca3a068bee7bbfe5e4c68c43ec7570c7006c"
+      "bytes": 73059,
+      "sha256": "aac0b9534b718c58ee8fe31a9324a6b4930dcb0b77c0e9488fcbc1e2ff3befaa"
     },
     {
       "path": "review-gate-a/race/live-payload.json",
@@ -3227,27 +3322,27 @@
     {
       "path": "review-gate-a/race/manifest.json",
       "bytes": 1060,
-      "sha256": "edff20995cbfbd35600373311a8451269d1363e5524ee0830b1dde239fc91f25"
+      "sha256": "03dfbda5c81d0d782e6c0192e33b2d9b18544f98b3e2ec9db617bf07472139f3"
     },
     {
       "path": "review-gate-a/race/README.md",
-      "bytes": 745,
-      "sha256": "214a06daeb34b272c24721731d981beac3998b5bf7578220787de639fead971f"
+      "bytes": 710,
+      "sha256": "5bbf7b6d96b2446321d836653d9a7ccbc2708140fbb9ec023d9d9a14edfe61c7"
     },
     {
       "path": "review-gate-a/race/result-card.png",
-      "bytes": 59063,
-      "sha256": "40bbaa84ca831934e187a9977a61c3f0d33c4530e8a4eb086fb20fe9acd837b8"
+      "bytes": 59490,
+      "sha256": "c87b252acf7c91800d85a37aa165a6b7e4150e0da9c54b1d4b895d68da34e1c7"
     },
     {
       "path": "review-gate-a/race/result-desktop.png",
-      "bytes": 93762,
-      "sha256": "c235746570f09e50f8133d0e791cdd0ca96652485e40ef73713b08cca850c1e0"
+      "bytes": 94182,
+      "sha256": "77b562cec088e793fc7c7d62d35a7212e6e847c23847a9acf22b1d6586181bb4"
     },
     {
       "path": "review-gate-a/race/result-mobile.png",
-      "bytes": 70854,
-      "sha256": "fe26e43b469580ae4bf4bf7f8198bbaf41585aab02d59018fd24c69ef1cb244d"
+      "bytes": 71066,
+      "sha256": "1e7de060279da8f71314129d3951cce67945782008039e21a42f92742af11ad2"
     },
     {
       "path": "review-gate-a/race/result-payload.json",
@@ -3255,14 +3350,29 @@
       "sha256": "8c1d18f00db3952e1ad063dbc951d940ba71c75d05861125fcf7b7c5d86a8d30"
     },
     {
+      "path": "review-gate-a/README.md",
+      "bytes": 885,
+      "sha256": "73bc2581ff35e1f6b5e0d129eb5b25ccce615b211bf85ba9b08f5c2ccce3772a"
+    },
+    {
+      "path": "review-gate-a/VALIDATION.md",
+      "bytes": 3177,
+      "sha256": "cb2ced22322452a5d8505b3afe695e1b08083fdd6bf28f16d38eccd582457483"
+    },
+    {
       "path": "scripts/compile-domain-tests.mjs",
-      "bytes": 527,
-      "sha256": "491dfd0e1aac318c49943911829e92cc8e6892a9a0bb729f2d86107c6376c208"
+      "bytes": 759,
+      "sha256": "1b6021dee8f4e8ed618982d12953670fb49a0da885b954c4ff47a301881895a5"
     },
     {
       "path": "scripts/copy-runtime-data.mjs",
-      "bytes": 372,
-      "sha256": "8b362d93e3b13b367fba98bf167778956a22d782a99017dfcdab119339d58879"
+      "bytes": 388,
+      "sha256": "9e43c05f6be140d31099ad7a1b6ab2e4387e025ae01821e20604b434909e4e7b"
+    },
+    {
+      "path": "scripts/event-review-fixtures.mjs",
+      "bytes": 545,
+      "sha256": "72493f83cdbf9934bce91b82214f9be7db9cb1bd559bb447d24985740c375ba4"
     },
     {
       "path": "scripts/generate-command-registration.mjs",
@@ -3291,18 +3401,28 @@
     },
     {
       "path": "scripts/preflight.mjs",
-      "bytes": 599,
-      "sha256": "3dbd41256c21ca5e0366419d334594906fa8d552400173e65639298209267fcc"
+      "bytes": 624,
+      "sha256": "6d3e9ef8037451eb70f4b4555727a72c88cf1f24c0466b5564ad86c67b4c959c"
+    },
+    {
+      "path": "scripts/render-fight-review.mjs",
+      "bytes": 5236,
+      "sha256": "4dfd117ab1c6753e9cce93dc4c81cce4e24b29a3e0d35f27c58a7f54f70454b8"
+    },
+    {
+      "path": "scripts/render-gate-a.mjs",
+      "bytes": 7459,
+      "sha256": "28f04f2bea213f04767d9a51f4c748b6a687c55129e1f54b807e14fee7f0106c"
     },
     {
       "path": "scripts/render-race-review.mjs",
-      "bytes": 5675,
-      "sha256": "c083c878bbd896a04357bc20a02ed1726b7b1ec53d3cbf844f16b0f156135ebc"
+      "bytes": 5511,
+      "sha256": "76a044a286a90ca28dbaed445d6894e3eda30d67c4ca71ba12a869697bf96da2"
     },
     {
       "path": "scripts/run-postgres-tests.mjs",
-      "bytes": 1685,
-      "sha256": "5fe7f34406afde69bf3dac0acf3083e0e294903b8a38e94da505bc55f312e4b9"
+      "bytes": 1701,
+      "sha256": "9f897f9640e69fca7be948f645ffdad6f5110e89ce2e6477c194246ffb17161c"
     },
     {
       "path": "scripts/update-file-inventory.mjs",
@@ -3318,6 +3438,11 @@
       "path": "scripts/validate-content.mjs",
       "bytes": 533,
       "sha256": "356ff38a467de1d4a2cf5a16a133d96bf6df701e17c886e8db8f4165a5ee326a"
+    },
+    {
+      "path": "scripts/validate-fight-sources.mjs",
+      "bytes": 1187,
+      "sha256": "8ad831979ad5c237bcde852f77b0d964ba8ba849e96733a8e878a32bc6203a7c"
     },
     {
       "path": "scripts/validate-golden-wyr.mjs",
@@ -3355,6 +3480,11 @@
       "sha256": "262c72d5f8fcdbe7a366a8ae4d7385e29f3e4400d701772cd88a61df8ae497a5"
     },
     {
+      "path": "testing/adapters/fight.test.mjs",
+      "bytes": 4083,
+      "sha256": "17d6943b59878fb9c87b2f7623cbeca431b7d3696a571035072baaabf6099c6d"
+    },
+    {
       "path": "testing/adapters/items.test.mjs",
       "bytes": 2451,
       "sha256": "3ddb8a9a5e129071595f986367333b2a4bb3cf5a8ccc8678f5bfdfd245345369"
@@ -3380,6 +3510,11 @@
       "sha256": "f04999d295284a1c3cd09efd208926e611319dfdcb7e585dbf19351d4194cf41"
     },
     {
+      "path": "testing/postgres/fight.test.mjs",
+      "bytes": 10251,
+      "sha256": "5b9bfe7b119f6a66ed60e9287a7a8bb0265203bdfa4e811135a3fd87c56103da"
+    },
+    {
       "path": "testing/postgres/item-extended-cases.mjs",
       "bytes": 3602,
       "sha256": "7b90c49f17ce86a9e77c071672c4ad6614858966bffb076f39ff123dbb03157d"
@@ -3400,6 +3535,11 @@
       "sha256": "f2ebd31ee024286b283c70fe57a9616824d871316b48d4bf496bc8bd127cb766"
     },
     {
+      "path": "testing/runtime/atomic-retry.test.mjs",
+      "bytes": 1110,
+      "sha256": "2275fe4c574796433dfb7c2429954bad0ea05ed7453b3e26036c9336a97235d1"
+    },
+    {
       "path": "testing/runtime/casino.test.mjs",
       "bytes": 2833,
       "sha256": "d54a36fe66aba1cf506b1a56a5ad74b4bc12a508b0246f1f9b65d2deec9bbd40"
@@ -3418,6 +3558,11 @@
       "path": "testing/runtime/events.test.mjs",
       "bytes": 2544,
       "sha256": "e27d75191201251ebbe016179185b4946d1f9ba44bc8d220b005bb9b2e12afd5"
+    },
+    {
+      "path": "testing/runtime/fight.test.mjs",
+      "bytes": 2708,
+      "sha256": "6982db9062ad81865d5fb3d26a7c1a8dd8e27eda5a6d4baf9d232fdb4bca3adb"
     },
     {
       "path": "testing/runtime/foundation-wiring.test.mjs",

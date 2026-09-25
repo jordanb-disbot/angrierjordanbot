@@ -1,0 +1,1111 @@
+{
+  "version": 1,
+  "feature": "robo_chair_fight",
+  "command": "/fight [@member]",
+  "combat_defaults": {
+    "starting_hp": 100,
+    "target_duration_seconds": 25,
+    "target_duration_range_seconds": [
+      22,
+      28
+    ],
+    "hard_duration_cap_seconds": 30,
+    "action_beat_seconds_range": [
+      1.35,
+      1.65
+    ],
+    "heal_turn_chance": 0.1,
+    "attack_outcomes": {
+      "normal": 0.68,
+      "miss": 0.1,
+      "blocked": 0.12,
+      "critical": 0.1
+    },
+    "block_damage_multiplier_range": [
+      0.25,
+      0.45
+    ],
+    "critical_damage_multiplier_range": [
+      1.65,
+      1.9
+    ],
+    "heal_at_full_hp_behavior": "reroll_as_attack",
+    "hp_min": 0,
+    "hp_max": 100,
+    "no_move_repeat_within_fight": true,
+    "recent_move_suppression_previous_fights": 3,
+    "winner_selection": "strict_50_50_preselected_before_combat_sequence",
+    "sequence_generation": "sample_and_validate_until_preselected_winner_and_duration_window_are_satisfied",
+    "late_fight_pacing": {
+      "after_seconds": 22,
+      "reduce_heal_probability": true,
+      "after_seconds_2": 26,
+      "disable_heals_and_misses": true,
+      "purpose": "finish near target duration without changing the preselected fair winner"
+    }
+  },
+  "attacks": [
+    {
+      "id": "folding-chair-faceplant",
+      "name": "Folding Chair Faceplant",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "recliner-ram",
+      "name": "Recliner Ram",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "barstool-backhand",
+      "name": "Barstool Backhand",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "chaise-lounge-charge",
+      "name": "Chaise Lounge Charge",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "ottoman-dropkick",
+      "name": "Ottoman Dropkick",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "throne-toss",
+      "name": "Throne Toss",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "armchair-uppercut",
+      "name": "Armchair Uppercut",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "rocking-chair-roundhouse",
+      "name": "Rocking Chair Roundhouse",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "office-chair-spinout",
+      "name": "Office Chair Spinout",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "dining-chair-dash",
+      "name": "Dining Chair Dash",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "backrest-bash",
+      "name": "Backrest Bash",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "seat-cushion-cannon",
+      "name": "Seat Cushion Cannon",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "caster-crash",
+      "name": "Caster Crash",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "chair-leg-sweep",
+      "name": "Chair Leg Sweep",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "recliner-ejection",
+      "name": "Recliner Ejection",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "swivel-strike",
+      "name": "Swivel Strike",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "steel-folding-surprise",
+      "name": "Steel Folding Surprise",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "high-chair-haymaker",
+      "name": "High-Chair Haymaker",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "directors-chair-drop",
+      "name": "Director’s Chair Drop",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "adirondack-avalanche",
+      "name": "Adirondack Avalanche",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "patio-chair-piledriver",
+      "name": "Patio Chair Piledriver",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "throne-room-takedown",
+      "name": "Throne Room Takedown",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "chaise-chase",
+      "name": "Chaise Chase",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "barstool-blitz",
+      "name": "Barstool Blitz",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "armrest-elbow",
+      "name": "Armrest Elbow",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "lumbar-lariat",
+      "name": "Lumbar Lariat",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "cushion-clobber",
+      "name": "Cushion Clobber",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "upholstery-uppercut",
+      "name": "Upholstery Uppercut",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "rocker-reversal",
+      "name": "Rocker Reversal",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "seatback-suplex",
+      "name": "Seatback Suplex",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "caster-corkscrew",
+      "name": "Caster Corkscrew",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "recliner-rebound",
+      "name": "Recliner Rebound",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "stool-slam",
+      "name": "Stool Slam",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "throne-room-rush",
+      "name": "Throne Room Rush",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "chairapult",
+      "name": "Chairapult",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "cushion-catapult",
+      "name": "Cushion Catapult",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "fold-and-fling",
+      "name": "Fold and Fling",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "swivel-sucker-punch",
+      "name": "Swivel Sucker Punch",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "rocking-chair-rampage",
+      "name": "Rocking Chair Rampage",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "seat-spring-snap",
+      "name": "Seat Spring Snap",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "armchair-avalanche",
+      "name": "Armchair Avalanche",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "barstool-barrage",
+      "name": "Barstool Barrage",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "chair-leg-lance",
+      "name": "Chair Leg Lance",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "backrest-breaker",
+      "name": "Backrest Breaker",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "cushion-crusher",
+      "name": "Cushion Crusher",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "recliner-ribshot",
+      "name": "Recliner Ribshot",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "chaise-lounge-lariat",
+      "name": "Chaise Lounge Lariat",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "dining-set-detonation",
+      "name": "Dining Set Detonation",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "patio-stack-smash",
+      "name": "Patio Stack Smash",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "swivel-chair-sling",
+      "name": "Swivel Chair Sling",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "ottoman-overhand",
+      "name": "Ottoman Overhand",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "folding-chair-fakeout",
+      "name": "Folding Chair Fakeout",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "throne-bone-crusher",
+      "name": "Throne Bone Crusher",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "armrest-armlock",
+      "name": "Armrest Armlock",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "caster-kick",
+      "name": "Caster Kick",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "recliner-rush",
+      "name": "Recliner Rush",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "chairback-chop",
+      "name": "Chairback Chop",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "seat-pan-smack",
+      "name": "Seat Pan Smack",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "barstool-bellyflop",
+      "name": "Barstool Bellyflop",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "rocker-ricochet",
+      "name": "Rocker Ricochet",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "chaise-lounge-chop",
+      "name": "Chaise Lounge Chop",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "cushion-cross",
+      "name": "Cushion Cross",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "office-chair-orbit",
+      "name": "Office Chair Orbit",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "director-chair-drive",
+      "name": "Director Chair Drive",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "folding-chair-flying-knee",
+      "name": "Folding Chair Flying Knee",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "patio-chair-punt",
+      "name": "Patio Chair Punt",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "throne-thunderclap",
+      "name": "Throne Thunderclap",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "armchair-ambush",
+      "name": "Armchair Ambush",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "stool-sweep",
+      "name": "Stool Sweep",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "seatbeltless-launch",
+      "name": "Seatbeltless Launch",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "chair-stack-collapse",
+      "name": "Chair Stack Collapse",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "recliner-rollover",
+      "name": "Recliner Rollover",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "backrest-battering-ram",
+      "name": "Backrest Battering Ram",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "caster-combo",
+      "name": "Caster Combo",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "cushion-crescent-kick",
+      "name": "Cushion Crescent Kick",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "chaise-lounge-clothesline",
+      "name": "Chaise Lounge Clothesline",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "rocking-chair-rib-rattle",
+      "name": "Rocking Chair Rib Rattle",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "armrest-axe-handle",
+      "name": "Armrest Axe Handle",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "dining-chair-double-tap",
+      "name": "Dining Chair Double Tap",
+      "category": "light",
+      "base_damage_min": 7,
+      "base_damage_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "barstool-body-check",
+      "name": "Barstool Body Check",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "folding-chair-fan-blade",
+      "name": "Folding Chair Fan Blade",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "throne-room-headbutt",
+      "name": "Throne Room Headbutt",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "ottoman-obliterator",
+      "name": "Ottoman Obliterator",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "swivel-seat-sidekick",
+      "name": "Swivel Seat Sidekick",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "cushion-comet",
+      "name": "Cushion Comet",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "patio-chair-pendulum",
+      "name": "Patio Chair Pendulum",
+      "category": "trick",
+      "base_damage_min": 8,
+      "base_damage_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "recliner-rocket",
+      "name": "Recliner Rocket",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "seat-spring-slingshot",
+      "name": "Seat Spring Slingshot",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "chair-leg-javelin",
+      "name": "Chair Leg Javelin",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "armchair-aftershock",
+      "name": "Armchair Aftershock",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "barstool-boomerang",
+      "name": "Barstool Boomerang",
+      "category": "ranged",
+      "base_damage_min": 9,
+      "base_damage_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "rocker-railroad",
+      "name": "Rocker Railroad",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "chaise-lounge-crash",
+      "name": "Chaise Lounge Crash",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "folding-chair-frenzy",
+      "name": "Folding Chair Frenzy",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    },
+    {
+      "id": "throne-room-finisher",
+      "name": "Throne Room Finisher",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "caster-clothesline",
+      "name": "Caster Clothesline",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "backrest-bomb",
+      "name": "Backrest Bomb",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "cushion-uppercut",
+      "name": "Cushion Uppercut",
+      "category": "medium",
+      "base_damage_min": 10,
+      "base_damage_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "seat-spring-stomp",
+      "name": "Seat Spring Stomp",
+      "category": "heavy",
+      "base_damage_min": 13,
+      "base_damage_max": 21,
+      "enabled": true
+    },
+    {
+      "id": "office-chair-overdrive",
+      "name": "Office Chair Overdrive",
+      "category": "chaos",
+      "base_damage_min": 11,
+      "base_damage_max": 19,
+      "enabled": true
+    }
+  ],
+  "heals": [
+    {
+      "id": "emergency-reupholstery",
+      "name": "Emergency Reupholstery",
+      "heal_min": 10,
+      "heal_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "tighten-the-bolts",
+      "name": "Tighten the Bolts",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "fresh-seat-cushion",
+      "name": "Fresh Seat Cushion",
+      "heal_min": 8,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "caster-lube",
+      "name": "Caster Lube",
+      "heal_min": 7,
+      "heal_max": 12,
+      "enabled": true
+    },
+    {
+      "id": "recline-and-recover",
+      "name": "Recline and Recover",
+      "heal_min": 10,
+      "heal_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "ottoman-footrest-reset",
+      "name": "Ottoman Footrest Reset",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "patch-the-upholstery",
+      "name": "Patch the Upholstery",
+      "heal_min": 9,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "wood-glue-ritual",
+      "name": "Wood Glue Ritual",
+      "heal_min": 10,
+      "heal_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "spare-chair-leg-transplant",
+      "name": "Spare Chair Leg Transplant",
+      "heal_min": 11,
+      "heal_max": 18,
+      "enabled": true
+    },
+    {
+      "id": "cushion-fluff",
+      "name": "Cushion Fluff",
+      "heal_min": 7,
+      "heal_max": 12,
+      "enabled": true
+    },
+    {
+      "id": "upholstery-staple-fix",
+      "name": "Upholstery Staple Fix",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "lumbar-support-boost",
+      "name": "Lumbar Support Boost",
+      "heal_min": 9,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "sit-down-for-a-second",
+      "name": "Sit Down for a Second",
+      "heal_min": 8,
+      "heal_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "quick-sand-and-varnish",
+      "name": "Quick Sand and Varnish",
+      "heal_min": 9,
+      "heal_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "reinforced-crossbar",
+      "name": "Reinforced Crossbar",
+      "heal_min": 10,
+      "heal_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "foam-refill",
+      "name": "Foam Refill",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "new-felt-pads",
+      "name": "New Felt Pads",
+      "heal_min": 7,
+      "heal_max": 12,
+      "enabled": true
+    },
+    {
+      "id": "restore-seat-springs",
+      "name": "Restore Seat Springs",
+      "heal_min": 10,
+      "heal_max": 17,
+      "enabled": true
+    },
+    {
+      "id": "duct-tape-the-frame",
+      "name": "Duct Tape the Frame",
+      "heal_min": 8,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "cushion-swap",
+      "name": "Cushion Swap",
+      "heal_min": 9,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "backrest-brace",
+      "name": "Backrest Brace",
+      "heal_min": 10,
+      "heal_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "armrest-alignment",
+      "name": "Armrest Alignment",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "emergency-allen-key",
+      "name": "Emergency Allen Key",
+      "heal_min": 9,
+      "heal_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "fresh-lacquer",
+      "name": "Fresh Lacquer",
+      "heal_min": 7,
+      "heal_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "bolt-check",
+      "name": "Bolt Check",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "caster-replacement",
+      "name": "Caster Replacement",
+      "heal_min": 9,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "throw-pillow-therapy",
+      "name": "Throw Pillow Therapy",
+      "heal_min": 7,
+      "heal_max": 12,
+      "enabled": true
+    },
+    {
+      "id": "rocking-chair-breather",
+      "name": "Rocking Chair Breather",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "chair-yoga",
+      "name": "Chair Yoga",
+      "heal_min": 8,
+      "heal_max": 13,
+      "enabled": true
+    },
+    {
+      "id": "golden-upholstery-patch",
+      "name": "Golden Upholstery Patch",
+      "heal_min": 11,
+      "heal_max": 18,
+      "enabled": true
+    },
+    {
+      "id": "seat-spring-reset",
+      "name": "Seat Spring Reset",
+      "heal_min": 10,
+      "heal_max": 16,
+      "enabled": true
+    },
+    {
+      "id": "armchair-first-aid",
+      "name": "Armchair First Aid",
+      "heal_min": 9,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "recliner-pit-stop",
+      "name": "Recliner Pit Stop",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "chaise-lounge-timeout",
+      "name": "Chaise Lounge Timeout",
+      "heal_min": 8,
+      "heal_max": 14,
+      "enabled": true
+    },
+    {
+      "id": "backrest-realignment",
+      "name": "Backrest Realignment",
+      "heal_min": 9,
+      "heal_max": 15,
+      "enabled": true
+    },
+    {
+      "id": "emergency-cushion-graft",
+      "name": "Emergency Cushion Graft",
+      "heal_min": 10,
+      "heal_max": 17,
+      "enabled": true
+    }
+  ],
+  "combat_log_templates": {
+    "normal": "{attacker} uses {move} — {damage} damage",
+    "miss": "{attacker} tries {move} — MISS",
+    "blocked": "{defender} blocks {attacker}’s {move} — {damage} damage",
+    "critical": "CRIT! {attacker} lands {move} — {damage} damage",
+    "heal": "{fighter} uses {move} — +{heal} HP",
+    "ko": "{loser} hits 0 HP. {winner} wins the fight."
+  }
+}

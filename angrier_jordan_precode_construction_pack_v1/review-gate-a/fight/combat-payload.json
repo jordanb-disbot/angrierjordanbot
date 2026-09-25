@@ -1,0 +1,20 @@
+{
+  "embed": {
+    "author": {
+      "name": "Angrier Jordan"
+    },
+    "title": "Robo Chair Fight",
+    "description": "Combat is live. Betting is locked.",
+    "color": 1357990,
+    "image": {
+      "url": "attachment://race.png"
+    },
+    "footer": {
+      "text": "fight:runtime-review-fight"
+    }
+  },
+  "rows": [],
+  "mentions": {
+    "parse": []
+  }
+}

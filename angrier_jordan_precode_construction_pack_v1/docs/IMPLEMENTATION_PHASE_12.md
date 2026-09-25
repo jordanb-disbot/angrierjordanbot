@@ -1,11 +1,19 @@
-# Phase 12 — Race implementation and shared event foundation
+# Phase 12 — Race and approved Robo Chair Fight
 
-Race is implemented behind `features.race` and `ENABLE_EVENTS_SMOKE`. Fight remains off: the canonical contract's approved move pool and full combat-system specification are not in the supplied sources. Their path has been requested; no replacement move pool has been fabricated.
+Both event flows are implemented behind `features.race`, `features.fight` and `ENABLE_EVENTS_SMOKE`. No feature flag was enabled. Railway readiness remains queued after owner approval of Review Gate A.
 
-Race includes silent deletion of unauthorized `!race`, independently configured access and notification roles, main-chat enforcement, no cooldown, first-come entry for 2–6 distinct chairs, one host extension of entry and betting, private immutable-selection cumulative wager modals, persisted fair motion plans, one authoritative public message, and no replay/rematch controls.
+## Approved Fight sources
 
-The shared Session/Timer/Ledger/Escrow engines drive state and settlement. Migration 0013 prevents overlapping Race/Fight channel sessions throughout betting and animation. Durable jobs and a bounded visual sweep recover persisted deadlines. All movement, standings and finish detection derive from one progress snapshot. Source-aware refunds use the owner-confirmed NO_WINNING_BETS_REFUND policy and retain the normal race result.
+The owner supplied the original files at repository-root `docs/specs/ANGRIER_JORDAN_FIGHT_COMBAT_SYSTEM_SPEC.md` and `content/fight/angrier_jordan_fight_move_pool_v1.json`. Byte-identical copies are packaged inside this workspace. Runtime and preflight enforce pinned SHA-256 hashes; Git attributes prevent line-ending conversion. The original files are unchanged, including their historical optional-target metadata; current command registration still requires `/fight @member`.
 
-PostgreSQL Race suite: 10 passed. Domain suite: 102 passed. Adapter/render suite: 20 passed. Full preflight passes. Full build is recorded in IMPLEMENTATION_STATUS.json. Live Discord validation remains pending.
+The planner selects the winner once with fair RNG, then samples approved attacks/heals until the sequence matches the selected winner and 22–28 second window. It preserves alternating turns, 100 starting HP, the 68/10/12/10 attack distribution before permitted late pacing constraints, healing opportunities, approved damage/heal ranges, no repeated moves, and previous-three-fight suppression. Every action and HP bar uses one persisted beat. No replacement move text or AI art is generated.
 
-`review-gate-a/race/` contains real production-adapter output using labeled fixture members, with desktop/mobile host review frames and raw production cards. These are not live Discord screenshots. Entry, betting, live and result states are included. Gate A is incomplete until actual Fight runtime and its review artifacts exist.
+## Shared state and money
+
+Race and Fight share the Session, Timer, Scheduler, Ledger, escrow and atomic-operation engines. Migration 0013 enforces one active Race/Fight per channel. Wager selections cannot switch after commitment; cumulative limits and wallet-first funding apply. Settlement pays 95% proportionally with whole-Ottoman remainder allocation. No winning wagers produces `NO_WINNING_BETS_REFUND`: source-aware full refunds, no rake, normal event result and win statistics.
+
+Fighter departure cancels during betting or combat. Durable membership state and forced Discord membership checks protect settlement; saved join timestamps detect leave/rejoin while offline. Provider errors cause retry rather than false absence. Direct departure-versus-settlement testing found an inverted cancellation lock order; cancellation now locks session state before escrow, matching settlement. The shared transaction wrapper also recognizes Prisma-wrapped PostgreSQL deadlocks and retries with bounded backoff.
+
+## Review and validation
+
+`review-gate-a/index.html` contains production-renderer playback and links to desktop/mobile entry, betting, live/combat and result renders. Fixture identities are labeled; these are not live Discord screenshots. No Race/Fight result has rematch or Play Again controls. The validation report records final test totals. Live Discord acceptance remains pending; Gate A is a functional/visual review, not production deployment approval.

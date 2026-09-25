@@ -25,6 +25,15 @@ export class TransactionLedgerRepository implements LedgerRepository {
 
 export const requestFingerprint=(input:unknown)=>createHash('sha256').update(JSON.stringify(input,(_,v)=>typeof v==='bigint'?v.toString():v)).digest('hex');
 
+/** Some Prisma connector versions surface SQLSTATE deadlocks as an unknown request error. */
+export function isRetryableAtomicError(error:unknown){
+  if(!error||typeof error!=='object')return false;
+  const e=error as {code?:unknown;name?:unknown;message?:unknown;meta?:{code?:unknown}};
+  if(['P2034','P2002','LEDGER_CONFLICT','SESSION_CONFLICT','40P01','40001'].includes(String(e.code)))return true;
+  if(e.code==='P2010'&&['40P01','40001'].includes(String(e.meta?.code)))return true;
+  return e.name==='PrismaClientUnknownRequestError'&&typeof e.message==='string'&&/PostgresError\s*\{\s*code:\s*"(?:40P01|40001)"/.test(e.message);
+}
+
 /** Durable receipt, serializable retry, and shared ledger for all consequential feature operations. */
 export class PrismaAtomicOperations {
   constructor(private readonly db:PrismaClient){}
@@ -39,8 +48,8 @@ export class PrismaAtomicOperations {
           return result;
         },{isolationLevel:'Serializable',maxWait:10000,timeout:20000});
       }catch(error){
-        const code=error&&typeof error==='object'&&'code' in error?error.code:undefined;
-        if(attempt===4||!['P2034','P2002','LEDGER_CONFLICT'].includes(String(code)))throw error;
+        if(attempt===4||!isRetryableAtomicError(error))throw error;
+        await new Promise(resolve=>setTimeout(resolve,25*2**attempt));
       }
     }
     throw new DomainError('CONCURRENT_OPERATION','The action is busy. Please retry.');

@@ -3,7 +3,7 @@
   "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
   "checkpoint": 8,
   "checkpoint_name": "Economy Foundation — ledger, wallet/bank, Daily Hub, weekly/grind, inventory/catalog",
-  "status": "PHASE_12_RACE_VERIFIED_FIGHT_SOURCES_REQUIRED",
+  "status": "REVIEW_GATE_A_READY_AWAITING_OWNER_APPROVAL",
   "registry": {
     "interactions": 192,
     "settings": 205,
@@ -38,20 +38,19 @@
   ],
   "verification": {
     "preflight": "PASS",
-    "domain_tests": 102,
+    "domain_tests": 106,
     "domain_tests_failed": 0,
     "typescript_domain_typecheck": "PASS",
     "production_wiring_structure": "PASS",
     "registry_validation": "PASS",
     "help_coverage": "PASS",
     "asset_validation": "PASS",
-    "live_discord_postgres_smoke_test": "PENDING_CREDENTIALS",
     "prisma_client_regeneration": "PASS",
     "full_bot_typecheck": "PASS",
     "full_workspace_typecheck": "PASS",
     "dashboard_production_build": "PASS",
     "dependency_lockfile": "package-lock.json",
-    "adapter_tests": 20,
+    "adapter_tests": 24,
     "postgres_item_acceptance": "PASS_11_TESTS",
     "full_build": "PASS",
     "postgres_migrations": "PASS_0001_THROUGH_0013_IN_ISOLATED_TEST_SCHEMAS",
@@ -59,7 +58,11 @@
     "postgres_profiles_acceptance": "PASS_6_TESTS",
     "postgres_scheduler_acceptance": "PASS_3_TESTS",
     "postgres_casino_acceptance": "PASS_10_TESTS",
-    "postgres_events_acceptance": "PASS_10_TESTS"
+    "postgres_events_acceptance": "PASS_10_TESTS",
+    "postgres_fight_acceptance": "PASS_10_TESTS",
+    "postgres_race_fight_combined": "PASS_20_TESTS",
+    "live_discord_smoke_test": "NOT_RUN",
+    "postgres_full_regression": "PASS_50_TESTS_0_FAILED"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",
@@ -82,11 +85,11 @@
     "features.race": false,
     "features.fight": false
   },
-  "next_checkpoint": "Phase 12 Race/Fight, then STOP at Review Gate A",
+  "next_checkpoint": "STOP at Review Gate A; owner approval required before Phase 13 or Railway readiness",
   "phase_09": {
     "implementation": "domain, PostgreSQL adapter and Discord controls present",
     "acceptance": "PostgreSQL concurrency/idempotency/restart gate passed; live Discord pending",
-    "review_gate_a": "not reached"
+    "review_gate_a": "REACHED"
   },
   "phase_10": {
     "implementation": "Domain, persistence, guarded Discord adapter and database acceptance implemented; live acceptance pending",
@@ -106,12 +109,11 @@
   },
   "phase_12": {
     "race": "Domain, persisted repository, gated Discord adapter, production renderer, database acceptance and fixture runtime review renders implemented",
-    "fight": "Awaiting owner-supplied approved move pool and combat specification confirmed omitted from workspace; kept disabled",
+    "fight": "Approved source-based combat, gated Discord adapter, shared event persistence/escrow, departure recovery and database acceptance implemented",
     "owner_policy": "NO_WINNING_BETS_REFUND: full source-aware refunds, no rake, normal result recorded",
-    "review_gate_a": "NOT_READY",
+    "review_gate_a": "READY_AWAITING_OWNER_APPROVAL",
     "remaining": [
-      "Approved Fight source files",
-      "Fight runtime, persistence, tests and review artifacts",
+      "Owner Gate A review",
       "Live Discord acceptance"
     ]
   },

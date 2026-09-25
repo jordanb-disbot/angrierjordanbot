@@ -28,7 +28,9 @@
     "validate:production-wiring": "node scripts/validate-production-wiring.mjs",
     "typecheck:workspace": "tsc -p apps/bot/tsconfig.json --noEmit && tsc -p apps/dashboard/tsconfig.json --noEmit",
     "test:postgres": "npm run db:generate && node scripts/compile-domain-tests.mjs && node scripts/run-postgres-tests.mjs",
-    "test:adapters": "npm --workspace @angrier-jordan/bot run build && node scripts/copy-runtime-data.mjs && node --test testing/adapters/*.test.mjs"
+    "test:adapters": "npm --workspace @angrier-jordan/bot run build && node scripts/copy-runtime-data.mjs && node --test testing/adapters/*.test.mjs",
+    "validate:fight-sources": "node scripts/validate-fight-sources.mjs",
+    "review:events": "node scripts/render-race-review.mjs && node scripts/render-fight-review.mjs && node scripts/render-gate-a.mjs"
   },
   "type": "module",
   "packageManager": "npm@11.6.0"

@@ -1,0 +1,169 @@
+{
+  "source": "Actual DiscordEventsCoordinator.payload and production renderer, using explicit fixture members. Host frames are review renders, not live Discord screenshots.",
+  "timing": {
+    "bettingSeconds": 30,
+    "hostExtensionSeconds": 30,
+    "extensionUses": 1,
+    "combatMs": 22283,
+    "beats": [
+      {
+        "atMs": 1411,
+        "outcome": "normal",
+        "amount": 19,
+        "hp": [
+          100,
+          81
+        ]
+      },
+      {
+        "atMs": 2885,
+        "outcome": "normal",
+        "amount": 18,
+        "hp": [
+          82,
+          81
+        ]
+      },
+      {
+        "atMs": 4319,
+        "outcome": "normal",
+        "amount": 10,
+        "hp": [
+          82,
+          71
+        ]
+      },
+      {
+        "atMs": 5833,
+        "outcome": "normal",
+        "amount": 14,
+        "hp": [
+          68,
+          71
+        ]
+      },
+      {
+        "atMs": 7395,
+        "outcome": "normal",
+        "amount": 18,
+        "hp": [
+          68,
+          53
+        ]
+      },
+      {
+        "atMs": 8797,
+        "outcome": "normal",
+        "amount": 18,
+        "hp": [
+          50,
+          53
+        ]
+      },
+      {
+        "atMs": 10402,
+        "outcome": "normal",
+        "amount": 11,
+        "hp": [
+          50,
+          42
+        ]
+      },
+      {
+        "atMs": 11797,
+        "outcome": "heal",
+        "amount": 8,
+        "hp": [
+          50,
+          50
+        ]
+      },
+      {
+        "atMs": 13387,
+        "outcome": "miss",
+        "amount": 0,
+        "hp": [
+          50,
+          50
+        ]
+      },
+      {
+        "atMs": 14751,
+        "outcome": "blocked",
+        "amount": 4,
+        "hp": [
+          46,
+          50
+        ]
+      },
+      {
+        "atMs": 16399,
+        "outcome": "normal",
+        "amount": 17,
+        "hp": [
+          46,
+          33
+        ]
+      },
+      {
+        "atMs": 17839,
+        "outcome": "blocked",
+        "amount": 5,
+        "hp": [
+          41,
+          33
+        ]
+      },
+      {
+        "atMs": 19387,
+        "outcome": "normal",
+        "amount": 17,
+        "hp": [
+          41,
+          16
+        ]
+      },
+      {
+        "atMs": 20894,
+        "outcome": "normal",
+        "amount": 15,
+        "hp": [
+          26,
+          16
+        ]
+      },
+      {
+        "atMs": 22283,
+        "outcome": "normal",
+        "amount": 16,
+        "hp": [
+          26,
+          0
+        ]
+      }
+    ]
+  },
+  "states": [
+    {
+      "state": "betting",
+      "card": "betting-card.png",
+      "desktop": "betting-desktop.png",
+      "mobile": "betting-mobile.png",
+      "payload": "betting-payload.json"
+    },
+    {
+      "state": "combat",
+      "card": "combat-card.png",
+      "desktop": "combat-desktop.png",
+      "mobile": "combat-mobile.png",
+      "payload": "combat-payload.json"
+    },
+    {
+      "state": "result",
+      "card": "result-card.png",
+      "desktop": "result-desktop.png",
+      "mobile": "result-mobile.png",
+      "payload": "result-payload.json"
+    }
+  ]
+}

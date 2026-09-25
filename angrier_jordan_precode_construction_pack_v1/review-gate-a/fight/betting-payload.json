@@ -1,0 +1,49 @@
+{
+  "embed": {
+    "author": {
+      "name": "Angrier Jordan"
+    },
+    "title": "Robo Chair Fight",
+    "description": "Betting closes <t:1790337660:R>.\nChoose a contestant to open a private wager modal. Selection locks after your first wager.",
+    "color": 1357990,
+    "image": {
+      "url": "attachment://race.png"
+    },
+    "footer": {
+      "text": "fight:runtime-review-fight"
+    }
+  },
+  "rows": [
+    [
+      {
+        "label": "+30 Seconds",
+        "disabled": false,
+        "style": 2,
+        "customId": "fight:extend:runtime-review-fight"
+      },
+      {
+        "label": "Rules",
+        "disabled": false,
+        "style": 2,
+        "customId": "fight:rules:runtime-review-fight"
+      }
+    ],
+    [
+      {
+        "label": "Bet · Jordan",
+        "disabled": false,
+        "style": 2,
+        "customId": "fight:bet:runtime-review-fight:fixture-0"
+      },
+      {
+        "label": "Bet · Alex",
+        "disabled": false,
+        "style": 2,
+        "customId": "fight:bet:runtime-review-fight:fixture-1"
+      }
+    ]
+  ],
+  "mentions": {
+    "parse": []
+  }
+}

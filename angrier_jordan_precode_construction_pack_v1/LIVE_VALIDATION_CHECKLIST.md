@@ -7,5 +7,9 @@
 - [ ] Supply development Discord token, application/server and role/channel IDs through local secrets.
 - [ ] Confirm privileged intents and hierarchy.
 - [ ] Exercise enabled modules with test balances and real Discord interactions.
-- [ ] Capture actual runtime desktop/mobile Race/Fight states for Gate A after Phase 12.
+- [x] Capture production-runtime desktop/mobile Race/Fight review renders using labeled fixture members.
+- [x] Complete Fight PostgreSQL acceptance, including departure/settlement concurrency (10 tests).
+- [x] Complete full PostgreSQL regression (50 tests), domain tests (106), adapter tests (24), full build and preflight.
+- [ ] Complete owner Gate A flow/presentation review.
+- [ ] Capture live Discord screenshots during subsequent live acceptance.
 - [x] Keep unfinished feature flags disabled.

@@ -728,6 +728,33 @@
         "Underfilled cancellation refunds",
         "No unresolved escrow or unbalanced ledger"
       ]
+    },
+    {
+      "id": "PH12-FIGHT-DB",
+      "module": "race_fight",
+      "name": "Approved Fight combat, wagers, departure and restart acceptance",
+      "kind": "integration",
+      "priority": "P0",
+      "preconditions": [
+        "Disposable TEST_DATABASE_URL only",
+        "Hash-verified approved move pool"
+      ],
+      "steps": [
+        "Run node scripts/run-postgres-tests.mjs events fight"
+      ],
+      "expected": [
+        "Required target, no accept or join",
+        "One active Race/Fight per channel",
+        "Host +30 once",
+        "Immutable wager selection",
+        "Persisted fair winner and approved combat plan",
+        "Restart resumes identical authoritative beat",
+        "Recent approved moves suppressed",
+        "95 percent payout once",
+        "NO_WINNING_BETS_REFUND once, original funding buckets",
+        "Fighter departure cancels safely before settlement",
+        "Balanced ledger, terminal escrows"
+      ]
     }
   ]
 }

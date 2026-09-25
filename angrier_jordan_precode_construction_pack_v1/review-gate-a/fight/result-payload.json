@@ -1,0 +1,20 @@
+{
+  "embed": {
+    "author": {
+      "name": "Angrier Jordan"
+    },
+    "title": "Robo Chair Fight",
+    "description": "Winner: <@fixture-0>\nPool: 1200 · Rake: 60 Ottomans",
+    "color": 1357990,
+    "image": {
+      "url": "attachment://race.png"
+    },
+    "footer": {
+      "text": "fight:runtime-review-fight"
+    }
+  },
+  "rows": [],
+  "mentions": {
+    "parse": []
+  }
+}

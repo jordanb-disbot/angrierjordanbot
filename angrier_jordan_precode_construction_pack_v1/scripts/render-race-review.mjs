@@ -1,12 +1,11 @@
+import {reviewMembers,reviewPlans} from './event-review-fixtures.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import {DiscordEventsCoordinator} from '../dist/apps/bot/src/discord/events-coordinator.js';
 import {planRace,raceSnapshot} from '../dist/packages/features-events/src/domain.js';
 import {rasterizeSvg} from '../dist/packages/renderer/src/raster.js';
 const output='review-gate-a/race';fs.mkdirSync(output,{recursive:true});
-const racers=['Jordan','Alex','Sam','Morgan','Taylor','Casey'].map((name,i)=>({userId:'fixture-'+i,name,chair:i+1}));
-let seed=42;const random=max=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed%max;};
-const plan=planRace(racers,random),winnerId=plan.winnerId;
+const racers=reviewMembers,plan=reviewPlans.race,winnerId=plan.winnerId;
 const base={id:'runtime-review-race',guildId:'fixture-server',channelId:'fixture-main',messageId:'fixture-message',ownerId:racers[0].userId,state:'OPEN',expiresAt:new Date('2026-09-25T12:01:00Z'),extensionUsed:false,racers,pool:'2400',bets:[]};
 const states={entry:{...base,racers:racers.slice(0,2),pool:'0'},betting:base,live:{...base,state:'LOCKED',motion:raceSnapshot(plan,plan.durationMs*.58)},result:{...base,state:'CLOSED',motion:raceSnapshot(plan,plan.durationMs),winnerId,result:{pool:'2400',rake:'120',payouts:{[winnerId]:'2280'},refunded:false,settlement:'PROPORTIONAL_PAYOUT'}}};
 const coordinator=new DiscordEventsCoordinator({}, {},async()=>true);
@@ -29,5 +28,5 @@ for(const [name,view] of Object.entries(states)){
  manifest.states.push({state:name,card:name+'-card.png',desktop:name+'-desktop.png',mobile:name+'-mobile.png',payload:name+'-payload.json'});
 }
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
-fs.writeFileSync(path.join(output,'README.md'),'# Race runtime review — partial Gate A preparation\n\nThese images execute the production Discord adapter and raster renderer with clearly identified fixture members. Desktop/mobile host frames are review renders, not live Discord screenshots. The same card and component rows are used in both.\n\nEntry and betting: 60 seconds; host extension: +30 seconds once; sprint: 15–20 seconds. A full race still accepts wagers until the deadline. One authoritative message is updated through the result, with no rematch or Play Again.\n\nPostgreSQL Race acceptance: 10 passed, including concurrent settlement, source-aware no-winning-bet refunds and restart recovery. Fight materials are not present; Gate A is not ready and no approval is requested yet.\n');
+fs.writeFileSync(path.join(output,'README.md'),'# Race runtime review\n\nThese images execute the production Discord adapter and raster renderer with clearly identified fixture members. Desktop/mobile host frames are review renders, not live Discord screenshots. The same card and component rows are used in both.\n\nEntry and betting: 60 seconds; host extension: +30 seconds once; sprint: 15–20 seconds. A full race still accepts wagers until the deadline. One authoritative message is updated through the result, with no rematch or Play Again.\n\nPostgreSQL Race acceptance: 10 passed, including concurrent settlement, source-aware no-winning-bet refunds and restart recovery. Fight materials and the combined Gate A review are available in the parent folder.\n');
 console.log('Race runtime review renders written to '+output);

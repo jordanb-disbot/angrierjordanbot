@@ -532,7 +532,9 @@
       ],
       "interaction_contract": "/fight @member only; native wager modal/+30; no accept/join/rematch",
       "status": "COVERED",
-      "runtime_status": "Disabled; approved move pool and combat specification missing"
+      "runtime_status": "Implemented behind flags; approved sources hash-verified unchanged; PostgreSQL acceptance passed; Gate A fixture runtime renders prepared",
+      "runtime_adapter": "apps/bot/src/discord/events-coordinator.ts",
+      "runtime_renderer": "packages/features-events/src/fight-render.ts"
     },
     {
       "id": "tictactoe",
