@@ -29,8 +29,8 @@ Offline tests use injected provider, Discord and transport boundaries. PostgreSQ
 | --- | --- |
 | Commit under review | This Phase 23 integration checkpoint, based on e6c4d77 |
 | Full build and preflight | PASS (workspace/dashboard build; final preflight) |
-| Runtime/domain tests | 277 passed |
-| Adapter/composition/publication tests | 366 passed, including 15 application and 17 publication cases |
+| Runtime/domain tests | 285 passed |
+| Adapter/composition/publication tests | 368 passed, including 15 application and 17 publication cases |
 | Targeted PostgreSQL tests | 24 passed on disposable TEST_DATABASE_URL; migrations applied to isolated schema |
 | Registration/help/settings/wiring checks | PASS; 256 settings generated, optional music.dj_role added |
 | Approved visual locks and secret scan | PASS; 38 immutable references + 144 approved Gate B images unchanged; no detected secret/local paths |
@@ -41,4 +41,6 @@ Offline tests use injected provider, Discord and transport boundaries. PostgreSQ
 
 Follow [GATE_C_MUSIC_ACCEPTANCE.md](GATE_C_MUSIC_ACCEPTANCE.md) for the controlled test-node handoff, live scenarios and evidence record. Offline validation is complete; the next dependency is the controlled test node and live Discord participation. Optional metadata credentials are needed only for the Spotify/Apple part of the acceptance matrix; ordinary YouTube/SoundCloud tests do not require a catalog or those credentials.
 
-The current [foundation gallery](../review-phase-23-foundation/index.html) contains 17 fictional scenarios / 34 desktop/mobile images, including source attribution, private choices/confirmations, queue/history/playlists and notices. It is not a live Discord capture or the complete Gate C package. The final package must include desktop/mobile controller states, requested/playback source attribution, selection/confirmation/error flows and the live evidence listed in the acceptance document. Preserve [the approved visual system](APPROVED_VISUAL_SYSTEM.md), Space Grotesk/Inter, the immutable Gate A/B references and deterministic runtime rendering. No redesign or runtime AI artwork is authorized.
+The current [foundation gallery](../review-phase-23-foundation/index.html) contains 23 fictional scenarios / 46 desktop/mobile images, including source attribution, private choices/confirmations, queue/history/playlists and notices. It is not a live Discord capture or the complete Gate C package. The final package must include desktop/mobile controller states, requested/playback source attribution, selection/confirmation/error flows and the live evidence listed in the acceptance document. Preserve [the approved visual system](APPROVED_VISUAL_SYSTEM.md), Space Grotesk/Inter, the immutable Gate A/B references and deterministic runtime rendering. No redesign or runtime AI artwork is authorized.
+
+Music presentation revision 01 uses the reference-inspired modular AJ layout; see [visual review notes](MUSIC_VISUAL_REVISION_01.md). This revision does not approve Gate C or change playback behavior.

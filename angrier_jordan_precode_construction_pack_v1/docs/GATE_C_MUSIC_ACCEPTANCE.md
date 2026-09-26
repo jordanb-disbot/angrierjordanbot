@@ -10,11 +10,11 @@ This document prepares a controlled test and owner review; it does not provision
 | --- | --- |
 | Tested commit and date | This integration checkpoint based on e6c4d77; 2026-09-25 |
 | Build, preflight and wiring checks | PASS |
-| Domain/runtime and adapter tests | 277 runtime + 366 adapter passed |
+| Domain/runtime and adapter tests | 285 runtime + 368 adapter passed |
 | Targeted PostgreSQL persistence tests | 24 passed |
 | Registry/help/tutorial/settings consistency | PASS |
 | Frozen visual references and secret scan | PASS; 38 reference files + 144 Gate B images unchanged |
-| Offline desktop/mobile review gallery | 17 fixture scenarios / 34 hash-verified images; actual Discord captures NOT RUN |
+| Offline desktop/mobile review gallery | 23 fixture scenarios / 46 hash-verified images; actual Discord captures NOT RUN |
 | Test node startup and audible playback | NOT RUN |
 
 Offline fixtures test the implementation with injected boundaries. They cannot demonstrate that a provider currently serves a recording, Discord carries audible output, an actual pin succeeds, or the host survives a real node restart. Keep those results separate.
@@ -66,7 +66,7 @@ Use the approved Gate A/B lounge frame, Space Grotesk headings, Inter body, cent
 
 Prepare paired desktop/mobile evidence for empty, pending, playing, paused, recovering and unavailable states; long track/artist/album/channel names; artwork fallback; requested Spotify/Apple identity versus actual audio provider; queue/history/playlist views; candidate selection; duplicate/batch confirmation; permission/unavailable notices; and retired controller controls. Confirm the actual requester name and voice-channel label, progress/duration, volume/loop/autoplay labels and clear button text. A placeholder portrait/name in an engineering fixture is not proof of the final member presentation.
 
-The [foundation gallery](../review-phase-23-foundation/index.html) contains 17 scenarios / 34 images and is explicitly simulated; live captures remain outstanding. Label all additional deterministic fixtures as simulations. Label actual Discord captures separately with test date/client size and link them to the matrix rows; a screenshot of a playing label is not proof of audible output. Preserve public message links or sanitized observation notes where useful.
+The [foundation gallery](../review-phase-23-foundation/index.html) contains 23 scenarios / 46 images and is explicitly simulated; live captures remain outstanding. Label all additional deterministic fixtures as simulations. Label actual Discord captures separately with test date/client size and link them to the matrix rows; a screenshot of a playing label is not proof of audible output. Preserve public message links or sanitized observation notes where useful.
 
 ## Owner decision
 
@@ -79,3 +79,5 @@ Gate C remains pending until the owner reviews the Music presentation/product be
 | Live matrix record | NOT RUN |
 | Accepted limitations / required follow-up | PENDING |
 | Production deployment authorization | NOT PROVIDED |
+
+Music presentation revision 01 uses the reference-inspired modular AJ layout; see [visual review notes](MUSIC_VISUAL_REVISION_01.md). This revision does not approve Gate C or change playback behavior.

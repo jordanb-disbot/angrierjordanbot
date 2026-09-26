@@ -1,3 +1,4 @@
+import {memberArt} from './member-art.js';
 import {ChannelType,EmbedBuilder,PermissionFlagsBits,type Client,type VoiceChannel,type Message} from 'discord.js';
 import {DeliveryEngine,type DeliveryRepository} from '../../../../packages/core/src/delivery.js';
 import type {PrismaMusicRepository} from '../../../../packages/features-music/src/prisma-repository.js';
@@ -33,7 +34,8 @@ export class DiscordMusicPublication {
  private async message(client:Client,channel:VoiceChannel,id:string):Promise<Message|null>{try{const message=await channel.messages.fetch({message:id,force:true,cache:false});this.author(client,message,channel.guildId,channel.id);return message;}catch(error){if(missing(error))return null;throw error;}}
  private async active(guildId:string,channelId:string,messageId:string){const current=await this.repo.read(guildId);return current?.state.textChannelId===channelId&&current.controllerMessageId===messageId?current:null;}
  private async rendered(state:MusicState,marker:string,channel:VoiceChannel){
-  const payload=await this.payloadFactory(state,{voiceChannelName:channel.name});if(!payload.embeds.length)fail('MUSIC_PAYLOAD');
+  const requester=state.current?.requesterUserId,art=requester&&channel.client?await memberArt(channel.client,state.guildId,requester):undefined;
+  const payload=await this.payloadFactory(state,{compact:true,voiceChannelName:channel.name,requesterName:art?.name??(requester?'Member':'Autoplay'),requesterAvatarData:art?.avatarData??''});if(!payload.embeds.length)fail('MUSIC_PAYLOAD');
   return{...payload,embeds:payload.embeds.map((embed,index)=>index===0?EmbedBuilder.from(embed).setFooter({text:marker}):EmbedBuilder.from(embed)),allowedMentions:{parse:[] as never[]}};
  }
  private async allowed(guildId:string){if(await this.enabled(guildId)!==true)fail('MUSIC_DISABLED');}

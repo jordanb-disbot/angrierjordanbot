@@ -10,12 +10,12 @@
         {
           "file": "review-phase-23-foundation/idle-desktop.png",
           "width": 440,
-          "sha256": "4352c5e1dfd6f154c008915dfc95ab6f551bc6b006950d166adca2c1b5626bd7"
+          "sha256": "197accc1f7212b8fee78353cba778bd0f17e1853d6cdd582678496c36ddc81d3"
         },
         {
           "file": "review-phase-23-foundation/idle-mobile.png",
           "width": 360,
-          "sha256": "f3ddf3bafa38ce957f5475ff78a9767d138e54b5a0c529dd1fc20b21d4fb618b"
+          "sha256": "96462aaed281d604acd0cec5ebb957dcaacd2f09540864362d0ec3e95ba27223"
         }
       ],
       "controls": [
@@ -32,7 +32,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:1:0:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -44,7 +44,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:1:0:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -98,12 +98,12 @@
         {
           "file": "review-phase-23-foundation/pending-desktop.png",
           "width": 440,
-          "sha256": "13d92a4dc1726ac80e75ad2a32624deea878c9a2e0ef51dd97924d08e22b4411"
+          "sha256": "03a17b5707903f11975f3de6c5b88fb1b79c88a185c61eaa73fa821978147db4"
         },
         {
           "file": "review-phase-23-foundation/pending-mobile.png",
           "width": 360,
-          "sha256": "1d59411dd040b958d6a8ce2f124b40ffc1501ec2906c91ab6931f04ac22f45db"
+          "sha256": "32d6ae834f81dbba5e56476389e554992f32f18bf945735fea3adc7729134a39"
         }
       ],
       "controls": [
@@ -120,7 +120,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:2:1:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -132,7 +132,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:2:1:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -186,12 +186,12 @@
         {
           "file": "review-phase-23-foundation/playing-simulation-desktop.png",
           "width": 440,
-          "sha256": "d72572e0355382d8ff035015ef0272d3cbb8946711537d0c968a88fa2603d4d4"
+          "sha256": "ab7a41506184bcc17d60403a979a01b7d873d93938f72a324b55cbc2e40ee4e8"
         },
         {
           "file": "review-phase-23-foundation/playing-simulation-mobile.png",
           "width": 360,
-          "sha256": "39eaaeb43e0b0a597e9cac50ad92cc1b0806451c95009bf412e8ffe11ea1bb07"
+          "sha256": "8e7d6f76fa2c30d10ef01f7804ce4cdd33f2a919ad9f98da029c7c95a4ab0d05"
         }
       ],
       "controls": [
@@ -208,7 +208,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:3:1:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -220,7 +220,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:3:1:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -274,12 +274,12 @@
         {
           "file": "review-phase-23-foundation/source-attribution-simulation-desktop.png",
           "width": 440,
-          "sha256": "0984bbabbe603f926356cdcb5f846c7f6993aed50ecb9f7f264ed53d3078e28a"
+          "sha256": "6831084d7c72d0ab1d4a98422f4e97c1c2d6028fb4bf745ea858a19f1ad39410"
         },
         {
           "file": "review-phase-23-foundation/source-attribution-simulation-mobile.png",
           "width": 360,
-          "sha256": "6c5c394486322c02281d0ec2b6cb9b0ba0807f92f082aa3ce2af1faa44bc6e14"
+          "sha256": "067f4a0462ca9489a0b3403df9796a6d85911cec19e5b26e55cf93ff77dcdad4"
         }
       ],
       "controls": [
@@ -296,7 +296,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:3:1:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -308,7 +308,447 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:3:1:stop:public",
               "label": "Stop",
+              "style": 4
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:shuffle:public",
+              "label": "Shuffle",
               "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "pinned-strip-playing",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/pinned-strip-playing-desktop.png",
+          "width": 440,
+          "sha256": "8dc83cc1eeaffcbb8ef2f860e0c07a6f680ce2f4681b7591b3f3ce7627b12b17"
+        },
+        {
+          "file": "review-phase-23-foundation/pinned-strip-playing-mobile.png",
+          "width": 360,
+          "sha256": "9bd58de89ec228c39b337e56cc08632337aabec8a75be6d44b01776a40342b35"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:pause:public",
+              "label": "Pause",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:stop:public",
+              "label": "Stop",
+              "style": 4
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "pinned-strip-recovery",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/pinned-strip-recovery-desktop.png",
+          "width": 440,
+          "sha256": "d765d21aa046b508744cd8a84c9988448048d14baaf004f9bd482cf6a56976dd"
+        },
+        {
+          "file": "review-phase-23-foundation/pinned-strip-recovery-mobile.png",
+          "width": 360,
+          "sha256": "297df8a30b393af3b63f2b00e42cd08d460c61c4d5a0f1c22e25e1498d34d72a"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:pause:public",
+              "label": "Pause",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:stop:public",
+              "label": "Stop",
+              "style": 4
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "pinned-strip-idle",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/pinned-strip-idle-desktop.png",
+          "width": 440,
+          "sha256": "b832420fc82ba1edafe423b7288bba47af8e191be3c5ca3c81850bac5fbc322a"
+        },
+        {
+          "file": "review-phase-23-foundation/pinned-strip-idle-mobile.png",
+          "width": 360,
+          "sha256": "c61dac8492a30ca46c9b04886255886f01e68d48273e528992e50d1c2077a056"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:pause:public",
+              "label": "Pause",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:stop:public",
+              "label": "Stop",
+              "style": 4
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:1:0:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "pinned-strip-long-title",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/pinned-strip-long-title-desktop.png",
+          "width": 440,
+          "sha256": "bf8f155c6c4727229403d2daeb962ca556af090b5cbeb5c5ff0ed239e8078628"
+        },
+        {
+          "file": "review-phase-23-foundation/pinned-strip-long-title-mobile.png",
+          "width": 360,
+          "sha256": "5f531996ceac7128d7ae308f09e31e4536fbcd82bbd58cadea111b2eb00a42d6"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:pause:public",
+              "label": "Pause",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:stop:public",
+              "label": "Stop",
+              "style": 4
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "autoplay-simulation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/autoplay-simulation-desktop.png",
+          "width": 440,
+          "sha256": "cc480ca72e56e3d7c9a7732e9a117b3d25c3ff042fe11b517c629751e21bdee3"
+        },
+        {
+          "file": "review-phase-23-foundation/autoplay-simulation-mobile.png",
+          "width": 360,
+          "sha256": "e6658ca75d3e10d136934521301defb457341e8dd8c78df4b3ff68f8485c9458"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:pause:public",
+              "label": "Pause",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:stop:public",
+              "label": "Stop",
+              "style": 4
             },
             {
               "type": 2,
@@ -362,12 +802,12 @@
         {
           "file": "review-phase-23-foundation/paused-simulation-desktop.png",
           "width": 440,
-          "sha256": "7b6850a1429b3e747ce7e898b9bfeee5be1ebe43c2da45babf314aea32fe3929"
+          "sha256": "ec6a00b9d95c8df22f68545e7e1708dd3b44d6d2080437f442fb96b969647d2d"
         },
         {
           "file": "review-phase-23-foundation/paused-simulation-mobile.png",
           "width": 360,
-          "sha256": "4b4703a4c34ff482cb4c4246c82dcca35388a9fdfc54c3b7f6a085cd1504a535"
+          "sha256": "69013ff23db0e2ae5fd09eabd85910b33efca626a604866d10c2828ad8247ef8"
         }
       ],
       "controls": [
@@ -384,7 +824,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:5:1:resume:public",
               "label": "Resume",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -396,7 +836,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:5:1:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -450,12 +890,12 @@
         {
           "file": "review-phase-23-foundation/recovering-simulation-desktop.png",
           "width": 440,
-          "sha256": "b31e9e3c56081be57b3dc85d619ef58d4c16e2e146b33c745e6b1f92a92b6d86"
+          "sha256": "33ffea4bc16c4bbb726854d9a5f4d1bce209b030da1c2e83c75083f610f82de6"
         },
         {
           "file": "review-phase-23-foundation/recovering-simulation-mobile.png",
           "width": 360,
-          "sha256": "ab5824aa7494b9088fd66eec106dc4c442b46795e2f238fdb3bc84f9a26d49ae"
+          "sha256": "56d8f942f15d83dfb43465c268199d88bfca321aca487b7870dfb4579d822853"
         }
       ],
       "controls": [
@@ -472,7 +912,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:4:2:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -484,7 +924,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:4:2:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -538,12 +978,12 @@
         {
           "file": "review-phase-23-foundation/unavailable-simulation-desktop.png",
           "width": 440,
-          "sha256": "b321251983387ffcb8d4291c1a9799f57c47bb7fc5a1cc9db7b31c61c1a9182e"
+          "sha256": "25021f1d84b5a9e617e8e14ef5c579d35d16125fd0f19f6fcb5ca1f66270e628"
         },
         {
           "file": "review-phase-23-foundation/unavailable-simulation-mobile.png",
           "width": 360,
-          "sha256": "bf70f1e382e3167ec17e443cdea4b7502d756285c03b26ea44680554eddd9362"
+          "sha256": "14b47ba12768d49c0f0a8e60a33c71bb57a103e85d8eee57715c8ec5ec72f4fc"
         }
       ],
       "controls": [
@@ -560,7 +1000,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:5:2:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -572,7 +1012,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:5:2:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -626,12 +1066,12 @@
         {
           "file": "review-phase-23-foundation/long-labels-simulation-desktop.png",
           "width": 440,
-          "sha256": "edf9662ffda30840a6aa48a0687172e0917632033200c015521dea902de2394c"
+          "sha256": "4ed6320b566758410070446f065661efe1ca91a4db6533de9b239122fdc36843"
         },
         {
           "file": "review-phase-23-foundation/long-labels-simulation-mobile.png",
           "width": 360,
-          "sha256": "7bd8dfe6eef417ff489587f306be0905bd64a525ad49ebb15ff89f5cf4df505d"
+          "sha256": "c576ed417816e1c3765d4855e0200d34eea8475e79d5b1c69930af2361358957"
         }
       ],
       "controls": [
@@ -648,7 +1088,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:3:1:pause:public",
               "label": "Pause",
-              "style": 2
+              "style": 1
             },
             {
               "type": 2,
@@ -660,7 +1100,7 @@
               "type": 2,
               "custom_id": "music:control:fixture-server:3:1:stop:public",
               "label": "Stop",
-              "style": 2
+              "style": 4
             },
             {
               "type": 2,
@@ -714,12 +1154,12 @@
         {
           "file": "review-phase-23-foundation/recording-choice-desktop.png",
           "width": 440,
-          "sha256": "420447164665f053e403b884aae64c12ec4bb807d1a0e6b4084b2f72f5c77683"
+          "sha256": "77ae7da5b3079e0d587142f66a00c906a0722ee1c8ed065d3de4d61cf1090375"
         },
         {
           "file": "review-phase-23-foundation/recording-choice-mobile.png",
           "width": 360,
-          "sha256": "37d333ca5fa9b61b528406e343c2a56378ed80c203869df4e45b0ff0db69e84f"
+          "sha256": "ebea993cd6b9dc3ef5c810b8d238be4b8608cd542638f9385da9121c2318dc04"
         }
       ],
       "controls": [
@@ -765,12 +1205,12 @@
         {
           "file": "review-phase-23-foundation/batch-confirmation-desktop.png",
           "width": 440,
-          "sha256": "faf56eda9d22a0392203fa557fd3bdf78e96343c3fc2acf40042d8555031e86a"
+          "sha256": "8fd5456e53e3c5f25a72670c5435abb88a0f7392c8e19a359ab3db3d1e3bb2da"
         },
         {
           "file": "review-phase-23-foundation/batch-confirmation-mobile.png",
           "width": 360,
-          "sha256": "704a7718664b28123b7bc9fd72d745b769268bba3227e9c857464b60485bfce9"
+          "sha256": "00ca222ab09ba5b8ad8e830a412d45c4d60844b7398c12b821a43e028033f4f8"
         }
       ],
       "controls": [
@@ -800,12 +1240,12 @@
         {
           "file": "review-phase-23-foundation/duplicate-confirmation-desktop.png",
           "width": 440,
-          "sha256": "4f16518a43c3c201e53298feaaab06cbc6f44bf0a8a0c6f78cff682b9c8f7d54"
+          "sha256": "e83af322e8244d6473e5dafcf388558090d17cadbc1d0a6d743345c30fe5d51a"
         },
         {
           "file": "review-phase-23-foundation/duplicate-confirmation-mobile.png",
           "width": 360,
-          "sha256": "fbb0d4b829cc9059fb894842d9ef2b5d81d1184f8b824e98d2b78995338f0eeb"
+          "sha256": "237aadc20564b33331a0b296449b6dcda53f5fca8e987d72af73d2e26600efb1"
         }
       ],
       "controls": [
@@ -835,12 +1275,29 @@
         {
           "file": "review-phase-23-foundation/queue-desktop.png",
           "width": 440,
-          "sha256": "4b9670ecd290400dd110094ed017655287e65ccfa8787b946790cc006cee9bcd"
+          "sha256": "b4201d7e79338f626303895ee40d29d7d3da29a266a39d9053f7ffd8e0f10d88"
         },
         {
           "file": "review-phase-23-foundation/queue-mobile.png",
           "width": 360,
-          "sha256": "07abb1a1cc10ba145fdccfb4527c4c10d4cb448c690c0dee0012f2bd138b8023"
+          "sha256": "7cd5427d678355591bdbbc0c0313d5f83fc8f4fe4dd33b6b4ef3358accf0a13a"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "queue-long-labels",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/queue-long-labels-desktop.png",
+          "width": 440,
+          "sha256": "44bbc1f130926d0bec15ce1d442fbacc339c9133ddc55304d955616b59b7ef11"
+        },
+        {
+          "file": "review-phase-23-foundation/queue-long-labels-mobile.png",
+          "width": 360,
+          "sha256": "74815bf624c128fef8e0c1361439adf5b98d286ce6876c2f2dcda1837079f4e3"
         }
       ],
       "controls": [],
@@ -852,12 +1309,12 @@
         {
           "file": "review-phase-23-foundation/history-desktop.png",
           "width": 440,
-          "sha256": "c32659882a7c7333b99f8481962717f3dd93d9041cf49a835c48ce616166e4a4"
+          "sha256": "9932fdb865648fd99728329d6baa7fa14308bbd7ff039a0889b533b373bd4f5c"
         },
         {
           "file": "review-phase-23-foundation/history-mobile.png",
           "width": 360,
-          "sha256": "4df6f1352a5edb5a11193ccde6bc8056a4d0cef9e228dfc333e47aeff911df05"
+          "sha256": "c68f18cd93f728328730a442b7b0e8dbfd5298536da149619e697cf451905f26"
         }
       ],
       "controls": [],
@@ -869,12 +1326,12 @@
         {
           "file": "review-phase-23-foundation/playlists-desktop.png",
           "width": 440,
-          "sha256": "7ca4885e4703a1c38be511f6592cac4f39de48fe9f3023efef7bc738fe9280e3"
+          "sha256": "60c702781f9c627f8f17b012f06b79916d033360f2027bbf241c83ed10500e7e"
         },
         {
           "file": "review-phase-23-foundation/playlists-mobile.png",
           "width": 360,
-          "sha256": "f9dcafa347dddf3e4385eb0e643dad8fc69a400f73d96a51d010c7e52f447c86"
+          "sha256": "6c0cb40627164476aebbdb0ddf252960304a9f5029886013e2a6ffe30c4eabba"
         }
       ],
       "controls": [],
@@ -886,12 +1343,12 @@
         {
           "file": "review-phase-23-foundation/playlist-tracks-desktop.png",
           "width": 440,
-          "sha256": "dd03066ab08c925da78a5ca1330fe35d203b9b88438c703ccd75c7938437cc51"
+          "sha256": "9f25e294981adfc31cc163374b2f50e2e7742d6015aa331021c1e86aaedc08a8"
         },
         {
           "file": "review-phase-23-foundation/playlist-tracks-mobile.png",
           "width": 360,
-          "sha256": "8b5825db50580349d149faebc96c9c1b549d57b4908467b2e0e9b79ed08d9b58"
+          "sha256": "5e1532323a408e405c2d6b4fd98fa3eaf926d323c6239f4c43f3930aa125ab5e"
         }
       ],
       "controls": [],
@@ -903,12 +1360,12 @@
         {
           "file": "review-phase-23-foundation/permission-notice-desktop.png",
           "width": 440,
-          "sha256": "e491752cd9967a095a2cef50459808783c31d61f11465a1f4e6dbd85f1ad9107"
+          "sha256": "7d0506008e4f535aef23d3492e87af20537f34da47902ca0039a39ed912097ff"
         },
         {
           "file": "review-phase-23-foundation/permission-notice-mobile.png",
           "width": 360,
-          "sha256": "c9a389b02f9f318b89bf8167da8e315aa1df79a8fd49f30dd48cecbd27b4926c"
+          "sha256": "9489dc29e6e0eddf4bd14ee833212d87d6d1eefbf593ec4fb29d78fb96267a3b"
         }
       ],
       "controls": [],
@@ -920,12 +1377,12 @@
         {
           "file": "review-phase-23-foundation/unavailable-notice-desktop.png",
           "width": 440,
-          "sha256": "d3fce490713a91145eb09414231ff488960c71734388576eb65ceead94810ce9"
+          "sha256": "32d2100a6c2ae0338c813e914929beb6527d4e339e920edbd10c42327c0d072a"
         },
         {
           "file": "review-phase-23-foundation/unavailable-notice-mobile.png",
           "width": 360,
-          "sha256": "a2f3fba62fed1f7c2d4b079f71f188ebc21e873576acc7d6fc6f37198ba2110d"
+          "sha256": "bc2a9b940092e125412ee07c2efb546180f3fb54135585ec4bcf37e202fd347c"
         }
       ],
       "controls": [],

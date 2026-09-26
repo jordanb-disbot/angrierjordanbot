@@ -6142,8 +6142,8 @@
       "category": "runtime",
       "canonical": true,
       "status": "ENGINEERING_FIXTURE_GATE_C_PENDING",
-      "usage": "Approved lounge frame applied to provider-neutral Music states; Discord adapter/owner Gate C pending.",
-      "sha256": "f9898e30a6430567f511e6636183fc9a0d7a982aaedd8c449d094ba5ff409f14"
+      "usage": "AJ modular Music full player, compact pinned strip, list panels and notices; Gate C owner visual review pending.",
+      "sha256": "95af036a6b94704a2bacf3638762d6fb93f2c984c6798073d17980b9193ef87f"
     }
   ]
 }

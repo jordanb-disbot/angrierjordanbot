@@ -6,13 +6,13 @@ Newest owner authority: [MUSIC_SOURCE_CONTRACT.md](MUSIC_SOURCE_CONTRACT.md). No
 
 Continue the existing `music-application.ts` and `music-publication.ts`; their earlier interrupted drafts have been extended in place. Dedicated application and publication tests now exist. Startup/job/interaction/voice-event/shutdown wiring is present behind the opt-in development switch. Do not restore stale notes claiming that these adapters are wholly absent, or infer that their presence proves live playback.
 
-See [PHASE_23_MUSIC_READINESS.md](PHASE_23_MUSIC_READINESS.md) for the implementation inventory and final validation record. Final offline results: full build/preflight PASS, 277 runtime tests, 366 adapter tests, 24 PostgreSQL tests, 34 fixture images, approved visual locks and secret scan PASS. This checkpoint extends e6c4d77; use its containing Git commit for live acceptance.
+See [PHASE_23_MUSIC_READINESS.md](PHASE_23_MUSIC_READINESS.md) for the implementation inventory and final validation record. Final offline results: full build/preflight PASS, 285 runtime tests, 368 adapter tests, 24 PostgreSQL tests, 46 fixture images, approved visual locks and secret scan PASS. This checkpoint extends e6c4d77; use its containing Git commit for live acceptance.
 
 ## Next safe sequence
 
 1. Offline integration is complete. Preserve the tested adapters, conflict-safe refresh coalescing, five-second disable watchdog, fresh-session recovery and frozen visual references.
 2. Provide the owner the bounded test-node setup in [GATE_C_MUSIC_ACCEPTANCE.md](GATE_C_MUSIC_ACCEPTANCE.md). No Java/Docker executable was available during this checkpoint and no live node was launched. No private catalog is required. Authorized Spotify/Apple metadata credentials are needed only for those cases.
-3. After the owner supplies the test node and controlled Discord test access, run and record real provider, voice, permissions, controller, concurrency and restart checks. Keep failed/unavailable cases explicit. Extend the 34-image fixture gallery with actual desktop/mobile captures and audible-playback observations.
+3. After the owner supplies the test node and controlled Discord test access, run and record real provider, voice, permissions, controller, concurrency and restart checks. Keep failed/unavailable cases explicit. Extend the 46-image fixture gallery with actual desktop/mobile captures and audible-playback observations.
 4. Present the evidence at Gate C and stop for the owner decision. Gate C and production release authorization are separate; neither has been granted. Do not continue Phase 24 across this gate.
 
 ## Boundaries to retain
@@ -27,3 +27,5 @@ See [PHASE_23_MUSIC_READINESS.md](PHASE_23_MUSIC_READINESS.md) for the implement
 - Repository workflows: shared atomic operations, sessions, timers, receipts, revision/generation fencing, authoritative controller reservation and durable cleanup/refresh intents.
 
 Do not inspect or print secret files for documentation work. Test database access remains restricted to the ignored project-root `.env.test.local` value `TEST_DATABASE_URL`; never select a production database for acceptance. The disposable Railway project `upbeat-kindness` is test-only.
+
+Music presentation revision 01 uses the reference-inspired modular AJ layout; see [visual review notes](MUSIC_VISUAL_REVISION_01.md). This revision does not approve Gate C or change playback behavior.
