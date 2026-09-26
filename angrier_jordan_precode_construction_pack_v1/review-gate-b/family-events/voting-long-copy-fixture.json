@@ -1,0 +1,47 @@
+{
+  "id": "fixture",
+  "guildId": "fixture",
+  "channelId": "fixture",
+  "messageId": "fixture",
+  "ownerId": "fixture-alex",
+  "state": "CLOSED",
+  "version": 2,
+  "createdAt": "2026-09-25T18:00:00.000Z",
+  "expiresAt": null,
+  "phase": "done",
+  "category": "Random",
+  "extensionUsed": false,
+  "submissionCount": 0,
+  "submissions": {},
+  "words": [],
+  "round": 2,
+  "game": "wwyd",
+  "prompt": "A warning arrives in the lounge: The family with a very long name has left a complicated note. The family with a very long name has left a complicated note. The family with a very long name has left a complicated note. ",
+  "options": [
+    {
+      "id": "open",
+      "text": "Open it together — Consider every member before deciding. Consider every member before deciding. Consider every member before deciding. "
+    },
+    {
+      "id": "wait",
+      "text": "Wait for the owner — Consider every member before deciding. Consider every member before deciding. Consider every member before deciding. "
+    },
+    {
+      "id": "inspect",
+      "text": "Inspect the label first — Consider every member before deciding. Consider every member before deciding. Consider every member before deciding. "
+    }
+  ],
+  "result": {
+    "label": "The lounge chose: Open it together",
+    "totals": {
+      "open": 12,
+      "wait": 5,
+      "inspect": 3
+    },
+    "percentages": {
+      "open": 60,
+      "wait": 25,
+      "inspect": 15
+    }
+  }
+}

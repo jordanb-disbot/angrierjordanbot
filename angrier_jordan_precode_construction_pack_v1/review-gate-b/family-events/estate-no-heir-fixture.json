@@ -12,6 +12,7 @@
   "data": {
     "kind": "estate",
     "departedId": "fixture-alex",
+    "members": [],
     "amount": "428750",
     "assetsTransferred": 2,
     "executed": true,

@@ -1,5 +1,7 @@
 # Gate B integration and owner review — 2026-09-25
 
+Historical integration evidence from the first Gate B package. Its visual counts and pending layout preferences are superseded by [the current visual corrections report](VISUAL_CORRECTIONS.md).
+
 Gate B is awaiting owner visual/product approval. This package contains 61 numbered owner-review items, 122 desktop/mobile review images, and two internal estate diagnostics (four images). They are deterministic fictional fixtures, not live Discord captures. Start with [the review gallery](index.html) or [the numbered review document](OWNER_REVIEW.md).
 
 ## Engineering corrections

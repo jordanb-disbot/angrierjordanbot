@@ -1,15 +1,13 @@
-import {heading,ink,panel,shell,text} from '../../features-events/src/visual.js';
-import {wrapText} from '../../renderer/src/text-layout.js';
-export interface CasinoResultRenderInput {
- title:string; memberName?:string; subtitle:string; amount:string; amountLabel:string;
- details:{label:string;value:string}[];
-}
-/** Shared production card: values come from saved state. */
-export function renderCasinoResult(data:CasinoResultRenderInput):string {
- let y=246,body=heading('CHAIRS · CASINO',data.title,data.subtitle);
- body+=panel(18,134,404,94,ink.gold)+text(34,158,data.amountLabel.toUpperCase(),11,ink.warm,'letter-spacing="1.1"');
- body+=text(34,192,data.amount,24,ink.white,'font-family="Space Grotesk" font-weight="700"')+text(34,214,'Ottomans',13,ink.muted);
- for(const item of [...(data.memberName?[{label:'MEMBER',value:data.memberName}]:[]),...data.details]){const wrapped=wrapText(item.value,372,16),height=45+wrapped.length*21;body+=panel(18,y,404,height,ink.slate)+text(34,y+23,item.label.toUpperCase(),11,ink.warm);wrapped.forEach((line,n)=>body+=text(34,y+47+n*21,line,16));y+=height+12;}
- body+=text(22,y+16,'Angrier Jordan · Chairs',12,ink.muted);
- return shell(y+38,body);
+import {ink,panel,shell} from '../../features-events/src/visual.js';
+import {centeredHeading,centeredBlock,portrait} from '../../features-events/src/gate-b-visual.js';
+export interface CasinoResultRenderInput {title:string;memberName?:string;avatarData?:string;subtitle:string;amount:string;amountLabel:string;details:{label:string;value:string}[];}
+export function renderCasinoResult(data:CasinoResultRenderInput):string{
+ const head=centeredHeading('ANGRIER JORDAN · CASINO',data.title,data.subtitle);let body=head.svg,y=head.height,content='',inner=y+26;
+ if(data.memberName){content+=portrait('casino-member',data.memberName,data.avatarData,220,inner-10,84);inner+=99;const name=centeredBlock(data.memberName,inner,{size:20,color:ink.warm,weight:600});content+=name.svg;inner+=name.height;}
+ const label=centeredBlock(data.amountLabel.toUpperCase(),inner,{size:11,color:ink.muted,gap:10});content+=label.svg;inner+=label.height;
+ const amount=centeredBlock(data.amount,inner,{size:24,color:ink.gold,weight:700,width:372,gap:2});content+=amount.svg;inner+=amount.height;
+ const unit=centeredBlock('Ottomans',inner,{size:13,color:ink.muted,gap:0});content+=unit.svg;inner+=unit.height;
+ body+=panel(18,y,404,inner-y+12,ink.gold)+content;y=inner+24;
+ for(const detail of data.details){const label=centeredBlock(detail.label.toUpperCase(),y+24,{size:11,color:ink.warm,gap:8}),value=centeredBlock(detail.value,y+24+label.height,{size:16,width:368,gap:0}),height=34+label.height+value.height;body+=panel(18,y,404,height,ink.teal)+label.svg+value.svg;y+=height+12;}
+ body+=centeredBlock('Angrier Jordan · Chairs',y+12,{size:11,color:ink.muted}).svg;return shell(y+32,body);
 }

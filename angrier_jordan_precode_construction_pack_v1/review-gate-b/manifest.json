@@ -3,7 +3,7 @@
   "status": "OWNER_GATE_B_PENDING",
   "fixture": true,
   "liveDiscordCapture": false,
-  "reviewCount": 61,
+  "reviewCount": 70,
   "diagnosticCount": 2,
   "items": [
     {
@@ -48,10 +48,10 @@
       "group": "family-events",
       "key": "family-events/marriage",
       "hashes": {
-        "desktop": "3cbfc08e884ad5fc2e60ba06127e567a71917ddf5d1161385c18616b9d9563b9",
-        "mobile": "fb00d96fb46026826721522b408e0b33a3d986ff42520e37d46e50765acfba89"
+        "desktop": "e6ffa8c5a2f253c1f93d95ad95d0c9b6f3d116d0d1898a0bef26c95f6df00555",
+        "mobile": "4a5a71c695a7d03fa40b0f0a3da2a43adb3d99dfcac3f6c11b0e1693c6af5c99"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 1
     },
     {
@@ -88,10 +88,10 @@
       "group": "family-events",
       "key": "family-events/proposal-pending",
       "hashes": {
-        "desktop": "e5d0dfcbf092329042cd9cb09b06c15b1db56ae709d0384dd6e7dc78cd1753f2",
-        "mobile": "7a13cca1c3f40f6d816021ece4181515bbcc3481b3ba2bdea8a12d6bced0c2e0"
+        "desktop": "7584d300c5ec48e9f42ccacf71c45a6a2b9b3cb305ca5e7f2165b1b7f994ba84",
+        "mobile": "13b7a4660b6e16987801c9dacc7da8a8f1e09252d77ab69e08140274fb6bac1b"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 2
     },
     {
@@ -128,10 +128,10 @@
       "group": "family-events",
       "key": "family-events/proposal-blessing",
       "hashes": {
-        "desktop": "979ccaa453c1907b957aec26ca7cea3350f5c6f8a615bd2feb260ea7f5b77109",
-        "mobile": "04dc4311d39475cc8c538d41756ea034832d0a6bc41566a5fa88d501772b74d9"
+        "desktop": "797b3aeb24f4361b524e407fdeae9d06333185717b76419f383722add76e74dd",
+        "mobile": "4c5efe06e445e80109b58eedee5244cdf1d74feeef646eeb9f7a37e671340d6a"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 3
     },
     {
@@ -154,10 +154,10 @@
       "group": "family-events",
       "key": "family-events/proposal-declined",
       "hashes": {
-        "desktop": "ed09670d10453c8c97b94809c9dc20a7c8b312a80838ad3fee8c07f484411372",
-        "mobile": "2df9e69addd4b3b0456cd737f22e1a8ae2a7244e0702ad157ced5ed48740c000"
+        "desktop": "de6ee404871248a7f1b2fb3c24f71310dee00f45a6adc6966e3821c5bde8646d",
+        "mobile": "e377c7c94c10edfc060c8deb833042f6251d95d1b483a685aedcf64a3bb67b0b"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 4
     },
     {
@@ -180,10 +180,10 @@
       "group": "family-events",
       "key": "family-events/proposal-expired",
       "hashes": {
-        "desktop": "4a62262516a8532b8a0a5ac03febdf9cef52e97b27aebfd73864f08b642beb26",
-        "mobile": "0039ff52b196c1b4595beb0d5b2ba7807e0985a293eee712e6e340715d6c1f8c"
+        "desktop": "c9d11493c80c5bbc59f298e7ec8f7b73ddb2a47c4580e8cf1deb6602c17c1644",
+        "mobile": "095ec1288defeec60a2a810d03f4145b8a57b3f845a6540d8871729f49976026"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 5
     },
     {
@@ -227,10 +227,10 @@
       "group": "family-events",
       "key": "family-events/marriage-live-vote",
       "hashes": {
-        "desktop": "3298bfd7f640dccdbba2cfa27f2c0e78d4263d887a37b00ccf6de154cf6f3ae4",
-        "mobile": "676ef5ba1865a3eebc2aa462d7d915efb2625fd7c14984490ddd5a85d6d478ee"
+        "desktop": "773c730bcbd24ccde45b5eaed582208209bfb782e8777b4aa56d340f4a14cfc4",
+        "mobile": "db564ce6e6d284d37324c09925025cd2f34c43a507b51d6c96a6c018500aaec2"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 6
     },
     {
@@ -275,10 +275,10 @@
       "group": "family-events",
       "key": "family-events/marriage-blessing-consumed",
       "hashes": {
-        "desktop": "1d6efdaf2f696fa6c12c350dfa6e205b1e0da681f62a23d3bb85eb19c1fb92cc",
-        "mobile": "c4fb43f48764d955b71b8dca075c39504ca8ff48727dea9ec649c05504c626ae"
+        "desktop": "8260c37a7ce686d3f3a65ca766aefa918e16e75c9f53cd4f7425b173c0079707",
+        "mobile": "3f396fe806430ab81a44863a7aa3f75bde06b7a15c35a8b207568d9470e2cfed"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 7
     },
     {
@@ -302,10 +302,10 @@
       "group": "family-events",
       "key": "family-events/divorce",
       "hashes": {
-        "desktop": "869ee108e9a3904ceb287176ce26c1b5ac4494aeb58ba866f0e2832dadbddb44",
-        "mobile": "075247dd3ff5a6b4dc7365d46b2a43ba2aa1b309a4dd46aa584126751348b633"
+        "desktop": "cfc06a67a4ec45c576545f390b31484e54e3d38cafdc6de700c61c80789ed7f7",
+        "mobile": "d0ef605b8510c7e5667681fc32dda441024235abc63f8f7e1df3139e4be05efc"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 8
     },
     {
@@ -329,10 +329,10 @@
       "group": "family-events",
       "key": "family-events/divorce-large-value",
       "hashes": {
-        "desktop": "29b24c0e809d6fa0f70589df5be2cab093d8ede3cf006d5055637d2ca9e2d823",
-        "mobile": "c5b882b4232452013dd2aaa8629ac2f2a795900af1b336c40567d76e0d963966"
+        "desktop": "636739508a39c3276d15bc3f28455391be32c0efe7667478d2d72e8b17112c00",
+        "mobile": "e718e1bed5dff24f74fcf1aedf359edce3b3864217c9b40d548de16a75dca56a"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 9
     },
     {
@@ -356,10 +356,10 @@
       "group": "family-events",
       "key": "family-events/inheritance",
       "hashes": {
-        "desktop": "822fad12844467dde5d3811779b492921d564ea46e8c6605a764beac01c2dc4e",
-        "mobile": "8c48cec28f3d5bfcbb65aa15bca3990898fe15dc1a0941aa5e156d18538b2673"
+        "desktop": "a7d276755a397c3f2fbafb388008ecc4fbffa663d9733d6013451b69d91a0fd8",
+        "mobile": "6ad03abd5175fbf34e8335c8b1bf3e59df2c54e1069b4798882f55f6efde9f18"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 10
     },
     {
@@ -383,10 +383,10 @@
       "group": "family-events",
       "key": "family-events/estate-no-heir",
       "hashes": {
-        "desktop": "d80ef623d7601e6bf848ac23d616370b743c6e280424194a730810d27190fa7b",
-        "mobile": "4bfcc9154d53e44335ed1e94fa9d9d18736d118375d53a3f6f2c59f79d8c580a"
+        "desktop": "b892eeb78316d22a0bc9f2847690b276f5d892d9df4426416621f275356047fa",
+        "mobile": "0e4b65ad341d0a3da1c68b91089bbbad27703227e51e9cae829f5235b0abead6"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 11
     },
     {
@@ -410,10 +410,10 @@
       "group": "family-events",
       "key": "family-events/estate-empty",
       "hashes": {
-        "desktop": "3247a6c58c2300cfcdd0b0da372ff13e16e379723a96dd6dfc48d8501045c992",
-        "mobile": "68dc0c3cc51933dff0683192eec56f2bacdfdadb5145a9bb0ae180bddc3df8c2"
+        "desktop": "8104640b7dd552964f925220b9c81724791af318f594e846fc6be7d5950d81e9",
+        "mobile": "4512e412bbed395c8ecef90ecc36a221bf061c241c78bca0fb7f50e065dc096a"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 12
     },
     {
@@ -436,10 +436,10 @@
       "group": "family-events",
       "key": "family-events/auction-win",
       "hashes": {
-        "desktop": "e961302644c5cd0e8075dc0a6b06af0b8c9031ae6894ad5000cdd87feb777ee1",
-        "mobile": "29af2137fe775e6474afebe1191ae6b90f8d3d5e0e882e223b37934973285331"
+        "desktop": "f0341b8f1b54fe4d1e3151d7517c05da643cf5cb33d9cdce00256b2a211ec44a",
+        "mobile": "9639a6549f2363b02d4930bf90057c2f30ab4311d21d6d3066aa3e5d7776e02d"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 13
     },
     {
@@ -470,10 +470,10 @@
       "group": "family-events",
       "key": "family-events/auction-open",
       "hashes": {
-        "desktop": "da788688660b6245f3dbff01b8d2483f04fec249f0fa6fc5dc8a4714d4e92491",
-        "mobile": "e1c99acc550c3178dedfca6d9a8e3aafa0ddbcf7050d75e0542125c7bc98c9df"
+        "desktop": "d88068239db958e1fce1e2bf5c1518c09274f0a970a24f7247c9b4f6b791595d",
+        "mobile": "1a899f7736547020d6f2533cb23e6da9afc8969311cf3db20c29cd4fdd883a68"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 14
     },
     {
@@ -496,10 +496,10 @@
       "group": "family-events",
       "key": "family-events/auction-refund",
       "hashes": {
-        "desktop": "2c43839b779808c77f75a1db3e8e615724938abdf053a308fb084bd280614c5b",
-        "mobile": "871243a098d6a06f055f529e1850229cde63867725b8ed11c8cf4640b34f8fed"
+        "desktop": "6faeee8448b6d26c18a09c8134699b4e562fa352758b225567107d97f75c9ee8",
+        "mobile": "e477c88404f1186461186f07c833e00f7c4d411439f047155fa3942046bdae41"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 15
     },
     {
@@ -522,10 +522,10 @@
       "group": "family-events",
       "key": "family-events/estate-auction-win",
       "hashes": {
-        "desktop": "a08999f5dad992a421e1e0fb595fbc6c28fd7970a3723a1d6bb3b74841525d9a",
-        "mobile": "aabeaa89f9ad49bdb5893d4f73009aff8131e55930bcb08d4314bd385740f1c2"
+        "desktop": "5e5397599f7efbd171d02cf481cc8a9a815f64d79f8770544e0ee19da101f18a",
+        "mobile": "6e6a2ccbca38797b7b721e6186220aae707b5a50f59665b8ad826111b940fa0a"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 16
     },
     {
@@ -561,10 +561,10 @@
       "group": "family-events",
       "key": "family-events/adoption-pending",
       "hashes": {
-        "desktop": "d15fd23e01b0d8a40f4790670abd32638218d5d196b80c874c9a0bba91ac03ca",
-        "mobile": "dc9f9809eaabd45be299bf4318c69a838b11ff619e9370fa0f574fc0d809f485"
+        "desktop": "f9ea31a8ea2969feb5657f23ba346d1fd52adde838b80be24120027bd0ef4fa1",
+        "mobile": "7189839cce5f54d5bd8da5c243e0bc146ff4d582ac45104f15f5d4bc97d146c8"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 17
     },
     {
@@ -594,10 +594,10 @@
       "group": "family-events",
       "key": "family-events/adoption-accepted",
       "hashes": {
-        "desktop": "5cce5522e3d0abe843c16ee19ea7769be89b8208bcfbde27f63d81fce1411886",
-        "mobile": "a41110abb00404cc0a74a99a9d37988a8113b172fefca3596ce1db7cac92c8f1"
+        "desktop": "f9aeee79525b9b0bfa1e1f61f5855d5078aac5c97dff77ca50ddf8e11c3cc354",
+        "mobile": "303635b0e960f724f5164e700d77457b3a2340071d0c7da91e5f5a7012434a64"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 18
     },
     {
@@ -620,10 +620,10 @@
       "group": "family-events",
       "key": "family-events/adoption-declined",
       "hashes": {
-        "desktop": "af6f4d5addfc0018df120b34ad3fbd4a05dc2097f32c4493e8eaf2503ce0ec9c",
-        "mobile": "e42035b8b26f0cf009cf5cd29b4a6cc231fd2547dd8f03f0d1f1925be85a20eb"
+        "desktop": "30756b1175e521e2ac77c6c80263e1687472cecb1b45e11117752f7ef55741fc",
+        "mobile": "5839dec70428f81a178a44318fba0b6c4cf7fb7d7d8370c168f97ee39ba1e02f"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 19
     },
     {
@@ -646,10 +646,10 @@
       "group": "family-events",
       "key": "family-events/family-ended",
       "hashes": {
-        "desktop": "fe23dc0e228692190777baa9be9dd4958274979b835e0e18ebaca11b9f6c9288",
-        "mobile": "01b9e98af686e041234a21c1d61065932a61ca6db116d499a80658aa51bfd979"
+        "desktop": "fadcb0f766af8e5c8bca49b5dbfbfd10e9b9c88a83f95ace3df33657976daa4e",
+        "mobile": "b4d3510766b61ad38476ab3ea0b6a4898ff025958de0d85467f8d98438cc1f60"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
       "number": 20
     },
     {
@@ -680,10 +680,10 @@
       "group": "family-events",
       "key": "family-events/arrest",
       "hashes": {
-        "desktop": "021a8ca7bb62b0cd10c0475b4f7ef36e2ec36af36472cca58a0fcd073e5ba565",
-        "mobile": "2c366c7a2d413fda8591a5a4a29b4d76ecca8d14b483ebfe56e3b9d42cda2e29"
+        "desktop": "a0505430bd0d7c00c09f0b38f17bfd036b476cc8b070b31057fc5663907499a6",
+        "mobile": "b28fdebb24ab42112556fdaec077ad2ce694a789a79da6df358409ddfd21c3c1"
       },
-      "rendererHash": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd",
+      "rendererHash": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1",
       "number": 21
     },
     {
@@ -719,10 +719,10 @@
       "group": "family-events",
       "key": "family-events/fmk-result",
       "hashes": {
-        "desktop": "ea58778e13559b050fe330d8cb1b02ce7d7cb5af4488f75827177406ab91f27b",
-        "mobile": "60b764e96b670a3c78ba8e24c76827297acd8a0d4a49bccc2067b7da1e7120da"
+        "desktop": "47fbcfd23f5d233df6b67f8abf7eee6e15b6b4d8b5c64f24341d3805506ee0b9",
+        "mobile": "c71032b9ef19049adcec466e3a47b2d29cc1ee3ea94bcf12f288c1c763953413"
       },
-      "rendererHash": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9",
+      "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
       "number": 22
     },
     {
@@ -758,11 +758,267 @@
       "group": "family-events",
       "key": "family-events/voting-result",
       "hashes": {
-        "desktop": "e16c6ceba508448e5a574450f0564537179c3ebcb3c868bcb2a837a2ba60a4e0",
-        "mobile": "e6844e7a721c24209f3fd3f39eeb06826e6dae73854cee0b86a529bd774e87ae"
+        "desktop": "74a6d0813113ff8f2c6f70b706aa7ce543bb5a28ec93ed5362189a9d55ff1835",
+        "mobile": "5199cda6f79b8fa0f98080772443b9dddd405776492f2f7f8bbcb7093f69556f"
       },
-      "rendererHash": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9",
+      "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
       "number": 23
+    },
+    {
+      "id": "arrest-fallback-extreme",
+      "name": "Arrest — fallback portrait and long bail",
+      "desktop": "review-gate-b/family-events/arrest-fallback-extreme-desktop.png",
+      "mobile": "review-gate-b/family-events/arrest-fallback-extreme-mobile.png",
+      "scenario": "Fallback portrait, unbroken long member name, large Ottoman value and moderation warning.",
+      "transcript": "review-gate-b/family-events/arrest-fallback-extreme-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/arrest-fallback-extreme-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "crime:rules:fixture",
+          "label": "Rules",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "financial",
+        "moderation-related"
+      ],
+      "renderer": "packages/features-crime/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/arrest-fallback-extreme",
+      "hashes": {
+        "desktop": "ab8af6f34f5f1fb311bd7863d4dd910ee438d14b2dca811d0034a109c95a7e04",
+        "mobile": "470d29579848ea9ad9d72aa29d7800ee9767a8711daa61533cada7a54ae1b5d9"
+      },
+      "rendererHash": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1",
+      "number": 24
+    },
+    {
+      "id": "robbery-members",
+      "name": "Robbery — member portraits",
+      "desktop": "review-gate-b/family-events/robbery-members-desktop.png",
+      "mobile": "review-gate-b/family-events/robbery-members-mobile.png",
+      "scenario": "Both members in an active incident use deterministic fixture portraits.",
+      "transcript": "review-gate-b/family-events/robbery-members-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/robbery-members-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "crime:fightback:fixture",
+          "label": "Fight Back",
+          "style": 2,
+          "disabled": true
+        },
+        {
+          "type": 2,
+          "custom_id": "crime:report:fixture",
+          "label": "911",
+          "style": 2,
+          "disabled": true
+        },
+        {
+          "type": 2,
+          "custom_id": "crime:rules:fixture",
+          "label": "Rules",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive",
+        "financial"
+      ],
+      "renderer": "packages/features-crime/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/robbery-members",
+      "hashes": {
+        "desktop": "6ec180a10ad3ffea3d9f77cd0125f858d7e54f088f0c564165787b5202175db8",
+        "mobile": "b716b965cf3b80becfd27a88463fde18e40b08132c8a6a68e86ca2629ada087f"
+      },
+      "rendererHash": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1",
+      "number": 25
+    },
+    {
+      "id": "fmk-fallback-extreme",
+      "name": "FMK — short and long names with fallback",
+      "desktop": "review-gate-b/family-events/fmk-fallback-extreme-desktop.png",
+      "mobile": "review-gate-b/family-events/fmk-fallback-extreme-mobile.png",
+      "scenario": "All three assignments retain complete names and deterministic no-avatar portraits.",
+      "transcript": "review-gate-b/family-events/fmk-fallback-extreme-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/fmk-fallback-extreme-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "party:again:fixture",
+          "label": "Play Again",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:details:fixture",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-party/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/fmk-fallback-extreme",
+      "hashes": {
+        "desktop": "b31ef33d654446b1d16060c3dec0ff6e14eb29de2635a970e4db5d1b46b2f3eb",
+        "mobile": "a058c7510ab80e1049fa5b3e4f35116e8a959865ce038ba44a937c0c2aad6d24"
+      },
+      "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "number": 26
+    },
+    {
+      "id": "voting-open",
+      "name": "Voting — open branded feed",
+      "desktop": "review-gate-b/family-events/voting-open-desktop.png",
+      "mobile": "review-gate-b/family-events/voting-open-mobile.png",
+      "scenario": "Open voting has branded choice panels and real coordinator controls; ballots and totals remain hidden.",
+      "transcript": "review-gate-b/family-events/voting-open-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/voting-open-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "party:vote:fixture:open",
+          "label": "Open it together",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:vote:fixture:wait",
+          "label": "Wait for the owner",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:vote:fixture:inspect",
+          "label": "Inspect the label first",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:extend:fixture",
+          "label": "+30 Seconds",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:details:fixture",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-party/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/voting-open",
+      "hashes": {
+        "desktop": "e5d9e3c14979914fe3f9566811d3360209e6f77de2dcedb6d4f75da46faebeb0",
+        "mobile": "79d8c5da225e2f20407154e112bd402d37415e71234c1ee53a47c94e64c746be"
+      },
+      "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "number": 27
+    },
+    {
+      "id": "voting-long-copy",
+      "name": "Voting — long prompt and choices",
+      "desktop": "review-gate-b/family-events/voting-long-copy-desktop.png",
+      "mobile": "review-gate-b/family-events/voting-long-copy-mobile.png",
+      "scenario": "Long warning copy, long choice labels and wrapped results remain readable.",
+      "transcript": "review-gate-b/family-events/voting-long-copy-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/voting-long-copy-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "party:again:fixture",
+          "label": "Play Again",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:details:fixture",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-party/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/voting-long-copy",
+      "hashes": {
+        "desktop": "81bc3bcc898cd935ffd4725fac2b1eaf81d59d5d5d8a473a9d00871a0c3a41db",
+        "mobile": "ae0f80f4e054406e4a2434e9fc23be965e28e1263e5cbb0f70b296c43af441b4"
+      },
+      "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "number": 28
+    },
+    {
+      "id": "family-fallback-short",
+      "name": "Family — short names and no avatars",
+      "desktop": "review-gate-b/family-events/family-fallback-short-desktop.png",
+      "mobile": "review-gate-b/family-events/family-fallback-short-mobile.png",
+      "scenario": "Short names and deterministic fallback portraits in the pending consent card.",
+      "transcript": "review-gate-b/family-events/family-fallback-short-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/family-fallback-short-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:accept:fixture",
+          "label": "Accept",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "family:reject:fixture",
+          "label": "Decline",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/family-fallback-short",
+      "hashes": {
+        "desktop": "a4b83acb9e70d95f07e9725bf3b58074c2007477fcb2ae38db5940e388706a62",
+        "mobile": "7752b1c5fb2d10f0316b5e7b664c348b6a400458062f5c0aa2da228916349991"
+      },
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "number": 29
     },
     {
       "id": "family-tree-empty",
@@ -784,11 +1040,11 @@
       "group": "family-events",
       "key": "family-events/family-tree-empty",
       "hashes": {
-        "desktop": "96a7b2509e9955f133519031251bc1fc54d4fd12cf70807b40fb7312f297e16a",
-        "mobile": "e41a62ecc25b104e4e2ff9bf3bf8f21afa7f34ea5edbe593a28d0970b1f633c1"
+        "desktop": "ddbb46af4f2daed2cfce8d0ae170fae9304bca90a10ed749ca714b5241453f46",
+        "mobile": "3d866879e74f9997764e1f4b8726fa8ab3675c89d67b8ba1e30b1746f72439d8"
       },
-      "rendererHash": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab",
-      "number": 24
+      "rendererHash": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157",
+      "number": 30
     },
     {
       "id": "family-tree-large",
@@ -810,11 +1066,11 @@
       "group": "family-events",
       "key": "family-events/family-tree-large",
       "hashes": {
-        "desktop": "4a5e6fb22a1e4d8caa8bccb641d09f54edc975cc6e0a12a371cffd44af8e7a31",
-        "mobile": "106b459a516b24426be3ddc7d1350cf5045c91b4255f7488a8fb73ee7eeb8d3f"
+        "desktop": "c5349d0ba26271f50130e4f1dfa1e5ab7a6b4d73d610e77aa1bdee1886a7450e",
+        "mobile": "ee1093641c0f4b74a13707fbd8141fcc015c1369fc69a04f29170e66e72ca0c0"
       },
-      "rendererHash": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab",
-      "number": 25
+      "rendererHash": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157",
+      "number": 31
     },
     {
       "id": "major-casino-win",
@@ -839,11 +1095,11 @@
       "key": "casino-profiles/major-casino-win",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "fd207b37b4edd6f3ada9564a3b7d0d2b93bdc8d83ba8495af141f8cfab9f0727",
-        "mobile": "429eba8fbeaa87fc7719a85aebe10c6e9aae58a9b1bd908608dbd38b46ceea0e"
+        "desktop": "2e75537f442874067c651d8e960e32d99251cce183c8af464833b7d042c06f8f",
+        "mobile": "44bdb20cf3333c40b2f69af6c63b67446f42794bc20937e85396898ef87bace9"
       },
-      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
-      "number": 26
+      "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "number": 32
     },
     {
       "id": "lottery-winner",
@@ -865,11 +1121,11 @@
       "key": "casino-profiles/lottery-winner",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "f00e1056e173881f4d58c318eb4341d49e00b96b398747f46d0c3b761c606381",
-        "mobile": "bb7771da84560fd350d231df290625186f31796e5cb143eb7dab20d8869e2207"
+        "desktop": "2e34f1ea1fde684b0330cba6efdd828ea73bb8769b0e2e40b12622d1b2d74abd",
+        "mobile": "c8404f340b90ac77abbd25ed2d32b01d650862bf07d14c24aabf669fec663fad"
       },
-      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
-      "number": 27
+      "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "number": 33
     },
     {
       "id": "chair-pot",
@@ -891,11 +1147,11 @@
       "key": "casino-profiles/chair-pot",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "5d7e55be33e4c20f862f19234a77d61838914be333e3e82e270c4b45c17fb7e0",
-        "mobile": "04db9fe35cf8708fa1373ea91e6e8e7710c7e161cc5a7194acda6aaaac135b34"
+        "desktop": "212dcf05ce45715b21a0d8288b747dc57ed743da5e3fc2f6ed8d22d9a85fd855",
+        "mobile": "f85c6f0baa1f0689f56a92e9c1b4300e57a60027f8289f35745a2642ac04d6a2"
       },
-      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
-      "number": 28
+      "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "number": 34
     },
     {
       "id": "weekly-spotlight",
@@ -916,11 +1172,11 @@
       "key": "casino-profiles/weekly-spotlight",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "30b55afd4167b87f44079b737000d172b96387ed3d0614a914fecc1cb6359e8e",
-        "mobile": "4488e7bb78119bd611ad955ce2b6a7a065f5f893242ae4d0a440e7ad9a3fb4a7"
+        "desktop": "efc9db42c09586b4e3277f03205e35d0cd583c8bd470eb3ba95ea8c62d3f44b3",
+        "mobile": "87d00b6a9d057ef978f9af5cb6ce513e77cf251ef6933b11429883c674299508"
       },
-      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
-      "number": 29
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 35
     },
     {
       "id": "major-record",
@@ -944,11 +1200,11 @@
       "key": "casino-profiles/major-record",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "189deed43baf26415c7934e10800585ba4c17d21819ebd082568d0e8b957d273",
-        "mobile": "5956880504b0faa951d643c00db0af3d828cee69b2f44f5091313527bca2cef0"
+        "desktop": "82b07fb6940a4da381857459468cf8d4935680ba078176bfebfc1ec3c6348fbc",
+        "mobile": "d791be41abc51d1a2ce1f048d3f2f6663435348e1ef7f176b8813f70fc52b845"
       },
-      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
-      "number": 30
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 36
     },
     {
       "id": "chair-pot-long-values",
@@ -970,11 +1226,11 @@
       "key": "casino-profiles/chair-pot-long-values",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "43ad831f1621908e44ddafe3c8a702ea9d8c568bf3e1835233b0c3f3fe7b8b3e",
-        "mobile": "c846bfc3804fa63680c76df76f68c83562e965bbdde75e8cbcadbfd503882c3e"
+        "desktop": "aa3bc912d816d059256f5b293357eb9d717d56693c8f8e2de7ece738ceeae79d",
+        "mobile": "a5e33bcd37cc905f508d86c5a8264ddcd3a6273d7c62320a8e00c8433a48c065"
       },
-      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
-      "number": 31
+      "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "number": 37
     },
     {
       "id": "weekly-spotlight-empty",
@@ -995,11 +1251,11 @@
       "key": "casino-profiles/weekly-spotlight-empty",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "f19066f9e394016b926b0b55ab276b0377d5b5cd309deadf73fa5919f7e7c5a1",
-        "mobile": "e40752538c4bed02debf796fd26ab255f6d566c22228d7ff24180fc1938e8c4f"
+        "desktop": "72e97472ea74b4ed63e0b58420ca00035f079ec23001e9243d2e73a359e6eb3c",
+        "mobile": "50ed5371701d9c3a831b6b5978af27d880d6636ca35620fa105583019107e982"
       },
-      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
-      "number": 32
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 38
     },
     {
       "id": "weekly-spotlight-long-names",
@@ -1020,11 +1276,11 @@
       "key": "casino-profiles/weekly-spotlight-long-names",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "c6faa28382265da75813ed96090b52f0a7874fa3acad9bcb7dce84860e57ce0b",
-        "mobile": "ebdc8ff93bdd020e08133afc4c78bcd5d09e65089e90081041d0b6b3bd86840c"
+        "desktop": "a9f3c51f989608694f7ba0de4d1853d393391587728906fac209a3a2203e3753",
+        "mobile": "d6bc5b47f038dc078562da1df956e930dfe965c3b4e2134c37cdb734ef199166"
       },
-      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
-      "number": 33
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 39
     },
     {
       "id": "records-empty",
@@ -1048,11 +1304,11 @@
       "key": "casino-profiles/records-empty",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "b00c911abd5c274a3fbcafd3be62a9338976e9c96229f39e9dd9ed6830d832db",
-        "mobile": "e8a0b3b820629760195d8cb011ee60adffd895e726afe0484ba8de8e2cd6547d"
+        "desktop": "29235cf8529d1303763a424db7f2c3355625e5f09f35c8c2ef2d6e4ffae38f57",
+        "mobile": "556db2d41f8c2eb56714fa1965e9f8e076839452cce28cf5eb93e7af78d5e241"
       },
-      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
-      "number": 34
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 40
     },
     {
       "id": "records-long-values",
@@ -1076,11 +1332,93 @@
       "key": "casino-profiles/records-long-values",
       "liveDiscordCapture": false,
       "hashes": {
-        "desktop": "fe0c819a79a17916dd2fdec9f1141a93e2fad4734321cf39f37c2067a87199b4",
-        "mobile": "b5c0c3aa8d9af4db09b35c004c2c0b568260b1fe454e121707aa48e9d97fe1a1"
+        "desktop": "ec603d52461ccc3a6e4ca2e35cb4c2aa4f728c2a8697e11b76aa7104aca085de",
+        "mobile": "67b0a45eccaf6b4a25fc0bf53acdc3be0836157bcdd51736c032f27bf70136c9"
       },
-      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
-      "number": 35
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 41
+    },
+    {
+      "id": "member-profile",
+      "name": "Member profile · public summary",
+      "scenario": "Public profile composed from already privacy-filtered activity, honors and showcase fields; actual native Edit Showcase remains member-bound.",
+      "controls": [
+        "Edit Showcase"
+      ],
+      "classification": [
+        "informational",
+        "interactive"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderProfile",
+      "desktop": "review-gate-b/casino-profiles/member-profile-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/member-profile-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/member-profile",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "76ea5278f6c0dd5703ce6fb23fe4ba0432662deb9f552eb74a80fb8f4bd0f1ea",
+        "mobile": "cc8a5ed1808112008341c24cecdc96688873933fe6c5ad8bf46b0ed3fbba0fa6"
+      },
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 42
+    },
+    {
+      "id": "record-announcement",
+      "name": "New record · public announcement",
+      "scenario": "Durable new-record announcement: Alex improves Biggest Casino Win to125000; previous100000 held86400seconds. Publication uses current portrait and same result shell.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+      "desktop": "review-gate-b/casino-profiles/record-announcement-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/record-announcement-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/record-announcement",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "2188c917bd3d02db993fde7f22770fdbb29c3fe95419569a8ec286a2a5b6390d",
+        "mobile": "3abba4d637d85ab746731226a204e0c35f1aad2edcf63e1a83f3eb4ba6515044"
+      },
+      "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "number": 43
+    },
+    {
+      "id": "casino-avatar-fallback",
+      "name": "Casino · short name and missing avatar",
+      "scenario": "Resolved identity Li with unavailable avatar, exact zero return and truthful fallback portrait; no network-dependent fixture content.",
+      "controls": [
+        "Play Again",
+        "Rules"
+      ],
+      "classification": [
+        "financial",
+        "interactive"
+      ],
+      "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+      "desktop": "review-gate-b/casino-profiles/casino-avatar-fallback-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/casino-avatar-fallback-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/casino-avatar-fallback",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "1c3f66bf0521b672a58af349c88e75a7cf47823cf800018cab3680140190feb8",
+        "mobile": "e9e129e0470e7bcaac5635e4dfb8e0bb2bd996065e49a2d2e90bad89eefd6689"
+      },
+      "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "number": 44
     },
     {
       "id": "community-poll-hidden",
@@ -1121,11 +1459,11 @@
       "group": "community",
       "key": "community/community-poll-hidden",
       "hashes": {
-        "desktop": "47da75be58e356cadf28a794b092cf03a93807100373dab8109f792416aab113",
-        "mobile": "3ce76ee7f0bbc6fe3094fe7f3e2ad36fe992371d394823b80bacaa97d45d20ad"
+        "desktop": "3d5fdafb36495460932b5f0f98d319523c0ef2d25a258262b287e0e8171f55d8",
+        "mobile": "233ae0ceedec794d17f1c2152a8e48d4d233d66a6ac236eaf6c62424f2c16f57"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 36
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 45
     },
     {
       "id": "community-poll-ranked-result",
@@ -1154,11 +1492,11 @@
       "group": "community",
       "key": "community/community-poll-ranked-result",
       "hashes": {
-        "desktop": "30b92dcce89f5ee0ce0eb201f42b2f84c89d31f0dc555e2cc0b45f0df9b1b3ae",
-        "mobile": "c8901cdc78a40bd1aa04725251c250fd3ee44084100043dbbbf8059cd05bfe09"
+        "desktop": "7b0454d7bd79d65799eb4e6ab4b44c13acd7298b78d4233cc2c130253d7e07ac",
+        "mobile": "6e9d701ab232efcf485e7487c1cef69dc884cec8ab53709f723bab145ab63f68"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 37
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 46
     },
     {
       "id": "community-suggestion",
@@ -1199,11 +1537,11 @@
       "group": "community",
       "key": "community/community-suggestion",
       "hashes": {
-        "desktop": "273ec92c2bbacecc0cade2601e3339f78964a810cddb6293d0007711818e5f1b",
-        "mobile": "a8a7992f7f1d708801437e5a9a017d69eee56725d0c8eba8ce1325edbf5d40cf"
+        "desktop": "d603d48ce0faa71f1103013f462573b2ca173a9d568c4bbf72e5da0322ad5fed",
+        "mobile": "7caf1e559ec1ea88064c0fa5fa7a9189b72c81cd52cc451f2d7ed460df0095cb"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 38
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 47
     },
     {
       "id": "community-ama-open",
@@ -1250,11 +1588,11 @@
       "group": "community",
       "key": "community/community-ama-open",
       "hashes": {
-        "desktop": "0ee6a9caf9d7b300a49a52abbfa57d9c6416abb7811a4d0c43f1407004e6adb8",
-        "mobile": "cf8e3af79389062a76d56824eb49798782c9447c95e1b1a656c71feb44de61e4"
+        "desktop": "05497097d851ea9bcd8b389f5c523dc085419a95e3728400cc1b955f31bf7c8f",
+        "mobile": "2050cd6466d56931a33dbb6d634fef556c06d54cd2f39d362c0fa801d43f598b"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 39
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 48
     },
     {
       "id": "community-ama-answer",
@@ -1283,11 +1621,11 @@
       "group": "community",
       "key": "community/community-ama-answer",
       "hashes": {
-        "desktop": "caa1eab7073d1e4532cdfc1dd0aaad54c9d4743fd0cc5c596bd542435576873f",
-        "mobile": "aa3f03605d3591aabc5d1f8f8369ae38448ba1eec21a4c7b4b857fa1d3e10659"
+        "desktop": "07e6874a6a1aaac90e5d3d6b33bc2f02dc4a45d0b91ae0a1ec92668726dd7b73",
+        "mobile": "5dc94caad6276ce67d73f986216d406a839cf1f42104c081fdc581270f2439c9"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 40
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 49
     },
     {
       "id": "community-ama-declined",
@@ -1316,11 +1654,11 @@
       "group": "community",
       "key": "community/community-ama-declined",
       "hashes": {
-        "desktop": "f837ec73c2c427b0c952378b9c8a0c3216fcc0b198ad81a720c045f9c439d7d3",
-        "mobile": "fe81cdd3860ccf8af36f42282fc15bf2e2080776ac11ff28cd24247c96789963"
+        "desktop": "a528e633837c703c075c5984c847857446268dce9cd4c14b68ff573c8fb4d06d",
+        "mobile": "2666921240df7f3432af5ec2b27440474917c24c6b03176f4ac51c9fda576608"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 41
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 50
     },
     {
       "id": "community-giveaway-paid",
@@ -1355,11 +1693,11 @@
       "group": "community",
       "key": "community/community-giveaway-paid",
       "hashes": {
-        "desktop": "ac5929f477a1b5af7020bedfbbfc5748abb3ec26b2d5298607f47328c02dd482",
-        "mobile": "233516efbfa2c096f786f3c99e0796aa22eb7e4866455b63c5b4de71d091a4cf"
+        "desktop": "cbe0c4e7dba74993240eb5dd230db7141efdd17d4ba183884a39a872535e1c93",
+        "mobile": "f5f921a8a2d0fc4db0e112b7b0fb4ca9b6468448e7008f1805d4297f37d786d6"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 42
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 51
     },
     {
       "id": "community-giveaway-pending",
@@ -1394,11 +1732,11 @@
       "group": "community",
       "key": "community/community-giveaway-pending",
       "hashes": {
-        "desktop": "dc09fb479c7265f64c6900d39dc80227ea3312b09066d07b59cb1e09622d0af9",
-        "mobile": "a6e3e3a6bd0dcc8211461f69bbf80a4124a33aaa512496d1375ac7d40b7098bf"
+        "desktop": "cec3491e5344c55b5eebdcc3076a6c82fa4cb769d649f2312be318f80ea76c46",
+        "mobile": "002ad6270cb0022a655226b2591ba85135dc209b035d69015a8094e85bf4e31a"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 43
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 52
     },
     {
       "id": "community-giveaway-empty",
@@ -1427,11 +1765,11 @@
       "group": "community",
       "key": "community/community-giveaway-empty",
       "hashes": {
-        "desktop": "f69140fc74b645ca60656a7c95920244f636475ce515b0e588caa0b1c52bb971",
-        "mobile": "4c6ef5ba85a1e5466cff49a12a181f5af63addbd7e04113ede2cc27a6fbfa654"
+        "desktop": "fef45db1af9dc0bdad0615bae0160502ccbd3b932c8356d01ad8176bd37e68e5",
+        "mobile": "c1f6ba420337c534c37cd0718fb9f59302640990c4d3c859a6364f5a083ef1e3"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 44
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 53
     },
     {
       "id": "community-long-text",
@@ -1472,11 +1810,11 @@
       "group": "community",
       "key": "community/community-long-text",
       "hashes": {
-        "desktop": "dc18ce73297b798d1f6974a900ec0d2079fcadab319cd29a5af57037eca9ef69",
-        "mobile": "4764459a04a08eec9232cc7e58b52c6ce27d9e09dc1907e18c7dcf5b30f421a8"
+        "desktop": "86a5509d58cb06141f8f98310dfccff2fc6c6405de37275b732f10281cf31367",
+        "mobile": "8d8fe9a75e56d98b55cfda424c23d6b4832abd73b798d726889273d95fcb1fec"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 45
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 54
     },
     {
       "id": "community-poll-private",
@@ -1517,11 +1855,11 @@
       "group": "community",
       "key": "community/community-poll-private",
       "hashes": {
-        "desktop": "b6ae84f2f843f658fdb57d5e6662df8b13995338c326c5064ef280bdfc4727ad",
-        "mobile": "b09de0c7528cb33da86d4e9d597da20cc75c234914ef538a6a7439f7c9e8287d"
+        "desktop": "382b5a1bd0d0cfb5bfb6edc9c2b89006b49e31c8d529fbc3fb347137d532bf39",
+        "mobile": "1d81545dc2772ace9066d55ccbe916a10e26fea9a37ae8a91c8ae1384bb9079a"
       },
-      "rendererHash": "0ac5ca24531e10afd73119fbdab6fbff3e13ae9ab346ebae0adc9c58db26e2fe",
-      "number": 46
+      "rendererHash": "15b528ec0ba5b85e458728a459f683b77d291373cf064e4fa249b0266d11cf5c",
+      "number": 55
     },
     {
       "id": "community-giveaway-confirm",
@@ -1549,11 +1887,11 @@
       "group": "community",
       "key": "community/community-giveaway-confirm",
       "hashes": {
-        "desktop": "d571cbc776781d75708512a63391a392c947ca1588ac190b9faa873481c23aab",
-        "mobile": "f56e7578283640253335697853d98487946eed35d0799f7974a17b02a2c68465"
+        "desktop": "c7a2b26cf4b953c7cc8021a109fb120cb81c1286dbf96d046bd3ec2c85d7ca93",
+        "mobile": "e806d44295e3f3d5c6e5486f8ad5b4d8ac29b28fc91a702ab8d5762e345df9ec"
       },
-      "rendererHash": "0ac5ca24531e10afd73119fbdab6fbff3e13ae9ab346ebae0adc9c58db26e2fe",
-      "number": 47
+      "rendererHash": "15b528ec0ba5b85e458728a459f683b77d291373cf064e4fa249b0266d11cf5c",
+      "number": 56
     },
     {
       "id": "community-staff-denied",
@@ -1574,11 +1912,11 @@
       "group": "community",
       "key": "community/community-staff-denied",
       "hashes": {
-        "desktop": "e1dbc26a0d6dc6f16e71a130a7cb2ef585b52f6e881463304c010b5c251b4050",
-        "mobile": "bcce7825779719a2a86fc17abe0e5cbd495e9f18a78611abb8e0371fb592f2ff"
+        "desktop": "88418029e4917377ea6aaf145f63b276ac8ac31f82ce14083e025d732fdfeb36",
+        "mobile": "333940781583f47cf347625624d73b484d23c4fe3ad72d41de3dce1a997dabdd"
       },
-      "rendererHash": "0ac5ca24531e10afd73119fbdab6fbff3e13ae9ab346ebae0adc9c58db26e2fe",
-      "number": 48
+      "rendererHash": "15b528ec0ba5b85e458728a459f683b77d291373cf064e4fa249b0266d11cf5c",
+      "number": 57
     },
     {
       "id": "chairisms-publication",
@@ -1600,11 +1938,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-publication",
       "hashes": {
-        "desktop": "116866a3ebf874460a0a7bdd757dab993623ebab13f98dc4a63723166cb0a067",
-        "mobile": "b26e077662840f7111b9b5c84629207320c80d5ced8c6411fa54780a81c2bf77"
+        "desktop": "7e3734208ea85b0a3d27ba0bfd778851968f8778794b3f41cb2d949f78d7b94d",
+        "mobile": "96184fe7df400d7f5d7fbe7f51940d49719e0053ab7ce0e91ee7b289fa7de2c9"
       },
-      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
-      "number": 49
+      "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "number": 58
     },
     {
       "id": "chairisms-reply",
@@ -1626,11 +1964,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-reply",
       "hashes": {
-        "desktop": "5f34a62e35975eea7e878ae45cbc9b53e8373552a83f8b4e1dd7739fb237daed",
-        "mobile": "2cfd26cf54ed0c47d0b3625af1368352043e1a124095684950d594b997c6e5bf"
+        "desktop": "c35e5993a3999cd41a510540e0c9b9a63f40fc9986a2a7cfade3fd2dac0824b1",
+        "mobile": "d1ed2b2af0c53b9d5222056bfcb7b4bf01e5dac96b11f7c9f18d6e07252a3d6d"
       },
-      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
-      "number": 50
+      "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "number": 59
     },
     {
       "id": "chairisms-image",
@@ -1652,11 +1990,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-image",
       "hashes": {
-        "desktop": "70b456053226c30065f16bfefa13bb091ee5534374b0fc8aa9d995b09c502b90",
-        "mobile": "2bb8ae0d2682418e554f705fe5ebd01783d3a58ecdea1407e4f86709fbb48e97"
+        "desktop": "640dcc16c525924d050bf0f0a896af4b87c883459b48dd078d1bfa89902b7df7",
+        "mobile": "ce5c2785770bff479d4c22ae7830d2260b3b0842d5a6f4c0374431d44bcba18f"
       },
-      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
-      "number": 51
+      "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "number": 60
     },
     {
       "id": "chairisms-long-text",
@@ -1678,11 +2016,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-long-text",
       "hashes": {
-        "desktop": "e51ea20a6dd4c13cec12966cc0fb6cd4b75777c709764cdcdb945fa33765353a",
-        "mobile": "213bbcf0096b26886ad16d1e397fad53eb1f652bc1265f032c5423e2df18a669"
+        "desktop": "17e2caa14712e183e71e13c852cf0151324fc8467218d28e78c518ff1112820a",
+        "mobile": "80fd0ff3c999b9cbf72a53f9ffda6b87bbabdf8ac5eac41b09392edbe1de59b2"
       },
-      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
-      "number": 52
+      "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "number": 61
     },
     {
       "id": "chairisms-selector",
@@ -1728,11 +2066,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-selector",
       "hashes": {
-        "desktop": "8510cd67987c9f4046edb9a7afc1e1bb4c8f2c5d2e9f6be0ba25400c06f3c6ea",
-        "mobile": "16fe37a03d52a4e75b5a6905a3034b70457899a73448b37eabd8479ba0233148"
+        "desktop": "38f4c5a168286ddfe012395d7e7924f4d8ee107a1d73a0435ace49abe8f3d8df",
+        "mobile": "b0fdc0ce041684c605b1a924a30ab5e6c74878774ae2c70a2d02b235b1fe893a"
       },
-      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
-      "number": 53
+      "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "number": 62
     },
     {
       "id": "chairisms-protected",
@@ -1753,11 +2091,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-protected",
       "hashes": {
-        "desktop": "394ed91f6461dac7f3eb05da242341b0b65313c5d6d82941d7cbd564eeea5a73",
-        "mobile": "a48b82c3a35f1114185000aa25092868df2e75d1e8cc9f2a1cbaa60323c68a2b"
+        "desktop": "8974acbe3348e502efd903749db7b581f193d650b3c8e37422e4cc906f0d8724",
+        "mobile": "cf43e46229b948e3eb95c1547e1d864e2dfef794a1cf490ae8851e7589d42a00"
       },
-      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
-      "number": 54
+      "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "number": 63
     },
     {
       "id": "chairisms-error",
@@ -1778,11 +2116,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-error",
       "hashes": {
-        "desktop": "ce24b3b877c088b2fd9663b9edb6a8e64d049e28d10aecd145d78ab63dc7b8f1",
-        "mobile": "67d62ade339d5e5c5a6d0e36da020587d71b427ea93e3bad29c58bf32c34f747"
+        "desktop": "05f9902cb998b8e08a984d3aa3789f90773238c9d42124085b2e8593f041bb70",
+        "mobile": "72520d3df01f49b942c41e05002caceec79cbfcc799275cb1808f8e3f8ce373d"
       },
-      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
-      "number": 55
+      "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "number": 64
     },
     {
       "id": "chairisms-empty",
@@ -1803,11 +2141,11 @@
       "group": "chairisms",
       "key": "chairisms/chairisms-empty",
       "hashes": {
-        "desktop": "8fb5474b82ded66024dfb1a152dd5cf8a43c9578a8c97480950ea2ead0e7a4f7",
-        "mobile": "c26c5e4f7309cbae3f812cd8bd2c5f118ca295bb5686993274a417fe7c72c568"
+        "desktop": "23265946c21c36ece0a29a2fd0fe40b5a358bcb14bf2d09f96d3fbb55a3f0aa8",
+        "mobile": "e79b7cd7298268409f5fd4bd6802b77bdc9733102ac88adbccc6f495ee945fcf"
       },
-      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
-      "number": 56
+      "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "number": 65
     },
     {
       "id": "superlative-winner",
@@ -1836,11 +2174,11 @@
       "group": "superlative",
       "key": "superlative/superlative-winner",
       "hashes": {
-        "desktop": "1b27dfdbc4ba4ee06fca49639fac4353fd30e1fed92c94df7dccfa5447310d03",
-        "mobile": "de5d88a780341d541122033730f73ee0d8310aa9c71e0705fa27aac0793bfe99"
+        "desktop": "78200bd3789a31c705a36d0f3b4836fc6d6f4bbcfd29adf9b2e1413179a6fd9f",
+        "mobile": "198bf24f1413dd107c9c682cf250263eb28355f83fb146e5e6e3b4ad0f0e96df"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 57
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 66
     },
     {
       "id": "superlative-nominations",
@@ -1875,11 +2213,11 @@
       "group": "superlative",
       "key": "superlative/superlative-nominations",
       "hashes": {
-        "desktop": "25bb6ef56ca1f55418cc380e0d9fd6ec0c875078e24675ea76185f66cd9d1b2e",
-        "mobile": "80eec434e761756b2d14ea567414fd76e17ecd2fc2244ec91d4c546f53a82850"
+        "desktop": "e86777d8147542d7e52e2fc7d686c2dfc1d339533dd28490a7e2b0fd3c787565",
+        "mobile": "7d9100f09903010767a9e31eabb144fa741b6fd651d1e832cea5de4cea0f0941"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 58
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 67
     },
     {
       "id": "superlative-voting",
@@ -1914,11 +2252,11 @@
       "group": "superlative",
       "key": "superlative/superlative-voting",
       "hashes": {
-        "desktop": "839ffd66b54bea6105bd0209a6b6b395b59371f2f5fa27c98966676149c46869",
-        "mobile": "6572b58a8c550d2361727624d0757188008bcf1fddadfc4d949b9ad379e1514f"
+        "desktop": "9ea4b57353c58872a7626c3378eb6e983c9a575216383058655d2e7fbf5f982a",
+        "mobile": "74e1acf7380c5a49af0e3d9afb421e865a6a2f7fd98125bb98f34646f7a0900a"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 59
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 68
     },
     {
       "id": "superlative-empty",
@@ -1947,11 +2285,11 @@
       "group": "superlative",
       "key": "superlative/superlative-empty",
       "hashes": {
-        "desktop": "3c57c51af040a8aa0118e16cba5c2053ac9f583456aa33b1a8b701eda7ef7837",
-        "mobile": "70d1e53ec8470c488c4569aa13a9e970bca94d754e4fa937de35b3631e47215d"
+        "desktop": "6f9a730fa55f517c3fd7aa95bac3b4a5fc4808539d5368c01631dc9b820c0f11",
+        "mobile": "b549f3bbca7397de608f59fa61a83f0bcf800d3a17994690e3d45ced931156bb"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 60
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 69
     },
     {
       "id": "superlative-long-name",
@@ -1980,11 +2318,11 @@
       "group": "superlative",
       "key": "superlative/superlative-long-name",
       "hashes": {
-        "desktop": "8e546072b76719efc05f105d9276ce01e379eb64b1573ab852c7def145a0e362",
-        "mobile": "66e2218a5d76a0cc1357c34716beaa1fcde22c3287e1baed7770a5c2b9b7693a"
+        "desktop": "7605270bd9b92ed6707e7d1143939603de0ba3dfa24958647e9aa468d7e62d06",
+        "mobile": "657062c37ace0299cc2f250adf74db074273bc1d6f7c3530fcb58d487e066167"
       },
-      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
-      "number": 61
+      "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "number": 70
     },
     {
       "id": "estate-waiting",
@@ -2006,10 +2344,10 @@
       "group": "family-events",
       "key": "family-events/estate-waiting",
       "hashes": {
-        "desktop": "15e371df33e7ab23924d53fb56db3c3394301594e08b62ad99a648c369bb2a51",
-        "mobile": "19f1cedb8360746e2808dc6c5df6392135081df666072345c9cfe1608ad073f2"
+        "desktop": "0f406c76f4c1182ace5a448cf9b7bc46bd41aa35fd46a6dd07ec9e5de2fdbee2",
+        "mobile": "fd8d45574e3c5feafa424260cf0aaa2fbe1553247da762d4fb723cc38f0c02e1"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "id": "estate-returned",
@@ -2031,10 +2369,10 @@
       "group": "family-events",
       "key": "family-events/estate-returned",
       "hashes": {
-        "desktop": "d8cdc77606d68ebdeec82b3f493d2ebd389dafcbf8ff3d42b8f1c4881172547d",
-        "mobile": "5ef388b27186c1fc603913a7b45f0e9dc2cb8ce19c55a0a1ad62806474a13655"
+        "desktop": "90b709ddf0e488de37c775b2e4e7ccf39fb9d3b7c1cec02bf2c13a83e7b64d50",
+        "mobile": "415aea80d48961d9cc67dfab3d74c15a07ec343c691e21b623ea56fb13d4403b"
       },
-      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     }
   ]
 }

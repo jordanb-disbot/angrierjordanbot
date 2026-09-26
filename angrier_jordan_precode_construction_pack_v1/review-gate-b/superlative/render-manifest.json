@@ -4,43 +4,43 @@
   "files": [
     {
       "file": "review-gate-b/superlative/winner-desktop.png",
-      "sha256": "1b27dfdbc4ba4ee06fca49639fac4353fd30e1fed92c94df7dccfa5447310d03"
+      "sha256": "78200bd3789a31c705a36d0f3b4836fc6d6f4bbcfd29adf9b2e1413179a6fd9f"
     },
     {
       "file": "review-gate-b/superlative/winner-mobile.png",
-      "sha256": "de5d88a780341d541122033730f73ee0d8310aa9c71e0705fa27aac0793bfe99"
+      "sha256": "198bf24f1413dd107c9c682cf250263eb28355f83fb146e5e6e3b4ad0f0e96df"
     },
     {
       "file": "review-gate-b/superlative/nominations-desktop.png",
-      "sha256": "25bb6ef56ca1f55418cc380e0d9fd6ec0c875078e24675ea76185f66cd9d1b2e"
+      "sha256": "e86777d8147542d7e52e2fc7d686c2dfc1d339533dd28490a7e2b0fd3c787565"
     },
     {
       "file": "review-gate-b/superlative/nominations-mobile.png",
-      "sha256": "80eec434e761756b2d14ea567414fd76e17ecd2fc2244ec91d4c546f53a82850"
+      "sha256": "7d9100f09903010767a9e31eabb144fa741b6fd651d1e832cea5de4cea0f0941"
     },
     {
       "file": "review-gate-b/superlative/voting-desktop.png",
-      "sha256": "839ffd66b54bea6105bd0209a6b6b395b59371f2f5fa27c98966676149c46869"
+      "sha256": "9ea4b57353c58872a7626c3378eb6e983c9a575216383058655d2e7fbf5f982a"
     },
     {
       "file": "review-gate-b/superlative/voting-mobile.png",
-      "sha256": "6572b58a8c550d2361727624d0757188008bcf1fddadfc4d949b9ad379e1514f"
+      "sha256": "74e1acf7380c5a49af0e3d9afb421e865a6a2f7fd98125bb98f34646f7a0900a"
     },
     {
       "file": "review-gate-b/superlative/empty-desktop.png",
-      "sha256": "3c57c51af040a8aa0118e16cba5c2053ac9f583456aa33b1a8b701eda7ef7837"
+      "sha256": "6f9a730fa55f517c3fd7aa95bac3b4a5fc4808539d5368c01631dc9b820c0f11"
     },
     {
       "file": "review-gate-b/superlative/empty-mobile.png",
-      "sha256": "70d1e53ec8470c488c4569aa13a9e970bca94d754e4fa937de35b3631e47215d"
+      "sha256": "b549f3bbca7397de608f59fa61a83f0bcf800d3a17994690e3d45ced931156bb"
     },
     {
       "file": "review-gate-b/superlative/long-name-desktop.png",
-      "sha256": "8e546072b76719efc05f105d9276ce01e379eb64b1573ab852c7def145a0e362"
+      "sha256": "7605270bd9b92ed6707e7d1143939603de0ba3dfa24958647e9aa468d7e62d06"
     },
     {
       "file": "review-gate-b/superlative/long-name-mobile.png",
-      "sha256": "66e2218a5d76a0cc1357c34716beaa1fcde22c3287e1baed7770a5c2b9b7693a"
+      "sha256": "657062c37ace0299cc2f250adf74db074273bc1d6f7c3530fcb58d487e066167"
     }
   ]
 }

@@ -1,6 +1,8 @@
 {
   "fictionalMembers": true,
   "liveDiscordCapture": false,
+  "fixtureAvatarSource": "Packaged approved chair artwork used as fictional profile pictures; no live Discord members",
+  "nativeControls": "Discord owns alignment and style; approximate review representation",
   "fixture": {
     "adapterFixture": "empty"
   },

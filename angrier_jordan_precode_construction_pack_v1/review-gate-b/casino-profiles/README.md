@@ -1,6 +1,6 @@
 # Casino and honors fixture review
 
-Actual deterministic production attachment renderers with fictional saved-state inputs. These are fixture renders, not live Discord screenshots. Desktop: 440px; mobile: 360px scaled attachment. Native Discord controls are documented in review-items.json and are not drawn into the attachment. No financial execution or feature enablement. Avatar squares are explicitly synthetic identity placeholders.
+Actual deterministic production attachment renderers with fictional saved-state inputs. These are fixture renders, not live Discord screenshots. Desktop: 440px; mobile: 360px scaled attachment. Native Discord controls are documented in review-items.json and are not drawn into the attachment. No financial execution or feature enablement. Portraits use clearly fictional profile pictures from existing approved packaged chair artwork; unavailable portraits use a deterministic branded monogram.
 
 1. **Major casino win** — [desktop](major-casino-win-desktop.png) · [mobile](major-casino-win-mobile.png)
    Saved closed roulette round: wager 1000 Ottomans, result 17, return 36000 Ottomans.
@@ -42,4 +42,16 @@ Actual deterministic production attachment renderers with fictional saved-state 
    Boundary fixture: two persisted records with 32-character unbroken member names and exact BIGINT amounts.
    Controls: Record period: All time / This month. Status: READY FOR OWNER REVIEW.
 
-The profile summary and Edit Showcase remain native Discord embeds/controls and were not redesigned in this pass. These fixtures do not claim to cover Discord client layout, scroll behavior, or live acceptance. Owner review: visual hierarchy and the long co-winner attachment at mobile size.
+11. **Member profile · public summary** — [desktop](member-profile-desktop.png) · [mobile](member-profile-mobile.png)
+   Public profile composed from already privacy-filtered activity, honors and showcase fields; actual native Edit Showcase remains member-bound.
+   Controls: Edit Showcase. Status: READY FOR OWNER REVIEW.
+
+12. **New record · public announcement** — [desktop](record-announcement-desktop.png) · [mobile](record-announcement-mobile.png)
+   Durable new-record announcement: Alex improves Biggest Casino Win to125000; previous100000 held86400seconds. Publication uses current portrait and same result shell.
+   Controls: None. Status: READY FOR OWNER REVIEW.
+
+13. **Casino · short name and missing avatar** — [desktop](casino-avatar-fallback-desktop.png) · [mobile](casino-avatar-fallback-mobile.png)
+   Resolved identity Li with unavailable avatar, exact zero return and truthful fallback portrait; no network-dependent fixture content.
+   Controls: Play Again; Rules. Status: READY FOR OWNER REVIEW.
+
+The public profile summary and durable record announcement now share the branded presentation. Edit Showcase controls and accessibility transcripts remain native Discord. These fixtures do not claim to cover Discord client layout, scroll behavior, or live acceptance. Owner review: visual hierarchy and the long co-winner attachment at mobile size.

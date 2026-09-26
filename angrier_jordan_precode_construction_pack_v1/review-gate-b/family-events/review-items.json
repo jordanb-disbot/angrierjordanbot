@@ -610,6 +610,214 @@
     "visibility": "member-facing attachment with actual coordinator controls in review metadata"
   },
   {
+    "id": "arrest-fallback-extreme",
+    "name": "Arrest — fallback portrait and long bail",
+    "desktop": "review-gate-b/family-events/arrest-fallback-extreme-desktop.png",
+    "mobile": "review-gate-b/family-events/arrest-fallback-extreme-mobile.png",
+    "scenario": "Fallback portrait, unbroken long member name, large Ottoman value and moderation warning.",
+    "transcript": "review-gate-b/family-events/arrest-fallback-extreme-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/arrest-fallback-extreme-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "crime:rules:fixture",
+        "label": "Rules",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "financial",
+      "moderation-related"
+    ],
+    "renderer": "packages/features-crime/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "robbery-members",
+    "name": "Robbery — member portraits",
+    "desktop": "review-gate-b/family-events/robbery-members-desktop.png",
+    "mobile": "review-gate-b/family-events/robbery-members-mobile.png",
+    "scenario": "Both members in an active incident use deterministic fixture portraits.",
+    "transcript": "review-gate-b/family-events/robbery-members-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/robbery-members-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "crime:fightback:fixture",
+        "label": "Fight Back",
+        "style": 2,
+        "disabled": true
+      },
+      {
+        "type": 2,
+        "custom_id": "crime:report:fixture",
+        "label": "911",
+        "style": 2,
+        "disabled": true
+      },
+      {
+        "type": 2,
+        "custom_id": "crime:rules:fixture",
+        "label": "Rules",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive",
+      "financial"
+    ],
+    "renderer": "packages/features-crime/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "fmk-fallback-extreme",
+    "name": "FMK — short and long names with fallback",
+    "desktop": "review-gate-b/family-events/fmk-fallback-extreme-desktop.png",
+    "mobile": "review-gate-b/family-events/fmk-fallback-extreme-mobile.png",
+    "scenario": "All three assignments retain complete names and deterministic no-avatar portraits.",
+    "transcript": "review-gate-b/family-events/fmk-fallback-extreme-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/fmk-fallback-extreme-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "party:again:fixture",
+        "label": "Play Again",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:details:fixture",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-party/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "voting-open",
+    "name": "Voting — open branded feed",
+    "desktop": "review-gate-b/family-events/voting-open-desktop.png",
+    "mobile": "review-gate-b/family-events/voting-open-mobile.png",
+    "scenario": "Open voting has branded choice panels and real coordinator controls; ballots and totals remain hidden.",
+    "transcript": "review-gate-b/family-events/voting-open-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/voting-open-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "party:vote:fixture:open",
+        "label": "Open it together",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:vote:fixture:wait",
+        "label": "Wait for the owner",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:vote:fixture:inspect",
+        "label": "Inspect the label first",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:extend:fixture",
+        "label": "+30 Seconds",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:details:fixture",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-party/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "voting-long-copy",
+    "name": "Voting — long prompt and choices",
+    "desktop": "review-gate-b/family-events/voting-long-copy-desktop.png",
+    "mobile": "review-gate-b/family-events/voting-long-copy-mobile.png",
+    "scenario": "Long warning copy, long choice labels and wrapped results remain readable.",
+    "transcript": "review-gate-b/family-events/voting-long-copy-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/voting-long-copy-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "party:again:fixture",
+        "label": "Play Again",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:details:fixture",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-party/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "family-fallback-short",
+    "name": "Family — short names and no avatars",
+    "desktop": "review-gate-b/family-events/family-fallback-short-desktop.png",
+    "mobile": "review-gate-b/family-events/family-fallback-short-mobile.png",
+    "scenario": "Short names and deterministic fallback portraits in the pending consent card.",
+    "transcript": "review-gate-b/family-events/family-fallback-short-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/family-fallback-short-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:accept:fixture",
+        "label": "Accept",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "family:reject:fixture",
+        "label": "Decline",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
     "id": "family-tree-empty",
     "name": "Family tree — no active links",
     "desktop": "review-gate-b/family-events/family-tree-empty-desktop.png",

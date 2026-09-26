@@ -111,12 +111,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "profile",
       "asset_refs": [
-        "production/atomic_assets/templates/profile.svg"
+        "packages/features-profiles/src/render.ts",
+        "packages/features-events/src/gate-b-visual.ts"
       ],
       "interaction_contract": "Rendered profile; native Edit Showcase and pagination controls",
       "status": "COVERED",
       "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
-      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
+      "runtime_acceptance": "IMPLEMENTED_FLAGS_OFF; Gate B visual corrections awaiting owner review"
     },
     {
       "id": "records",
@@ -128,12 +129,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "records",
       "asset_refs": [
-        "production/atomic_assets/templates/records.svg"
+        "packages/features-profiles/src/render.ts",
+        "packages/features-events/src/gate-b-visual.ts"
       ],
       "interaction_contract": "Shared records/leaderboard renderer; native category selector where applicable",
       "status": "COVERED",
       "runtime_adapter": "apps/bot/src/discord/profiles-coordinator.ts",
-      "runtime_acceptance": "IN_PROGRESS_FLAGS_OFF; canonical visual presentation pending"
+      "runtime_acceptance": "IMPLEMENTED_FLAGS_OFF; Gate B visual corrections awaiting owner review"
     },
     {
       "id": "daily",

@@ -1,0 +1,79 @@
+{
+  "id": "fixture",
+  "guildId": "fixture",
+  "channelId": "fixture",
+  "messageId": "fixture",
+  "ownerId": "fixture-alex",
+  "state": "CLOSED",
+  "version": 2,
+  "createdAt": "2026-09-25T18:00:00.000Z",
+  "expiresAt": null,
+  "phase": "done",
+  "category": "Random",
+  "extensionUsed": false,
+  "submissionCount": 0,
+  "submissions": {},
+  "words": [],
+  "round": 2,
+  "game": "fmk",
+  "trio": [
+    {
+      "userId": "fixture-alex",
+      "name": "A",
+      "avatar": ""
+    },
+    {
+      "userId": "fixture-sam",
+      "name": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "avatar": ""
+    },
+    {
+      "userId": "fixture-casey",
+      "name": "Long Member Name With Many Words",
+      "avatar": ""
+    }
+  ],
+  "assignments": {
+    "fuck": "fixture-alex",
+    "marry": "fixture-sam",
+    "kill": "fixture-casey"
+  },
+  "subjectCounters": {
+    "fixture-alex": {
+      "fucked": 4,
+      "married": 2,
+      "killed": 1
+    },
+    "fixture-sam": {
+      "fucked": 1,
+      "married": 6,
+      "killed": 2
+    },
+    "fixture-casey": {
+      "fucked": 3,
+      "married": 2,
+      "killed": 5
+    }
+  },
+  "options": [
+    {
+      "id": "agree",
+      "text": "Agree"
+    },
+    {
+      "id": "disagree",
+      "text": "Disagree"
+    }
+  ],
+  "result": {
+    "label": "The lounge agrees · 80% agreement",
+    "totals": {
+      "agree": 16,
+      "disagree": 4
+    },
+    "percentages": {
+      "agree": 80,
+      "disagree": 20
+    }
+  }
+}

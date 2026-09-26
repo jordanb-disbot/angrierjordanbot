@@ -5,327 +5,399 @@
   "files": [
     {
       "file": "marriage-desktop.png",
-      "sha256": "3cbfc08e884ad5fc2e60ba06127e567a71917ddf5d1161385c18616b9d9563b9",
+      "sha256": "e6ffa8c5a2f253c1f93d95ad95d0c9b6f3d116d0d1898a0bef26c95f6df00555",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "marriage-mobile.png",
-      "sha256": "fb00d96fb46026826721522b408e0b33a3d986ff42520e37d46e50765acfba89",
+      "sha256": "4a5a71c695a7d03fa40b0f0a3da2a43adb3d99dfcac3f6c11b0e1693c6af5c99",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-pending-desktop.png",
-      "sha256": "e5d0dfcbf092329042cd9cb09b06c15b1db56ae709d0384dd6e7dc78cd1753f2",
+      "sha256": "7584d300c5ec48e9f42ccacf71c45a6a2b9b3cb305ca5e7f2165b1b7f994ba84",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-pending-mobile.png",
-      "sha256": "7a13cca1c3f40f6d816021ece4181515bbcc3481b3ba2bdea8a12d6bced0c2e0",
+      "sha256": "13b7a4660b6e16987801c9dacc7da8a8f1e09252d77ab69e08140274fb6bac1b",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-blessing-desktop.png",
-      "sha256": "979ccaa453c1907b957aec26ca7cea3350f5c6f8a615bd2feb260ea7f5b77109",
+      "sha256": "797b3aeb24f4361b524e407fdeae9d06333185717b76419f383722add76e74dd",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-blessing-mobile.png",
-      "sha256": "04dc4311d39475cc8c538d41756ea034832d0a6bc41566a5fa88d501772b74d9",
+      "sha256": "4c5efe06e445e80109b58eedee5244cdf1d74feeef646eeb9f7a37e671340d6a",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-declined-desktop.png",
-      "sha256": "ed09670d10453c8c97b94809c9dc20a7c8b312a80838ad3fee8c07f484411372",
+      "sha256": "de6ee404871248a7f1b2fb3c24f71310dee00f45a6adc6966e3821c5bde8646d",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-declined-mobile.png",
-      "sha256": "2df9e69addd4b3b0456cd737f22e1a8ae2a7244e0702ad157ced5ed48740c000",
+      "sha256": "e377c7c94c10edfc060c8deb833042f6251d95d1b483a685aedcf64a3bb67b0b",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-expired-desktop.png",
-      "sha256": "4a62262516a8532b8a0a5ac03febdf9cef52e97b27aebfd73864f08b642beb26",
+      "sha256": "c9d11493c80c5bbc59f298e7ec8f7b73ddb2a47c4580e8cf1deb6602c17c1644",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "proposal-expired-mobile.png",
-      "sha256": "0039ff52b196c1b4595beb0d5b2ba7807e0985a293eee712e6e340715d6c1f8c",
+      "sha256": "095ec1288defeec60a2a810d03f4145b8a57b3f845a6540d8871729f49976026",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "marriage-live-vote-desktop.png",
-      "sha256": "3298bfd7f640dccdbba2cfa27f2c0e78d4263d887a37b00ccf6de154cf6f3ae4",
+      "sha256": "773c730bcbd24ccde45b5eaed582208209bfb782e8777b4aa56d340f4a14cfc4",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "marriage-live-vote-mobile.png",
-      "sha256": "676ef5ba1865a3eebc2aa462d7d915efb2625fd7c14984490ddd5a85d6d478ee",
+      "sha256": "db564ce6e6d284d37324c09925025cd2f34c43a507b51d6c96a6c018500aaec2",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "marriage-blessing-consumed-desktop.png",
-      "sha256": "1d6efdaf2f696fa6c12c350dfa6e205b1e0da681f62a23d3bb85eb19c1fb92cc",
+      "sha256": "8260c37a7ce686d3f3a65ca766aefa918e16e75c9f53cd4f7425b173c0079707",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "marriage-blessing-consumed-mobile.png",
-      "sha256": "c4fb43f48764d955b71b8dca075c39504ca8ff48727dea9ec649c05504c626ae",
+      "sha256": "3f396fe806430ab81a44863a7aa3f75bde06b7a15c35a8b207568d9470e2cfed",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "divorce-desktop.png",
-      "sha256": "869ee108e9a3904ceb287176ce26c1b5ac4494aeb58ba866f0e2832dadbddb44",
+      "sha256": "cfc06a67a4ec45c576545f390b31484e54e3d38cafdc6de700c61c80789ed7f7",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "divorce-mobile.png",
-      "sha256": "075247dd3ff5a6b4dc7365d46b2a43ba2aa1b309a4dd46aa584126751348b633",
+      "sha256": "d0ef605b8510c7e5667681fc32dda441024235abc63f8f7e1df3139e4be05efc",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "divorce-large-value-desktop.png",
-      "sha256": "29b24c0e809d6fa0f70589df5be2cab093d8ede3cf006d5055637d2ca9e2d823",
+      "sha256": "636739508a39c3276d15bc3f28455391be32c0efe7667478d2d72e8b17112c00",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "divorce-large-value-mobile.png",
-      "sha256": "c5b882b4232452013dd2aaa8629ac2f2a795900af1b336c40567d76e0d963966",
+      "sha256": "e718e1bed5dff24f74fcf1aedf359edce3b3864217c9b40d548de16a75dca56a",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "inheritance-desktop.png",
-      "sha256": "822fad12844467dde5d3811779b492921d564ea46e8c6605a764beac01c2dc4e",
+      "sha256": "a7d276755a397c3f2fbafb388008ecc4fbffa663d9733d6013451b69d91a0fd8",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "inheritance-mobile.png",
-      "sha256": "8c48cec28f3d5bfcbb65aa15bca3990898fe15dc1a0941aa5e156d18538b2673",
+      "sha256": "6ad03abd5175fbf34e8335c8b1bf3e59df2c54e1069b4798882f55f6efde9f18",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-no-heir-desktop.png",
-      "sha256": "d80ef623d7601e6bf848ac23d616370b743c6e280424194a730810d27190fa7b",
+      "sha256": "b892eeb78316d22a0bc9f2847690b276f5d892d9df4426416621f275356047fa",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-no-heir-mobile.png",
-      "sha256": "4bfcc9154d53e44335ed1e94fa9d9d18736d118375d53a3f6f2c59f79d8c580a",
+      "sha256": "0e4b65ad341d0a3da1c68b91089bbbad27703227e51e9cae829f5235b0abead6",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-empty-desktop.png",
-      "sha256": "3247a6c58c2300cfcdd0b0da372ff13e16e379723a96dd6dfc48d8501045c992",
+      "sha256": "8104640b7dd552964f925220b9c81724791af318f594e846fc6be7d5950d81e9",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-empty-mobile.png",
-      "sha256": "68dc0c3cc51933dff0683192eec56f2bacdfdadb5145a9bb0ae180bddc3df8c2",
+      "sha256": "4512e412bbed395c8ecef90ecc36a221bf061c241c78bca0fb7f50e065dc096a",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-waiting-desktop.png",
-      "sha256": "15e371df33e7ab23924d53fb56db3c3394301594e08b62ad99a648c369bb2a51",
+      "sha256": "0f406c76f4c1182ace5a448cf9b7bc46bd41aa35fd46a6dd07ec9e5de2fdbee2",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-waiting-mobile.png",
-      "sha256": "19f1cedb8360746e2808dc6c5df6392135081df666072345c9cfe1608ad073f2",
+      "sha256": "fd8d45574e3c5feafa424260cf0aaa2fbe1553247da762d4fb723cc38f0c02e1",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-returned-desktop.png",
-      "sha256": "d8cdc77606d68ebdeec82b3f493d2ebd389dafcbf8ff3d42b8f1c4881172547d",
+      "sha256": "90b709ddf0e488de37c775b2e4e7ccf39fb9d3b7c1cec02bf2c13a83e7b64d50",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-returned-mobile.png",
-      "sha256": "5ef388b27186c1fc603913a7b45f0e9dc2cb8ce19c55a0a1ad62806474a13655",
+      "sha256": "415aea80d48961d9cc67dfab3d74c15a07ec343c691e21b623ea56fb13d4403b",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "auction-win-desktop.png",
-      "sha256": "e961302644c5cd0e8075dc0a6b06af0b8c9031ae6894ad5000cdd87feb777ee1",
+      "sha256": "f0341b8f1b54fe4d1e3151d7517c05da643cf5cb33d9cdce00256b2a211ec44a",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "auction-win-mobile.png",
-      "sha256": "29af2137fe775e6474afebe1191ae6b90f8d3d5e0e882e223b37934973285331",
+      "sha256": "9639a6549f2363b02d4930bf90057c2f30ab4311d21d6d3066aa3e5d7776e02d",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "auction-open-desktop.png",
-      "sha256": "da788688660b6245f3dbff01b8d2483f04fec249f0fa6fc5dc8a4714d4e92491",
+      "sha256": "d88068239db958e1fce1e2bf5c1518c09274f0a970a24f7247c9b4f6b791595d",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "auction-open-mobile.png",
-      "sha256": "e1c99acc550c3178dedfca6d9a8e3aafa0ddbcf7050d75e0542125c7bc98c9df",
+      "sha256": "1a899f7736547020d6f2533cb23e6da9afc8969311cf3db20c29cd4fdd883a68",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "auction-refund-desktop.png",
-      "sha256": "2c43839b779808c77f75a1db3e8e615724938abdf053a308fb084bd280614c5b",
+      "sha256": "6faeee8448b6d26c18a09c8134699b4e562fa352758b225567107d97f75c9ee8",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "auction-refund-mobile.png",
-      "sha256": "871243a098d6a06f055f529e1850229cde63867725b8ed11c8cf4640b34f8fed",
+      "sha256": "e477c88404f1186461186f07c833e00f7c4d411439f047155fa3942046bdae41",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-auction-win-desktop.png",
-      "sha256": "a08999f5dad992a421e1e0fb595fbc6c28fd7970a3723a1d6bb3b74841525d9a",
+      "sha256": "5e5397599f7efbd171d02cf481cc8a9a815f64d79f8770544e0ee19da101f18a",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "estate-auction-win-mobile.png",
-      "sha256": "aabeaa89f9ad49bdb5893d4f73009aff8131e55930bcb08d4314bd385740f1c2",
+      "sha256": "6e6a2ccbca38797b7b721e6186220aae707b5a50f59665b8ad826111b940fa0a",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "adoption-pending-desktop.png",
-      "sha256": "d15fd23e01b0d8a40f4790670abd32638218d5d196b80c874c9a0bba91ac03ca",
+      "sha256": "f9ea31a8ea2969feb5657f23ba346d1fd52adde838b80be24120027bd0ef4fa1",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "adoption-pending-mobile.png",
-      "sha256": "dc9f9809eaabd45be299bf4318c69a838b11ff619e9370fa0f574fc0d809f485",
+      "sha256": "7189839cce5f54d5bd8da5c243e0bc146ff4d582ac45104f15f5d4bc97d146c8",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "adoption-accepted-desktop.png",
-      "sha256": "5cce5522e3d0abe843c16ee19ea7769be89b8208bcfbde27f63d81fce1411886",
+      "sha256": "f9aeee79525b9b0bfa1e1f61f5855d5078aac5c97dff77ca50ddf8e11c3cc354",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "adoption-accepted-mobile.png",
-      "sha256": "a41110abb00404cc0a74a99a9d37988a8113b172fefca3596ce1db7cac92c8f1",
+      "sha256": "303635b0e960f724f5164e700d77457b3a2340071d0c7da91e5f5a7012434a64",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "adoption-declined-desktop.png",
-      "sha256": "af6f4d5addfc0018df120b34ad3fbd4a05dc2097f32c4493e8eaf2503ce0ec9c",
+      "sha256": "30756b1175e521e2ac77c6c80263e1687472cecb1b45e11117752f7ef55741fc",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "adoption-declined-mobile.png",
-      "sha256": "e42035b8b26f0cf009cf5cd29b4a6cc231fd2547dd8f03f0d1f1925be85a20eb",
+      "sha256": "5839dec70428f81a178a44318fba0b6c4cf7fb7d7d8370c168f97ee39ba1e02f",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "family-ended-desktop.png",
-      "sha256": "fe23dc0e228692190777baa9be9dd4958274979b835e0e18ebaca11b9f6c9288",
+      "sha256": "fadcb0f766af8e5c8bca49b5dbfbfd10e9b9c88a83f95ace3df33657976daa4e",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "family-ended-mobile.png",
-      "sha256": "01b9e98af686e041234a21c1d61065932a61ca6db116d499a80658aa51bfd979",
+      "sha256": "b4d3510766b61ad38476ab3ea0b6a4898ff025958de0d85467f8d98438cc1f60",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "arrest-desktop.png",
-      "sha256": "021a8ca7bb62b0cd10c0475b4f7ef36e2ec36af36472cca58a0fcd073e5ba565",
+      "sha256": "a0505430bd0d7c00c09f0b38f17bfd036b476cc8b070b31057fc5663907499a6",
       "renderer": "packages/features-crime/src/render.ts",
-      "rendererSha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
+      "rendererSha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
     },
     {
       "file": "arrest-mobile.png",
-      "sha256": "2c366c7a2d413fda8591a5a4a29b4d76ecca8d14b483ebfe56e3b9d42cda2e29",
+      "sha256": "b28fdebb24ab42112556fdaec077ad2ce694a789a79da6df358409ddfd21c3c1",
       "renderer": "packages/features-crime/src/render.ts",
-      "rendererSha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
+      "rendererSha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
     },
     {
       "file": "fmk-result-desktop.png",
-      "sha256": "ea58778e13559b050fe330d8cb1b02ce7d7cb5af4488f75827177406ab91f27b",
+      "sha256": "47fbcfd23f5d233df6b67f8abf7eee6e15b6b4d8b5c64f24341d3805506ee0b9",
       "renderer": "packages/features-party/src/render.ts",
-      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
     },
     {
       "file": "fmk-result-mobile.png",
-      "sha256": "60b764e96b670a3c78ba8e24c76827297acd8a0d4a49bccc2067b7da1e7120da",
+      "sha256": "c71032b9ef19049adcec466e3a47b2d29cc1ee3ea94bcf12f288c1c763953413",
       "renderer": "packages/features-party/src/render.ts",
-      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
     },
     {
       "file": "voting-result-desktop.png",
-      "sha256": "e16c6ceba508448e5a574450f0564537179c3ebcb3c868bcb2a837a2ba60a4e0",
+      "sha256": "74a6d0813113ff8f2c6f70b706aa7ce543bb5a28ec93ed5362189a9d55ff1835",
       "renderer": "packages/features-party/src/render.ts",
-      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
     },
     {
       "file": "voting-result-mobile.png",
-      "sha256": "e6844e7a721c24209f3fd3f39eeb06826e6dae73854cee0b86a529bd774e87ae",
+      "sha256": "5199cda6f79b8fa0f98080772443b9dddd405776492f2f7f8bbcb7093f69556f",
       "renderer": "packages/features-party/src/render.ts",
-      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "arrest-fallback-extreme-desktop.png",
+      "sha256": "ab8af6f34f5f1fb311bd7863d4dd910ee438d14b2dca811d0034a109c95a7e04",
+      "renderer": "packages/features-crime/src/render.ts",
+      "rendererSha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
+    },
+    {
+      "file": "arrest-fallback-extreme-mobile.png",
+      "sha256": "470d29579848ea9ad9d72aa29d7800ee9767a8711daa61533cada7a54ae1b5d9",
+      "renderer": "packages/features-crime/src/render.ts",
+      "rendererSha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
+    },
+    {
+      "file": "robbery-members-desktop.png",
+      "sha256": "6ec180a10ad3ffea3d9f77cd0125f858d7e54f088f0c564165787b5202175db8",
+      "renderer": "packages/features-crime/src/render.ts",
+      "rendererSha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
+    },
+    {
+      "file": "robbery-members-mobile.png",
+      "sha256": "b716b965cf3b80becfd27a88463fde18e40b08132c8a6a68e86ca2629ada087f",
+      "renderer": "packages/features-crime/src/render.ts",
+      "rendererSha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
+    },
+    {
+      "file": "fmk-fallback-extreme-desktop.png",
+      "sha256": "b31ef33d654446b1d16060c3dec0ff6e14eb29de2635a970e4db5d1b46b2f3eb",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "fmk-fallback-extreme-mobile.png",
+      "sha256": "a058c7510ab80e1049fa5b3e4f35116e8a959865ce038ba44a937c0c2aad6d24",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "voting-open-desktop.png",
+      "sha256": "e5d9e3c14979914fe3f9566811d3360209e6f77de2dcedb6d4f75da46faebeb0",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "voting-open-mobile.png",
+      "sha256": "79d8c5da225e2f20407154e112bd402d37415e71234c1ee53a47c94e64c746be",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "voting-long-copy-desktop.png",
+      "sha256": "81bc3bcc898cd935ffd4725fac2b1eaf81d59d5d5d8a473a9d00871a0c3a41db",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "voting-long-copy-mobile.png",
+      "sha256": "ae0f80f4e054406e4a2434e9fc23be965e28e1263e5cbb0f70b296c43af441b4",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
+    },
+    {
+      "file": "family-fallback-short-desktop.png",
+      "sha256": "a4b83acb9e70d95f07e9725bf3b58074c2007477fcb2ae38db5940e388706a62",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
+    },
+    {
+      "file": "family-fallback-short-mobile.png",
+      "sha256": "7752b1c5fb2d10f0316b5e7b664c348b6a400458062f5c0aa2da228916349991",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "file": "family-tree-empty-desktop.png",
-      "sha256": "96a7b2509e9955f133519031251bc1fc54d4fd12cf70807b40fb7312f297e16a",
+      "sha256": "ddbb46af4f2daed2cfce8d0ae170fae9304bca90a10ed749ca714b5241453f46",
       "renderer": "apps/bot/src/discord/family-coordinator.ts",
-      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+      "rendererSha256": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157"
     },
     {
       "file": "family-tree-empty-mobile.png",
-      "sha256": "e41a62ecc25b104e4e2ff9bf3bf8f21afa7f34ea5edbe593a28d0970b1f633c1",
+      "sha256": "3d866879e74f9997764e1f4b8726fa8ab3675c89d67b8ba1e30b1746f72439d8",
       "renderer": "apps/bot/src/discord/family-coordinator.ts",
-      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+      "rendererSha256": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157"
     },
     {
       "file": "family-tree-large-desktop.png",
-      "sha256": "4a5e6fb22a1e4d8caa8bccb641d09f54edc975cc6e0a12a371cffd44af8e7a31",
+      "sha256": "c5349d0ba26271f50130e4f1dfa1e5ab7a6b4d73d610e77aa1bdee1886a7450e",
       "renderer": "apps/bot/src/discord/family-coordinator.ts",
-      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+      "rendererSha256": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157"
     },
     {
       "file": "family-tree-large-mobile.png",
-      "sha256": "106b459a516b24426be3ddc7d1350cf5045c91b4255f7488a8fb73ee7eeb8d3f",
+      "sha256": "ee1093641c0f4b74a13707fbd8141fcc015c1369fc69a04f29170e66e72ca0c0",
       "renderer": "apps/bot/src/discord/family-coordinator.ts",
-      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+      "rendererSha256": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157"
     }
   ]
 }

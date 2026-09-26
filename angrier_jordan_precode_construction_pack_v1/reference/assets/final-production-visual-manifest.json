@@ -3,7 +3,7 @@
   "date": "2026-09-21",
   "status": "FINAL_INTEGRATED_PRODUCTION_VISUAL_MANIFEST",
   "style_source": "Approved second Angrier Jordan visual system only",
-  "asset_count": 388,
+  "asset_count": 389,
   "phase3_asset_count": 312,
   "phase4_runtime_template_count": 36,
   "assets": [
@@ -6017,7 +6017,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+      "sha256": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59"
     },
     {
       "id": "crime.runtime.renderer",
@@ -6026,7 +6026,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
+      "sha256": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1"
     },
     {
       "id": "channel-games.runtime.renderer",
@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2"
+      "sha256": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba"
     },
     {
       "id": "family.runtime.renderer",
@@ -6053,7 +6053,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+      "sha256": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
     },
     {
       "id": "family.tree.renderer",
@@ -6062,7 +6062,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+      "sha256": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157"
     },
     {
       "id": "chairisms.runtime.renderer",
@@ -6071,7 +6071,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8"
+      "sha256": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188"
     },
     {
       "id": "chairisms.browser",
@@ -6080,7 +6080,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24"
+      "sha256": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c"
     },
     {
       "id": "casino.runtime.renderer",
@@ -6089,7 +6089,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f"
+      "sha256": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f"
     },
     {
       "id": "profiles.runtime.renderer",
@@ -6098,7 +6098,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a"
+      "sha256": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730"
     },
     {
       "id": "shared.text.layout",
@@ -6108,6 +6108,15 @@
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
       "sha256": "854cb57eb48afb6a878f8f1f68083c59a9c0d34a90d554ba4696b511c9349f10"
+    },
+    {
+      "id": "gate-b.shared.visual",
+      "file": "packages/features-events/src/gate-b-visual.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Centered Gate B lounge composition and framed member portraits; owner approval pending.",
+      "sha256": "93d819f95fe8b69c6e8ac06df04f60653faa6c3aad0781de6b11b08a0ea5003a"
     }
   ]
 }

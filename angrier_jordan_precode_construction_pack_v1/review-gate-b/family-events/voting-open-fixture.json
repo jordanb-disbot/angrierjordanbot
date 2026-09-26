@@ -1,0 +1,34 @@
+{
+  "id": "fixture",
+  "guildId": "fixture",
+  "channelId": "fixture",
+  "messageId": "fixture",
+  "ownerId": "fixture-alex",
+  "state": "OPEN",
+  "version": 2,
+  "createdAt": "2026-09-25T18:00:00.000Z",
+  "expiresAt": null,
+  "phase": "vote",
+  "category": "Random",
+  "extensionUsed": false,
+  "submissionCount": 0,
+  "submissions": {},
+  "words": [],
+  "round": 2,
+  "game": "wwyd",
+  "prompt": "The lounge finds a sealed mystery box. What would you do?",
+  "options": [
+    {
+      "id": "open",
+      "text": "Open it together"
+    },
+    {
+      "id": "wait",
+      "text": "Wait for the owner"
+    },
+    {
+      "id": "inspect",
+      "text": "Inspect the label first"
+    }
+  ]
+}

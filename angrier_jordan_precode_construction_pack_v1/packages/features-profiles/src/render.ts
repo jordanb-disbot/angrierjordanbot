@@ -1,38 +1,41 @@
-import {heading,ink,panel,shell,text} from '../../features-events/src/visual.js';
-import {wrapText} from '../../renderer/src/text-layout.js';
+import {ink,panel,shell} from '../../features-events/src/visual.js';
+import {centeredHeading,centeredBlock,portrait} from '../../features-events/src/gate-b-visual.js';
 export interface SpotlightRenderInput {
  weekStart:string;weekEnd:string;activeMembers:number;messages:number;words:number;voiceSeconds:number;
  categories:{title:string;winners:{name:string;avatarData:string;total:string;lifetimeWins:number;status:string;tripleThreat:boolean}[]}[];
 }
-/** Frozen totals and resolved Discord identities in the approved lounge shell. */
 export function renderSpotlight(data:SpotlightRenderInput):string{
- let y=136,body=heading('CHAIRS · WEEKLY HONORS','Weekly Spotlight',data.weekStart+' — '+data.weekEnd+' · Mountain');
- for(const category of data.categories){
-  body+=text(24,y+22,category.title,21,ink.gold,'font-family="Space Grotesk" font-weight="600"');y+=36;
-  if(!category.winners.length){body+=panel(18,y,404,62,ink.slate)+text(34,y+37,'No qualifying winner',16,ink.muted);y+=74;}
-  for(const w of category.winners){
-   if(!/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(w.avatarData))throw new Error('Spotlight requires a resolved avatar image.');
-   const nameLines=wrapText(w.name,300,18),statusLines=wrapText(w.status+' · '+w.lifetimeWins+' lifetime wins',372,13),height=96+(nameLines.length-1)*22+statusLines.length*18+(w.tripleThreat?36:0);
-   body+=panel(18,y,404,height,w.tripleThreat?ink.gold:ink.teal)+`<image x="32" y="${y+17}" width="52" height="52" href="${w.avatarData}"/>`;
-   nameLines.forEach((line,n)=>body+=text(98,y+37+n*22,line,18,ink.white,'font-weight="600"'));
-   const totalY=y+62+(nameLines.length-1)*22;body+=text(98,totalY,w.total,17,ink.gold);
-   statusLines.forEach((line,n)=>body+=text(32,totalY+27+n*18,line,13,ink.muted));
-   if(w.tripleThreat)body+=text(32,y+height-17,'TRIPLE THREAT · PERMANENT',13,ink.gold,'font-family="Space Grotesk" font-weight="700"');
-   y+=height+12;
+ const head=centeredHeading('ANGRIER JORDAN · WEEKLY HONORS','Weekly Spotlight',data.weekStart+' — '+data.weekEnd+' · Mountain');let body=head.svg,y=head.height;
+ for(const [ci,category]of data.categories.entries()){
+  const title=centeredBlock(category.title,y+22,{size:20,color:ink.gold,weight:600});body+=title.svg;y+=title.height+28;
+  if(!category.winners.length){body+=panel(18,y,404,60,ink.teal)+centeredBlock('No qualifying winner',y+36,{size:16,color:ink.muted}).svg;y+=72;}
+  for(let index=0;index<category.winners.length;index+=2){
+   const row=category.winners.slice(index,index+2),cols=row.map((winner,col)=>{
+    const cx=row.length===1?220:122+col*196,width=row.length===1?360:168;let inner=100,svg=portrait('spotlight-'+ci+'-'+(index+col),winner.name,winner.avatarData,cx,y+14,68);
+    for(const [value,size,color,weight]of [[winner.name,18,ink.white,600],[winner.total,19,ink.gold,700],[winner.status+' · '+winner.lifetimeWins+' lifetime wins',12,ink.muted,400],...(winner.tripleThreat?[['TRIPLE THREAT · PERMANENT',12,ink.gold,600]]:[])] as [string,number,string,number][]){const block=centeredBlock(value,y+inner,{size,color,weight,width,gap:7,cx});svg+=block.svg;inner+=block.height;}
+    return{svg,height:inner+5};
+   });
+   const height=Math.max(...cols.map(c=>c.height));body+=panel(18,y,404,height,row.some(w=>w.tripleThreat)?ink.gold:ink.teal)+cols.map(c=>c.svg).join('');y+=height+12;
   }
-  y+=8;
  }
- const totals=[data.activeMembers+' active members',data.messages+' messages · '+data.words+' words',data.voiceSeconds+' qualifying voice seconds'].flatMap(value=>wrapText(value,372,15));
- const totalsHeight=48+totals.length*24;
- body+=panel(18,y,404,totalsHeight,ink.slate)+text(34,y+25,'SERVER TOTALS',11,ink.warm);
- totals.forEach((line,n)=>body+=text(34,y+53+n*24,line,15,n===totals.length-1?ink.muted:ink.white));
- return shell(y+totalsHeight+20,body);
+ const totals=centeredBlock([data.activeMembers+' active members',data.messages+' messages · '+data.words+' words',data.voiceSeconds+' qualifying voice seconds'].join('\n'),y+53,{size:15,width:368,gap:0});
+ const height=totals.height+64;body+=panel(18,y,404,height,ink.gold)+centeredBlock('SERVER TOTALS',y+25,{size:11,color:ink.warm}).svg+totals.svg;return shell(y+height+18,body);
 }
-export interface RecordRenderInput {scope:string;records:{title:string;memberName:string;amount:string;achievedAt:string}[];}
+export interface RecordRenderInput {scope:string;title?:string;records:{title:string;memberName:string;avatarData?:string;amount:string;achievedAt:string;supporting?:string}[];}
 export const recordTitle=(key:string)=>key.replaceAll('_',' ').replaceAll('.',' · ').replace(/\b\w/g,c=>c.toUpperCase());
 export function renderRecords(data:RecordRenderInput):string{
- let y=135,body=heading('CHAIRS · HALL OF RECORDS','Server Records',data.scope);
- if(!data.records.length){body+=panel(18,y,404,75,ink.slate)+text(34,y+44,'No records yet.',18,ink.muted);y+=90;}
- for(const r of data.records){const content=[...wrapText(r.title,372,19),...wrapText(r.memberName,372,16),...wrapText(r.amount,372,16),'Set '+r.achievedAt],height=30+content.length*25;body+=panel(18,y,404,height,ink.gold);content.forEach((line,n)=>body+=text(34,y+30+n*25,line,n===0?19:16,n===0?ink.gold:ink.white));y+=height+14;}
- return shell(y+12,body);
+ const head=centeredHeading('ANGRIER JORDAN · HALL OF RECORDS',data.title??'Server Records',data.scope);let body=head.svg,y=head.height;
+ if(!data.records.length){body+=panel(18,y,404,76,ink.teal)+centeredBlock('No records yet.',y+45,{size:18,color:ink.muted}).svg;y+=90;}
+ for(const [index,r]of data.records.entries()){
+  let content=portrait('record-'+index,r.memberName,r.avatarData,220,y+16,76),inner=y+119;
+  for(const [value,size,color,weight]of [[r.memberName,20,ink.white,600],[r.title,19,ink.warm,600],[r.amount,23,ink.gold,700],['Set '+r.achievedAt,13,ink.muted,400],...(r.supporting?[[r.supporting,14,ink.muted,400]]:[])]as[string,number,string,number][]){const block=centeredBlock(value,inner,{size,color,weight,width:368,gap:8});content+=block.svg;inner+=block.height;}
+  body+=panel(18,y,404,inner-y+4,ink.gold)+content;y=inner+18;
+ }return shell(y+8,body);
+}
+/** Inputs are already privacy-filtered before presentation. */
+export function renderProfile(data:{name:string;avatarData?:string;sections:{label:string;value:string}[]}):string{
+ const head=centeredHeading('ANGRIER JORDAN · MEMBER PROFILE','A Seat in the Chairs','');let body=head.svg,y=head.height;
+ const name=centeredBlock(data.name,y+124,{size:22,color:ink.warm,weight:600});body+=panel(18,y,404,136+name.height,ink.gold)+portrait('profile',data.name,data.avatarData,220,y+16,84)+name.svg;y+=148+name.height;
+ for(const section of data.sections){const label=centeredBlock(section.label.toUpperCase(),y+26,{size:12,color:ink.warm,weight:600}),value=centeredBlock(section.value,y+26+label.height,{size:15,width:368,gap:0}),height=36+label.height+value.height;body+=panel(18,y,404,height,ink.teal)+label.svg+value.svg;y+=height+12;}
+ return shell(y+8,body);
 }

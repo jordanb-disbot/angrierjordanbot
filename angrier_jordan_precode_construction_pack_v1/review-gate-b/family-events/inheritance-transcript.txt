@@ -1,5 +1,6 @@
 Inheritance executed
-One beneficiary received the eligible estate.
+Sam Rivera
+Beneficiary: Sam Rivera
 428,750 Ottomans transferred.
 12 eligible inventory entries transferred.
 Execution is final. A later return does not restore this estate.

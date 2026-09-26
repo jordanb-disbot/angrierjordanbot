@@ -174,5 +174,60 @@
     "fixture": true,
     "controlsShown": [],
     "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
+  },
+  {
+    "id": "member-profile",
+    "name": "Member profile · public summary",
+    "scenario": "Public profile composed from already privacy-filtered activity, honors and showcase fields; actual native Edit Showcase remains member-bound.",
+    "controls": [
+      "Edit Showcase"
+    ],
+    "classification": [
+      "informational",
+      "interactive"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderProfile",
+    "desktop": "review-gate-b/casino-profiles/member-profile-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/member-profile-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
+  },
+  {
+    "id": "record-announcement",
+    "name": "New record · public announcement",
+    "scenario": "Durable new-record announcement: Alex improves Biggest Casino Win to125000; previous100000 held86400seconds. Publication uses current portrait and same result shell.",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+    "desktop": "review-gate-b/casino-profiles/record-announcement-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/record-announcement-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "casino-avatar-fallback",
+    "name": "Casino · short name and missing avatar",
+    "scenario": "Resolved identity Li with unavailable avatar, exact zero return and truthful fallback portrait; no network-dependent fixture content.",
+    "controls": [
+      "Play Again",
+      "Rules"
+    ],
+    "classification": [
+      "financial",
+      "interactive"
+    ],
+    "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+    "desktop": "review-gate-b/casino-profiles/casino-avatar-fallback-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/casino-avatar-fallback-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
   }
 ]

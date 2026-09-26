@@ -1,3 +1,4 @@
+import {memberArt} from './member-art.js';
 import {renderCasinoResult} from '../../../../packages/features-casino/src/render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import casinoHelp from '../../../../packages/content/help/casino.json' with {type:'json'};
@@ -49,19 +50,20 @@ export class DiscordCasinoCoordinator {
    id=(await this.casino.start(c,previous.data.game,BigInt(previous.data.stake),previous.data.selection,policy)).sessionId;
   }else if(i.isButton()&&parts[1]==='act')id=(await this.casino.action(c,parts[3]!,Number(parts[4]),parts[5] as 'hit'|'stand'|'double'|'split',policy)).sessionId;
   else throw new DomainError('CASINO_CONTROL','Open a casino game to continue.');
-  const message=await i.editReply(await this.roundPayload(id));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
+  const message=await i.editReply(await this.roundPayload(id,i.client));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
  }catch(error){const content=error instanceof DomainError?error.message:'The wager could not be completed. Your saved round can be checked before retrying.';if(i.deferred){if(i.isButton()&&i.customId.startsWith('casino:act:'))await i.followUp({ephemeral:true,content});else await i.editReply({content});}else await i.reply({ephemeral:true,content});}}
- private async roundPayload(id:string){
+ private async roundPayload(id:string,client?:Client){
   const round=await this.casino.get(id),policy=await this.policy(round.guildId),ownerId=round.ownerUserId!,d=round.data,closed=round.state==='CLOSED';let text=`Wager: **${d.stake} Ottomans**\n`;
   if(d.blackjack){text+=`Dealer: ${closed?d.blackjack.dealer.map(cardLabel).join(' '):cardLabel(d.blackjack.dealer[0]!)+' · hidden'}\n`;text+=d.blackjack.hands.map((h,n)=>`${n===d.blackjack!.active&&!closed?'→ ':''}Hand ${n+1}: ${h.cards.map(cardLabel).join(' ')} · ${handValue(h.cards).total} · ${h.stake} Ottomans`).join('\n');if(!closed)text+='\nTimeout automatically stands remaining hands.';}
   else text+=`Result: ${(d.symbols??[]).map(s=>policy.symbols.find(x=>x.id===s)?.name??s).join(' · ')}\n`;
   if(closed)text+=`\n**${d.outcome}** · Returned: **${d.payout} Ottomans**`;
   const controls=new ActionRowBuilder<ButtonBuilder>();if(closed)controls.addComponents(new ButtonBuilder().setCustomId(`casino:again:${ownerId}:${id}`).setLabel('Play Again').setStyle(ButtonStyle.Primary));else for(const action of ['hit','stand','double','split'])controls.addComponents(new ButtonBuilder().setCustomId(`casino:act:${ownerId}:${id}:${round.version}:${action}`).setLabel(action[0]!.toUpperCase()+action.slice(1)).setStyle(action==='stand'?ButtonStyle.Secondary:ButtonStyle.Primary));
   controls.addComponents(new ButtonBuilder().setCustomId('casino:help:'+ownerId+':'+d.game).setLabel('Rules').setStyle(ButtonStyle.Secondary));
-  const attachment=closed?new AttachmentBuilder(await rasterizeSvg(renderCasinoResult({title:d.game[0]!.toUpperCase()+d.game.slice(1)+' Result',subtitle:'Settled round · '+(d.outcome??'Complete'),amount:d.payout??'0',amountLabel:'Returned',details:[{label:'Wager',value:d.stake+' Ottomans'},{label:'Result',value:d.blackjack?d.blackjack.hands.map((h,n)=>'Hand '+(n+1)+': '+h.cards.map(cardLabel).join(' ')+' · '+handValue(h.cards).total).join(' / '):(d.symbols??[]).map(s=>policy.symbols.find(x=>x.id===s)?.name??s).join(' · ')}]})),{name:'casino-result.png'}):undefined;
+  const identity=closed&&client?await memberArt(client,round.guildId,ownerId):undefined;
+  const attachment=closed?new AttachmentBuilder(await rasterizeSvg(renderCasinoResult({memberName:identity?.name??'Member',avatarData:identity?.avatarData??'',title:d.game[0]!.toUpperCase()+d.game.slice(1)+' Result',subtitle:'Settled round · '+(d.outcome??'Complete'),amount:d.payout??'0',amountLabel:'Returned',details:[{label:'Wager',value:d.stake+' Ottomans'},{label:'Result',value:d.blackjack?d.blackjack.hands.map((h,n)=>'Hand '+(n+1)+': '+h.cards.map(cardLabel).join(' ')+' · '+handValue(h.cards).total).join(' / '):(d.symbols??[]).map(s=>policy.symbols.find(x=>x.id===s)?.name??s).join(' · ')}]})),{name:'casino-result.png'}):undefined;
   const embed=card('Casino · '+d.game,text).setFooter({text:'casino:'+id});if(attachment)embed.setImage('attachment://casino-result.png');
   return{embeds:[embed],files:attachment?[attachment]:[],attachments:[],components:[controls],allowedMentions:{parse:[] as never[]}};
  }
- async refresh(client:Client,id:string){const round=await this.casino.get(id);if(!round.messageId)return;const channel=await client.channels.fetch(round.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Casino message channel unavailable.');const message=await channel.messages.fetch(round.messageId);if(message.author.id!==client.user?.id)throw new Error('Casino message owner mismatch.');await message.edit(await this.roundPayload(id));}
+ async refresh(client:Client,id:string){const round=await this.casino.get(id);if(!round.messageId)return;const channel=await client.channels.fetch(round.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Casino message channel unavailable.');const message=await channel.messages.fetch(round.messageId);if(message.author.id!==client.user?.id)throw new Error('Casino message owner mismatch.');await message.edit(await this.roundPayload(id,client));}
 
 }
