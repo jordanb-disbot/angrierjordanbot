@@ -1,0 +1,9 @@
+{
+  "title": "Getting settled",
+  "commands": ["rules", "roles"],
+  "body": "Your private onboarding controls help you settle into Chairs at your own pace.",
+  "rules": "Read the server rules before choosing Acknowledge Rules. Acknowledgement records your acceptance and restores only access permitted by the server settings and any active restrictions.",
+  "roles": "Choose optional cosmetic roles from the server’s configured categories. Open /roles to see available choices and your current selections. If the panel is unavailable, the server team still needs to finish setup; no role has been changed.",
+  "examples": ["/rules", "/roles"],
+  "tutorial": {"steps": ["Open the command when you are ready to use its real controls.", "Read the available rules or role categories before making a selection.", "For roles, respect each category’s single or multiple selection limit; deselect choices to remove them.", "Reopen /roles to check your saved choices. Unavailable or unmanageable roles are rejected safely.", "Practice only reviews these instructions. It does not acknowledge rules, grant access, or change your roles."]}
+}

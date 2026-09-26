@@ -6124,8 +6124,8 @@
       "category": "runtime",
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
-      "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
-      "sha256": "97166667dee8b5dd00a6c3ee4820b4f6eda4384d3f81d8949d8b3a63945d202d"
+      "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
+      "sha256": "ff7078d57cedb4dc16077258e5fdf52e842ea6cd4d855fa0b5878a69e439741b"
     },
     {
       "id": "social.runtime",
@@ -6549,6 +6549,24 @@
       "canonical": true,
       "sha256": "facca1dab30c9f1ef5b874c1a918b02c226227c9283d6c55f8f0ea5710b77018",
       "status": "OWNER_REVIEW_PENDING"
+    },
+    {
+      "id": "learning.runtime",
+      "file": "packages/features-learning/src/visual.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
+      "sha256": "6c6e82bad3cca90a5de9d40f85dacd2b2486beebb8ee88e54fae1e0d0d1361d4"
+    },
+    {
+      "id": "onboarding.runtime",
+      "file": "packages/features-onboarding/src/render.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
+      "sha256": "e2cc1879317b7e424933b0550fb70430adf8436d1b493063e1741f5ec7e94833"
     }
   ]
 }

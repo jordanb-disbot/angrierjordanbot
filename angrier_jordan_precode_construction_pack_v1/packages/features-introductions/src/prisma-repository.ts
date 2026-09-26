@@ -13,13 +13,21 @@ export class PrismaIntroductionsRepository {
  /** Input must come from the already-published shared ConfigService; this is a materialized runtime form. */
  async configure(guildId:string,channelId:string,settings:PublishedIntroSettings|null){
   if(!/^\d{17,20}$/.test(channelId))throw new DomainError('INTRO_CHANNEL','The introductions channel is not configured.');
-  const fingerprint=requestFingerprint({channelId,settings}),previous=await this.db.introductionFormConfig.findUnique({where:{guildId}});if(previous?.sourceFingerprint===fingerprint)return;
+  const fingerprint=requestFingerprint({channelId,settings,questionRevision:2}),previous=await this.db.introductionFormConfig.findUnique({where:{guildId}});if(previous?.sourceFingerprint===fingerprint)return;
   const key='intro:configuration:'+fingerprint+':'+(previous?.version??0);
-  await this.atomic.run(guildId,key,requestFingerprint({channelId,settings}),async tx=>{
+  await this.atomic.run(guildId,key,requestFingerprint({channelId,settings,questionRevision:2}),async tx=>{
    const config=await tx.introductionFormConfig.upsert({where:{guildId},update:{},create:{guildId,introductionChannelId:channelId}});
    if(config.sourceFingerprint===fingerprint)return{applied:true};
    let form=await tx.introductionForm.findFirst({where:{guildId,enabled:true},include:{prompts:true},orderBy:[{version:'desc'},{id:'asc'}]});
    if(!form){form=await tx.introductionForm.create({data:{guildId,title:'Your introduction',prompts:{create:INTRO_DEFAULTS.map((p,n)=>({...p,id:guildId+'_'+p.id,sortOrder:n,placeholder:null,minLength:null,showOnCard:true}))}},include:{prompts:true}});}
+   // Stable IDs and stored answers survive; retired answers are never reinterpreted.
+   const originalPrompts=form.prompts;
+   if(!settings&&originalPrompts.filter(p=>p.enabled&&!p.deletedAt).length===5&&['name','age','from','about','why'].every(id=>originalPrompts.some(p=>p.id===guildId+'_'+id&&p.enabled&&!p.deletedAt))){
+    const currentIds=new Set(INTRO_DEFAULTS.map(p=>guildId+'_'+p.id));
+    for(const p of form.prompts)if(!currentIds.has(p.id))await tx.introductionPrompt.update({where:{id:p.id},data:{enabled:false,deletedAt:this.clock()}});
+    for(const [n,p] of INTRO_DEFAULTS.entries()){const id=guildId+'_'+p.id,fields={...p,id,sortOrder:n,placeholder:null,minLength:null,showOnCard:true,enabled:true,deletedAt:null};await tx.introductionPrompt.upsert({where:{id},create:{...fields,formId:form.id},update:fields});}
+    form=await tx.introductionForm.update({where:{id:form.id},data:{version:{increment:1}},include:{prompts:true}});
+   }
    const nextConfig={...config,introductionChannelId:channelId,...(settings?{headerText:settings.headerText,footerText:settings.footerText,showAvatar:settings.showAvatar,showDisplayName:settings.showDisplayName,showJoinDate:settings.showJoinDate,allowAdminIntroConfig:settings.allowAdminIntroConfig}:{})};
    const nextForm:IntroForm=settings?{id:form.id,version:form.version,title:settings.title,prompts:settings.prompts}:form;
    validateIntroForm(nextForm,nextConfig);

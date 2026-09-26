@@ -8,7 +8,7 @@
   ],
   "body": "Use /introduce in the introductions channel. Create, Edit and Preview are private buttons. Publish is an explicit separate action; previews match the public card. Editing updates your existing introduction.",
   "fields": {
-    "answers": "Complete required fields. Optional answers may be blank. Only fields configured for the card are published."
+    "answers": "Answer Name, Location, DOC, How’d you find the server, Fun fact about you?, and Favorite type of chair?. Optional blank answers stay off the card."
   },
   "examples": [
     "/introduce",

@@ -5,11 +5,12 @@ export interface IntroForm {id:string;version:number;title:string;prompts:IntroP
 export interface IntroDraft {form:IntroForm;config:IntroConfig;answers:Record<string,string>;baseRevision:number;page:number;previewedVersion:number|null;}
 export interface IntroContext {guildId:string;channelId:string;userId:string;requestKey:string;}
 export const INTRO_DEFAULTS=[
- {id:'name',label:'What should we call you?',cardLabel:'Name',required:true,maxLength:80,inputStyle:'short'},
- {id:'age',label:'How old are you?',cardLabel:'Age',required:true,maxLength:20,inputStyle:'short'},
- {id:'from',label:"What part of the world are you joining us from? Share only as much as you're comfortable with.",cardLabel:'From',required:false,maxLength:100,inputStyle:'short'},
- {id:'about',label:'Tell us a little about yourself — hobbies, interests, personality, whatever you want people to know.',cardLabel:'About Me',required:true,maxLength:700,inputStyle:'paragraph'},
- {id:'why',label:'What brought you here, or what are you hoping to find in the community?',cardLabel:"Why I’m Here",required:false,maxLength:500,inputStyle:'paragraph'}
+ {id:'name',label:'Name',cardLabel:'Name',required:false,maxLength:80,inputStyle:'short'},
+ {id:'from',label:'Location',cardLabel:'Location',required:false,maxLength:100,inputStyle:'short'},
+ {id:'doc',label:'DOC',cardLabel:'DOC',required:false,maxLength:100,inputStyle:'short'},
+ {id:'discovery',label:"How'd you find the server",cardLabel:"How'd you find the server",required:false,maxLength:500,inputStyle:'paragraph'},
+ {id:'fun_fact',label:'Fun fact about you?',cardLabel:'Fun fact about you?',required:false,maxLength:700,inputStyle:'paragraph'},
+ {id:'chair',label:'Favorite type of chair?',cardLabel:'Favorite type of chair?',required:false,maxLength:300,inputStyle:'paragraph'}
 ] as const;
 export function activePrompts(form:IntroForm){return form.prompts.filter(p=>p.enabled&&!p.deletedAt).sort((a,b)=>a.sortOrder-b.sortOrder||a.id.localeCompare(b.id));}
 export function promptPages(form:IntroForm){const prompts=activePrompts(form);return Array.from({length:Math.ceil(prompts.length/5)},(_,n)=>prompts.slice(n*5,n*5+5));}
@@ -29,6 +30,6 @@ export function saveAnswers(draft:IntroDraft,page:number,submitted:Record<string
  return{...draft,answers,page,previewedVersion:null};
 }
 export function validateAnswers(draft:IntroDraft){for(let n=0;n<promptPages(draft.form).length;n++){const values=Object.fromEntries(promptPages(draft.form)[n]!.map(p=>[p.id,draft.answers[p.id]??'']));saveAnswers(draft,n,values);}}
-export function introTranscript(draft:IntroDraft,displayName:string,joinedAt?:string){return [draft.config.headerText,draft.config.showDisplayName?displayName:'',draft.config.showJoinDate&&joinedAt?`Joined ${joinedAt}`:'',...activePrompts(draft.form).filter(p=>p.showOnCard&&draft.answers[p.id]).map(p=>`${p.cardLabel}\n${draft.answers[p.id]}`),draft.config.footerText].filter(Boolean).join('\n\n');}
+export function introTranscript(draft:IntroDraft,displayName:string,joinedAt?:string){return [draft.config.headerText,draft.config.showDisplayName?displayName:'',draft.config.showJoinDate&&joinedAt?`Joined ${joinedAt}`:'',...activePrompts(draft.form).filter(p=>p.showOnCard&&draft.answers[p.id]?.trim()).map(p=>`${p.cardLabel}\n${draft.answers[p.id]}`),draft.config.footerText].filter(Boolean).join('\n\n');}
 /** Bound every image page; split long answers without losing text or splitting surrogate pairs. */
 export function introCardPages(text:string){const chars=[...text],pages:string[]=[];while(chars.length)pages.push(chars.splice(0,1250).join(''));if(pages.length>10)throw new DomainError('INTRO_CARD_LIMIT','This introduction exceeds Discord’s card attachment limit.');return pages.length?pages:['Pull up a chair.'];}

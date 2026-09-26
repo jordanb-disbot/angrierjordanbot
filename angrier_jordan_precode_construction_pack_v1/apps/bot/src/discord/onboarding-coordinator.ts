@@ -1,10 +1,18 @@
 import {
-  ActionRowBuilder,ButtonBuilder,ButtonStyle,ContainerBuilder,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
+  ActionRowBuilder,AttachmentBuilder,EmbedBuilder,MediaGalleryBuilder,MediaGalleryItemBuilder,ButtonBuilder,ButtonStyle,ContainerBuilder,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
   type ButtonInteraction,type ChatInputCommandInteraction,type GuildMember,type PartialGuildMember,type StringSelectMenuInteraction,
 } from 'discord.js';
 import type { ConfigService } from '../../../../packages/core/src/index.js';
 import { DomainError } from '../../../../packages/core/src/index.js';
 import type { OnboardingService, RestorePlan, RoleSnapshot, SelfRolePanelDefinition } from '../../../../packages/features-onboarding/src/index.js';
+import {readFileSync} from 'node:fs';
+import {renderOnboarding,rulesSections,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
+import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+
+const rules=JSON.parse(readFileSync(new URL('../../../../packages/content/onboarding/rules.json',import.meta.url),'utf8')) as {title:string;sections:GuidanceSection[]};
+let rulesArt:Promise<Buffer[]>|undefined;
+let rolesArt:Promise<Buffer>|undefined;
+function rulesImages(){return rulesArt??=Promise.all(rules.sections.flatMap(section=>rulesSections(section.body).map((page,index,pages)=>rasterizeSvg(renderOnboarding(rules.title,'Our shared space · read before acknowledging',[{title:section.title+(pages.length>1?` · ${index+1}/${pages.length}`:''),body:page[0]!.body}]))))).catch(error=>{rulesArt=undefined;throw error;});}
 
 const roleId=async(config:ConfigService,guildId:string,key:string):Promise<string|null>=>{
   const value=await config.get(guildId,key);return typeof value==='string'&&value?value:null;
@@ -22,10 +30,10 @@ export class DiscordOnboardingCoordinator {
   constructor(private readonly service:OnboardingService,private readonly config:ConfigService,private readonly learning:OnboardingLearningOptions={}){}
 
   async handleMemberAdd(member:GuildMember):Promise<void>{
-    await this.service.memberJoined(member.guild.id,member.id);
+    const {returning}=await this.service.memberJoined(member.guild.id,member.id);
     const access=await roleId(this.config,member.guild.id,'roles.member_access');
     if(access&&member.roles.cache.has(access))await member.roles.remove(access,'Rules acknowledgment required on join/rejoin.').catch(()=>undefined);
-    await member.send({content:'Welcome back to Chairs. Please review `/rules` and acknowledge them before normal server access is restored.'}).catch(()=>undefined);
+    await member.send({content:(returning?'Welcome back to Chairs.':'Welcome to Chairs. Your seat is waiting.')+' Please review `/rules` and acknowledge them to complete your arrival.'}).catch(()=>undefined);
   }
 
   async handleMemberRemove(member:GuildMember|PartialGuildMember):Promise<void>{
@@ -47,11 +55,11 @@ export class DiscordOnboardingCoordinator {
 
   async handleRulesCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
+    await interaction.deferReply({ephemeral:true});
+    const images=await rulesImages();
+    const files=images.map((buffer,i)=>new AttachmentBuilder(buffer,{name:`chairs-rules-${i+1}.png`,description:`${rules.title}, page ${i+1}.`}));
     const ack=new ButtonBuilder().setCustomId('onboard:ack_rules').setLabel('Acknowledge Rules').setStyle(ButtonStyle.Success);
-    const container=new ContainerBuilder().setAccentColor(0x14B8A6)
-      .addTextDisplayComponents(new TextDisplayBuilder().setContent('# Server Rules\nReview the server rules. When you are ready, acknowledge them below to unlock normal server access.'))
-      .addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(ack));
-    await interaction.reply({flags:MessageFlags.Ephemeral|MessageFlags.IsComponentsV2,components:[container]});
+    await interaction.editReply({embeds:files.map((_,i)=>new EmbedBuilder().setColor(0x773747).setImage(`attachment://chairs-rules-${i+1}.png`)),files,components:[new ActionRowBuilder<ButtonBuilder>().addComponents(ack)],allowedMentions:{parse:[]}});
   }
 
   async handleRulesAck(interaction:ButtonInteraction):Promise<void>{
@@ -83,8 +91,9 @@ export class DiscordOnboardingCoordinator {
 
   async handleRolesCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
-    try{const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.reply(this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId)));}
-    catch(error){await interaction.reply({ephemeral:true,content:error instanceof DomainError?error.message:'The role panel could not be loaded.'});}
+    await interaction.deferReply({ephemeral:true});
+    try{const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId)));}
+    catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'The role panel could not be loaded.'});}
   }
 
   async handleRoleSelect(interaction:StringSelectMenuInteraction):Promise<void>{
@@ -119,13 +128,12 @@ export class DiscordOnboardingCoordinator {
       throw error;
     }
     const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-    await interaction.editReply(this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId)));
+    await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),false));
   }
 
-  private rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[]){
+  private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true){
     const selected=new Set(selectedRoleIds);
     const components:Array<TextDisplayBuilder|ActionRowBuilder<StringSelectMenuBuilder>>=[];
-    components.push(new TextDisplayBuilder().setContent(`# Choose Your Roles\nChanges apply immediately. You can run \`/roles\` again anytime.`));
     for(const category of panel.categories){
       const options=category.options.filter(o=>o.enabled&&!o.archived);
       if(!options.length){components.push(new TextDisplayBuilder().setContent(`**${category.label}**\n_No options configured yet._`));continue;}
@@ -137,9 +145,10 @@ export class DiscordOnboardingCoordinator {
         components.push(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(menu));
       }
     }
-    const containers:ContainerBuilder[]=[];
-    for(let i=0;i<components.length;i+=9){const container=new ContainerBuilder().setAccentColor(0x14B8A6);for(const c of components.slice(i,i+9)){if(c instanceof TextDisplayBuilder)container.addTextDisplayComponents(c);else container.addActionRowComponents(c);}containers.push(container);}
-    return {flags:MessageFlags.Ephemeral|MessageFlags.IsComponentsV2,components:containers};
+    const containers:ContainerBuilder[]=[new ContainerBuilder().setAccentColor(0x773747).addMediaGalleryComponents(new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL('attachment://your-roles.png').setDescription('Choose your roles. Saved selections appear in the menus. Clear a selection to remove it.')))];
+    for(let i=0;i<components.length;i+=9){const container=new ContainerBuilder().setAccentColor(0x773747);for(const c of components.slice(i,i+9)){if(c instanceof TextDisplayBuilder)container.addTextDisplayComponents(c);else container.addActionRowComponents(c);}containers.push(container);}
+    const art=includeArtwork?await(rolesArt??=rasterizeSvg(renderOnboarding('Your Place in Chairs','Choose the details that feel like you',[{title:'YOUR ROLES · YOUR CHOICE',body:'Select from the categories below. Clear a selection to remove it. Changes are saved immediately; reopen /roles to see your choices.'},{title:'APPROVED SELF-ASSIGNABLE ROLES',body:'Only configured member roles are available. Staff and protected roles cannot be self-assigned.'}])).catch(error=>{rolesArt=undefined;throw error;})):null;
+    return {flags:MessageFlags.IsComponentsV2 as const,components:containers,...(art?{files:[new AttachmentBuilder(art,{name:'your-roles.png'})],attachments:[]}:{}),allowedMentions:{parse:[] as never[]}};
   }
 
   async restoreAfterPunishment(member:GuildMember):Promise<void>{const plan=await this.service.buildPostPunishmentRestorePlan(member.guild.id,member.id);await this.applyRestorePlan(member,plan);}

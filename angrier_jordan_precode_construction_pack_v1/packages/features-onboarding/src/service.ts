@@ -12,12 +12,14 @@ const allowedRestore=(role:RoleSnapshot,now:Date)=>{
 export class OnboardingService {
   constructor(private readonly repository:OnboardingRepository,private readonly audit:AuditService,private readonly clock:Clock){}
 
-  async memberJoined(guildId:string,userId:string):Promise<{needsRulesAck:true}> {
+  async memberJoined(guildId:string,userId:string):Promise<{needsRulesAck:true;returning:boolean}> {
     await this.repository.ensureMember(guildId,userId);
+    const previous=await this.repository.getPresence(guildId,userId);
+    const returning=Boolean(previous?.joinedAt||previous?.leftAt||previous?.rulesAcknowledgedAt);
     const now=this.clock.now();
     await this.repository.markJoined(guildId,userId,now);
     await this.audit.record({guildId,actorUserId:userId,source:'discord',action:'member.rejoin_gate',targetType:'member',targetId:userId,after:{needsRulesAck:true},requestId:`join:${guildId}:${userId}:${now.getTime()}`,createdAt:now});
-    return {needsRulesAck:true};
+    return {needsRulesAck:true,returning};
   }
 
   async memberLeft(input:{guildId:string;userId:string;nickname?:string;roles:readonly RoleSnapshot[]}):Promise<{pausedPunishmentIds:string[]}> {
