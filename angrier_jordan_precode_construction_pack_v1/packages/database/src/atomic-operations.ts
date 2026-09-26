@@ -39,21 +39,35 @@ export function isRetryableAtomicError(error:unknown){
 }
 
 /** Durable receipt, serializable retry, and shared ledger for all consequential feature operations. */
+export interface AtomicRetryRuntime {now():number;pause(milliseconds:number):Promise<void>;random():number;}
+const retryRuntime:AtomicRetryRuntime={now:()=>performance.now(),pause:milliseconds=>new Promise(resolve=>setTimeout(resolve,milliseconds)),random:()=>Math.random()};
+const maxAtomicAttempts=12,atomicBudgetMs=30_000;
 export class PrismaAtomicOperations {
-  constructor(private readonly db:PrismaClient){}
-  async run<T extends Prisma.InputJsonObject>(guildId:string,key:string,fingerprint:string,operation:(tx:Prisma.TransactionClient,ledger:LedgerEngine)=>Promise<T>):Promise<T>{
-    for(let attempt=0;attempt<5;attempt++){
+  constructor(private readonly db:PrismaClient,private readonly retry:AtomicRetryRuntime=retryRuntime){}
+  async run<T extends Prisma.InputJsonObject>(guildId:string,key:string,fingerprint:string,operation:(tx:Prisma.TransactionClient,ledger:LedgerEngine)=>Promise<T>,beforeCommit?:()=>void):Promise<T>{
+    const deadline=this.retry.now()+atomicBudgetMs;
+    for(let attempt=0;attempt<maxAtomicAttempts;attempt++){
+      const remaining=Math.floor(deadline-this.retry.now());if(remaining<3)break;
+      const maxWait=Math.min(10000,Math.floor(remaining/3)),timeout=Math.min(20000,remaining-maxWait);
       try{
         return await this.db.$transaction(async tx=>{
           const prior=await tx.operationReceipt.findUnique({where:{guildId_key:{guildId,key}}});
-          if(prior){if(prior.fingerprint!==fingerprint)throw new DomainError('REPLAY_MISMATCH','This request key belongs to a different action.');return prior.result as T;}
+          if(prior){if(prior.fingerprint!==fingerprint)throw new DomainError('REPLAY_MISMATCH','This request key belongs to a different action.');beforeCommit?.();return prior.result as T;}
           const result=await operation(tx,new LedgerEngine(new TransactionLedgerRepository(tx)));
           await tx.operationReceipt.create({data:{guildId,key,fingerprint,result}});
+          // Synchronous only: observe events during the receipt write without another await before return.
+          // Replay runs the same guard but never re-executes financial work.
+          beforeCommit?.();
           return result;
-        },{isolationLevel:'Serializable',maxWait:10000,timeout:20000});
+        },{isolationLevel:'Serializable',maxWait,timeout});
       }catch(error){
-        if(attempt===4||!isRetryableAtomicError(error))throw error;
-        await new Promise(resolve=>setTimeout(resolve,25*2**attempt));
+        if(!isRetryableAtomicError(error))throw error;
+        if(attempt===maxAtomicAttempts-1)break;
+        // Identical exponential sleeps repeatedly synchronize contending transactions.
+        // Equal jitter keeps a nonzero floor while allowing each worker a fresh snapshot.
+        const cap=Math.min(1000,25*2**attempt),delay=Math.floor(cap/2+this.retry.random()*cap/2);
+        if(this.retry.now()+delay>=deadline)break;
+        await this.retry.pause(delay);
       }
     }
     throw new DomainError('CONCURRENT_OPERATION','The action is busy. Please retry.');
