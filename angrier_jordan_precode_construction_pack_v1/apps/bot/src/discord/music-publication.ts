@@ -5,7 +5,7 @@ import type {PrismaMusicRepository} from '../../../../packages/features-music/sr
 import type {MusicState} from '../../../../packages/features-music/src/interfaces.js';
 import type {DiscordMusicCoordinator} from './music-coordinator.js';
 
-type Repository=Pick<PrismaMusicRepository,'read'|'reserveController'|'controllerPublication'|'finalizeController'|'controllerCleanupIntent'>;
+type Repository=Pick<PrismaMusicRepository,'read'|'reserveController'|'controllerPublication'|'finalizeController'|'controllerCleanupIntent'|'releaseUnsentController'>;
 type PayloadFactory=DiscordMusicCoordinator['payload'];
 export type MusicPublicationResult={kind:'published'|'refreshed'|'retired'|'obsolete'|'missing';messageId?:string};
 export class MusicPublicationError extends Error {constructor(public readonly code:string){super('The music controller update could not be confirmed.');this.name='MusicPublicationError';}}
@@ -74,9 +74,16 @@ export class DiscordMusicPublication {
     return found;
    },
    send:async key=>{
-    publication=await this.repo.controllerPublication(jobId);await this.allowed(guildId);if(publication.obsolete||!publication.state)fail('MUSIC_STALE');
-    const destination=await this.channel(client,guildId,publication.payload.channelId,true),payload=await this.rendered(publication.state!,key,destination);
-    await this.allowed(guildId);const fresh=await this.repo.controllerPublication(jobId);if(fresh.obsolete||!fresh.state||!same(publication.state!,fresh.state))fail('MUSIC_STALE');
+    let destination:VoiceChannel,payload:Awaited<ReturnType<DiscordMusicPublication['rendered']>>;
+    try{
+     publication=await this.repo.controllerPublication(jobId);await this.allowed(guildId);if(publication.obsolete||!publication.state)fail('MUSIC_STALE');
+     destination=await this.channel(client,guildId,publication.payload.channelId,true);payload=await this.rendered(publication.state!,key,destination);
+     await this.allowed(guildId);const fresh=await this.repo.controllerPublication(jobId);if(fresh.obsolete||!fresh.state||!same(publication.state!,fresh.state))fail('MUSIC_STALE');
+    }catch(error){
+     // This callback owns the delivery claim and has not called Discord send yet.
+     // Only definite pre-send failures may release it; network outcomes remain fenced.
+     await this.repo.releaseUnsentController(jobId);throw error;
+    }
     const sent=await destination.send(payload);this.author(client,sent,guildId,destination.id);if(deliveryMarker(sent)!==key)fail('MUSIC_MARKER');return sent.id;
    }
   });

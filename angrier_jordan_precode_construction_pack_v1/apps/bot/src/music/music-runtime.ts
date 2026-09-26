@@ -32,7 +32,7 @@ export class MusicRuntime {
   if(operation==='write'){const job=this.#active.get(fence.guildId);return Boolean(job?.leaseToken&&await this.#options.repository.ownsIntentLease(job.id,job.leaseToken,fence));}
   const row=await this.#options.repository.read(fence.guildId);return row?.state.revision===fence.revision&&row.state.generation===fence.generation;
  }
- async recover(guildId:string){return this.#lane(guildId,async()=>{if(this.#abort.signal.aborted)return;this.#bindings.delete(guildId);if(await this.#options.repository.read(guildId))await this.#options.repository.recover(guildId,'node-'+this.#options.socketEpoch);});}
+ async recover(guildId:string,resumeActive=true){return this.#lane(guildId,async()=>{if(this.#abort.signal.aborted)return;this.#bindings.delete(guildId);if(await this.#options.repository.read(guildId))await this.#options.repository.recover(guildId,'node-'+this.#options.socketEpoch,resumeActive);});}
  async reconcile(job:ScheduledJob){return this.#lane(job.guildId,async()=>{
   if(this.#abort.signal.aborted||!await this.#options.enabled(job.guildId))throw new DomainError('MUSIC_DISABLED','Music is unavailable.');
   const intent=await this.#options.repository.intent(job.id);if(intent.obsolete)return;

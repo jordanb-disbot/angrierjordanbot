@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {inspect} from 'node:util';
 import {ActionRowBuilder,ButtonBuilder,ButtonStyle,ChannelType,Collection,EmbedBuilder,PermissionsBitField,PermissionFlagsBits} from 'discord.js';
+import {DiscordMusicCoordinator} from '../../dist/apps/bot/src/discord/music-coordinator.js';
+import {createMusicState} from '../../dist/packages/features-music/src/domain.js';
 import {DiscordMusicPublication} from '../../dist/apps/bot/src/discord/music-publication.js';
 const guildId='111111111111111111',channelId='222222222222222222',otherId='333333333333333333',botId='444444444444444444';
 const clone=value=>structuredClone(value),error=code=>Object.assign(Error('PRIVATE_DISCORD_TOKEN'),{code});
@@ -10,6 +12,7 @@ function fixture(){
  const addJob=(id='job-1',channel=channelId)=>{const p={job:{id,guildId},payload:{channelId:channel,expectedMessageId:null,superseded:false,deliveryState:'PENDING'}};f.jobs.set(id,p);return p;};addJob();
  f.move=()=>{const old=f.pointer;for(const p of f.jobs.values())p.payload.superseded=true;if(old)f.cleanups.set('cleanup-'+old,{job:{guildId},payload:{channelId:f.state.textChannelId,messageId:old}});f.state={...f.state,textChannelId:otherId,voiceChannelId:otherId,revision:f.state.revision+1};f.pointer=null;};
  f.repo={
+  releaseUnsentController:async id=>{const p=f.jobs.get(id).payload;if(p.deliveryState==='SENDING'&&!p.deliveryMessageId)p.deliveryState='PENDING';},
   read:async()=>({state:clone(f.state),controllerMessageId:f.pointer}),
   reserveController:async(_guild,revision,expected=null)=>{f.reservations.push({revision,expected});assert.equal(revision,f.state.revision);if(expected!==null){assert.equal(f.pointer,expected);for(const p of f.jobs.values())p.payload.superseded=true;f.cleanups.set('cleanup-'+expected,{job:{guildId},payload:{channelId:f.state.textChannelId,messageId:expected}});f.pointer=null;}else if(f.pointer)return{kind:'linked',channelId:f.state.textChannelId,messageId:f.pointer};let p=[...f.jobs.values()].find(p=>!p.payload.superseded);if(!p)p=addJob('job-'+(f.jobs.size+1),f.state.textChannelId);return{kind:'publication',jobId:p.job.id,channelId:p.payload.channelId,marker:'music-controller:'+p.job.id};},
   controllerPublication:async id=>{const p=f.jobs.get(id);if(!p)throw error('PRIVATE_JOB');return{...clone(p),state:clone(f.state),marker:'music-controller:'+id,obsolete:p.payload.superseded||p.payload.channelId!==f.state.textChannelId||f.pointer!==null&&f.pointer!==p.payload.deliveryMessageId};},
@@ -99,4 +102,16 @@ test('retired verified bot players are deleted when possible; forbidden deletion
 
 test('voice-chat pin rejection retains one authoritative editable player without repeated failed pins',async()=>{
  const f=fixture();f.onSend=message=>{message.pin=async()=>{f.counts.pins++;throw error(50019);};};const result=await f.publisher.ensure(f.client,guildId);assert.equal(result.kind,'published');assert.equal(f.pointer,result.messageId);await f.publisher.refresh(f.client,guildId);assert.equal(f.counts.sends,1);assert.equal(f.counts.pins,1);assert.equal(f.counts.edits,2);assert.equal(f.messages.get(f.pointer).embeds[0].footer,undefined);
+});
+
+
+test('definite pre-send state changes release the claim; the next attempt publishes all control rows',async()=>{
+ const f=fixture();f.onRender=()=>{f.state.revision++;};await rejects(f.publisher.ensure(f.client,guildId),'MUSIC_STALE');assert.equal(f.counts.sends,0);assert.equal(f.jobs.get('job-1').payload.deliveryState,'PENDING');f.onRender=null;await f.publisher.ensure(f.client,guildId);assert.equal(f.counts.sends,1);assert.equal(f.messages.get(f.pointer).components.length,1);assert.equal(f.messages.get(f.pointer).components[0].components[0].label,'Pause');await f.publisher.refresh(f.client,guildId);assert.equal(f.messages.get(f.pointer).components[0].components[0].label,'Pause');
+});
+
+
+test('real shared Jukebox creation and refresh retain all native control rows',async()=>{
+ const f=fixture();f.state=createMusicState(guildId,{guildId,userId:otherId,voiceChannelId:channelId,textChannelId:channelId,eligible:true,isDj:true},{queueMaxTracks:10,defaultVolume:65,defaultLoop:'off',defaultAutoplay:false}).state;
+ const coordinator=new DiscordMusicCoordinator(f.repo,{},null,async()=>({eligible:true,isDj:true}));f.publisher.payloadFactory=coordinator.payload.bind(coordinator);
+ await f.publisher.ensure(f.client,guildId);const expected=[['Previous','Pause','Skip','Stop'],['Queue','Shuffle','Loop'],['Volume','Autoplay','Refresh']];assert.deepEqual(f.messages.get(f.pointer).components.map(row=>row.components.map(button=>button.label)),expected);f.state.revision++;await f.publisher.refresh(f.client,guildId);assert.deepEqual(f.messages.get(f.pointer).components.map(row=>row.components.map(button=>button.label)),expected);assert.equal(f.counts.sends,1);
 });
