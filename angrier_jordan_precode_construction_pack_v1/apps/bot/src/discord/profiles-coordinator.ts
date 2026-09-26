@@ -5,13 +5,25 @@ import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/ca
 import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,StringSelectMenuBuilder,type ButtonInteraction,type ChatInputCommandInteraction,type Client,type Message,type StringSelectMenuInteraction} from 'discord.js';
 import {DomainError,DeliveryEngine,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
 import {PrismaProfilesRepository} from '../../../../packages/features-profiles/src/prisma-repository.js';
-import {qualifyingVoice,fmkSummary} from '../../../../packages/features-profiles/src/domain.js';
+import {qualifyingVoice,fmkSummary,type SpotlightPostingSettings} from '../../../../packages/features-profiles/src/domain.js';
 export const PROFILE_COMMANDS=new Set(['profile','privacy','leaderboard','records']);
 const card=(title:string,description:string)=>new EmbedBuilder().setColor(0xC9A768).setAuthor({name:'Angrier Jordan'}).setTitle(title).setDescription(description.slice(0,4000));
 const categories=['wealth','collections','wins','crafting','gambling','crime','fmk_fucked','fmk_married','fmk_killed','fmk_agreement','spotlight','messages','words','voice'];
 export class DiscordProfilesCoordinator {
  constructor(private readonly repo:PrismaProfilesRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
- async message(m:Message){if(!m.guildId||m.author.bot||await this.config.get(m.guildId,'features.activity')!==true)return;const excluded=await Promise.all(['channels.bot_channel','channels.games_channel','channels.staff_log','channels.hotseat_channel'].map(k=>this.config.get(m.guildId!,k)));await this.repo.message(m.guildId,m.author.id,m.id,m.createdAt,{content:m.content,bot:m.author.bot,command:/^\s*[!/]\w/.test(m.content),excludedChannel:excluded.includes(m.channelId)});}
+ async message(m:Message){
+  if(!m.guildId||m.author.bot||await this.config.get(m.guildId,'features.activity')!==true)return;
+  const exclusions=[['channels.bot_channel','activity.exclude_bot_channel'],['channels.games_channel','activity.exclude_games_channel'],['channels.staff_log','activity.exclude_staff_channel']] as const;
+  const excluded=await Promise.all(exclusions.map(async([channel,toggle])=>await this.config.get(m.guildId!,toggle)===true?this.config.get(m.guildId!,channel):null));
+  excluded.push(await this.config.get(m.guildId,'channels.hotseat_channel'));
+  await this.repo.message(m.guildId,m.author.id,m.id,m.createdAt,{content:m.content,bot:m.author.bot,command:/^\s*[!/]\w/.test(m.content),excludedChannel:excluded.includes(m.channelId)});
+ }
+ private async postingSettings(guildId:string):Promise<SpotlightPostingSettings>{
+  const [fallbackHour,startHour,endHour]=await Promise.all(['spotlight.fallback_post_hour','spotlight.learned_post_window_start_hour','spotlight.learned_post_window_end_hour'].map(key=>this.config.get(guildId,key)));
+  if(typeof fallbackHour!=='number'||typeof startHour!=='number'||typeof endHour!=='number')throw new DomainError('SPOTLIGHT_POSTING_CONFIG','Spotlight posting hours must be numeric.');
+  return{fallbackHour,startHour,endHour};
+ }
+
  async sampleVoice(client:Client,guildId:string){if(await this.config.get(guildId,'features.activity')!==true)return;const guild=await client.guilds.fetch(guildId),snapshot:{userId:string;channelId:string;qualified:boolean}[]=[];for(const channel of guild.channels.cache.values()){if(!channel.isVoiceBased())continue;const members=[...channel.members.values()].map(m=>({userId:m.id,bot:m.user.bot,selfMuted:m.voice.selfMute===true,selfDeafened:m.voice.selfDeaf===true})),qualified=new Set(qualifyingVoice(members,channel.id===guild.afkChannelId));for(const m of members.filter(m=>!m.bot))snapshot.push({userId:m.userId,channelId:channel.id,qualified:qualified.has(m.userId)});}await this.repo.voice(guildId,snapshot,new Date());}
  async recordCommand(i:ChatInputCommandInteraction){if(i.guildId&&await this.config.get(i.guildId,'features.activity')===true)await this.repo.command(i.guildId,i.user.id,i.id,[i.commandName,i.options.getSubcommandGroup(false),i.options.getSubcommand(false)].filter(Boolean).join(' '),new Date());}
  async handle(i:ChatInputCommandInteraction|ButtonInteraction|StringSelectMenuInteraction){try{
@@ -53,10 +65,10 @@ export class DiscordProfilesCoordinator {
   const category=i.isStringSelectMenu()?i.values[0]??'wealth':'wealth';const rows=await this.repo.leaderboard(i.guildId,category);
   await i.editReply({embeds:[card(`${i.isChatInputCommand()&&i.commandName==='records'?'Server Records':'Leaderboard'} · ${category}`,rows.slice(0,20).map((r,n)=>`${n+1}. <@${r.userId}> · ${r.value}`).join('\n')||'No records yet.')],components:[new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId(`profile:leaderboard:${i.user.id}`).setPlaceholder('Choose a category').addOptions(categories.map(c=>({label:c,value:c}))))],allowedMentions:{parse:[]}});
  }catch(e){const content=e instanceof DomainError?e.message:'Profile controls could not be completed.';if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
- async freeze(client:Client,guildId:string,at=new Date()){if(await this.config.get(guildId,'features.spotlight')!==true)throw new DomainError('SPOTLIGHT_DISABLED','Spotlight is disabled; retain scheduled work.');await this.sampleVoice(client,guildId);await this.repo.freeze(guildId,at);await this.repo.schedule(guildId);}
- async reconcile(guildId:string){if(await this.config.get(guildId,'features.spotlight')===true)await this.repo.reconcile(guildId);}
+ async freeze(client:Client,guildId:string,at=new Date()){if(await this.config.get(guildId,'features.spotlight')!==true)throw new DomainError('SPOTLIGHT_DISABLED','Spotlight is disabled; retain scheduled work.');await this.sampleVoice(client,guildId);await this.repo.freeze(guildId,at,await this.postingSettings(guildId));await this.repo.schedule(guildId);}
+ async reconcile(guildId:string){if(await this.config.get(guildId,'features.spotlight')===true)await this.repo.reconcile(guildId,new Date(),await this.postingSettings(guildId));}
  async announce(client:Client,guildId:string,weekKey:string){
-  if(await this.config.get(guildId,'features.spotlight')!==true)return;
+  if(await this.config.get(guildId,'features.spotlight')!==true)throw new DomainError('SPOTLIGHT_DISABLED','Spotlight is disabled; retain scheduled work.');
   const frozen=await this.repo.announcement(guildId,weekKey);if(!frozen||frozen.deliveryState==='SENT')return;
   const channelId=await this.config.get(guildId,'spotlight.post_channel')||await this.config.get(guildId,'channels.main_chat');if(typeof channelId!=='string'||!channelId)throw new Error('Weekly Spotlight channel is not configured.');
   const channel=await client.channels.fetch(channelId);if(!channel?.isTextBased()||!('send' in channel))throw new Error('Weekly Spotlight requires a text channel.');

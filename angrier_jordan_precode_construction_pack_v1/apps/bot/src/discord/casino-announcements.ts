@@ -7,6 +7,8 @@ import {PrismaJobDeliveryRepository} from '../../../../packages/database/src/job
 export class DiscordCasinoAnnouncements {
  constructor(private readonly db:PrismaClient,private readonly config:ConfigService){}
  async deliver(client:Client,job:ScheduledJob){
+  const feature=job.jobType==='lottery.announce'?'features.lottery':'features.casino';
+  if(await this.config.get(job.guildId,feature)!==true)throw new Error('Casino announcement disabled; retain pending delivery.');
   const p=job.payload as {userId?:unknown;amount?:unknown;roundId?:unknown};if(typeof p?.userId!=='string'||typeof p.amount!=='string'||!/^\d+$/.test(p.amount))throw new Error('Invalid casino announcement.');
   const channelId=await this.config.get(job.guildId,'channels.bot_channel');if(typeof channelId!=='string'||!channelId)throw new Error('Casino result channel is not configured.');
   const channel=await client.channels.fetch(channelId);if(!channel?.isTextBased()||!('send' in channel))throw new Error('Casino result destination unavailable.');

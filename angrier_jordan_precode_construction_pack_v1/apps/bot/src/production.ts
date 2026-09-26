@@ -203,16 +203,16 @@ export async function startProductionBot():Promise<void>{
     'special.callout':async job=>{if(!enableSpecialSmoke)throw new Error('Special Commands disabled; retain pending delivery.');await special.deliver(client,job.id);},
     'special.line_lock':async job=>{const p=job.payload as {guildId:string;sessionId:string};await special.advance(client,p.guildId,p.sessionId,false);},
     'special.line_complete':async job=>{const p=job.payload as {guildId:string;sessionId:string};await special.advance(client,p.guildId,p.sessionId,true);},
-    'community.publish':async job=>{await community.publish(client,job.id);},
-    'community.advance':async job=>{const p=job.payload as {guildId:string;sessionId:string;round:number};await community.advance(client,p.guildId,p.sessionId,p.round);},
+    'community.publish':async job=>{if(!enableCommunitySmoke)throw new Error('Community runtime disabled; retain pending delivery.');await community.publish(client,job.id);},
+    'community.advance':async job=>{if(!enableCommunitySmoke)throw new Error('Community runtime disabled; retain pending work.');const p=job.payload as {guildId:string;sessionId:string;round:number};await community.advance(client,p.guildId,p.sessionId,p.round);},
     'crime.refresh':async job=>{const p=job.payload as {sessionId:string};await crime.refresh(client,p.sessionId);},
-    'crime.publish':async job=>{await crime.deliver(client,job.id);},
+    'crime.publish':async job=>{if(!enableCrimeSmoke||await config.get(job.guildId,'features.crime')!==true)throw new Error('Crime publication disabled; retain pending delivery.');await crime.deliver(client,job.id);},
     'crime.close':async job=>{const p=job.payload as {guildId:string;sessionId:string};await crime.advance(client,p.guildId,p.sessionId);},
     'crime.release':async job=>{const p=job.payload as {guildId:string;sentenceId:string};await crimeRepo.release(p.guildId,p.sentenceId);},
     'crime.decay':async job=>{const p=job.payload as {guildId:string;userId:string};await crimeRepo.decay(p.guildId,p.userId,await crime.policy(p.guildId));},
     'crime.records':async job=>{const p=job.payload as {guildId:string;sessionId:string};await crimeRepo.records(p.guildId,p.sessionId);},
     'channelgame.announce':async job=>{await channelGames.deliver(client,job.id);},
-    'party.publish':async job=>{await party.publish(client,job.id);},
+    'party.publish':async job=>{if(!enablePartySmoke||await config.get(job.guildId,'features.party_games')!==true)throw new Error('Party publication disabled; retain pending delivery.');await party.publish(client,job.id);},
     'party.advance':async job=>{const p=job.payload as {guildId:string;sessionId:string;round:number};await party.advance(client,p.guildId,p.sessionId,p.round);},
     'wyr.publish':async job=>{const p=job.payload as {sessionId:string};await wyr.publish(client,p.sessionId);},
     'wyr.close':async job=>{const p=job.payload as {sessionId:string};await wyr.advance(client,p.sessionId);},
@@ -222,8 +222,8 @@ export async function startProductionBot():Promise<void>{
     'events.settle':async job=>{const p=job.payload as {guildId:string;sessionId:string};await events.advance(client,p.guildId,p.sessionId,true);},
     'casino.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string};await casinoRepo.expire(p.guildId,p.sessionId);await casino.refresh(client,p.sessionId);},
     'lottery.draw':async job=>{const p=job.payload as {guildId:string;roundId:string};await lotteryRepo.draw(p.guildId,p.roundId);if(enableCasinoSmoke&&await config.get(p.guildId,'features.lottery')===true)await lotteryRepo.schedule(p.guildId);},
-    'casino.jackpot_announce':async job=>{await casinoAnnouncements.deliver(client,job);},
-    'lottery.announce':async job=>{await casinoAnnouncements.deliver(client,job);},
+    'casino.jackpot_announce':async job=>{if(!enableCasinoSmoke)throw new Error('Casino runtime disabled; retain pending delivery.');await casinoAnnouncements.deliver(client,job);},
+    'lottery.announce':async job=>{if(!enableCasinoSmoke)throw new Error('Casino runtime disabled; retain pending delivery.');await casinoAnnouncements.deliver(client,job);},
     'records.observe':async job=>{const p=job.payload as {guildId:string;userId:string;records:Record<string,string>;occurredAt:string};if(p.guildId!==job.guildId)throw new Error('Record server mismatch.');for(const [key,value] of Object.entries(p.records)){if(BigInt(value)>0n)await profileRepo.record(p.guildId,p.userId,key,BigInt(value),job.executionKey+':'+key,new Date(p.occurredAt));}await profileRepo.refreshAchievements(p.guildId,p.userId);},
     'record.announce':async job=>{if(!enableProfilesSmoke)throw new Error('Record runtime disabled; retain job.');await recordAnnouncements.deliver(client,job);},
     'spotlight.freeze':async job=>{const p=job.payload as {guildId?:unknown};if(typeof p?.guildId!=='string')throw new Error('Invalid Spotlight job.');if(!enableProfilesSmoke)throw new Error('Spotlight runtime disabled; retain job for retry.');await profiles.freeze(client,p.guildId,job.dueAt);},
@@ -264,13 +264,13 @@ export async function startProductionBot():Promise<void>{
     await events.sweep(ready);if(lifecycle.isStopping)return;
     eventSweep=setInterval(()=>lifecycle.run(()=>events.sweep(ready),()=>console.error('Event recovery or rendering failed; durable jobs retained.')),1500);
     wyrSweep=setInterval(()=>lifecycle.run(()=>wyr.closeDue(ready),()=>console.error('WYR close failed; persisted recovery retained.')),5_000);
-    await special.sweep(ready);await solo.recover(ready);await pvp.sweep(ready);await party.sweep(ready);await crime.sweep(ready);await community.sweep(ready);if(lifecycle.isStopping)return;
+    await special.sweep(ready);await solo.recover(ready);await pvp.sweep(ready);await party.sweep(ready);await crime.sweep(ready);if(enableCommunitySmoke)await community.sweep(ready);if(lifecycle.isStopping)return;
     specialSweep=setInterval(()=>lifecycle.run(()=>special.sweep(ready),()=>console.error('Line recovery pending.')),1000);
     soloSweep=setInterval(()=>lifecycle.run(()=>solo.recover(ready),()=>console.error('Solo recovery pending.')),10_000);
     pvpSweep=setInterval(()=>lifecycle.run(()=>pvp.sweep(ready),()=>console.error('Skill-game recovery pending.')),10_000);
     partySweep=setInterval(()=>lifecycle.run(()=>party.sweep(ready),()=>console.error('Party recovery pending.')),5000);
     crimeSweep=setInterval(()=>lifecycle.run(()=>crime.sweep(ready),()=>console.error('Crime recovery pending.')),5000);
-    communitySweep=setInterval(()=>lifecycle.run(()=>community.sweep(ready),()=>console.error('Community recovery pending.')),5000);
+    if(enableCommunitySmoke)communitySweep=setInterval(()=>lifecycle.run(()=>community.sweep(ready),()=>console.error('Community recovery pending.')),5000);
     const snapshot=await health.check();
     console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
     initialized=true;

@@ -101,7 +101,7 @@
       "section": "core",
       "label": "Feature Flags",
       "description": "",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": {},
       "risk": "normal",
       "editableBy": [
@@ -137,7 +137,7 @@
       "section": "channels_roles",
       "label": "Main Chat",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -154,7 +154,7 @@
       "section": "channels_roles",
       "label": "Bot Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -171,7 +171,7 @@
       "section": "channels_roles",
       "label": "Games Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -188,7 +188,7 @@
       "section": "channels_roles",
       "label": "Counting Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -205,7 +205,7 @@
       "section": "channels_roles",
       "label": "Last Letter Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -222,7 +222,7 @@
       "section": "channels_roles",
       "label": "Staff Log",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -239,7 +239,7 @@
       "section": "channels_roles",
       "label": "Chairisms Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -256,7 +256,7 @@
       "section": "channels_roles",
       "label": "Introduction Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -273,7 +273,7 @@
       "section": "channels_roles",
       "label": "Hotseat Channel",
       "description": "Resolved Discord channel ID.",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -290,7 +290,7 @@
       "section": "channels_roles",
       "label": "Throne",
       "description": "Resolved Discord role ID.",
-      "kind": "role",
+      "kind": "role-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -307,7 +307,7 @@
       "section": "channels_roles",
       "label": "Chaise Lounge",
       "description": "Resolved Discord role ID.",
-      "kind": "role",
+      "kind": "role-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -324,7 +324,7 @@
       "section": "channels_roles",
       "label": "Recliner",
       "description": "Resolved Discord role ID.",
-      "kind": "role",
+      "kind": "role-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -341,7 +341,7 @@
       "section": "channels_roles",
       "label": "Jailed",
       "description": "Resolved Discord role ID.",
-      "kind": "role",
+      "kind": "role-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -965,7 +965,7 @@
       "section": "spotlight",
       "label": "Post Channel",
       "description": "",
-      "kind": "channel",
+      "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
       "editableBy": [
@@ -1799,7 +1799,7 @@
       "section": "family",
       "label": "Adoption Slot Days",
       "description": "Canonical marriage-age child slots; only the first slot can be unlocked by the community bonus.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         3,
         7,
@@ -2459,7 +2459,7 @@
       "section": "channels_roles",
       "label": "Member Access",
       "description": "Normal member/access role granted after rules acknowledgment.",
-      "kind": "role",
+      "kind": "role-select",
       "defaultValue": null,
       "risk": "security",
       "editableBy": [
@@ -2493,7 +2493,7 @@
       "section": "special_commands",
       "label": "Builtin Role Map",
       "description": "Notification-role mappings for built-in Special Commands.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": {
         "!line": null,
         "!race": null,
@@ -2560,7 +2560,7 @@
       "section": "roles_panel",
       "label": "Category Order",
       "description": "Initial category order; live category definitions are database-backed.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         "Gender",
         "Age",
@@ -2585,7 +2585,7 @@
       "section": "roles_panel",
       "label": "Single Choice Categories",
       "description": "Categories that allow at most one selected option and may also be cleared.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         "Gender",
         "Age",
@@ -2604,7 +2604,7 @@
       "section": "roles_panel",
       "label": "Multi Choice Categories",
       "description": "Categories that allow independent multi-selection with no product cap.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         "Vices",
         "Personalities",
@@ -2650,7 +2650,7 @@
       "section": "onboarding",
       "label": "Optional Steps",
       "description": "Guided onboarding steps that may be skipped.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         "roles",
         "lore",
@@ -3099,7 +3099,7 @@
       "section": "economy",
       "label": "Bank Tiers",
       "description": "Five bank tiers. Tiers 1–4 have capacities; Tier 5 is unlimited.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         {
           "tier": 1,
@@ -3180,7 +3180,7 @@
       "section": "economy",
       "label": "Daily Milestones",
       "description": "Exact Claim Daily streak milestone bonuses.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": {
         "7": 500,
         "30": 2500,
@@ -3202,7 +3202,7 @@
       "section": "economy",
       "label": "Daily Spin Table",
       "description": "Weighted Daily Spin reward table. Runtime hard bounds still apply.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         {
           "kind": "ottomans",
@@ -3284,7 +3284,7 @@
       "section": "economy",
       "label": "Grind Tables",
       "description": "Bounded weighted outcome tables for /work, /fish, /dig and /scavenge.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": {
         "work": [
           {
@@ -3587,7 +3587,7 @@
       "section": "casino",
       "label": "Chair Symbols",
       "description": "Three chair-symbol reels. Matching triples pay the configured gross multiplier; matching Throne triggers Chair Pot.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         {
           "id": "folding_chair",
@@ -3636,7 +3636,7 @@
       "section": "casino",
       "label": "Slots Wagers",
       "description": "Supported slot wagers; every replay also rechecks global bet limits.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         10,
         50,
@@ -3660,7 +3660,7 @@
       "section": "casino",
       "label": "Roulette Choices",
       "description": "Single-zero roulette selections. Straight numbers pay 36× gross; even-money choices pay 2× gross.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         "red",
         "black",
@@ -3721,7 +3721,7 @@
       "section": "casino",
       "label": "Dice Choices",
       "description": "Available dice modes. High compares one member die to one house die; ties return the wager.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [
         "high"
       ],
@@ -3831,7 +3831,7 @@
       "section": "special_commands",
       "label": "Access Roles",
       "description": "Empty permits members; otherwise require one of these roles. Separate from notification roles.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": {
         "!race": [],
         "!line": [],
@@ -3892,7 +3892,7 @@
       "section": "special_commands",
       "label": "Custom Commands",
       "description": "Notification-only Special Commands: trigger, notificationRoleId, responsePool, enabled, allowedRoleIds. Native triggers cannot be replaced.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [],
       "risk": "security",
       "editableBy": [
@@ -3909,7 +3909,7 @@
       "section": "special_commands",
       "label": "Builtin Response Pools",
       "description": "Authored built-in callout overrides. Empty uses the packaged pool; mention permissions remain enforced.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": {
         "!line": [],
         "!race": [],
@@ -4611,7 +4611,7 @@
       "section": "chairisms",
       "label": "Excluded Channel Ids",
       "description": "Channel/category IDs excluded from Chairisms: unique snowflakes, at most 100. Configure evidence and quarantine locations before enabling.",
-      "kind": "json",
+      "kind": "json-editor",
       "defaultValue": [],
       "risk": "security",
       "editableBy": [

@@ -14,6 +14,11 @@ for(const game of ['blackjack','roulette','slots','dice','coinflip','lottery'])i
 if(!casino.fields.amount||!casino.fields.selection||!casino.tutorial.steps.length)throw new Error('Incomplete casino tutorial');
 console.log('Phase 11 contextual rules and tutorial coverage valid.');
 
+const profiles=JSON.parse(fs.readFileSync('packages/content/help/profiles.json','utf8'));
+for(const id of profiles.commands)if(!r.commands.some(c=>c.id===id&&c.help_id&&c.tutorial_id))throw new Error('Unknown profile help command '+id);
+if(!profiles.tutorial.steps.length)throw new Error('Incomplete profile tutorial');
+console.log('Profile/privacy/record contextual help links valid.');
+
 const events=JSON.parse(fs.readFileSync('packages/content/help/events.json','utf8'));
 for(const id of events.commands)if(!r.commands.some(c=>c.id===id&&c.help_id))throw new Error('Unknown event help command '+id);
 if(!events.fields.amount||!events.fields.selection||!events.fields.member||!events.tutorial.steps.length)throw new Error('Incomplete event help');

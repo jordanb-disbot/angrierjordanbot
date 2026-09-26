@@ -23,3 +23,15 @@ test('record comparisons retain exact Ottoman integers, hold time, and ignore ti
  assert.equal(compareRecord(9007199254740992n,old,at),null);
  assert.deepEqual(compareRecord(9007199254740994n,old,at),{oldValue:old.value,newValue:'9007199254740994',heldMs:86400000,achievedAt:at.toISOString()});
 });
+
+test('learned Spotlight consumes configured fallback and window while smoothing from prior timing',()=>{
+ const settings={fallbackHour:21,startHour:8,endHour:12};
+ assert.equal(learnedSpotlightHour({12:29,22:500},19,settings),21);
+ assert.equal(learnedSpotlightHour({8:100,22:500},undefined,settings),11);
+ assert.equal(learnedSpotlightHour({8:100},10,settings),9);
+ assert.equal(learnedSpotlightHour({12:100},19,settings),12);
+ assert.equal(learnedSpotlightHour({8:30,12:30},10,settings),9);
+});
+test('invalid Spotlight posting configuration fails before selecting a schedule',()=>{
+ for(const settings of [{fallbackHour:16,startHour:17,endHour:22},{fallbackHour:19,startHour:22,endHour:17},{fallbackHour:19,startHour:17,endHour:17},{fallbackHour:19,startHour:-1,endHour:22},{fallbackHour:19,startHour:17,endHour:24},{fallbackHour:19,startHour:17.5,endHour:22}])assert.throws(()=>learnedSpotlightHour({},undefined,settings),{code:'SPOTLIGHT_POSTING_CONFIG'});
+});

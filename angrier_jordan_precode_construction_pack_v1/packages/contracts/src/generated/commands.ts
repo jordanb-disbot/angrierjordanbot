@@ -156,7 +156,7 @@ export const COMMANDS = [
     ],
     "ephemeralDefault": false,
     "helpId": "profile",
-    "tutorialId": null
+    "tutorialId": "community.profiles"
   },
   {
     "id": "records",
@@ -175,7 +175,7 @@ export const COMMANDS = [
     "options": [],
     "ephemeralDefault": false,
     "helpId": "records",
-    "tutorialId": null
+    "tutorialId": "community.profiles"
   },
   {
     "id": "daily",

@@ -3,7 +3,7 @@
   "date": "2026-09-21",
   "status": "FINAL_INTEGRATED_PRODUCTION_VISUAL_MANIFEST",
   "style_source": "Approved second Angrier Jordan visual system only",
-  "asset_count": 385,
+  "asset_count": 388,
   "phase3_asset_count": 312,
   "phase4_runtime_template_count": 36,
   "assets": [
@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "7d387808882b0d02d9bae5d9a1feb0dbffc052d945053e3c684b4e33ed985cc1"
+      "sha256": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2"
     },
     {
       "id": "family.runtime.renderer",
@@ -6053,7 +6053,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "sha256": "40f84fd44f6486885668f48c36e556e97441b9d848d81b7d7d02a65f19e529ca"
     },
     {
       "id": "family.tree.renderer",
@@ -6062,7 +6062,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "2b8ca07692c215f185e6c4473c927fe459b2f3c572d013f71f61de618e5b884e"
+      "sha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
     },
     {
       "id": "chairisms.runtime.renderer",
@@ -6071,7 +6071,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "627214e0f1a1e4b232f91c8fecac7a166455a3eae1eb7b416fc60c9ccdeeb823"
+      "sha256": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8"
     },
     {
       "id": "chairisms.browser",
@@ -6081,6 +6081,33 @@
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
       "sha256": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24"
+    },
+    {
+      "id": "casino.runtime.renderer",
+      "file": "packages/features-casino/src/render.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Deterministic Gate B rendering; owner review pending.",
+      "sha256": "3a23d37601c7364343441439c0a94ceea1281b3c57cdd62f914f79605099e224"
+    },
+    {
+      "id": "profiles.runtime.renderer",
+      "file": "packages/features-profiles/src/render.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Deterministic Gate B rendering; owner review pending.",
+      "sha256": "673ca04e8dfa863322907c9ef2d2ccc1a8bd7bb5857b35915fcc3a3e90bb7c50"
+    },
+    {
+      "id": "shared.text.layout",
+      "file": "packages/renderer/src/text-layout.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Deterministic Gate B rendering; owner review pending.",
+      "sha256": "854cb57eb48afb6a878f8f1f68083c59a9c0d34a90d554ba4696b511c9349f10"
     }
   ]
 }

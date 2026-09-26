@@ -1,4 +1,5 @@
 import {dailyCycle} from '../../features-economy/src/service.js';
+import {DomainError} from '../../core/src/errors.js';
 const STOP=new Set('a an and are as at be been but by for from had has have he her his i if in is it its me my of on or our she so that the their them there they this to us was we were what when where which who will with you your'.split(' '));
 export interface MessageObservation {content:string;bot:boolean;command:boolean;excludedChannel:boolean;}
 export function qualifyMessage(input:MessageObservation){
@@ -17,7 +18,18 @@ export function spotlightWinners(totals:ActivityTotal[]){
  const winners=categories.map(category=>{const max=Math.max(0,...totals.map(t=>t[category]));return{category,value:max,userIds:max>0?totals.filter(t=>t[category]===max).map(t=>t.userId).sort():[]};});
  return{winners,tripleThreat:totals.filter(t=>winners.every(w=>w.userIds.includes(t.userId))).map(t=>t.userId),activeMembers:totals.filter(t=>t.messages||t.words||t.vcSeconds).length,totals:Object.fromEntries(categories.map(k=>[k,totals.reduce((n,t)=>n+t[k],0)]))};
 }
-export function learnedSpotlightHour(hours:Record<number,number>,previous=19){const eligible=[17,18,19,20,21,22],total=eligible.reduce((n,h)=>n+(hours[h]??0),0);if(total<30)return 19;const best=eligible.sort((a,b)=>(hours[b]??0)-(hours[a]??0)||Math.abs(a-previous)-Math.abs(b-previous))[0]!;return Math.max(17,Math.min(22,Math.round((previous*2+best)/3)));}
+export interface SpotlightPostingSettings {fallbackHour:number;startHour:number;endHour:number;}
+export const DEFAULT_SPOTLIGHT_POSTING:Readonly<SpotlightPostingSettings>={fallbackHour:19,startHour:17,endHour:22};
+export function learnedSpotlightHour(hours:Record<number,number>,previous?:number,settings:Readonly<SpotlightPostingSettings>=DEFAULT_SPOTLIGHT_POSTING){
+ const {fallbackHour,startHour,endHour}=settings;
+ if(!Number.isInteger(fallbackHour)||fallbackHour<17||fallbackHour>22||![startHour,endHour].every(h=>Number.isInteger(h)&&h>=0&&h<=23)||startHour>=endHour)throw new DomainError('SPOTLIGHT_POSTING_CONFIG','Spotlight requires a 5 PM to 10 PM fallback and a valid same-day posting window ending after it starts.');
+ const eligible=Array.from({length:endHour-startHour+1},(_,i)=>startHour+i),total=eligible.reduce((n,h)=>n+(hours[h]??0),0);
+ // Insufficient history uses the configured fallback independently of the learned window.
+ if(total<30)return fallbackHour;
+ const anchor=Math.max(startHour,Math.min(endHour,previous??fallbackHour));
+ const best=eligible.sort((a,b)=>(hours[b]??0)-(hours[a]??0)||Math.abs(a-anchor)-Math.abs(b-anchor))[0]!;
+ return Math.max(startHour,Math.min(endHour,Math.round((anchor*2+best)/3)));
+}
 export interface AchievementRule {id:string;class:string;criteria:{metric?:string;atLeast?:number;requires?:string[]};}
 export function earnedAchievements(rules:AchievementRule[],metrics:Record<string,number>,already:ReadonlySet<string>){const earned=new Set(already);let changed=true;while(changed){changed=false;for(const r of rules){if(earned.has(r.id))continue;const c=r.criteria;const passes=c.metric?Number.isFinite(c.atLeast)&&((metrics[c.metric]??0)>=(c.atLeast??Infinity)):Array.isArray(c.requires)&&c.requires.length>0&&c.requires.every(id=>earned.has(id));if(passes){earned.add(r.id);changed=true;}}}return[...earned].filter(id=>!already.has(id));}
 

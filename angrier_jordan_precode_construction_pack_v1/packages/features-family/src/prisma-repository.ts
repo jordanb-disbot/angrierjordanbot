@@ -1,5 +1,6 @@
 import {DomainError,TimerEngine,spendableWallet} from '../../core/src/index.js';
 import {PrismaTransactionSessions} from '../../database/src/transaction-sessions.js';
+import {assertItemEscrow} from '../../database/src/escrow-contract.js';
 import {PrismaWagerEscrow} from '../../database/src/wager-escrow.js';
 import {PrismaAuditSink} from '../../database/src/prisma-adapters.js';
 import {FamilyAuctions} from './auctions.js';
@@ -41,6 +42,19 @@ export class PrismaFamilyRepository extends FamilyAuctions {
  // The shared runner checks synchronously after receipt insertion. A gateway
  // event during any awaited write therefore rolls back the receipt and assets.
  },beforeCommit);}
- async publicView(id:string){const row=await this.get(id),data=row.data;const vote=row.type==='family_marriage'&&row.state==='OPEN'?marriageVoting(row.votes):null;return{id:row.id,guildId:row.guildId,channelId:row.channelId,messageId:row.messageId,ownerId:row.ownerUserId,state:row.state,type:row.type,createdAt:row.createdAt,expiresAt:row.expiresAt,data:{...data,...(vote?{voteResult:{up:vote.totals.up??0,down:vote.totals.down??0,total:vote.total,approval:vote.approval}}:{})}};}
+ /** Session, typed assets and winning identity must represent one committed snapshot. */
+ async publicView(id:string){return this.db.$transaction(async tx=>{
+  const row=await tx.gameSession.findUnique({where:{id},include:{votes:true}});
+  if(!row||!row.type.startsWith('family_'))throw new DomainError('FAMILY_SESSION','That family event is unavailable.');
+  const data={...row.data as unknown as FamilyData};
+  if(row.type==='family_auction'&&data.winnerId&&!data.members?.some(m=>m.userId===data.winnerId)){
+   const winner=await tx.gameParticipant.findUnique({where:{sessionId_userId:{sessionId:id,userId:data.winnerId}}});
+   if(winner?.data){const member=winner.data as unknown as import('./domain.js').FamilyMember;data.members=[...(data.members??[]),member];}
+  }
+  const itemEscrow=row.type==='family_marriage'?(await tx.escrow.findMany({where:{guildId:row.guildId,referenceType:'family_proposal',referenceId:row.id},orderBy:{id:'asc'}})).map(item=>{assertItemEscrow(item);return{itemId:item.itemRef,quantity:item.itemQuantity,state:item.state};}):undefined;
+  const vote=row.type==='family_marriage'&&row.state==='OPEN'?marriageVoting(row.votes):null;
+  return{id:row.id,guildId:row.guildId,channelId:row.channelId,messageId:row.messageId,ownerId:row.ownerUserId,state:row.state,type:row.type,createdAt:row.createdAt,expiresAt:row.expiresAt,data:{...data,...(itemEscrow?{itemEscrow}:{}),...(vote?{voteResult:{up:vote.totals.up??0,down:vote.totals.down??0,total:vote.total,approval:vote.approval}}:{})}};
+ },{isolationLevel:'RepeatableRead'});}
+
 }
 export type FamilyView=Awaited<ReturnType<PrismaFamilyRepository['publicView']>>;

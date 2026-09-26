@@ -41,6 +41,19 @@ test('Phase 10 PostgreSQL privacy, records and Spotlight recovery',async t=>{
    const p=await repo.profile('profiles','a',new Date('2026-10-06T12:00:00Z'));assert.ok(p.state.tripleThreatAt);assert.equal(p.spotlight.length,0);
    await assert.rejects(()=>repo.showcase('profiles','a',['not-earned'],undefined),{code:'SHOWCASE_OWNERSHIP'});
   });
+  await t.test('posting settings persist once per freeze, smooth history and survive recovery',async()=>{
+   const guildId='profiles-posting',settings={fallbackHour:21,startHour:8,endHour:12};await db.guild.create({data:{id:guildId,name:'Posting test'}});
+   await repo.freeze(guildId,new Date('2026-09-21T10:00:00Z'),settings);
+   const first=await repo.announcement(guildId,'2026-09-14');assert.equal(first.announceAt.toISOString(),'2026-09-22T03:00:00.000Z');
+   await new PrismaProfilesRepository(db).freeze(guildId,new Date('2026-09-21T10:00:00Z'),{fallbackHour:17,startHour:17,endHour:22});
+   assert.equal((await repo.announcement(guildId,'2026-09-14')).announceAt.toISOString(),first.announceAt.toISOString());
+   await db.activityObservation.createMany({data:Array.from({length:30},(_,n)=>({id:'posting-history-'+n,guildId,userId:'observer',kind:'message',occurredAt:new Date('2026-09-21T14:00:00Z'),hourMt:8}))});
+   await new PrismaProfilesRepository(db).reconcile(guildId,new Date('2026-09-28T10:00:00Z'),settings);
+   assert.equal((await repo.announcement(guildId,'2026-09-21')).announceAt.toISOString(),'2026-09-28T17:00:00.000Z');
+   const jobs=await db.scheduledJob.findMany({where:{guildId,jobType:'spotlight.announce'},orderBy:{dueAt:'asc'}});assert.equal(jobs.length,2);assert.equal(jobs[1].dueAt.toISOString(),'2026-09-28T17:00:00.000Z');
+   await assert.rejects(()=>repo.freeze(guildId,new Date('2026-10-05T10:00:00Z'),{fallbackHour:19,startHour:22,endHour:17}),{code:'SPOTLIGHT_POSTING_CONFIG'});
+   assert.equal(await db.spotlightFreeze.count({where:{guildId}}),2);assert.equal(await db.scheduledJob.count({where:{guildId,jobType:'spotlight.announce'}}),2);
+  });
   await t.test('overall wins count individual games without double-counting category aggregates',async()=>{
    for(const [gameKey,wins] of [['tictactoe',2],['connectfour',1],['skill_games',3],['wwyd',4],['party_games',4]])await db.memberGameStats.create({data:{guildId:'profiles',userId:'a',gameKey,wins}});
    assert.equal((await repo.leaderboard('profiles','wins')).find(row=>row.userId==='a').value,7);
