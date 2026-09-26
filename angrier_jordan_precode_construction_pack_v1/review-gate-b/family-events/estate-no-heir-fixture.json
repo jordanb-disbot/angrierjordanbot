@@ -1,0 +1,24 @@
+{
+  "id": "fixture",
+  "guildId": "fixture",
+  "channelId": "fixture",
+  "messageId": "fixture",
+  "ownerId": "fixture-alex",
+  "state": "CLOSED",
+  "version": 2,
+  "createdAt": "2026-09-25T18:00:00.000Z",
+  "expiresAt": null,
+  "type": "family_estate",
+  "data": {
+    "kind": "estate",
+    "departedId": "fixture-alex",
+    "amount": "428750",
+    "assetsTransferred": 2,
+    "executed": true,
+    "result": "Estate funds removed; eligible items auctioned.",
+    "auctionIds": [
+      "item-auction-1",
+      "item-auction-2"
+    ]
+  }
+}

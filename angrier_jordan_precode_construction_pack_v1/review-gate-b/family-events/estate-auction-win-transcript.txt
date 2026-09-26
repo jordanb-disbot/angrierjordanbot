@@ -1,0 +1,9 @@
+Auction finalized
+Sam Rivera
+System estate item auction
+Winning member: Sam Rivera
+Winning bid: 87,500 Ottomans
+The winning member received the item.
+Other reserved bids have been returned.
+3 × Ring
+Winning member: <@fixture-sam>.

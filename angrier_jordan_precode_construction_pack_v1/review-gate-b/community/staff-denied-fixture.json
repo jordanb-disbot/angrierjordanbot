@@ -1,0 +1,44 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "action": "answer",
+    "view": {
+      "id": "fixture-round",
+      "guildId": "111111111111111111",
+      "channelId": "222222222222222222",
+      "messageId": "444444444444444444",
+      "ownerId": "333333333333333333",
+      "state": "OPEN",
+      "version": 12,
+      "expiresAt": "2026-09-25T20:00:00.000Z",
+      "kind": "ama",
+      "phase": "open",
+      "round": 1,
+      "title": "Which lounge night should we host?",
+      "anonymous": true,
+      "hidden": true,
+      "ranked": false,
+      "choices": [
+        {
+          "id": "1",
+          "label": "Board games and cocoa"
+        },
+        {
+          "id": "2",
+          "label": "A film in the lounge"
+        },
+        {
+          "id": "3",
+          "label": "Reading by the fire"
+        }
+      ],
+      "categories": [],
+      "entryCount": 7
+    }
+  },
+  "adapterPayload": {
+    "content": "This action requires Chaise Lounge or Throne.",
+    "controls": []
+  }
+}

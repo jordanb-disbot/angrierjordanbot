@@ -1,0 +1,110 @@
+{
+  "fixture": true,
+  "liveDiscordCapture": false,
+  "files": [
+    {
+      "file": "review-gate-b/community/poll-hidden-desktop.png",
+      "sha256": "47da75be58e356cadf28a794b092cf03a93807100373dab8109f792416aab113"
+    },
+    {
+      "file": "review-gate-b/community/poll-hidden-mobile.png",
+      "sha256": "3ce76ee7f0bbc6fe3094fe7f3e2ad36fe992371d394823b80bacaa97d45d20ad"
+    },
+    {
+      "file": "review-gate-b/community/poll-ranked-result-desktop.png",
+      "sha256": "30b92dcce89f5ee0ce0eb201f42b2f84c89d31f0dc555e2cc0b45f0df9b1b3ae"
+    },
+    {
+      "file": "review-gate-b/community/poll-ranked-result-mobile.png",
+      "sha256": "c8901cdc78a40bd1aa04725251c250fd3ee44084100043dbbbf8059cd05bfe09"
+    },
+    {
+      "file": "review-gate-b/community/suggestion-desktop.png",
+      "sha256": "273ec92c2bbacecc0cade2601e3339f78964a810cddb6293d0007711818e5f1b"
+    },
+    {
+      "file": "review-gate-b/community/suggestion-mobile.png",
+      "sha256": "a8a7992f7f1d708801437e5a9a017d69eee56725d0c8eba8ce1325edbf5d40cf"
+    },
+    {
+      "file": "review-gate-b/community/ama-open-desktop.png",
+      "sha256": "0ee6a9caf9d7b300a49a52abbfa57d9c6416abb7811a4d0c43f1407004e6adb8"
+    },
+    {
+      "file": "review-gate-b/community/ama-open-mobile.png",
+      "sha256": "cf8e3af79389062a76d56824eb49798782c9447c95e1b1a656c71feb44de61e4"
+    },
+    {
+      "file": "review-gate-b/community/ama-answer-desktop.png",
+      "sha256": "caa1eab7073d1e4532cdfc1dd0aaad54c9d4743fd0cc5c596bd542435576873f"
+    },
+    {
+      "file": "review-gate-b/community/ama-answer-mobile.png",
+      "sha256": "aa3f03605d3591aabc5d1f8f8369ae38448ba1eec21a4c7b4b857fa1d3e10659"
+    },
+    {
+      "file": "review-gate-b/community/ama-declined-desktop.png",
+      "sha256": "f837ec73c2c427b0c952378b9c8a0c3216fcc0b198ad81a720c045f9c439d7d3"
+    },
+    {
+      "file": "review-gate-b/community/ama-declined-mobile.png",
+      "sha256": "fe81cdd3860ccf8af36f42282fc15bf2e2080776ac11ff28cd24247c96789963"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-paid-desktop.png",
+      "sha256": "ac5929f477a1b5af7020bedfbbfc5748abb3ec26b2d5298607f47328c02dd482"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-paid-mobile.png",
+      "sha256": "233516efbfa2c096f786f3c99e0796aa22eb7e4866455b63c5b4de71d091a4cf"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-pending-desktop.png",
+      "sha256": "dc09fb479c7265f64c6900d39dc80227ea3312b09066d07b59cb1e09622d0af9"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-pending-mobile.png",
+      "sha256": "a6e3e3a6bd0dcc8211461f69bbf80a4124a33aaa512496d1375ac7d40b7098bf"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-empty-desktop.png",
+      "sha256": "f69140fc74b645ca60656a7c95920244f636475ce515b0e588caa0b1c52bb971"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-empty-mobile.png",
+      "sha256": "4c6ef5ba85a1e5466cff49a12a181f5af63addbd7e04113ede2cc27a6fbfa654"
+    },
+    {
+      "file": "review-gate-b/community/long-text-desktop.png",
+      "sha256": "dc18ce73297b798d1f6974a900ec0d2079fcadab319cd29a5af57037eca9ef69"
+    },
+    {
+      "file": "review-gate-b/community/long-text-mobile.png",
+      "sha256": "4764459a04a08eec9232cc7e58b52c6ce27d9e09dc1907e18c7dcf5b30f421a8"
+    },
+    {
+      "file": "review-gate-b/community/poll-private-desktop.png",
+      "sha256": "b6ae84f2f843f658fdb57d5e6662df8b13995338c326c5064ef280bdfc4727ad"
+    },
+    {
+      "file": "review-gate-b/community/poll-private-mobile.png",
+      "sha256": "b09de0c7528cb33da86d4e9d597da20cc75c234914ef538a6a7439f7c9e8287d"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-confirm-desktop.png",
+      "sha256": "d571cbc776781d75708512a63391a392c947ca1588ac190b9faa873481c23aab"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-confirm-mobile.png",
+      "sha256": "f56e7578283640253335697853d98487946eed35d0799f7974a17b02a2c68465"
+    },
+    {
+      "file": "review-gate-b/community/staff-denied-desktop.png",
+      "sha256": "e1dbc26a0d6dc6f16e71a130a7cb2ef585b52f6e881463304c010b5c251b4050"
+    },
+    {
+      "file": "review-gate-b/community/staff-denied-mobile.png",
+      "sha256": "bcce7825779719a2a86fc17abe0e5cbd495e9f18a78611abb8e0371fb592f2ff"
+    }
+  ]
+}

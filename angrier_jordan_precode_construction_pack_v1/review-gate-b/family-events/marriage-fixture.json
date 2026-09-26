@@ -25,6 +25,13 @@
     ],
     "marriedAt": "2026-09-25T18:00:00Z",
     "proposalItem": "family.ring",
+    "itemEscrow": [
+      {
+        "itemId": "family.ring",
+        "quantity": 1,
+        "state": "SETTLED"
+      }
+    ],
     "compatibility": 87,
     "success": 79,
     "blessingConsumed": false,
@@ -39,6 +46,6 @@
       "approval": 90
     },
     "firstChildBonus": true,
-    "result": "Married · community vote complete"
+    "result": "Married"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "adapterFixture": "empty"
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Chairisms",
+        "color": 1096065,
+        "description": "No eligible Chairisms found."
+      }
+    ],
+    "controls": [],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

@@ -33,7 +33,6 @@
   ],
   "result": {
     "label": "The lounge chose: Open it together",
-    "winnerId": "open",
     "totals": {
       "open": 12,
       "wait": 5,

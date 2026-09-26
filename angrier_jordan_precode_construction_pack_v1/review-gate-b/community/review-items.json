@@ -1,0 +1,370 @@
+[
+  {
+    "id": "community-poll-hidden",
+    "fileStem": "poll-hidden",
+    "name": "Community · anonymous poll",
+    "desktop": "review-gate-b/community/poll-hidden-desktop.png",
+    "mobile": "review-gate-b/community/poll-hidden-mobile.png",
+    "scenario": "/poll with hidden results; member has not voted.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:vote:fixture-round",
+        "label": "Vote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:close:fixture-round",
+        "label": "Close Poll",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-poll-ranked-result",
+    "fileStem": "poll-ranked-result",
+    "name": "Community · ranked poll result",
+    "desktop": "review-gate-b/community/poll-ranked-result-desktop.png",
+    "mobile": "review-gate-b/community/poll-ranked-result-mobile.png",
+    "scenario": "Saved closed ranked poll; final-round counts and named ballots are available in Details.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "informational",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-suggestion",
+    "fileStem": "suggestion",
+    "name": "Community · suggestion status",
+    "desktop": "review-gate-b/community/suggestion-desktop.png",
+    "mobile": "review-gate-b/community/suggestion-mobile.png",
+    "scenario": "Anonymous suggestion after a community admin changes the status to REVIEWING; voting remains available.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:vote:fixture-round",
+        "label": "Vote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:status:fixture-round",
+        "label": "Update Status",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-ama-open",
+    "fileStem": "ama-open",
+    "name": "Community · AMA question",
+    "desktop": "review-gate-b/community/ama-open-desktop.png",
+    "mobile": "review-gate-b/community/ama-open-mobile.png",
+    "scenario": "Anonymous question awaiting staff answer; staff-only Answer and Decline controls are enforced on click.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:upvote:fixture-round",
+        "label": "Upvote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:answer:fixture-round",
+        "label": "Answer",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:decline:fixture-round",
+        "label": "Decline",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "moderation-related",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-ama-answer",
+    "fileStem": "ama-answer",
+    "name": "Community · answered AMA",
+    "desktop": "review-gate-b/community/ama-answer-desktop.png",
+    "mobile": "review-gate-b/community/ama-answer-mobile.png",
+    "scenario": "Saved public answer closes voting and leaves Details.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "informational",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-ama-declined",
+    "fileStem": "ama-declined",
+    "name": "Community · declined protected question",
+    "desktop": "review-gate-b/community/ama-declined-desktop.png",
+    "mobile": "review-gate-b/community/ama-declined-mobile.png",
+    "scenario": "Declined question projects only the public unavailable notice; original question and author are absent.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "moderation-related",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-giveaway-paid",
+    "fileStem": "giveaway-paid",
+    "name": "Community · paid giveaway",
+    "desktop": "review-gate-b/community/giveaway-paid-desktop.png",
+    "mobile": "review-gate-b/community/giveaway-paid-mobile.png",
+    "scenario": "Admin-created 3-winner giveaway; entry requires separate private confirmation of the exact 5000 Ottoman fee.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:enter:fixture-round",
+        "label": "Enter · 5000 Ottomans",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "financial",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-giveaway-pending",
+    "fileStem": "giveaway-pending",
+    "name": "Community · custom reward pending",
+    "desktop": "review-gate-b/community/giveaway-pending-desktop.png",
+    "mobile": "review-gate-b/community/giveaway-pending-mobile.png",
+    "scenario": "Draw selected one actual winner from a maximum of three; organizer fulfillment remains pending.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:fulfill:fixture-round",
+        "label": "Mark Reward Fulfilled",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "financial",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-giveaway-empty",
+    "fileStem": "giveaway-empty",
+    "name": "Community · no-entry draw",
+    "desktop": "review-gate-b/community/giveaway-empty-desktop.png",
+    "mobile": "review-gate-b/community/giveaway-empty-mobile.png",
+    "scenario": "Giveaway closes with zero entrants; no winner or reward is claimed.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "financial",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-long-text",
+    "fileStem": "long-text",
+    "name": "Community · long-text overflow",
+    "desktop": "review-gate-b/community/long-text-desktop.png",
+    "mobile": "review-gate-b/community/long-text-mobile.png",
+    "scenario": "Maximum-length suggestion with unbroken wide text and long submitted name; full content stays in Details.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:vote:fixture-round",
+        "label": "Vote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:status:fixture-round",
+        "label": "Update Status",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "community-poll-private",
+    "fileStem": "poll-private",
+    "name": "Community · private ballot",
+    "desktop": "review-gate-b/community/poll-private-desktop.png",
+    "mobile": "review-gate-b/community/poll-private-mobile.png",
+    "scenario": "Actual adapter response to vote; fictional member has ordinary member permissions.",
+    "controls": [
+      {
+        "type": 3,
+        "custom_id": "community:vote_pick:fixture-round",
+        "placeholder": "Your ballot",
+        "options": [
+          {
+            "label": "Board games and cocoa",
+            "value": "1"
+          },
+          {
+            "label": "A film in the lounge",
+            "value": "2"
+          },
+          {
+            "label": "Reading by the fire",
+            "value": "3"
+          }
+        ]
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  },
+  {
+    "id": "community-giveaway-confirm",
+    "fileStem": "giveaway-confirm",
+    "name": "Community · private paid entry confirmation",
+    "desktop": "review-gate-b/community/giveaway-confirm-desktop.png",
+    "mobile": "review-gate-b/community/giveaway-confirm-mobile.png",
+    "scenario": "Actual adapter response to enter; fictional member has ordinary member permissions.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:confirm_entry:fixture-round:5000:333333333333333333",
+        "label": "Confirm Entry",
+        "style": 2
+      }
+    ],
+    "classification": "financial",
+    "renderer": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  },
+  {
+    "id": "community-staff-denied",
+    "fileStem": "staff-denied",
+    "name": "Community · protected staff action",
+    "desktop": "review-gate-b/community/staff-denied-desktop.png",
+    "mobile": "review-gate-b/community/staff-denied-mobile.png",
+    "scenario": "Actual adapter response to answer; fictional member has ordinary member permissions.",
+    "controls": [],
+    "classification": "moderation-related",
+    "renderer": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  }
+]

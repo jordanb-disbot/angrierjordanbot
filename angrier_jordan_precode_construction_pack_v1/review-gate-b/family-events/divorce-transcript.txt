@@ -1,3 +1,7 @@
 Divorced
 Alex Morgan + Sam Rivera
-<@fixture-alex> paid <@fixture-sam> 125000 Ottomans.
+125,000 Ottomans transferred.
+Alex Morgan paid Sam Rivera.
+Items remain with their owners.
+This pair may remarry after the waiting period.
+<@fixture-alex> paid <@fixture-sam>.

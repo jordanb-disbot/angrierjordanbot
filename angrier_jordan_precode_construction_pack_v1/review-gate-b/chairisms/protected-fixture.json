@@ -1,0 +1,11 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "adapterFixture": "protected"
+  },
+  "adapterPayload": {
+    "content": "This source is not available for public Chairisms.",
+    "controls": []
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "fixture-round",
+    "guildId": "111111111111111111",
+    "channelId": "222222222222222222",
+    "messageId": "444444444444444444",
+    "ownerId": "333333333333333333",
+    "state": "OPEN",
+    "version": 12,
+    "expiresAt": "2026-09-25T20:00:00.000Z",
+    "kind": "giveaway",
+    "phase": "open",
+    "round": 1,
+    "title": "Giveaway · 999999999 Ottomans",
+    "anonymous": false,
+    "hidden": false,
+    "ranked": false,
+    "choices": [],
+    "categories": [],
+    "prize": {
+      "kind": "ottomans",
+      "label": "999999999 Ottomans"
+    },
+    "fee": "5000",
+    "winnerCount": 3,
+    "entryCount": 17
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Giveaway",
+        "description": "Giveaway\nGiveaway · 999999999 Ottomans\nPrize per winner: 999999999 Ottomans\n3 winners · 17 entries\nEntry: 5000 Ottomans · fees removed from circulation\nCloses <t:1790366400:R>.",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:fixture-round"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:enter:fixture-round",
+        "label": "Enter · 5000 Ottomans",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

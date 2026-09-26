@@ -1,0 +1,16 @@
+{
+  "id": "fixture",
+  "guildId": "fixture",
+  "channelId": "fixture",
+  "messageId": "fixture",
+  "ownerId": "fixture-alex",
+  "state": "CLOSED",
+  "version": 2,
+  "createdAt": "2026-09-25T18:00:00.000Z",
+  "expiresAt": null,
+  "type": "family_ended",
+  "data": {
+    "kind": "ended",
+    "result": "A member became independent."
+  }
+}

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "major-casino-win",
+    "name": "Major casino win",
+    "scenario": "Saved closed roulette round: wager 1000 Ottomans, result 17, return 36000 Ottomans.",
+    "controls": [
+      "Play Again",
+      "Rules"
+    ],
+    "classification": [
+      "financial",
+      "interactive"
+    ],
+    "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+    "desktop": "review-gate-b/casino-profiles/major-casino-win-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/major-casino-win-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
+  },
+  {
+    "id": "lottery-winner",
+    "name": "Lottery winner",
+    "scenario": "Completed weekly lottery draw pays the full ticket-funded 24800 Ottoman pot to Alex.",
+    "controls": [],
+    "classification": [
+      "financial",
+      "informational"
+    ],
+    "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+    "desktop": "review-gate-b/casino-profiles/lottery-winner-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/lottery-winner-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "chair-pot",
+    "name": "Chair Pot jackpot",
+    "scenario": "Settled slots jackpot pays Jordan 125000 Ottomans from Chair Pot.",
+    "controls": [],
+    "classification": [
+      "financial",
+      "informational"
+    ],
+    "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+    "desktop": "review-gate-b/casino-profiles/chair-pot-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/chair-pot-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "weekly-spotlight",
+    "name": "Weekly Spotlight with co-winners",
+    "scenario": "Frozen week has tied message winners Jordan and Alex, Jordan also wins words and voice and holds permanent Triple Threat.",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
+    "desktop": "review-gate-b/casino-profiles/weekly-spotlight-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/weekly-spotlight-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "major-record",
+    "name": "Major record",
+    "scenario": "The all-time records selector shows Jordan holding Biggest Casino Win, 125000, set September 25, 2026.",
+    "controls": [
+      "Record period: All time / This month"
+    ],
+    "classification": [
+      "informational",
+      "interactive"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+    "desktop": "review-gate-b/casino-profiles/major-record-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/major-record-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
+  },
+  {
+    "id": "chair-pot-long-values",
+    "name": "Chair Pot long member name and currency",
+    "scenario": "Boundary fixture: unbroken 32-character member name; exact signed BIGINT maximum 9223372036854775807 Ottoman payout, verifying no rounding or illegible shrinking.",
+    "controls": [],
+    "classification": [
+      "financial",
+      "informational"
+    ],
+    "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+    "desktop": "review-gate-b/casino-profiles/chair-pot-long-values-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/chair-pot-long-values-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "weekly-spotlight-empty",
+    "name": "Weekly Spotlight without qualifiers",
+    "scenario": "Frozen week has zero qualifying activity and no winner in all three categories.",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
+    "desktop": "review-gate-b/casino-profiles/weekly-spotlight-empty-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/weekly-spotlight-empty-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "weekly-spotlight-long-names",
+    "name": "Weekly Spotlight long names and totals",
+    "scenario": "Boundary fixture: three co-winners include a 32-character unbroken wide name and markup characters; maximum 32-bit activity totals.",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
+    "desktop": "review-gate-b/casino-profiles/weekly-spotlight-long-names-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/weekly-spotlight-long-names-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "No interactive controls for this announcement."
+  },
+  {
+    "id": "records-empty",
+    "name": "Empty records",
+    "scenario": "The records command has no persisted all-time records.",
+    "controls": [
+      "Record period: All time / This month"
+    ],
+    "classification": [
+      "informational",
+      "interactive"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+    "desktop": "review-gate-b/casino-profiles/records-empty-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/records-empty-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
+  },
+  {
+    "id": "records-long-values",
+    "name": "Records long names and currency",
+    "scenario": "Boundary fixture: two persisted records with 32-character unbroken member names and exact BIGINT amounts.",
+    "controls": [
+      "Record period: All time / This month"
+    ],
+    "classification": [
+      "informational",
+      "interactive"
+    ],
+    "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+    "desktop": "review-gate-b/casino-profiles/records-long-values-desktop.png",
+    "mobile": "review-gate-b/casino-profiles/records-long-values-mobile.png",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "controlsShown": [],
+    "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured."
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "fixture-round",
+    "guildId": "111111111111111111",
+    "channelId": "222222222222222222",
+    "messageId": "444444444444444444",
+    "ownerId": "333333333333333333",
+    "state": "OPEN",
+    "version": 12,
+    "expiresAt": null,
+    "kind": "suggest",
+    "phase": "open",
+    "round": 1,
+    "title": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. ",
+    "anonymous": false,
+    "hidden": false,
+    "ranked": false,
+    "choices": [
+      {
+        "id": "up",
+        "label": "Support"
+      },
+      {
+        "id": "down",
+        "label": "Oppose"
+      }
+    ],
+    "categories": [],
+    "status": "OPEN",
+    "submitterName": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "entryCount": 7
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Suggestion",
+        "description": "Suggestion\nWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW A long reading suggestion. \nup. Support\ndown. Oppose\nStatus: OPEN\nSubmitted by WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:fixture-round"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:vote:fixture-round",
+        "label": "Vote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:status:fixture-round",
+        "label": "Update Status",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

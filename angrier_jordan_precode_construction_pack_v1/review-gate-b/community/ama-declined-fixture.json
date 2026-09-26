@@ -1,0 +1,54 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "fixture-round",
+    "guildId": "111111111111111111",
+    "channelId": "222222222222222222",
+    "messageId": "444444444444444444",
+    "ownerId": "333333333333333333",
+    "state": "CLOSED",
+    "version": 12,
+    "expiresAt": null,
+    "kind": "ama",
+    "phase": "closed",
+    "round": 1,
+    "title": "This question is no longer available.",
+    "anonymous": true,
+    "hidden": true,
+    "ranked": false,
+    "choices": [],
+    "categories": [],
+    "status": "DECLINED",
+    "entryCount": 7
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Ask Me Anything",
+        "description": "Ask Me Anything\nThis question is no longer available.\nStatus: DECLINED",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:fixture-round"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

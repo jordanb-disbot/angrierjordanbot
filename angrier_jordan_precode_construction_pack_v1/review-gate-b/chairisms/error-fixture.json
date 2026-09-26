@@ -1,0 +1,11 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "adapterFixture": "error"
+  },
+  "adapterPayload": {
+    "content": "This Chairism could not be completed. If publication was interrupted, its saved delivery must be checked before retrying.",
+    "controls": []
+  }
+}

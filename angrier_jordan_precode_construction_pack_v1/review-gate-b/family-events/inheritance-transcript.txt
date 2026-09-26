@@ -1,3 +1,6 @@
 Inheritance executed
-Alex Morgan + Sam Rivera
+One beneficiary received the eligible estate.
+428,750 Ottomans transferred.
+12 eligible inventory entries transferred.
+Execution is final. A later return does not restore this estate.
 Beneficiary: <@fixture-sam>.

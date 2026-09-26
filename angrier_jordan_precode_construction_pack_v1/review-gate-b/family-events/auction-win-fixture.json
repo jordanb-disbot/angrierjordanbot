@@ -27,6 +27,6 @@
     "reserve": "50000",
     "winnerId": "fixture-sam",
     "amount": "87500",
-    "result": "Auction complete"
+    "result": "Auction finalized"
   }
 }

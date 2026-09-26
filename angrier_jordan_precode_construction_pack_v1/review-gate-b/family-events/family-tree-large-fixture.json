@@ -1,0 +1,128 @@
+{
+  "tree": {
+    "members": [
+      "fixture-tree-0",
+      "fixture-tree-1",
+      "fixture-tree-2",
+      "fixture-tree-3",
+      "fixture-tree-4",
+      "fixture-tree-5",
+      "fixture-tree-6",
+      "fixture-tree-7",
+      "fixture-tree-8",
+      "fixture-tree-9",
+      "fixture-tree-10",
+      "fixture-tree-11",
+      "fixture-tree-12",
+      "fixture-tree-13",
+      "fixture-tree-14",
+      "fixture-tree-15",
+      "fixture-tree-16",
+      "fixture-tree-17",
+      "fixture-tree-18",
+      "fixture-tree-19"
+    ],
+    "marriages": [
+      {
+        "userA": "fixture-tree-0",
+        "userB": "fixture-tree-1"
+      },
+      {
+        "userA": "fixture-tree-1",
+        "userB": "fixture-tree-2"
+      },
+      {
+        "userA": "fixture-tree-2",
+        "userB": "fixture-tree-3"
+      },
+      {
+        "userA": "fixture-tree-3",
+        "userB": "fixture-tree-4"
+      },
+      {
+        "userA": "fixture-tree-4",
+        "userB": "fixture-tree-5"
+      },
+      {
+        "userA": "fixture-tree-5",
+        "userB": "fixture-tree-6"
+      },
+      {
+        "userA": "fixture-tree-6",
+        "userB": "fixture-tree-7"
+      },
+      {
+        "userA": "fixture-tree-7",
+        "userB": "fixture-tree-8"
+      },
+      {
+        "userA": "fixture-tree-8",
+        "userB": "fixture-tree-9"
+      },
+      {
+        "userA": "fixture-tree-9",
+        "userB": "fixture-tree-10"
+      },
+      {
+        "userA": "fixture-tree-10",
+        "userB": "fixture-tree-11"
+      },
+      {
+        "userA": "fixture-tree-11",
+        "userB": "fixture-tree-12"
+      },
+      {
+        "userA": "fixture-tree-12",
+        "userB": "fixture-tree-13"
+      },
+      {
+        "userA": "fixture-tree-13",
+        "userB": "fixture-tree-14"
+      },
+      {
+        "userA": "fixture-tree-14",
+        "userB": "fixture-tree-15"
+      },
+      {
+        "userA": "fixture-tree-15",
+        "userB": "fixture-tree-16"
+      },
+      {
+        "userA": "fixture-tree-16",
+        "userB": "fixture-tree-17"
+      },
+      {
+        "userA": "fixture-tree-17",
+        "userB": "fixture-tree-18"
+      },
+      {
+        "userA": "fixture-tree-18",
+        "userB": "fixture-tree-19"
+      }
+    ],
+    "adoptions": [],
+    "record": null
+  },
+  "names": {
+    "fixture-tree-0": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-1": "Long Member Name With Many Words",
+    "fixture-tree-2": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-3": "Long Member Name With Many Words",
+    "fixture-tree-4": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-5": "Long Member Name With Many Words",
+    "fixture-tree-6": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-7": "Long Member Name With Many Words",
+    "fixture-tree-8": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-9": "Long Member Name With Many Words",
+    "fixture-tree-10": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-11": "Long Member Name With Many Words",
+    "fixture-tree-12": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-13": "Long Member Name With Many Words",
+    "fixture-tree-14": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-15": "Long Member Name With Many Words",
+    "fixture-tree-16": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-17": "Long Member Name With Many Words",
+    "fixture-tree-18": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fixture-tree-19": "Long Member Name With Many Words"
+  }
+}

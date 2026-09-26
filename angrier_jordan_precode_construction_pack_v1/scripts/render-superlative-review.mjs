@@ -1,9 +1,10 @@
-import fs from 'node:fs';import {createHash} from 'node:crypto';
-import {renderCommunity,superlativeReviewFixture,communityTranscript} from '../dist/packages/features-community/src/render.js';
-import {rasterizeSvg} from '../dist/packages/renderer/src/raster.js';
-const output=new URL('../review-gate-b/superlative/',import.meta.url);fs.mkdirSync(output,{recursive:true});
-const fixture=superlativeReviewFixture(),svg=renderCommunity(fixture),desktop=await rasterizeSvg(svg),mobile=await rasterizeSvg(svg.replace('width="440" height="741" viewBox','width="360" height="606" viewBox'));
-fs.writeFileSync(new URL('desktop.png',output),desktop);fs.writeFileSync(new URL('mobile.png',output),mobile);fs.writeFileSync(new URL('fixture.json',output),JSON.stringify(fixture,null,2)+'\n');fs.writeFileSync(new URL('transcript.txt',output),communityTranscript(fixture)+'\n');
-fs.writeFileSync(new URL('manifest.json',output),JSON.stringify({kind:'actual-production-renderer-fixture',fictionalMembers:true,liveDiscordCapture:false,renderer:'packages/features-community/src/render.ts',rendererSha256:createHash('sha256').update(fs.readFileSync(new URL('../packages/features-community/src/render.ts',import.meta.url))).digest('hex'),files:['desktop.png','mobile.png'].map(file=>({file,sha256:createHash('sha256').update(fs.readFileSync(new URL(file,output))).digest('hex')}))},null,2)+'\n');
-fs.writeFileSync(new URL('README.md',output),'# Superlative win · Gate B\n\nThese desktop (440px) and mobile (360px) cards come from the actual production `renderCommunity` renderer. Morgan and the season/category values are fictional saved-state fixtures, not live member data or Discord screenshots. The production coordinator adds the native Details button and complete transcript.\n\nRegenerate after the bot build with `node scripts/render-superlative-review.mjs`. The approved lounge, frame and fonts are unchanged. Gate B approval remains pending.\n');
-console.log('Superlative runtime desktop/mobile fixtures written to review-gate-b/superlative.');
+// Compatibility entry point. The consolidated package includes current controls,
+// privacy/error states and per-item owner-review metadata for Superlatives.
+import './render-gate-b-community-chairisms.mjs';
+import fs from 'node:fs';
+const root=new URL('../review-gate-b/superlative/',import.meta.url);
+for(const size of ['desktop','mobile'])fs.copyFileSync(new URL(`winner-${size}.png`,root),new URL(`${size}.png`,root));
+fs.writeFileSync(new URL('fixture.json',root),JSON.stringify(JSON.parse(fs.readFileSync(new URL('winner-fixture.json',root),'utf8')).fixture,null,2)+'\n');
+fs.copyFileSync(new URL('winner-transcript.txt',root),new URL('transcript.txt',root));
+import {createHash} from 'node:crypto';
+fs.writeFileSync(new URL('manifest.json',root),JSON.stringify({kind:'actual-production-renderer-fixture',fictionalMembers:true,liveDiscordCapture:false,renderer:'packages/features-community/src/render.ts',rendererSha256:createHash('sha256').update(fs.readFileSync(new URL('../packages/features-community/src/render.ts',import.meta.url))).digest('hex'),files:['desktop.png','mobile.png'].map(file=>({file,sha256:createHash('sha256').update(fs.readFileSync(new URL(file,root))).digest('hex')}))},null,2)+'\n');

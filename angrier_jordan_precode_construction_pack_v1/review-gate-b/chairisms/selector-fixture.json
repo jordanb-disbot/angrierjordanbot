@@ -1,0 +1,39 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "adapterFixture": "selector"
+  },
+  "adapterPayload": {
+    "content": "Choose what to preserve. The source and permissions are checked again before publication.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "chairism:this:333333333333333333:222222222222222222:444444444444444444",
+        "label": "This Message",
+        "style": 1
+      },
+      {
+        "type": 2,
+        "custom_id": "chairism:reply:333333333333333333:222222222222222222:444444444444444444",
+        "label": "Include Replied Message",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "chairism:image:333333333333333333:222222222222222222:444444444444444444",
+        "label": "Include Image",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "chairism:both:333333333333333333:222222222222222222:444444444444444444",
+        "label": "Include Reply + Image",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

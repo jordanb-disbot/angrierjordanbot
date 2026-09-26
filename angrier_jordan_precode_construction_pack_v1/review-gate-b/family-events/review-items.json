@@ -1,0 +1,648 @@
+[
+  {
+    "id": "marriage",
+    "name": "Marriage result and completed community vote",
+    "desktop": "review-gate-b/family-events/marriage-desktop.png",
+    "mobile": "review-gate-b/family-events/marriage-mobile.png",
+    "scenario": "Ring accepted; marriage committed; the vote closes with 18 approvals and 2 disapprovals, unlocking the first child slot.",
+    "transcript": "review-gate-b/family-events/marriage-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/marriage-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:vote:fixture:up",
+        "label": "👍",
+        "style": 2,
+        "disabled": true
+      },
+      {
+        "type": 2,
+        "custom_id": "family:vote:fixture:down",
+        "label": "👎",
+        "style": 2,
+        "disabled": true
+      },
+      {
+        "type": 2,
+        "custom_id": "family:tree:fixture",
+        "label": "View Family",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "informational",
+      "interactive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "proposal-pending",
+    "name": "Proposal — Ring reserved",
+    "desktop": "review-gate-b/family-events/proposal-pending-desktop.png",
+    "mobile": "review-gate-b/family-events/proposal-pending-mobile.png",
+    "scenario": "/family marry member:Sam reserves one Ring while Sam decides.",
+    "transcript": "review-gate-b/family-events/proposal-pending-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/proposal-pending-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:accept:fixture",
+        "label": "Accept",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "family:reject:fixture",
+        "label": "Decline",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive",
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "proposal-blessing",
+    "name": "Second-marriage proposal — Ring and Blessing reserved",
+    "desktop": "review-gate-b/family-events/proposal-blessing-desktop.png",
+    "mobile": "review-gate-b/family-events/proposal-blessing-mobile.png",
+    "scenario": "A member with one active spouse proposes again; one Ring and one Blessing remain reserved.",
+    "transcript": "review-gate-b/family-events/proposal-blessing-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/proposal-blessing-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:accept:fixture",
+        "label": "Accept",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "family:reject:fixture",
+        "label": "Decline",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive",
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "proposal-declined",
+    "name": "Proposal declined — item returned",
+    "desktop": "review-gate-b/family-events/proposal-declined-desktop.png",
+    "mobile": "review-gate-b/family-events/proposal-declined-mobile.png",
+    "scenario": "Sam declines; the Ring is returned in the committed transaction.",
+    "transcript": "review-gate-b/family-events/proposal-declined-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/proposal-declined-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "proposal-expired",
+    "name": "Proposal expired — item returned",
+    "desktop": "review-gate-b/family-events/proposal-expired-desktop.png",
+    "mobile": "review-gate-b/family-events/proposal-expired-mobile.png",
+    "scenario": "The 24-hour proposal timer expires; the Ring is returned once.",
+    "transcript": "review-gate-b/family-events/proposal-expired-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/proposal-expired-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "marriage-live-vote",
+    "name": "Marriage — voting open",
+    "desktop": "review-gate-b/family-events/marriage-live-vote-desktop.png",
+    "mobile": "review-gate-b/family-events/marriage-live-vote-mobile.png",
+    "scenario": "An accepted marriage opens its three-hour community approval vote with no ballots yet.",
+    "transcript": "review-gate-b/family-events/marriage-live-vote-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/marriage-live-vote-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:vote:fixture:up",
+        "label": "👍",
+        "style": 2,
+        "disabled": false
+      },
+      {
+        "type": 2,
+        "custom_id": "family:vote:fixture:down",
+        "label": "👎",
+        "style": 2,
+        "disabled": false
+      },
+      {
+        "type": 2,
+        "custom_id": "family:tree:fixture",
+        "label": "View Family",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "marriage-blessing-consumed",
+    "name": "Second marriage — Wedding Sack and Blessing consumed",
+    "desktop": "review-gate-b/family-events/marriage-blessing-consumed-desktop.png",
+    "mobile": "review-gate-b/family-events/marriage-blessing-consumed-mobile.png",
+    "scenario": "A Wedding Sack activates a second marriage and consumes the Sack plus required Blessing.",
+    "transcript": "review-gate-b/family-events/marriage-blessing-consumed-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/marriage-blessing-consumed-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:vote:fixture:up",
+        "label": "👍",
+        "style": 2,
+        "disabled": true
+      },
+      {
+        "type": 2,
+        "custom_id": "family:vote:fixture:down",
+        "label": "👎",
+        "style": 2,
+        "disabled": true
+      },
+      {
+        "type": 2,
+        "custom_id": "family:tree:fixture",
+        "label": "View Family",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "financial",
+      "interactive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "divorce",
+    "name": "Divorce settlement",
+    "desktop": "review-gate-b/family-events/divorce-desktop.png",
+    "mobile": "review-gate-b/family-events/divorce-mobile.png",
+    "scenario": "/family divorce ends an eligible marriage and transfers the selected payer’s half-liquid settlement to the former spouse.",
+    "transcript": "review-gate-b/family-events/divorce-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/divorce-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial",
+      "destructive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "divorce-large-value",
+    "name": "Divorce — long names and large settlement",
+    "desktop": "review-gate-b/family-events/divorce-large-value-desktop.png",
+    "mobile": "review-gate-b/family-events/divorce-large-value-mobile.png",
+    "scenario": "Readability boundary fixture: 32-character member names and a signed-64-bit-scale Ottoman amount; this is a projection fixture, not a transaction.",
+    "transcript": "review-gate-b/family-events/divorce-large-value-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/divorce-large-value-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial",
+      "destructive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "inheritance",
+    "name": "Inheritance completed",
+    "desktop": "review-gate-b/family-events/inheritance-desktop.png",
+    "mobile": "review-gate-b/family-events/inheritance-mobile.png",
+    "scenario": "The 24-hour departure grace expires; no reservations remain; the selected eligible beneficiary receives committed funds and 12 inventory entries.",
+    "transcript": "review-gate-b/family-events/inheritance-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/inheritance-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial",
+      "destructive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "estate-no-heir",
+    "name": "Estate — no eligible heir",
+    "desktop": "review-gate-b/family-events/estate-no-heir-desktop.png",
+    "mobile": "review-gate-b/family-events/estate-no-heir-mobile.png",
+    "scenario": "With no eligible heir, liquid funds leave circulation and each of two eligible assets receives a separate system auction.",
+    "transcript": "review-gate-b/family-events/estate-no-heir-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/estate-no-heir-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial",
+      "destructive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "estate-empty",
+    "name": "Estate — no eligible assets",
+    "desktop": "review-gate-b/family-events/estate-empty-desktop.png",
+    "mobile": "review-gate-b/family-events/estate-empty-mobile.png",
+    "scenario": "An estate executes with no remaining money, eligible heir or transferable inventory.",
+    "transcript": "review-gate-b/family-events/estate-empty-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/estate-empty-fixture.json",
+    "controls": [],
+    "classification": [
+      "informational",
+      "destructive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "estate-waiting",
+    "name": "Estate — waiting safely",
+    "desktop": "review-gate-b/family-events/estate-waiting-desktop.png",
+    "mobile": "review-gate-b/family-events/estate-waiting-mobile.png",
+    "scenario": "Internal recovery projection only: reserved assets delay execution. No publication intent is created for this state.",
+    "transcript": "review-gate-b/family-events/estate-waiting-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/estate-waiting-fixture.json",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "NO VISUAL REVIEW REQUIRED",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "internal diagnostic renderer fixture; not a public announcement"
+  },
+  {
+    "id": "estate-returned",
+    "name": "Estate — canceled after return",
+    "desktop": "review-gate-b/family-events/estate-returned-desktop.png",
+    "mobile": "review-gate-b/family-events/estate-returned-mobile.png",
+    "scenario": "Internal recovery projection only: a confirmed return cancels execution. No publication intent is created for this state.",
+    "transcript": "review-gate-b/family-events/estate-returned-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/estate-returned-fixture.json",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "NO VISUAL REVIEW REQUIRED",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "internal diagnostic renderer fixture; not a public announcement"
+  },
+  {
+    "id": "auction-win",
+    "name": "Sealed auction winner",
+    "desktop": "review-gate-b/family-events/auction-win-desktop.png",
+    "mobile": "review-gate-b/family-events/auction-win-mobile.png",
+    "scenario": "A spouse self-auction closes; Sam is the highest still-eligible reserve-meeting bidder; 87,500 Ottomans settle to Alex.",
+    "transcript": "review-gate-b/family-events/auction-win-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/auction-win-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "auction-open",
+    "name": "Sealed auction — bidding open",
+    "desktop": "review-gate-b/family-events/auction-open-desktop.png",
+    "mobile": "review-gate-b/family-events/auction-open-mobile.png",
+    "scenario": "/family familyauction type:spouse reserve:50000 opens a sealed self-auction; no participant bids are public.",
+    "transcript": "review-gate-b/family-events/auction-open-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/auction-open-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:bid:fixture",
+        "label": "Place / Increase Sealed Bid",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive",
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "auction-refund",
+    "name": "Sealed auction — no qualifying winner",
+    "desktop": "review-gate-b/family-events/auction-refund-desktop.png",
+    "mobile": "review-gate-b/family-events/auction-refund-mobile.png",
+    "scenario": "At close every bid is below reserve or ineligible; all reserved bids refund and no relationship is created.",
+    "transcript": "review-gate-b/family-events/auction-refund-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/auction-refund-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "estate-auction-win",
+    "name": "Estate item auction winner",
+    "desktop": "review-gate-b/family-events/estate-auction-win-desktop.png",
+    "mobile": "review-gate-b/family-events/estate-auction-win-mobile.png",
+    "scenario": "An estate’s three-Ring stack auction settles to Sam; the winner receives the items, other bids refund and funds leave circulation.",
+    "transcript": "review-gate-b/family-events/estate-auction-win-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/estate-auction-win-fixture.json",
+    "controls": [],
+    "classification": [
+      "financial"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "adoption-pending",
+    "name": "Adoption consent",
+    "desktop": "review-gate-b/family-events/adoption-pending-desktop.png",
+    "mobile": "review-gate-b/family-events/adoption-pending-mobile.png",
+    "scenario": "An eligible married parent pair with an open slot requests adoption; only the proposed child may accept.",
+    "transcript": "review-gate-b/family-events/adoption-pending-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/adoption-pending-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:accept:fixture",
+        "label": "Accept",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "family:reject:fixture",
+        "label": "Decline",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "adoption-accepted",
+    "name": "Adoption accepted",
+    "desktop": "review-gate-b/family-events/adoption-accepted-desktop.png",
+    "mobile": "review-gate-b/family-events/adoption-accepted-mobile.png",
+    "scenario": "The proposed child accepts; both parents are linked and View Family is available.",
+    "transcript": "review-gate-b/family-events/adoption-accepted-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/adoption-accepted-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "family:tree:fixture",
+        "label": "View Family",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "adoption-declined",
+    "name": "Adoption declined",
+    "desktop": "review-gate-b/family-events/adoption-declined-desktop.png",
+    "mobile": "review-gate-b/family-events/adoption-declined-mobile.png",
+    "scenario": "The proposed child declines; no adoption link is created.",
+    "transcript": "review-gate-b/family-events/adoption-declined-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/adoption-declined-fixture.json",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "family-ended",
+    "name": "Family link ended",
+    "desktop": "review-gate-b/family-events/family-ended-desktop.png",
+    "mobile": "review-gate-b/family-events/family-ended-mobile.png",
+    "scenario": "/family emancipate ends an eligible adoption after its waiting period; the result confirms the saved change.",
+    "transcript": "review-gate-b/family-events/family-ended-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/family-ended-fixture.json",
+    "controls": [],
+    "classification": [
+      "destructive"
+    ],
+    "renderer": "packages/features-family/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "arrest",
+    "name": "Arrest and crime jail",
+    "desktop": "review-gate-b/family-events/arrest-desktop.png",
+    "mobile": "review-gate-b/family-events/arrest-mobile.png",
+    "scenario": "Robbery incident closes with arrest, complete restitution and a 7,200-Ottoman bail quote.",
+    "transcript": "review-gate-b/family-events/arrest-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/arrest-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "crime:rules:fixture",
+        "label": "Rules",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "moderation-related",
+      "financial"
+    ],
+    "renderer": "packages/features-crime/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "fmk-result",
+    "name": "FMK result",
+    "desktop": "review-gate-b/family-events/fmk-result-desktop.png",
+    "mobile": "review-gate-b/family-events/fmk-result-mobile.png",
+    "scenario": "A completed FMK round freezes three named assignments, lifetime counters and 16–4 agreement ballots.",
+    "transcript": "review-gate-b/family-events/fmk-result-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/fmk-result-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "party:again:fixture",
+        "label": "Play Again",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:details:fixture",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-party/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "voting-result",
+    "name": "Major voting result",
+    "desktop": "review-gate-b/family-events/voting-result-desktop.png",
+    "mobile": "review-gate-b/family-events/voting-result-mobile.png",
+    "scenario": "A completed WWYD vote freezes a 12–5–3 result for three choices.",
+    "transcript": "review-gate-b/family-events/voting-result-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/voting-result-fixture.json",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "party:again:fixture",
+        "label": "Play Again",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "party:details:fixture",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": [
+      "interactive"
+    ],
+    "renderer": "packages/features-party/src/render.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "family-tree-empty",
+    "name": "Family tree — no active links",
+    "desktop": "review-gate-b/family-events/family-tree-empty-desktop.png",
+    "mobile": "review-gate-b/family-events/family-tree-empty-mobile.png",
+    "scenario": "/family familytree for a member with no active relationships.",
+    "transcript": "review-gate-b/family-events/family-tree-empty-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/family-tree-empty-fixture.json",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "apps/bot/src/discord/family-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  },
+  {
+    "id": "family-tree-large",
+    "name": "Family tree — many long member names",
+    "desktop": "review-gate-b/family-events/family-tree-large-desktop.png",
+    "mobile": "review-gate-b/family-events/family-tree-large-mobile.png",
+    "scenario": "A large current family component with long names; complete relationships remain available in active-family.txt.",
+    "transcript": "review-gate-b/family-events/family-tree-large-transcript.txt",
+    "fixtureSource": "review-gate-b/family-events/family-tree-large-fixture.json",
+    "controls": [],
+    "classification": [
+      "informational"
+    ],
+    "renderer": "apps/bot/src/discord/family-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "visibility": "member-facing attachment with actual coordinator controls in review metadata"
+  }
+]

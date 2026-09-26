@@ -1,0 +1,63 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "fixture-round",
+    "guildId": "111111111111111111",
+    "channelId": "222222222222222222",
+    "messageId": "444444444444444444",
+    "ownerId": "333333333333333333",
+    "state": "CLOSED",
+    "version": 12,
+    "expiresAt": null,
+    "kind": "ama",
+    "phase": "closed",
+    "round": 1,
+    "title": "Will there be another game night?",
+    "anonymous": true,
+    "hidden": true,
+    "ranked": false,
+    "choices": [
+      {
+        "id": "up",
+        "label": "Upvote"
+      }
+    ],
+    "categories": [],
+    "status": "ANSWERED",
+    "answer": "Yes. The next game night will include a beginner table and a quiet corner for spectators.",
+    "entryCount": 7,
+    "results": {
+      "up": 8
+    }
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Ask Me Anything",
+        "description": "Ask Me Anything\nWill there be another game night?\nup. Upvote · 8 votes\nStatus: ANSWERED\nAnswer: Yes. The next game night will include a beginner table and a quiet corner for spectators.",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:fixture-round"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

@@ -5,61 +5,277 @@
   "files": [
     {
       "file": "marriage-desktop.png",
-      "sha256": "9d753118194c00a077709858637ef220f5336f4eff92ac454c14f03121fb4f1f",
+      "sha256": "3cbfc08e884ad5fc2e60ba06127e567a71917ddf5d1161385c18616b9d9563b9",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "marriage-mobile.png",
-      "sha256": "d3fbe214400ab1f9c92d0f555d94af1634881d936ccf5e6ebfe199a744343ce7",
+      "sha256": "fb00d96fb46026826721522b408e0b33a3d986ff42520e37d46e50765acfba89",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-pending-desktop.png",
+      "sha256": "e5d0dfcbf092329042cd9cb09b06c15b1db56ae709d0384dd6e7dc78cd1753f2",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-pending-mobile.png",
+      "sha256": "7a13cca1c3f40f6d816021ece4181515bbcc3481b3ba2bdea8a12d6bced0c2e0",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-blessing-desktop.png",
+      "sha256": "979ccaa453c1907b957aec26ca7cea3350f5c6f8a615bd2feb260ea7f5b77109",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-blessing-mobile.png",
+      "sha256": "04dc4311d39475cc8c538d41756ea034832d0a6bc41566a5fa88d501772b74d9",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-declined-desktop.png",
+      "sha256": "ed09670d10453c8c97b94809c9dc20a7c8b312a80838ad3fee8c07f484411372",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-declined-mobile.png",
+      "sha256": "2df9e69addd4b3b0456cd737f22e1a8ae2a7244e0702ad157ced5ed48740c000",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-expired-desktop.png",
+      "sha256": "4a62262516a8532b8a0a5ac03febdf9cef52e97b27aebfd73864f08b642beb26",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "proposal-expired-mobile.png",
+      "sha256": "0039ff52b196c1b4595beb0d5b2ba7807e0985a293eee712e6e340715d6c1f8c",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "marriage-live-vote-desktop.png",
+      "sha256": "3298bfd7f640dccdbba2cfa27f2c0e78d4263d887a37b00ccf6de154cf6f3ae4",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "marriage-live-vote-mobile.png",
+      "sha256": "676ef5ba1865a3eebc2aa462d7d915efb2625fd7c14984490ddd5a85d6d478ee",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "marriage-blessing-consumed-desktop.png",
+      "sha256": "1d6efdaf2f696fa6c12c350dfa6e205b1e0da681f62a23d3bb85eb19c1fb92cc",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "marriage-blessing-consumed-mobile.png",
+      "sha256": "c4fb43f48764d955b71b8dca075c39504ca8ff48727dea9ec649c05504c626ae",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "divorce-desktop.png",
-      "sha256": "7f1852496f22b5fe301879ff78b2558a79290e7f0475016d01547d7bddb87d7d",
+      "sha256": "869ee108e9a3904ceb287176ce26c1b5ac4494aeb58ba866f0e2832dadbddb44",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "divorce-mobile.png",
-      "sha256": "f1830251b849a678804797f3cd48e900ee141b4a054ea07c9389e1c3688e2dd8",
+      "sha256": "075247dd3ff5a6b4dc7365d46b2a43ba2aa1b309a4dd46aa584126751348b633",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "divorce-large-value-desktop.png",
+      "sha256": "29b24c0e809d6fa0f70589df5be2cab093d8ede3cf006d5055637d2ca9e2d823",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "divorce-large-value-mobile.png",
+      "sha256": "c5b882b4232452013dd2aaa8629ac2f2a795900af1b336c40567d76e0d963966",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "inheritance-desktop.png",
-      "sha256": "722a95448a22ed448e423d46349409d6d7e24850968dcf9251ce1d736b597a2b",
+      "sha256": "822fad12844467dde5d3811779b492921d564ea46e8c6605a764beac01c2dc4e",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "inheritance-mobile.png",
-      "sha256": "f983aa5c20a510c9dcbf1b3b00f633c32a5ece17602f56a6e737a70cd3995435",
+      "sha256": "8c48cec28f3d5bfcbb65aa15bca3990898fe15dc1a0941aa5e156d18538b2673",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-no-heir-desktop.png",
+      "sha256": "d80ef623d7601e6bf848ac23d616370b743c6e280424194a730810d27190fa7b",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-no-heir-mobile.png",
+      "sha256": "4bfcc9154d53e44335ed1e94fa9d9d18736d118375d53a3f6f2c59f79d8c580a",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-empty-desktop.png",
+      "sha256": "3247a6c58c2300cfcdd0b0da372ff13e16e379723a96dd6dfc48d8501045c992",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-empty-mobile.png",
+      "sha256": "68dc0c3cc51933dff0683192eec56f2bacdfdadb5145a9bb0ae180bddc3df8c2",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-waiting-desktop.png",
+      "sha256": "15e371df33e7ab23924d53fb56db3c3394301594e08b62ad99a648c369bb2a51",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-waiting-mobile.png",
+      "sha256": "19f1cedb8360746e2808dc6c5df6392135081df666072345c9cfe1608ad073f2",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-returned-desktop.png",
+      "sha256": "d8cdc77606d68ebdeec82b3f493d2ebd389dafcbf8ff3d42b8f1c4881172547d",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-returned-mobile.png",
+      "sha256": "5ef388b27186c1fc603913a7b45f0e9dc2cb8ce19c55a0a1ad62806474a13655",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "auction-win-desktop.png",
-      "sha256": "028ab45b90731e4fb58e86a20398aab92a0ba06c6d87f9072ba6367c50ebb356",
+      "sha256": "e961302644c5cd0e8075dc0a6b06af0b8c9031ae6894ad5000cdd87feb777ee1",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "auction-win-mobile.png",
-      "sha256": "8910ee46b3eb37fec484c87ead5221bcb1be1479a768154acedc51b323a7245b",
+      "sha256": "29af2137fe775e6474afebe1191ae6b90f8d3d5e0e882e223b37934973285331",
       "renderer": "packages/features-family/src/render.ts",
-      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "auction-open-desktop.png",
+      "sha256": "da788688660b6245f3dbff01b8d2483f04fec249f0fa6fc5dc8a4714d4e92491",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "auction-open-mobile.png",
+      "sha256": "e1c99acc550c3178dedfca6d9a8e3aafa0ddbcf7050d75e0542125c7bc98c9df",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "auction-refund-desktop.png",
+      "sha256": "2c43839b779808c77f75a1db3e8e615724938abdf053a308fb084bd280614c5b",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "auction-refund-mobile.png",
+      "sha256": "871243a098d6a06f055f529e1850229cde63867725b8ed11c8cf4640b34f8fed",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-auction-win-desktop.png",
+      "sha256": "a08999f5dad992a421e1e0fb595fbc6c28fd7970a3723a1d6bb3b74841525d9a",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "estate-auction-win-mobile.png",
+      "sha256": "aabeaa89f9ad49bdb5893d4f73009aff8131e55930bcb08d4314bd385740f1c2",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "adoption-pending-desktop.png",
+      "sha256": "d15fd23e01b0d8a40f4790670abd32638218d5d196b80c874c9a0bba91ac03ca",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "adoption-pending-mobile.png",
+      "sha256": "dc9f9809eaabd45be299bf4318c69a838b11ff619e9370fa0f574fc0d809f485",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "adoption-accepted-desktop.png",
+      "sha256": "5cce5522e3d0abe843c16ee19ea7769be89b8208bcfbde27f63d81fce1411886",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "adoption-accepted-mobile.png",
+      "sha256": "a41110abb00404cc0a74a99a9d37988a8113b172fefca3596ce1db7cac92c8f1",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "adoption-declined-desktop.png",
+      "sha256": "af6f4d5addfc0018df120b34ad3fbd4a05dc2097f32c4493e8eaf2503ce0ec9c",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "adoption-declined-mobile.png",
+      "sha256": "e42035b8b26f0cf009cf5cd29b4a6cc231fd2547dd8f03f0d1f1925be85a20eb",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "family-ended-desktop.png",
+      "sha256": "fe23dc0e228692190777baa9be9dd4958274979b835e0e18ebaca11b9f6c9288",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "file": "family-ended-mobile.png",
+      "sha256": "01b9e98af686e041234a21c1d61065932a61ca6db116d499a80658aa51bfd979",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "file": "arrest-desktop.png",
-      "sha256": "a458071433f95f1e4d170b7984d5d638e91a8fc21aeac818d1a4b369ebf636f7",
+      "sha256": "021a8ca7bb62b0cd10c0475b4f7ef36e2ec36af36472cca58a0fcd073e5ba565",
       "renderer": "packages/features-crime/src/render.ts",
       "rendererSha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
     },
     {
       "file": "arrest-mobile.png",
-      "sha256": "a58c713275eaa1b5551aedfc401417f638ae9b9476c8e4ea150498e06fe7c95b",
+      "sha256": "2c366c7a2d413fda8591a5a4a29b4d76ecca8d14b483ebfe56e3b9d42cda2e29",
       "renderer": "packages/features-crime/src/render.ts",
       "rendererSha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
     },
@@ -77,15 +293,39 @@
     },
     {
       "file": "voting-result-desktop.png",
-      "sha256": "d15c03828d5e550683bc00604d1a2adc667f65e336a917980808654d10686209",
+      "sha256": "e16c6ceba508448e5a574450f0564537179c3ebcb3c868bcb2a837a2ba60a4e0",
       "renderer": "packages/features-party/src/render.ts",
       "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
     },
     {
       "file": "voting-result-mobile.png",
-      "sha256": "dfa8e1ab2c47f6a95e0a42240a295f9122eea5cdbb15e4486cc62b3417a94a38",
+      "sha256": "e6844e7a721c24209f3fd3f39eeb06826e6dae73854cee0b86a529bd774e87ae",
       "renderer": "packages/features-party/src/render.ts",
       "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+    },
+    {
+      "file": "family-tree-empty-desktop.png",
+      "sha256": "96a7b2509e9955f133519031251bc1fc54d4fd12cf70807b40fb7312f297e16a",
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+    },
+    {
+      "file": "family-tree-empty-mobile.png",
+      "sha256": "e41a62ecc25b104e4e2ff9bf3bf8f21afa7f34ea5edbe593a28d0970b1f633c1",
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+    },
+    {
+      "file": "family-tree-large-desktop.png",
+      "sha256": "4a5e6fb22a1e4d8caa8bccb641d09f54edc975cc6e0a12a371cffd44af8e7a31",
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
+    },
+    {
+      "file": "family-tree-large-mobile.png",
+      "sha256": "106b459a516b24426be3ddc7d1350cf5045c91b4255f7488a8fb73ee7eeb8d3f",
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "rendererSha256": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab"
     }
   ]
 }

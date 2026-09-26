@@ -1,0 +1,151 @@
+[
+  {
+    "id": "chairisms-publication",
+    "fileStem": "publication",
+    "name": "Chairisms · public publication",
+    "desktop": "review-gate-b/chairisms/publication-desktop.png",
+    "mobile": "review-gate-b/chairisms/publication-mobile.png",
+    "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "packages/features-chairisms/src/render.ts",
+    "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "chairisms-reply",
+    "fileStem": "reply",
+    "name": "Chairisms · quote with replied message",
+    "desktop": "review-gate-b/chairisms/reply-desktop.png",
+    "mobile": "review-gate-b/chairisms/reply-mobile.png",
+    "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "packages/features-chairisms/src/render.ts",
+    "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "chairisms-image",
+    "fileStem": "image",
+    "name": "Chairisms · optional reply and image",
+    "desktop": "review-gate-b/chairisms/image-desktop.png",
+    "mobile": "review-gate-b/chairisms/image-mobile.png",
+    "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "packages/features-chairisms/src/render.ts",
+    "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "chairisms-long-text",
+    "fileStem": "long-text",
+    "name": "Chairisms · long names and quote",
+    "desktop": "review-gate-b/chairisms/long-text-desktop.png",
+    "mobile": "review-gate-b/chairisms/long-text-mobile.png",
+    "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "packages/features-chairisms/src/render.ts",
+    "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "chairisms-selector",
+    "fileStem": "selector",
+    "name": "Chairisms · private source selector",
+    "desktop": "review-gate-b/chairisms/selector-desktop.png",
+    "mobile": "review-gate-b/chairisms/selector-mobile.png",
+    "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "chairism:this:333333333333333333:222222222222222222:444444444444444444",
+        "label": "This Message",
+        "style": 1
+      },
+      {
+        "type": 2,
+        "custom_id": "chairism:reply:333333333333333333:222222222222222222:444444444444444444",
+        "label": "Include Replied Message",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "chairism:image:333333333333333333:222222222222222222:444444444444444444",
+        "label": "Include Image",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "chairism:both:333333333333333333:222222222222222222:444444444444444444",
+        "label": "Include Reply + Image",
+        "style": 2
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  },
+  {
+    "id": "chairisms-protected",
+    "fileStem": "protected",
+    "name": "Chairisms · protected source rejection",
+    "desktop": "review-gate-b/chairisms/protected-desktop.png",
+    "mobile": "review-gate-b/chairisms/protected-mobile.png",
+    "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  },
+  {
+    "id": "chairisms-error",
+    "fileStem": "error",
+    "name": "Chairisms · interrupted publication",
+    "desktop": "review-gate-b/chairisms/error-desktop.png",
+    "mobile": "review-gate-b/chairisms/error-mobile.png",
+    "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  },
+  {
+    "id": "chairisms-empty",
+    "fileStem": "empty",
+    "name": "Chairisms · private empty browser",
+    "desktop": "review-gate-b/chairisms/empty-desktop.png",
+    "mobile": "review-gate-b/chairisms/empty-mobile.png",
+    "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+    "controls": [],
+    "classification": "informational",
+    "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": true
+  }
+]

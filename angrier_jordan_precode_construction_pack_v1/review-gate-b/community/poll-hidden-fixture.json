@@ -1,0 +1,78 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "fixture-round",
+    "guildId": "111111111111111111",
+    "channelId": "222222222222222222",
+    "messageId": "444444444444444444",
+    "ownerId": "333333333333333333",
+    "state": "OPEN",
+    "version": 12,
+    "expiresAt": "2026-09-25T20:00:00.000Z",
+    "kind": "poll",
+    "phase": "open",
+    "round": 1,
+    "title": "Which lounge night should we host?",
+    "anonymous": true,
+    "hidden": true,
+    "ranked": false,
+    "choices": [
+      {
+        "id": "1",
+        "label": "Board games and cocoa"
+      },
+      {
+        "id": "2",
+        "label": "A film in the lounge"
+      },
+      {
+        "id": "3",
+        "label": "Reading by the fire"
+      }
+    ],
+    "categories": [],
+    "entryCount": 7
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Community Poll",
+        "description": "Community Poll\nWhich lounge night should we host?\n1. Board games and cocoa\n2. A film in the lounge\n3. Reading by the fire\nCloses <t:1790366400:R>.",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:fixture-round"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:vote:fixture-round",
+        "label": "Vote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:close:fixture-round",
+        "label": "Close Poll",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

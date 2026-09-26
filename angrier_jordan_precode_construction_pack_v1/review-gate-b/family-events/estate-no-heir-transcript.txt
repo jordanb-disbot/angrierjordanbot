@@ -1,0 +1,6 @@
+Estate funds removed; eligible items auctioned.
+No eligible heir remained.
+428,750 Ottomans removed from circulation.
+2 eligible inventory entries assigned to estate auctions.
+2 separate estate-item auctions opened.
+Execution is final. A later return does not restore this estate.

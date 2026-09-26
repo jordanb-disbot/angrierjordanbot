@@ -38,6 +38,8 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run preflight
+      - name: Verify Gate B review images, sources and package are current
+        run: node scripts/build-gate-b-review.mjs --check
       - name: Write disposable database setting to the ignored test file
         run: |
           git check-ignore -q .env.test.local

@@ -1,3 +1,8 @@
-Auction complete
+Auction finalized
 Alex Morgan + Sam Rivera
-Winning member: <@fixture-sam> · 87500 Ottomans.
+Self-auction · spouse roleplay
+Winning member: Sam Rivera
+Winning bid: 87,500 Ottomans
+Proceeds went directly to the member auctioned.
+Other reserved bids have been returned.
+Winning member: <@fixture-sam>.

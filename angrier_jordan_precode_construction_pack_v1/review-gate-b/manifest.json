@@ -1,0 +1,2040 @@
+{
+  "version": 1,
+  "status": "OWNER_GATE_B_PENDING",
+  "fixture": true,
+  "liveDiscordCapture": false,
+  "reviewCount": 61,
+  "diagnosticCount": 2,
+  "items": [
+    {
+      "id": "marriage",
+      "name": "Marriage result and completed community vote",
+      "desktop": "review-gate-b/family-events/marriage-desktop.png",
+      "mobile": "review-gate-b/family-events/marriage-mobile.png",
+      "scenario": "Ring accepted; marriage committed; the vote closes with 18 approvals and 2 disapprovals, unlocking the first child slot.",
+      "transcript": "review-gate-b/family-events/marriage-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/marriage-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:vote:fixture:up",
+          "label": "👍",
+          "style": 2,
+          "disabled": true
+        },
+        {
+          "type": 2,
+          "custom_id": "family:vote:fixture:down",
+          "label": "👎",
+          "style": 2,
+          "disabled": true
+        },
+        {
+          "type": 2,
+          "custom_id": "family:tree:fixture",
+          "label": "View Family",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "informational",
+        "interactive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/marriage",
+      "hashes": {
+        "desktop": "3cbfc08e884ad5fc2e60ba06127e567a71917ddf5d1161385c18616b9d9563b9",
+        "mobile": "fb00d96fb46026826721522b408e0b33a3d986ff42520e37d46e50765acfba89"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 1
+    },
+    {
+      "id": "proposal-pending",
+      "name": "Proposal — Ring reserved",
+      "desktop": "review-gate-b/family-events/proposal-pending-desktop.png",
+      "mobile": "review-gate-b/family-events/proposal-pending-mobile.png",
+      "scenario": "/family marry member:Sam reserves one Ring while Sam decides.",
+      "transcript": "review-gate-b/family-events/proposal-pending-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/proposal-pending-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:accept:fixture",
+          "label": "Accept",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "family:reject:fixture",
+          "label": "Decline",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive",
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/proposal-pending",
+      "hashes": {
+        "desktop": "e5d0dfcbf092329042cd9cb09b06c15b1db56ae709d0384dd6e7dc78cd1753f2",
+        "mobile": "7a13cca1c3f40f6d816021ece4181515bbcc3481b3ba2bdea8a12d6bced0c2e0"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 2
+    },
+    {
+      "id": "proposal-blessing",
+      "name": "Second-marriage proposal — Ring and Blessing reserved",
+      "desktop": "review-gate-b/family-events/proposal-blessing-desktop.png",
+      "mobile": "review-gate-b/family-events/proposal-blessing-mobile.png",
+      "scenario": "A member with one active spouse proposes again; one Ring and one Blessing remain reserved.",
+      "transcript": "review-gate-b/family-events/proposal-blessing-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/proposal-blessing-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:accept:fixture",
+          "label": "Accept",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "family:reject:fixture",
+          "label": "Decline",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive",
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/proposal-blessing",
+      "hashes": {
+        "desktop": "979ccaa453c1907b957aec26ca7cea3350f5c6f8a615bd2feb260ea7f5b77109",
+        "mobile": "04dc4311d39475cc8c538d41756ea034832d0a6bc41566a5fa88d501772b74d9"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 3
+    },
+    {
+      "id": "proposal-declined",
+      "name": "Proposal declined — item returned",
+      "desktop": "review-gate-b/family-events/proposal-declined-desktop.png",
+      "mobile": "review-gate-b/family-events/proposal-declined-mobile.png",
+      "scenario": "Sam declines; the Ring is returned in the committed transaction.",
+      "transcript": "review-gate-b/family-events/proposal-declined-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/proposal-declined-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/proposal-declined",
+      "hashes": {
+        "desktop": "ed09670d10453c8c97b94809c9dc20a7c8b312a80838ad3fee8c07f484411372",
+        "mobile": "2df9e69addd4b3b0456cd737f22e1a8ae2a7244e0702ad157ced5ed48740c000"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 4
+    },
+    {
+      "id": "proposal-expired",
+      "name": "Proposal expired — item returned",
+      "desktop": "review-gate-b/family-events/proposal-expired-desktop.png",
+      "mobile": "review-gate-b/family-events/proposal-expired-mobile.png",
+      "scenario": "The 24-hour proposal timer expires; the Ring is returned once.",
+      "transcript": "review-gate-b/family-events/proposal-expired-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/proposal-expired-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/proposal-expired",
+      "hashes": {
+        "desktop": "4a62262516a8532b8a0a5ac03febdf9cef52e97b27aebfd73864f08b642beb26",
+        "mobile": "0039ff52b196c1b4595beb0d5b2ba7807e0985a293eee712e6e340715d6c1f8c"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 5
+    },
+    {
+      "id": "marriage-live-vote",
+      "name": "Marriage — voting open",
+      "desktop": "review-gate-b/family-events/marriage-live-vote-desktop.png",
+      "mobile": "review-gate-b/family-events/marriage-live-vote-mobile.png",
+      "scenario": "An accepted marriage opens its three-hour community approval vote with no ballots yet.",
+      "transcript": "review-gate-b/family-events/marriage-live-vote-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/marriage-live-vote-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:vote:fixture:up",
+          "label": "👍",
+          "style": 2,
+          "disabled": false
+        },
+        {
+          "type": 2,
+          "custom_id": "family:vote:fixture:down",
+          "label": "👎",
+          "style": 2,
+          "disabled": false
+        },
+        {
+          "type": 2,
+          "custom_id": "family:tree:fixture",
+          "label": "View Family",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/marriage-live-vote",
+      "hashes": {
+        "desktop": "3298bfd7f640dccdbba2cfa27f2c0e78d4263d887a37b00ccf6de154cf6f3ae4",
+        "mobile": "676ef5ba1865a3eebc2aa462d7d915efb2625fd7c14984490ddd5a85d6d478ee"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 6
+    },
+    {
+      "id": "marriage-blessing-consumed",
+      "name": "Second marriage — Wedding Sack and Blessing consumed",
+      "desktop": "review-gate-b/family-events/marriage-blessing-consumed-desktop.png",
+      "mobile": "review-gate-b/family-events/marriage-blessing-consumed-mobile.png",
+      "scenario": "A Wedding Sack activates a second marriage and consumes the Sack plus required Blessing.",
+      "transcript": "review-gate-b/family-events/marriage-blessing-consumed-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/marriage-blessing-consumed-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:vote:fixture:up",
+          "label": "👍",
+          "style": 2,
+          "disabled": true
+        },
+        {
+          "type": 2,
+          "custom_id": "family:vote:fixture:down",
+          "label": "👎",
+          "style": 2,
+          "disabled": true
+        },
+        {
+          "type": 2,
+          "custom_id": "family:tree:fixture",
+          "label": "View Family",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "financial",
+        "interactive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/marriage-blessing-consumed",
+      "hashes": {
+        "desktop": "1d6efdaf2f696fa6c12c350dfa6e205b1e0da681f62a23d3bb85eb19c1fb92cc",
+        "mobile": "c4fb43f48764d955b71b8dca075c39504ca8ff48727dea9ec649c05504c626ae"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 7
+    },
+    {
+      "id": "divorce",
+      "name": "Divorce settlement",
+      "desktop": "review-gate-b/family-events/divorce-desktop.png",
+      "mobile": "review-gate-b/family-events/divorce-mobile.png",
+      "scenario": "/family divorce ends an eligible marriage and transfers the selected payer’s half-liquid settlement to the former spouse.",
+      "transcript": "review-gate-b/family-events/divorce-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/divorce-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial",
+        "destructive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/divorce",
+      "hashes": {
+        "desktop": "869ee108e9a3904ceb287176ce26c1b5ac4494aeb58ba866f0e2832dadbddb44",
+        "mobile": "075247dd3ff5a6b4dc7365d46b2a43ba2aa1b309a4dd46aa584126751348b633"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 8
+    },
+    {
+      "id": "divorce-large-value",
+      "name": "Divorce — long names and large settlement",
+      "desktop": "review-gate-b/family-events/divorce-large-value-desktop.png",
+      "mobile": "review-gate-b/family-events/divorce-large-value-mobile.png",
+      "scenario": "Readability boundary fixture: 32-character member names and a signed-64-bit-scale Ottoman amount; this is a projection fixture, not a transaction.",
+      "transcript": "review-gate-b/family-events/divorce-large-value-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/divorce-large-value-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial",
+        "destructive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/divorce-large-value",
+      "hashes": {
+        "desktop": "29b24c0e809d6fa0f70589df5be2cab093d8ede3cf006d5055637d2ca9e2d823",
+        "mobile": "c5b882b4232452013dd2aaa8629ac2f2a795900af1b336c40567d76e0d963966"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 9
+    },
+    {
+      "id": "inheritance",
+      "name": "Inheritance completed",
+      "desktop": "review-gate-b/family-events/inheritance-desktop.png",
+      "mobile": "review-gate-b/family-events/inheritance-mobile.png",
+      "scenario": "The 24-hour departure grace expires; no reservations remain; the selected eligible beneficiary receives committed funds and 12 inventory entries.",
+      "transcript": "review-gate-b/family-events/inheritance-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/inheritance-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial",
+        "destructive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/inheritance",
+      "hashes": {
+        "desktop": "822fad12844467dde5d3811779b492921d564ea46e8c6605a764beac01c2dc4e",
+        "mobile": "8c48cec28f3d5bfcbb65aa15bca3990898fe15dc1a0941aa5e156d18538b2673"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 10
+    },
+    {
+      "id": "estate-no-heir",
+      "name": "Estate — no eligible heir",
+      "desktop": "review-gate-b/family-events/estate-no-heir-desktop.png",
+      "mobile": "review-gate-b/family-events/estate-no-heir-mobile.png",
+      "scenario": "With no eligible heir, liquid funds leave circulation and each of two eligible assets receives a separate system auction.",
+      "transcript": "review-gate-b/family-events/estate-no-heir-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/estate-no-heir-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial",
+        "destructive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/estate-no-heir",
+      "hashes": {
+        "desktop": "d80ef623d7601e6bf848ac23d616370b743c6e280424194a730810d27190fa7b",
+        "mobile": "4bfcc9154d53e44335ed1e94fa9d9d18736d118375d53a3f6f2c59f79d8c580a"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 11
+    },
+    {
+      "id": "estate-empty",
+      "name": "Estate — no eligible assets",
+      "desktop": "review-gate-b/family-events/estate-empty-desktop.png",
+      "mobile": "review-gate-b/family-events/estate-empty-mobile.png",
+      "scenario": "An estate executes with no remaining money, eligible heir or transferable inventory.",
+      "transcript": "review-gate-b/family-events/estate-empty-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/estate-empty-fixture.json",
+      "controls": [],
+      "classification": [
+        "informational",
+        "destructive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/estate-empty",
+      "hashes": {
+        "desktop": "3247a6c58c2300cfcdd0b0da372ff13e16e379723a96dd6dfc48d8501045c992",
+        "mobile": "68dc0c3cc51933dff0683192eec56f2bacdfdadb5145a9bb0ae180bddc3df8c2"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 12
+    },
+    {
+      "id": "auction-win",
+      "name": "Sealed auction winner",
+      "desktop": "review-gate-b/family-events/auction-win-desktop.png",
+      "mobile": "review-gate-b/family-events/auction-win-mobile.png",
+      "scenario": "A spouse self-auction closes; Sam is the highest still-eligible reserve-meeting bidder; 87,500 Ottomans settle to Alex.",
+      "transcript": "review-gate-b/family-events/auction-win-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/auction-win-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/auction-win",
+      "hashes": {
+        "desktop": "e961302644c5cd0e8075dc0a6b06af0b8c9031ae6894ad5000cdd87feb777ee1",
+        "mobile": "29af2137fe775e6474afebe1191ae6b90f8d3d5e0e882e223b37934973285331"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 13
+    },
+    {
+      "id": "auction-open",
+      "name": "Sealed auction — bidding open",
+      "desktop": "review-gate-b/family-events/auction-open-desktop.png",
+      "mobile": "review-gate-b/family-events/auction-open-mobile.png",
+      "scenario": "/family familyauction type:spouse reserve:50000 opens a sealed self-auction; no participant bids are public.",
+      "transcript": "review-gate-b/family-events/auction-open-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/auction-open-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:bid:fixture",
+          "label": "Place / Increase Sealed Bid",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive",
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/auction-open",
+      "hashes": {
+        "desktop": "da788688660b6245f3dbff01b8d2483f04fec249f0fa6fc5dc8a4714d4e92491",
+        "mobile": "e1c99acc550c3178dedfca6d9a8e3aafa0ddbcf7050d75e0542125c7bc98c9df"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 14
+    },
+    {
+      "id": "auction-refund",
+      "name": "Sealed auction — no qualifying winner",
+      "desktop": "review-gate-b/family-events/auction-refund-desktop.png",
+      "mobile": "review-gate-b/family-events/auction-refund-mobile.png",
+      "scenario": "At close every bid is below reserve or ineligible; all reserved bids refund and no relationship is created.",
+      "transcript": "review-gate-b/family-events/auction-refund-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/auction-refund-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/auction-refund",
+      "hashes": {
+        "desktop": "2c43839b779808c77f75a1db3e8e615724938abdf053a308fb084bd280614c5b",
+        "mobile": "871243a098d6a06f055f529e1850229cde63867725b8ed11c8cf4640b34f8fed"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 15
+    },
+    {
+      "id": "estate-auction-win",
+      "name": "Estate item auction winner",
+      "desktop": "review-gate-b/family-events/estate-auction-win-desktop.png",
+      "mobile": "review-gate-b/family-events/estate-auction-win-mobile.png",
+      "scenario": "An estate’s three-Ring stack auction settles to Sam; the winner receives the items, other bids refund and funds leave circulation.",
+      "transcript": "review-gate-b/family-events/estate-auction-win-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/estate-auction-win-fixture.json",
+      "controls": [],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/estate-auction-win",
+      "hashes": {
+        "desktop": "a08999f5dad992a421e1e0fb595fbc6c28fd7970a3723a1d6bb3b74841525d9a",
+        "mobile": "aabeaa89f9ad49bdb5893d4f73009aff8131e55930bcb08d4314bd385740f1c2"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 16
+    },
+    {
+      "id": "adoption-pending",
+      "name": "Adoption consent",
+      "desktop": "review-gate-b/family-events/adoption-pending-desktop.png",
+      "mobile": "review-gate-b/family-events/adoption-pending-mobile.png",
+      "scenario": "An eligible married parent pair with an open slot requests adoption; only the proposed child may accept.",
+      "transcript": "review-gate-b/family-events/adoption-pending-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/adoption-pending-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:accept:fixture",
+          "label": "Accept",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "family:reject:fixture",
+          "label": "Decline",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/adoption-pending",
+      "hashes": {
+        "desktop": "d15fd23e01b0d8a40f4790670abd32638218d5d196b80c874c9a0bba91ac03ca",
+        "mobile": "dc9f9809eaabd45be299bf4318c69a838b11ff619e9370fa0f574fc0d809f485"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 17
+    },
+    {
+      "id": "adoption-accepted",
+      "name": "Adoption accepted",
+      "desktop": "review-gate-b/family-events/adoption-accepted-desktop.png",
+      "mobile": "review-gate-b/family-events/adoption-accepted-mobile.png",
+      "scenario": "The proposed child accepts; both parents are linked and View Family is available.",
+      "transcript": "review-gate-b/family-events/adoption-accepted-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/adoption-accepted-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "family:tree:fixture",
+          "label": "View Family",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/adoption-accepted",
+      "hashes": {
+        "desktop": "5cce5522e3d0abe843c16ee19ea7769be89b8208bcfbde27f63d81fce1411886",
+        "mobile": "a41110abb00404cc0a74a99a9d37988a8113b172fefca3596ce1db7cac92c8f1"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 18
+    },
+    {
+      "id": "adoption-declined",
+      "name": "Adoption declined",
+      "desktop": "review-gate-b/family-events/adoption-declined-desktop.png",
+      "mobile": "review-gate-b/family-events/adoption-declined-mobile.png",
+      "scenario": "The proposed child declines; no adoption link is created.",
+      "transcript": "review-gate-b/family-events/adoption-declined-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/adoption-declined-fixture.json",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/adoption-declined",
+      "hashes": {
+        "desktop": "af6f4d5addfc0018df120b34ad3fbd4a05dc2097f32c4493e8eaf2503ce0ec9c",
+        "mobile": "e42035b8b26f0cf009cf5cd29b4a6cc231fd2547dd8f03f0d1f1925be85a20eb"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 19
+    },
+    {
+      "id": "family-ended",
+      "name": "Family link ended",
+      "desktop": "review-gate-b/family-events/family-ended-desktop.png",
+      "mobile": "review-gate-b/family-events/family-ended-mobile.png",
+      "scenario": "/family emancipate ends an eligible adoption after its waiting period; the result confirms the saved change.",
+      "transcript": "review-gate-b/family-events/family-ended-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/family-ended-fixture.json",
+      "controls": [],
+      "classification": [
+        "destructive"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/family-ended",
+      "hashes": {
+        "desktop": "fe23dc0e228692190777baa9be9dd4958274979b835e0e18ebaca11b9f6c9288",
+        "mobile": "01b9e98af686e041234a21c1d61065932a61ca6db116d499a80658aa51bfd979"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372",
+      "number": 20
+    },
+    {
+      "id": "arrest",
+      "name": "Arrest and crime jail",
+      "desktop": "review-gate-b/family-events/arrest-desktop.png",
+      "mobile": "review-gate-b/family-events/arrest-mobile.png",
+      "scenario": "Robbery incident closes with arrest, complete restitution and a 7,200-Ottoman bail quote.",
+      "transcript": "review-gate-b/family-events/arrest-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/arrest-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "crime:rules:fixture",
+          "label": "Rules",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "moderation-related",
+        "financial"
+      ],
+      "renderer": "packages/features-crime/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/arrest",
+      "hashes": {
+        "desktop": "021a8ca7bb62b0cd10c0475b4f7ef36e2ec36af36472cca58a0fcd073e5ba565",
+        "mobile": "2c366c7a2d413fda8591a5a4a29b4d76ecca8d14b483ebfe56e3b9d42cda2e29"
+      },
+      "rendererHash": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd",
+      "number": 21
+    },
+    {
+      "id": "fmk-result",
+      "name": "FMK result",
+      "desktop": "review-gate-b/family-events/fmk-result-desktop.png",
+      "mobile": "review-gate-b/family-events/fmk-result-mobile.png",
+      "scenario": "A completed FMK round freezes three named assignments, lifetime counters and 16–4 agreement ballots.",
+      "transcript": "review-gate-b/family-events/fmk-result-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/fmk-result-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "party:again:fixture",
+          "label": "Play Again",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:details:fixture",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-party/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/fmk-result",
+      "hashes": {
+        "desktop": "ea58778e13559b050fe330d8cb1b02ce7d7cb5af4488f75827177406ab91f27b",
+        "mobile": "60b764e96b670a3c78ba8e24c76827297acd8a0d4a49bccc2067b7da1e7120da"
+      },
+      "rendererHash": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9",
+      "number": 22
+    },
+    {
+      "id": "voting-result",
+      "name": "Major voting result",
+      "desktop": "review-gate-b/family-events/voting-result-desktop.png",
+      "mobile": "review-gate-b/family-events/voting-result-mobile.png",
+      "scenario": "A completed WWYD vote freezes a 12–5–3 result for three choices.",
+      "transcript": "review-gate-b/family-events/voting-result-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/voting-result-fixture.json",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "party:again:fixture",
+          "label": "Play Again",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "party:details:fixture",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-party/src/render.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/voting-result",
+      "hashes": {
+        "desktop": "e16c6ceba508448e5a574450f0564537179c3ebcb3c868bcb2a837a2ba60a4e0",
+        "mobile": "e6844e7a721c24209f3fd3f39eeb06826e6dae73854cee0b86a529bd774e87ae"
+      },
+      "rendererHash": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9",
+      "number": 23
+    },
+    {
+      "id": "family-tree-empty",
+      "name": "Family tree — no active links",
+      "desktop": "review-gate-b/family-events/family-tree-empty-desktop.png",
+      "mobile": "review-gate-b/family-events/family-tree-empty-mobile.png",
+      "scenario": "/family familytree for a member with no active relationships.",
+      "transcript": "review-gate-b/family-events/family-tree-empty-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/family-tree-empty-fixture.json",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/family-tree-empty",
+      "hashes": {
+        "desktop": "96a7b2509e9955f133519031251bc1fc54d4fd12cf70807b40fb7312f297e16a",
+        "mobile": "e41a62ecc25b104e4e2ff9bf3bf8f21afa7f34ea5edbe593a28d0970b1f633c1"
+      },
+      "rendererHash": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab",
+      "number": 24
+    },
+    {
+      "id": "family-tree-large",
+      "name": "Family tree — many long member names",
+      "desktop": "review-gate-b/family-events/family-tree-large-desktop.png",
+      "mobile": "review-gate-b/family-events/family-tree-large-mobile.png",
+      "scenario": "A large current family component with long names; complete relationships remain available in active-family.txt.",
+      "transcript": "review-gate-b/family-events/family-tree-large-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/family-tree-large-fixture.json",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "member-facing attachment with actual coordinator controls in review metadata",
+      "group": "family-events",
+      "key": "family-events/family-tree-large",
+      "hashes": {
+        "desktop": "4a5e6fb22a1e4d8caa8bccb641d09f54edc975cc6e0a12a371cffd44af8e7a31",
+        "mobile": "106b459a516b24426be3ddc7d1350cf5045c91b4255f7488a8fb73ee7eeb8d3f"
+      },
+      "rendererHash": "d3e1a0a0360c016272348694d5cfee16f47045597b01f1b9b4fe5650ea78e7ab",
+      "number": 25
+    },
+    {
+      "id": "major-casino-win",
+      "name": "Major casino win",
+      "scenario": "Saved closed roulette round: wager 1000 Ottomans, result 17, return 36000 Ottomans.",
+      "controls": [
+        "Play Again",
+        "Rules"
+      ],
+      "classification": [
+        "financial",
+        "interactive"
+      ],
+      "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+      "desktop": "review-gate-b/casino-profiles/major-casino-win-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/major-casino-win-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/major-casino-win",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "fd207b37b4edd6f3ada9564a3b7d0d2b93bdc8d83ba8495af141f8cfab9f0727",
+        "mobile": "429eba8fbeaa87fc7719a85aebe10c6e9aae58a9b1bd908608dbd38b46ceea0e"
+      },
+      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
+      "number": 26
+    },
+    {
+      "id": "lottery-winner",
+      "name": "Lottery winner",
+      "scenario": "Completed weekly lottery draw pays the full ticket-funded 24800 Ottoman pot to Alex.",
+      "controls": [],
+      "classification": [
+        "financial",
+        "informational"
+      ],
+      "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+      "desktop": "review-gate-b/casino-profiles/lottery-winner-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/lottery-winner-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/lottery-winner",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "f00e1056e173881f4d58c318eb4341d49e00b96b398747f46d0c3b761c606381",
+        "mobile": "bb7771da84560fd350d231df290625186f31796e5cb143eb7dab20d8869e2207"
+      },
+      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
+      "number": 27
+    },
+    {
+      "id": "chair-pot",
+      "name": "Chair Pot jackpot",
+      "scenario": "Settled slots jackpot pays Jordan 125000 Ottomans from Chair Pot.",
+      "controls": [],
+      "classification": [
+        "financial",
+        "informational"
+      ],
+      "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+      "desktop": "review-gate-b/casino-profiles/chair-pot-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/chair-pot-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/chair-pot",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "5d7e55be33e4c20f862f19234a77d61838914be333e3e82e270c4b45c17fb7e0",
+        "mobile": "04db9fe35cf8708fa1373ea91e6e8e7710c7e161cc5a7194acda6aaaac135b34"
+      },
+      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
+      "number": 28
+    },
+    {
+      "id": "weekly-spotlight",
+      "name": "Weekly Spotlight with co-winners",
+      "scenario": "Frozen week has tied message winners Jordan and Alex, Jordan also wins words and voice and holds permanent Triple Threat.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
+      "desktop": "review-gate-b/casino-profiles/weekly-spotlight-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/weekly-spotlight-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/weekly-spotlight",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "30b55afd4167b87f44079b737000d172b96387ed3d0614a914fecc1cb6359e8e",
+        "mobile": "4488e7bb78119bd611ad955ce2b6a7a065f5f893242ae4d0a440e7ad9a3fb4a7"
+      },
+      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
+      "number": 29
+    },
+    {
+      "id": "major-record",
+      "name": "Major record",
+      "scenario": "The all-time records selector shows Jordan holding Biggest Casino Win, 125000, set September 25, 2026.",
+      "controls": [
+        "Record period: All time / This month"
+      ],
+      "classification": [
+        "informational",
+        "interactive"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+      "desktop": "review-gate-b/casino-profiles/major-record-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/major-record-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/major-record",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "189deed43baf26415c7934e10800585ba4c17d21819ebd082568d0e8b957d273",
+        "mobile": "5956880504b0faa951d643c00db0af3d828cee69b2f44f5091313527bca2cef0"
+      },
+      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
+      "number": 30
+    },
+    {
+      "id": "chair-pot-long-values",
+      "name": "Chair Pot long member name and currency",
+      "scenario": "Boundary fixture: unbroken 32-character member name; exact signed BIGINT maximum 9223372036854775807 Ottoman payout, verifying no rounding or illegible shrinking.",
+      "controls": [],
+      "classification": [
+        "financial",
+        "informational"
+      ],
+      "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
+      "desktop": "review-gate-b/casino-profiles/chair-pot-long-values-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/chair-pot-long-values-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/chair-pot-long-values",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "43ad831f1621908e44ddafe3c8a702ea9d8c568bf3e1835233b0c3f3fe7b8b3e",
+        "mobile": "c846bfc3804fa63680c76df76f68c83562e965bbdde75e8cbcadbfd503882c3e"
+      },
+      "rendererHash": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f",
+      "number": 31
+    },
+    {
+      "id": "weekly-spotlight-empty",
+      "name": "Weekly Spotlight without qualifiers",
+      "scenario": "Frozen week has zero qualifying activity and no winner in all three categories.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
+      "desktop": "review-gate-b/casino-profiles/weekly-spotlight-empty-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/weekly-spotlight-empty-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/weekly-spotlight-empty",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "f19066f9e394016b926b0b55ab276b0377d5b5cd309deadf73fa5919f7e7c5a1",
+        "mobile": "e40752538c4bed02debf796fd26ab255f6d566c22228d7ff24180fc1938e8c4f"
+      },
+      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
+      "number": 32
+    },
+    {
+      "id": "weekly-spotlight-long-names",
+      "name": "Weekly Spotlight long names and totals",
+      "scenario": "Boundary fixture: three co-winners include a 32-character unbroken wide name and markup characters; maximum 32-bit activity totals.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
+      "desktop": "review-gate-b/casino-profiles/weekly-spotlight-long-names-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/weekly-spotlight-long-names-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "No interactive controls for this announcement.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/weekly-spotlight-long-names",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "c6faa28382265da75813ed96090b52f0a7874fa3acad9bcb7dce84860e57ce0b",
+        "mobile": "ebdc8ff93bdd020e08133afc4c78bcd5d09e65089e90081041d0b6b3bd86840c"
+      },
+      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
+      "number": 33
+    },
+    {
+      "id": "records-empty",
+      "name": "Empty records",
+      "scenario": "The records command has no persisted all-time records.",
+      "controls": [
+        "Record period: All time / This month"
+      ],
+      "classification": [
+        "informational",
+        "interactive"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+      "desktop": "review-gate-b/casino-profiles/records-empty-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/records-empty-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/records-empty",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "b00c911abd5c274a3fbcafd3be62a9338976e9c96229f39e9dd9ed6830d832db",
+        "mobile": "e8a0b3b820629760195d8cb011ee60adffd895e726afe0484ba8de8e2cd6547d"
+      },
+      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
+      "number": 34
+    },
+    {
+      "id": "records-long-values",
+      "name": "Records long names and currency",
+      "scenario": "Boundary fixture: two persisted records with 32-character unbroken member names and exact BIGINT amounts.",
+      "controls": [
+        "Record period: All time / This month"
+      ],
+      "classification": [
+        "informational",
+        "interactive"
+      ],
+      "renderer": "packages/features-profiles/src/render.ts#renderRecords",
+      "desktop": "review-gate-b/casino-profiles/records-long-values-desktop.png",
+      "mobile": "review-gate-b/casino-profiles/records-long-values-mobile.png",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "controlsShown": [],
+      "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
+      "group": "casino-profiles",
+      "key": "casino-profiles/records-long-values",
+      "liveDiscordCapture": false,
+      "hashes": {
+        "desktop": "fe0c819a79a17916dd2fdec9f1141a93e2fad4734321cf39f37c2067a87199b4",
+        "mobile": "b5c0c3aa8d9af4db09b35c004c2c0b568260b1fe454e121707aa48e9d97fe1a1"
+      },
+      "rendererHash": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a",
+      "number": 35
+    },
+    {
+      "id": "community-poll-hidden",
+      "fileStem": "poll-hidden",
+      "name": "Community · anonymous poll",
+      "desktop": "review-gate-b/community/poll-hidden-desktop.png",
+      "mobile": "review-gate-b/community/poll-hidden-mobile.png",
+      "scenario": "/poll with hidden results; member has not voted.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:vote:fixture-round",
+          "label": "Vote",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:close:fixture-round",
+          "label": "Close Poll",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-poll-hidden",
+      "hashes": {
+        "desktop": "47da75be58e356cadf28a794b092cf03a93807100373dab8109f792416aab113",
+        "mobile": "3ce76ee7f0bbc6fe3094fe7f3e2ad36fe992371d394823b80bacaa97d45d20ad"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 36
+    },
+    {
+      "id": "community-poll-ranked-result",
+      "fileStem": "poll-ranked-result",
+      "name": "Community · ranked poll result",
+      "desktop": "review-gate-b/community/poll-ranked-result-desktop.png",
+      "mobile": "review-gate-b/community/poll-ranked-result-mobile.png",
+      "scenario": "Saved closed ranked poll; final-round counts and named ballots are available in Details.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-poll-ranked-result",
+      "hashes": {
+        "desktop": "30b92dcce89f5ee0ce0eb201f42b2f84c89d31f0dc555e2cc0b45f0df9b1b3ae",
+        "mobile": "c8901cdc78a40bd1aa04725251c250fd3ee44084100043dbbbf8059cd05bfe09"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 37
+    },
+    {
+      "id": "community-suggestion",
+      "fileStem": "suggestion",
+      "name": "Community · suggestion status",
+      "desktop": "review-gate-b/community/suggestion-desktop.png",
+      "mobile": "review-gate-b/community/suggestion-mobile.png",
+      "scenario": "Anonymous suggestion after a community admin changes the status to REVIEWING; voting remains available.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:vote:fixture-round",
+          "label": "Vote",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:status:fixture-round",
+          "label": "Update Status",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-suggestion",
+      "hashes": {
+        "desktop": "273ec92c2bbacecc0cade2601e3339f78964a810cddb6293d0007711818e5f1b",
+        "mobile": "a8a7992f7f1d708801437e5a9a017d69eee56725d0c8eba8ce1325edbf5d40cf"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 38
+    },
+    {
+      "id": "community-ama-open",
+      "fileStem": "ama-open",
+      "name": "Community · AMA question",
+      "desktop": "review-gate-b/community/ama-open-desktop.png",
+      "mobile": "review-gate-b/community/ama-open-mobile.png",
+      "scenario": "Anonymous question awaiting staff answer; staff-only Answer and Decline controls are enforced on click.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:upvote:fixture-round",
+          "label": "Upvote",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:answer:fixture-round",
+          "label": "Answer",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:decline:fixture-round",
+          "label": "Decline",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "moderation-related"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-ama-open",
+      "hashes": {
+        "desktop": "0ee6a9caf9d7b300a49a52abbfa57d9c6416abb7811a4d0c43f1407004e6adb8",
+        "mobile": "cf8e3af79389062a76d56824eb49798782c9447c95e1b1a656c71feb44de61e4"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 39
+    },
+    {
+      "id": "community-ama-answer",
+      "fileStem": "ama-answer",
+      "name": "Community · answered AMA",
+      "desktop": "review-gate-b/community/ama-answer-desktop.png",
+      "mobile": "review-gate-b/community/ama-answer-mobile.png",
+      "scenario": "Saved public answer closes voting and leaves Details.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-ama-answer",
+      "hashes": {
+        "desktop": "caa1eab7073d1e4532cdfc1dd0aaad54c9d4743fd0cc5c596bd542435576873f",
+        "mobile": "aa3f03605d3591aabc5d1f8f8369ae38448ba1eec21a4c7b4b857fa1d3e10659"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 40
+    },
+    {
+      "id": "community-ama-declined",
+      "fileStem": "ama-declined",
+      "name": "Community · declined protected question",
+      "desktop": "review-gate-b/community/ama-declined-desktop.png",
+      "mobile": "review-gate-b/community/ama-declined-mobile.png",
+      "scenario": "Declined question projects only the public unavailable notice; original question and author are absent.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "moderation-related"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-ama-declined",
+      "hashes": {
+        "desktop": "f837ec73c2c427b0c952378b9c8a0c3216fcc0b198ad81a720c045f9c439d7d3",
+        "mobile": "fe81cdd3860ccf8af36f42282fc15bf2e2080776ac11ff28cd24247c96789963"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 41
+    },
+    {
+      "id": "community-giveaway-paid",
+      "fileStem": "giveaway-paid",
+      "name": "Community · paid giveaway",
+      "desktop": "review-gate-b/community/giveaway-paid-desktop.png",
+      "mobile": "review-gate-b/community/giveaway-paid-mobile.png",
+      "scenario": "Admin-created 3-winner giveaway; entry requires separate private confirmation of the exact 5000 Ottoman fee.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:enter:fixture-round",
+          "label": "Enter · 5000 Ottomans",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-giveaway-paid",
+      "hashes": {
+        "desktop": "ac5929f477a1b5af7020bedfbbfc5748abb3ec26b2d5298607f47328c02dd482",
+        "mobile": "233516efbfa2c096f786f3c99e0796aa22eb7e4866455b63c5b4de71d091a4cf"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 42
+    },
+    {
+      "id": "community-giveaway-pending",
+      "fileStem": "giveaway-pending",
+      "name": "Community · custom reward pending",
+      "desktop": "review-gate-b/community/giveaway-pending-desktop.png",
+      "mobile": "review-gate-b/community/giveaway-pending-mobile.png",
+      "scenario": "Draw selected one actual winner from a maximum of three; organizer fulfillment remains pending.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:fulfill:fixture-round",
+          "label": "Mark Reward Fulfilled",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-giveaway-pending",
+      "hashes": {
+        "desktop": "dc09fb479c7265f64c6900d39dc80227ea3312b09066d07b59cb1e09622d0af9",
+        "mobile": "a6e3e3a6bd0dcc8211461f69bbf80a4124a33aaa512496d1375ac7d40b7098bf"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 43
+    },
+    {
+      "id": "community-giveaway-empty",
+      "fileStem": "giveaway-empty",
+      "name": "Community · no-entry draw",
+      "desktop": "review-gate-b/community/giveaway-empty-desktop.png",
+      "mobile": "review-gate-b/community/giveaway-empty-mobile.png",
+      "scenario": "Giveaway closes with zero entrants; no winner or reward is claimed.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-giveaway-empty",
+      "hashes": {
+        "desktop": "f69140fc74b645ca60656a7c95920244f636475ce515b0e588caa0b1c52bb971",
+        "mobile": "4c6ef5ba85a1e5466cff49a12a181f5af63addbd7e04113ede2cc27a6fbfa654"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 44
+    },
+    {
+      "id": "community-long-text",
+      "fileStem": "long-text",
+      "name": "Community · long-text overflow",
+      "desktop": "review-gate-b/community/long-text-desktop.png",
+      "mobile": "review-gate-b/community/long-text-mobile.png",
+      "scenario": "Maximum-length suggestion with unbroken wide text and long submitted name; full content stays in Details.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:vote:fixture-round",
+          "label": "Vote",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:status:fixture-round",
+          "label": "Update Status",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:fixture-round",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "community",
+      "key": "community/community-long-text",
+      "hashes": {
+        "desktop": "dc18ce73297b798d1f6974a900ec0d2079fcadab319cd29a5af57037eca9ef69",
+        "mobile": "4764459a04a08eec9232cc7e58b52c6ce27d9e09dc1907e18c7dcf5b30f421a8"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 45
+    },
+    {
+      "id": "community-poll-private",
+      "fileStem": "poll-private",
+      "name": "Community · private ballot",
+      "desktop": "review-gate-b/community/poll-private-desktop.png",
+      "mobile": "review-gate-b/community/poll-private-mobile.png",
+      "scenario": "Actual adapter response to vote; fictional member has ordinary member permissions.",
+      "controls": [
+        {
+          "type": 3,
+          "custom_id": "community:vote_pick:fixture-round",
+          "placeholder": "Your ballot",
+          "options": [
+            {
+              "label": "Board games and cocoa",
+              "value": "1"
+            },
+            {
+              "label": "A film in the lounge",
+              "value": "2"
+            },
+            {
+              "label": "Reading by the fire",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "community",
+      "key": "community/community-poll-private",
+      "hashes": {
+        "desktop": "b6ae84f2f843f658fdb57d5e6662df8b13995338c326c5064ef280bdfc4727ad",
+        "mobile": "b09de0c7528cb33da86d4e9d597da20cc75c234914ef538a6a7439f7c9e8287d"
+      },
+      "rendererHash": "0ac5ca24531e10afd73119fbdab6fbff3e13ae9ab346ebae0adc9c58db26e2fe",
+      "number": 46
+    },
+    {
+      "id": "community-giveaway-confirm",
+      "fileStem": "giveaway-confirm",
+      "name": "Community · private paid entry confirmation",
+      "desktop": "review-gate-b/community/giveaway-confirm-desktop.png",
+      "mobile": "review-gate-b/community/giveaway-confirm-mobile.png",
+      "scenario": "Actual adapter response to enter; fictional member has ordinary member permissions.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:confirm_entry:fixture-round:5000:333333333333333333",
+          "label": "Confirm Entry",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "financial"
+      ],
+      "renderer": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "community",
+      "key": "community/community-giveaway-confirm",
+      "hashes": {
+        "desktop": "d571cbc776781d75708512a63391a392c947ca1588ac190b9faa873481c23aab",
+        "mobile": "f56e7578283640253335697853d98487946eed35d0799f7974a17b02a2c68465"
+      },
+      "rendererHash": "0ac5ca24531e10afd73119fbdab6fbff3e13ae9ab346ebae0adc9c58db26e2fe",
+      "number": 47
+    },
+    {
+      "id": "community-staff-denied",
+      "fileStem": "staff-denied",
+      "name": "Community · protected staff action",
+      "desktop": "review-gate-b/community/staff-denied-desktop.png",
+      "mobile": "review-gate-b/community/staff-denied-mobile.png",
+      "scenario": "Actual adapter response to answer; fictional member has ordinary member permissions.",
+      "controls": [],
+      "classification": [
+        "moderation-related"
+      ],
+      "renderer": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "community",
+      "key": "community/community-staff-denied",
+      "hashes": {
+        "desktop": "e1dbc26a0d6dc6f16e71a130a7cb2ef585b52f6e881463304c010b5c251b4050",
+        "mobile": "bcce7825779719a2a86fc17abe0e5cbd495e9f18a78611abb8e0371fb592f2ff"
+      },
+      "rendererHash": "0ac5ca24531e10afd73119fbdab6fbff3e13ae9ab346ebae0adc9c58db26e2fe",
+      "number": 48
+    },
+    {
+      "id": "chairisms-publication",
+      "fileStem": "publication",
+      "name": "Chairisms · public publication",
+      "desktop": "review-gate-b/chairisms/publication-desktop.png",
+      "mobile": "review-gate-b/chairisms/publication-mobile.png",
+      "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-publication",
+      "hashes": {
+        "desktop": "116866a3ebf874460a0a7bdd757dab993623ebab13f98dc4a63723166cb0a067",
+        "mobile": "b26e077662840f7111b9b5c84629207320c80d5ced8c6411fa54780a81c2bf77"
+      },
+      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
+      "number": 49
+    },
+    {
+      "id": "chairisms-reply",
+      "fileStem": "reply",
+      "name": "Chairisms · quote with replied message",
+      "desktop": "review-gate-b/chairisms/reply-desktop.png",
+      "mobile": "review-gate-b/chairisms/reply-mobile.png",
+      "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-reply",
+      "hashes": {
+        "desktop": "5f34a62e35975eea7e878ae45cbc9b53e8373552a83f8b4e1dd7739fb237daed",
+        "mobile": "2cfd26cf54ed0c47d0b3625af1368352043e1a124095684950d594b997c6e5bf"
+      },
+      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
+      "number": 50
+    },
+    {
+      "id": "chairisms-image",
+      "fileStem": "image",
+      "name": "Chairisms · optional reply and image",
+      "desktop": "review-gate-b/chairisms/image-desktop.png",
+      "mobile": "review-gate-b/chairisms/image-mobile.png",
+      "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-image",
+      "hashes": {
+        "desktop": "70b456053226c30065f16bfefa13bb091ee5534374b0fc8aa9d995b09c502b90",
+        "mobile": "2bb8ae0d2682418e554f705fe5ebd01783d3a58ecdea1407e4f86709fbb48e97"
+      },
+      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
+      "number": 51
+    },
+    {
+      "id": "chairisms-long-text",
+      "fileStem": "long-text",
+      "name": "Chairisms · long names and quote",
+      "desktop": "review-gate-b/chairisms/long-text-desktop.png",
+      "mobile": "review-gate-b/chairisms/long-text-mobile.png",
+      "scenario": "Actual deterministic Chairism attachment with fictional source text; source channel details remain hidden. The optional image fixture reuses packaged lounge artwork as an explicitly fictional source attachment.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "adapter": "apps/bot/src/discord/chairisms-publication.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-long-text",
+      "hashes": {
+        "desktop": "e51ea20a6dd4c13cec12966cc0fb6cd4b75777c709764cdcdb945fa33765353a",
+        "mobile": "213bbcf0096b26886ad16d1e397fad53eb1f652bc1265f032c5423e2df18a669"
+      },
+      "rendererHash": "3adc36d26d0566e45a642a9fd9614ab7c0bca0a3c4cfb67d893950c3a001f7a8",
+      "number": 52
+    },
+    {
+      "id": "chairisms-selector",
+      "fileStem": "selector",
+      "name": "Chairisms · private source selector",
+      "desktop": "review-gate-b/chairisms/selector-desktop.png",
+      "mobile": "review-gate-b/chairisms/selector-mobile.png",
+      "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "chairism:this:333333333333333333:222222222222222222:444444444444444444",
+          "label": "This Message",
+          "style": 1
+        },
+        {
+          "type": 2,
+          "custom_id": "chairism:reply:333333333333333333:222222222222222222:444444444444444444",
+          "label": "Include Replied Message",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "chairism:image:333333333333333333:222222222222222222:444444444444444444",
+          "label": "Include Image",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "chairism:both:333333333333333333:222222222222222222:444444444444444444",
+          "label": "Include Reply + Image",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-selector",
+      "hashes": {
+        "desktop": "8510cd67987c9f4046edb9a7afc1e1bb4c8f2c5d2e9f6be0ba25400c06f3c6ea",
+        "mobile": "16fe37a03d52a4e75b5a6905a3034b70457899a73448b37eabd8479ba0233148"
+      },
+      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
+      "number": 53
+    },
+    {
+      "id": "chairisms-protected",
+      "fileStem": "protected",
+      "name": "Chairisms · protected source rejection",
+      "desktop": "review-gate-b/chairisms/protected-desktop.png",
+      "mobile": "review-gate-b/chairisms/protected-mobile.png",
+      "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-protected",
+      "hashes": {
+        "desktop": "394ed91f6461dac7f3eb05da242341b0b65313c5d6d82941d7cbd564eeea5a73",
+        "mobile": "a48b82c3a35f1114185000aa25092868df2e75d1e8cc9f2a1cbaa60323c68a2b"
+      },
+      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
+      "number": 54
+    },
+    {
+      "id": "chairisms-error",
+      "fileStem": "error",
+      "name": "Chairisms · interrupted publication",
+      "desktop": "review-gate-b/chairisms/error-desktop.png",
+      "mobile": "review-gate-b/chairisms/error-mobile.png",
+      "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-error",
+      "hashes": {
+        "desktop": "ce24b3b877c088b2fd9663b9edb6a8e64d049e28d10aecd145d78ab63dc7b8f1",
+        "mobile": "67d62ade339d5e5c5a6d0e36da020587d71b427ea93e3bad29c58bf32c34f747"
+      },
+      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
+      "number": 55
+    },
+    {
+      "id": "chairisms-empty",
+      "fileStem": "empty",
+      "name": "Chairisms · private empty browser",
+      "desktop": "review-gate-b/chairisms/empty-desktop.png",
+      "mobile": "review-gate-b/chairisms/empty-mobile.png",
+      "scenario": "Actual adapter response with injected fixture boundaries; private state, no live source fetch or Discord publication.",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": true,
+      "group": "chairisms",
+      "key": "chairisms/chairisms-empty",
+      "hashes": {
+        "desktop": "8fb5474b82ded66024dfb1a152dd5cf8a43c9578a8c97480950ea2ead0e7a4f7",
+        "mobile": "c26c5e4f7309cbae3f812cd8bd2c5f118ca295bb5686993274a417fe7c72c568"
+      },
+      "rendererHash": "4af32bc9e74dace5b32715347c2c9333012add6fe21ddf54c096335335be1c24",
+      "number": 56
+    },
+    {
+      "id": "superlative-winner",
+      "fileStem": "winner",
+      "name": "Superlatives · season winner",
+      "desktop": "review-gate-b/superlative/winner-desktop.png",
+      "mobile": "review-gate-b/superlative/winner-mobile.png",
+      "scenario": "Saved season fixture: closed; anonymous nominations/ballots; no Ottoman prizes.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:superlative-review",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "superlative",
+      "key": "superlative/superlative-winner",
+      "hashes": {
+        "desktop": "1b27dfdbc4ba4ee06fca49639fac4353fd30e1fed92c94df7dccfa5447310d03",
+        "mobile": "de5d88a780341d541122033730f73ee0d8310aa9c71e0705fa27aac0793bfe99"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 57
+    },
+    {
+      "id": "superlative-nominations",
+      "fileStem": "nominations",
+      "name": "Superlatives · nomination phase",
+      "desktop": "review-gate-b/superlative/nominations-desktop.png",
+      "mobile": "review-gate-b/superlative/nominations-mobile.png",
+      "scenario": "Saved season fixture: nominations; anonymous nominations/ballots; no Ottoman prizes.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:nominate:superlative-review",
+          "label": "Nominate",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:superlative-review",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "superlative",
+      "key": "superlative/superlative-nominations",
+      "hashes": {
+        "desktop": "25bb6ef56ca1f55418cc380e0d9fd6ec0c875078e24675ea76185f66cd9d1b2e",
+        "mobile": "80eec434e761756b2d14ea567414fd76e17ecd2fc2244ec91d4c546f53a82850"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 58
+    },
+    {
+      "id": "superlative-voting",
+      "fileStem": "voting",
+      "name": "Superlatives · voting phase",
+      "desktop": "review-gate-b/superlative/voting-desktop.png",
+      "mobile": "review-gate-b/superlative/voting-mobile.png",
+      "scenario": "Saved season fixture: voting; anonymous nominations/ballots; no Ottoman prizes.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:seasonvote:superlative-review",
+          "label": "Vote",
+          "style": 2
+        },
+        {
+          "type": 2,
+          "custom_id": "community:details:superlative-review",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "interactive"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "superlative",
+      "key": "superlative/superlative-voting",
+      "hashes": {
+        "desktop": "839ffd66b54bea6105bd0209a6b6b395b59371f2f5fa27c98966676149c46869",
+        "mobile": "6572b58a8c550d2361727624d0757188008bcf1fddadfc4d949b9ad379e1514f"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 59
+    },
+    {
+      "id": "superlative-empty",
+      "fileStem": "empty",
+      "name": "Superlatives · no nominations",
+      "desktop": "review-gate-b/superlative/empty-desktop.png",
+      "mobile": "review-gate-b/superlative/empty-mobile.png",
+      "scenario": "Saved season fixture: closed; no nominations and no badge award.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:superlative-review",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "superlative",
+      "key": "superlative/superlative-empty",
+      "hashes": {
+        "desktop": "3c57c51af040a8aa0118e16cba5c2053ac9f583456aa33b1a8b701eda7ef7837",
+        "mobile": "70d1e53ec8470c488c4569aa13a9e970bca94d754e4fa937de35b3631e47215d"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 60
+    },
+    {
+      "id": "superlative-long-name",
+      "fileStem": "long-name",
+      "name": "Superlatives · long winner and category",
+      "desktop": "review-gate-b/superlative/long-name-desktop.png",
+      "mobile": "review-gate-b/superlative/long-name-mobile.png",
+      "scenario": "Saved season fixture: closed; 80-character wide category and winner names retained in Details.",
+      "controls": [
+        {
+          "type": 2,
+          "custom_id": "community:details:superlative-review",
+          "label": "Details",
+          "style": 2
+        }
+      ],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-community/src/render.ts",
+      "adapter": "apps/bot/src/discord/community-coordinator.ts",
+      "status": "READY FOR OWNER REVIEW",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "private": false,
+      "group": "superlative",
+      "key": "superlative/superlative-long-name",
+      "hashes": {
+        "desktop": "8e546072b76719efc05f105d9276ce01e379eb64b1573ab852c7def145a0e362",
+        "mobile": "66e2218a5d76a0cc1357c34716beaa1fcde22c3287e1baed7770a5c2b9b7693a"
+      },
+      "rendererHash": "b74b441ccc3026327112e5c52f2d576246e7101cb38c6e37cbefca88391e85e2",
+      "number": 61
+    },
+    {
+      "id": "estate-waiting",
+      "name": "Estate — waiting safely",
+      "desktop": "review-gate-b/family-events/estate-waiting-desktop.png",
+      "mobile": "review-gate-b/family-events/estate-waiting-mobile.png",
+      "scenario": "Internal recovery projection only: reserved assets delay execution. No publication intent is created for this state.",
+      "transcript": "review-gate-b/family-events/estate-waiting-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/estate-waiting-fixture.json",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "NO VISUAL REVIEW REQUIRED",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "internal diagnostic renderer fixture; not a public announcement",
+      "group": "family-events",
+      "key": "family-events/estate-waiting",
+      "hashes": {
+        "desktop": "15e371df33e7ab23924d53fb56db3c3394301594e08b62ad99a648c369bb2a51",
+        "mobile": "19f1cedb8360746e2808dc6c5df6392135081df666072345c9cfe1608ad073f2"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    },
+    {
+      "id": "estate-returned",
+      "name": "Estate — canceled after return",
+      "desktop": "review-gate-b/family-events/estate-returned-desktop.png",
+      "mobile": "review-gate-b/family-events/estate-returned-mobile.png",
+      "scenario": "Internal recovery projection only: a confirmed return cancels execution. No publication intent is created for this state.",
+      "transcript": "review-gate-b/family-events/estate-returned-transcript.txt",
+      "fixtureSource": "review-gate-b/family-events/estate-returned-fixture.json",
+      "controls": [],
+      "classification": [
+        "informational"
+      ],
+      "renderer": "packages/features-family/src/render.ts",
+      "status": "NO VISUAL REVIEW REQUIRED",
+      "fixture": true,
+      "liveDiscordCapture": false,
+      "visibility": "internal diagnostic renderer fixture; not a public announcement",
+      "group": "family-events",
+      "key": "family-events/estate-returned",
+      "hashes": {
+        "desktop": "d8cdc77606d68ebdeec82b3f493d2ebd389dafcbf8ff3d42b8f1c4881172547d",
+        "mobile": "5ef388b27186c1fc603913a7b45f0e9dc2cb8ce19c55a0a1ad62806474a13655"
+      },
+      "rendererHash": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
+    }
+  ]
+}

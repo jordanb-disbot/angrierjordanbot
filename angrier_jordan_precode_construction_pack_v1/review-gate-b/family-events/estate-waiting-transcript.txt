@@ -1,0 +1,2 @@
+Awaiting existing reserved-asset settlement
+No estate transfer has been executed. Existing reservations must settle before execution.

@@ -1,0 +1,71 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "superlative-review",
+    "guildId": "fixture",
+    "channelId": "fixture",
+    "messageId": "fixture",
+    "ownerId": null,
+    "state": "OPEN",
+    "version": 12,
+    "expiresAt": "2026-09-25T12:00:00.000Z",
+    "kind": "superlatives",
+    "phase": "nominations",
+    "round": 1,
+    "title": "Superlatives · Season 1",
+    "anonymous": true,
+    "hidden": true,
+    "ranked": false,
+    "choices": [],
+    "categories": [
+      {
+        "id": "1",
+        "name": "Most Likely to Bring a Spare Chair",
+        "finalists": []
+      },
+      {
+        "id": "2",
+        "name": "Best Lounge Storyteller",
+        "finalists": []
+      }
+    ],
+    "season": 1,
+    "entryCount": 7
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Superlatives",
+        "description": "Superlatives\nSuperlatives · Season 1\nSeason 1 · nominations\nMost Likely to Bring a Spare Chair\nNominations open.\nBest Lounge Storyteller\nNominations open.\nPermanent season badges · no Ottoman prizes.\nCloses <t:1790337600:R>.",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:superlative-review"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:nominate:superlative-review",
+        "label": "Nominate",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:superlative-review",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}

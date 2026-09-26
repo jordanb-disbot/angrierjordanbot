@@ -1,0 +1,15 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "quote": {
+      "userId": "333333333333333333",
+      "displayName": "Morgan",
+      "text": "A good chair does not solve every problem, but it is an excellent place to start.",
+      "timestamp": "2026-09-25T12:00:00Z"
+    }
+  },
+  "adapterPayload": {
+    "controls": []
+  }
+}

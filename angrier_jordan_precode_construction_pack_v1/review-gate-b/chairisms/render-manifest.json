@@ -1,0 +1,70 @@
+{
+  "fixture": true,
+  "liveDiscordCapture": false,
+  "files": [
+    {
+      "file": "review-gate-b/chairisms/publication-desktop.png",
+      "sha256": "116866a3ebf874460a0a7bdd757dab993623ebab13f98dc4a63723166cb0a067"
+    },
+    {
+      "file": "review-gate-b/chairisms/publication-mobile.png",
+      "sha256": "b26e077662840f7111b9b5c84629207320c80d5ced8c6411fa54780a81c2bf77"
+    },
+    {
+      "file": "review-gate-b/chairisms/reply-desktop.png",
+      "sha256": "5f34a62e35975eea7e878ae45cbc9b53e8373552a83f8b4e1dd7739fb237daed"
+    },
+    {
+      "file": "review-gate-b/chairisms/reply-mobile.png",
+      "sha256": "2cfd26cf54ed0c47d0b3625af1368352043e1a124095684950d594b997c6e5bf"
+    },
+    {
+      "file": "review-gate-b/chairisms/image-desktop.png",
+      "sha256": "70b456053226c30065f16bfefa13bb091ee5534374b0fc8aa9d995b09c502b90"
+    },
+    {
+      "file": "review-gate-b/chairisms/image-mobile.png",
+      "sha256": "2bb8ae0d2682418e554f705fe5ebd01783d3a58ecdea1407e4f86709fbb48e97"
+    },
+    {
+      "file": "review-gate-b/chairisms/long-text-desktop.png",
+      "sha256": "e51ea20a6dd4c13cec12966cc0fb6cd4b75777c709764cdcdb945fa33765353a"
+    },
+    {
+      "file": "review-gate-b/chairisms/long-text-mobile.png",
+      "sha256": "213bbcf0096b26886ad16d1e397fad53eb1f652bc1265f032c5423e2df18a669"
+    },
+    {
+      "file": "review-gate-b/chairisms/selector-desktop.png",
+      "sha256": "8510cd67987c9f4046edb9a7afc1e1bb4c8f2c5d2e9f6be0ba25400c06f3c6ea"
+    },
+    {
+      "file": "review-gate-b/chairisms/selector-mobile.png",
+      "sha256": "16fe37a03d52a4e75b5a6905a3034b70457899a73448b37eabd8479ba0233148"
+    },
+    {
+      "file": "review-gate-b/chairisms/protected-desktop.png",
+      "sha256": "394ed91f6461dac7f3eb05da242341b0b65313c5d6d82941d7cbd564eeea5a73"
+    },
+    {
+      "file": "review-gate-b/chairisms/protected-mobile.png",
+      "sha256": "a48b82c3a35f1114185000aa25092868df2e75d1e8cc9f2a1cbaa60323c68a2b"
+    },
+    {
+      "file": "review-gate-b/chairisms/error-desktop.png",
+      "sha256": "ce24b3b877c088b2fd9663b9edb6a8e64d049e28d10aecd145d78ab63dc7b8f1"
+    },
+    {
+      "file": "review-gate-b/chairisms/error-mobile.png",
+      "sha256": "67d62ade339d5e5c5a6d0e36da020587d71b427ea93e3bad29c58bf32c34f747"
+    },
+    {
+      "file": "review-gate-b/chairisms/empty-desktop.png",
+      "sha256": "8fb5474b82ded66024dfb1a152dd5cf8a43c9578a8c97480950ea2ead0e7a4f7"
+    },
+    {
+      "file": "review-gate-b/chairisms/empty-mobile.png",
+      "sha256": "c26c5e4f7309cbae3f812cd8bd2c5f118ca295bb5686993274a417fe7c72c568"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+[
+  {
+    "id": "superlative-winner",
+    "fileStem": "winner",
+    "name": "Superlatives · season winner",
+    "desktop": "review-gate-b/superlative/winner-desktop.png",
+    "mobile": "review-gate-b/superlative/winner-mobile.png",
+    "scenario": "Saved season fixture: closed; anonymous nominations/ballots; no Ottoman prizes.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:superlative-review",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "informational",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "superlative-nominations",
+    "fileStem": "nominations",
+    "name": "Superlatives · nomination phase",
+    "desktop": "review-gate-b/superlative/nominations-desktop.png",
+    "mobile": "review-gate-b/superlative/nominations-mobile.png",
+    "scenario": "Saved season fixture: nominations; anonymous nominations/ballots; no Ottoman prizes.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:nominate:superlative-review",
+        "label": "Nominate",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:superlative-review",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "superlative-voting",
+    "fileStem": "voting",
+    "name": "Superlatives · voting phase",
+    "desktop": "review-gate-b/superlative/voting-desktop.png",
+    "mobile": "review-gate-b/superlative/voting-mobile.png",
+    "scenario": "Saved season fixture: voting; anonymous nominations/ballots; no Ottoman prizes.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:seasonvote:superlative-review",
+        "label": "Vote",
+        "style": 2
+      },
+      {
+        "type": 2,
+        "custom_id": "community:details:superlative-review",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "interactive",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "superlative-empty",
+    "fileStem": "empty",
+    "name": "Superlatives · no nominations",
+    "desktop": "review-gate-b/superlative/empty-desktop.png",
+    "mobile": "review-gate-b/superlative/empty-mobile.png",
+    "scenario": "Saved season fixture: closed; no nominations and no badge award.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:superlative-review",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "informational",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  },
+  {
+    "id": "superlative-long-name",
+    "fileStem": "long-name",
+    "name": "Superlatives · long winner and category",
+    "desktop": "review-gate-b/superlative/long-name-desktop.png",
+    "mobile": "review-gate-b/superlative/long-name-mobile.png",
+    "scenario": "Saved season fixture: closed; 80-character wide category and winner names retained in Details.",
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:superlative-review",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "classification": "informational",
+    "renderer": "packages/features-community/src/render.ts",
+    "adapter": "apps/bot/src/discord/community-coordinator.ts",
+    "status": "READY FOR OWNER REVIEW",
+    "fixture": true,
+    "liveDiscordCapture": false,
+    "private": false
+  }
+]

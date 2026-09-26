@@ -1,0 +1,81 @@
+{
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "fixture": {
+    "id": "fixture-round",
+    "guildId": "111111111111111111",
+    "channelId": "222222222222222222",
+    "messageId": "444444444444444444",
+    "ownerId": "333333333333333333",
+    "state": "CLOSED",
+    "version": 12,
+    "expiresAt": "2026-09-25T20:00:00.000Z",
+    "kind": "poll",
+    "phase": "closed",
+    "round": 1,
+    "title": "Which lounge night should we host?",
+    "anonymous": false,
+    "hidden": true,
+    "ranked": true,
+    "choices": [
+      {
+        "id": "1",
+        "label": "Board games and cocoa"
+      },
+      {
+        "id": "2",
+        "label": "A film in the lounge"
+      },
+      {
+        "id": "3",
+        "label": "Reading by the fire"
+      }
+    ],
+    "categories": [],
+    "entryCount": 7,
+    "results": {
+      "1": 7,
+      "2": 3
+    },
+    "winnerId": "1",
+    "ballots": [
+      {
+        "memberId": "333333333333333333",
+        "choices": [
+          "1",
+          "3",
+          "2"
+        ]
+      }
+    ]
+  },
+  "adapterPayload": {
+    "embeds": [
+      {
+        "author": {
+          "name": "Angrier Jordan"
+        },
+        "title": "Community Poll",
+        "description": "Community Poll\nWhich lounge night should we host?\n1. Board games and cocoa · 7 votes\n2. A film in the lounge · 3 votes\n3. Reading by the fire · 0 votes\nNamed ballots:\n333333333333333333: Board games and cocoa > Reading by the fire > A film in the lounge",
+        "color": 959910,
+        "image": {
+          "url": "attachment://community.png"
+        },
+        "footer": {
+          "text": "community:fixture-round"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "type": 2,
+        "custom_id": "community:details:fixture-round",
+        "label": "Details",
+        "style": 2
+      }
+    ],
+    "allowedMentions": {
+      "parse": []
+    }
+  }
+}
