@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "22974dc55fbfc217e9fd4b031cf56f9d01e8a610579902f6b03ea0ca3a504e04"
+      "sha256": "695721d2c04d55e85217b84df2cbe09b76ca2b8ce347641e299244201305c8ee"
     },
     {
       "id": "line.approved.lounge",

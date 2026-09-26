@@ -9,6 +9,8 @@ import {eventPayouts,eventRandom,planRace,raceSnapshot,type Racer,type RacePlan,
 export interface EventContext {guildId:string;channelId:string;userId:string;requestKey:string;}
 export interface EventPolicy {minBet:bigint;maxBet:bigint;}
 export interface RaceData {racers:Racer[];plan?:RacePlan;fightPlan?:FightPlan;startedAt?:string;winnerId?:string;result?:{pool:string;rake:string;payouts:Record<string,string>;refunded:boolean;settlement:string};cancelReason?:string;}
+/** Private preparation only; never publish the outcome before the event finishes. */
+export interface PreparedEventClose {sessionId:string;guildId:string;type:string;version:number;participantFingerprint:string;recentMoveFingerprint:string;data:Pick<RaceData,'plan'|'fightPlan'>;}
 const json=(value:unknown)=>JSON.parse(JSON.stringify(value)) as Prisma.InputJsonObject;
 export class PrismaEventsRepository {
  private readonly atomic:PrismaAtomicOperations;
@@ -73,16 +75,28 @@ export class PrismaEventsRepository {
   // Shared session version serializes wager placement with the betting-close boundary.
   await new SessionEngine(new PrismaTransactionSessions(tx)).transition<RaceData>(id,['OPEN'],'OPEN');return{sessionId:id,total:cumulative.toString()};
  });}
- async closeBetting(guildId:string,id:string){return this.atomic.run(guildId,'event:close:'+id,id,async(tx,ledger)=>{
+ private async recentMoves(db:Pick<Prisma.TransactionClient,'gameSession'>,guildId:string,id:string){
+  const previous=await db.gameSession.findMany({where:{guildId,type:'fight',id:{not:id},state:{in:['CLOSED','CANCELLED']}},orderBy:{createdAt:'desc'},take:3});
+  return previous.flatMap(row=>(row.data as unknown as RaceData).fightPlan?.usedMoveIds??[]);
+ }
+ private preparePlan(type:string,racers:Racer[],recent:string[]):Pick<RaceData,'plan'|'fightPlan'>{return type==='fight'?{fightPlan:planFight(racers,recent,this.rng)}:{plan:planRace(racers,this.rng)};}
+ async prepareClose(guildId:string,id:string):Promise<PreparedEventClose|undefined>{
+  const s=await this.db.gameSession.findUnique({where:{id}});
+  if(!s||s.guildId!==guildId||!['race','fight'].includes(s.type))throw new DomainError('EVENT_MISSING','Event unavailable.');
+  const data=s.data as unknown as RaceData;if(s.state!=='OPEN'||data.racers.length<2)return undefined;
+  const recent=s.type==='fight'?await this.recentMoves(this.db,guildId,id):[];
+  return{sessionId:id,guildId,type:s.type,version:s.version,participantFingerprint:requestFingerprint(data.racers),recentMoveFingerprint:requestFingerprint(recent),data:this.preparePlan(s.type,data.racers,recent)};
+ }
+ async closeBetting(guildId:string,id:string,prepared?:PreparedEventClose){return this.atomic.run(guildId,'event:close:'+id,id,async(tx,ledger)=>{
   const s=await new PrismaTransactionSessions(tx).get<RaceData>(id);if(!s||s.guildId!==guildId||!['race','fight'].includes(s.type))throw new DomainError('EVENT_MISSING','Event unavailable.');
   if(s.state!=='OPEN')return{sessionId:id};if(!s.expiresAt||s.expiresAt>this.clock())throw new DomainError('NOT_DUE','The event window remains open.');
   if(s.data.racers.length<2){await this.cancelInside(tx,ledger,s,'Not enough racers; all wagers refunded.');return{sessionId:id};}
   if(s.type==='fight'&&await this.fighterAbsent(tx,s)){await this.cancelInside(tx,ledger,s,'A fighter left; all wagers refunded.');return{sessionId:id};}
-  let nextPlan:Pick<RaceData,'plan'|'fightPlan'>,durationMs:number;
-  if(s.type==='fight'){
-   const previous=await tx.gameSession.findMany({where:{guildId,type:'fight',id:{not:id},state:{in:['CLOSED','CANCELLED']}},orderBy:{createdAt:'desc'},take:3});
-   const recent=previous.flatMap(row=>(row.data as unknown as RaceData).fightPlan?.usedMoveIds??[]),fightPlan=planFight(s.data.racers,recent,this.rng);nextPlan={fightPlan};durationMs=fightPlan.durationMs;
-  }else{const plan=planRace(s.data.racers,this.rng);nextPlan={plan};durationMs=plan.durationMs;}
+  const recent=s.type==='fight'?await this.recentMoves(tx,guildId,id):[];
+  // Validate outcome inputs inside the serializable close transaction. Wagers and
+  // extensions can change the version without changing these inputs.
+  const reusable=prepared?.sessionId===id&&prepared.guildId===guildId&&prepared.type===s.type&&prepared.participantFingerprint===requestFingerprint(s.data.racers)&&prepared.recentMoveFingerprint===requestFingerprint(recent)&&Boolean(s.type==='fight'?prepared.data.fightPlan:prepared.data.plan);
+  const nextPlan=reusable?prepared!.data:this.preparePlan(s.type,s.data.racers,recent),durationMs=(nextPlan.fightPlan??nextPlan.plan)!.durationMs;
   const now=this.clock(),expiresAt=new Date(now.getTime()+durationMs),data={...s.data,...nextPlan,startedAt:now.toISOString()};
   await new SessionEngine(new PrismaTransactionSessions(tx)).transition<RaceData>(id,['OPEN'],'LOCKED',s=>({...s,data,expiresAt}));
   await tx.scheduledJob.create({data:{guildId,jobType:'events.settle',executionKey:'events:settle:'+id,dueAt:expiresAt,payload:{guildId,sessionId:id}}});return{sessionId:id};

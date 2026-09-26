@@ -1,3 +1,4 @@
+import {eventTiming} from './event-performance.js';
 import {eventWindow,hasLineIdentity} from './event-window.js';
 import {LINE_DURATION_MS} from '../../../../packages/features-special/src/domain.js';
 import {randomInt} from 'node:crypto';
@@ -7,11 +8,22 @@ import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/ca
 import {PrismaSpecialRepository,type LineView} from '../../../../packages/features-special/src/prisma-repository.js';
 import {validateBuiltinRoleMap,validateCustomSpecialCommands,mayInvokeSpecial,specialNotificationRole,type SpecialCommand} from '../../../../packages/features-special/src/domain.js';
 import {renderLine,lineSequence} from '../../../../packages/features-special/src/render.js';
-import {rasterizeSvg,rasterizeSequence} from '../../../../packages/renderer/src/raster.js';
+import {rasterizeSvg,rasterizeSequence,rasterizeTimeline} from '../../../../packages/renderer/src/raster.js';
 import builtinCallouts from '../../../../packages/features-special/content/builtin_callouts.json' with {type:'json'};
 export class DiscordSpecialCoordinator {
  private readonly refreshes=new Map<string,Promise<void>>();
  private readonly publishedVersions=new Map<string,string>();
+ private readonly finales=new Map<string,{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>}>();
+ private readonly preparing=new Set<string>();
+ private finaleKey(view:LineView){return JSON.stringify([view.ownerId,view.members,view.extensionUsed]);}
+ private prepareFinale(view:LineView){
+  if(view.state!=='OPEN'){if(!['LOCKED','SETTLING'].includes(view.state))this.finales.delete(view.id);return;}
+  const key=this.finaleKey(view);if(this.preparing.has(view.id)||this.finales.get(view.id)?.key===key)return;
+  this.preparing.add(view.id);if(this.finales.size>=8)this.finales.delete(this.finales.keys().next().value!);
+  const entry:{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>}={key};this.finales.set(view.id,entry);
+  void eventTiming('line.prepare',()=>this.payload({...view,state:'SETTLING',elapsedMs:0,durationMs:LINE_DURATION_MS})).then(payload=>{if(this.finales.get(view.id)===entry)entry.payload=payload;}).catch(()=>this.finales.delete(view.id)).finally(()=>this.preparing.delete(view.id));
+ }
+ private readyFinale(view:LineView){const entry=this.finales.get(view.id);return entry?.key===this.finaleKey(view)?entry.payload:undefined;}
  private sweeping=false;
  constructor(private readonly repo:PrismaSpecialRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  private async guard(guildId:string,userId:string,channelId:string,line=true){
@@ -49,15 +61,18 @@ export class DiscordSpecialCoordinator {
   });if(p.sessionId)await this.repo.linkMessage(p.sessionId,p.guildId,messageId);
  }
  async handle(i:ButtonInteraction){try{
-  if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use Line in the server.');await this.guard(i.guildId,i.user.id,i.channelId);
-  const[prefix,action,id,pageRaw]=i.customId.split(':');if(prefix!=='line'||!id)throw new DomainError('LINE_CONTROL','This Line control is unavailable.');const view=await this.repo.publicView(id);if(view.guildId!==i.guildId||view.channelId!==i.channelId||(action!=='roster'&&view.messageId!==i.message.id))throw new DomainError('LINE_CONTROL','Use this Line’s original message.');
+  if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use Line in the server.');
+  const[prefix,action,id,pageRaw]=i.customId.split(':');if(prefix!=='line'||!id)throw new DomainError('LINE_CONTROL','This Line control is unavailable.');
+  if(['ready','waiting','extend','start','cancel'].includes(action!))await eventTiming('line.ack',()=>i.deferUpdate());
+  await this.guard(i.guildId,i.user.id,i.channelId);
+  const view=await this.repo.publicView(id);if(view.guildId!==i.guildId||view.channelId!==i.channelId||(action!=='roster'&&view.messageId!==i.message.id))throw new DomainError('LINE_CONTROL','Use this Line’s original message.');
   if(action==='roster'){const page=Math.max(0,Math.min(Math.floor((view.members.length-1)/20),Number(pageRaw)||0)),slice=view.members.slice(page*20,page*20+20);const buttons=new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`line:roster:${id}:${Math.max(0,page-1)}`).setLabel('Previous').setStyle(ButtonStyle.Secondary).setDisabled(page===0),new ButtonBuilder().setCustomId(`line:roster:${id}:${page+1}`).setLabel('Next').setStyle(ButtonStyle.Secondary).setDisabled((page+1)*20>=view.members.length));await i.reply({ephemeral:true,content:slice.map(m=>`${m.status==='ready'?'✓':'…'} <@${m.userId}>${m.userId===view.ownerId?' · Host':''}`).join('\n'),components:[buttons],allowedMentions:{parse:[]}});return;}
-  await i.deferUpdate();const c={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
+  if(!i.deferred)await i.deferUpdate();const c={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
   if(action==='ready'||action==='waiting'){const member=await i.guild.members.fetch(i.user.id);await this.repo.checkIn(c,id,member.displayName,action);}
   else if(action==='extend')await this.repo.extend(c,id);
   else if(action==='start'){
    const shameEnabled=await this.config.get(i.guildId,'line.shame_enabled')===true,preview=await this.repo.previewCountdown(c,id,shameEnabled),current=await this.repo.publicView(id);
-   const payload=await this.payload({...current,state:'SETTLING',elapsedMs:0,shame:preview.shame});
+   const payload=this.readyFinale(current)??await this.payload({...current,state:'SETTLING',elapsedMs:0,shame:preview.shame});
    const previous=this.refreshes.get(id)??Promise.resolve(),publish=previous.catch(()=>{}).then(async()=>{
     await this.repo.countdown(c,id,shameEnabled,preview);
     await i.message.edit(payload);this.publishedVersions.set(id,JSON.stringify(['SETTLING',current.members,current.extensionUsed,null]));
@@ -67,7 +82,15 @@ export class DiscordSpecialCoordinator {
   else throw new DomainError('LINE_CONTROL','This Line control is unavailable.');
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public update is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The Line update could not be completed. Check its saved state before retrying.';if(i.replied||i.deferred)await i.followUp({ephemeral:true,content});else await i.reply({ephemeral:true,content});}}
- async payload(view:LineView,callout?:string){const live=view.state==='SETTLING'&&view.elapsedMs<(view.durationMs??LINE_DURATION_MS),sequence=live?lineSequence(view,'wide'):null,animated=Boolean(sequence&&sequence.frames.length>1),image=sequence&&animated?await rasterizeSequence(sequence.frames,sequence.delays):await rasterizeSvg(renderLine(view,view.elapsedMs,'wide',callout)),filename=animated?'line-live.gif':'line.png',components:ActionRowBuilder<ButtonBuilder>[]=[];
+ async payload(view:LineView,callout?:string){
+  const live=view.state==='SETTLING'&&view.elapsedMs<(view.durationMs??LINE_DURATION_MS),sequence=live?lineSequence(view,'wide'):null,animated=Boolean(sequence&&sequence.frames.length>1),waiting=view.state==='OPEN'&&view.remainingMs>0;
+  let image:Buffer;
+  if(sequence&&animated)image=await rasterizeSequence(sequence.frames,sequence.delays);
+  else if(waiting){
+   const now=Date.now(),remaining=Math.ceil(view.remainingMs/10)*10,steps=Math.min(60,Math.ceil(remaining/1000)),step=Math.ceil(remaining/steps/10)*10,times=Array.from({length:steps},(_,i)=>i*step).filter(at=>at<remaining);times.push(remaining);
+   image=await rasterizeTimeline(times.map(at=>renderLine({...view,remainingMs:Math.max(0,remaining-at)},0,'wide',callout)),times.map((at,i)=>i+1<times.length?times[i+1]!-at:1000),now);
+  }else image=await rasterizeSvg(renderLine(view,view.elapsedMs,'wide',callout));
+  const filename=animated?'line-live.gif':waiting?'line-waiting.gif':'line.png',components:ActionRowBuilder<ButtonBuilder>[]=[];
   const roster=new ButtonBuilder().setCustomId('line:roster:'+view.id+':0').setLabel('Check-ins').setStyle(ButtonStyle.Secondary);
   if(view.state==='OPEN')components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('line:ready:'+view.id).setLabel('I’m In').setStyle(ButtonStyle.Success),new ButtonBuilder().setCustomId('line:waiting:'+view.id).setLabel('I Need a Second').setStyle(ButtonStyle.Secondary),roster));
   if(['OPEN','LOCKED'].includes(view.state))components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('line:start:'+view.id).setLabel('Start Countdown').setStyle(ButtonStyle.Primary),...(view.state==='OPEN'?[new ButtonBuilder().setCustomId('line:extend:'+view.id).setLabel('+30 Seconds').setStyle(ButtonStyle.Secondary).setDisabled(view.extensionUsed)]:[roster]),new ButtonBuilder().setCustomId('line:cancel:'+view.id).setLabel('Cancel Line').setStyle(ButtonStyle.Danger)));
@@ -75,11 +98,11 @@ export class DiscordSpecialCoordinator {
   if(['CLOSED','CANCELLED'].includes(view.state))components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(roster));
   return eventWindow({title:'Line Time',description:view.state==='OPEN'?`Readiness ends <t:${Math.floor(view.expiresAt!.getTime()/1000)}:R> → five-second countdown → powder finale.`:view.state==='LOCKED'?'Preparing the countdown.':view.state==='CANCELLED'?'Line cancelled.':view.state==='CLOSED'?'Line complete.':'Five seconds. One shared moment.',filename,image,rows:components,accent:0xa469e2,...(callout?{callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve(),current=previous.catch(()=>{}).then(async()=>{const view=await this.repo.publicView(id);if(!view.messageId)return;const key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);if(this.publishedVersions.get(id)===key)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Line channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Line message author mismatch.');if(view.state==='SETTLING'&&message.attachments?.some(a=>a.name==='line-live.gif')){this.publishedVersions.set(id,key);return;}let payload=await this.payload(view);if(view.state==='SETTLING'){const latest=await this.repo.publicView(id);if(latest.state==='SETTLING'&&latest.elapsedMs>=(latest.durationMs??LINE_DURATION_MS)){await this.repo.complete(latest.guildId,id);payload=await this.payload(await this.repo.publicView(id));}else if(latest.state!=='SETTLING')payload=await this.payload(latest);}await message.edit(payload);this.publishedVersions.set(id,key);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve(),current=previous.catch(()=>{}).then(async()=>{let view=await this.repo.publicView(id);if(!view.messageId)return;this.prepareFinale(view);let key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);if(this.publishedVersions.get(id)===key)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Line channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Line message author mismatch.');if(view.state==='SETTLING'&&message.attachments?.some(a=>a.name==='line-live.gif')){this.publishedVersions.set(id,key);return;}let payload=await this.payload(view);if(view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);payload=await this.payload(view);}}if(view.state==='SETTLING'){const latest=await this.repo.publicView(id);if(latest.state==='SETTLING'&&latest.elapsedMs>=(latest.durationMs??LINE_DURATION_MS)){await this.repo.complete(latest.guildId,id);payload=await this.payload(await this.repo.publicView(id));}else if(latest.state!=='SETTLING')payload=await this.payload(latest);}await eventTiming('line.edit-upload',()=>message.edit(payload));this.publishedVersions.set(id,key);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
  async advance(client:Client,guildId:string,id:string,complete:boolean){if(complete){await this.repo.complete(guildId,id);await this.refresh(client,id);return;}
   const previous=this.refreshes.get(id)??Promise.resolve(),current=previous.catch(()=>{}).then(async()=>{const before=await this.repo.publicView(id);if(!['OPEN','LOCKED'].includes(before.state))return;
    // Prepare the complete one-shot before starting the persisted clock, just like host start.
-   const prepared=await this.payload({...before,state:'SETTLING',elapsedMs:0,durationMs:LINE_DURATION_MS});await this.repo.lock(guildId,id,await this.config.get(guildId,'line.shame_enabled')===true);const latest=await this.repo.publicView(id);if(!latest.messageId)return;
+   const prepared=this.readyFinale(before)??await this.payload({...before,state:'SETTLING',elapsedMs:0,durationMs:LINE_DURATION_MS});await this.repo.lock(guildId,id,await this.config.get(guildId,'line.shame_enabled')===true);const latest=await this.repo.publicView(id);if(!latest.messageId)return;
    const channel=await client.channels.fetch(latest.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Line channel unavailable.');const message=await channel.messages.fetch(latest.messageId);if(message.author.id!==client.user?.id)throw new Error('Line message author mismatch.');
    if(latest.state==='SETTLING'&&message.attachments?.some(a=>a.name==='line-live.gif'))return;
    await message.edit(latest.state==='SETTLING'&&latest.elapsedMs<500?prepared:await this.payload(latest));this.publishedVersions.set(id,JSON.stringify([latest.state,latest.members,latest.extensionUsed,latest.state==='OPEN'?latest.expiresAt:null]));

@@ -6,7 +6,7 @@ const controlsOf=payload=>payload.components.flatMap(c=>c.toJSON().components).f
 const config={get:async(_g,k)=>k==='features.fight'?true:k==='channels.main_chat'?'main':false};
 const forbidden=new Proxy({},{get:()=>()=>{throw Error('Mutation must not be reached');}});
 test('Fight requires another eligible human and honors its independent flag',async()=>{
- for(const kind of ['self','bot','restricted','disabled']){const calls=[],target={id:kind==='self'?'host':'target',bot:kind==='bot'},i={guildId:'g',guild:{},channelId:'main',user:{id:'host'},options:{getUser:(name,required)=>{assert.equal(name,'member');assert.equal(required,true);return target;}},reply:async p=>calls.push(p)};
+ for(const kind of ['self','bot','restricted','disabled']){const calls=[],target={id:kind==='self'?'host':'target',bot:kind==='bot'},i={guildId:'g',guild:{},channelId:'main',user:{id:'host'},options:{getUser:(name,required)=>{assert.equal(name,'member');assert.equal(required,true);return target;}},deferred:false,deferReply:async function(){this.deferred=true;},deleteReply:async()=>{},followUp:async p=>calls.push(p),reply:async p=>calls.push(p)};
   await new DiscordEventsCoordinator(forbidden,kind==='disabled'?{get:async()=>false}:config,async()=>kind!=='restricted').startFight(i);assert.equal(calls.length,1);assert.equal(calls[0].ephemeral,true);assert.match(calls[0].content,/eligible|restricted|not enabled|cannot participate/);
  }
 });
