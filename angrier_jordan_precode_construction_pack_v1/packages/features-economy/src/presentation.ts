@@ -26,25 +26,25 @@ function itemMotif(motif:string|undefined,x:number,y:number,accent:string):strin
  return `<g data-item-motif="${escape(key)}" transform="translate(${x} ${y})">${shape}</g>`;
 }
 function renderItemGallery(input:EconomyPresentationInput):string {
- const palette=[0xf4c542,0x38bdf8,0xa469e2,0x10b981,0xf59e0b,0x0ea5a6],cards=input.cards?.slice(0,6)??[];
- const rows=Math.max(1,Math.ceil(cards.length/3)),height=rows===2?1080:710,top=190,footerY=height-100;
+ const palette=[0xf4c542,0x38bdf8,0xa469e2,0x10b981,0xf59e0b,0x0ea5a6],cards=input.cards?.slice(0,8)??[];
+ const columns=cards.length>3?4:3,width=columns===4?1440:1100,center=width/2,rows=Math.max(1,Math.ceil(cards.length/columns)),height=rows===2?1080:710,top=190,footerY=height-100;
  const titles={shop:'THE LOUNGE STOREFRONT',inventory:'YOUR PERSONAL COLLECTION',collection:'THE CHAIR GALLERY',craft:'THE CHAIR WORKSHOP'};
- let body=text(550,63,'ANGRIER JORDAN · '+titles[input.mode!],20,'#F4D17B',true);
- economyWrap(input.title,36,1).forEach(t=>body+=text(550,117,t,46,'#E6EAF0',true));
- economyWrap(input.summary??input.description??'',70,1).forEach(t=>body+=text(550,156,t,24,'#D3E9E5'));
- if(!cards.length){body+='<rect x="50" y="190" width="1000" height="385" rx="18" fill="url(#glass)" stroke="#D4B06C"/>'+itemMotif(input.mode==='craft'?'workshop':input.mode==='collection'?'chair':'box',550,288,'#10B981');economyWrap(input.description??'Your next discovery starts here.',52,3).forEach((t,j)=>body+=text(550,422+j*38,t,30));}
+ let body=text(center,63,'ANGRIER JORDAN · '+titles[input.mode!],20,'#F4D17B',true);
+ economyWrap(input.title,36,1).forEach(t=>body+=text(center,117,t,46,'#E6EAF0',true));
+ economyWrap(input.summary??input.description??'',70,1).forEach(t=>body+=text(center,156,t,24,'#D3E9E5'));
+ if(!cards.length){body+='<rect x="50" y="190" width="1000" height="385" rx="18" fill="url(#glass)" stroke="#D4B06C"/>'+itemMotif(input.mode==='craft'?'workshop':input.mode==='collection'?'chair':'box',550,288,'#10B981');economyWrap(input.description??'Your next discovery starts here.',52,3).forEach((t,j)=>body+=text(center,422+j*38,t,30));}
  for(const [i,card]of cards.entries()){
-  const rowCount=Math.min(3,cards.length-Math.floor(i/3)*3),startX=(1100-(rowCount*320+(rowCount-1)*20))/2;
-  const x=startX+i%3*340,y=top+Math.floor(i/3)*385,c=color(card.accent??palette[i]!);
+  const rowCount=Math.min(columns,cards.length-Math.floor(i/columns)*columns),startX=(width-(rowCount*320+(rowCount-1)*20))/2;
+  const x=startX+i%columns*340,y=top+Math.floor(i/columns)*385,c=color(card.accent??palette[i%palette.length]!);
   body+=`<g data-item-card="${i}"><rect x="${x}" y="${y}" width="320" height="365" rx="16" fill="url(#glass)" stroke="${c}" stroke-width="2"/><path d="M${x+15} ${y+42}V${y+15}H${x+46}M${x+274} ${y+350}H${x+305}V${y+323}" stroke="#E0C27E" fill="none" stroke-width="2"/><ellipse cx="${x+160}" cy="${y+120}" rx="113" ry="95" fill="${c}" opacity=".07"/><path d="M${x+27} ${y+195}H${x+293}" stroke="${c}" opacity=".45"/>`;
   body+=text(x+160,y+33,economyWrap(card.badge??'LOUNGE ESSENTIAL',22,1)[0]??'',20,c,true)+itemMotif(card.motif,x+160,y+115,c);
   economyWrap(card.name,20,2).forEach((t,j)=>body+=text(x+160,y+230+j*30,t,28,'#F1F4F7',true));
   economyWrap(card.detail,23,3).forEach((t,j)=>body+=text(x+160,y+292+j*27,t,24,'#D7E5E3'));
   body+='</g>';
  }
- body+=`<rect x="50" y="${footerY}" width="1000" height="65" rx="12" fill="#081B25" stroke="#B9985A"/>`;
- economyWrap(input.footer??'Use the matching controls below',76,1).forEach(t=>body+=text(550,footerY+29,t,22,'#ECE2CB',true));body+=text(550,footerY+52,'SIT. PLAY. BELONG.',17,'#72D5C6',true);
- return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="${height}" viewBox="0 0 1100 ${height}"><defs><linearGradient id="glass" x2="0" y2="1"><stop stop-color="#153D43" stop-opacity=".96"/><stop offset="1" stop-color="#07121D" stop-opacity=".96"/></linearGradient><linearGradient id="brass"><stop stop-color="#77521F"/><stop offset=".48" stop-color="#FFE29A"/><stop offset="1" stop-color="#997132"/></linearGradient><linearGradient id="upholstery" x2="0" y2="1"><stop stop-color="#1B7775"/><stop offset="1" stop-color="#09242C"/></linearGradient></defs><image href="${art()}" width="1100" height="${height}" preserveAspectRatio="xMidYMid slice"/><rect width="1100" height="${height}" fill="#06151D" opacity=".57"/>${body}<rect x="4" y="4" width="1092" height="${height-8}" rx="19" fill="none" stroke="#0EA5A6" stroke-width="3"/><rect x="14" y="14" width="1072" height="${height-28}" rx="14" fill="none" stroke="url(#brass)" stroke-width="2"/></svg>`;
+ body+=`<rect x="50" y="${footerY}" width="${width-100}" height="65" rx="12" fill="#081B25" stroke="#B9985A"/>`;
+ economyWrap(input.footer??'Use the matching controls below',76,1).forEach(t=>body+=text(center,footerY+29,t,22,'#ECE2CB',true));body+=text(center,footerY+52,'SIT. PLAY. BELONG.',17,'#72D5C6',true);
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="glass" x2="0" y2="1"><stop stop-color="#153D43" stop-opacity=".96"/><stop offset="1" stop-color="#07121D" stop-opacity=".96"/></linearGradient><linearGradient id="brass"><stop stop-color="#77521F"/><stop offset=".48" stop-color="#FFE29A"/><stop offset="1" stop-color="#997132"/></linearGradient><linearGradient id="upholstery" x2="0" y2="1"><stop stop-color="#1B7775"/><stop offset="1" stop-color="#09242C"/></linearGradient></defs><image href="${art()}" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice"/><rect width="${width}" height="${height}" fill="#06151D" opacity=".57"/>${body}<rect x="4" y="4" width="${width-8}" height="${height-8}" rx="19" fill="none" stroke="#0EA5A6" stroke-width="3"/><rect x="14" y="14" width="${width-28}" height="${height-28}" rx="14" fill="none" stroke="url(#brass)" stroke-width="2"/></svg>`;
 }
 const brand=JSON.parse(readFileSync(new URL('../../../production/theme/brand.json',import.meta.url),'utf8')) as {typography:{heading:string;body:string}};
 let lounge:string|undefined;

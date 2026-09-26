@@ -1,6 +1,6 @@
 import type {ItemState} from '../../../../packages/features-economy/src/items-types.js';
 import type {ItemService} from '../../../../packages/features-economy/src/items-service.js';
-export const ITEM_PAGE_SIZE=3;
+export const ITEM_PAGE_SIZE=8;
 export function itemPage<T>(items:T[],requested=0){const pages=Math.max(1,Math.ceil(items.length/ITEM_PAGE_SIZE)),page=Math.min(pages-1,Math.max(0,Number.isFinite(requested)?Math.floor(requested):0));return {items:items.slice(page*ITEM_PAGE_SIZE,(page+1)*ITEM_PAGE_SIZE),page,pages};}
 export function inventoryCategories(rows:ReturnType<ItemService['inventory']>){return [...new Set(rows.map(x=>x.item.type))].sort().slice(0,24);}
 export function inventoryCard(state:ItemState,userId:string,x:ReturnType<ItemService['inventory']>[number]){

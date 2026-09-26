@@ -13,8 +13,8 @@ const examples={
  result:{title:'Daily claimed',description:'Your daily reward is ready: 250 Ottomans. Current streak: 8 days. Your next reward is available after the daily reset.',accent:0x10b981},
  extreme:{title:'Statement · Extremely long member display name',description:'Exact identifiers and values remain available in native Discord text.',fields:[{name:'Wallet',value:'999,999,999,999,999,999,999 Ottomans'},{name:'Bank',value:'999,999,999,999,999,999,999 Ottomans'},{name:'Recent transaction',value:'A very long transaction description '.repeat(12)}]}
 };
-examples.shop.cards=examples.shop.cards.slice(0,3);
-examples.collection.cards=examples.collection.cards.slice(0,3);
+examples.shop.cards.push({name:'Oak Materials',motif:'material',badge:'COMMON · MATERIAL',detail:'400 Ottomans · Workshop supply'},{name:'Lounge Blueprint',motif:'recipe',badge:'RARE · RECIPE',detail:'2,000 Ottomans · Learn a recipe'});
+
 await mkdir('review-economy',{recursive:true});
 for(const[name,input]of Object.entries(examples)){const image=await rasterizeSvg(renderEconomyPresentation(input));await writeFile('review-economy/'+name+'.png',image);await writeFile('review-economy/'+name+'-mobile.png',await sharp(image).resize({width:360}).png().toBuffer());}
 await writeFile('review-economy/index.html','<!doctype html><meta charset="utf-8"><title>Economy fixtures</title><style>body{background:#0b1220;color:#e6eaf0;font:18px sans-serif;max-width:1150px;margin:auto}img{width:100%;height:auto}.mobile{width:360px;max-width:100%}</style><h1>Economy / Items — deterministic fixture renders</h1><p>Illustrative fixture data, not live Discord screenshots or reward-policy definitions. Each image is shown at desktop and 360px mobile widths.</p>'+Object.keys(examples).map(name=>`<h2>${name}</h2><img src="${name}.png" alt="${name} desktop fixture"><img class="mobile" src="${name}.png" alt="${name} mobile fixture">`).join(''));
