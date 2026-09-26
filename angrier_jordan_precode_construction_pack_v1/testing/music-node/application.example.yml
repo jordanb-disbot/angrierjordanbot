@@ -1,0 +1,41 @@
+# TEST-ONLY template. No node is launched or credential installed by this file.
+# Reviewed baseline: Lavalink 4.2.2 / youtube-plugin 1.18.2.
+server:
+  address: 127.0.0.1
+  port: 2333
+lavalink:
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
+  server:
+    password: "${LAVALINK_SERVER_PASSWORD}"
+    sources:
+      youtube: false
+      bandcamp: false
+      soundcloud: true
+      twitch: false
+      vimeo: false
+      nico: false
+      http: false
+      local: false
+    youtubePlaylistLoadLimit: 1
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: false
+    allowDirectPlaylistIds: false
+    clients:
+      - MUSIC
+      - ANDROID_VR
+      - WEB
+      - WEBEMBEDDED
+    oauth:
+      enabled: false
+logging:
+  level:
+    root: WARN
+    lavalink: WARN
+    dev.lavalink.youtube: WARN
+    com.github.topi314.lavasrc: WARN

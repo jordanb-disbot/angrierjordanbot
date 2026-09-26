@@ -6,21 +6,23 @@ const guildId='111111111111111111',channelId='222222222222222222';
 const fence=(revision=1,generation=1)=>({guildId,revision,generation});
 const json=value=>new Response(JSON.stringify(value),{headers:{'content-type':'application/json'}});
 const track=()=>json({loadType:'track',data:{encoded:'PRIVATE_ENCODED_SOURCE',info:{sourceName:'http',isSeekable:true,length:90000,uri:'https://catalog.invalid/private?token=secret'},pluginInfo:{secret:'private'}}});
-function setup(overrides={}){const calls=[];const options={endpoint:'https://node.invalid',password:'PRIVATE_NODE_PASSWORD',sessionId:'ready-session',fetch:async(url,init)=>{calls.push({url,init});return init.method==='GET'?track():init.method==='DELETE'?new Response(null,{status:204}):json(url.includes('/players/')?{guildId,voice:{token:'PRIVATE_VOICE_TOKEN'}}:{resuming:true,timeout:60});},resolveCatalogSource:async()=>({uri:'https://catalog.invalid/song.ogg'}),isCurrent:async()=>true,...overrides};return{client:new LavalinkRestClient(options),calls,options};}
+const validInfo=()=>({version:{major:4},sourceManagers:['http'],plugins:[]});
+function setup(overrides={}){const calls=[],{fetch:fetchOverride,infoFetch,...rest}=overrides;const options={sourcePolicy:{mode:'direct-only'},endpoint:'https://node.invalid',password:'PRIVATE_NODE_PASSWORD',sessionId:'ready-session',resolveCatalogSource:async()=>({uri:'https://catalog.invalid/song.ogg'}),isCurrent:async()=>true,...rest,fetch:async(url,init)=>{calls.push({url,init});if(url.endsWith('/v4/info'))return infoFetch?infoFetch(url,init):json(validInfo());if(fetchOverride)return fetchOverride(url,init);return init.method==='GET'?track():init.method==='DELETE'?new Response(null,{status:204}):json(url.includes('/players/')?{guildId,voice:{token:'PRIVATE_VOICE_TOKEN'}}:{resuming:true,timeout:60});}};return{client:new LavalinkRestClient(options),calls,options};}
 const rejected=(operation,code)=>assert.rejects(async()=>operation(),{code});
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 
 test('Lavalink authenticates fixed v4 routes and returns no private provider fields',async()=>{
  const {client,calls}=setup();const handle=await client.loadCatalogTrack('licensed-song');
  assert.deepEqual(handle,{});assert.equal(JSON.stringify(handle),'{}');assert.equal(JSON.stringify(client),'{}');assert.ok(!inspect(client).includes('PRIVATE'));
- assert.equal(calls[0].url,'https://node.invalid/v4/loadtracks?identifier=https%3A%2F%2Fcatalog.invalid%2Fsong.ogg');
+ assert.equal(calls[0].url,'https://node.invalid/v4/info');assert.equal(calls[0].init.headers.Authorization,'PRIVATE_NODE_PASSWORD');assert.equal(calls[0].init.redirect,'error');
+ assert.equal(calls[1].url,'https://node.invalid/v4/loadtracks?identifier=https%3A%2F%2Fcatalog.invalid%2Fsong.ogg');
  const voice={token:'PRIVATE_VOICE_TOKEN',endpoint:'voice.discord.media:443',sessionId:'discord-session',channelId};
  assert.deepEqual(await client.updatePlayer(fence(),{track:handle,position:1000,paused:true,volume:65,voice}),{accepted:true});
- assert.equal(calls[1].url,`https://node.invalid/v4/sessions/ready-session/players/${guildId}?noReplace=false`);
- assert.deepEqual(JSON.parse(calls[1].init.body),{track:{encoded:'PRIVATE_ENCODED_SOURCE'},position:1000,paused:true,volume:65,voice});
- assert.equal(calls[1].init.headers.Authorization,'PRIVATE_NODE_PASSWORD');assert.equal(calls[1].init.redirect,'error');
- await client.destroyPlayer(fence(2));assert.equal(calls[2].init.method,'DELETE');assert.equal(calls[2].init.body,undefined);
- assert.deepEqual(await client.updateSession({resuming:true,timeout:60}),{accepted:true});assert.equal(calls[3].url,'https://node.invalid/v4/sessions/ready-session');
+ assert.equal(calls[2].url,`https://node.invalid/v4/sessions/ready-session/players/${guildId}?noReplace=false`);
+ assert.deepEqual(JSON.parse(calls[2].init.body),{track:{encoded:'PRIVATE_ENCODED_SOURCE'},position:1000,paused:true,volume:65,voice});
+ assert.equal(calls[2].init.headers.Authorization,'PRIVATE_NODE_PASSWORD');assert.equal(calls[2].init.redirect,'error');
+ await client.destroyPlayer(fence(2));assert.equal(calls[3].init.method,'DELETE');assert.equal(calls[3].init.body,undefined);
+ assert.deepEqual(await client.updateSession({resuming:true,timeout:60}),{accepted:true});assert.equal(calls[4].url,'https://node.invalid/v4/sessions/ready-session');
 });
 
 test('Operator endpoint rejects alternate schemes, credentials, injected paths and implicit insecure HTTP',()=>{
@@ -35,8 +37,8 @@ test('Operator endpoint rejects alternate schemes, credentials, injected paths a
 test('Only trusted catalog IDs resolve; search prefixes and member URLs never reach Lavalink',async()=>{
  let resolutions=0;const {client,calls}=setup({resolveCatalogSource:async()=>{resolutions++;return{uri:'http://catalog.invalid/song.mp3'};}});
  for(const id of ['ytsearch:some song','scsearch:some song','https://youtube.com/watch?v=x','../x','song?token=secret'])await rejected(()=>client.loadCatalogTrack(id),'LAVALINK_CATALOG');
- assert.equal(resolutions,0);assert.equal(calls.length,0);await client.loadCatalogTrack('catalog-123');assert.equal(resolutions,1);assert.ok(calls[0].url.includes('http%3A'));
- for(const uri of ['ytsearch:secret','file:///secret','https://user:secret@catalog.invalid/song','https://catalog.invalid/song#x','ftp://catalog.invalid/song']){const bad=setup({resolveCatalogSource:async()=>({uri})});await rejected(()=>bad.client.loadCatalogTrack('song'),'LAVALINK_SOURCE');assert.equal(bad.calls.length,0);}
+ assert.equal(resolutions,0);assert.equal(calls.length,0);await client.loadCatalogTrack('catalog-123');assert.equal(resolutions,1);assert.ok(calls[1].url.includes('http%3A'));
+ for(const uri of ['ytsearch:secret','file:///secret','https://user:secret@catalog.invalid/song','https://catalog.invalid/song#x','ftp://catalog.invalid/song']){const bad=setup({resolveCatalogSource:async()=>({uri})});await rejected(()=>bad.client.loadCatalogTrack('song'),'LAVALINK_SOURCE');assert.equal(bad.calls.length,1);assert.ok(bad.calls[0].url.endsWith('/v4/info'));}
 });
 
 test('Search, playlist, empty, error and non-HTTP provider responses cannot create playable handles',async()=>{
@@ -112,5 +114,70 @@ test('REST track correlation derives generation from the persisted fence and rej
  await assert.rejects(async()=>client.updatePlayer(fence(8,4),{entryId:'orphan',paused:true}));
  await assert.rejects(async()=>client.updatePlayer(fence(8,4),{track:null,entryId:'orphan'}));
  await assert.rejects(async()=>client.updatePlayer(fence(8,4),{track:handle,entryId:'https://private.invalid'}));
- assert.equal(calls.length,2);
+ assert.equal(calls.length,3);
+});
+
+test('HTTP-only node policy rejects extractors, local sources, plugins and unknown versions before resolving catalog IDs',async()=>{
+ for(const info of [null,{}, {sourceManagers:['http'],plugins:[]}, {...validInfo(),version:{major:3}}, {...validInfo(),version:{major:'4'}}, {...validInfo(),sourceManagers:[]}, {...validInfo(),sourceManagers:['http','youtube']}, {...validInfo(),sourceManagers:['http','local']}, {...validInfo(),sourceManagers:['http','http']}, {...validInfo(),sourceManagers:['HTTP']}, {...validInfo(),sourceManagers:'http'}, {...validInfo(),plugins:[{name:'licensed-or-extractor-plugin',version:'SECRET'}]}, {...validInfo(),plugins:null}]){
+  let resolutions=0;const {client,calls}=setup({infoFetch:async()=>json(info),resolveCatalogSource:async()=>{resolutions++;return{uri:'https://catalog.invalid/song.mp3'};}});
+  await rejected(()=>client.loadCatalogTrack('song'),'LAVALINK_NODE_POLICY');assert.equal(resolutions,0);assert.equal(calls.length,1);assert.ok(calls[0].url.endsWith('/v4/info'));
+ }
+});
+
+test('Concurrent catalog loads share successful node verification only within their ready-session client',async()=>{
+ let release,infoCalls=0,resolutions=0;const {client,calls}=setup({infoFetch:async()=>{infoCalls++;await new Promise(resolve=>{release=resolve;});return json(validInfo());},resolveCatalogSource:async()=>{resolutions++;return{uri:'https://catalog.invalid/song.mp3'};}});
+ const a=client.loadCatalogTrack('song-a'),b=client.loadCatalogTrack('song-b');await tick();assert.equal(infoCalls,1);assert.equal(resolutions,0);release();await Promise.all([a,b]);assert.equal(resolutions,2);await client.loadCatalogTrack('song-c');assert.equal(infoCalls,1);assert.equal(calls.filter(call=>call.url.includes('/loadtracks')).length,3);
+ const next=setup({sessionId:'new-ready-session'});await next.client.loadCatalogTrack('song');assert.ok(next.calls[0].url.endsWith('/v4/info'));
+});
+
+test('Failed node verification is never cached as approved and a corrected node must pass a fresh check',async()=>{
+ let checks=0,resolutions=0;const {client,calls}=setup({infoFetch:async()=>json(++checks===1?{...validInfo(),sourceManagers:['http','soundcloud']}:validInfo()),resolveCatalogSource:async()=>{resolutions++;return{uri:'https://catalog.invalid/song.mp3'};}});
+ await rejected(()=>client.loadCatalogTrack('song'),'LAVALINK_NODE_POLICY');assert.equal(resolutions,0);await client.loadCatalogTrack('song');assert.equal(checks,2);assert.equal(resolutions,1);assert.deepEqual(calls.map(call=>new URL(call.url).pathname),['/v4/info','/v4/info','/v4/loadtracks']);
+});
+
+test('Node-info redirects, network errors and malformed responses never reach catalog resolution',async()=>{
+ for(const [infoFetch,code] of [[async()=>new Response(null,{status:302,headers:{Location:'https://SECRET.invalid'}}),'LAVALINK_REDIRECT'],[async()=>{throw Error('SECRET_NODE_TOKEN');},'LAVALINK_TRANSPORT'],[async()=>new Response('SECRET_BODY',{headers:{'content-type':'text/plain'}}),'LAVALINK_RESPONSE']]){
+  let resolutions=0;const {client,calls}=setup({infoFetch,resolveCatalogSource:async()=>{resolutions++;return{uri:'https://catalog.invalid/song.mp3'};}});await rejected(()=>client.loadCatalogTrack('song'),code);assert.equal(resolutions,0);assert.equal(calls.length,1);
+ }
+});
+
+test('A cancelled catalog request cannot resolve or load after shared preflight completes',async()=>{
+ let release,resolutions=0;const controller=new AbortController(),{client,calls}=setup({infoFetch:async()=>{await new Promise(resolve=>{release=resolve;});return json(validInfo());},resolveCatalogSource:async()=>{resolutions++;return{uri:'https://catalog.invalid/song.mp3'};}});
+ const pending=client.loadCatalogTrack('song',controller.signal),check=rejected(()=>pending,'LAVALINK_ABORTED');await tick();controller.abort();release();await check;assert.equal(resolutions,0);assert.equal(calls.length,1);
+});
+
+const playerState=(overrides={})=>({guildId,paused:true,state:{connected:true,position:1250,time:2000,ping:20},track:{encoded:'SECRET_ENCODED',info:{uri:'https://SECRET.invalid',title:'PRIVATE_TITLE'},userData:{ajMusic:{entryId:'entry-1',generation:3},token:'SECRET'}},voice:{token:'SECRET_VOICE',sessionId:'SECRET_SESSION',endpoint:'SECRET_ENDPOINT'},pluginInfo:{secret:'SECRET'},...overrides});
+
+test('Player-state GET returns only safe telemetry and correlation without asserting PLAYING',async()=>{
+ const {client,calls}=setup({fetch:async()=>json(playerState())});
+ assert.deepEqual(await client.readPlayer(fence(8,3)),{guildId,paused:true,connected:true,positionMs:1250,at:2000,track:{entryId:'entry-1',generation:3}});
+ assert.equal(calls.length,1);assert.equal(calls[0].url,`https://node.invalid/v4/sessions/ready-session/players/${guildId}`);assert.equal(calls[0].init.method,'GET');assert.equal(calls[0].init.body,undefined);assert.equal(calls[0].init.redirect,'error');assert.equal(calls[0].init.headers.Authorization,'PRIVATE_NODE_PASSWORD');
+ const idle=setup({fetch:async()=>json(playerState({track:null,paused:false,state:{connected:false,position:0,time:3000}}))});const result=await idle.client.readPlayer(fence());assert.equal(result.track,null);assert.equal(result.connected,false);assert.equal(result.status,undefined);assert.ok(!JSON.stringify(result).includes('SECRET'));
+});
+
+test('Player-state reads enforce current persisted fence before and after the network request',async()=>{
+ const blocked=setup({isCurrent:async()=>false});await rejected(()=>blocked.client.readPlayer(fence()),'LAVALINK_STALE');assert.equal(blocked.calls.length,0);
+ let checks=0;const changed=setup({fetch:async()=>json(playerState()),isCurrent:async()=>++checks===1});await rejected(()=>changed.client.readPlayer(fence()),'LAVALINK_STALE');assert.equal(changed.calls.length,1);assert.equal(checks,2);
+});
+
+test('Player-state reads reject malformed fields or uncorrelated non-null tracks without copying them',async()=>{
+ for(const body of [playerState({guildId:'999999999999999999'}),playerState({paused:'true'}),playerState({state:{connected:1,position:0,time:0}}),playerState({state:{connected:true,position:-1,time:0}}),playerState({state:{connected:true,position:604800001,time:0}}),playerState({state:{connected:true,position:0,time:8640000000000001}}),playerState({track:undefined}),playerState({track:{encoded:'SECRET'}}),playerState({track:{userData:{ajMusic:{entryId:'https://SECRET.invalid',generation:3}}}}),playerState({track:{userData:{ajMusic:{entryId:'entry-1',generation:'3'}}}})]){
+  const {client}=setup({fetch:async()=>json(body)});await rejected(()=>client.readPlayer(fence()),'LAVALINK_RESPONSE');
+ }
+});
+
+test('A stale queued read is skipped and an in-flight read is not acknowledged after a newer revision',async()=>{
+ let release;const {client,calls}=setup({fetch:async()=>{if(calls.length===1)await new Promise(resolve=>{release=resolve;});return json(playerState());}});
+ const first=client.readPlayer(fence(1)),firstCheck=rejected(()=>first,'LAVALINK_STALE');await tick();const queued=client.readPlayer(fence(2)),queuedCheck=rejected(()=>queued,'LAVALINK_STALE');const latest=client.readPlayer(fence(3));release();await firstCheck;await queuedCheck;assert.equal((await latest).paused,true);assert.equal(calls.length,2);
+ await rejected(()=>client.readPlayer(fence(2)),'LAVALINK_STALE');
+});
+
+test('Read failures are redacted and do not mark otherwise healthy player writes uncertain',async()=>{
+ let failed=true;const {client}=setup({fetch:async(_url,init)=>{if(init.method==='GET'&&failed){failed=false;return new Response('SECRET_MISSING_PLAYER_BODY',{status:404});}return json(init.method==='GET'?playerState():{guildId});}});
+ await rejected(()=>client.readPlayer(fence()),'LAVALINK_HTTP');await client.updatePlayer(fence(2),{paused:true});assert.equal((await client.readPlayer(fence(2))).paused,true);
+});
+
+test('Reading an uncertain player is allowed for recovery but never clears the write block',async()=>{
+ const {client}=setup({fetch:async(_url,init)=>{if(init.method==='PATCH')throw Error('SECRET_UNCERTAIN');return json(playerState());}});
+ await rejected(()=>client.updatePlayer(fence(),{paused:true}),'LAVALINK_TRANSPORT');assert.equal((await client.readPlayer(fence(2))).paused,true);await rejected(()=>client.updatePlayer(fence(3),{paused:false}),'LAVALINK_UNCERTAIN');
 });

@@ -31,16 +31,16 @@
     "playlist_view",
     "music_help"
   ],
-  "body": "Join a voice channel and use its embedded chat. /play searches the owner-authorized direct-audio catalog. External service links provide metadata references only: a track must match an enabled authorized catalog item to play. The controller distinguishes pending requests from confirmed playback.",
+  "body": "Join a voice channel and use its embedded chat. /play searches YouTube Music, YouTube and SoundCloud. Supported Spotify and Apple Music references resolve metadata, then require a confident playable match or your explicit choice. Direct audio is optional. The controller distinguishes pending requests from confirmed playback.",
   "fields": {
-    "query": "Search the authorized catalog or provide a supported metadata reference. Unmatched recordings are unavailable; no silent substitute is played.",
+    "query_or_link": "Search for a song or artist, or provide a supported track or playlist link. Ambiguous recording matches require your choice.",
     "time": "Seek within the current supported recording.",
     "position": "Use the current queue or playlist position.",
     "percent": "Volume is a DJ control.",
     "name": "Your own playlist name."
   },
   "examples": [
-    "/play query:evening",
+    "/play query_or_link:evening",
     "/music queue"
   ],
   "tutorial": {

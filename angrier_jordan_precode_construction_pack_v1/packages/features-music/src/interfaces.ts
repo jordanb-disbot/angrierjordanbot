@@ -2,8 +2,10 @@
 export interface MusicMetadata {
  provider:string;reference:string;title:string;artist:string;album:string|null;
  durationMs:number|null;artworkUrl:string|null;seekable:boolean;
+ /** Optional canonical recording identity; never a provider stream capability. */
+ isrc?:string|null;explicit?:boolean|null;
 }
-export interface MusicEntry {id:string;requesterUserId:string|null;track:MusicMetadata;}
+export interface MusicEntry {id:string;requesterUserId:string|null;track:MusicMetadata;requestedTrack?:MusicMetadata;resolutionMethod?:'direct'|'isrc'|'metadata'|'selected';}
 export interface MetadataResolution {tracks:MusicMetadata[];unavailable:{reference:string;reason:string}[];}
 export interface MusicMetadataProvider {
  search(query:string,limit:number,signal:AbortSignal):Promise<MusicMetadata[]>;

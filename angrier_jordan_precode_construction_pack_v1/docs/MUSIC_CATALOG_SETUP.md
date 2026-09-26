@@ -1,5 +1,7 @@
 # Authorized Music catalog setup (development preparation)
 
+**Superseded as the primary playback requirement:** see MUSIC_SOURCE_CONTRACT.md. This document now describes optional owner-supplied direct audio only. Ordinary playback must not require this catalog.
+
 Owner decision: direct audio supplied by the owner is the playable source. Lavalink supplies transport only. External music services may provide permitted metadata links; they do not become audio sources automatically. No commercial account or subscription is selected.
 
 The empty tracked example is docs/examples/music-catalog.example.json. Real catalog entries belong only in the ignored project-root .music.catalog.local.json. Never commit that file, paste signed URIs into chat or put them in public metadata. No real catalog has been created by this implementation.

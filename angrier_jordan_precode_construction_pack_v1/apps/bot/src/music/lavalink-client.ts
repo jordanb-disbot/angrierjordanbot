@@ -1,15 +1,22 @@
-import type {MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
+import {normalizeMusicReference,safeMusicArtworkUrl,type MusicPublicProvider} from '../../../../packages/features-music/src/provider-references.js';
+import type {MusicResolutionProvider,MusicSearchSource,MusicSearchRequest} from '../../../../packages/features-music/src/resolution.js';
+import type {MusicMetadata,MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
 
 /** A transport acknowledgement is not a Discord voice/playback observation. */
 export interface LavalinkAcknowledgement {accepted:true;}
+/** State telemetry only; connected alone does not establish that the current track played. */
+export interface LavalinkPlayerObservation {guildId:string;paused:boolean;connected:boolean;positionMs:number;at:number;track:{entryId:string;generation:number}|null;}
 /** Opaque, process-local capability. Its encoded track is never enumerable or serializable. */
 export interface LavalinkTrackHandle {readonly __lavalinkTrack?:never;}
 export interface LavalinkVoiceState {token:string;endpoint:string;sessionId:string;channelId:string;}
 export interface LavalinkPlayerPatch {track?:LavalinkTrackHandle|null;entryId?:string;position?:number;paused?:boolean;volume?:number;voice?:LavalinkVoiceState;}
+export type LavalinkSourcePolicy={mode:'direct-only'}|{mode:'multi-source';metadataSources?:readonly ('spotify'|'applemusic')[];catalog?:boolean};
+export const LAVALINK_REVIEWED_PLUGINS=Object.freeze({'youtube-plugin':'1.18.2','lavasrc-plugin':'4.8.3'});
 export interface LavalinkClientOptions {
+ sourcePolicy?:LavalinkSourcePolicy;
  endpoint:string;password:string;sessionId:string;fetch:typeof globalThis.fetch;
- resolveCatalogSource:(catalogId:string)=>Promise<{uri:string}>;
- isCurrent:(fence:MusicTransportFence)=>Promise<boolean>;
+ resolveCatalogSource?:(catalogId:string)=>Promise<{uri:string}>;
+ isCurrent:(fence:MusicTransportFence,operation?:'read'|'write')=>Promise<boolean>;
  timeoutMs?:number;
  /** Operator-only opt-in for an isolated private/test node; never member-controlled. */
  allowInsecureHttp?:boolean;
@@ -27,24 +34,37 @@ const same=(a:MusicTransportFence,b:MusicTransportFence)=>a.generation===b.gener
 const ack=():LavalinkAcknowledgement=>({accepted:true});
 
 /**
- * Lavalink v4 REST only: no gateway connection, audio extraction, or search endpoints.
- * The resolver is trusted operator catalog code, not an adapter around member URLs.
- * The node deployment MUST restrict HTTP-source DNS, redirects and egress to authorized
- * catalog origins (including rebinding/private-address protection). REST redirect:error
- * controls the node API request only, not Lavalink's later source fetches.
- * One client owns a ready session. Multi-process execution additionally needs the shared
- * durable worker lease. Uncertain mutations fail closed until node/session reconciliation.
+ * Trusted operator Lavalink v4 transport and bounded public metadata projection.
+ * Only the reviewed exact source/plugin set passes preflight for this ready session.
+ * Spotify/Apple encoded mirror tracks are discarded; playback requires a fresh public
+ * YouTube/SoundCloud identity load or an explicitly enabled trusted catalog resolver.
+ * Node operator policy additionally forbids cookies/token scraping, remote cipher and
+ * yt-dlp. /info attests loaded managers/plugins, not private plugin configuration.
+ * Catalog DNS/redirect/egress restrictions belong to the trusted node deployment.
+ * One client owns a ready session; multi-process use also requires the durable lease.
  */
-export class LavalinkRestClient {
+export class LavalinkRestClient implements MusicResolutionProvider {
  #origin:string;#password:string;#sessionId:string;#fetch:typeof globalThis.fetch;
  #resolve:LavalinkClientOptions['resolveCatalogSource'];#isCurrent:LavalinkClientOptions['isCurrent'];#timeout:number;
  #tracks=new WeakMap<LavalinkTrackHandle,{encoded:string;seekable:boolean;length:number}>();
+ #nodeReady:Promise<void>|null=null;#sources=new Set<string>();#plugins=new Map<string,string>();#catalog=false;
  #tails=new Map<string,Promise<unknown>>();#latest=new Map<string,MusicTransportFence>();#uncertain=new Set<string>();
  constructor(options:LavalinkClientOptions){
   let endpoint:URL;try{endpoint=new URL(options.endpoint);}catch{fail('LAVALINK_CONFIG');}
   if(!text(options.endpoint,2048)||endpoint!.username||endpoint!.password||endpoint!.search||endpoint!.hash||endpoint!.pathname!=='/'||!(endpoint!.protocol==='https:'||options.allowInsecureHttp===true&&endpoint!.protocol==='http:'))fail('LAVALINK_CONFIG');
   if(endpoint!.protocol==='http:'&&!privateHost(endpoint!.hostname))fail('LAVALINK_CONFIG');
-  if(!text(options.password,1024)||!text(options.sessionId,128)||!/^[a-zA-Z0-9_-]+$/.test(options.sessionId)||typeof options.fetch!=='function'||typeof options.resolveCatalogSource!=='function'||typeof options.isCurrent!=='function')fail('LAVALINK_CONFIG');
+  if(!text(options.password,1024)||!text(options.sessionId,128)||!/^[a-zA-Z0-9_-]+$/.test(options.sessionId)||typeof options.fetch!=='function'||options.resolveCatalogSource!==undefined&&typeof options.resolveCatalogSource!=='function'||typeof options.isCurrent!=='function')fail('LAVALINK_CONFIG');
+  const policy=options.sourcePolicy??{mode:'multi-source'};
+  if(!object(policy)||!['direct-only','multi-source'].includes(policy.mode))fail('LAVALINK_CONFIG');
+  if(policy.mode==='direct-only'){if(Object.keys(policy).some(key=>key!=='mode'))fail('LAVALINK_CONFIG');this.#catalog=true;this.#sources.add('http');}
+  else{
+   if(Object.keys(policy).some(key=>!['mode','metadataSources','catalog'].includes(key))||policy.catalog!==undefined&&typeof policy.catalog!=='boolean')fail('LAVALINK_CONFIG');
+   const metadata=policy.metadataSources??[];if(!Array.isArray(metadata)||metadata.length>2||new Set(metadata).size!==metadata.length||metadata.some(source=>!['spotify','applemusic'].includes(source)))fail('LAVALINK_CONFIG');
+   this.#sources=new Set(['youtube','soundcloud',...metadata]);this.#plugins.set('youtube-plugin',LAVALINK_REVIEWED_PLUGINS['youtube-plugin']);
+   if(metadata.length)this.#plugins.set('lavasrc-plugin',LAVALINK_REVIEWED_PLUGINS['lavasrc-plugin']);
+   if(policy.catalog===true){this.#catalog=true;this.#sources.add('http');}
+  }
+  if(this.#catalog&&typeof options.resolveCatalogSource!=='function')fail('LAVALINK_CONFIG');
   const timeout=options.timeoutMs??10000;if(!integer(timeout,1,60000))fail('LAVALINK_CONFIG');
   this.#origin=endpoint!.origin;this.#password=options.password;this.#sessionId=options.sessionId;this.#fetch=options.fetch;this.#resolve=options.resolveCatalogSource;this.#isCurrent=options.isCurrent;this.#timeout=timeout;
  }
@@ -72,14 +92,76 @@ export class LavalinkRestClient {
   }catch(error){if(error instanceof LavalinkBoundaryError)throw error;fail('LAVALINK_TRANSPORT');}
   finally{clearTimeout(timer);signal?.removeEventListener('abort',abort);controller.signal.removeEventListener('abort',onAbort);}
  }
+ async #verifyNode():Promise<void>{
+  if(!this.#nodeReady){
+   const pending=this.#request('GET','/v4/info',undefined).then(value=>{
+    const info=object(value),version=object(info?.version);
+    if(version?.major!==4||!Array.isArray(info?.sourceManagers)||info.sourceManagers.length!==this.#sources.size||new Set(info.sourceManagers).size!==this.#sources.size||info.sourceManagers.some(source=>typeof source!=='string'||!this.#sources.has(source))||!Array.isArray(info.plugins)||info.plugins.length!==this.#plugins.size)fail('LAVALINK_NODE_POLICY');
+    const names=new Set<string>();for(const raw of info!.plugins as unknown[]){const plugin=object(raw);if(typeof plugin?.name!=='string'||names.has(plugin.name)||!this.#plugins.has(plugin.name)||plugin.version!==this.#plugins.get(plugin.name))fail('LAVALINK_NODE_POLICY');names.add(plugin!.name as string);}
+   });
+   this.#nodeReady=pending;
+   // A transient failure or corrected node configuration can be checked again. Only
+   // verified success is retained; simultaneous loads share the same bounded request.
+   void pending.catch(()=>{if(this.#nodeReady===pending)this.#nodeReady=null;});
+  }
+  await this.#nodeReady;
+ }
  async loadCatalogTrack(catalogId:string,signal?:AbortSignal):Promise<LavalinkTrackHandle>{
+  if(!this.#catalog)fail('LAVALINK_SOURCE_DISABLED');
   if(!text(catalogId,128)||!/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(catalogId))fail('LAVALINK_CATALOG');
   if(signal?.aborted)fail('LAVALINK_ABORTED');
-  let source:{uri:string};try{source=await this.#resolve(catalogId);}catch{fail('LAVALINK_SOURCE');}
+  await this.#verifyNode();
+  if(signal?.aborted)fail('LAVALINK_ABORTED');
+  let source:{uri:string};try{source=await this.#resolve!(catalogId);}catch{fail('LAVALINK_SOURCE');}
   let uri:URL;try{if(!text(source!.uri,4096))throw Error();uri=new URL(source!.uri);if(!['https:','http:'].includes(uri.protocol)||uri.username||uri.password||uri.hash)throw Error();}catch{fail('LAVALINK_SOURCE');}
   const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(uri!.href),undefined,signal)),data=object(result?.data),info=object(data?.info);
   if(result?.loadType!=='track'||!text(data?.encoded,65536)||info?.sourceName!=='http'||typeof info.isSeekable!=='boolean'||!integer(info.length,0,604800000))fail('LAVALINK_SOURCE');
   const handle=Object.freeze({});this.#tracks.set(handle,{encoded:data!.encoded as string,seekable:info!.isSeekable as boolean,length:info!.length as number});return handle;
+ }
+ /** Search prefixes are selected here, never accepted from member input. */
+ async search(source:MusicSearchSource,query:MusicSearchRequest,limit:number,signal:AbortSignal):Promise<MusicMetadata[]>{
+  if(!['youtube_music','youtube','soundcloud'].includes(source)||!integer(limit,1,25)||!object(query)||typeof query.text!=='string'||!query.text.trim()||query.text.length>300||/[\u0000-\u001f\u007f]/.test(query.text)||query.isrc!==undefined&&!/^[A-Z]{2}[A-Z0-9]{3}\d{7}$/.test(query.isrc))fail('LAVALINK_INPUT');
+  this.#enabled(source);if(signal.aborted)fail('LAVALINK_ABORTED');await this.#verifyNode();
+  const prefix={youtube_music:'ytmsearch:',youtube:'ytsearch:',soundcloud:'scsearch:'}[source],term=query.isrc?'"'+query.isrc+'"':query.text.trim();
+  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(prefix+term),undefined,signal));
+  if(result?.loadType==='empty')return[];
+  if(result?.loadType!=='search'||!Array.isArray(result.data))fail('LAVALINK_SOURCE');
+  return this.#rows(result!.data as unknown[],source,limit);
+ }
+ async resolve(reference:string,limit:number,signal:AbortSignal):Promise<{tracks:MusicMetadata[];truncated:boolean}>{
+  const parsed=normalizeMusicReference(reference);if(!parsed||!integer(limit,1,1000))fail('LAVALINK_INPUT');
+  this.#enabled(parsed!.provider);if(signal.aborted)fail('LAVALINK_ABORTED');await this.#verifyNode();
+  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(parsed!.reference),undefined,signal));
+  if(result?.loadType==='empty')return{tracks:[],truncated:false};
+  if(result?.loadType==='track'&&parsed!.kind==='track'){
+   const row=this.#metadata(result.data,parsed!.provider);if(!row||row.reference!==parsed!.reference)fail('LAVALINK_SOURCE');return{tracks:[row!],truncated:false};
+  }
+  if(result?.loadType!=='playlist'||parsed!.kind!=='collection')fail('LAVALINK_SOURCE');
+  const data=object(result!.data);if(!Array.isArray(data?.tracks))fail('LAVALINK_SOURCE');
+  const raw=data!.tracks as unknown[],tracks=this.#rows(raw,parsed!.provider,limit),total=object(data!.pluginInfo)?.totalTracks;
+  // A provider may impose an upstream playlist page limit without totalTracks. Be
+  // conservative: collections without a verified total are visibly partial.
+  return{tracks,truncated:tracks.length<raw.length||!integer(total,0,1000000)||total>raw.length};
+ }
+ #enabled(provider:MusicPublicProvider){if(!this.#sources.has(provider==='youtube_music'?'youtube':provider))fail('LAVALINK_SOURCE_DISABLED');}
+ #rows(raw:unknown[],provider:MusicPublicProvider,limit:number):MusicMetadata[]{const result:MusicMetadata[]=[],seen=new Set<string>();for(const data of raw){const row=this.#metadata(data,provider);if(row&&!seen.has(row.reference)){result.push(row);seen.add(row.reference);if(result.length===limit)break;}}return result;}
+ #metadata(raw:unknown,provider:MusicPublicProvider):MusicMetadata|null {
+  const data=object(raw),info=object(data?.info),plugin=object(data?.pluginInfo);
+  if(!info||info.sourceName!==(provider==='youtube_music'?'youtube':provider)||typeof info.title!=='string'||typeof info.author!=='string'||typeof info.isSeekable!=='boolean'||typeof info.isStream!=='boolean'||!integer(info.length,0,604800000))return null;
+  let ref=typeof info.uri==='string'?normalizeMusicReference(info.uri):null;if(!ref||ref.kind!=='track')return null;
+  if((provider==='youtube'||provider==='youtube_music')&&(ref.provider==='youtube'||ref.provider==='youtube_music'))ref=normalizeMusicReference(ref.reference.replace(/^https:\/\/(?:www|music)\.youtube\.com/,provider==='youtube_music'?'https://music.youtube.com':'https://www.youtube.com'));
+  if(ref?.provider!==provider)return null;
+  const label=(input:string,max:number)=>input.normalize('NFKC').replace(/[\u0000-\u001f\u007f]/g,'').trim().slice(0,max),title=label(info.title,300),artist=label(info.author,300);if(!title||!artist)return null;
+  const isrc=typeof info.isrc==='string'&&/^[A-Z]{2}[A-Z0-9]{3}\d{7}$/.test(info.isrc)?info.isrc:null;
+  return{provider,reference:ref.reference,title,artist,album:typeof plugin?.albumName==='string'?label(plugin.albumName,300):null,durationMs:info.isStream||info.length===0?null:info.length as number,artworkUrl:safeMusicArtworkUrl(info.artworkUrl),seekable:info.isSeekable&&!info.isStream,isrc,...(typeof plugin?.explicit==='boolean'?{explicit:plugin.explicit}:{})};
+ }
+ /** Only the selected public recording identity may create a private playback capability. */
+ async loadPlayableTrack(track:MusicMetadata,signal?:AbortSignal):Promise<LavalinkTrackHandle>{
+  const parsed=normalizeMusicReference(track?.reference);if(!parsed||parsed.kind!=='track'||!['youtube','youtube_music','soundcloud'].includes(parsed.provider)||track.provider!==parsed.provider)fail('LAVALINK_SOURCE');
+  this.#enabled(parsed!.provider);if(signal?.aborted)fail('LAVALINK_ABORTED');await this.#verifyNode();
+  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(parsed!.reference),undefined,signal)),data=object(result?.data),metadata=this.#metadata(data,parsed!.provider);
+  if(result?.loadType!=='track'||!metadata||metadata.reference!==parsed!.reference||!text(data?.encoded,65536))fail('LAVALINK_SOURCE');
+  const handle=Object.freeze({});this.#tracks.set(handle,{encoded:data!.encoded as string,seekable:metadata!.seekable,length:metadata!.durationMs??0});return handle;
  }
  async updateSession(options:{resuming:boolean;timeout:number},signal?:AbortSignal):Promise<LavalinkAcknowledgement>{
   if(typeof options.resuming!=='boolean'||!integer(options.timeout,0,3600))fail('LAVALINK_INPUT');
@@ -89,9 +171,9 @@ export class LavalinkRestClient {
  }
  #serial<T>(key:string,work:()=>Promise<T>):Promise<T>{const operation=(this.#tails.get(key)??Promise.resolve()).catch(()=>{}).then(work);this.#tails.set(key,operation);void operation.finally(()=>{if(this.#tails.get(key)===operation)this.#tails.delete(key);}).catch(()=>{});return operation;}
  #fence(input:MusicTransportFence):MusicTransportFence {if(!snowflake(input.guildId)||!integer(input.revision,0,Number.MAX_SAFE_INTEGER)||!integer(input.generation,0,Number.MAX_SAFE_INTEGER))fail('LAVALINK_FENCE');return{guildId:input.guildId,revision:input.revision,generation:input.generation};}
- async #current(fence:MusicTransportFence){
-  if(this.#uncertain.has(fence.guildId))fail('LAVALINK_UNCERTAIN');
-  let current=false;try{current=await this.#isCurrent({...fence});}catch{fail('LAVALINK_FENCE');}
+ async #current(fence:MusicTransportFence,allowUncertain=false){
+  if(!allowUncertain&&this.#uncertain.has(fence.guildId))fail('LAVALINK_UNCERTAIN');
+  let current=false;try{current=await this.#isCurrent({...fence},allowUncertain?'read':'write');}catch{fail('LAVALINK_FENCE');}
   if(current!==true||!same(this.#latest.get(fence.guildId)!,fence))fail('LAVALINK_STALE');
  }
  #mutate(fenceInput:MusicTransportFence,work:()=>Promise<void>,signal?:AbortSignal):Promise<LavalinkAcknowledgement>{
@@ -118,4 +200,23 @@ export class LavalinkRestClient {
   return this.#mutate(fence,async()=>{const response=object(await this.#request('PATCH','/v4/sessions/'+this.#sessionId+'/players/'+fence.guildId+'?noReplace=false',body,signal));if(response?.guildId!==fence.guildId)fail('LAVALINK_RESPONSE');},signal);
  }
  destroyPlayer(fenceInput:MusicTransportFence,signal?:AbortSignal):Promise<LavalinkAcknowledgement>{const fence=this.#fence(fenceInput);return this.#mutate(fence,async()=>{await this.#request('DELETE','/v4/sessions/'+this.#sessionId+'/players/'+fence.guildId,undefined,signal);},signal);}
+ /**
+  * Pause/resume do not emit dedicated WebSocket events. The worker may combine this
+  * projection with a confirmed TrackStart binding for the same entry and generation.
+  * Reads may inspect an uncertain player for recovery, but NEVER clear the write block.
+  */
+ readPlayer(fenceInput:MusicTransportFence,signal?:AbortSignal):Promise<LavalinkPlayerObservation>{
+  const fence=this.#fence(fenceInput),prior=this.#latest.get(fence.guildId);
+  if(prior&&(fence.revision<prior.revision||fence.generation<prior.generation||fence.revision===prior.revision&&fence.generation!==prior.generation))return Promise.reject(new LavalinkBoundaryError('LAVALINK_STALE'));
+  this.#latest.set(fence.guildId,fence);
+  return this.#serial(fence.guildId,async()=>{
+   await this.#current(fence,true);
+   const response=object(await this.#request('GET','/v4/sessions/'+this.#sessionId+'/players/'+fence.guildId,undefined,signal)),state=object(response?.state);
+   if(response?.guildId!==fence.guildId||typeof response.paused!=='boolean'||!state||typeof state.connected!=='boolean'||!integer(state.position,0,604800000)||!integer(state.time,0,8640000000000000))fail('LAVALINK_RESPONSE');
+   let track:LavalinkPlayerObservation['track']=null;
+   if(response!.track!==null){const data=object(object(response!.track)?.userData),correlation=object(data?.ajMusic);if(!correlation||!text(correlation.entryId,100)||!/^[-a-zA-Z0-9_]+$/.test(correlation.entryId)||!integer(correlation.generation,0,Number.MAX_SAFE_INTEGER))fail('LAVALINK_RESPONSE');track={entryId:correlation!.entryId as string,generation:correlation!.generation as number};}
+   await this.#current(fence,true);
+   return{guildId:fence.guildId,paused:response!.paused as boolean,connected:state!.connected as boolean,positionMs:state!.position as number,at:state!.time as number,track};
+  });
+ }
 }

@@ -10,12 +10,12 @@
         {
           "file": "review-phase-23-foundation/idle-desktop.png",
           "width": 440,
-          "sha256": "695eccf338259bfc73e964fe4493765432ad82e735a6c8300165a4017ffe0e54"
+          "sha256": "4352c5e1dfd6f154c008915dfc95ab6f551bc6b006950d166adca2c1b5626bd7"
         },
         {
           "file": "review-phase-23-foundation/idle-mobile.png",
           "width": 360,
-          "sha256": "d950d6562643e1d924cec58113d6a28f60585003aa3e2efdf42d0f43f051792f"
+          "sha256": "f3ddf3bafa38ce957f5475ff78a9767d138e54b5a0c529dd1fc20b21d4fb618b"
         }
       ],
       "controls": [
@@ -98,12 +98,12 @@
         {
           "file": "review-phase-23-foundation/pending-desktop.png",
           "width": 440,
-          "sha256": "5ae417a8c23ce73132141bb17a9d97b72fe3f1dc4c3d0e9a4327144558ba71aa"
+          "sha256": "13d92a4dc1726ac80e75ad2a32624deea878c9a2e0ef51dd97924d08e22b4411"
         },
         {
           "file": "review-phase-23-foundation/pending-mobile.png",
           "width": 360,
-          "sha256": "362ad3ba3beb0697abfd6241765bd3242c170df84ad4c61e36a8d5996f8a433e"
+          "sha256": "1d59411dd040b958d6a8ce2f124b40ffc1501ec2906c91ab6931f04ac22f45db"
         }
       ],
       "controls": [
@@ -186,12 +186,12 @@
         {
           "file": "review-phase-23-foundation/playing-simulation-desktop.png",
           "width": 440,
-          "sha256": "eddf32ac83472ebabd62d0fdb6420e6e2a6a071ba1bad514da2cad704f7a6da3"
+          "sha256": "d72572e0355382d8ff035015ef0272d3cbb8946711537d0c968a88fa2603d4d4"
         },
         {
           "file": "review-phase-23-foundation/playing-simulation-mobile.png",
           "width": 360,
-          "sha256": "14f7321bf15a704f4372ba5611a9bbc20c2af7ae75f14dc926448c57d9b38752"
+          "sha256": "39eaaeb43e0b0a597e9cac50ad92cc1b0806451c95009bf412e8ffe11ea1bb07"
         }
       ],
       "controls": [
