@@ -170,6 +170,7 @@ model Escrow {
   kind String
   amount BigInt?
   itemRef String?
+  itemQuantity Int?
   state EscrowState @default(RESERVED)
   referenceType String
   referenceId String
