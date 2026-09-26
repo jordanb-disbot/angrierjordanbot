@@ -3,7 +3,7 @@ import type {RaceView} from './prisma-repository.js';
 import {art,footer,heading,ink,lines,panel,shell,text,type EventMotion} from './visual.js';
 /** Saved HP and move logs are authoritative; visual breathing never changes combat. */
 export function renderFight(view:RaceView,motion:EventMotion={},layout:'compact'|'wide'='compact'){
- if(layout==='wide')return renderWideFight(view);
+ if(layout==='wide')return renderWideFight(view,motion);
  const hp=view.combat?.hp??[100,100],closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',live=view.state==='LOCKED',phase=motion.phase??0,height=790;
  const logs=view.combat?.log??['Choose a fighter below. Your wager stays private.'],wrapped=logs.map(s=>lines(s,39));
  const winner=view.racers.find(f=>f.userId===view.winnerId);

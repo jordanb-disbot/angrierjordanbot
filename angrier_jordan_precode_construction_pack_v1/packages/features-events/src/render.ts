@@ -3,7 +3,7 @@ import type {RaceView} from './prisma-repository.js';
 import {art,footer,heading,ink,panel,shell,text,type EventMotion} from './visual.js';
 /** Visual state consumes saved standings; lighting and suspension never change progress. */
 export function renderRace(view:RaceView,_layout:'compact'|'wide'='compact',motion:EventMotion={}){
- if(_layout==='wide')return renderWideRace(view);
+ if(_layout==='wide')return renderWideRace(view,motion);
  const live=view.state==='LOCKED',closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',phase=motion.phase??0;
  const winner=view.racers.find(r=>r.userId===view.winnerId),height=closed?650:live?244+view.racers.length*104:252+Math.ceil(view.racers.length/2)*184;
  let body=heading(closed?'LIVE EVENTS / OFFICIAL RESULT':live?'LIVE EVENTS / SPRINT IN PROGRESS':'LIVE EVENTS / BETTING OPEN',cancelled?'Race cancelled':closed?'Race results':'Chair Race',cancelled?'All wagers refunded.':closed?'The lounge has a new front runner.':live?'One sprint. Equal odds. Betting locked.':'Take your seat. Back your favourite.');

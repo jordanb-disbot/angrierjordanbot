@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "7e6ef1fc3a5dd221fc3718c0a4b30b81930ec978e50ad9195c2b7740545f859b"
+      "sha256": "1c6fd2f8232df277df3462aa52dac34ad20741b08ae7f31d2b950e1b69c09a2a"
     },
     {
       "id": "line.approved.lounge",
@@ -6144,6 +6144,24 @@
       "status": "VISUAL_APPROVED_LIVE_ACCEPTANCE_PENDING",
       "usage": "Owner-approved Music visual system at f98de3c (2026-09-26): full/compact player, lists, notices and native controls. Live functional Gate C pending.",
       "sha256": "e5c09467ba04e1be0348d3382e5dc9f5cd7761616c198fc362759c79c1299911"
+    },
+    {
+      "id": "event.chair-car.v4",
+      "file": "production/event_art/v4/chair-car.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged static event artwork; deterministic runtime composition. No runtime generation.",
+      "sha256": "044e9e4cc6e57772d37aca0ec6253144fa24ed93b8074b6a2852862afaeaa44d"
+    },
+    {
+      "id": "event.chair-robot.v4",
+      "file": "production/event_art/v4/chair-robot.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged static event artwork; deterministic runtime composition. No runtime generation.",
+      "sha256": "6957a8ba0e56a787e48bb1270ef0844e836f8ccf628db5428d31ee400905a2be"
     }
   ]
 }
