@@ -4580,5 +4580,21 @@ export const SETTINGS = [
     "mutable": true,
     "dashboard_write": "blocked",
     "depends_on": []
+  },
+  {
+    "key": "music.dj_role",
+    "section": "music",
+    "type": "discord_role",
+    "default": null,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Optional dedicated Music DJ role; shared staff tiers retain DJ authority.",
+    "risk": "security",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
   }
 ] as const satisfies readonly SettingContract[];

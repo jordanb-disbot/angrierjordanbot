@@ -49,7 +49,9 @@
       "Search with /play and choose an available authorized recording.",
       "Confirm duplicates when prompted; check pending versus confirmed playback on the controller.",
       "Skip your own track, use DJ authority, or vote with eligible listeners. Previous, Replay and Seek require the current requester or a DJ.",
-      "Save your own playlists. Deleting a playlist does not remove tracks already queued."
+      "Save your own playlists. Deleting a playlist does not remove tracks already queued.",
+      "DJs include the configured staff tiers and optional dedicated DJ role. Autoplay chooses another available recording by the same artist; unavailable matches leave the jukebox idle.",
+      "The pinned player refreshes without reposting each change. After an unexpected voice departure, use /music join to resume; a process restart recovers the saved queue."
     ]
   }
 }

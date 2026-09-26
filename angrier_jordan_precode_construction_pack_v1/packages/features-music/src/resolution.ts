@@ -50,6 +50,12 @@ export function scoreMusicMatch(request:MusicMetadata,candidate:MusicMetadata):M
 }
 export class MusicResolutionService {
  constructor(private provider:MusicResolutionProvider){}
+ /** Deliberate autoplay: same artist, compatible version, no recent recording repeats. */
+ async recommendations(after:MusicMetadata,excludedRefs:readonly string[],signal:AbortSignal):Promise<MusicMetadata[]>{
+  const seed=publicMusicMetadata(after),excluded=new Set([...excludedRefs,seed.reference]);
+  const rows=await this.search(seed.artist,25,signal);
+  return rows.filter(track=>!excluded.has(track.reference)&&track.durationMs!==null&&artist(track.artist)===artist(seed.artist)&&variants(track.title)===variants(seed.title)&&(seed.explicit==null||track.explicit==null||seed.explicit===track.explicit)&&normalize(track.title)!==normalize(seed.title)).slice(0,5);
+ }
  async resolveReference(reference:string,limit:number,signal:AbortSignal):Promise<{tracks:MusicMetadata[];truncated:boolean}>{
   if(!Number.isSafeInteger(limit)||limit<1||limit>1000||reference.length>2048||/[\u0000-\u001f]/.test(reference))throw new DomainError('MUSIC_QUERY','Choose a supported music reference.');
   if(signal.aborted)throw new DomainError('MUSIC_CANCELLED','The request was cancelled.');

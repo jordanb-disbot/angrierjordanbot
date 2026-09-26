@@ -1,34 +1,44 @@
-# Phase 23 Music — implementation in progress, disabled
+# Phase 23 Music readiness — Gate C pending
 
-Gate C is pending. Nothing here deploys, enables Music, selects a provider account or claims live playback acceptance.
+The current checkpoint adds offline Music integration. It does not establish live playback acceptance or authorize production deployment. [MUSIC_SOURCE_CONTRACT.md](MUSIC_SOURCE_CONTRACT.md) is the newest owner authority: normal playback uses Lavalink v4 with maintained YouTube support and SoundCloud; direct audio is optional. A private catalog is not a prerequisite.
 
-**Latest owner update:** MUSIC_SOURCE_CONTRACT.md supersedes the catalog-first decision below. Multi-source search/playback is required; the optional private catalog is not an acceptance prerequisite. Existing catalog-only foundation tests are not evidence that the new multi-source contract is implemented.
+## Implementation present
 
-## Owner decision recorded
+- Provider-neutral search checks YouTube Music, YouTube, then SoundCloud. Public provider references and artwork are normalized. Spotify/Apple references are metadata only; matching considers ISRC, title, artist, duration and version, with explicit selection for ambiguous candidates. Requested identity and selected audio-source provenance remain separate.
+- The REST client verifies reviewed source managers and pinned plugins, projects bounded metadata and creates opaque playback handles only for freshly loaded selected recordings or opted-in catalog entries. Credentials, encoded tracks and temporary audio URLs are not public metadata.
+- Discord voice collection and gateway projection use current identity, channel, epoch and revision/generation checks. Acknowledged transport writes and connected telemetry do not by themselves mean the track played. Correlated TrackStart and subsequent observations drive recorded playback.
+- The synchronizer preserves the current recording for queue-only revisions. The runtime uses shared job leases and per-server event ordering. A new node session resolves fresh playback capabilities; uncertain writes are not reset on the same client.
+- Durable selection/confirmation sessions, queue/requester identity, playlist ownership/revisions and history are implemented through shared persistence. Previous, Replay and Seek require the current requester or DJ; other eligible listeners vote to skip. DJ access uses the shared capability matrix and configured DJ role with fresh interaction membership checks.
+- Controller publication uses the shared DeliveryEngine, a stable publication marker, authoritative message pointers, pin retries, positive-deletion replacement and durable relocation cleanup. Retirement removes controls and unpins while preserving the post. Refresh jobs are coalesced in five-second buckets; presentation retry is separated from audio recovery.
+- Application composition includes optional on-demand catalog loading, fresh node sessions, reconnect backoff, shutdown guards, conservative same-artist autoplay candidates and listener/bot departure handling. Unexpected bot removal quarantines the current process until an explicit join request; process restart still recovers persisted desired playback and queue. No unapproved empty-channel idle timer is introduced.
+- Worker startup, autocomplete/interaction routes, voice-state events, shared scheduled job handlers and lifecycle shutdown are wired. These paths remain opt-in for controlled development acceptance.
 
-The owner approved Previous, Replay and Seek for the current requester or a DJ only (2026-09-25). Skip retains the canonical current-requester/DJ direct action and eligible-listener majority vote for others. New controls must not bypass those rules.
+Combined offline validation passed on 2026-09-25. Live voice/provider acceptance remains unverified.
 
-The owner replaced the earlier catalog-first decision with Lavalink v4, maintained YouTube source support, SoundCloud, and Spotify/Apple metadata resolution. Conservative matching and explicit ambiguous choices remain required. See MUSIC_SOURCE_CONTRACT.md; MUSIC_CATALOG_SETUP.md now covers optional direct audio only.
+## Disabled defaults and boundaries
 
-## Foundations
+`ENABLE_MUSIC_SMOKE=false` and the server setting `music.enabled=false` remain the default. Runtime environment validation rejects the Music smoke switch when `NODE_ENV=production` while Gate C is pending. Spotify metadata, Apple metadata and direct audio each have separate false-by-default environment switches. No node, provider account, credential or production resource was provisioned by this checkpoint.
 
-Provider-neutral interfaces separate metadata/search references, private authorized audio streams and voice transport. Track requests and observed audio state are distinct. Generation tokens fence stale track callbacks; operation receipts and revisions serialize durable mutations. The additive 0022 migration introduces transport intents/recovery fields and playlist revisions without deleting existing rows. Legacy state fails closed rather than inventing confirmed playback.
+With the development composition loaded, publication may reconcile existing SENDING/SENT receipts while disabled and retire obsolete controllers. It cannot send new disabled posts. A five-second enabled-state watchdog retires active audio on disablement or configuration-read failure; reenabling uses a fresh session. With the environment switch off, no Music composition is loaded and durable jobs remain pending.
 
-Queue entries carry stable IDs and requester identity. Playlist edits use ownership and stale-revision checks. Queued copies survive playlist deletion. Metadata projects only public fields; stream URLs and provider credentials must not be persisted or rendered.
+Offline tests use injected provider, Discord and transport boundaries. PostgreSQL tests establish persistence behavior; they do not establish audible output. The [test-node template](../testing/music-node/README.md) records reviewed versions and operator constraints, not proof of successful node startup, current provider availability or Discord playback.
 
-The controller renderer reuses the approved Gate B lounge frame, centered hierarchy, brass artwork treatment and bundled fonts. Until the Discord adapter is wired, its outputs are engineering fixtures, not Gate C runtime acceptance.
+## Validation record
 
-## Outstanding integration before Gate C
+| Check | Final checkpoint result |
+| --- | --- |
+| Commit under review | This Phase 23 integration checkpoint, based on e6c4d77 |
+| Full build and preflight | PASS (workspace/dashboard build; final preflight) |
+| Runtime/domain tests | 277 passed |
+| Adapter/composition/publication tests | 366 passed, including 15 application and 17 publication cases |
+| Targeted PostgreSQL tests | 24 passed on disposable TEST_DATABASE_URL; migrations applied to isolated schema |
+| Registration/help/settings/wiring checks | PASS; 256 settings generated, optional music.dj_role added |
+| Approved visual locks and secret scan | PASS; 38 immutable references + 144 approved Gate B images unchanged; no detected secret/local paths |
+| Real node/provider/Discord voice acceptance | NOT RUN |
+| Owner Gate C review | PENDING |
 
-Current tested work includes the multi-source REST boundary, public reference normalization, conservative ISRC/metadata matching, opaque playback capabilities, voice handshake and Discord gateway bridge, generation-fenced player synchronization and event handling, durable selection/confirmation sessions, and controller reservation/cleanup persistence. Runtime playback remains disabled and not wired into production startup.
+## Remaining acceptance work
 
-The initial catalog foundation is retained as an optional source. It is no longer the normal search/playback requirement. Source attribution now distinguishes requested Spotify/Apple identity from the selected audio provider. The current provisional Music fixtures were regenerated; approved Gate A/B reference images were not changed.
+Follow [GATE_C_MUSIC_ACCEPTANCE.md](GATE_C_MUSIC_ACCEPTANCE.md) for the controlled test-node handoff, live scenarios and evidence record. Offline validation is complete; the next dependency is the controlled test node and live Discord participation. Optional metadata credentials are needed only for the Spotify/Apple part of the acceptance matrix; ordinary YouTube/SoundCloud tests do not require a catalog or those credentials.
 
-Final application composition (`apps/bot/src/music/music-application.ts`) and controller-publication adapter (`apps/bot/src/discord/music-publication.ts`) are preserved as uncommitted work in progress. They typecheck, but need dedicated integration/ambiguous-delivery tests and production lifecycle wiring. Do not treat a workspace build as completion of those acceptance gates. Parallel work was interrupted by a service usage limit; resume these files rather than reconstructing them.
-
-- Fresh voice/member/DJ authority at every interaction, embedded VC-chat enforcement, one pinned authoritative controller and safe replacement through shared delivery records.
-- Serialized, generation-fenced transport intent execution; actual provider failures, restarts, permissions and listener changes.
-- Registry option/autocomplete reconciliation, music help/tutorial/dashboard metadata, final manifest and controller review fixtures.
-- A reachable approved test Lavalink node and live Discord acceptance; authorized metadata integration credentials where required. No private catalog is required for ordinary playback. Finish offline integration before requesting node provisioning; use testing/music-node for the reviewed configuration.
-
-No provider secret files have been inspected. Production credentials and deployment remain outside this checkpoint.
+The current [foundation gallery](../review-phase-23-foundation/index.html) contains 17 fictional scenarios / 34 desktop/mobile images, including source attribution, private choices/confirmations, queue/history/playlists and notices. It is not a live Discord capture or the complete Gate C package. The final package must include desktop/mobile controller states, requested/playback source attribution, selection/confirmation/error flows and the live evidence listed in the acceptance document. Preserve [the approved visual system](APPROVED_VISUAL_SYSTEM.md), Space Grotesk/Inter, the immutable Gate A/B references and deterministic runtime rendering. No redesign or runtime AI artwork is authorized.

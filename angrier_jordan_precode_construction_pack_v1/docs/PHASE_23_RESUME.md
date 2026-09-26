@@ -1,27 +1,29 @@
-# Phase 23 resume point — 2026-09-25
+# Phase 23 resume point — Music integration and Gate C
 
-Newest owner authority: MUSIC_SOURCE_CONTRACT.md. Normal playback is multi-source Lavalink; do not reinstate the private-catalog prerequisite. Gate C is pending. Music is disabled in production wiring. Gate A and B references remain frozen.
+Newest owner authority: [MUSIC_SOURCE_CONTRACT.md](MUSIC_SOURCE_CONTRACT.md). Normal playback is multi-source Lavalink; direct audio is optional. Gate C remains pending. Music stays disabled by default, and the runtime environment guard rejects production Music enablement while this gate is pending. Gate A/B visual references remain frozen.
 
-## Preserve current work
+## Preserve the integrated work
 
-Two parallel agents hit the service usage limit. Their existing files were retained. In particular, `apps/bot/src/discord/music-publication.ts` and `apps/bot/src/music/music-application.ts` are uncommitted composition work, not accepted production integration. Do not replace or discard them. Both typecheck with the current tree; controller publication still needs dedicated tests.
+Continue the existing `music-application.ts` and `music-publication.ts`; their earlier interrupted drafts have been extended in place. Dedicated application and publication tests now exist. Startup/job/interaction/voice-event/shutdown wiring is present behind the opt-in development switch. Do not restore stale notes claiming that these adapters are wholly absent, or infer that their presence proves live playback.
+
+See [PHASE_23_MUSIC_READINESS.md](PHASE_23_MUSIC_READINESS.md) for the implementation inventory and final validation record. Final offline results: full build/preflight PASS, 277 runtime tests, 366 adapter tests, 24 PostgreSQL tests, 34 fixture images, approved visual locks and secret scan PASS. This checkpoint extends e6c4d77; use its containing Git commit for live acceptance.
 
 ## Next safe sequence
 
-1. Add controller-publication tests for shared DeliveryEngine recovery, pin-only retry, stale/foreign post rejection, replacement after confirmed deletion, relocation during send/edit, permission loss, disabled publication and non-destructive retirement. Ensure a controller refresh failure does not unnecessarily destroy the healthy audio session; use durable refresh retry where needed.
-2. Test the application composition, including optional catalog loading, new non-resumed node sessions, fresh provider resolution after restart, shutdown during initialization and node failure. Reconcile reconnects without clearing uncertain write guards on an existing node session.
-3. Wire the composition into production startup, shared scheduled job handlers (`music.reconcile`, `music.controller.publish`, `music.controller.cleanup`), interaction/autocomplete routing, health/lifecycle shutdown and environment validation. Keep the default Music flag/environment switch off. Derive DJ access from the shared capability matrix and fresh server roles; preserve confinement/security checks.
-4. Finish enabled autoplay/recommendation integration, current listener/voice departure handling and controller refresh pacing. Do not claim these work from domain-only tests. Update help/tutorial/settings/status and deterministic desktop/mobile fixtures together.
-5. Run full build/preflight, targeted PostgreSQL and lifecycle/provider/controller integration tests, visual locks and secret scan. Commit/push only verified work without rewriting history.
-6. Only after offline integration is complete, provide the owner exact test-node setup instructions from `testing/music-node/` and identify any authorized Spotify/Apple metadata credentials genuinely needed. No production credentials/deployment are authorized. Then complete real voice/provider/restart acceptance and the established Gate C review package.
+1. Offline integration is complete. Preserve the tested adapters, conflict-safe refresh coalescing, five-second disable watchdog, fresh-session recovery and frozen visual references.
+2. Provide the owner the bounded test-node setup in [GATE_C_MUSIC_ACCEPTANCE.md](GATE_C_MUSIC_ACCEPTANCE.md). No Java/Docker executable was available during this checkpoint and no live node was launched. No private catalog is required. Authorized Spotify/Apple metadata credentials are needed only for those cases.
+3. After the owner supplies the test node and controlled Discord test access, run and record real provider, voice, permissions, controller, concurrency and restart checks. Keep failed/unavailable cases explicit. Extend the 34-image fixture gallery with actual desktop/mobile captures and audible-playback observations.
+4. Present the evidence at Gate C and stop for the owner decision. Gate C and production release authorization are separate; neither has been granted. Do not continue Phase 24 across this gate.
 
-## Useful boundaries
+## Boundaries to retain
 
-- `MusicResolutionService`: public canonical metadata, conservative ISRC/title/artist/duration/version matching and explicit ambiguous choices.
-- `LavalinkRestClient`: reviewed node/source policy, projected metadata, fresh opaque playable handles, no Spotify/Apple mirror playback.
-- `DiscordVoiceHandshake` / `DiscordJsVoiceGateway`: fresh epoch/sequence-bound voice credentials; fail closed after uncertain attempts.
-- `MusicPlayerSynchronizer`: accepts desired state under a live fence; acknowledgements never imply audible playback. Queue-only revisions do not replay tracks.
-- `MusicRuntime`: one per-server event/reconciliation lane plus shared job lease checks. Telemetry needs correlated TrackStart and does not create reconciliation feedback. Disconnect is observed only after the voice boundary confirms departure.
-- Repository event/selection/controller APIs: shared atomic operations, sessions/timers/receipts, stable controller reservation and durable late-send cleanup. Do not use the legacy unfenced `completeIntent` helper from a worker; let the scheduler complete with its lease token.
+- `MusicResolutionService`: canonical public metadata, conservative recording matching, explicit choices, bounded recommendations and honest unavailable results.
+- `LavalinkRestClient`: reviewed source/plugin policy, projected metadata, fresh opaque playable handles; never Spotify/Apple mirror playback.
+- `DiscordVoiceHandshake` / `DiscordJsVoiceGateway`: fresh epoch/sequence-bound credentials and fail-closed uncertain attempts.
+- `MusicPlayerSynchronizer`: fenced desired-state effects. Queue/telemetry changes do not replay audio; acknowledgements are not playback evidence.
+- `MusicRuntime`: current shared job lease for writes, correlated TrackStart for telemetry, stale-socket/generation rejection and confirmed voice departure for disconnect observation.
+- `MusicApplication`: fresh non-resumed node sessions, retry/backoff, lifecycle shutdown, explicit bot-departure recovery and presentation retry independent of audio.
+- `DiscordMusicPublication`: shared delivery recovery, stable marker, author/channel/pointer checks, same-message pin retry, CAS replacement and non-destructive retirement.
+- Repository workflows: shared atomic operations, sessions, timers, receipts, revision/generation fencing, authoritative controller reservation and durable cleanup/refresh intents.
 
-The current node template is research/configuration, not evidence of successful JVM startup or audible playback. Current Music images are explicitly fixture simulations, not live Discord screenshots or Gate C approval.
+Do not inspect or print secret files for documentation work. Test database access remains restricted to the ignored project-root `.env.test.local` value `TEST_DATABASE_URL`; never select a production database for acceptance. The disposable Railway project `upbeat-kindness` is test-only.

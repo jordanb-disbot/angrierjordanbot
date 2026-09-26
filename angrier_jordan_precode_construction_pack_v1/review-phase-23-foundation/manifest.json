@@ -267,6 +267,669 @@
         }
       ],
       "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "source-attribution-simulation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/source-attribution-simulation-desktop.png",
+          "width": 440,
+          "sha256": "0984bbabbe603f926356cdcb5f846c7f6993aed50ecb9f7f264ed53d3078e28a"
+        },
+        {
+          "file": "review-phase-23-foundation/source-attribution-simulation-mobile.png",
+          "width": 360,
+          "sha256": "6c5c394486322c02281d0ec2b6cb9b0ba0807f92f082aa3ce2af1faa44bc6e14"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:pause:public",
+              "label": "Pause",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:stop:public",
+              "label": "Stop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "paused-simulation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/paused-simulation-desktop.png",
+          "width": 440,
+          "sha256": "7b6850a1429b3e747ce7e898b9bfeee5be1ebe43c2da45babf314aea32fe3929"
+        },
+        {
+          "file": "review-phase-23-foundation/paused-simulation-mobile.png",
+          "width": 360,
+          "sha256": "4b4703a4c34ff482cb4c4246c82dcca35388a9fdfc54c3b7f6a085cd1504a535"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:resume:public",
+              "label": "Resume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:stop:public",
+              "label": "Stop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:1:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "recovering-simulation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/recovering-simulation-desktop.png",
+          "width": 440,
+          "sha256": "b31e9e3c56081be57b3dc85d619ef58d4c16e2e146b33c745e6b1f92a92b6d86"
+        },
+        {
+          "file": "review-phase-23-foundation/recovering-simulation-mobile.png",
+          "width": 360,
+          "sha256": "ab5824aa7494b9088fd66eec106dc4c442b46795e2f238fdb3bc84f9a26d49ae"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:pause:public",
+              "label": "Pause",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:stop:public",
+              "label": "Stop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:4:2:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "unavailable-simulation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/unavailable-simulation-desktop.png",
+          "width": 440,
+          "sha256": "b321251983387ffcb8d4291c1a9799f57c47bb7fc5a1cc9db7b31c61c1a9182e"
+        },
+        {
+          "file": "review-phase-23-foundation/unavailable-simulation-mobile.png",
+          "width": 360,
+          "sha256": "bf70f1e382e3167ec17e443cdea4b7502d756285c03b26ea44680554eddd9362"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:pause:public",
+              "label": "Pause",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:stop:public",
+              "label": "Stop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:5:2:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "long-labels-simulation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/long-labels-simulation-desktop.png",
+          "width": 440,
+          "sha256": "edf9662ffda30840a6aa48a0687172e0917632033200c015521dea902de2394c"
+        },
+        {
+          "file": "review-phase-23-foundation/long-labels-simulation-mobile.png",
+          "width": 360,
+          "sha256": "7bd8dfe6eef417ff489587f306be0905bd64a525ad49ebb15ff89f5cf4df505d"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:previous:public",
+              "label": "Previous",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:pause:public",
+              "label": "Pause",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:skip:public",
+              "label": "Skip",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:stop:public",
+              "label": "Stop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:shuffle:public",
+              "label": "Shuffle",
+              "style": 2
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:loop:public",
+              "label": "Loop",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:queue:public",
+              "label": "Queue",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:volume:public",
+              "label": "Volume",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:autoplay:public",
+              "label": "Autoplay",
+              "style": 2
+            },
+            {
+              "type": 2,
+              "custom_id": "music:control:fixture-server:3:1:nowplaying:public",
+              "label": "Refresh",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#payload"
+    },
+    {
+      "id": "recording-choice",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/recording-choice-desktop.png",
+          "width": 440,
+          "sha256": "420447164665f053e403b884aae64c12ec4bb807d1a0e6b4084b2f72f5c77683"
+        },
+        {
+          "file": "review-phase-23-foundation/recording-choice-mobile.png",
+          "width": 360,
+          "sha256": "37d333ca5fa9b61b528406e343c2a56378ed80c203869df4e45b0ff0db69e84f"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 3,
+              "custom_id": "music:resolvepick:fixture-member:fixture-selection:0",
+              "placeholder": "Choose the exact recording",
+              "options": [
+                {
+                  "label": "An Evening in the Lounge",
+                  "value": "0",
+                  "description": "Fictional Quartet · Fictional fixture catalog"
+                },
+                {
+                  "label": "Another Evening in the Lounge",
+                  "value": "1",
+                  "description": "Fictional Quartet · Fictional fixture catalog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:resolvecancel:fixture-member:fixture-selection:0",
+              "label": "Cancel",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "batch-confirmation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/batch-confirmation-desktop.png",
+          "width": 440,
+          "sha256": "faf56eda9d22a0392203fa557fd3bdf78e96343c3fc2acf40042d8555031e86a"
+        },
+        {
+          "file": "review-phase-23-foundation/batch-confirmation-mobile.png",
+          "width": 360,
+          "sha256": "704a7718664b28123b7bc9fd72d745b769268bba3227e9c857464b60485bfce9"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:resolveconfirm:fixture-member:fixture-batch:0",
+              "label": "Add selection",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:resolvecancel:fixture-member:fixture-batch:0",
+              "label": "Cancel",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "duplicate-confirmation",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/duplicate-confirmation-desktop.png",
+          "width": 440,
+          "sha256": "4f16518a43c3c201e53298feaaab06cbc6f44bf0a8a0c6f78cff682b9c8f7d54"
+        },
+        {
+          "file": "review-phase-23-foundation/duplicate-confirmation-mobile.png",
+          "width": 360,
+          "sha256": "fbb0d4b829cc9059fb894842d9ef2b5d81d1184f8b824e98d2b78995338f0eeb"
+        }
+      ],
+      "controls": [
+        {
+          "type": 1,
+          "components": [
+            {
+              "type": 2,
+              "custom_id": "music:resolveconfirm:fixture-member:fixture-duplicates:0",
+              "label": "Add duplicates",
+              "style": 1
+            },
+            {
+              "type": 2,
+              "custom_id": "music:resolvecancel:fixture-member:fixture-duplicates:0",
+              "label": "Cancel",
+              "style": 2
+            }
+          ]
+        }
+      ],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "queue",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/queue-desktop.png",
+          "width": 440,
+          "sha256": "4b9670ecd290400dd110094ed017655287e65ccfa8787b946790cc006cee9bcd"
+        },
+        {
+          "file": "review-phase-23-foundation/queue-mobile.png",
+          "width": 360,
+          "sha256": "07abb1a1cc10ba145fdccfb4527c4c10d4cb448c690c0dee0012f2bd138b8023"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "history",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/history-desktop.png",
+          "width": 440,
+          "sha256": "c32659882a7c7333b99f8481962717f3dd93d9041cf49a835c48ce616166e4a4"
+        },
+        {
+          "file": "review-phase-23-foundation/history-mobile.png",
+          "width": 360,
+          "sha256": "4df6f1352a5edb5a11193ccde6bc8056a4d0cef9e228dfc333e47aeff911df05"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "playlists",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/playlists-desktop.png",
+          "width": 440,
+          "sha256": "7ca4885e4703a1c38be511f6592cac4f39de48fe9f3023efef7bc738fe9280e3"
+        },
+        {
+          "file": "review-phase-23-foundation/playlists-mobile.png",
+          "width": 360,
+          "sha256": "f9dcafa347dddf3e4385eb0e643dad8fc69a400f73d96a51d010c7e52f447c86"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "playlist-tracks",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/playlist-tracks-desktop.png",
+          "width": 440,
+          "sha256": "dd03066ab08c925da78a5ca1330fe35d203b9b88438c703ccd75c7938437cc51"
+        },
+        {
+          "file": "review-phase-23-foundation/playlist-tracks-mobile.png",
+          "width": 360,
+          "sha256": "8b5825db50580349d149faebc96c9c1b549d57b4908467b2e0e9b79ed08d9b58"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "permission-notice",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/permission-notice-desktop.png",
+          "width": 440,
+          "sha256": "e491752cd9967a095a2cef50459808783c31d61f11465a1f4e6dbd85f1ad9107"
+        },
+        {
+          "file": "review-phase-23-foundation/permission-notice-mobile.png",
+          "width": 360,
+          "sha256": "c9a389b02f9f318b89bf8167da8e315aa1df79a8fd49f30dd48cecbd27b4926c"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
+    },
+    {
+      "id": "unavailable-notice",
+      "files": [
+        {
+          "file": "review-phase-23-foundation/unavailable-notice-desktop.png",
+          "width": 440,
+          "sha256": "d3fce490713a91145eb09414231ff488960c71734388576eb65ceead94810ce9"
+        },
+        {
+          "file": "review-phase-23-foundation/unavailable-notice-mobile.png",
+          "width": 360,
+          "sha256": "a2f3fba62fed1f7c2d4b079f71f188ebc21e873576acc7d6fc6f37198ba2110d"
+        }
+      ],
+      "controls": [],
+      "renderer": "apps/bot/src/discord/music-coordinator.ts#private-interaction-presentation"
     }
   ]
 }

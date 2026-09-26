@@ -6,6 +6,13 @@ import {SchedulerWorker} from '../../.test-build/packages/core/src/scheduler-wor
 import {PermissionEngine} from '../../.test-build/packages/core/src/permissions.js';
 
 const base={NODE_ENV:'production',DATABASE_URL:'postgresql://fixture:secret@chairs-db.railway.internal:5432/chairs',AJ_DATABASE_PURPOSE:'production',DISCORD_TOKEN:'fake-only',DISCORD_APPLICATION_ID:'123456789012345678',DISCORD_GUILD_ID:'223456789012345678'};
+test('Music acceptance configuration is optional when disabled and cannot enable production before Gate C',()=>{
+ assert.doesNotThrow(()=>validateRuntimeEnvironment({...base,ENABLE_MUSIC_SMOKE:'false'},'worker'));
+ const music={...base,NODE_ENV:'development',ENABLE_MUSIC_SMOKE:'true',LAVALINK_URL:'https://node.example',LAVALINK_PASSWORD:'fixture-secret-password'};
+ assert.doesNotThrow(()=>validateRuntimeEnvironment(music,'worker'));
+ for(const change of [{NODE_ENV:'production'},{LAVALINK_PASSWORD:'short-private'},{LAVALINK_URL:'https://user:private@node.example'},{LAVALINK_URL:'http://node.example',LAVALINK_ALLOW_INSECURE_HTTP:'true'},{MUSIC_SPOTIFY_METADATA:'yes'}])assert.throws(()=>validateRuntimeEnvironment({...music,...change},'worker'),e=>!e.message.includes('private')&&!e.message.includes('fixture-secret'));
+ assert.doesNotThrow(()=>validateRuntimeEnvironment({...music,LAVALINK_URL:'http://localhost:2333',LAVALINK_ALLOW_INSECURE_HTTP:'true'},'worker'));
+});
 test('production refuses test/public/unresolved database configurations without disclosing values',()=>{
   assert.equal(validateRuntimeEnvironment(base,'worker').port,8080);
   for(const change of [{TEST_DATABASE_URL:'postgresql://x:private-secret@proxy.rlwy.net:1234/test'},{AJ_DATABASE_PURPOSE:'test'},{RAILWAY_PROJECT_NAME:'upbeat-kindness'},{DATABASE_URL:'postgresql://x:private-secret@proxy.rlwy.net:1234/test'},{DATABASE_URL:'${RAILWAY_TEMPLATE}'},{PORT:'abc'},{ENABLE_EVENTS_SMOKE:'yes'}]){

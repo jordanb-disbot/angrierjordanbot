@@ -1,5 +1,5 @@
 {
-  "count": 255,
+  "count": 256,
   "controls": [
     {
       "key": "server.timezone",
@@ -4835,6 +4835,23 @@
       "restartRequired": false,
       "mutable": true,
       "dashboardWrite": "blocked",
+      "dependsOn": []
+    },
+    {
+      "key": "music.dj_role",
+      "section": "music",
+      "label": "Dj Role",
+      "description": "Optional dedicated Music DJ role; shared staff tiers retain DJ authority.",
+      "kind": "role-select",
+      "defaultValue": null,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
       "dependsOn": []
     }
   ]
