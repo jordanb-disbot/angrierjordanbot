@@ -6053,7 +6053,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "40f84fd44f6486885668f48c36e556e97441b9d848d81b7d7d02a65f19e529ca"
+      "sha256": "adb19c88210bb248246ccd9afb44813bb0bd9a4cd3c8a120cfe0644482ecf372"
     },
     {
       "id": "family.tree.renderer",
@@ -6089,7 +6089,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "3a23d37601c7364343441439c0a94ceea1281b3c57cdd62f914f79605099e224"
+      "sha256": "9e8b7bf984ecf80e8842461a8b5183a756ecf8bfb8276eb916a6be2381eb6e7f"
     },
     {
       "id": "profiles.runtime.renderer",
@@ -6098,7 +6098,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "673ca04e8dfa863322907c9ef2d2ccc1a8bd7bb5857b35915fcc3a3e90bb7c50"
+      "sha256": "f4fb08a43053e20d8128077d1a02edcb74d28cc46a15763d1409314b4739c92a"
     },
     {
       "id": "shared.text.layout",
