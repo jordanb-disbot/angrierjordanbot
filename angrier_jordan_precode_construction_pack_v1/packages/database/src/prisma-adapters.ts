@@ -117,10 +117,10 @@ const scheduledJob=(row:ScheduledJobRow):ScheduledJob=>({
 });
 
 export class PrismaJobRepository implements JobRepository {
-  constructor(private readonly db:FoundationPrismaLike){}
+  constructor(private readonly db:FoundationPrismaLike,private readonly jobTypes?:{in?:string[];notIn?:string[]}){}
   async claimDue(now:Date,limit:number):Promise<ScheduledJob[]>{
     return this.db.$transaction(async tx=>{
-      const available={OR:[{status:'PENDING',dueAt:{lte:now}},{status:'FAILED',retryAt:{lte:now}},{status:'RUNNING',OR:[{leaseUntil:{lte:now}},{leaseUntil:null}]}]};
+      const available={...(this.jobTypes?{jobType:this.jobTypes}:{}),OR:[{status:'PENDING',dueAt:{lte:now}},{status:'FAILED',retryAt:{lte:now}},{status:'RUNNING',OR:[{leaseUntil:{lte:now}},{leaseUntil:null}]}]};
       const due=await tx.scheduledJob.findMany({where:available,orderBy:{dueAt:'asc'},take:limit});
       const claimed:ScheduledJob[]=[];
       for(const row of due){

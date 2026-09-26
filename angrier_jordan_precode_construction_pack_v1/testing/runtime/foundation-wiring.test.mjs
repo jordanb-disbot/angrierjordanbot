@@ -50,3 +50,11 @@ test('urgent persisted work wakes immediately after a busy tick without overlapp
  const worker=new SchedulerWorker({tick:async()=>{calls++;maximum=Math.max(maximum,++active);if(calls===1)await gate;active--;}});
  const polling=worker.runOnce(),waking=worker.wake();assert.equal(calls,1);release();await Promise.all([polling,waking]);assert.equal(calls,2);assert.equal(maximum,1);
 });
+
+test('Music transport wake does not wait for a busy background publication worker',async()=>{
+ let release,started;const gate=new Promise(resolve=>release=resolve),entered=new Promise(resolve=>started=resolve);
+ const background=new SchedulerWorker({tick:async()=>{started();await gate;}});const busy=background.runOnce();await entered;
+ const job={id:'music',guildId:'g',jobType:'music.reconcile',executionKey:'music:1',dueAt:new Date(0),status:'PENDING',attempts:0},repo=new InMemoryJobRepository([job]);let updates=0;
+ const music=new SchedulerWorker(new IdempotentScheduler(repo,{'music.reconcile':async()=>{updates++;}}),60000);
+ try{await music.wake();assert.equal(updates,1);assert.equal(repo.get('music').status,'COMPLETED');}finally{release();await busy;await music.stopAndDrain();}
+});

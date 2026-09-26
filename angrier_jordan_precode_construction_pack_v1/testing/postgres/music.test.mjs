@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import {PrismaClient} from '@prisma/client';
 import {PrismaMusicRepository} from '../../.test-build/packages/features-music/src/prisma-repository.js';
 import {AuthorizedMusicCatalog} from '../../.test-build/packages/features-music/src/catalog.js';
+import {PrismaJobRepository} from '../../.test-build/packages/database/src/prisma-adapters.js';
 import {PrismaJobDeliveryRepository} from '../../.test-build/packages/database/src/job-delivery.js';
 import {MusicResolutionService} from '../../.test-build/packages/features-music/src/resolution.js';
 const require=createRequire(import.meta.url),schema='aj_music_test_'+randomUUID().replaceAll('-','');
@@ -88,4 +89,10 @@ test('Music PostgreSQL ownership, durable intents, transport observations and pl
  await t.test('definite unsent delivery can retry without releasing a completed receipt',async()=>{
   const g='music-unsent',who={...actor,guildId:g};await db.guild.create({data:{id:g,name:g}});await repo.join(request('unsent-join',who),policy);const reserved=await repo.reserveController(g,(await repo.read(g)).state.revision),delivery=new PrismaJobDeliveryRepository(db,reserved.jobId);assert.equal(await delivery.claim(),true);await repo.releaseUnsentController(reserved.jobId);assert.equal((await delivery.read()).state,'PENDING');assert.equal(await delivery.claim(),true);await delivery.complete('888888888888888881');await repo.releaseUnsentController(reserved.jobId);assert.equal((await delivery.read()).state,'SENT');
  });
- }finally{assert.match(schema,/^aj_music_test_[0-9a-f]{32}$/);try{if(connected)await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);}finally{await db.$disconnect();}}});
+  await t.test('Music transport claims are disjoint from presentation jobs and concurrent claims retain leases',async()=>{
+ const transport=new PrismaJobRepository(db,{in:['music.reconcile']}),background=new PrismaJobRepository(db,{notIn:['music.reconcile']}),now=new Date();
+ const [a,b,other]=await Promise.all([transport.claimDue(now,10),transport.claimDue(now,10),background.claimDue(now,10)]);
+ assert.ok(a.length+b.length>0);assert.ok(other.length>0);assert.ok([...a,...b].every(job=>job.jobType==='music.reconcile'));assert.ok(other.every(job=>job.jobType!=='music.reconcile'));
+ const all=[...a,...b,...other];assert.equal(new Set(all.map(job=>job.id)).size,all.length);assert.ok(all.every(job=>job.leaseToken));
+ });
+}finally{assert.match(schema,/^aj_music_test_[0-9a-f]{32}$/);try{if(connected)await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);}finally{await db.$disconnect();}}});
