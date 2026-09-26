@@ -6062,7 +6062,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157"
+      "sha256": "cba2c90eff7a45f4be9e127cfe6833d1b7d97e3479e790c0638576af3cfbe16c"
     },
     {
       "id": "chairisms.runtime.renderer",
@@ -6504,6 +6504,15 @@
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Wide paginated in-frame account statement",
       "sha256": "56d9bd99a45dd5457b95ce32f5acedc68194d745186493590e8967e5c1874a26"
+    },
+    {
+      "id": "family-premium-runtime",
+      "file": "packages/features-family/src/premium-render.ts",
+      "category": "renderer",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wide avatar-led Family trees, weddings, voting, auctions, estates and private windows.",
+      "sha256": "a12019412e01d2b810d02c0932f0ecdd9b6883a3c640809cdf94b283f7b611eb"
     }
   ]
 }
