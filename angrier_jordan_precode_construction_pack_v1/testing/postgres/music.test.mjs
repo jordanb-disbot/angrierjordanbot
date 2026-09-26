@@ -77,4 +77,8 @@ test('Music PostgreSQL ownership, durable intents, transport observations and pl
    assert.deepEqual(await repo.read(g),saved);assert.equal((await db.gameSession.findUnique({where:{id:next.sessionId}})).state,'OPEN');
   }
  });
+ await t.test('explicit SoundCloud URL persists its own identity and reconciliation intent without provider conversion',async()=>{
+ const g='777777777777777769',who={...actor,guildId:g},track={...publicTrack(),provider:'soundcloud',reference:'https://soundcloud.com/kr3ture/watch-it-grow',title:'Watch It Grow',artist:'KR3TURE'};await db.guild.create({data:{id:g,name:'SoundCloud fixture'}});let searches=0;
+ const service=new MusicResolutionService({search:async()=>{searches++;return[];},resolve:async reference=>{assert.equal(reference,track.reference);return{tracks:[track],truncated:false};}});const resolved=await service.resolveReference(track.reference,1,AbortSignal.timeout(30000));const result=await repo.requestResolvedTracks(request('soundcloud-url',who),resolved.tracks,service,policy);assert.equal(result.kind,'applied');const saved=await repo.read(g);assert.equal(saved.state.current.track.provider,'soundcloud');assert.equal(saved.state.current.requestedTrack.provider,'soundcloud');assert.equal(saved.state.current.track.reference,track.reference);assert.equal(searches,0);assert.equal(await db.scheduledJob.count({where:{guildId:g,jobType:'music.reconcile'}}),1);assert.equal(saved.state.observedStatus,'DISCONNECTED');
+ });
  }finally{assert.match(schema,/^aj_music_test_[0-9a-f]{32}$/);try{if(connected)await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);}finally{await db.$disconnect();}}});

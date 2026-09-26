@@ -7,6 +7,7 @@ export function musicDiagnostic(error:unknown):string {
   case 10003:case 10007:case 10065:case 50001:case 50013:return `DISCORD_${code}: Discord context or permissions could not be confirmed.`;
   case 'P1001':case 'P2003':case 'P2021':case 'P2022':case 'P2025':case 'P2028':return `${code}: Music persistence request failed.`;
   case 'LAVALINK_NODE_POLICY':return 'LAVALINK_NODE_POLICY: node sources/plugins do not match the reviewed configuration.';
+  case 'MUSIC_VOICE_REMOVED':return 'MUSIC_VOICE_REMOVED: Discord confirmed the bot left its intended voice channel.';
   case 'MUSIC_SELECTION_CHANGED':return 'MUSIC_SELECTION_CHANGED: selected recording identity failed revalidation.';
   case 'LAVALINK_TRACK_CHANGED':return 'LAVALINK_TRACK_CHANGED: loaded recording differs from the selected recording.';
   case 'LAVALINK_HTTP':return 'LAVALINK_HTTP: node rejected the request.';
@@ -21,7 +22,7 @@ export function musicDiagnostic(error:unknown):string {
  }
 }
 
-const stages=['interaction.received','context.read','member.voice.detected','selection.read','selection.received','resolution.request','resolution.ready','queue.persisted','interaction.failure','node.session.ready','job.start','job.failure','voice.join.start','voice.join.success','voice.join.failure','voice.state.received','voice.server.received','player.update.start','player.update.success','player.update.failure','track.handoff','playback.started','track.load.start','track.load.success','track.load.failure','playback.exception','playback.ended','player.read.failure','playback.stuck','voice.socket.closed','provider.load.result','player.http.response','player.observed','autocomplete.choice'] as const;
+const stages=['interaction.received','context.read','member.voice.detected','selection.read','selection.received','resolution.request','resolution.ready','queue.persisted','interaction.failure','node.session.ready','job.start','job.failure','voice.join.start','voice.join.success','voice.join.failure','voice.state.received','voice.server.received','player.update.start','player.update.success','player.update.failure','track.handoff','playback.started','track.load.start','track.load.success','track.load.failure','playback.exception','playback.ended','player.read.failure','playback.stuck','voice.socket.closed','provider.load.result','player.http.response','player.observed','autocomplete.choice','transport.wait','transport.confirmed','transport.failure'] as const;
 export type MusicTraceStage=typeof stages[number];
 /** Fixed stages and projected IDs only: never log the supplied object or error itself. */
 export function musicTrace(stage:MusicTraceStage,details:{guildId?:string|null|undefined;channelId?:string|null|undefined;error?:unknown;phase?:MusicTraceStage;selectionKind?:'reference'|'text';reference?:string;status?:number;loadType?:string;connected?:boolean;hasTrack?:boolean;voiceReady?:boolean;outcome?:string}={}){

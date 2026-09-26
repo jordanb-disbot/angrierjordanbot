@@ -100,17 +100,28 @@ export class MusicApplication {
  async voiceChanged(guildId:string,userId:string){
   if(!await this.#enabled(guildId))return;
   if(userId!==this.#options.client.user?.id){if(await this.#repo.read(guildId))await this.#deferRefresh(guildId);return;}
-  const guild=await this.#options.client.guilds.fetch({guild:guildId,force:true}),voice=await guild.voiceStates.fetch(userId,{force:true});
+  const runtime=this.#runtime,inspect=async()=>{if(runtime&&this.#runtime!==runtime)return;await this.#inspectVoice(guildId,userId);};
+  // A gateway update can arrive while a join or relocation still owns its lease.
+  // Check the resulting fresh state after that work, rather than losing the update.
+  if(runtime)await runtime.afterCurrentWork(guildId,inspect);else await inspect();
+ }
+ async #inspectVoice(guildId:string,userId:string){
+  const node=this.#node,guild=await this.#options.client.guilds.fetch({guild:guildId,force:true});let voice:{channelId:string|null};
+  try{voice=await guild.voiceStates.fetch(userId,{force:true});}
+  catch(error){
+   // Discord UnknownVoiceState is authoritative absence, not an unavailable API.
+   if(!error||typeof error!=='object'||!('code'in error)||error.code!==10065)throw error;
+   voice={channelId:null};
+  }
   // A DJ may have changed the intended channel while the gateway fetch was pending.
-  const saved=await this.#repo.read(guildId);if(!saved||this.#closed||voice.channelId===saved.state.voiceChannelId||saved.state.desiredStatus==='DISCONNECTED')return;
-  const state=saved.state,fence={guildId,revision:state.revision,generation:state.generation};if(await this.#runtime?.isCurrent(fence))return;
-  const node=this.#node,epoch=node?.socketEpoch??'voice';
+  const saved=await this.#repo.read(guildId);if(!saved||this.#closed||this.#node!==node||voice.channelId===saved.state.voiceChannelId||saved.state.desiredStatus==='DISCONNECTED')return;
+  const state=saved.state,fence={guildId,revision:state.revision,generation:state.generation},epoch=node?.socketEpoch??'voice';
   try{const applied=await this.#repo.applyTransportEvent({...fence,socketEpoch:epoch+'_voice',sequence:++this.#voiceSequence,expectedRevision:state.revision,entryId:state.current?.id??null},{kind:'observation',status:'FAILED',positionMs:state.positionMs,at:(this.#dependencies.now??Date.now)()});if(applied.ignored)return;}
   catch(error){if(error instanceof DomainError&&error.code==='MUSIC_STALE')return;throw error;}
   // A retired epoch cannot close its replacement after an awaited database write.
   if(this.#closed||this.#node!==node)return;
   // This is process-local quarantine; restart still follows the persisted desired state.
-  this.#departedAtRevision=state.revision;this.#clearTimer(this.#reconnect);this.#reconnect=undefined;this.#retire();await this.#deferRefresh(guildId);
+  musicTrace('transport.failure',{guildId,channelId:state.voiceChannelId,error:{code:'MUSIC_VOICE_REMOVED'}});this.#departedAtRevision=state.revision;this.#clearTimer(this.#reconnect);this.#reconnect=undefined;this.#retire();await this.#deferRefresh(guildId);
  }
  #retire(){this.#ready=false;this.#clearTimer(this.#watchdog);this.#watchdog=undefined;const runtime=this.#runtime,sync=this.#sync,voice=this.#voice,gateway=this.#gateway,node=this.#node;this.#runtime=undefined;this.#sync=undefined;this.#voice=undefined;this.#gateway=undefined;this.#node=undefined;for(const retire of [()=>runtime?.close(),()=>sync?.close(),()=>voice?.shutdown(),()=>gateway?.shutdown(),()=>node?.close()]){try{retire();}catch{/* Retire every boundary without logging private adapter diagnostics. */}}}
  close(){if(this.#closed)return;this.#closed=true;this.#clearTimer(this.#reconnect);this.#reconnect=undefined;this.#clearTimer(this.#refreshRetry);this.#refreshRetry=undefined;this.#retire();}

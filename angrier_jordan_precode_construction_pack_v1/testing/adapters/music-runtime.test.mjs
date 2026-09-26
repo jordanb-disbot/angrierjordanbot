@@ -6,7 +6,7 @@ const job={id:'job',guildId:g,jobType:'music.reconcile',executionKey:'intent',du
 const start={kind:'trackStart',guildId:g,entryId:'entry',generation:3};
 test('Playback trace requires a current correlated and persisted TrackStart event',async t=>{
  const traces=[];t.mock.method(console,'info',message=>traces.push(message));const f=fixture();
- await f.runtime.reconcile(job);await f.runtime.event(start,{socketEpoch:'old',sequence:1});await f.runtime.event({...start,generation:2},{socketEpoch:'epoch',sequence:2});assert.deepEqual(traces,[]);
+ await f.runtime.reconcile(job);assert.match(traces.shift(),/transport.wait/);await f.runtime.event(start,{socketEpoch:'old',sequence:1});await f.runtime.event({...start,generation:2},{socketEpoch:'epoch',sequence:2});assert.deepEqual(traces,[]);
  f.repo.applyTransportEvent=async()=>({ignored:true,needsControllerRefresh:false});await f.runtime.event(start,{socketEpoch:'epoch',sequence:3});assert.deepEqual(traces,[]);
  f.repo.applyTransportEvent=async()=>({ignored:false,needsControllerRefresh:false});await f.runtime.event(start,{socketEpoch:'epoch',sequence:4});assert.deepEqual(traces,['Music trace: playback.started '+JSON.stringify({guildId:g,channelId:channel})]);
 });
@@ -17,7 +17,7 @@ test('Playback exception and end traces require accepted current persisted event
  f.repo.applyTransportEvent=async()=>({ignored:false,needsControllerRefresh:false});await f.runtime.event(exception,{socketEpoch:'epoch',sequence:4});await f.runtime.event(ended,{socketEpoch:'epoch',sequence:5});assert.deepEqual(traces.map(line=>line.split(' ')[2]),['playback.exception','playback.ended']);assert.ok(traces.every(line=>line.endsWith(JSON.stringify({guildId:g,channelId:channel}))));
 });
 test('Player read diagnostics deduplicate the same failure and fence and reset after a successful read',async t=>{
- const traces=[];t.mock.method(console,'info',message=>traces.push(message));const f=fixture(),successful=f.options.readPlayer,fail=async()=>{throw Error('SECRET_TOKEN https://private-player');};f.options.readPlayer=fail;
+ const traces=[];t.mock.method(console,'info',message=>{if(message.includes('player.read.failure'))traces.push(message);});const f=fixture(),successful=f.options.readPlayer,fail=async()=>{throw Error('SECRET_TOKEN https://private-player');};f.options.readPlayer=fail;
  await f.runtime.reconcile(job);await f.runtime.reconcile(job);assert.equal(traces.length,1);
  f.state.revision++;await f.runtime.reconcile(job);assert.equal(traces.length,2);
  f.options.readPlayer=successful;await f.runtime.reconcile(job);f.options.readPlayer=fail;await f.runtime.reconcile(job);assert.equal(traces.length,3);assert.ok(traces.every(line=>line.includes('player.read.failure')));assert.doesNotMatch(traces.join('\n'),/SECRET|private-player|https:|token|sessionId/);
@@ -32,3 +32,7 @@ test('events wait behind reconciliation and cannot race its external effects',as
 test('recovery retires bindings and writes one epoch-keyed recovery request without asserting audio',async()=>{const f=fixture();await f.runtime.recover(g);assert.deepEqual(f.calls,[['recover',g,'node-epoch']]);assert.deepEqual(f.mutations,[]);});
 test('disabled or closed runtime performs no event writes or transport mutations',async()=>{const f=fixture();f.setEnabled(false);await f.runtime.event(start,{socketEpoch:'epoch',sequence:1});await assert.rejects(f.runtime.reconcile(job),{code:'MUSIC_DISABLED'});f.setEnabled(true);f.runtime.close();await f.runtime.event(start,{socketEpoch:'epoch',sequence:2});assert.deepEqual(f.calls,[]);assert.deepEqual(f.mutations,[]);});
 test('disconnect becomes observed only after the voice boundary confirms gateway departure',async()=>{const f=fixture();f.state.current=null;f.state.desiredStatus='DISCONNECTED';await f.runtime.reconcile(job);assert.equal(f.mutations.length,0);f.options.synchronize=async()=>({accepted:true,changed:true,voiceDisconnected:true});await f.runtime.reconcile(job);assert.equal(f.mutations[0].e.status,'DISCONNECTED');});
+
+test('Departure inspection waits for in-flight reconciliation instead of losing the gateway update',async()=>{
+ const f=fixture();let release,entered;const ready=new Promise(r=>{entered=r;});f.options.synchronize=async()=>{entered();await new Promise(r=>{release=r;});};const work=f.runtime.reconcile(job);await ready;let inspected=false;const after=f.runtime.afterCurrentWork(g,async()=>{inspected=true;assert.equal(await f.runtime.isCurrent({guildId:g,revision:2,generation:3}),false);});await Promise.resolve();assert.equal(inspected,false);release();await work;await after;assert.equal(inspected,true);f.runtime.close();
+});

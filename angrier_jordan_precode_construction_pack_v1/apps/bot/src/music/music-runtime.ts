@@ -25,6 +25,8 @@ export class MusicRuntime {
  #readFailures=new Map<string,string>();
  constructor(options:MusicRuntimeOptions){this.#options=options;}
  #lane<T>(guildId:string,work:()=>Promise<T>):Promise<T>{const task=(this.#tails.get(guildId)??Promise.resolve()).catch(()=>{}).then(work);this.#tails.set(guildId,task);void task.finally(()=>{if(this.#tails.get(guildId)===task)this.#tails.delete(guildId);}).catch(()=>{});return task;}
+ /** Re-read Discord after an in-flight join/move settles instead of dropping its voice event. */
+ afterCurrentWork<T>(guildId:string,work:()=>Promise<T>):Promise<T>{return this.#lane(guildId,work);}
  async isCurrent(fence:MusicTransportFence,operation:'read'|'write'='write'){
   if(this.#abort.signal.aborted||!await this.#options.enabled(fence.guildId))return false;
   if(operation==='write'){const job=this.#active.get(fence.guildId);return Boolean(job?.leaseToken&&await this.#options.repository.ownsIntentLease(job.id,job.leaseToken,fence));}
@@ -39,6 +41,7 @@ export class MusicRuntime {
    const state=intent.state,fence={guildId:state.guildId,revision:state.revision,generation:state.generation};
    if(!await this.isCurrent(fence))throw new DomainError('MUSIC_LEASE','Music worker authority expired.');
    const synchronized=await this.#options.synchronize(state,this.#abort.signal);
+   if(state.current)musicTrace('transport.wait',{guildId:state.guildId,channelId:state.voiceChannelId,phase:'playback.started'});
    if(!await this.isCurrent(fence))throw new DomainError('MUSIC_LEASE','Music worker authority changed.');
    // Controller reservation is durable and shared across revisions, never a direct send.
    await this.#options.repository.reserveController(job.guildId,state.revision);

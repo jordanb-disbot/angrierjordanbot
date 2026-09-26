@@ -70,6 +70,6 @@ export class MusicPlayerSynchronizer {
   });
   this.#tails.set(input.guildId,work);void work.finally(()=>{if(this.#tails.get(input.guildId)===work)this.#tails.delete(input.guildId);}).catch(()=>{});return work;
  }
- close(){this.#closed=true;}
+ close(){this.#closed=true;this.#applied.clear();}
  toJSON(){return{};}
 }
