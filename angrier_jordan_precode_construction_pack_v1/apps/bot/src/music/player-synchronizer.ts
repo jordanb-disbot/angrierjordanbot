@@ -35,6 +35,8 @@ export class MusicPlayerSynchronizer {
     const paused=input.status==='PAUSED',patch:LavalinkPlayerPatch={};
     const reconnect=!prior||prior.channelId!==input.channelId;
     const replace=reconnect||prior.generation!==input.generation||prior.entryId!==(input.entry?.id??null);
+    let credentials:Awaited<ReturnType<VoiceClient['join']>>|undefined;
+    if(reconnect){await check();mutationStarted=true;credentials=await this.#voice.join(fence,input.channelId,signal);}
     if(replace){
      if(input.entry){
       await check();musicTrace('track.load.start',{guildId:input.guildId,channelId:input.channelId});
@@ -55,8 +57,7 @@ export class MusicPlayerSynchronizer {
      catch(error){musicTrace('player.update.failure',{guildId:input.guildId,channelId:input.channelId,error});throw error;}
     };
     if(reconnect){
-     mutationStarted=true;const credentials=await this.#voice.join(fence,input.channelId,signal);
-     await credentials.consume(async voice=>{await check();await update({...patch,voice});});
+     await credentials!.consume(async voice=>{await check();await update({...patch,voice});});
     }else{mutationStarted=true;await update(patch);}
     await check();this.#applied.set(input.guildId,{channelId:input.channelId,generation:input.generation,entryId:input.entry?.id??null,paused,volume:input.volume});
     return{accepted:true as const,changed:true};

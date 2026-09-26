@@ -44,3 +44,9 @@ test('/status handler renders health checks privately',async()=>{
   const response=await handler({guildId:'g',channelId:'c',userId:'u',commandId:'status',options:{},requestId:'r'});
   assert.equal(response.ephemeral,true);assert.match(response.content,/OK/);assert.match(response.content,/postgres 3ms/);assert.match(response.content,/discord 1ms/);
 });
+
+test('urgent persisted work wakes immediately after a busy tick without overlapping leases',async()=>{
+ let release,calls=0,active=0,maximum=0;const gate=new Promise(resolve=>release=resolve);
+ const worker=new SchedulerWorker({tick:async()=>{calls++;maximum=Math.max(maximum,++active);if(calls===1)await gate;active--;}});
+ const polling=worker.runOnce(),waking=worker.wake();assert.equal(calls,1);release();await Promise.all([polling,waking]);assert.equal(calls,2);assert.equal(maximum,1);
+});

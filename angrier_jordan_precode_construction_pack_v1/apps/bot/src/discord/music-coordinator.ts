@@ -23,7 +23,7 @@ const whole=(value:string,label:string)=>{if(!/^\d+$/.test(value)||!Number.isSaf
 function seekPosition(value:string){if(!/^\d+(?::[0-5]\d){0,2}$/.test(value))throw new DomainError('MUSIC_SEEK','Use seconds, minutes:seconds or hours:minutes:seconds.');const seconds=value.split(':').reduce((total,part)=>total*60+Number(part),0);if(!Number.isSafeInteger(seconds*1000))throw new DomainError('MUSIC_SEEK','Choose a valid playback position.');return seconds*1000;}
 /** Saves intents and renders actual persisted state. It never connects to a music provider or claims an intent played audio. */
 export class DiscordMusicCoordinator {
- constructor(private repo:PrismaMusicRepository,private config:ConfigService,private loadCatalog:(()=>Promise<AuthorizedMusicCatalog>)|null,private resolveActor:MusicAccessResolver,private now=()=>Date.now(),private resolutionService?:MusicResolutionService,private scheduleAutocomplete:MusicAutocompleteTimer=autocompleteTimer){}
+ constructor(private repo:PrismaMusicRepository,private config:ConfigService,private loadCatalog:(()=>Promise<AuthorizedMusicCatalog>)|null,private resolveActor:MusicAccessResolver,private now=()=>Date.now(),private resolutionService?:MusicResolutionService,private scheduleAutocomplete:MusicAutocompleteTimer=autocompleteTimer,private prepareVoice?: (request:MusicRequest,policy:MusicPolicy)=>Promise<void>){}
  private catalog(){return this.loadCatalog?this.loadCatalog():Promise.resolve(new AuthorizedMusicCatalog([]));}
  private resolution(){if(!this.resolutionService)throw new DomainError('MUSIC_UNAVAILABLE','Music source resolution is unavailable.');return this.resolutionService;}
  private async context(i:AnyInteraction):Promise<MusicActor>{
@@ -62,7 +62,7 @@ export class DiscordMusicCoordinator {
   // A failed response can be ambiguous. Never retry it or let late work respond.
   if(!i.responded)try{await i.respond(choices);}catch{/* Interaction expired or response delivery is uncertain. */}
  }
- private async notice(i:Interaction,title:string,message:string,components:Rows=[],list?:{title:string;detail?:string;badge?:string}[],subtitle=''){await i.editReply({content:message,embeds:[],files:[new AttachmentBuilder(await rasterizeSvg(list?.length?renderMusicList(title,subtitle,list,'Use the controls below.'):renderMusicNotice(title,message)),{name:'music-notice.png',description:[title,subtitle,message].filter(Boolean).join(' · ').slice(0,1024)})],components,allowedMentions:{parse:[]}});}
+ private async notice(i:Interaction,title:string,message:string,components:Rows=[],list?:{title:string;detail?:string;badge?:string}[],subtitle=''){await i.editReply({content:message,embeds:[],files:[new AttachmentBuilder(await rasterizeSvg(list?.length?renderMusicList(title,subtitle,list.slice(0,2).map(row=>({...row,title:row.title.slice(0,90),detail:row.detail?.slice(0,70)??''})),list.length>2?'First 2 previewed; all entries in the message or menu.':'Use the controls below.'):renderMusicNotice(title,message.length>180?message.slice(0,177)+'…':message)),{name:'music-notice.png',description:[title,subtitle,message].filter(Boolean).join(' · ').slice(0,1024)})],components,allowedMentions:{parse:[]}});}
  private async player(actor:MusicActor,allowOtherVoice=false){const saved=await this.repo.read(actor.guildId);if(!saved)throw new DomainError('MUSIC_EMPTY','The jukebox is empty. Use /play and choose a recording.');assertMusicActor(saved.state,actor,allowOtherVoice);return saved;}
  private async listeners(i:Interaction,actor:MusicActor):Promise<string[]>{
   const candidates=[...i.guild!.voiceStates.cache.values()].filter(v=>v.channelId===actor.voiceChannelId).map(v=>v.id);if(!candidates.includes(actor.userId))candidates.push(actor.userId);
@@ -89,6 +89,7 @@ export class DiscordMusicCoordinator {
    const operation=control==='shuffle'?this.shuffle(saved.state,i.id):this.buttonControl(control,saved.state);await this.repo.control(request,revision,operation);await this.showPlayer(i,actor,'Music control saved; playback changes await transport confirmation.');return;
   }
   if(i.commandName==='play'){
+   await this.prepareVoice?.(request,await this.policy(actor.guildId));
    const value=i.options.getString('query',true).trim();musicTrace('selection.received',{guildId:actor.guildId,channelId:actor.voiceChannelId,reference:value,selectionKind:/^[a-z][a-z0-9+.-]*:/i.test(value)?'reference':'text'});phase='resolution.request';if(this.resolutionService){await this.resolveQuery(i,request,value);return;}if(value.startsWith('catalog:')||/^[a-z][a-z0-9+.-]*:/i.test(value)||value.startsWith('//')){await this.enqueueSelection(i,request,value);return;}
    const catalog=await this.catalog(),matches=catalog.search(value);if(!matches.length){await this.notice(i,'Track unavailable','No available authorized catalog tracks match this search. Try another title or artist.');return;}
    const picker=new StringSelectMenuBuilder().setCustomId('music:pick:'+actor.userId).setPlaceholder('Choose the exact recording').addOptions(matches.map(track=>({label:track.metadata.title.slice(0,100),description:track.metadata.artist.slice(0,100),value:'catalog:'+track.id})));

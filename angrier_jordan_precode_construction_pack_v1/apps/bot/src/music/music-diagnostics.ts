@@ -11,6 +11,9 @@ export function musicDiagnostic(error:unknown):string {
   case 'MUSIC_SELECTION_CHANGED':return 'MUSIC_SELECTION_CHANGED: selected recording identity failed revalidation.';
   case 'LAVALINK_TRACK_CHANGED':return 'LAVALINK_TRACK_CHANGED: loaded recording differs from the selected recording.';
   case 'LAVALINK_HTTP':return 'LAVALINK_HTTP: node rejected the request.';
+  case 'LAVALINK_INPUT':return 'LAVALINK_INPUT: reference is unsupported or malformed.';
+  case 'MUSIC_UNAVAILABLE':return 'MUSIC_UNAVAILABLE: recording resolution failed.';
+  case 'MUSIC_QUERY':return 'MUSIC_QUERY: unsupported music reference.';
   case 'LAVALINK_SOURCE':return 'LAVALINK_SOURCE: provider response could not be used.';
   case 'LAVALINK_TRANSPORT':return 'LAVALINK_TRANSPORT: node request failed or exceeded its deadline.';
   case 'LAVALINK_SESSION_SETUP':return 'LAVALINK_SESSION_SETUP: node session setup failed.';

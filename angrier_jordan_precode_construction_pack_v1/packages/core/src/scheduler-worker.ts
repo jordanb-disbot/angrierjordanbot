@@ -10,6 +10,11 @@ export class SchedulerWorker {
   }
   stop():void{if(this.timer){clearInterval(this.timer);this.timer=undefined;}}
   async stopAndDrain():Promise<void>{this.stop();await this.active;}
+  /** A persisted urgent intent must not be skipped when a polling tick is busy. */
+  async wake():Promise<void>{
+    while(this.active)await this.active;
+    await this.runOnce();
+  }
   async runOnce(now=new Date()):Promise<void>{
     if(this.active)return;
     this.active=this.scheduler.tick(now);

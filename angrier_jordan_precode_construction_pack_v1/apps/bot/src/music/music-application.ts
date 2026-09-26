@@ -21,6 +21,7 @@ export interface MusicApplicationOptions {
  client:Client;db:PrismaClient;config:ConfigService;guildId:string;
  endpoint:string;password:string;allowInsecureHttp:boolean;
  metadataSources:('spotify'|'applemusic')[];directAudio:boolean;
+ wakeMusic?:()=>Promise<void>;
  access:(guild:Guild,member:GuildMember)=>Promise<{eligible:boolean;isDj:boolean}>;
 }
 type NodeConnection=Pick<LavalinkConnection,'start'|'client'|'close'|'ready'|'socketEpoch'>;
@@ -53,7 +54,7 @@ export class MusicApplication {
    resolve:async(reference,limit,signal)=>{if(reference.startsWith('catalog:')&&options.directAudio){const found=(await this.#catalog()).resolve(reference);return{tracks:found.status==='available'?[found.track.metadata]:[],truncated:false};}try{await this.start();const result=await this.#node!.client().resolve(reference,limit,signal);this.#lastDiagnostic=undefined;return result;}catch(error){this.#diagnose(error);throw error;}}
   });
   this.#service=service;
-  this.coordinator=new DiscordMusicCoordinator(this.#repo,options.config,options.directAudio?()=>this.#catalog():null,options.access,dependencies.now??Date.now,service);
+  this.coordinator=new DiscordMusicCoordinator(this.#repo,options.config,options.directAudio?()=>this.#catalog():null,options.access,dependencies.now??Date.now,service,undefined,async(request,policy)=>{await this.start();await this.#repo.join({...request,requestKey:request.requestKey+':voice'},policy);await options.wakeMusic?.();});
   this.publication=dependencies.publication??new DiscordMusicPublication(this.#repo,id=>new PrismaJobDeliveryRepository(options.db,id),this.coordinator.payload.bind(this.coordinator),g=>this.#enabled(g));
  }
  get ready(){return this.#ready&&!this.#closed&&this.#node?.ready===true;}
