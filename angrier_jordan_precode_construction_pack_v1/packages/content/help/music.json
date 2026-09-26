@@ -1,0 +1,55 @@
+{
+  "title": "The Jukebox",
+  "commands": [
+    "music_play",
+    "music_pause",
+    "music_resume",
+    "music_skip",
+    "music_previous",
+    "music_stop",
+    "music_replay",
+    "music_seek",
+    "music_queue",
+    "music_remove",
+    "music_move",
+    "music_clear",
+    "music_shuffle",
+    "music_jump",
+    "music_loop",
+    "music_autoplay",
+    "music_volume",
+    "music_nowplaying",
+    "music_history",
+    "music_join",
+    "music_leave",
+    "playlist_create",
+    "playlist_add",
+    "playlist_remove",
+    "playlist_play",
+    "playlist_rename",
+    "playlist_delete",
+    "playlist_view",
+    "music_help"
+  ],
+  "body": "Join a voice channel and use its embedded chat. /play searches the owner-authorized direct-audio catalog. External service links provide metadata references only: a track must match an enabled authorized catalog item to play. The controller distinguishes pending requests from confirmed playback.",
+  "fields": {
+    "query": "Search the authorized catalog or provide a supported metadata reference. Unmatched recordings are unavailable; no silent substitute is played.",
+    "time": "Seek within the current supported recording.",
+    "position": "Use the current queue or playlist position.",
+    "percent": "Volume is a DJ control.",
+    "name": "Your own playlist name."
+  },
+  "examples": [
+    "/play query:evening",
+    "/music queue"
+  ],
+  "tutorial": {
+    "steps": [
+      "Join a voice channel and open its embedded text chat.",
+      "Search with /play and choose an available authorized recording.",
+      "Confirm duplicates when prompted; check pending versus confirmed playback on the controller.",
+      "Skip your own track, use DJ authority, or vote with eligible listeners. Previous, Replay and Seek require the current requester or a DJ.",
+      "Save your own playlists. Deleting a playlist does not remove tracks already queued."
+    ]
+  }
+}

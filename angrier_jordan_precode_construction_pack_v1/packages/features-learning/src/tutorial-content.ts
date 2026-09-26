@@ -3,7 +3,7 @@ import type {CommandContract,CommandOptionContract} from '../../contracts/src/ty
 interface HelpDocument {commands:string[];title?:string;body?:string;games?:Record<string,string>;fields?:Record<string,unknown>;examples?:string[];tutorial?:{steps?:string[]};[key:string]:unknown;}
 export interface LessonCopy {purpose:string;fields:string;example:string;steps:string[];}
 // These are the existing feature-owned, reviewed help sources. Runtime never executes examples.
-const sources=['items','profiles','casino','events','special','solo','pvp','party','channel-games','crime','family','community','chairisms','social','introductions','learning'];
+const sources=['items','profiles','casino','events','special','solo','pvp','party','channel-games','crime','family','community','chairisms','social','introductions','learning','music'];
 const documents:HelpDocument[]=sources.map(name=>JSON.parse(readFileSync(new URL('../../content/help/'+name+'.json',import.meta.url),'utf8')) as HelpDocument);
 const fieldTypes:Record<string,string>={user:'a server member',integer:'a whole number',number:'a number',boolean:'yes or no',channel:'a server channel',role:'a server role',string:'text',choice:'one of the listed choices'};
 function object(value:unknown):Record<string,unknown>|undefined{return value&&typeof value==='object'&&!Array.isArray(value)?value as Record<string,unknown>:undefined;}
@@ -23,7 +23,8 @@ function currentExample(c:CommandContract,source:HelpDocument|undefined){
 function boundedSteps(steps:string[]){const clean=steps.filter(s=>typeof s==='string'&&s.trim());if(clean.length<=5)return clean;const result=clean.slice(0,4);result.push(clean.slice(4).join(' '));return result;}
 /** Registry defines execution paths/fields; feature help supplies actual teaching content. */
 export function lessonCopy(c:CommandContract):LessonCopy{
- const source=documents.find(d=>d.commands.includes(c.id)),detail=source?.games?.[c.id]??(typeof source?.[c.id]==='string'?source[c.id] as string:undefined);
+ if(c.id.startsWith('special_custom_'))return{purpose:'An enabled, role-authorized server Special Command. It sends its configured notification or response in main chat; it does not start a native game.',fields:'No command fields. Your current roles and the published server settings determine availability.',example:c.registered,steps:['Use the configured main chat.','Type '+c.registered+' as its own message.','Angrier Jordan removes the trigger and posts the configured response; only the configured opt-in role may be notified.','This practice example does not send a message or notification.']};
+ const source=c.id.startsWith('special_custom_')?documents.find(d=>d.commands.includes('line')):documents.find(d=>d.commands.includes(c.id)),detail=source?.games?.[c.id]??(typeof source?.[c.id]==='string'?source[c.id] as string:undefined);
  const purpose=[detail,source?.body].filter((v):v is string=>Boolean(v)).join('\n\n')||`Quick reference for ${c.registered}. A feature-specific guided lesson has not been authored yet.`;
  const fields=c.options.map(o=>fieldCopy(c,o,source)).join('\n')||'This command has no slash-command fields. Follow its displayed controls where offered.';
  const example=currentExample(c,source),authored=source?.tutorial?.steps??[];

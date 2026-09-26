@@ -31,7 +31,8 @@
     "packages/features-chairisms/src/**/*.ts",
     "packages/features-social/src/**/*.ts",
     "packages/features-introductions/src/**/*.ts",
-    "packages/features-learning/src/**/*.ts"
+    "packages/features-learning/src/**/*.ts",
+    "packages/features-music/src/**/*.ts"
   ],
   "exclude": [
     "apps/bot/src/discord/**/*.ts",

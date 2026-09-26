@@ -1532,10 +1532,11 @@
       ],
       "options": [
         {
-          "name": "query_or_link",
+          "name": "query",
           "type": "string",
           "required": true,
-          "description": ""
+          "description": "Search the authorized audio catalog or paste a metadata link.",
+          "autocomplete": true
         }
       ],
       "handler": "music.music_play",
@@ -1700,10 +1701,10 @@
       ],
       "options": [
         {
-          "name": "value",
+          "name": "time",
           "type": "string",
           "required": true,
-          "description": ""
+          "description": "Playback position such as 1:30 or 90 seconds."
         }
       ],
       "handler": "music.music_seek",
@@ -1753,10 +1754,11 @@
       ],
       "options": [
         {
-          "name": "value",
-          "type": "string",
+          "name": "position",
+          "type": "integer",
           "required": true,
-          "description": ""
+          "min": 1,
+          "description": "Current queue position to remove."
         }
       ],
       "handler": "music.music_remove",
@@ -1783,10 +1785,18 @@
       ],
       "options": [
         {
-          "name": "value",
-          "type": "string",
+          "name": "position",
+          "type": "integer",
           "required": true,
-          "description": ""
+          "min": 1,
+          "description": "Current queue position."
+        },
+        {
+          "name": "to",
+          "type": "integer",
+          "required": true,
+          "min": 1,
+          "description": "New queue position."
         }
       ],
       "handler": "music.music_move",
@@ -1859,10 +1869,11 @@
       ],
       "options": [
         {
-          "name": "value",
-          "type": "string",
+          "name": "position",
+          "type": "integer",
           "required": true,
-          "description": ""
+          "min": 1,
+          "description": "Queue position to play next."
         }
       ],
       "handler": "music.music_jump",
@@ -1887,7 +1898,19 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "mode",
+          "type": "string",
+          "required": true,
+          "choices": [
+            "off",
+            "track",
+            "queue"
+          ],
+          "description": "Loop mode."
+        }
+      ],
       "handler": "music.music_loop",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -1910,7 +1933,14 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "required": true,
+          "description": "Use authorized catalog recommendations after the queue."
+        }
+      ],
       "handler": "music.music_autoplay",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -1935,10 +1965,12 @@
       ],
       "options": [
         {
-          "name": "value",
-          "type": "string",
+          "name": "percent",
+          "type": "integer",
           "required": true,
-          "description": ""
+          "min": 1,
+          "max": 100,
+          "description": "Player volume from 1 to 100 percent."
         }
       ],
       "handler": "music.music_volume",
@@ -2055,7 +2087,14 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Playlist name."
+        }
+      ],
       "handler": "music.playlist_create",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -2078,7 +2117,22 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Your playlist.",
+          "autocomplete": true
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Authorized catalog track or metadata reference.",
+          "autocomplete": true
+        }
+      ],
       "handler": "music.playlist_add",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -2101,7 +2155,22 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Your playlist.",
+          "autocomplete": true
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "required": true,
+          "min": 1,
+          "description": "Track position to remove."
+        }
+      ],
       "handler": "music.playlist_remove",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -2124,7 +2193,15 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Your playlist.",
+          "autocomplete": true
+        }
+      ],
       "handler": "music.playlist_play",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -2147,7 +2224,21 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Your playlist.",
+          "autocomplete": true
+        },
+        {
+          "name": "new_name",
+          "type": "string",
+          "required": true,
+          "description": "New playlist name."
+        }
+      ],
       "handler": "music.playlist_rename",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -2170,7 +2261,15 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Your playlist.",
+          "autocomplete": true
+        }
+      ],
       "handler": "music.playlist_delete",
       "feature_flag": "music",
       "ephemeral_default": false,
@@ -2193,7 +2292,15 @@
       "channels": [
         "voice_text_chat"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Your playlist.",
+          "autocomplete": true
+        }
+      ],
       "handler": "music.playlist_view",
       "feature_flag": "music",
       "ephemeral_default": false,

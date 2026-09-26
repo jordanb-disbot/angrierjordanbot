@@ -1,5 +1,5 @@
 import {DomainError} from '../../core/src/index.js';
-export const LORE_CHAPTERS=[{id:'not',title:'The Story Behind the “not”'},{id:'chairs',title:'Why the Server Is Called Chairs'},{id:'jordan',title:'The Story of Angrier Jordan'}] as const;
+export const LORE_CHAPTERS=[{id:'not',title:'The Story Behind the ‘not’'},{id:'chairs',title:'Why the Server Is Called Chairs'},{id:'jordan',title:'The Story of Angrier Jordan'}] as const;
 export interface Chapter {id:string;title:string;version:number;pages:string[];}
 export const LORE_PAGE_TARGET=1200;
 // Reserve space below Discord's description limit for the page label and achievement notice.

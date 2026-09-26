@@ -1323,10 +1323,11 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "query_or_link",
+        "name": "query",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Search the authorized audio catalog or paste a metadata link.",
+        "autocomplete": true
       }
     ],
     "ephemeralDefault": false,
@@ -1463,10 +1464,10 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "value",
+        "name": "time",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Playback position such as 1:30 or 90 seconds."
       }
     ],
     "ephemeralDefault": false,
@@ -1508,10 +1509,11 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "value",
-        "type": "string",
+        "name": "position",
+        "type": "integer",
         "required": true,
-        "description": ""
+        "min": 1,
+        "description": "Current queue position to remove."
       }
     ],
     "ephemeralDefault": false,
@@ -1534,10 +1536,18 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "value",
-        "type": "string",
+        "name": "position",
+        "type": "integer",
         "required": true,
-        "description": ""
+        "min": 1,
+        "description": "Current queue position."
+      },
+      {
+        "name": "to",
+        "type": "integer",
+        "required": true,
+        "min": 1,
+        "description": "New queue position."
       }
     ],
     "ephemeralDefault": false,
@@ -1598,10 +1608,11 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "value",
-        "type": "string",
+        "name": "position",
+        "type": "integer",
         "required": true,
-        "description": ""
+        "min": 1,
+        "description": "Queue position to play next."
       }
     ],
     "ephemeralDefault": false,
@@ -1622,7 +1633,19 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "mode",
+        "type": "string",
+        "required": true,
+        "choices": [
+          "off",
+          "track",
+          "queue"
+        ],
+        "description": "Loop mode."
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "music_loop",
     "tutorialId": "music"
@@ -1641,7 +1664,14 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "enabled",
+        "type": "boolean",
+        "required": true,
+        "description": "Use authorized catalog recommendations after the queue."
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "music_autoplay",
     "tutorialId": "music"
@@ -1662,10 +1692,12 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "value",
-        "type": "string",
+        "name": "percent",
+        "type": "integer",
         "required": true,
-        "description": ""
+        "min": 1,
+        "max": 100,
+        "description": "Player volume from 1 to 100 percent."
       }
     ],
     "ephemeralDefault": false,
@@ -1762,7 +1794,14 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Playlist name."
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_create",
     "tutorialId": "music"
@@ -1781,7 +1820,22 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Your playlist.",
+        "autocomplete": true
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "required": true,
+        "description": "Authorized catalog track or metadata reference.",
+        "autocomplete": true
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_add",
     "tutorialId": "music"
@@ -1800,7 +1854,22 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Your playlist.",
+        "autocomplete": true
+      },
+      {
+        "name": "position",
+        "type": "integer",
+        "required": true,
+        "min": 1,
+        "description": "Track position to remove."
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_remove",
     "tutorialId": "music"
@@ -1819,7 +1888,15 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Your playlist.",
+        "autocomplete": true
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_play",
     "tutorialId": "music"
@@ -1838,7 +1915,21 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Your playlist.",
+        "autocomplete": true
+      },
+      {
+        "name": "new_name",
+        "type": "string",
+        "required": true,
+        "description": "New playlist name."
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_rename",
     "tutorialId": "music"
@@ -1857,7 +1948,15 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Your playlist.",
+        "autocomplete": true
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_delete",
     "tutorialId": "music"
@@ -1876,7 +1975,15 @@ export const COMMANDS = [
     "channels": [
       "voice_text_chat"
     ],
-    "options": [],
+    "options": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "Your playlist.",
+        "autocomplete": true
+      }
+    ],
     "ephemeralDefault": false,
     "helpId": "playlist_view",
     "tutorialId": "music"

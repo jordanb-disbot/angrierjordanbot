@@ -11,9 +11,15 @@ const roleId=async(config:ConfigService,guildId:string,key:string):Promise<strin
 };
 const safeError=(error:unknown)=>error instanceof Error?error.message:String(error);
 const STAFF_PERMISSION_MASK=PermissionFlagsBits.Administrator|PermissionFlagsBits.ManageGuild|PermissionFlagsBits.ManageRoles|PermissionFlagsBits.ManageChannels|PermissionFlagsBits.KickMembers|PermissionFlagsBits.BanMembers|PermissionFlagsBits.ModerateMembers|PermissionFlagsBits.ManageMessages;
+export interface OnboardingLearningOptions {
+  /** Reuses current shared capability, runtime activation and restriction checks. */
+  eligible?:(guildId:string,userId:string)=>Promise<boolean>;
+  /** True only when all authored lore chapters are published and readable. */
+  loreAvailable?:(guildId:string)=>Promise<boolean>;
+}
 
 export class DiscordOnboardingCoordinator {
-  constructor(private readonly service:OnboardingService,private readonly config:ConfigService){}
+  constructor(private readonly service:OnboardingService,private readonly config:ConfigService,private readonly learning:OnboardingLearningOptions={}){}
 
   async handleMemberAdd(member:GuildMember):Promise<void>{
     await this.service.memberJoined(member.guild.id,member.id);
@@ -55,9 +61,24 @@ export class DiscordOnboardingCoordinator {
     const plan=await this.service.acknowledgeRules(interaction.guildId,interaction.user.id);
     const result=await this.applyRestorePlan(member,plan);
     const accessText=plan.applyJailedRole?'Your rules acknowledgment is complete. Your moderation Hotseat has resumed; normal access returns when it ends.':'Rules acknowledged. Your normal server access has been restored.';
-    const optional=plan.crimeCommandRestricted?(plan.applyJailedRole?'Crime jail also remains active. Another eligible member may pay your crime bail; moderation Hotseat remains separate.':'Crime jail still blocks ordinary bot commands. Use `/crime bail`, or another member may pay it for you.'):'Optional next steps: `/roles`, `/lore`, `/introduce`, `/tutorial`.';
+    const components=await this.optionalLearningButtons(member,plan,result.failed);
+    const optional=plan.crimeCommandRestricted?(plan.applyJailedRole?'Crime jail also remains active. Another eligible member may pay your crime bail; moderation Hotseat remains separate.':'Crime jail still blocks ordinary bot commands. Use `/crime bail`, or another member may pay it for you.'):plan.applyJailedRole?'Optional next steps are available after your moderation Hotseat ends.':'Optional next steps: `/roles`, `/introduce`.'+(components.length?' The learning buttons are optional, too.':'');
     const failed=result.failed.length?`\n${result.failed.length} prior role(s) could not be restored and were logged.`:'';
-    await interaction.editReply({content:`${accessText}\n${optional}${failed}`});
+    await interaction.editReply({content:`${accessText}\n${optional}${failed}`,components,allowedMentions:{parse:[]}});
+  }
+
+  private async optionalLearningButtons(member:GuildMember,plan:RestorePlan,failed:readonly {roleId:string}[]){
+    // Optional discovery must never hold up a completed rules acknowledgment or bypass a
+    // restored punishment, unsuccessful access restoration, timeout or current security gate.
+    if(!plan.grantMemberAccess||plan.applyJailedRole||plan.crimeCommandRestricted||plan.deferredBecausePunished||member.isCommunicationDisabled?.())return[];
+    try{
+      const access=await roleId(this.config,member.guild.id,'roles.member_access');
+      if(access&&failed.some(row=>row.roleId===access)||await this.learning.eligible?.(member.guild.id,member.id)!==true)return[];
+      const [lore,learn]=await Promise.all(['features.lore','features.learning'].map(key=>this.config.get(member.guild.id,key))),buttons:ButtonBuilder[]=[];
+      if(lore===true&&await this.learning.loreAvailable?.(member.guild.id)===true)buttons.push(new ButtonBuilder().setCustomId(`learn:lore:${member.id}:toc`).setLabel('Read the Lore').setStyle(ButtonStyle.Secondary));
+      if(learn===true)buttons.push(new ButtonBuilder().setCustomId(`learn:tutorial:${member.id}:home`).setLabel('Show Me Around').setStyle(ButtonStyle.Secondary));
+      return buttons.length?[new ActionRowBuilder<ButtonBuilder>().addComponents(buttons)]:[];
+    }catch{return[];}
   }
 
   async handleRolesCommand(interaction:ChatInputCommandInteraction):Promise<void>{

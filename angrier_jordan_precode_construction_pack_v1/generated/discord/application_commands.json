@@ -718,9 +718,10 @@
     "options": [
       {
         "type": 3,
-        "name": "query_or_link",
-        "description": "query_or_link option",
-        "required": true
+        "name": "query",
+        "description": "Search the authorized audio catalog or paste a metadata link.",
+        "required": true,
+        "autocomplete": true
       }
     ]
   },
@@ -772,8 +773,8 @@
         "options": [
           {
             "type": 3,
-            "name": "value",
-            "description": "value option",
+            "name": "time",
+            "description": "Playback position such as 1:30 or 90 seconds.",
             "required": true
           }
         ]
@@ -790,10 +791,11 @@
         "description": "Music: remove.",
         "options": [
           {
-            "type": 3,
-            "name": "value",
-            "description": "value option",
-            "required": true
+            "type": 4,
+            "name": "position",
+            "description": "Current queue position to remove.",
+            "required": true,
+            "min_value": 1
           }
         ]
       },
@@ -803,10 +805,18 @@
         "description": "Music: move.",
         "options": [
           {
-            "type": 3,
-            "name": "value",
-            "description": "value option",
-            "required": true
+            "type": 4,
+            "name": "position",
+            "description": "Current queue position.",
+            "required": true,
+            "min_value": 1
+          },
+          {
+            "type": 4,
+            "name": "to",
+            "description": "New queue position.",
+            "required": true,
+            "min_value": 1
           }
         ]
       },
@@ -828,10 +838,11 @@
         "description": "Music: jump.",
         "options": [
           {
-            "type": 3,
-            "name": "value",
-            "description": "value option",
-            "required": true
+            "type": 4,
+            "name": "position",
+            "description": "Queue position to play next.",
+            "required": true,
+            "min_value": 1
           }
         ]
       },
@@ -839,13 +850,41 @@
         "type": 1,
         "name": "loop",
         "description": "Music: loop.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "mode",
+            "description": "Loop mode.",
+            "required": true,
+            "choices": [
+              {
+                "name": "off",
+                "value": "off"
+              },
+              {
+                "name": "track",
+                "value": "track"
+              },
+              {
+                "name": "queue",
+                "value": "queue"
+              }
+            ]
+          }
+        ]
       },
       {
         "type": 1,
         "name": "autoplay",
         "description": "Music: autoplay.",
-        "options": []
+        "options": [
+          {
+            "type": 5,
+            "name": "enabled",
+            "description": "Use authorized catalog recommendations after the queue.",
+            "required": true
+          }
+        ]
       },
       {
         "type": 1,
@@ -853,10 +892,12 @@
         "description": "Music: volume.",
         "options": [
           {
-            "type": 3,
-            "name": "value",
-            "description": "value option",
-            "required": true
+            "type": 4,
+            "name": "percent",
+            "description": "Player volume from 1 to 100 percent.",
+            "required": true,
+            "min_value": 1,
+            "max_value": 100
           }
         ]
       },
@@ -901,43 +942,118 @@
         "type": 1,
         "name": "create",
         "description": "Playlist: create.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Playlist name.",
+            "required": true
+          }
+        ]
       },
       {
         "type": 1,
         "name": "add",
         "description": "Playlist: add.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Your playlist.",
+            "required": true,
+            "autocomplete": true
+          },
+          {
+            "type": 3,
+            "name": "query",
+            "description": "Authorized catalog track or metadata reference.",
+            "required": true,
+            "autocomplete": true
+          }
+        ]
       },
       {
         "type": 1,
         "name": "remove",
         "description": "Playlist: remove.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Your playlist.",
+            "required": true,
+            "autocomplete": true
+          },
+          {
+            "type": 4,
+            "name": "position",
+            "description": "Track position to remove.",
+            "required": true,
+            "min_value": 1
+          }
+        ]
       },
       {
         "type": 1,
         "name": "play",
         "description": "Playlist: play.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Your playlist.",
+            "required": true,
+            "autocomplete": true
+          }
+        ]
       },
       {
         "type": 1,
         "name": "rename",
         "description": "Playlist: rename.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Your playlist.",
+            "required": true,
+            "autocomplete": true
+          },
+          {
+            "type": 3,
+            "name": "new_name",
+            "description": "New playlist name.",
+            "required": true
+          }
+        ]
       },
       {
         "type": 1,
         "name": "delete",
         "description": "Playlist: delete.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Your playlist.",
+            "required": true,
+            "autocomplete": true
+          }
+        ]
       },
       {
         "type": 1,
         "name": "view",
         "description": "Playlist: view.",
-        "options": []
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Your playlist.",
+            "required": false,
+            "autocomplete": true
+          }
+        ]
       }
     ]
   },

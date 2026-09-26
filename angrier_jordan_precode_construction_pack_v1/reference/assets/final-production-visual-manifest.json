@@ -6135,6 +6135,15 @@
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
       "sha256": "730a704a7d6c195678eaddefd9a517e892fad33017ae29a267a7b53746c2b096"
+    },
+    {
+      "id": "music.runtime.controller",
+      "file": "packages/features-music/src/render.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "ENGINEERING_FIXTURE_GATE_C_PENDING",
+      "usage": "Approved lounge frame applied to provider-neutral Music states; Discord adapter/owner Gate C pending.",
+      "sha256": "65287375b1e6468675dc62d1f8325d28e7d16879b4b481f6db3b8a18928d9a59"
     }
   ]
 }

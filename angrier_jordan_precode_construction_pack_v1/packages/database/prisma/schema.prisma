@@ -692,6 +692,7 @@ model Chairism {
 }
 
 model Playlist {
+  revision Int @default(0)
   id String @id @default(cuid())
   guildId String
   userId String
@@ -1029,6 +1030,17 @@ model SelfRolePanel {
 }
 
 model MusicSession {
+  revision Int @default(0)
+  generation Int @default(0)
+  desiredStatus String @default("DISCONNECTED")
+  observedStatus String @default("DISCONNECTED")
+  observedGeneration Int @default(0)
+  positionMs Int @default(0)
+  observedAt DateTime?
+  lastError String?
+  history Json @default("[]")
+  skipVotes Json @default("{}")
+  queueMaxTracks Int @default(250)
   guildId String @id
   voiceChannelId String
   textChannelId String

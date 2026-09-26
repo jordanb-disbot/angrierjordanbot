@@ -19,3 +19,26 @@ test('tutorial finder paginates enabled commands and rejects forged pages',async
  assert.ok(nextIds.length);assert.ok(nextIds.every(id=>!firstIds.includes(id)));
  const bad=interaction({guild,isChatInputCommand:()=>false,customId:'learn:tutorial:member:pathpage:finder:999'});await coordinator.handle(bad);assert.match(bad.calls[0].content,/Reopen/);
 });
+
+test('custom Special Command lessons disappear immediately when authorization is revoked',async()=>{
+ let visible=true;const config={get:async(_g,k)=>k.startsWith('roles.')?null:true,definition:()=>({})},guild={ownerId:'owner',members:{fetch:async()=>({permissions:{has:()=>false},roles:{cache:new Map([['allowed',{}]])}})}},seen=[];
+ const c=new DiscordLearningCoordinator(forbidden,config,async()=>true,()=>true,async(_g,_u,roles)=>visible&&roles.has('allowed')?[{trigger:'!lounge'}]:[]);
+ const i={guildId:'server',guild,user:{id:'member'},options:{getFocused:()=> 'lounge'},respond:async rows=>seen.push(rows)};
+ await c.autocomplete(i);assert.ok(seen[0].some(r=>r.name==='!lounge'));visible=false;await c.autocomplete(i);assert.deepEqual(seen[1],[]);
+ const stale=interaction({guild,isChatInputCommand:()=>false,customId:'learn:tutorial:member:lesson:special_custom_lounge:0'});await c.handle(stale);assert.match(stale.calls[0].content,/unavailable/);
+});
+
+test('TLDR events count only witnessed deliveries and never project private payloads',async()=>{
+ const {PrismaLearningRepository}=await import('../../dist/packages/features-learning/src/prisma-repository.js');
+ const at=new Date('2026-09-25T12:00Z'),since=new Date('2026-09-24T12:00Z');
+ const sent={deliveryState:'SENT',deliveryMessageId:'123456789012345678',secret:'private text'};
+ const db={scheduledJob:{findMany:async query=>{assert.deepEqual(query.where.completedAt,{gte:since,lte:at});assert.equal(query.where.guildId,'server');assert.equal(query.where.status,'COMPLETED');assert.ok(!('dueAt'in query.where));return[
+ {jobType:'record.announce',completedAt:at,payload:sent},
+ {jobType:'record.announce',completedAt:at,payload:{...sent,deliveryState:'SENDING'}},
+ {jobType:'lottery.announce',completedAt:at,payload:{deliveryState:'SENT'}},
+ {jobType:'spotlight.announce',completedAt:at,payload:{weekKey:'absent'}},
+ {jobType:'spotlight.announce',completedAt:at,payload:{weekKey:'published'}},
+ {jobType:'family.publish',completedAt:at,payload:{...sent,sessionId:'one',channelId:'public'}},
+ {jobType:'family.publish',completedAt:at,payload:{...sent,sessionId:'one',channelId:'public'}}];}},spotlightFreeze:{findMany:async()=>[{weekKey:'published',messageId:'223456789012345678'}]}};
+ const result=await new PrismaLearningRepository(db).notableEvents('server',since,at);assert.deepEqual(result.map(r=>r.jobType),['record.announce','spotlight.announce','family.publish']);assert.ok(result.every(r=>Object.keys(r).sort().join(',')==='completedAt,jobType'));assert.ok(!JSON.stringify(result).includes('private text'));
+});

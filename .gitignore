@@ -19,3 +19,6 @@ __pycache__/
 credentials.json
 tokens.json
 *.tmp
+
+# Owner-supplied private playback catalog (URIs may contain signed credentials).
+**/.music.catalog.local.json
