@@ -1,4 +1,4 @@
-import {randomInt} from 'node:crypto';
+import {randomInt,createHash} from 'node:crypto';
 import {AttachmentBuilder,EmbedBuilder,type Client} from 'discord.js';
 import {DeliveryEngine,DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {PrismaChairismRepository} from '../../../../packages/features-chairisms/src/prisma-repository.js';
@@ -12,10 +12,10 @@ export class DiscordChairismPublication implements ChairismPublisher,ChairismBro
  async deliver(jobId:string){const job=await this.repo.job(jobId),p=job.payload;if(await this.config.get(job.guildId,'features.chairisms')!==true)throw new DomainError('CHAIRISMS_DISABLED','Chairisms are not enabled yet.');
   // A recorded Discord receipt may be finalized after restart without re-fetching deleted source content.
   if(p.deliveryState==='SENT')return this.repo.finalize(jobId);
-  const channel=await this.security.output(p.context,p.outputChannelId),marker='chairism:'+jobId;
+  const channel=await this.security.output(p.context,p.outputChannelId),marker='chairism:'+jobId,filename='preserved-'+createHash('sha256').update(marker).digest('hex').slice(0,24)+'.png';
   await new DeliveryEngine(this.repo.delivery(jobId)).deliver(marker,{
-   find:async key=>{const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===this.client.user?.id&&m.embeds.some(e=>e.footer?.text===key))?.id??null;},
-   send:async key=>{if(!p.snapshot)throw new DomainError('CHAIRISM_JOB','This Chairism has no pending source.');const png=await rasterizeSvg(renderChairism(p.snapshot));await this.security.revalidate(p.context,p.snapshot);const destination=await this.security.output(p.context,p.outputChannelId);return(await destination.send({embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle('Chairisms').setColor(0xC9A768).setImage('attachment://chairism.png').setFooter({text:key})],files:[new AttachmentBuilder(png,{name:'chairism.png'})],allowedMentions:{parse:[]}})).id;}
+   find:async key=>{const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===this.client.user?.id&&(m.embeds.some(e=>e.footer?.text===key)||m.attachments?.some(a=>a.name===filename)))?.id??null;},
+   send:async key=>{if(!p.snapshot)throw new DomainError('CHAIRISM_JOB','This Chairism has no pending source.');const png=await rasterizeSvg(renderChairism(p.snapshot));await this.security.revalidate(p.context,p.snapshot);const destination=await this.security.output(p.context,p.outputChannelId);return(await destination.send({embeds:[new EmbedBuilder().setColor(0xC9A768).setImage('attachment://'+filename)],files:[new AttachmentBuilder(png,{name:filename})],allowedMentions:{parse:[]}})).id;}
   });return this.repo.finalize(jobId);
  }
  async list(context:ChairismContext,query:ChairismBrowseQuery):Promise<ChairismBrowseItem[]>{await this.security.assertCanBrowse(context,query.memberId?[query.memberId]:[]);if(query.mode==='member'&&!query.memberId)throw new DomainError('CHAIRISM_MEMBER','Choose a member.');let cursor=query.beforeId,eligibleCount=0;const selected:ChairismBrowseItem[]=[];

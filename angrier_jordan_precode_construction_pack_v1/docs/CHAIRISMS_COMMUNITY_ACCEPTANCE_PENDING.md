@@ -1,25 +1,25 @@
 # Chairisms / Community owner acceptance — 2026-09-26
 
-## Passed locally
-- Chairisms recent/member/random browsing and quote text publication.
-- Destination configured in disposable test guild only.
+## Passed locally before this revision
+- Chairisms recent/member/random, quote text, destination publication and member attribution/avatar.
+- Poll creation, hidden/anonymous voting and vote revision.
+- Suggestion submission/archive/Support-Oppose/status handling.
+- AMA submission, admin answer and answered state.
+- Amber/bronze/midnight palette approved.
 
-## Current presentation pass (owner review pending)
-- Amber, warm brass and midnight plates/backgrounds for Chairisms and Community; wider quote/browser frames and stronger identity/text hierarchy.
-- Games blue reduced to accent use; neutral midnight/slate plates replace saturated blue fields.
+## Implemented; revised presentation awaiting live review
+- Landscape quote/reply/image frames, archive portraits/ref links, Poppins/Cinzel typography.
+- Conditional This Message / Reply / Image / Both on slash and message Apps routes; existing source validation retained.
+- Art-first public posts; technical footers replaced by hidden attachment-based recovery with legacy recognition.
+- Community ballot/navigation reuses private windows; successful actions no longer create large Saved cards; public post updates remain authoritative.
+- Early nonmodal acknowledgement, serialized refresh and unchanged-image suppression.
+- Prepared Superlatives, Giveaway and Weekly Spotlight award presentation, no rules/timer/reward changes or live triggering.
 
-## Chairisms remaining acceptance / cleanup
-- Browser: inspect wider detailed frames and polished empty state on desktop/mobile; remove duplicated native copy where practical, preserving usable links.
-- Published quote: quote-first readability, prominent avatar/name, premium preserved lounge moment; remove redundant native embed text.
-- Replace visible chairism: technical delivery markers with a clean public Chairism # reference while preserving duplicate-delivery recovery. Not removed by this palette pass.
-- Fully test source selection through message Apps → Create Chairism (primary UX), and /quote message (alternate): This Message, Reply, Image, Both only when source permits; clear reply context and unclipped supported images.
-- Existing source security and transactional publication must remain unchanged.
+## Still pending
+- Live desktop/mobile approval, full source/reply/image/both quoting and Apps entry path.
+- Poll close/final result review; another member's ballot/privacy; role-denial edge cases.
+- Superlatives live season, Giveaway paid entries/prizes/settlement, Weekly Spotlight/badges, long-duration/recovery.
+- No artificial season fast-forward, production enablement or deployment.
 
-## Community — live acceptance pending
-- /poll (NEXT), /suggest, /ama, /superlatives, /giveaway.
-- Weekly Spotlight/badges; scheduled closure/recovery; member/staff denial paths.
-- After functional tests: remove duplicate native transcript text and community: footer markers safely, preserve recovery, retain native controls where necessary.
-- Palette updates do not constitute functional acceptance.
-
-Next exact test: /poll question:Local acceptance test choices:Tea|Coffee results:hidden anonymous:true
-Vote, revise once, then Close Poll. Scheduled and multi-member branches remain later.
+Next: /poll question:Local acceptance test choices:Tea|Coffee results:hidden anonymous:true
+Vote, revise once, then Close Poll. Verify one public post, clean private ballot, no Saved image, and final totals.

@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "a4e4bae44579fffd589f61ec7cf256e168e8dacab798693558b767754a137af3"
+      "sha256": "2f0753a49383e2d59d3112148eaaae8ce05834585b96d37be0452d301fc00343"
     },
     {
       "id": "family.runtime.renderer",
@@ -6071,7 +6071,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "0753b19f751c472b074d9244b5238965a25410e294860dbc9033250c78c721bc"
+      "sha256": "850a34a240bbf63c6bc83cac965134a62c9149f3029af74cecfe501ed9e71af8"
     },
     {
       "id": "chairisms.browser",
@@ -6080,7 +6080,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "cc14c5c326af84c8f37c4a295a8816612ff249aa1426b48f873091986eb2a053"
+      "sha256": "750863f9a0e71122e74df946240877411f0b6b09d3c2ad069059517a8c71d511"
     },
     {
       "id": "casino.runtime.renderer",
@@ -6098,7 +6098,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730"
+      "sha256": "ac4af9d2e573439ca438ae46700ea6673c3edd03da4513dcc29727909cc4b63a"
     },
     {
       "id": "shared.text.layout",
@@ -6538,7 +6538,16 @@
       "category": "renderer",
       "usage": "Wide amber Chairisms browser and quote materials",
       "canonical": true,
-      "sha256": "23505d77708d623e79fb3859872f46dcd75b64b829613c3c3e665f506029a790",
+      "sha256": "25a4026a6459009ae3b6d65254f7cc80e1d9450cc9b186b1b137b1826dc079be",
+      "status": "OWNER_REVIEW_PENDING"
+    },
+    {
+      "id": "community.spotlight.renderer",
+      "file": "packages/features-profiles/src/spotlight-render.ts",
+      "category": "renderer",
+      "usage": "Wide weekly honors, portraits and permanent achievement presentation",
+      "canonical": true,
+      "sha256": "facca1dab30c9f1ef5b874c1a918b02c226227c9283d6c55f8f0ea5710b77018",
       "status": "OWNER_REVIEW_PENDING"
     }
   ]

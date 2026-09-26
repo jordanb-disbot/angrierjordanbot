@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import {renderPremiumProfile,renderPremiumRecords,renderPremiumLeaderboard,renderPremiumShowcase} from '../../../../packages/features-profiles/src/premium-render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {avatarData,memberArt} from './member-art.js';
@@ -81,10 +82,9 @@ export class DiscordProfilesCoordinator {
   const frozen=await this.repo.announcement(guildId,weekKey);if(!frozen||frozen.deliveryState==='SENT')return;
   const channelId=await this.config.get(guildId,'spotlight.post_channel')||await this.config.get(guildId,'channels.main_chat');if(typeof channelId!=='string'||!channelId)throw new Error('Weekly Spotlight channel is not configured.');
   const channel=await client.channels.fetch(channelId);if(!channel?.isTextBased()||!('send' in channel))throw new Error('Weekly Spotlight requires a text channel.');
-  const marker=`spotlight:${weekKey}`;
+  const marker=`spotlight:${weekKey}`,filename='weekly-honors-'+createHash('sha256').update(marker).digest('hex').slice(0,24)+'.png';
   const result=frozen.snapshot as unknown as {winners:{category:string;value:number;userIds:string[]}[];tripleThreat:string[];activeMembers:number;totals:Record<string,number>};
   const names:Record<string,string>={messages:'The Loudest Chair',words:'The Wordsmith',vcSeconds:'Voice of the Lounge'};
-  const description=result.winners.map(w=>`**${names[w.category]}**\n${w.userIds.map(id=>`<@${id}>`).join(', ')||'No qualifying winner'} · ${w.value}`).join('\n\n')+`\n\nActive members: ${result.activeMembers}\nServer totals: ${result.totals.messages} messages · ${result.totals.words} words · ${result.totals.vcSeconds} voice seconds${result.tripleThreat.length?'\nTriple Threat: '+result.tripleThreat.map(id=>`<@${id}>`).join(', '):''}`;
   const awards=await this.repo.awardDetails(guildId,weekKey),identities=new Map<string,{name:string;avatarData:string}>();
   for(const userId of new Set(awards.map(a=>a.userId)))identities.set(userId,await memberArt(client,guildId,userId)??{name:'Member',avatarData:''});
   const end=weeklyCycle(new Date(weekKey+'T12:00:00Z')).next;
@@ -94,8 +94,8 @@ export class DiscordProfilesCoordinator {
    read:async()=>{const row=await this.repo.announcement(guildId,weekKey);return{state:row?.deliveryState==='SENT'?'SENT':row?.deliveryState==='SENDING'?'SENDING':'PENDING',...(row?.messageId?{messageId:row.messageId}:{})};},
    claim:()=>this.repo.claimAnnouncement(guildId,weekKey),complete:id=>this.repo.delivered(guildId,weekKey,id)
   }).deliver(marker,{
-   find:async key=>{const recent=await channel.messages.fetch({limit:100});return recent.find(m=>m.author.id===client.user?.id&&m.embeds.some(e=>e.footer?.text===key))?.id??null;},
-   send:async key=>(await channel.send({content:'@everyone',embeds:[card('Weekly Spotlight · '+weekKey,description).setImage('attachment://weekly-spotlight.png').setFooter({text:key})],files:[new AttachmentBuilder(png,{name:'weekly-spotlight.png'})],allowedMentions:{parse:['everyone']}})).id
+   find:async key=>{const recent=await channel.messages.fetch({limit:100});return recent.find(m=>m.author.id===client.user?.id&&(m.embeds.some(e=>e.footer?.text===key)||m.attachments?.some(a=>a.name===filename)))?.id??null;},
+   send:async key=>(await channel.send({content:'@everyone',embeds:[new EmbedBuilder().setColor(0xF59E0B).setImage('attachment://'+filename)],files:[new AttachmentBuilder(png,{name:filename})],allowedMentions:{parse:['everyone']}})).id
   });
  }
 }
