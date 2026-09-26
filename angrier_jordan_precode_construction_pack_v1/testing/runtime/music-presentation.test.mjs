@@ -84,3 +84,29 @@ test('Music lists show all 25 choices, explicit overflow, empty state and bounde
  const overflow=renderMusicList('History','Recent tracks',[...rows,...rows]);assert.match(words(overflow),/25 additional choices below/);boundedText(overflow);
  const long=renderMusicList('X'.repeat(5000),'Y'.repeat(5000),[{title:'Z'.repeat(5000),detail:'W'.repeat(5000),badge:'B'.repeat(5000)}],'F'.repeat(5000));assert.ok(height(long)<700);boundedText(long);
 });
+
+
+test('Wide player centers hierarchy within artwork-safe columns and settings rows',()=>{
+ const svg=renderMusicStrip(playing(),1000,'Jordan',undefined,'The Listening Room');
+ const nodes=[...svg.matchAll(/<text\b([^>]*)>(.*?)<\/text>/g)];
+ const at=(value,x)=>{const node=nodes.find(row=>unescape(row[2])===value);assert.ok(node,value);assert.match(node[1],/text-anchor="middle"/);assert.match(node[1],new RegExp('\\bx="'+x+'"'));};
+ at('NOW PLAYING',259);at('Lounge frequency first',259);at('The House Band',259);
+ at('Voice · The Listening Room',220);at('Requested by Jordan',235);at('Audio source · YouTube',220);
+ at('4 queued · Volume 65%',220);at('Loop off · Autoplay off',220);boundedText(svg);
+});
+
+test('Both players use a readable channel fallback instead of an internal channel ID',()=>{
+ const state=playing();state.voiceChannelId='1553150573866647552';
+ for(const render of [renderMusicController,renderMusicStrip])for(const name of [undefined,'','   ']){
+  const svg=render(state,1000,'Jordan',undefined,name);assert.match(words(svg),/Voice channel/);assert.doesNotMatch(svg,/1553150573866647552/);boundedText(svg);
+ }
+});
+
+test('Player progress advances only for confirmed playback and freezes when paused',()=>{
+ const state=playing(),paused={...state,desiredStatus:'PAUSED',observedStatus:'PAUSED'};
+ for(const render of [renderMusicController,renderMusicStrip]){
+  assert.match(words(render(state,11000,'Jordan')),/1:10 \/ 4:00/);
+  assert.match(words(render(paused,11000,'Jordan')),/1:00 \/ 4:00/);
+  assert.match(words(render({...state,observedStatus:'RECOVERING'},11000,'Jordan')),/1:00 \/ 4:00/);
+ }
+});

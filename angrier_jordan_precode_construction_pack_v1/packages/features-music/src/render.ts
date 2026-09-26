@@ -42,11 +42,11 @@ function progress(view:View,x:number,y:number,width:number){
 }
 function context(state:MusicState,view:View,y:number,requesterName:string,avatar:string|undefined){
  const name=view.requesterUserId?requesterName:state.current?'Autoplay':'The lounge is listening';
- const nameRows=copy(name,94,y+45,292,17,2,ink.white,false,true);
- let svg=portrait('music-requester',clean(name,100),avatar,59,y+18,44)+label(view.requesterUserId?'REQUESTED BY':state.current?'CURATED BY':'PULL UP A CHAIR',94,y+24,ink.teal)+nameRows.svg;
+ const nameRows=copy(name,240,y+45,292,17,2,ink.white,true,true);
+ let svg=portrait('music-requester',clean(name,100),avatar,59,y+18,44)+label(view.requesterUserId?'REQUESTED BY':state.current?'CURATED BY':'PULL UP A CHAIR',240,y+24,ink.teal,true)+nameRows.svg;
  let cursor=y+51+nameRows.height;
- if(view.provider){const source=copy('Audio source · '+providerName(view.provider),38,cursor,364,14,2,ink.muted);svg+=source.svg;cursor+=source.height;}
- if(view.requestedProvider&&view.requestedProvider!==view.provider){const requested=copy('Requested via '+providerName(view.requestedProvider),38,cursor,364,14,2,ink.muted);svg+=requested.svg;cursor+=requested.height;}
+ if(view.provider){const source=copy('Audio source · '+providerName(view.provider),220,cursor,364,14,2,ink.muted,true);svg+=source.svg;cursor+=source.height;}
+ if(view.requestedProvider&&view.requestedProvider!==view.provider){const requested=copy('Requested via '+providerName(view.requestedProvider),220,cursor,364,14,2,ink.muted,true);svg+=requested.svg;cursor+=requested.height;}
  const height=cursor-y+10;
  return{svg:panel(18,y,404,height,ink.teal)+svg,height};
 }
@@ -55,7 +55,7 @@ function context(state:MusicState,view:View,y:number,requesterName:string,avatar
 export function renderMusicController(state:MusicState,now:number,requesterName:string,artworkData?:string,voiceChannelName?:string,requesterAvatarData?:string){
  const view=musicController(state,now),display=status(view);
  let svg=header(),y=72;
- const voice=copy(voiceChannelName??view.voiceChannelId,220,y+42,360,16,2,ink.white,true);
+ const voice=copy(voiceChannelName?.trim()||'Voice channel',220,y+42,360,16,2,ink.white,true);
  svg+=panel(18,y,404,voice.height+34,ink.teal)+label('VOICE CHANNEL',220,y+18,ink.teal,true)+voice.svg;y+=voice.height+46;
  const heroTop=y;
  let hero=artwork('music-cover',artworkData,36,y+18,108);
@@ -87,14 +87,15 @@ export function renderMusicController(state:MusicState,now:number,requesterName:
 export function renderMusicStrip(state:MusicState,now:number,requesterName:string,artworkData?:string,voiceChannelName?:string,requesterAvatarData?:string){
  const view=musicController(state,now),display=status(view);
  let svg=label('ANGRIER JORDAN · THE JUKEBOX',220,28,ink.teal,true),y=43;
- const top=y;let body=artwork('music-strip-cover',artworkData,34,y+18,70)+label(display.title.toUpperCase(),121,y+30,display.color);
- const title=copy(state.current?view.title:'The jukebox is empty',121,y+56,276,18,2,ink.white,false,true);body+=title.svg;
- const artist=copy(view.artist??'Use /play to choose a track.',121,y+62+title.height,276,14,1,ink.muted);body+=artist.svg;y+=Math.max(112,76+title.height+artist.height);
+ const top=y;let body=artwork('music-strip-cover',artworkData,34,y+18,70)+label(display.title.toUpperCase(),259,y+30,display.color,true);
+ const title=copy(state.current?view.title:'The jukebox is empty',259,y+56,276,18,2,ink.white,true,true);body+=title.svg;
+ const artist=copy(view.artist??'Use /play to choose a track.',259,y+62+title.height,276,14,1,ink.muted,true);body+=artist.svg;y+=Math.max(112,76+title.height+artist.height);
  if(state.current){body+=progress(view,38,y,364);y+=46;}
- const voice=copy('Voice · '+(voiceChannelName??view.voiceChannelId),38,y+3,364,14,2,ink.white);body+=voice.svg;y+=voice.height+12;
- if(state.current){body+=portrait('strip-requester',clean(requesterName,100),requesterAvatarData,49,y-2,26);const who=copy(view.requesterUserId?'Requested by '+requesterName:'Autoplay',72,y+16,326,14,2,ink.muted);body+=who.svg;y+=Math.max(34,who.height+13);}
- if(view.provider){const source=copy('Audio source · '+providerName(view.provider)+(view.requestedProvider!==view.provider?' · Requested via '+providerName(view.requestedProvider??view.provider):''),38,y,364,13,2,ink.muted);body+=source.svg;y+=source.height+9;}
- const settings=copy(`${view.queueCount} queued · Volume ${view.volume}% · Loop ${view.loop} · Autoplay ${view.autoplay?'on':'off'}`,220,y,364,14,2,ink.white,true);body+=settings.svg;y+=settings.height+3;
+ const voice=copy('Voice · '+(voiceChannelName?.trim()||'Voice channel'),220,y+3,364,14,2,ink.white,true);body+=voice.svg;y+=voice.height+12;
+ if(state.current){body+=portrait('strip-requester',clean(requesterName,100),requesterAvatarData,49,y-2,26);const who=copy(view.requesterUserId?'Requested by '+requesterName:'Autoplay',235,y+16,326,14,2,ink.muted,true);body+=who.svg;y+=Math.max(34,who.height+13);}
+ if(view.provider){const source=copy('Audio source · '+providerName(view.provider)+(view.requestedProvider!==view.provider?' · Requested via '+providerName(view.requestedProvider??view.provider):''),220,y,364,13,2,ink.muted,true);body+=source.svg;y+=source.height+9;}
+ const settings=copy(`${view.queueCount} queued · Volume ${view.volume}%`,220,y,364,14,1,ink.white,true);body+=settings.svg;y+=settings.height+4;
+ const modes=copy(`Loop ${view.loop} · Autoplay ${view.autoplay?'on':'off'}`,220,y,364,14,1,ink.muted,true);body+=modes.svg;y+=modes.height+3;
  svg+=panel(18,top,404,y-top,ink.gold)+body;return shell(y+18,svg);
 }
 

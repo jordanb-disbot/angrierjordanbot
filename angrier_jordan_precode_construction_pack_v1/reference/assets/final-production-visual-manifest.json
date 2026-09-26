@@ -6143,7 +6143,7 @@
       "canonical": true,
       "status": "VISUAL_APPROVED_LIVE_ACCEPTANCE_PENDING",
       "usage": "Owner-approved Music visual system at f98de3c (2026-09-26): full/compact player, lists, notices and native controls. Live functional Gate C pending.",
-      "sha256": "95af036a6b94704a2bacf3638762d6fb93f2c984c6798073d17980b9193ef87f"
+      "sha256": "e5c09467ba04e1be0348d3382e5dc9f5cd7761616c198fc362759c79c1299911"
     }
   ]
 }

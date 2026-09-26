@@ -36,3 +36,10 @@ test('disconnect becomes observed only after the voice boundary confirms gateway
 test('Departure inspection waits for in-flight reconciliation instead of losing the gateway update',async()=>{
  const f=fixture();let release,entered;const ready=new Promise(r=>{entered=r;});f.options.synchronize=async()=>{entered();await new Promise(r=>{release=r;});};const work=f.runtime.reconcile(job);await ready;let inspected=false;const after=f.runtime.afterCurrentWork(g,async()=>{inspected=true;assert.equal(await f.runtime.isCurrent({guildId:g,revision:2,generation:3}),false);});await Promise.resolve();assert.equal(inspected,false);release();await work;await after;assert.equal(inspected,true);f.runtime.close();
 });
+
+test('Progress refreshes coalesce to fifteen seconds while explicit Refresh reads latest telemetry',async()=>{
+ const f=fixture();let now=1000;f.options.now=()=>now;await f.runtime.event(start,{socketEpoch:'epoch',sequence:1});f.calls.length=0;
+ const update=sequence=>f.runtime.event({kind:'playerUpdate',guildId:g,positionMs:now,at:now,connected:true},{socketEpoch:'epoch',sequence});
+ await update(2);now=5000;await update(3);now=15999;await update(4);assert.equal(f.calls.filter(c=>c[0]==='refresh').length,1);now=16000;await update(5);assert.equal(f.calls.filter(c=>c[0]==='refresh').length,2);
+ const reads=f.calls.filter(c=>c[0]==='read').length;await f.runtime.refresh(g);assert.equal(f.calls.filter(c=>c[0]==='read').length,reads+1);f.runtime.close();await f.runtime.refresh(g);assert.equal(f.calls.filter(c=>c[0]==='read').length,reads+1);
+});

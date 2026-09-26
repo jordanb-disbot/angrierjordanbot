@@ -22,7 +22,7 @@ export interface MusicRuntimeOptions {
 export class MusicRuntime {
  #options:MusicRuntimeOptions;#tails=new Map<string,Promise<unknown>>();#active=new Map<string,ScheduledJob>();
  #bindings=new Map<string,LavalinkPlayerBinding>();#abort=new AbortController();#pollSequence=0;
- #readFailures=new Map<string,string>();
+ #readFailures=new Map<string,string>();#lastProgressRefresh=new Map<string,number>();
  constructor(options:MusicRuntimeOptions){this.#options=options;}
  #lane<T>(guildId:string,work:()=>Promise<T>):Promise<T>{const task=(this.#tails.get(guildId)??Promise.resolve()).catch(()=>{}).then(work);this.#tails.set(guildId,task);void task.finally(()=>{if(this.#tails.get(guildId)===task)this.#tails.delete(guildId);}).catch(()=>{});return task;}
  /** Re-read Discord after an in-flight join/move settles instead of dropping its voice event. */
@@ -68,12 +68,14 @@ export class MusicRuntime {
   const status=!observation.connected?'FAILED':state.current?(observation.paused?'PAUSED':'PLAYING'):'IDLE';
   await this.#apply(state,this.#options.socketEpoch+'_poll',++this.#pollSequence,{kind:'observation',status,positionMs:observation.positionMs,at:observation.at});
  }
+ /** Explicit Refresh reads current node telemetry before repainting the authoritative post. */
+ async refresh(guildId:string){return this.#lane(guildId,async()=>{if(this.#abort.signal.aborted||!await this.#options.enabled(guildId))return;const saved=await this.#options.repository.read(guildId);if(saved)await this.#poll(saved.state);});}
  async event(event:Exclude<LavalinkEvent,{kind:'ready'}>,context:{socketEpoch:string;sequence:number}){return this.#lane(event.guildId,async()=>{
   if(this.#abort.signal.aborted||context.socketEpoch!==this.#options.socketEpoch||!await this.#options.enabled(event.guildId))return;
   const saved=await this.#options.repository.read(event.guildId);if(!saved)return;const state=saved.state;
   const fence={guildId:state.guildId,revision:state.revision,generation:state.generation,entryId:state.current?.id??null};
   const projected=projectLavalinkEvent(event,{expected:fence,current:fence,sourceSocketEpoch:context.socketEpoch,activeSocketEpoch:this.#options.socketEpoch,sourceSequence:context.sequence,...(this.#bindings.has(event.guildId)?{playerBinding:this.#bindings.get(event.guildId)!}:{}),...(state.observedAt===null?{}:{lastObservedAt:state.observedAt})});if(!projected)return;
-  if(projected.kind==='playerUpdate'){await this.#poll(state);await this.#options.refreshController(event.guildId);return;}
+  if(projected.kind==='playerUpdate'){await this.#poll(state);const now=(this.#options.now??Date.now)(),last=this.#lastProgressRefresh.get(event.guildId);if(last===undefined||now-last>=15000){this.#lastProgressRefresh.set(event.guildId,now);await this.#options.refreshController(event.guildId);}return;}
   const mutation:MusicTransportEvent=projected.kind==='trackStart'?{kind:'track-start',at:(this.#options.now??Date.now)(),positionMs:state.positionMs}:projected.kind==='trackEnd'?{kind:'track-end',reason:projected.reason}:{kind:'observation',status:'FAILED',at:(this.#options.now??Date.now)(),positionMs:state.positionMs};
   const applied=await this.#apply(state,context.socketEpoch,context.sequence,mutation);
   if(!applied.ignored&&projected.kind==='trackException')musicTrace('playback.exception',{guildId:event.guildId,channelId:state.voiceChannelId});
@@ -82,5 +84,5 @@ export class MusicRuntime {
   if(!applied.ignored&&projected.kind==='trackEnd')this.#bindings.delete(event.guildId);
   if(applied.needsControllerRefresh)await this.#options.refreshController(event.guildId);
  });}
- close(){this.#abort.abort();this.#bindings.clear();this.#readFailures.clear();}
+ close(){this.#abort.abort();this.#bindings.clear();this.#readFailures.clear();this.#lastProgressRefresh.clear();}
 }

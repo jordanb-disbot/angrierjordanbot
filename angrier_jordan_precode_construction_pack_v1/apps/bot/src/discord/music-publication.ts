@@ -12,6 +12,11 @@ export class MusicPublicationError extends Error {constructor(public readonly co
 const fail=(code:string):never=>{throw new MusicPublicationError(code);};
 const missing=(error:unknown)=>typeof error==='object'&&error!==null&&'code'in error&&error.code===10008;
 const safeCodes=new Set(['MUSIC_DISABLED','MUSIC_CHANNEL','MUSIC_PERMISSIONS','MUSIC_AUTHOR','MUSIC_MARKER','MUSIC_STALE','MUSIC_MISSING','MUSIC_PAYLOAD','MUSIC_PUBLICATION','DELIVERY_UNCERTAIN','DELIVERY_BUSY']);
+// Delivery identity lives in component metadata, never normal message text.
+function deliveryMarker(message:Message):string|undefined {
+ for(const row of message.components){const data=(typeof row.toJSON==='function'?row.toJSON():row) as {components?:{custom_id?:string}[]};for(const control of data.components??[]){const match=control.custom_id?.match(/:p=([a-zA-Z0-9_-]{1,100})$/);if(match)return 'music-controller:'+match[1];}}
+ return message.embeds.map(embed=>embed.footer?.text).find(text=>/^music-controller:[a-zA-Z0-9_-]{1,100}$/.test(text??''));
+}
 const same=(state:MusicState,other:MusicState)=>state.guildId===other.guildId&&state.textChannelId===other.textChannelId&&state.revision===other.revision&&state.generation===other.generation;
 
 /** Durable send recovery, authoritative pointer refresh and non-destructive retirement.
@@ -20,7 +25,7 @@ const same=(state:MusicState,other:MusicState)=>state.guildId===other.guildId&&s
  * relocation's durable cleanup intent retires any late edit/send. Never blindly resend.
  */
 export class DiscordMusicPublication {
- #tails=new Map<string,Promise<unknown>>();
+ #tails=new Map<string,Promise<unknown>>();#unpinnable=new Set<string>();
  constructor(private repo:Repository,private deliveryForJob:(jobId:string)=>DeliveryRepository,private payloadFactory:PayloadFactory,private enabled:(guildId:string)=>Promise<boolean>){}
  private async boundary<T>(work:()=>Promise<T>):Promise<T>{try{return await work();}catch(error){const code=error instanceof Error&&'code'in error&&typeof error.code==='string'&&safeCodes.has(error.code)?error.code:'MUSIC_PUBLICATION';throw new MusicPublicationError(code);}}
  private serial<T>(guildId:string,work:()=>Promise<T>):Promise<T>{const pending=(this.#tails.get(guildId)??Promise.resolve()).catch(()=>{}).then(work);this.#tails.set(guildId,pending);void pending.finally(()=>{if(this.#tails.get(guildId)===pending)this.#tails.delete(guildId);}).catch(()=>{});return pending;}
@@ -36,8 +41,12 @@ export class DiscordMusicPublication {
  private async rendered(state:MusicState,marker:string,channel:VoiceChannel){
   const requester=state.current?.requesterUserId,art=requester&&channel.client?await memberArt(channel.client,state.guildId,requester):undefined;
   const payload=await this.payloadFactory(state,{compact:true,voiceChannelName:channel.name,requesterName:art?.name??(requester?'Member':'Autoplay'),requesterAvatarData:art?.avatarData??''});if(!payload.embeds.length)fail('MUSIC_PAYLOAD');
-  return{...payload,embeds:payload.embeds.map((embed,index)=>index===0?EmbedBuilder.from(embed).setFooter({text:marker}):EmbedBuilder.from(embed)),allowedMentions:{parse:[] as never[]}};
+  const components=payload.components.map(row=>row.toJSON());let marked=false;
+  for(const row of components)for(const control of row.components){if(!marked&&'custom_id'in control){const id=control.custom_id+':p='+marker.slice('music-controller:'.length);if(id.length>100)fail('MUSIC_PAYLOAD');control.custom_id=id;marked=true;}}
+  if(!marked)fail('MUSIC_PAYLOAD');
+  return{...payload,components,embeds:payload.embeds.map(embed=>EmbedBuilder.from(embed).setFooter(null)),allowedMentions:{parse:[] as never[]}};
  }
+ private async pin(message:Message,channel:VoiceChannel){if(this.#unpinnable.has(channel.id))return;try{await message.pin('Current music controller');}catch(error){if(error&&typeof error==='object'&&'code'in error&&error.code===50019){this.#unpinnable.add(channel.id);return;}throw error;}}
  private async allowed(guildId:string){if(await this.enabled(guildId)!==true)fail('MUSIC_DISABLED');}
  async ensure(client:Client,guildId:string):Promise<MusicPublicationResult>{return this.boundary(()=>this.serial(guildId,()=>this.ensureInternal(client,guildId)));}
  private async ensureInternal(client:Client,guildId:string):Promise<MusicPublicationResult>{
@@ -59,7 +68,7 @@ export class DiscordMusicPublication {
     let before:string|undefined;let found:string|null=null;
     for(let page=0;page<10;page++){
      const messages=await channel.messages.fetch({limit:100,...(before?{before}:{}),cache:false});if(!messages.size)break;
-     for(const message of messages.values())if(message.author.id===client.user?.id&&message.guildId===guildId&&message.channelId===channel.id&&message.embeds.some(embed=>embed.footer?.text===key)){if(found&&found!==message.id)fail('MUSIC_MARKER');found=message.id;}
+     for(const message of messages.values())if(message.author.id===client.user?.id&&message.guildId===guildId&&message.channelId===channel.id&&deliveryMarker(message)===key){if(found&&found!==message.id)fail('MUSIC_MARKER');found=message.id;}
      const next=messages.last()?.id;if(messages.size<100||!next||next===before)break;before=next;
     }
     return found;
@@ -68,10 +77,10 @@ export class DiscordMusicPublication {
     publication=await this.repo.controllerPublication(jobId);await this.allowed(guildId);if(publication.obsolete||!publication.state)fail('MUSIC_STALE');
     const destination=await this.channel(client,guildId,publication.payload.channelId,true),payload=await this.rendered(publication.state!,key,destination);
     await this.allowed(guildId);const fresh=await this.repo.controllerPublication(jobId);if(fresh.obsolete||!fresh.state||!same(publication.state!,fresh.state))fail('MUSIC_STALE');
-    const sent=await destination.send(payload);this.author(client,sent,guildId,destination.id);if(!sent.embeds.some(embed=>embed.footer?.text===key))fail('MUSIC_MARKER');return sent.id;
+    const sent=await destination.send(payload);this.author(client,sent,guildId,destination.id);if(deliveryMarker(sent)!==key)fail('MUSIC_MARKER');return sent.id;
    }
   });
-  const message=await this.message(client,channel,messageId);if(message&&!message.embeds.some(embed=>embed.footer?.text===marker))fail('MUSIC_MARKER');
+  const message=await this.message(client,channel,messageId);if(message&&deliveryMarker(message)!==marker)fail('MUSIC_MARKER');
   // SENT is durable proof of the original delivery. A positively deleted post can
   // be linked then replaced through the expected-message CAS, never blind resent.
   const finalized=await this.repo.finalizeController(jobId,messageId);if(!finalized.linked)return{kind:'obsolete',messageId};
@@ -79,7 +88,7 @@ export class DiscordMusicPublication {
   // rendering. A failed pin never creates another post or repeats an earlier edit.
   if(await this.enabled(guildId)!==true)return{kind:'published',messageId};
   if(!message)return this.refreshInternal(client,guildId);
-  if(!message.pinned){await this.channel(client,guildId,channel.id,true);await this.allowed(guildId);if(!await this.active(guildId,channel.id,messageId))return{kind:'obsolete',messageId};await message.pin('Current music controller');}
+  if(!message.pinned){await this.channel(client,guildId,channel.id,true);await this.allowed(guildId);if(!await this.active(guildId,channel.id,messageId))return{kind:'obsolete',messageId};await this.pin(message,channel);}
   await this.refreshInternal(client,guildId);return{kind:'published',messageId};
  }
  async refresh(client:Client,guildId:string):Promise<MusicPublicationResult>{return this.boundary(()=>this.serial(guildId,()=>this.refreshInternal(client,guildId)));}
@@ -87,20 +96,21 @@ export class DiscordMusicPublication {
   await this.allowed(guildId);const saved=await this.repo.read(guildId);if(!saved)return{kind:'missing'};if(!saved.controllerMessageId)return this.ensureInternal(client,guildId);
   const channel=await this.channel(client,guildId,saved.state.textChannelId,true),messageId=saved.controllerMessageId,message=await this.message(client,channel,messageId);
   if(!message){const current=await this.active(guildId,channel.id,messageId);if(!current)return{kind:'obsolete'};const reserved=await this.repo.reserveController(guildId,current.state.revision,messageId);return reserved.kind==='publication'?this.publishInternal(client,reserved.jobId):{kind:'obsolete'};}
-  const marker=message.embeds.map(embed=>embed.footer?.text).find(text=>/^music-controller:[a-zA-Z0-9_-]{1,100}$/.test(text??''));if(!marker)fail('MUSIC_MARKER');
+  const marker=deliveryMarker(message);if(!marker)fail('MUSIC_MARKER');
   const publication=await this.repo.controllerPublication(marker!.slice('music-controller:'.length));if(publication.marker!==marker||publication.job.guildId!==guildId||publication.payload.channelId!==channel.id||publication.payload.deliveryState!=='SENT'||publication.payload.deliveryMessageId!==messageId||publication.obsolete)fail('MUSIC_MARKER');
   const payload=await this.rendered(saved.state,marker!,channel);await this.allowed(guildId);const fresh=await this.active(guildId,channel.id,messageId);if(!fresh||!same(saved.state,fresh.state))fail('MUSIC_STALE');
   await message.edit(payload);
   if(!await this.active(guildId,channel.id,messageId))return{kind:'obsolete',messageId};
-  if(!message.pinned){await this.allowed(guildId);if(!await this.active(guildId,channel.id,messageId))return{kind:'obsolete',messageId};await message.pin('Current music controller');}
+  if(!message.pinned){await this.allowed(guildId);if(!await this.active(guildId,channel.id,messageId))return{kind:'obsolete',messageId};await this.pin(message,channel);}
   return{kind:'refreshed',messageId};
  }
  async cleanup(client:Client,jobId:string):Promise<MusicPublicationResult>{return this.boundary(async()=>{const intent=await this.repo.controllerCleanupIntent(jobId);return this.serial(intent.job.guildId,async()=>{
   const current=await this.repo.controllerCleanupIntent(jobId);if(current.obsolete)return{kind:'obsolete'};
   const channel=await this.channel(client,current.job.guildId,current.payload.channelId),message=await this.message(client,channel,current.payload.messageId);if(!message)return{kind:'missing'};
   if((await this.repo.controllerCleanupIntent(jobId)).obsolete)return{kind:'obsolete'};
-  // Keep approved art/history; only retire interaction controls and the pin.
-  await message.edit({components:[],allowedMentions:{parse:[]}});
+  // Delete only the verified retired bot post; otherwise visibly disable it.
+  try{await message.delete();return{kind:'retired',messageId:message.id};}catch(error){if(missing(error))return{kind:'missing'};}
+  await message.edit({content:'This Music player has been retired. Use the current shared Jukebox.',embeds:message.embeds.map(embed=>EmbedBuilder.from(embed).setFooter(null)),components:[],allowedMentions:{parse:[]}});
   if((await this.repo.controllerCleanupIntent(jobId)).obsolete)return{kind:'obsolete'};
   if(message.pinned){const bot=await channel.guild.members.fetchMe({force:true});if(!channel.permissionsFor(bot)?.has(PermissionFlagsBits.PinMessages))fail('MUSIC_PERMISSIONS');if((await this.repo.controllerCleanupIntent(jobId)).obsolete)return{kind:'obsolete'};await message.unpin('Retired music controller');}
   return{kind:'retired',messageId:message.id};

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {inspect} from 'node:util';
-import {ChannelType,Collection,EmbedBuilder,PermissionsBitField,PermissionFlagsBits} from 'discord.js';
+import {ActionRowBuilder,ButtonBuilder,ButtonStyle,ChannelType,Collection,EmbedBuilder,PermissionsBitField,PermissionFlagsBits} from 'discord.js';
 import {DiscordMusicPublication} from '../../dist/apps/bot/src/discord/music-publication.js';
 const guildId='111111111111111111',channelId='222222222222222222',otherId='333333333333333333',botId='444444444444444444';
 const clone=value=>structuredClone(value),error=code=>Object.assign(Error('PRIVATE_DISCORD_TOKEN'),{code});
@@ -21,14 +21,14 @@ function fixture(){
  const guild={id:guildId,members:{fetchMe:async options=>{assert.equal(options.force,true);return{id:botId};}},channels:{fetch:async(id,options)=>{assert.equal(options.force,true);return f.channels.get(id);}}};
  for(const id of [channelId,otherId]){const channel={id,guildId,guild,type:ChannelType.GuildVoice,name:'Lounge',mask:PermissionsBitField.All&~PermissionFlagsBits.Administrator,isSendable:()=>true,permissionsFor:()=>new PermissionsBitField(channel.mask),messages:{fetch:async options=>{if(f.fetchError)throw f.fetchError;if(options.message){assert.equal(options.force,true);const m=f.messages.get(options.message);if(!m)throw error(10008);return m;}assert.equal(options.cache,false);return new Collection([...f.messages].filter(([,m])=>m.channelId===id));}},send:async payload=>{f.counts.sends++;const m=f.makeMessage(String(555555555555555550n+BigInt(f.counts.sends)),id);m.embeds=payload.embeds.map(e=>e.toJSON());m.components=payload.components;if(f.onSend)await f.onSend(m);if(f.sendError)throw error(500);return m;}};f.channels.set(id,channel);}
  f.client={user:{id:botId},guilds:{fetch:async options=>{assert.deepEqual(options,{guild:guildId,force:true});return guild;}}};
- const payloadFactory=async(state,options)=>{assert.equal(options.voiceChannelName,'Lounge');const payload={embeds:[new EmbedBuilder().setTitle('The Jukebox').setFooter({text:'original'})],files:[{attachment:Buffer.from('approved fixture'),name:'music-controller.png'}],components:[{type:1,revision:state.revision}],attachments:[],allowedMentions:{parse:[]}};f.factoryPayloads.push(payload);if(f.onRender)await f.onRender();return payload;};
+ const payloadFactory=async(state,options)=>{assert.equal(options.voiceChannelName,'Lounge');const payload={embeds:[new EmbedBuilder().setTitle('The Jukebox').setFooter({text:'original'})],files:[{attachment:Buffer.from('approved fixture'),name:'music-controller.png'}],components:[new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('music:control:'+guildId+':'+state.revision+':1:pause:public').setLabel('Pause').setStyle(ButtonStyle.Primary))],attachments:[],allowedMentions:{parse:[]}};f.factoryPayloads.push(payload);if(f.onRender)await f.onRender();return payload;};
  f.publisher=new DiscordMusicPublication(f.repo,f.delivery,payloadFactory,async()=>f.enabled);f.link=()=>{const m=f.makeMessage('555555555555555559',channelId);Object.assign(f.jobs.get('job-1').payload,{deliveryState:'SENT',deliveryMessageId:m.id});f.pointer=m.id;return m;};return f;
 }
 const rejects=(work,code)=>assert.rejects(work,{code});
 
 test('Controller ensure uses one shared delivery, authoritative pointer and pin with stable marker; payload is cloned',async()=>{
  const f=fixture();const result=await f.publisher.ensure(f.client,guildId);assert.equal(result.kind,'published');assert.equal(f.pointer,result.messageId);assert.equal(f.counts.sends,1);assert.equal(f.counts.claims,1);assert.equal(f.counts.completes,1);assert.equal(f.counts.pins,1);
- await f.publisher.refresh(f.client,guildId);assert.equal(f.counts.sends,1);assert.equal(f.messages.get(f.pointer).embeds[0].footer.text,'music-controller:job-1');assert.ok(f.factoryPayloads.every(p=>p.embeds[0].data.footer.text==='original'));assert.ok(f.edits.every(p=>p.allowedMentions.parse.length===0));
+ await f.publisher.refresh(f.client,guildId);assert.equal(f.counts.sends,1);assert.equal(f.messages.get(f.pointer).embeds[0].footer,undefined);assert.match(f.messages.get(f.pointer).components[0].components[0].custom_id,/:p=job-1$/);assert.ok(f.factoryPayloads.every(p=>p.embeds[0].data.footer.text==='original'));assert.ok(f.edits.every(p=>p.allowedMentions.parse.length===0));
 });
 test('Ambiguous send is recovered by bot author, destination and durable marker without another send',async()=>{
  const f=fixture();f.sendError=true;await rejects(f.publisher.publish(f.client,'job-1'),'MUSIC_PUBLICATION');assert.equal(f.jobs.get('job-1').payload.deliveryState,'SENDING');assert.equal(f.pointer,null);f.sendError=false;
@@ -48,14 +48,14 @@ test('Refresh discards a rendered payload if state changes before editing the au
  const f=fixture();f.link();f.onRender=()=>{f.state.revision++;};await rejects(f.publisher.refresh(f.client,guildId),'MUSIC_STALE');assert.equal(f.counts.edits,0);assert.equal(f.counts.pins,0);assert.equal(f.counts.sends,0);
 });
 test('Only confirmed UnknownMessage reserves a replacement for the exact old pointer',async()=>{
- const f=fixture(),old=f.link();f.messages.delete(old.id);const result=await f.publisher.refresh(f.client,guildId);assert.equal(result.kind,'published');assert.equal(f.counts.sends,1);assert.equal(f.reservations[0].expected,old.id);assert.notEqual(f.pointer,old.id);assert.ok(f.cleanups.has('cleanup-'+old.id));assert.equal(f.messages.get(f.pointer).embeds[0].footer.text,'music-controller:job-2');
+ const f=fixture(),old=f.link();f.messages.delete(old.id);const result=await f.publisher.refresh(f.client,guildId);assert.equal(result.kind,'published');assert.equal(f.counts.sends,1);assert.equal(f.reservations[0].expected,old.id);assert.notEqual(f.pointer,old.id);assert.ok(f.cleanups.has('cleanup-'+old.id));assert.equal(f.messages.get(f.pointer).embeds[0].footer,undefined);assert.match(f.messages.get(f.pointer).components[0].components[0].custom_id,/:p=job-2$/);
  const denied=fixture();denied.link();denied.fetchError=error(50013);await rejects(denied.publisher.refresh(denied.client,guildId),'MUSIC_PUBLICATION');assert.equal(denied.reservations.length,0);assert.equal(denied.counts.sends,0);
 });
 test('Confirmed delivery deleted before finalization is replaced through expected-message CAS instead of retrying forever',async()=>{
  const f=fixture(),old=f.link();f.pointer=null;f.messages.delete(old.id);const result=await f.publisher.publish(f.client,'job-1');assert.equal(result.kind,'published');assert.equal(f.counts.sends,1);assert.notEqual(f.pointer,old.id);assert.equal(f.reservations[0].expected,old.id);assert.equal(f.jobs.get('job-1').payload.superseded,true);
 });
 test('Relocation during final enable checks cannot send or pin in the retired destination',async()=>{
- const f=fixture();let checks=0;const publisher=new DiscordMusicPublication(f.repo,f.delivery,async()=>({embeds:[new EmbedBuilder().setTitle('Controller')],files:[],components:[],attachments:[],allowedMentions:{parse:[]}}),async()=>{if(++checks===3)f.move();return true;});
+ const f=fixture();let checks=0;const publisher=new DiscordMusicPublication(f.repo,f.delivery,async()=>({embeds:[new EmbedBuilder().setTitle('Controller')],files:[],components:[new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('music:control:test').setLabel('Pause').setStyle(ButtonStyle.Primary))],attachments:[],allowedMentions:{parse:[]}}),async()=>{if(++checks===3)f.move();return true;});
  await rejects(publisher.publish(f.client,'job-1'),'MUSIC_STALE');assert.equal(f.counts.sends,0);assert.equal(f.counts.pins,0);
  const pin=fixture();const m=pin.link();pin.pointer=null;let pinChecks=0;const retry=new DiscordMusicPublication(pin.repo,pin.delivery,async()=>{throw error('SHOULD_NOT_RENDER');},async()=>{if(++pinChecks===2)pin.move();return true;});const result=await retry.publish(pin.client,'job-1');assert.equal(result.kind,'obsolete');assert.equal(pin.counts.pins,0);assert.ok(pin.cleanups.has('cleanup-'+m.id));
 });
@@ -65,7 +65,7 @@ test('Late send after relocation is finalized only for durable cleanup and never
 });
 test('Relocation during an edit avoids a late pin and cleanup retires controls without deleting approved content',async()=>{
  const f=fixture(),m=f.link();m.pinned=true;f.onEdit=()=>{f.onEdit=null;f.move();};const result=await f.publisher.refresh(f.client,guildId);assert.equal(result.kind,'obsolete');assert.equal(f.counts.pins,0);const before=clone(m.embeds);
- await f.publisher.cleanup(f.client,'cleanup-'+m.id);assert.deepEqual(m.components,[]);assert.deepEqual(m.embeds,before);assert.equal(m.pinned,false);assert.equal(f.counts.unpins,1);assert.deepEqual(Object.keys(f.edits.at(-1)).sort(),['allowedMentions','components']);
+ await f.publisher.cleanup(f.client,'cleanup-'+m.id);assert.deepEqual(m.components,[]);assert.ok(m.embeds.every(embed=>!embed.footer));assert.equal(m.pinned,false);assert.equal(f.counts.unpins,1);assert.deepEqual(Object.keys(f.edits.at(-1)).sort(),['allowedMentions','components','content','embeds']);
 });
 test('Disabled or permission-denied fresh publication makes no send or delivery claim',async()=>{
  const disabled=fixture();disabled.enabled=false;await rejects(disabled.publisher.publish(disabled.client,'job-1'),'MUSIC_DISABLED');assert.equal(disabled.counts.claims,0);assert.equal(disabled.counts.sends,0);
@@ -89,4 +89,14 @@ test('Unpin failure is retryable with no duplicate publication or destructive de
 test('Same-server concurrent ensure calls retain one durable controller and fixed errors do not reveal provider details',async()=>{
  const f=fixture();await Promise.all([f.publisher.ensure(f.client,guildId),f.publisher.ensure(f.client,guildId)]);assert.equal(f.counts.sends,1);assert.equal(f.counts.claims,1);
  const failed=fixture();failed.repo.read=async()=>{throw error('PRIVATE_ERROR_CODE');};await assert.rejects(failed.publisher.ensure(failed.client,guildId),e=>{assert.equal(e.code,'MUSIC_PUBLICATION');assert.ok(!inspect(e).includes('PRIVATE'));assert.equal(e.cause,undefined);return true;});
+});
+
+
+test('retired verified bot players are deleted when possible; forbidden deletion disables and labels the post',async()=>{
+ for(const denied of [false,true]){const f=fixture(),m=f.link();f.move();let deleted=0;m.delete=async()=>{if(denied)throw error(50013);deleted++;f.messages.delete(m.id);};await f.publisher.cleanup(f.client,'cleanup-'+m.id);assert.equal(deleted,denied?0:1);if(denied){assert.deepEqual(m.components,[]);assert.match(f.edits.at(-1).content,/retired/);assert.ok(m.embeds.every(embed=>!embed.footer));}else assert.equal(f.counts.edits,0);}
+});
+
+
+test('voice-chat pin rejection retains one authoritative editable player without repeated failed pins',async()=>{
+ const f=fixture();f.onSend=message=>{message.pin=async()=>{f.counts.pins++;throw error(50019);};};const result=await f.publisher.ensure(f.client,guildId);assert.equal(result.kind,'published');assert.equal(f.pointer,result.messageId);await f.publisher.refresh(f.client,guildId);assert.equal(f.counts.sends,1);assert.equal(f.counts.pins,1);assert.equal(f.counts.edits,2);assert.equal(f.messages.get(f.pointer).embeds[0].footer,undefined);
 });
