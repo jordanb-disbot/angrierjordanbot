@@ -1,3 +1,4 @@
+import {runWithDailyAcknowledgement,replyDailyRestriction} from './discord/daily-interaction-ack.js';
 import {DiscordServerBootstrap} from './discord/server-bootstrap.js';
 import {PrismaServerBootstrapRepository} from '../../../packages/database/src/prisma-server-bootstrap.js';
 import {MusicApplication} from './music/music-application.js';
@@ -110,7 +111,7 @@ export async function startProductionBot():Promise<void>{
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration]});
   const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const}),async()=>{try{return{name:'music',status:!music||await config.get(guildId,'music.enabled')!==true||music.ready?'ok' as const:'degraded' as const};}catch{return{name:'music',status:'degraded' as const};}}]);
   const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
-    client.on(event,(...args)=>lifecycle.run(()=>serverBootstrap.run(event,args,()=>listener(...args)),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
+    client.on(event,(...args)=>lifecycle.run(()=>runWithDailyAcknowledgement(event,args,enableEconomySmoke,()=>serverBootstrap.run(event,args,()=>listener(...args))),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
   };
   const promptRepo=new PrismaWyrPromptRepository(db);
   const sessionRepo=new PrismaWyrSessionRepository(db);
@@ -380,8 +381,8 @@ export async function startProductionBot():Promise<void>{
         const subcommand=interaction.isChatInputCommand()?interaction.options.getSubcommand(false)??undefined:undefined;
         const component='customId' in interaction?interaction.customId:undefined;
         const moderationSafe=component==='onboard:ack_rules'||command==='rules'||command==='help'||(command==='jail'&&(subcommand==='status'||subcommand==='reason'));
-        if(!moderationSafe&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are currently in moderation Hotseat. Only jail-safe commands are available until release.'});return;}
-        if(command!=='rules'&&component!=='onboard:ack_rules'&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are in crime jail. Use /crime bail, or ask another member to pay your bail.'});return;}
+        if(!moderationSafe&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are currently in moderation Hotseat. Only jail-safe commands are available until release.');return;}
+        if(command!=='rules'&&component!=='onboard:ack_rules'&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are in crime jail. Use /crime bail, or ask another member to pay your bail.');return;}
       }
       if((interaction.isChatInputCommand()&&MUSIC_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('music:'))){if(!music){await interaction.reply({ephemeral:true,content:'Music is not enabled yet.'});return;}await music.coordinator.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&SOCIAL_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('social:'))){if(!enableSocialSmoke){await interaction.reply({ephemeral:true,content:'Social features are not enabled yet.'});return;}await social.handle(interaction);return;}
@@ -436,11 +437,11 @@ export async function startProductionBot():Promise<void>{
         const isRulesAck=interaction.isButton()&&interaction.customId==='onboard:ack_rules';
         const isReview=interaction.isButton()&&(interaction.customId.startsWith('jail:review:')||interaction.customId.startsWith('moderation:review:'));
         if(!isRulesAck&&!isReview&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){
-          await interaction.reply({ephemeral:true,content:'You are currently in moderation Hotseat. Interactive game, role, and community controls are unavailable until release.'});return;
+          await replyDailyRestriction(interaction,'You are currently in moderation Hotseat. Interactive game, role, and community controls are unavailable until release.');return;
         }
       }
-      if(enableSecuritySmoke&&interaction.guildId&&(interaction.isButton()||interaction.isStringSelectMenu())){const securitySafe=interaction.isButton()&&(interaction.customId==='security:verify'||interaction.customId==='security:panic_deactivate_confirm'||interaction.customId.startsWith('moderation:review:')||interaction.customId==='onboard:ack_rules');if(!securitySafe&&await security.isRestricted(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'Join Gate verification is required before interactive controls are available.'});return;}}
-      if(enableEconomySmoke&&interaction.isButton()&&interaction.customId.startsWith('economy:')){if(enableSecuritySmoke&&interaction.guildId&&await security.isRestricted(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'Join Gate verification is required before economy controls are available.'});return;}await economy.handleButton(interaction);return;}
+      if(enableSecuritySmoke&&interaction.guildId&&(interaction.isButton()||interaction.isStringSelectMenu())){const securitySafe=interaction.isButton()&&(interaction.customId==='security:verify'||interaction.customId==='security:panic_deactivate_confirm'||interaction.customId.startsWith('moderation:review:')||interaction.customId==='onboard:ack_rules');if(!securitySafe&&await security.isRestricted(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'Join Gate verification is required before interactive controls are available.');return;}}
+      if(enableEconomySmoke&&interaction.isButton()&&interaction.customId.startsWith('economy:')){if(enableSecuritySmoke&&interaction.guildId&&await security.isRestricted(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'Join Gate verification is required before economy controls are available.');return;}await economy.handleButton(interaction);return;}
       if(enableEconomySmoke&&interaction.isModalSubmit()&&interaction.customId.startsWith('economy:')){if(enableJailSmoke&&interaction.guildId&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are currently in moderation Hotseat. Economy controls are unavailable until release.'});return;}if(enableSecuritySmoke&&interaction.guildId&&await security.isRestricted(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'Join Gate verification is required before economy controls are available.'});return;}await economy.handleModal(interaction);return;}
             if(interaction.isButton()&&interaction.customId.startsWith('wyr:')){await wyr.handleButton(interaction);return;}
       if(enableSecuritySmoke&&interaction.isButton()&&interaction.customId==='security:verify'){await security.handleVerifyButton(interaction);if(enableOnboardingSmoke&&interaction.guild){const member=await interaction.guild.members.fetch(interaction.user.id);await onboarding.restoreAfterPunishment(member).catch(()=>undefined);}return;}

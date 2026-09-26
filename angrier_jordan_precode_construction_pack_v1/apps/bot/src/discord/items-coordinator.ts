@@ -1,3 +1,4 @@
+import {economyPresentation} from './economy-presentation.js';
 import itemHelp from '../../../../packages/content/help/items.json' with {type:'json'};
 import {ActionRowBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,ModalBuilder,StringSelectMenuBuilder,TextInputBuilder,TextInputStyle,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction,type StringSelectMenuInteraction} from 'discord.js';
 import {DomainError,PermissionEngine,type CapabilityMap,type ConfigService} from '../../../../packages/core/src/index.js';
@@ -26,7 +27,7 @@ export class DiscordItemsCoordinator {
    const parts=i.isChatInputCommand()?[]:i.customId.split(':');
    if(parts.length&&parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own item controls.');
    const id=(action:string,arg='')=>`items:${action}:${i.user.id}${arg?':'+arg:''}`;
-   const send=async(title:string,text:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[])=>{const payload={embeds:[embed(title,text)],components,allowedMentions:{parse:[] as never[]}};if(i.deferred)await i.editReply(payload);else await i.reply({ephemeral:true,...payload});};
+   const send=async(title:string,text:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[])=>{const payload={...await economyPresentation({title,description:text}),components,allowedMentions:{parse:[] as never[]}};if(i.deferred)await i.editReply(payload);else await i.reply({ephemeral:true,...payload});};
    const menu=(action:string,options:{label:string;value:string;description?:string}[])=>new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId(id(action)).setPlaceholder('Choose an item').addOptions(options.slice(0,25)));
    const view=async()=>svc.view(c.guildId,c.userId);
    const showInventory=async(query:Parameters<ItemService['inventory']>[2]={},page=0)=>{const s=await view(),all=svc.inventory(s,c.userId,query),offset=Math.max(0,Math.floor(page))*20,items=all.slice(offset,offset+20);await send('Inventory',items.map(x=>`${x.item.name}${x.quality?' · '+x.quality:''} × ${x.quantity} · ${x.locked?'Locked':'Unlocked'}\nID: \`${x.id}\``).join('\n')||'No matching items.',[...(items.length?[menu('inspect',items.map(x=>({label:`${x.item.name} × ${x.quantity}`.slice(0,100),value:x.id})))]:[]),row(button(id('filter'),'Search / Sort / Filter'),button(id('sale','junk'),'Sell All Junk'),button(id('sale','duplicates'),'Sell Duplicates')),row(button(id('category'),'Category Locks'),button(id('help'),'How This Works'))]);};

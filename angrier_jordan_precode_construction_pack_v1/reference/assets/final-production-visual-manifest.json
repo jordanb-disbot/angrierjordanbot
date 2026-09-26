@@ -6468,6 +6468,15 @@
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
       "sha256": "a8002b0d2abb17d27e021f8de0578190a1f6ed557449da4775b064d07764f1dc"
+    },
+    {
+      "id": "economy.shared-presentation",
+      "file": "packages/features-economy/src/presentation.ts",
+      "category": "renderer",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Shared deterministic Economy and Items lounge frames.",
+      "sha256": "f22cb71da0a41c105cf414a96707a2e5e452923dd8ed4adc1a29dd4dcf5ec7e9"
     }
   ]
 }
