@@ -1,0 +1,34 @@
+{
+  "id": "family",
+  "classification": "guided",
+  "commands": [
+    "family_marry",
+    "family_divorce",
+    "family_adopt",
+    "family_disown",
+    "family_emancipate",
+    "family_familytree",
+    "family_will",
+    "family_familyauction"
+  ],
+  "title": "Family, auctions and estates",
+  "body": "Use /family in the bot channel. A Ring proposal requires the target’s decision and expires after 24 hours. A Wedding Sack guarantees the bot marriage. Each second marriage consumes its own Blessing. Spouses keep separate finances. Marriage-card votes are anonymous, editable and exclude both spouses; more than 80% approval with at least five voters unlocks only the first child slot. Divorce after three days transfers half one randomly chosen spouse’s liquid Ottomans; the same pair waits seven days to remarry. Adoption needs a married pair with an open slot and the child’s acceptance. Disown/emancipate wait three days. Only active links appear in the family tree. Self-auctions use private increasing escrowed bids for spouse/child roleplay, last 1–72 hours and pay the person auctioned. A will chooses one beneficiary. Departure starts a 24-hour estate grace; returning cancels an unexecuted estate. Executed inheritance is irreversible and never restores assets or starter funds on rejoin.",
+  "fields": {
+    "member": "Target member; familytree defaults to yourself.",
+    "item": "Ring or Wedding Sack. Have unlocked required items and a Blessing when taking a second spouse.",
+    "type": "Auction yourself as spouse or child roleplay.",
+    "hours": "Auction duration from one to 72 hours; default 24.",
+    "reserve": "Optional minimum winning Ottoman bid. Sealed bids cannot decrease or withdraw."
+  },
+  "tutorial": {
+    "lesson_id": "family.intro",
+    "steps": [
+      "Obtain required family items through the shared Shop and keep them unlocked.",
+      "Choose the member and Ring/Sack behavior; read the public proposal or marriage result.",
+      "Use the marriage’s own voting controls and View Family.",
+      "Allow child-slot and minimum relationship ages to mature before family changes.",
+      "Review sealed-bid amounts before confirming; losing bids are refunded at settlement.",
+      "Set your will and understand the departure grace and irreversible estate result."
+    ]
+  }
+}

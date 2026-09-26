@@ -4,9 +4,9 @@
   "source_registry_count": 192,
   "coverage_count": 192,
   "presentation_types": {
-    "NATIVE_DISCORD": 66,
-    "SHARED_RUNTIME": 72,
-    "DEDICATED_RUNTIME": 52,
+    "NATIVE_DISCORD": 69,
+    "SHARED_RUNTIME": 66,
+    "DEDICATED_RUNTIME": 55,
     "SPECIAL_EVENT_RUNTIME": 2
   },
   "commands": [
@@ -491,10 +491,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "community",
       "asset_refs": [
-        "production/atomic_assets/templates/giveaway.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-community/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "race",
@@ -735,10 +738,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "community",
       "asset_refs": [
-        "production/atomic_assets/templates/poll.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-community/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "superlatives",
@@ -750,10 +756,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "community",
       "asset_refs": [
-        "production/atomic_assets/templates/superlative.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-community/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "suggest",
@@ -765,10 +774,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "community",
       "asset_refs": [
-        "production/atomic_assets/templates/suggestion.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-community/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "ama",
@@ -780,10 +792,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "community",
       "asset_refs": [
-        "production/atomic_assets/templates/ama.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
       "interaction_contract": "Rendered community card + Discord-native voting/entry controls",
-      "status": "COVERED"
+      "status": "COVERED",
+      "renderer": "packages/features-community/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "roles",
@@ -808,15 +823,15 @@
       "command_type": "slash",
       "visibility": "public",
       "presentation_type": "DEDICATED_RUNTIME",
-      "renderer_family": "chairism",
+      "renderer_family": "chairisms",
       "asset_refs": [
-        "production/atomic_assets/templates/chairism_short.svg",
-        "production/atomic_assets/templates/chairism_long.svg",
-        "production/atomic_assets/templates/chairism_image.svg",
-        "production/atomic_assets/templates/chairism_reply.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "One Chairism renderer family; native context action where applicable",
-      "status": "COVERED"
+      "interaction_contract": "Private source choices and confirmation; actual public Chairism card after source checks and confirmed delivery.",
+      "status": "COVERED",
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "quote_text",
@@ -826,15 +841,15 @@
       "command_type": "slash",
       "visibility": "public",
       "presentation_type": "DEDICATED_RUNTIME",
-      "renderer_family": "chairism",
+      "renderer_family": "chairisms",
       "asset_refs": [
-        "production/atomic_assets/templates/chairism_short.svg",
-        "production/atomic_assets/templates/chairism_long.svg",
-        "production/atomic_assets/templates/chairism_image.svg",
-        "production/atomic_assets/templates/chairism_reply.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "One Chairism renderer family; native context action where applicable",
-      "status": "COVERED"
+      "interaction_contract": "Private source choices and confirmation; actual public Chairism card after source checks and confirmed delivery.",
+      "status": "COVERED",
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "chairisms_recent",
@@ -842,17 +857,14 @@
       "invocation": "/chairisms recent",
       "registration_path": "/chairisms recent",
       "command_type": "slash",
-      "visibility": "public",
-      "presentation_type": "DEDICATED_RUNTIME",
-      "renderer_family": "chairism",
-      "asset_refs": [
-        "production/atomic_assets/templates/chairism_short.svg",
-        "production/atomic_assets/templates/chairism_long.svg",
-        "production/atomic_assets/templates/chairism_image.svg",
-        "production/atomic_assets/templates/chairism_reply.svg"
-      ],
-      "interaction_contract": "One Chairism renderer family; native context action where applicable",
-      "status": "COVERED"
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "chairisms",
+      "asset_refs": [],
+      "interaction_contract": "Private metadata browser with saved output links and pagination.",
+      "status": "COVERED",
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "chairisms_member",
@@ -860,17 +872,14 @@
       "invocation": "/chairisms member",
       "registration_path": "/chairisms member",
       "command_type": "slash",
-      "visibility": "public",
-      "presentation_type": "DEDICATED_RUNTIME",
-      "renderer_family": "chairism",
-      "asset_refs": [
-        "production/atomic_assets/templates/chairism_short.svg",
-        "production/atomic_assets/templates/chairism_long.svg",
-        "production/atomic_assets/templates/chairism_image.svg",
-        "production/atomic_assets/templates/chairism_reply.svg"
-      ],
-      "interaction_contract": "One Chairism renderer family; native context action where applicable",
-      "status": "COVERED"
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "chairisms",
+      "asset_refs": [],
+      "interaction_contract": "Private metadata browser with saved output links and pagination.",
+      "status": "COVERED",
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "chairisms_random",
@@ -878,17 +887,14 @@
       "invocation": "/chairisms random",
       "registration_path": "/chairisms random",
       "command_type": "slash",
-      "visibility": "public",
-      "presentation_type": "DEDICATED_RUNTIME",
-      "renderer_family": "chairism",
-      "asset_refs": [
-        "production/atomic_assets/templates/chairism_short.svg",
-        "production/atomic_assets/templates/chairism_long.svg",
-        "production/atomic_assets/templates/chairism_image.svg",
-        "production/atomic_assets/templates/chairism_reply.svg"
-      ],
-      "interaction_contract": "One Chairism renderer family; native context action where applicable",
-      "status": "COVERED"
+      "visibility": "ephemeral",
+      "presentation_type": "NATIVE_DISCORD",
+      "renderer_family": "chairisms",
+      "asset_refs": [],
+      "interaction_contract": "Private metadata browser with saved output links and pagination.",
+      "status": "COVERED",
+      "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "music_play",
@@ -2070,10 +2076,13 @@
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/runtime_templates/family/02_marriage_vote.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Public authoritative marriage card + native 👍/👎 and View Family controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_divorce",
@@ -2082,13 +2091,16 @@
       "registration_path": "/family divorce",
       "command_type": "slash",
       "visibility": "public",
-      "presentation_type": "SHARED_RUNTIME",
+      "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/atomic_assets/templates/family.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_adopt",
@@ -2097,13 +2109,16 @@
       "registration_path": "/family adopt",
       "command_type": "slash",
       "visibility": "public",
-      "presentation_type": "SHARED_RUNTIME",
+      "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/atomic_assets/templates/family.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_disown",
@@ -2112,13 +2127,16 @@
       "registration_path": "/family disown",
       "command_type": "slash",
       "visibility": "public",
-      "presentation_type": "SHARED_RUNTIME",
+      "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/atomic_assets/templates/family.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_emancipate",
@@ -2127,13 +2145,16 @@
       "registration_path": "/family emancipate",
       "command_type": "slash",
       "visibility": "public",
-      "presentation_type": "SHARED_RUNTIME",
+      "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/atomic_assets/templates/family.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_familytree",
@@ -2141,14 +2162,17 @@
       "invocation": "/family familytree",
       "registration_path": "/family familytree",
       "command_type": "slash",
-      "visibility": "public",
+      "visibility": "ephemeral",
       "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/runtime_templates/family/01_tree.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Rendered family tree with native navigation",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "apps/bot/src/discord/family-coordinator.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_will",
@@ -2156,14 +2180,17 @@
       "invocation": "/family will",
       "registration_path": "/family will",
       "command_type": "slash",
-      "visibility": "public",
-      "presentation_type": "SHARED_RUNTIME",
+      "visibility": "ephemeral",
+      "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/atomic_assets/templates/family.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "family_familyauction",
@@ -2172,13 +2199,16 @@
       "registration_path": "/family familyauction",
       "command_type": "slash",
       "visibility": "public",
-      "presentation_type": "SHARED_RUNTIME",
+      "presentation_type": "DEDICATED_RUNTIME",
       "renderer_family": "family",
       "asset_refs": [
-        "production/atomic_assets/templates/family.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "Shared family event renderer + native confirmations/auction controls",
-      "status": "COVERED"
+      "interaction_contract": "Private command acknowledgment; authoritative public family events, sealed private bids, active-only tree and persisted outcomes.",
+      "status": "COVERED",
+      "renderer": "packages/features-family/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "warn",
@@ -2786,17 +2816,17 @@
       "invocation": "Create Chairism",
       "registration_path": "Create Chairism",
       "command_type": "context_message",
-      "visibility": "ephemeral",
+      "visibility": "public",
       "presentation_type": "DEDICATED_RUNTIME",
-      "renderer_family": "chairism",
+      "renderer_family": "chairisms",
       "asset_refs": [
-        "production/atomic_assets/templates/chairism_short.svg",
-        "production/atomic_assets/templates/chairism_long.svg",
-        "production/atomic_assets/templates/chairism_image.svg",
-        "production/atomic_assets/templates/chairism_reply.svg"
+        "production/event_art/v3/lounge.png",
+        "production/theme/brand.json"
       ],
-      "interaction_contract": "One Chairism renderer family; native context action where applicable",
-      "status": "COVERED"
+      "interaction_contract": "Private source choices and confirmation; actual public Chairism card after source checks and confirmed delivery.",
+      "status": "COVERED",
+      "renderer": "packages/features-chairisms/src/render.ts",
+      "runtime_status": "IMPLEMENTED_FLAGGED_OFF"
     },
     {
       "id": "tldr_chat",

@@ -5,7 +5,7 @@ import { CAPABILITY_MATRIX } from '../../../packages/contracts/src/generated/cap
 import { getPrismaClient } from '../../../packages/database/src/client';
 import { PrismaConfigDraftRepository } from '../../../packages/features-dashboard/src/prisma-drafts';
 import { verifyDashboardReferences } from '../../../packages/features-dashboard/src/references';
-import { validateBuiltinRoleMap } from '../../../packages/features-special/src/domain';
+import { validateDashboardComplexSetting } from '../../../packages/features-dashboard/src/complex-settings';
 
 const verifyReferences:ReferenceVerifier=async(guildId,definitions,values)=>{
   return verifyDashboardReferences(guildId,definitions,values,async(serverId,resource)=>{
@@ -16,8 +16,5 @@ const verifyReferences:ReferenceVerifier=async(guildId,definitions,values)=>{
 };
 
 export function draftService(){
-  return new ConfigDraftService(SETTINGS,new PrismaConfigDraftRepository(getPrismaClient(),SETTINGS),new PermissionEngine(CAPABILITY_MATRIX.capabilities),verifyReferences,Date.now,(key,value)=>{
-    if(key!=='special_commands.builtin_role_map')return false;
-    validateBuiltinRoleMap(value);return true;
-  });
+  return new ConfigDraftService(SETTINGS,new PrismaConfigDraftRepository(getPrismaClient(),SETTINGS),new PermissionEngine(CAPABILITY_MATRIX.capabilities),verifyReferences,Date.now,validateDashboardComplexSetting);
 }

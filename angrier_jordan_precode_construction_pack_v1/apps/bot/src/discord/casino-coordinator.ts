@@ -1,5 +1,7 @@
+import {renderCasinoResult} from '../../../../packages/features-casino/src/render.js';
+import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import casinoHelp from '../../../../packages/content/help/casino.json' with {type:'json'};
-import {ActionRowBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,ModalBuilder,TextInputBuilder,TextInputStyle,type Client,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction} from 'discord.js';
+import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,ModalBuilder,TextInputBuilder,TextInputStyle,type Client,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction} from 'discord.js';
 import {DomainError,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaCasinoRepository,type CasinoContext,type CasinoPolicy} from '../../../../packages/features-casino/src/prisma-repository.js';
@@ -56,7 +58,9 @@ export class DiscordCasinoCoordinator {
   if(closed)text+=`\n**${d.outcome}** · Returned: **${d.payout} Ottomans**`;
   const controls=new ActionRowBuilder<ButtonBuilder>();if(closed)controls.addComponents(new ButtonBuilder().setCustomId(`casino:again:${ownerId}:${id}`).setLabel('Play Again').setStyle(ButtonStyle.Primary));else for(const action of ['hit','stand','double','split'])controls.addComponents(new ButtonBuilder().setCustomId(`casino:act:${ownerId}:${id}:${round.version}:${action}`).setLabel(action[0]!.toUpperCase()+action.slice(1)).setStyle(action==='stand'?ButtonStyle.Secondary:ButtonStyle.Primary));
   controls.addComponents(new ButtonBuilder().setCustomId('casino:help:'+ownerId+':'+d.game).setLabel('Rules').setStyle(ButtonStyle.Secondary));
-  return{embeds:[card('Casino · '+d.game,text).setFooter({text:'casino:'+id})],components:[controls],allowedMentions:{parse:[] as never[]}};
+  const attachment=closed?new AttachmentBuilder(await rasterizeSvg(renderCasinoResult({title:d.game[0]!.toUpperCase()+d.game.slice(1)+' Result',subtitle:'Settled round · '+(d.outcome??'Complete'),amount:d.payout??'0',amountLabel:'Returned',details:[{label:'Wager',value:d.stake+' Ottomans'},{label:'Result',value:d.blackjack?d.blackjack.hands.map((h,n)=>'Hand '+(n+1)+': '+h.cards.map(cardLabel).join(' ')+' · '+handValue(h.cards).total).join(' / '):(d.symbols??[]).map(s=>policy.symbols.find(x=>x.id===s)?.name??s).join(' · ')}]})),{name:'casino-result.png'}):undefined;
+  const embed=card('Casino · '+d.game,text).setFooter({text:'casino:'+id});if(attachment)embed.setImage('attachment://casino-result.png');
+  return{embeds:[embed],files:attachment?[attachment]:[],attachments:[],components:[controls],allowedMentions:{parse:[] as never[]}};
  }
  async refresh(client:Client,id:string){const round=await this.casino.get(id);if(!round.messageId)return;const channel=await client.channels.fetch(round.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Casino message channel unavailable.');const message=await channel.messages.fetch(round.messageId);if(message.author.id!==client.user?.id)throw new Error('Casino message owner mismatch.');await message.edit(await this.roundPayload(id));}
 

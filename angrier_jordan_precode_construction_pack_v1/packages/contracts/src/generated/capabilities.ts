@@ -251,6 +251,26 @@ export const CAPABILITY_MATRIX = {
       "throne",
       "discord_administrator",
       "guild_owner"
+    ],
+    "community.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne",
+      "discord_administrator",
+      "guild_owner"
+    ],
+    "family.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
+    ],
+    "chairisms.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
     ]
   },
   "rules": [

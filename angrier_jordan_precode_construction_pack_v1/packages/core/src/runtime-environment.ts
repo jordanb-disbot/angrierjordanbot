@@ -21,6 +21,7 @@ export function validateRuntimeEnvironment(env:Environment,role:RuntimeRole):Run
   if(role==='worker'){
     required('DISCORD_TOKEN');
     for(const key of ['DISCORD_APPLICATION_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key)))errors.add(key);
+    if(env.ENABLE_FAMILY_SMOKE==='true')required('FAMILY_COMPATIBILITY_SECRET',32);
     if(production&&(env.ENABLE_MODERATION_SMOKE==='true'||env.ENABLE_SECURITY_SMOKE==='true'))required('EVIDENCE_ENCRYPTION_KEY',32);
   }
   let dashboardBaseUrl:string|undefined,oauthCallbackUrl:string|undefined;

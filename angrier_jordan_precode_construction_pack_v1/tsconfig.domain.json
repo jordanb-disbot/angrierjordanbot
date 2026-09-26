@@ -25,7 +25,10 @@
     "packages/features-pvp/src/**/*.ts",
     "packages/features-party/src/**/*.ts",
     "packages/features-channel-games/src/**/*.ts",
-    "packages/features-crime/src/**/*.ts"
+    "packages/features-crime/src/**/*.ts",
+    "packages/features-community/src/**/*.ts",
+    "packages/features-family/src/**/*.ts",
+    "packages/features-chairisms/src/**/*.ts"
   ],
   "exclude": [
     "apps/bot/src/discord/**/*.ts",

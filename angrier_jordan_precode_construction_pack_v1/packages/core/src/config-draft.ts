@@ -183,7 +183,7 @@ export class ConfigDraftService {
     if(typeof start==='number'&&typeof end==='number'&&start>=end)errors.push('spotlight: the posting window must end after it starts.');
     const reward=values['solo.reward'],cap=values['solo.daily_reward_cap'];
     if(typeof reward==='number'&&typeof cap==='number'&&reward>cap)errors.push('solo: the reward must not exceed the daily reward cap.');
-    for(const [minimum,maximum] of [['pvp.min_wager','pvp.max_wager'],['crime.theft_min_bp','crime.theft_max_bp'],['crime.catch_base_bp','crime.catch_cap_bp'],['giveaway.min_duration_minutes','giveaway.max_duration_minutes']]){
+    for(const [minimum,maximum] of [['pvp.min_wager','pvp.max_wager'],['crime.theft_min_bp','crime.theft_max_bp'],['crime.catch_base_bp','crime.catch_cap_bp'],['giveaway.min_duration_minutes','giveaway.max_duration_minutes'],['family.auction_min_hours','family.auction_max_hours'],['family.cooldown_base_seconds','family.cooldown_max_seconds']]){
       const low=values[minimum!],high=values[maximum!];if(typeof low==='number'&&typeof high==='number'&&low>high)errors.push(`${minimum}: must not exceed ${maximum}.`);
     }
     const relevant=[...related].map(key=>this.byKey.get(key)).filter((item):item is SettingDefinition=>!!item);

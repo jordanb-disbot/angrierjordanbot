@@ -1,0 +1,91 @@
+{
+  "kind": "actual-production-renderer-fixtures",
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "files": [
+    {
+      "file": "marriage-desktop.png",
+      "sha256": "9d753118194c00a077709858637ef220f5336f4eff92ac454c14f03121fb4f1f",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "marriage-mobile.png",
+      "sha256": "d3fbe214400ab1f9c92d0f555d94af1634881d936ccf5e6ebfe199a744343ce7",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "divorce-desktop.png",
+      "sha256": "7f1852496f22b5fe301879ff78b2558a79290e7f0475016d01547d7bddb87d7d",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "divorce-mobile.png",
+      "sha256": "f1830251b849a678804797f3cd48e900ee141b4a054ea07c9389e1c3688e2dd8",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "inheritance-desktop.png",
+      "sha256": "722a95448a22ed448e423d46349409d6d7e24850968dcf9251ce1d736b597a2b",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "inheritance-mobile.png",
+      "sha256": "f983aa5c20a510c9dcbf1b3b00f633c32a5ece17602f56a6e737a70cd3995435",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "auction-win-desktop.png",
+      "sha256": "028ab45b90731e4fb58e86a20398aab92a0ba06c6d87f9072ba6367c50ebb356",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "auction-win-mobile.png",
+      "sha256": "8910ee46b3eb37fec484c87ead5221bcb1be1479a768154acedc51b323a7245b",
+      "renderer": "packages/features-family/src/render.ts",
+      "rendererSha256": "2aabba0d351aa34437777c7b6a09e5425f6992a0ffc542ba1b8c6bbcf0a5d033"
+    },
+    {
+      "file": "arrest-desktop.png",
+      "sha256": "a458071433f95f1e4d170b7984d5d638e91a8fc21aeac818d1a4b369ebf636f7",
+      "renderer": "packages/features-crime/src/render.ts",
+      "rendererSha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
+    },
+    {
+      "file": "arrest-mobile.png",
+      "sha256": "a58c713275eaa1b5551aedfc401417f638ae9b9476c8e4ea150498e06fe7c95b",
+      "renderer": "packages/features-crime/src/render.ts",
+      "rendererSha256": "3ce93605fd6d1f35143af6227849688844073751f176e5d067f565c12304b4bd"
+    },
+    {
+      "file": "fmk-result-desktop.png",
+      "sha256": "ea58778e13559b050fe330d8cb1b02ce7d7cb5af4488f75827177406ab91f27b",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+    },
+    {
+      "file": "fmk-result-mobile.png",
+      "sha256": "60b764e96b670a3c78ba8e24c76827297acd8a0d4a49bccc2067b7da1e7120da",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+    },
+    {
+      "file": "voting-result-desktop.png",
+      "sha256": "d15c03828d5e550683bc00604d1a2adc667f65e336a917980808654d10686209",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+    },
+    {
+      "file": "voting-result-mobile.png",
+      "sha256": "dfa8e1ab2c47f6a95e0a42240a295f9122eea5cdbb15e4486cc62b3417a94a38",
+      "renderer": "packages/features-party/src/render.ts",
+      "rendererSha256": "e8e256c392fddc0b3dac93d2b8198a2df8d7bf73c7fc52fffb4c6fcc5baf48f9"
+    }
+  ]
+}

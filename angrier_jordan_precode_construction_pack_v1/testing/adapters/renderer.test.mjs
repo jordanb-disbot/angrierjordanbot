@@ -19,7 +19,7 @@ test('Spotlight renders all co-winners with escaped identities and deterministic
  const winner={name:'Chair <&> Member',avatarData:'data:image/png;base64,'+avatar.toString('base64'),total:'42',lifetimeWins:3,status:'RETAINED',tripleThreat:true};
  const data={weekStart:'2026-09-14',weekEnd:'2026-09-21',activeMembers:2,messages:84,words:200,voiceSeconds:600,categories:['The Loudest Chair','The Wordsmith','Voice of the Lounge'].map(title=>({title,winners:[winner,{...winner,name:'Co-winner'}]}))};
  const svg=renderSpotlight(data);assert.match(svg,/Chair &lt;&amp;&gt; Member/);assert.equal((svg.match(/Co-winner/g)??[]).length,3);
- const first=await rasterizeSvg(svg),second=await rasterizeSvg(svg);assert.deepEqual(first,second);const metadata=await sharp(first).metadata();assert.equal(metadata.width,1200);assert.equal(metadata.height,608);
+ const first=await rasterizeSvg(svg),second=await rasterizeSvg(svg);assert.deepEqual(first,second);const metadata=await sharp(first).metadata();assert.equal(metadata.width,440);assert.equal(metadata.height,1380);
 });
 
 test('bundled Poppins and Cinzel produce distinct glyphs independent of system fonts',async()=>{

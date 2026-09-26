@@ -618,9 +618,40 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "giveaway",
+    "options": [
+      {
+        "name": "prize",
+        "type": "string",
+        "required": true,
+        "description": "ottomans:amount, item:id, collectible:id, tool:id, recipe:id or custom:description."
+      },
+      {
+        "name": "winners",
+        "type": "integer",
+        "required": true,
+        "description": "Number of distinct winners, one to five.",
+        "min": 1,
+        "max": 5
+      },
+      {
+        "name": "hours",
+        "type": "integer",
+        "required": true,
+        "description": "Giveaway duration, one hour to seven days.",
+        "min": 1,
+        "max": 168
+      },
+      {
+        "name": "fee",
+        "type": "integer",
+        "required": false,
+        "description": "Ottomans per entry; fees leave circulation. Omit for free entry.",
+        "min": 0,
+        "max": 5000
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "community",
     "tutorialId": "community"
   },
   {
@@ -962,9 +993,52 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "poll",
+    "options": [
+      {
+        "name": "question",
+        "type": "string",
+        "required": true,
+        "description": "The poll question."
+      },
+      {
+        "name": "choices",
+        "type": "string",
+        "required": true,
+        "description": "Distinct choices separated by |, within the configured poll choice limit."
+      },
+      {
+        "name": "minutes",
+        "type": "integer",
+        "required": false,
+        "description": "Timed close in minutes; omit for manual close.",
+        "min": 1,
+        "max": 10080
+      },
+      {
+        "name": "results",
+        "type": "string",
+        "required": false,
+        "choices": [
+          "hidden",
+          "live"
+        ],
+        "description": "Hide totals until close or show live results."
+      },
+      {
+        "name": "anonymous",
+        "type": "boolean",
+        "required": false,
+        "description": "Keep member ballot identities private."
+      },
+      {
+        "name": "ranked",
+        "type": "boolean",
+        "required": false,
+        "description": "Accept ordered preference ballots with instant runoff."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "community",
     "tutorialId": "community"
   },
   {
@@ -982,9 +1056,16 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "superlatives",
+    "options": [
+      {
+        "name": "categories",
+        "type": "string",
+        "required": false,
+        "description": "Admin starts a season with category names separated by |; omit to view."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "community",
     "tutorialId": "community"
   },
   {
@@ -1001,9 +1082,36 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "suggest",
+    "options": [
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "description": "Submit a suggestion; omit to browse the archive."
+      },
+      {
+        "name": "anonymous",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide your name from members."
+      },
+      {
+        "name": "search",
+        "type": "string",
+        "required": false,
+        "description": "Search archived suggestion text."
+      },
+      {
+        "name": "page",
+        "type": "integer",
+        "required": false,
+        "description": "Archive page, twenty suggestions per page.",
+        "min": 1,
+        "max": 100001
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "community",
     "tutorialId": "community"
   },
   {
@@ -1020,9 +1128,40 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "ama",
+    "options": [
+      {
+        "name": "question",
+        "type": "string",
+        "required": false,
+        "description": "Ask a question; omit to browse questions and your private statuses."
+      },
+      {
+        "name": "anonymous",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide your name from members."
+      },
+      {
+        "name": "sort",
+        "type": "string",
+        "required": false,
+        "choices": [
+          "newest",
+          "upvotes"
+        ],
+        "description": "Admins may sort questions by upvotes."
+      },
+      {
+        "name": "page",
+        "type": "integer",
+        "required": false,
+        "description": "Archive page, twenty questions per page.",
+        "min": 1,
+        "max": 100001
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "community",
     "tutorialId": "community"
   },
   {
@@ -1063,12 +1202,12 @@ export const COMMANDS = [
         "name": "message_link",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "A public message link from this server; sources are rechecked before publishing."
       }
     ],
-    "ephemeralDefault": false,
-    "helpId": "quote_message",
-    "tutorialId": "community"
+    "ephemeralDefault": true,
+    "helpId": "chairisms",
+    "tutorialId": "chairisms"
   },
   {
     "id": "quote_text",
@@ -1089,12 +1228,12 @@ export const COMMANDS = [
         "name": "text",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Your own quote, up to 1200 characters and 30 lines."
       }
     ],
-    "ephemeralDefault": false,
-    "helpId": "quote_text",
-    "tutorialId": "community"
+    "ephemeralDefault": true,
+    "helpId": "chairisms",
+    "tutorialId": "chairisms"
   },
   {
     "id": "chairisms_recent",
@@ -1111,9 +1250,9 @@ export const COMMANDS = [
       "any_allowed"
     ],
     "options": [],
-    "ephemeralDefault": false,
-    "helpId": "chairisms_recent",
-    "tutorialId": null
+    "ephemeralDefault": true,
+    "helpId": "chairisms",
+    "tutorialId": "chairisms"
   },
   {
     "id": "chairisms_member",
@@ -1129,10 +1268,17 @@ export const COMMANDS = [
     "channels": [
       "any_allowed"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "chairisms_member",
-    "tutorialId": null
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "Member whose published Chairisms you want to browse."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "chairisms",
+    "tutorialId": "chairisms"
   },
   {
     "id": "chairisms_random",
@@ -1149,9 +1295,9 @@ export const COMMANDS = [
       "any_allowed"
     ],
     "options": [],
-    "ephemeralDefault": false,
-    "helpId": "chairisms_random",
-    "tutorialId": null
+    "ephemeralDefault": true,
+    "helpId": "chairisms",
+    "tutorialId": "chairisms"
   },
   {
     "id": "music_play",
@@ -2946,10 +3092,27 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_marry",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "The current member for this family action."
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "required": false,
+        "description": "Ring proposal or Wedding Sack guarantee.",
+        "choices": [
+          "ring",
+          "sack"
+        ]
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_divorce",
@@ -2965,10 +3128,17 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_divorce",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "The current member for this family action."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_adopt",
@@ -2984,10 +3154,17 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_adopt",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "The current member for this family action."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_disown",
@@ -3003,10 +3180,17 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_disown",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "The current member for this family action."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_emancipate",
@@ -3023,9 +3207,9 @@ export const COMMANDS = [
       "bot_channel"
     ],
     "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_emancipate",
-    "tutorialId": "crime_family"
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_familytree",
@@ -3041,10 +3225,17 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_familytree",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": false,
+        "description": "The current member for this family action."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_will",
@@ -3060,10 +3251,17 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_will",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "The current member for this family action."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "family_familyauction",
@@ -3079,10 +3277,37 @@ export const COMMANDS = [
     "channels": [
       "bot_channel"
     ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "family_familyauction",
-    "tutorialId": "crime_family"
+    "options": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": true,
+        "description": "Auction yourself as spouse or adopted-child roleplay.",
+        "choices": [
+          "spouse",
+          "child"
+        ]
+      },
+      {
+        "name": "hours",
+        "type": "integer",
+        "required": false,
+        "description": "Duration in hours; default 24.",
+        "min": 1,
+        "max": 72
+      },
+      {
+        "name": "reserve",
+        "type": "integer",
+        "required": false,
+        "description": "Minimum winning bid in Ottomans; default zero.",
+        "min": 0,
+        "max": 9007199254740991
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "family",
+    "tutorialId": "family"
   },
   {
     "id": "warn",
@@ -4258,8 +4483,8 @@ export const COMMANDS = [
     ],
     "options": [],
     "ephemeralDefault": true,
-    "helpId": "quote_message",
-    "tutorialId": "community"
+    "helpId": "chairisms",
+    "tutorialId": "chairisms"
   },
   {
     "id": "tldr_chat",

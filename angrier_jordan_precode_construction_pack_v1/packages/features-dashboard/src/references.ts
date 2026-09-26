@@ -1,5 +1,6 @@
 import type { SettingDefinition } from '../../core/src/config.js';
 import { specialNotificationRole } from '../../features-special/src/domain.js';
+import { validateChairismExcludedChannels } from '../../features-chairisms/src/domain.js';
 
 export interface DiscordReferenceObject {id:string;type?:number;managed?:boolean;permissions?:string;}
 export type FetchReferenceObjects=(guildId:string,resource:'channels'|'roles')=>Promise<DiscordReferenceObject[]>;
@@ -9,6 +10,11 @@ export async function verifyDashboardReferences(guildId:string,definitions:reado
   const errors:string[]=[],references:Record<string,unknown>={};
   for(const [type,resource] of [['discord_channel','channels'],['discord_role','roles']] as const){
     const checks=definitions.filter(definition=>definition.type===type&&values[definition.key]!==null).map(definition=>({key:definition.key,id:values[definition.key],notification:false}));
+    if(resource==='channels'&&definitions.some(definition=>definition.key==='chairisms.excluded_channel_ids')){
+      const excluded=values['chairisms.excluded_channel_ids'];
+      if(!validateChairismExcludedChannels(excluded))errors.push('chairisms.excluded_channel_ids: use at most 100 unique channel/category snowflake IDs.');
+      else for(const [index,id]of excluded.entries())checks.push({key:`chairisms.excluded_channel_ids.${index}`,id,notification:false});
+    }
     if(resource==='roles'&&definitions.some(definition=>definition.key==='special_commands.builtin_role_map')){
       const map=values['special_commands.builtin_role_map'];
       if(map&&typeof map==='object'&&!Array.isArray(map)){

@@ -41,5 +41,9 @@
   "dependencies": {
     "dictionary-en": "4.0.0",
     "nspell": "2.1.5"
+  },
+  "overrides": {
+    "deepmerge-ts": "8.0.0",
+    "postcss": "8.5.23"
   }
 }

@@ -1,0 +1,29 @@
+{
+  "id": "chairisms",
+  "classification": "guided",
+  "commands": [
+    "quote_message",
+    "quote_text",
+    "chairisms_recent",
+    "chairisms_member",
+    "chairisms_random",
+    "chairism_context"
+  ],
+  "title": "Chairisms",
+  "body": "Use /quote message or Message → Apps → Create Chairism on an accessible public message from this server. Choose This Message, Include Replied Message, Include Image or both when offered. Every selected source and permission is checked again before posting. Staff/private/evidence/quarantine/excluded channels and unavailable messages are rejected. /quote text always attributes your supplied words to you. Published cards preserve the actual name, portrait, timestamp and selected content in the Chairisms channel. A creation succeeds only after confirmed delivery. Browse recent, member or random published outputs privately; browsing never reveals pending quotes or refetches original content.",
+  "fields": {
+    "message_link": "A real public message link from this server.",
+    "text": "Your own words, up to 1200 Unicode characters and 30 lines.",
+    "member": "Required for /chairisms member.",
+    "options": "Include a reply or image only when offered and currently allowed."
+  },
+  "tutorial": {
+    "lesson_id": "chairisms.intro",
+    "steps": [
+      "Open a real public source or write your own quote.",
+      "Choose the exact message/reply/image context you want to preserve.",
+      "Wait for confirmed publication and follow its saved output link.",
+      "Browse recent, member or random results privately; use Older Chairisms to page."
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "actual-production-renderer-fixture",
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "renderer": "packages/features-community/src/render.ts",
+  "rendererSha256": "7d387808882b0d02d9bae5d9a1feb0dbffc052d945053e3c684b4e33ed985cc1",
+  "files": [
+    {
+      "file": "desktop.png",
+      "sha256": "18037a44366c4ff2ebe89ab62692ecb5449f379a5e32550be5cdb1fb2061a8cc"
+    },
+    {
+      "file": "mobile.png",
+      "sha256": "98aa1de74e1a4e521b21638ae8467c961a54a0bb28ca5f6c80a40b21879cce50"
+    }
+  ]
+}

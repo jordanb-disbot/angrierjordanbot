@@ -735,11 +735,42 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "prize",
+          "type": "string",
+          "required": true,
+          "description": "ottomans:amount, item:id, collectible:id, tool:id, recipe:id or custom:description."
+        },
+        {
+          "name": "winners",
+          "type": "integer",
+          "required": true,
+          "description": "Number of distinct winners, one to five.",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "name": "hours",
+          "type": "integer",
+          "required": true,
+          "description": "Giveaway duration, one hour to seven days.",
+          "min": 1,
+          "max": 168
+        },
+        {
+          "name": "fee",
+          "type": "integer",
+          "required": false,
+          "description": "Ottomans per entry; fees leave circulation. Omit for free entry.",
+          "min": 0,
+          "max": 5000
+        }
+      ],
       "handler": "community.giveaway",
       "feature_flag": "community",
-      "ephemeral_default": false,
-      "help_id": "giveaway",
+      "ephemeral_default": true,
+      "help_id": "community",
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
@@ -1131,11 +1162,54 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "question",
+          "type": "string",
+          "required": true,
+          "description": "The poll question."
+        },
+        {
+          "name": "choices",
+          "type": "string",
+          "required": true,
+          "description": "Distinct choices separated by |, within the configured poll choice limit."
+        },
+        {
+          "name": "minutes",
+          "type": "integer",
+          "required": false,
+          "description": "Timed close in minutes; omit for manual close.",
+          "min": 1,
+          "max": 10080
+        },
+        {
+          "name": "results",
+          "type": "string",
+          "required": false,
+          "choices": [
+            "hidden",
+            "live"
+          ],
+          "description": "Hide totals until close or show live results."
+        },
+        {
+          "name": "anonymous",
+          "type": "boolean",
+          "required": false,
+          "description": "Keep member ballot identities private."
+        },
+        {
+          "name": "ranked",
+          "type": "boolean",
+          "required": false,
+          "description": "Accept ordered preference ballots with instant runoff."
+        }
+      ],
       "handler": "community.poll",
       "feature_flag": "community",
-      "ephemeral_default": false,
-      "help_id": "poll",
+      "ephemeral_default": true,
+      "help_id": "community",
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
@@ -1155,11 +1229,18 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "categories",
+          "type": "string",
+          "required": false,
+          "description": "Admin starts a season with category names separated by |; omit to view."
+        }
+      ],
       "handler": "community.superlatives",
       "feature_flag": "community",
-      "ephemeral_default": false,
-      "help_id": "superlatives",
+      "ephemeral_default": true,
+      "help_id": "community",
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
@@ -1178,11 +1259,38 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "description": "Submit a suggestion; omit to browse the archive."
+        },
+        {
+          "name": "anonymous",
+          "type": "boolean",
+          "required": false,
+          "description": "Hide your name from members."
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "required": false,
+          "description": "Search archived suggestion text."
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": "Archive page, twenty suggestions per page.",
+          "min": 1,
+          "max": 100001
+        }
+      ],
       "handler": "community.suggest",
       "feature_flag": "community",
-      "ephemeral_default": false,
-      "help_id": "suggest",
+      "ephemeral_default": true,
+      "help_id": "community",
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
@@ -1201,11 +1309,42 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "question",
+          "type": "string",
+          "required": false,
+          "description": "Ask a question; omit to browse questions and your private statuses."
+        },
+        {
+          "name": "anonymous",
+          "type": "boolean",
+          "required": false,
+          "description": "Hide your name from members."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "required": false,
+          "choices": [
+            "newest",
+            "upvotes"
+          ],
+          "description": "Admins may sort questions by upvotes."
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": "Archive page, twenty questions per page.",
+          "min": 1,
+          "max": 100001
+        }
+      ],
       "handler": "community.ama",
       "feature_flag": "community",
-      "ephemeral_default": false,
-      "help_id": "ama",
+      "ephemeral_default": true,
+      "help_id": "community",
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
@@ -1252,14 +1391,14 @@
           "name": "message_link",
           "type": "string",
           "required": true,
-          "description": ""
+          "description": "A public message link from this server; sources are rechecked before publishing."
         }
       ],
       "handler": "chairisms.quote_message",
       "feature_flag": "chairisms",
-      "ephemeral_default": false,
-      "help_id": "quote_message",
-      "tutorial_id": "community",
+      "ephemeral_default": true,
+      "help_id": "chairisms",
+      "tutorial_id": "chairisms",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/quote message",
@@ -1282,14 +1421,14 @@
           "name": "text",
           "type": "string",
           "required": true,
-          "description": ""
+          "description": "Your own quote, up to 1200 characters and 30 lines."
         }
       ],
       "handler": "chairisms.quote_text",
       "feature_flag": "chairisms",
-      "ephemeral_default": false,
-      "help_id": "quote_text",
-      "tutorial_id": "community",
+      "ephemeral_default": true,
+      "help_id": "chairisms",
+      "tutorial_id": "chairisms",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/quote text",
@@ -1310,9 +1449,9 @@
       "options": [],
       "handler": "chairisms.chairisms_recent",
       "feature_flag": "chairisms",
-      "ephemeral_default": false,
-      "help_id": "chairisms_recent",
-      "tutorial_id": null,
+      "ephemeral_default": true,
+      "help_id": "chairisms",
+      "tutorial_id": "chairisms",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/chairisms recent",
@@ -1330,12 +1469,19 @@
       "channels": [
         "any_allowed"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "Member whose published Chairisms you want to browse."
+        }
+      ],
       "handler": "chairisms.chairisms_member",
       "feature_flag": "chairisms",
-      "ephemeral_default": false,
-      "help_id": "chairisms_member",
-      "tutorial_id": null,
+      "ephemeral_default": true,
+      "help_id": "chairisms",
+      "tutorial_id": "chairisms",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/chairisms member",
@@ -1356,9 +1502,9 @@
       "options": [],
       "handler": "chairisms.chairisms_random",
       "feature_flag": "chairisms",
-      "ephemeral_default": false,
-      "help_id": "chairisms_random",
-      "tutorial_id": null,
+      "ephemeral_default": true,
+      "help_id": "chairisms",
+      "tutorial_id": "chairisms",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/chairisms random",
@@ -3463,12 +3609,29 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "The current member for this family action."
+        },
+        {
+          "name": "item",
+          "type": "string",
+          "required": false,
+          "description": "Ring proposal or Wedding Sack guarantee.",
+          "choices": [
+            "ring",
+            "sack"
+          ]
+        }
+      ],
       "handler": "family.family_marry",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_marry",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family marry",
@@ -3486,12 +3649,19 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "The current member for this family action."
+        }
+      ],
       "handler": "family.family_divorce",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_divorce",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family divorce",
@@ -3509,12 +3679,19 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "The current member for this family action."
+        }
+      ],
       "handler": "family.family_adopt",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_adopt",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family adopt",
@@ -3532,12 +3709,19 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "The current member for this family action."
+        }
+      ],
       "handler": "family.family_disown",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_disown",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family disown",
@@ -3558,9 +3742,9 @@
       "options": [],
       "handler": "family.family_emancipate",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_emancipate",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family emancipate",
@@ -3578,12 +3762,19 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": "The current member for this family action."
+        }
+      ],
       "handler": "family.family_familytree",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_familytree",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family familytree",
@@ -3601,12 +3792,19 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "The current member for this family action."
+        }
+      ],
       "handler": "family.family_will",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_will",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family will",
@@ -3624,12 +3822,39 @@
       "channels": [
         "bot_channel"
       ],
-      "options": [],
+      "options": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "description": "Auction yourself as spouse or adopted-child roleplay.",
+          "choices": [
+            "spouse",
+            "child"
+          ]
+        },
+        {
+          "name": "hours",
+          "type": "integer",
+          "required": false,
+          "description": "Duration in hours; default 24.",
+          "min": 1,
+          "max": 72
+        },
+        {
+          "name": "reserve",
+          "type": "integer",
+          "required": false,
+          "description": "Minimum winning bid in Ottomans; default zero.",
+          "min": 0,
+          "max": 9007199254740991
+        }
+      ],
       "handler": "family.family_familyauction",
       "feature_flag": "family",
-      "ephemeral_default": false,
-      "help_id": "family_familyauction",
-      "tutorial_id": "crime_family",
+      "ephemeral_default": true,
+      "help_id": "family",
+      "tutorial_id": "family",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "/family familyauction",
@@ -4969,8 +5194,8 @@
       "handler": "chairisms.contextCreate",
       "feature_flag": "chairisms",
       "ephemeral_default": true,
-      "help_id": "quote_message",
-      "tutorial_id": "community",
+      "help_id": "chairisms",
+      "tutorial_id": "chairisms",
       "aliases": [],
       "status": "locked",
       "preferred_invocation": "Create Chairism",

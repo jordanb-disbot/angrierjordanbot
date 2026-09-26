@@ -1,5 +1,5 @@
 {
-  "count": 234,
+  "count": 244,
   "controls": [
     {
       "key": "server.timezone",
@@ -1676,7 +1676,7 @@
       "key": "family.max_spouses",
       "section": "family",
       "label": "Max Spouses",
-      "description": "",
+      "description": "Maximum two active spouses; a second marriage requires its own Blessing.",
       "kind": "number",
       "defaultValue": 2,
       "risk": "locked",
@@ -1685,90 +1685,78 @@
       "mutable": false,
       "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 1,
+      "min": 2,
       "max": 2
     },
     {
       "key": "family.proposal_hours",
       "section": "family",
       "label": "Proposal Hours",
-      "description": "",
+      "description": "Ring proposals expire after 24 hours.",
       "kind": "number",
       "defaultValue": 24,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 1,
-      "max": 168
+      "min": 24,
+      "max": 24
     },
     {
       "key": "family.divorce_min_days",
       "section": "family",
       "label": "Divorce Min Days",
-      "description": "",
+      "description": "Minimum marriage age before divorce: three days.",
       "kind": "number",
       "defaultValue": 3,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 0,
-      "max": 30
+      "min": 3,
+      "max": 3
     },
     {
       "key": "family.same_pair_remarry_lock_days",
       "section": "family",
       "label": "Same Pair Remarry Lock Days",
-      "description": "",
+      "description": "The same pair waits seven days before remarrying.",
       "kind": "number",
       "defaultValue": 7,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 0,
-      "max": 90
+      "min": 7,
+      "max": 7
     },
     {
       "key": "family.will_grace_hours",
       "section": "family",
       "label": "Will Grace Hours",
-      "description": "",
+      "description": "Estate execution waits a 24-hour departure grace.",
       "kind": "number",
       "defaultValue": 24,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 1,
-      "max": 168
+      "min": 24,
+      "max": 24
     },
     {
       "key": "family.auction_min_hours",
       "section": "family",
       "label": "Auction Min Hours",
-      "description": "",
+      "description": "Minimum self-auction duration, within the canonical 1–72 hour window.",
       "kind": "number",
       "defaultValue": 1,
       "risk": "normal",
@@ -1779,15 +1767,17 @@
       "restartRequired": false,
       "mutable": true,
       "dashboardWrite": "draft",
-      "dependsOn": [],
+      "dependsOn": [
+        "family.auction_max_hours"
+      ],
       "min": 1,
-      "max": 24
+      "max": 72
     },
     {
       "key": "family.auction_max_hours",
       "section": "family",
       "label": "Auction Max Hours",
-      "description": "",
+      "description": "Maximum self-auction duration, within the canonical 1–72 hour window.",
       "kind": "number",
       "defaultValue": 72,
       "risk": "normal",
@@ -1798,15 +1788,17 @@
       "restartRequired": false,
       "mutable": true,
       "dashboardWrite": "draft",
-      "dependsOn": [],
-      "min": 2,
-      "max": 168
+      "dependsOn": [
+        "family.auction_min_hours"
+      ],
+      "min": 1,
+      "max": 72
     },
     {
       "key": "family.adoption_slot_days",
       "section": "family",
       "label": "Adoption Slot Days",
-      "description": "",
+      "description": "Canonical marriage-age child slots; only the first slot can be unlocked by the community bonus.",
       "kind": "json",
       "defaultValue": [
         3,
@@ -1815,14 +1807,11 @@
         30,
         60
       ],
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": []
     },
     {
@@ -1890,64 +1879,55 @@
       "key": "superlatives.nomination_hours",
       "section": "community",
       "label": "Nomination Hours",
-      "description": "",
+      "description": "Canonical nomination window: exactly 48 hours.",
       "kind": "number",
       "defaultValue": 48,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 1,
-      "max": 168
+      "min": 48,
+      "max": 48
     },
     {
       "key": "superlatives.voting_hours",
       "section": "community",
       "label": "Voting Hours",
-      "description": "",
+      "description": "Canonical voting window: exactly 48 hours.",
       "kind": "number",
       "defaultValue": 48,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 1,
-      "max": 168
+      "min": 48,
+      "max": 48
     },
     {
       "key": "superlatives.finalist_count",
       "section": "community",
       "label": "Finalist Count",
-      "description": "",
+      "description": "Top five nominees per category, with deterministic cutoff ties.",
       "kind": "number",
       "defaultValue": 5,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
+      "risk": "locked",
+      "editableBy": [],
       "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
+      "mutable": false,
+      "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 2,
-      "max": 10
+      "min": 5,
+      "max": 5
     },
     {
       "key": "poll.max_choices",
       "section": "community",
       "label": "Max Choices",
-      "description": "",
+      "description": "Maximum poll options, enforced at creation; default 20, supported range 2–25.",
       "kind": "number",
       "defaultValue": 20,
       "risk": "normal",
@@ -4457,6 +4437,211 @@
         "crime.bail_base",
         "crime.bail_per_heat",
         "crime.bail_random_max"
+      ]
+    },
+    {
+      "key": "features.community",
+      "section": "features",
+      "label": "Community",
+      "description": "Enable accepted community tools; keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.bot_channel",
+        "giveaway.max_entry_fee",
+        "giveaway.min_duration_minutes",
+        "giveaway.max_duration_minutes",
+        "giveaway.max_winners",
+        "poll.max_choices"
+      ]
+    },
+    {
+      "key": "giveaway.max_entry_fee",
+      "section": "community",
+      "label": "Max Entry Fee",
+      "description": "Maximum paid giveaway entry fee in Ottomans; fees are removed from circulation.",
+      "kind": "number",
+      "defaultValue": 100,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 0,
+      "max": 5000
+    },
+    {
+      "key": "family.marriage_vote_hours",
+      "section": "family",
+      "label": "Marriage Vote Hours",
+      "description": "Marriage-card community voting window in hours.",
+      "kind": "number",
+      "defaultValue": 3,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 1,
+      "max": 24
+    },
+    {
+      "key": "family.cooldown_base_seconds",
+      "section": "family",
+      "label": "Cooldown Base Seconds",
+      "description": "Base delay after a family change; scales with recent changes.",
+      "kind": "number",
+      "defaultValue": 1800,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "family.cooldown_max_seconds"
+      ],
+      "min": 1,
+      "max": 86400
+    },
+    {
+      "key": "family.cooldown_max_seconds",
+      "section": "family",
+      "label": "Cooldown Max Seconds",
+      "description": "Maximum scaled family-event cooldown.",
+      "kind": "number",
+      "defaultValue": 86400,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "family.cooldown_base_seconds"
+      ],
+      "min": 1,
+      "max": 604800
+    },
+    {
+      "key": "family.cooldown_quiet_hours",
+      "section": "family",
+      "label": "Cooldown Quiet Hours",
+      "description": "Quiet-period window after which family-event history stops affecting cooldowns.",
+      "kind": "number",
+      "defaultValue": 168,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 1,
+      "max": 8760
+    },
+    {
+      "key": "features.family",
+      "section": "features",
+      "label": "Family",
+      "description": "Enable accepted Family, auctions and estate workflows; keep off until acceptance.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.bot_channel",
+        "family.marriage_vote_hours",
+        "family.auction_min_hours",
+        "family.auction_max_hours",
+        "family.cooldown_base_seconds",
+        "family.cooldown_max_seconds",
+        "family.cooldown_quiet_hours"
+      ]
+    },
+    {
+      "key": "chairisms.cooldown_seconds",
+      "section": "chairisms",
+      "label": "Cooldown Seconds",
+      "description": "Persisted technical cooldown between Chairism creations.",
+      "kind": "number",
+      "defaultValue": 30,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 5,
+      "max": 3600
+    },
+    {
+      "key": "chairisms.excluded_channel_ids",
+      "section": "chairisms",
+      "label": "Excluded Channel Ids",
+      "description": "Channel/category IDs excluded from Chairisms: unique snowflakes, at most 100. Configure evidence and quarantine locations before enabling.",
+      "kind": "json",
+      "defaultValue": [],
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.chairisms",
+      "section": "features",
+      "label": "Chairisms",
+      "description": "Enable accepted Chairism creation and browsing after source-channel exclusions are configured.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.chairisms_channel",
+        "chairisms.cooldown_seconds",
+        "chairisms.excluded_channel_ids"
       ]
     }
   ]

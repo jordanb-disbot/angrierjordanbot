@@ -1,6 +1,8 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import fs from 'node:fs/promises';
+import {seedFamilyCatalog} from '../../features-economy/src/catalog-seed.js';
 const prisma=new PrismaClient();
+await seedFamilyCatalog(prisma);
 const fixture=JSON.parse(await fs.readFile(new URL('../../testing/fixtures/dev_server.json',import.meta.url),'utf8'));
 const defaults=JSON.parse(await fs.readFile(new URL('../../testing/fixtures/settings_seed.json',import.meta.url),'utf8'));
 await prisma.guild.upsert({where:{id:fixture.guild.id},update:{name:fixture.guild.name},create:fixture.guild});

@@ -1,0 +1,41 @@
+{
+  "id": "community",
+  "classification": "guided",
+  "commands": [
+    "poll",
+    "superlatives",
+    "suggest",
+    "ama",
+    "giveaway"
+  ],
+  "title": "Community",
+  "body": "Polls support manual or timed closure, hidden/live totals, anonymous/named ballots and ranked preferences. One saved ballot per member may be revised before close. Ranked ballots list choice numbers best first; omitted choices can exhaust. Superlatives are admin-started numbered seasons: anonymous nominations for 48 hours, top five finalists per category, then anonymous voting for 48 hours. One nomination per member/category, no self-nomination, and deterministic tie resolution. Winners earn permanent season badges without Ottomans. Suggestions support anonymous submissions, Support/Oppose voting, audited staff statuses and searchable archives. AMA has upvotes only; admins answer/decline, and the submitter can inspect a declined question’s private status. Admin-created giveaways run for one hour to seven days with one to five winners. Paid entries require exact-fee confirmation, are charged once, and their fees leave circulation. Custom reward delivery remains visibly pending until staff acknowledges fulfillment.",
+  "fields": {
+    "question": "Poll question or AMA question.",
+    "choices": "Pipe-separated choices within the configured maximum; default 20, up to 25.",
+    "minutes": "Poll deadline in minutes; omit for creator/admin manual close.",
+    "results": "Hidden until close or live results.",
+    "anonymous": "Keep ballot identities or submission author private as indicated by the feature.",
+    "ranked": "Rank distinct choice numbers, best first.",
+    "categories": "Only category names separated by |; community admins start the next season.",
+    "text": "Suggestion submission; omit to browse.",
+    "search": "Search suggestion text.",
+    "sort": "AMA newest, or admin upvote sorting.",
+    "page": "Archive page, twenty entries per page.",
+    "prize": "ottomans:amount, item:id, collectible:id, tool:id, recipe:id or custom:description; prize is per winner.",
+    "winners": "One to five distinct giveaway winners.",
+    "hours": "One to 168 hours, within configured giveaway limits.",
+    "fee": "Ottomans per entry, bounded by the configured maximum; omit for free entry."
+  },
+  "tutorial": {
+    "lesson_id": "community.intro",
+    "steps": [
+      "Review poll privacy, visibility and closing mode before creating it.",
+      "Use one ballot and rank preferences in the requested order when enabled.",
+      "Nominate another member once per Superlative category, then return for the separate voting phase.",
+      "Search suggestion history and check your AMA status privately.",
+      "Review the exact paid giveaway entry fee before confirming.",
+      "Read the final draw and distinguish delivered rewards from pending custom fulfillment."
+    ]
+  }
+}

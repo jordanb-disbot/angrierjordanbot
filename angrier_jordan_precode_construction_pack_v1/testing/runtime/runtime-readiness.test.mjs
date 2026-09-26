@@ -21,6 +21,13 @@ test('production migration requires explicit approved release',()=>{
   assert.throws(()=>validateRuntimeEnvironment(base,'migrate'));
   assert.equal(validateRuntimeEnvironment({...base,AJ_PRODUCTION_MIGRATIONS_APPROVED:'true',AJ_MIGRATION_RELEASE:'a'.repeat(40)},'migrate').production,true);
 });
+
+test('family requires a stable secret only when enabled and never includes its value in validation errors',()=>{
+  assert.equal(validateRuntimeEnvironment({...base,ENABLE_FAMILY_SMOKE:'false'},'worker').port,8080);
+  for(const secret of [undefined,'short-private-value','${UNRESOLVED_PRIVATE_FAMILY_SECRET}'])assert.throws(()=>validateRuntimeEnvironment({...base,ENABLE_FAMILY_SMOKE:'true',FAMILY_COMPATIBILITY_SECRET:secret},'worker'),error=>{assert.match(error.message,/FAMILY_COMPATIBILITY_SECRET/);assert.doesNotMatch(error.message,/short-private-value|UNRESOLVED_PRIVATE/);return true;});
+  assert.equal(validateRuntimeEnvironment({...base,ENABLE_FAMILY_SMOKE:'true',FAMILY_COMPATIBILITY_SECRET:'test-only-stable-family-secret-not-production'},'worker').port,8080);
+  assert.throws(()=>validateRuntimeEnvironment({...base,NODE_ENV:'development',ENABLE_FAMILY_SMOKE:'true'},'worker'),/FAMILY_COMPATIBILITY_SECRET/);
+});
 test('shutdown rejects new work and drains work already admitted',async()=>{
   const life=new RuntimeLifecycle();let release;let completed=false;let rejectedWork=false;
   life.run(async()=>{await new Promise(r=>{release=r});completed=true;});await Promise.resolve();

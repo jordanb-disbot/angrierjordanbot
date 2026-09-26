@@ -1,0 +1,36 @@
+{
+  "id": "superlative-review",
+  "guildId": "fixture",
+  "channelId": "fixture",
+  "messageId": "fixture",
+  "ownerId": null,
+  "state": "CLOSED",
+  "version": 12,
+  "expiresAt": "2026-09-25T12:00:00.000Z",
+  "kind": "superlatives",
+  "phase": "closed",
+  "round": 1,
+  "title": "Superlatives · Season 1",
+  "anonymous": true,
+  "hidden": true,
+  "ranked": false,
+  "choices": [],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Most Likely to Bring a Spare Chair",
+      "finalists": [
+        {
+          "id": "fixture-winner",
+          "name": "Morgan"
+        }
+      ],
+      "winner": {
+        "id": "fixture-winner",
+        "name": "Morgan"
+      }
+    }
+  ],
+  "season": 1,
+  "entryCount": 7
+}
