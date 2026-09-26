@@ -36,6 +36,34 @@ Estate execution rechecks passive membership inside its transaction. A synchrono
 
 Validation is recorded after execution; test presence alone is not a pass. All PostgreSQL acceptance uses only `TEST_DATABASE_URL` from the ignored application-root `.env.test.local`, with isolated disposable schemas and redacted output. No production database, deployment or Discord acceptance is part of this workstream.
 
-Focused typed escrow PostgreSQL acceptance passed all 13 tests. The latest domain compilation and 207 runtime tests pass, as do workspace typechecks and 29 source membership-adapter tests. Registry/codegen synchronization, help, content, all 385 asset hashes and the 38 immutable visual references pass. Full dependency audit reports zero advisories.
+Implementation commit `1588a3c9c3677cfd81bd424f7408466cfe126abb` passed [Build and acceptance run 36207522614](https://github.com/jordanb-disbot/angrierjordanbot/actions/runs/36207522614). The complete PostgreSQL run used the CI job's own disposable PostgreSQL 16 service, reading its connection only from the ignored test environment file. It used the unchanged production transaction limits and the same assertions.
 
-The first local Family run returned 5 passed / 21 failed (25 behavior cases plus their parent). All failed behavior cases reported Prisma transaction errors: four explicitly exceeded the unchanged 20-second transaction limit; the others reported a missing/closed transaction. No escrow-constraint or eligibility-cascade error remained in that log. A subsequent receipt-guard run encountered the same class of errors. Colocated CI PostgreSQL acceptance is required to distinguish public-network timing from remaining logic defects. No production timeout or assertion was relaxed. Final consolidated results will be recorded after that run.
+| Validation | Result |
+| --- | --- |
+| Full local and CI build / preflight | PASS |
+| Runtime/domain tests | 207 passed, 0 failed, 0 skipped |
+| Rebuilt adapter tests | 134 passed, 0 failed, 0 skipped, including 29 membership tests |
+| PostgreSQL complete regression | 196 passed, 0 failed, 0 skipped across 18 suites |
+| Family PostgreSQL | 30 passed (29 behavior cases plus parent) |
+| Typed item escrow PostgreSQL | 13 passed locally and in CI |
+| Scheduler / delivery PostgreSQL | 6 passed in CI, including all 3 added delivery races |
+| Shared financial regression | Casino 10, Race 10, Fight 10, wallet holds 13, items 11, PvP 11: all passed |
+| Other persisted regression | Line/Special 11, solo 5, party 15, channel games 7, Crime 10, profiles 7, dashboard 8, Community 13, Chairisms 6: all passed |
+| Registry / generated output | 192 interactions, 244 settings, 53 capabilities; zero generator drift |
+| Visual validation | 385 asset hashes and 38 immutable approved references verified |
+| Full dependency audit | Zero advisories |
+| Linux container | Build, non-root execution, packaged renderer, local-file exclusions and credential-free fail-closed startup passed |
+
+The first local public-network Family run returned 5 passed / 21 failed (25 behavior cases plus their parent). All failed behavior cases reported Prisma transaction errors: four explicitly exceeded the unchanged 20-second transaction limit; the others reported a missing/closed transaction. No escrow-constraint or eligibility-cascade error remained in that log. A subsequent receipt-guard run returned 7 passed / 20 failed with the same class of transaction errors. The local scheduler run returned 4 passed / 2 failed (claim test plus parent failed on transaction start); all three new delivery races passed. These local runs are not represented as successful full acceptance. Colocated CI passed the final expanded suites without changing deadlines or weakening assertions. No Family functional acceptance failures remain; public-network test timing remains an environment limitation.
+
+## Change inventory and boundaries
+
+- Escrow: `packages/database/prisma/schema.prisma`, new `0020_typed_item_escrow/migration.sql`, shared `escrow-contract.ts`, `item-escrow.ts`, and monetary adapter guards in `wager-escrow.ts`.
+- Family: `store.ts`, `relationships.ts`, `prisma-repository.ts` and independent PostgreSQL fixtures. The interrupted `0019_family_invariants` migration and Family source/catalog/review files are preserved. Its duplicate historical `schema-fragment.sql` is retained as reference only, never applied in addition to the migration.
+- Membership: `apps/bot/src/discord/family-membership.ts`, production startup/gateway/scheduler wiring, and 29 membership adapter tests.
+- Shared regression: `atomic-operations.ts`, `job-delivery.ts`, runtime retry/delivery tests, and PostgreSQL scheduler/delivery tests.
+- Validation/metadata: the PostgreSQL suite runner, normal generators, help/registries/settings, existing interrupted Community/Chairisms integration, and this report plus implementation status/known issues.
+
+Commits: `2dccadb` (typed escrow), `183588f` (atomic guard/retry), `5b20ce6` (delivery races), and `1588a3c` (preserved integration and Family recovery). Family, membership and the interrupted Community/Chairisms wiring share the production composition and generated metadata, so that integration is committed together rather than leaving missing modules between commits. No reset, clean, stash, discarded work, historical migration rewrite or Git history rewrite was used.
+
+The persistence workstream is ready for the next integration/owner-review step. Family, Community and Chairisms flags remain off. Gate B visual/product approval, live Discord acceptance, dashboard OAuth/owner acceptance and production authorization remain separate; this work did not perform any of them.

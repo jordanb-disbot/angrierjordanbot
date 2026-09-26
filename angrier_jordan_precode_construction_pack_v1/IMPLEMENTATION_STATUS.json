@@ -1,22 +1,22 @@
 {
   "date": "2026-09-25",
   "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
-  "checkpoint": 18,
-  "checkpoint_name": "Games through Crime, shared wallet holds, dashboard foundation and Railway preparation",
-  "status": "GATE_A_APPROVED_PHASE_19_IN_PROGRESS",
+  "checkpoint": 19,
+  "checkpoint_name": "Family persistence recovery and preserved Community/Chairisms integration",
+  "status": "PERSISTENCE_ACCEPTANCE_PASSED_GATE_B_OWNER_REVIEW_PENDING",
   "registry": {
     "interactions": 192,
-    "settings": 234,
-    "capabilities": 50,
+    "settings": 244,
+    "capabilities": 53,
     "generated_application_commands": 65,
     "top_level_chat_input_commands": 64
   },
   "database": {
-    "schema_version": "0018_crime_decay",
+    "schema_version": "0020_typed_item_escrow",
     "prisma_models": 90
   },
   "visual_library": {
-    "assets_and_templates": 380,
+    "assets_and_templates": 385,
     "embedded": true,
     "wyr_visual_standard_approved": true,
     "permanent_visual_system": "production/theme/brand.json"
@@ -44,11 +44,13 @@
     "Phase16 party games, private FMK, shared voting and durable WYR publication/recovery",
     "Phase17 Counting and Last Letter with deterministic lexicon, persisted score/reset and staff audit",
     "Phase18 Crime with atomic wallet holds/restitution, wanted heat, bail and independent command confinement",
-    "Crime-only rejoin preserves normal channel access while moderation role restrictions remain independent"
+    "Crime-only rejoin preserves normal channel access while moderation role restrictions remain independent",
+    "Family relationships, sealed auctions and estates with typed item escrow and atomic membership recovery; database acceptance passed, flags off pending owner/live acceptance",
+    "Preserved Phase20 Community and Phase21 Chairisms implementation, dashboard settings and deterministic Gate B review fixtures; owner/live acceptance pending"
   ],
   "verification": {
     "preflight": "PASS",
-    "domain_tests": 175,
+    "domain_tests": 207,
     "domain_tests_failed": 0,
     "typescript_domain_typecheck": "PASS",
     "production_wiring_structure": "PASS",
@@ -60,32 +62,42 @@
     "full_workspace_typecheck": "PASS",
     "dashboard_production_build": "PASS",
     "dependency_lockfile": "package-lock.json",
-    "adapter_tests": 74,
+    "adapter_tests": 134,
     "postgres_item_acceptance": "PASS_11_TESTS",
     "full_build": "PASS",
-    "postgres_migrations": "PASS_0001_THROUGH_0018_IN_ISOLATED_TEST_SCHEMAS",
+    "postgres_migrations": "PASS_0001_THROUGH_0020_IN_ISOLATED_TEST_SCHEMAS",
     "test_database": "Owner-confirmed disposable Railway Postgres; public TCP proxy; credentials only in ignored .env.test.local",
-    "postgres_profiles_acceptance": "PASS_6_TESTS",
-    "postgres_scheduler_acceptance": "PASS_3_TESTS",
+    "postgres_profiles_acceptance": "PASS_7_TESTS",
+    "postgres_scheduler_acceptance": "PASS_6_TESTS",
     "postgres_casino_acceptance": "PASS_10_TESTS",
     "postgres_events_acceptance": "PASS_10_TESTS",
     "postgres_fight_acceptance": "PASS_10_TESTS",
     "postgres_race_fight_combined": "PASS_20_TESTS",
     "live_discord_smoke_test": "NOT_RUN",
-    "postgres_full_regression": "75_TESTS_PASSED_BEFORE_RUNNER_TIME_LIMIT_REMAINING_AND_NEW_56_PASSED_IN_TARGETED_RUNS",
+    "postgres_full_regression": "PASS_196_TESTS_18_SUITES_ON_1588a3c",
     "event_animation": "PASS_24_FRAMES_50MS_AUTHORITATIVE_STATE_UNCHANGED",
-    "postgres_revision_note": "All 14 database suites have passing runs (131 tests including parent tests). Wallet-hold guards additionally passed 29 economy/items runtime regression tests. Final same-release full regression remains a required CI gate.",
+    "postgres_revision_note": "All 18 suites passed together on implementation commit 1588a3c in colocated disposable CI PostgreSQL, with no skips. Family public-network runs encountered transaction expiry/closure; no production limits or assertions were relaxed. Runtime tests 207/207 and adapters 134/134 passed both locally and in CI.",
     "event_typography": "Bundled Space Grotesk/Inter with pinned official sources and OFL licenses",
     "postgres_special_acceptance": "PASS_11_TESTS",
     "postgres_solo_acceptance": "PASS_5_TESTS",
     "postgres_pvp_acceptance": "PASS_11_TESTS",
     "postgres_dashboard_acceptance": "PASS_8_TESTS",
-    "container_build": "PENDING_GITHUB_CI_DOCKER_UNAVAILABLE_LOCALLY",
+    "container_build": "PASS_GITHUB_CI_1588a3c_DOCKER_UNAVAILABLE_LOCALLY",
     "dashboard_oauth_live": "NOT_RUN",
     "postgres_party_acceptance": "PASS_15_TESTS",
     "postgres_channel_games_acceptance": "PASS_7_TESTS",
     "postgres_crime_acceptance": "PASS_10_TESTS",
-    "postgres_wallet_holds_acceptance": "PASS_13_TESTS"
+    "postgres_wallet_holds_acceptance": "PASS_13_TESTS",
+    "postgres_typed_item_escrow": "PASS_13_LOCAL_AND_CI_TESTS",
+    "postgres_family_acceptance": "PASS_30_TESTS",
+    "postgres_community_acceptance": "PASS_13_TESTS",
+    "postgres_chairisms_acceptance": "PASS_6_TESTS",
+    "family_membership_adapter_tests": "PASS_29_TESTS",
+    "dependency_audit": "PASS_ZERO_ADVISORIES_ALL_DEPENDENCIES",
+    "generated_output_sync": "PASS_192_COMMANDS_244_SETTINGS_53_CAPABILITIES_NO_CODEGEN_DRIFT",
+    "family_recovery_report": "docs/FAMILY_PERSISTENCE_RECOVERY.md",
+    "implementation_ci": "https://github.com/jordanb-disbot/angrierjordanbot/actions/runs/36207522614",
+    "implementation_commit": "1588a3c9c3677cfd81bd424f7408466cfe126abb"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",
@@ -120,9 +132,15 @@
     "ENABLE_CRIME_SMOKE": false,
     "features.party_games": false,
     "features.channel_games": false,
-    "features.crime": false
+    "features.crime": false,
+    "ENABLE_FAMILY_SMOKE": false,
+    "features.family": false,
+    "ENABLE_COMMUNITY_SMOKE": false,
+    "features.community": false,
+    "ENABLE_CHAIRISMS_SMOKE": false,
+    "features.chairisms": false
   },
-  "next_checkpoint": "Railway production-readiness, then Phase 13; next meaningful owner gate is Gate B",
+  "next_checkpoint": "Gate B integration/owner review, then remaining roadmap; no production enablement or live Discord acceptance yet",
   "phase_09": {
     "implementation": "domain, PostgreSQL adapter and Discord controls present",
     "acceptance": "PostgreSQL concurrency/idempotency/restart gate passed; live Discord pending",
@@ -158,7 +176,7 @@
   "deferred_work": [
     {
       "id": "railway-production-readiness",
-      "status": "IN_PROGRESS_AFTER_GATE_A_APPROVAL",
+      "status": "PREPARATION_IMPLEMENTED_NOT_DEPLOYED",
       "requirements": "docs/RAILWAY_AFTER_GATE_A.md",
       "deployment_authorized": false
     }

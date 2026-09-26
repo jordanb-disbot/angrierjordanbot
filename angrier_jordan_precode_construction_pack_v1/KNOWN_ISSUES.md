@@ -2,7 +2,8 @@
 
 - Live Discord smoke tests have not run. Review Gate A uses actual production-adapter output with explicit fixture members and desktop/mobile host review frames. Do not represent it as live Discord validation or production readiness.
 - Gate A is fully approved. The current Line/Race/Fight/standard-window presentation is frozen as permanent visual infrastructure. Earlier rejected artwork remains historical.
-- All unfinished/unaccepted production feature flags remain off. Phases 13–18, shared wallet holds, dashboard foundations and Railway packaging are implemented and tested; Family and Community are progressing independently. Preparation does not authorize production deployment.
-- Docker is absent locally. GitHub CI must validate Linux image build and native renderer smoke before release; no container PASS is claimed yet.
+- All unfinished/unaccepted production feature flags remain off. Family, Community and Chairisms source from the interrupted integration is preserved and integrated. Gate B visual/product review and live acceptance remain pending. Preparation does not authorize production deployment.
+- Docker is absent locally. The Linux container build and runtime smoke passed in GitHub CI for implementation commit `1588a3c`; every future release still requires checks for its exact commit.
 - Real Discord update latency and client animation handling still require live acceptance. Review timeline playback is explicitly distinct from Discord message refresh cadence.
-- Five previously identified transitive advisories remain in the Prisma CLI configuration and dashboard CSS toolchain (1 moderate, 4 high); further remediation is pending.
+- The pinned dependency overrides and lockfile resolve the previously reported toolchain advisories. The current full dependency audit reports zero advisories; recheck before release.
+- Public-network Railway Family acceptance hit Prisma transaction expiry/closure, and the scheduler claim test hit its transaction-start deadline. All 196 PostgreSQL tests across 18 suites subsequently passed together on colocated disposable CI PostgreSQL, including all 30 Family cases. Production limits and assertions remain unchanged. The public-network test path remains unsuitable for reliable timing-sensitive full acceptance; see `docs/FAMILY_PERSISTENCE_RECOVERY.md` for exact results and boundaries.
