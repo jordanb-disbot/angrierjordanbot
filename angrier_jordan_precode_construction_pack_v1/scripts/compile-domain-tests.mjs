@@ -13,3 +13,7 @@ for(const dir of ['packages/content/help','packages/content/economy','packages/f
  mkdirSync(new URL('../.test-build/'+dir+'/',import.meta.url),{recursive:true});
  cpSync(new URL('../'+dir+'/',import.meta.url),new URL('../.test-build/'+dir+'/',import.meta.url),{recursive:true});
 }
+
+// Wide Games frames use the packaged lounge stage, without copying unrelated animation assets.
+mkdirSync(new URL('../.test-build/production/event_art/v5/',import.meta.url),{recursive:true});
+cpSync(new URL('../production/event_art/v5/lounge-stage-runtime.png',import.meta.url),new URL('../.test-build/production/event_art/v5/lounge-stage-runtime.png',import.meta.url));

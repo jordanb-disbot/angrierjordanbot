@@ -31,7 +31,7 @@ export class WyrService {
   ){}
 
   async start(input:StartWyrInput):Promise<WyrRuntimeSession>{
-    const duration=input.durationSeconds??60;
+    const duration=input.durationSeconds??30;
     const extension=input.extensionSeconds??30;
     invariant(duration>0,'INVALID_DURATION','WYR duration must be positive.');
     invariant(extension>=0,'INVALID_EXTENSION','WYR extension cannot be negative.');

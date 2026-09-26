@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import { AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, type ButtonInteraction, type ChatInputCommandInteraction, type Client } from 'discord.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import { DeliveryEngine, DomainError, PermissionEngine, type ConfigService } from '../../../../packages/core/src/index.js';
@@ -17,6 +18,8 @@ const resultRow=(sessionId:string)=>new ActionRowBuilder<ButtonBuilder>().addCom
 );
 
 export class DiscordWyrCoordinator {
+  private readonly rendered=new Map<string,string>();
+  private readonly updates=new Map<string,Promise<void>>();
   constructor(private readonly service:WyrService,private readonly config?:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>=async()=>false,private readonly publication?:PrismaWyrPublicationRepository){}
   private async guard(i:ChatInputCommandInteraction|ButtonInteraction){if(!i.guildId||!i.guild)throw new DomainError('SERVER_ONLY','Use WYR in the server.');if(!this.config||await this.config.get(i.guildId,'features.party_games')!==true)throw new DomainError('WYR_DISABLED','Party games are not enabled yet.');if(await this.config.get(i.guildId,'channels.games_channel')!==i.channelId)throw new DomainError('WYR_CHANNEL','Use the configured games channel.');if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!await this.eligible(i.guildId,i.user.id))throw new DomainError('WYR_RESTRICTED','Party games are unavailable while restricted.');}
 
@@ -24,7 +27,7 @@ export class DiscordWyrCoordinator {
     const raw=interaction.options.getString('category')??'Random';
     const category=validCategories.has(raw as WyrCategoryInput)?raw as WyrCategoryInput:'Random';
     try{
-      await this.guard(interaction);await interaction.deferReply();
+      await interaction.deferReply();await this.guard(interaction);
       const message=await interaction.fetchReply();
       const session=await this.service.start({guildId:interaction.guildId!,channelId:interaction.channelId,ownerUserId:interaction.user.id,category,messageId:message.id});
       await this.publish(interaction.client,session.id,interaction).catch(async()=>{await interaction.followUp({ephemeral:true,content:'Your round is saved. Its original card is pending recovery.'});});
@@ -35,22 +38,19 @@ export class DiscordWyrCoordinator {
     const [scope,action,arg,sessionIdMaybe]=interaction.customId.split(':');
     if(scope!=='wyr')return;
     try{
+      if(action==='vote')await interaction.deferReply({ephemeral:true});else if(action==='extend')await interaction.deferUpdate();else if(action==='play')await interaction.deferReply();
       await this.guard(interaction);const id=action==='vote'?sessionIdMaybe:arg;if(!id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');const source=await this.service.get(id);if(source.guildId!==interaction.guildId||source.channelId!==interaction.channelId||source.messageId!==interaction.message.id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');
       if(action==='vote'&&(arg==='A'||arg==='B')&&sessionIdMaybe){
-        await interaction.deferReply({ephemeral:true});
         const session=await this.service.vote(sessionIdMaybe,interaction.user.id,arg);
         const label=arg==='A'?session.data.optionA:session.data.optionB;
         await interaction.editReply({content:`Vote recorded — ${label}. You can change it until voting closes.`,allowedMentions:{parse:[]}});return;
       }
       if(action==='extend'&&arg){
         if(source.ownerUserId!==interaction.user.id)throw new DomainError('NOT_ALLOWED','Only the host may extend the round.');
-        await interaction.deferUpdate();
         const session=await this.service.extend(arg,interaction.user.id);
-        const buffer=await png(this.service.renderOpen(session));
-        await interaction.editReply({content:`Voting closes <t:${Math.floor(session.expiresAt.getTime()/1000)}:R>. Totals stay hidden until close.`,files:[file(buffer)],attachments:[],components:[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)],allowedMentions:{parse:[]}});return;
+        await this.editKnownMessage(interaction.client,session.guildId,session.channelId,session.messageId!,this.service.renderOpen(session),[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)]);return;
       }
       if(action==='play'&&arg){
-        await interaction.deferReply();
         const message=await interaction.fetchReply(),session=await this.service.replay(arg,interaction.user.id,message.id);
         await this.publish(interaction.client,session.id,interaction).catch(async()=>{await interaction.followUp({ephemeral:true,content:'Your round is saved. Its original card is pending recovery.'});});return;
       }
@@ -86,22 +86,29 @@ export class DiscordWyrCoordinator {
     const job=await this.publication.jobForSession(sessionId),session=await this.service.get(sessionId),channel=await client.channels.fetch(session.channelId);
     if(!channel?.isSendable()||!('messages' in channel))throw new Error('WYR destination unavailable.');
     const marker='wyr:'+sessionId;
-    const payload=async()=>{let latest=await this.service.get(sessionId);if(latest.state==='OPEN'){try{latest=(await this.service.close(sessionId)).session;}catch(error){if(!(error instanceof DomainError)||error.code!=='NOT_DUE')throw error;}}const closed=latest.state==='CLOSED',svg=closed?(await this.service.close(sessionId)).svg:this.service.renderOpen(latest);return{content:closed?'Results are in.':`Voting closes <t:${Math.floor(latest.expiresAt.getTime()/1000)}:R>. Totals stay hidden until close.`,files:[file(await png(svg))],attachments:[],embeds:[new EmbedBuilder().setFooter({text:marker})],components:[closed?resultRow(sessionId):openRow(sessionId,latest.data.extensionSeconds,latest.extensionUsed)],allowedMentions:{parse:[] as never[]}};};
+    const payload=async()=>{let latest=await this.service.get(sessionId);if(latest.state==='OPEN'){try{latest=(await this.service.close(sessionId)).session;}catch(error){if(!(error instanceof DomainError)||error.code!=='NOT_DUE')throw error;}}const closed=latest.state==='CLOSED',svg=closed?(await this.service.close(sessionId)).svg:this.service.renderOpen(latest);return{content:closed?'':`Voting closes <t:${Math.floor(latest.expiresAt.getTime()/1000)}:R>.`,files:[file(await png(svg))],attachments:[],embeds:[new EmbedBuilder().setImage('attachment://wyr.png').setColor(0x3B82F6)],components:[closed?resultRow(sessionId):openRow(sessionId,latest.data.extensionSeconds,latest.extensionUsed)],allowedMentions:{parse:[] as never[]}};};
     const editOriginal=async()=>{if(!session.messageId)return null;const message=await channel.messages.fetch(session.messageId);if(message.author.id!==client.user?.id)throw new Error('WYR message author mismatch.');const card=await payload();if(interaction)await interaction.editReply(card);else await message.edit(card);return message.id;};
     const messageId=await new DeliveryEngine(this.publication.delivery(job.id)).deliver(marker,{
-      find:async()=>{if(session.messageId)return editOriginal();const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===client.user?.id&&m.embeds.some(e=>e.footer?.text===marker))?.id??null;},
+      find:async()=>{if(session.messageId)return editOriginal();const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===client.user?.id&&(m.components?.some(row=>'components' in row&&row.components.some(c=>'customId' in c&&['wyr:vote:A:'+sessionId,'wyr:play:'+sessionId].includes(c.customId??'')))||m.embeds.some(e=>e.footer?.text===marker)))?.id??null;},
       send:async()=>{const original=await editOriginal();if(original)return original;return(await channel.send(await payload())).id;},
     });
     if(session.messageId!==messageId)await this.service.attachMessage(sessionId,messageId);
   }
 
-  private async editKnownMessage(client:Client,guildId:string,channelId:string,messageId:string,svg:string,components:ActionRowBuilder<ButtonBuilder>[]):Promise<void>{
-    const guild=await client.guilds.fetch(guildId);const channel=await guild.channels.fetch(channelId);
-    if(!channel?.isTextBased()||!('messages' in channel))return;
-    const message=await channel.messages.fetch(messageId);if(message.author.id!==client.user?.id)throw new Error('WYR message author mismatch.');const buffer=await png(svg);
-    const first=components[0]?.components[0]?.data;
-    const isResult=first && 'custom_id' in first && first.custom_id?.includes(':play:');
-    await message.edit({attachments:[],...(isResult?{content:'Results are in.'}:{}),files:[file(buffer)],components});
+  private async editKnownMessage(client:Client,guildId:string,channelId:string,messageId:string,_svg:string,components:ActionRowBuilder<ButtonBuilder>[]):Promise<void>{
+    const previous=this.updates.get(messageId)??Promise.resolve(),pending=previous.catch(()=>{}).then(async()=>{
+      const first=components[0]?.components[0]?.data,id=first&&'custom_id' in first?first.custom_id?.split(':').at(-1):undefined;
+      if(!id)return;
+      const current=await this.service.get(id),closed=current.state==='CLOSED';
+      const svg=closed?(await this.service.close(id)).svg:this.service.renderOpen(current),rows=[closed?resultRow(id):openRow(id,current.data.extensionSeconds,current.extensionUsed)];
+      const content=closed?'':`Voting closes <t:${Math.floor(current.expiresAt.getTime()/1000)}:R>.`,key=createHash('sha256').update(svg+content+JSON.stringify(rows)).digest('hex');
+      if(this.rendered.get(messageId)===key)return;
+      const guild=await client.guilds.fetch(guildId),channel=await guild.channels.fetch(channelId);
+      if(!channel?.isTextBased()||!('messages' in channel))return;
+      const message=await channel.messages.fetch(messageId);if(message.author.id!==client.user?.id)throw new Error('WYR message author mismatch.');
+      await message.edit({content,attachments:[],embeds:[new EmbedBuilder().setImage('attachment://wyr.png').setColor(0x3B82F6)],files:[file(await png(svg))],components:rows,allowedMentions:{parse:[]}});
+      this.rendered.delete(messageId);this.rendered.set(messageId,key);if(this.rendered.size>256)this.rendered.delete(this.rendered.keys().next().value!);
+    });this.updates.set(messageId,pending);try{await pending;}finally{if(this.updates.get(messageId)===pending)this.updates.delete(messageId);}
   }
 
   private async replyError(interaction:ChatInputCommandInteraction|ButtonInteraction,error:unknown):Promise<void>{

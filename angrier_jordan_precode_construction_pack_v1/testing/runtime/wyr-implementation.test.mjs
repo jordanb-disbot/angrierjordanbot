@@ -16,12 +16,13 @@ const make=({random=0}={})=>{
 };
 
 test('WYR starts a public hidden-total round from Random category',async()=>{
-  const {controller}=make({random:0});
+  const {controller,service}=make({random:0});
   const view=await controller.start({guildId:'g1',channelId:'games',userId:'u1',category:'Random'});
   assert.equal(view.ephemeral,false);
+  const saved=await service.get(view.sessionId);assert.equal((saved.expiresAt-saved.openedAt)/1000,30);
   assert.match(view.renderAsset,/WOULD YOU RATHER/);
   assert.match(view.renderAsset,/CASUAL/);
-  assert.doesNotMatch(view.renderAsset,/ANGRIER JORDAN/i);
+  assert.match(view.renderAsset,/ANGRIER JORDAN/i);
   assert.doesNotMatch(view.renderAsset,/vote[s]? •/i);
   assert.equal(view.components.length,3);
   assert.equal(view.components[2].label,'+30 Seconds');
@@ -45,7 +46,7 @@ test('WYR permits one host extension, rejects staff override, and blocks a secon
   const extended=await controller.handleComponent(`wyr:extend:${open.sessionId}`,'host');
   assert.match(extended.content,/Voting closes/);
   const session=await service.get(open.sessionId);
-  assert.equal((session.expiresAt-session.openedAt)/1000,90);
+  assert.equal((session.expiresAt-session.openedAt)/1000,60);
   await assert.rejects(()=>controller.handleComponent(`wyr:extend:${open.sessionId}`,'host'),e=>e instanceof DomainError&&e.code==='EXTENSION_ALREADY_USED');
 });
 
