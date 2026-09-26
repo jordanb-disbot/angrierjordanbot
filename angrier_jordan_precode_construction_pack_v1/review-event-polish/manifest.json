@@ -4,7 +4,7 @@
   "files": [
     {
       "file": "race-open.png",
-      "sha256": "b633e6c81ce109097c610657acc5cb93380a63a839894aea2f4e0c96079a05d4",
+      "sha256": "4a6e061f8b59a1f5f181b25b2bffa629ce4934ee300e882e32e8bdd535e45ace",
       "controls": [
         "Join Race",
         "+30 Seconds",
@@ -19,22 +19,22 @@
     },
     {
       "file": "race-locked.gif",
-      "sha256": "5a298c384eda73e7eea6be9d656236a9b890809f592b8115d75fb6240a5c10e3",
+      "sha256": "9ffbfcfde807989e1345c6cee766a8e89ab14a19e92c280cf64235f478feb634",
       "controls": []
     },
     {
       "file": "race-closed.png",
-      "sha256": "c4e9e97811bcf11dd9ee96063de13caf13667d22a0b75d9de19e3e895a52eb58",
+      "sha256": "202a66e3baee626e4a00cec2054bc3012d2efd282151bce77d1fc5a95c409a60",
       "controls": []
     },
     {
       "file": "race-cancelled.png",
-      "sha256": "5d95606ff74523a1a125605c9f518878fcdaeebcdc6b2cc42e2c38fbf20747a4",
+      "sha256": "0fb755a010512664b974c960b5c4921d5057857e9c61e7e5c7ef1bca8a4afa07",
       "controls": []
     },
     {
       "file": "fight-open.png",
-      "sha256": "da1496bd3c63c3412cba7575dfeeda6949d9e172012233814dc63e3ca43fb01a",
+      "sha256": "ffe4c9b7012d93aa1862c37e05d5c621b807b5f2d6ff39742ac1360b48bec137",
       "controls": [
         "+30 Seconds",
         "Rules",
@@ -44,22 +44,22 @@
     },
     {
       "file": "fight-locked.gif",
-      "sha256": "b2f23c7d7eb2179ec2a5c6dd00bb2b40a9c9745559eedfc4de06c33ab28395b2",
+      "sha256": "8ee9738bb6c58074b3855b44990a10e3eef9e2113e1ef02a096c05859bd9285d",
       "controls": []
     },
     {
       "file": "fight-closed.png",
-      "sha256": "8b62864de1abe47fb78864e155b7230515dcae376cc9ddc8b0efe3ab770a6501",
+      "sha256": "ea24c1c9949281e4489a5ddd4db52a816548919c9e9649636ed13acfc4700729",
       "controls": []
     },
     {
       "file": "fight-cancelled.png",
-      "sha256": "664a62c1c268c723318041a7c39dfe8f3db33a583bb3c1ad58506981f7cac842",
+      "sha256": "0f5fd55346a90f04e93c45892d325962859e29da9cf029a81b1fd87ba7731265",
       "controls": []
     },
     {
       "file": "line-open.png",
-      "sha256": "657f115ae2ca10b9e83e1749efdce9602268fb3d75134af6ede84d7a4c88dcff",
+      "sha256": "4444f058e7bdc344d739b0b16a8d394f43c0cd95653138101dec617d679752b8",
       "controls": [
         "I’m In",
         "I Need a Second",
@@ -71,21 +71,21 @@
     },
     {
       "file": "line-locked.gif",
-      "sha256": "f2c2866bccd675c59880ec324e467f0aa00c0f3e4a4cc4a1b86ba36a87ab7521",
+      "sha256": "038bddcd829b49a8e0e18311e7556e7ba375d48b4d1fc8b6c32a86c138c76a43",
       "controls": [
         "Countdown live"
       ]
     },
     {
       "file": "line-closed.png",
-      "sha256": "de9bb0f0cc56a5637e69a046bea40a4ebf7bb6481bdfe60cecf9cc5c39a99975",
+      "sha256": "ebd3a1104a040657b727f0d64a0256b0c663aed68c9af3291daa3448d8f61a72",
       "controls": [
         "Check-ins"
       ]
     },
     {
       "file": "line-cancelled.png",
-      "sha256": "fd4bd1b29d4ef5335aecca2c1c55457e13e9a089b3adde35ce51f1169e89dcd2",
+      "sha256": "eb24f201b1cc670ace16d5c14cbc6a0a829f6d55dfd41275c82d73c914c35587",
       "controls": [
         "Check-ins"
       ]

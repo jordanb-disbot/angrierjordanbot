@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "1c6fd2f8232df277df3462aa52dac34ad20741b08ae7f31d2b950e1b69c09a2a"
+      "sha256": "d9275e7fdbf610012f794854711097fe1d52295b306842dfc8997624a695639e"
     },
     {
       "id": "line.approved.lounge",
@@ -6162,6 +6162,312 @@
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged static event artwork; deterministic runtime composition. No runtime generation.",
       "sha256": "6957a8ba0e56a787e48bb1270ef0844e836f8ccf628db5428d31ee400905a2be"
+    },
+    {
+      "id": "event.v5.lounge-stage",
+      "file": "production/event_art/v5/lounge-stage.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "01cf6d5f89805965dc7aca0b12f2b25372f8aed1c2215ec1b34aee9628ab211e"
+    },
+    {
+      "id": "event.v5.lounge-stage-runtime",
+      "file": "production/event_art/v5/lounge-stage-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "6ad4a2c4bcc31ea7813da5ec248ba17e94dd7e8c003e44f5a2f482afb9c5cc0c"
+    },
+    {
+      "id": "event.v5.line-countdown",
+      "file": "production/event_art/v5/line-countdown.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "6c400793f0f2ecc1f209aa06866db1b06f1db267397d7339ba4ea70bb750c7c5"
+    },
+    {
+      "id": "event.v5.line-countdown-runtime",
+      "file": "production/event_art/v5/line-countdown-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "ea3c700b1e990e68091b26bf9f8efb6e2a51888864994e2b3c575e10187e635c"
+    },
+    {
+      "id": "event.v5.line-powder",
+      "file": "production/event_art/v5/line-powder.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "232adbfe88d49410dc36d1eaa8c04ec0ae309c3a431c96963af619f8a13217d5"
+    },
+    {
+      "id": "event.v5.line-powder-runtime",
+      "file": "production/event_art/v5/line-powder-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "2fe582101ecfbe0261180f257cc0121177c3e96a941c5a3fa6a70a7098cb526a"
+    },
+    {
+      "id": "event.v5.race-stage",
+      "file": "production/event_art/v5/race-stage.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "44b15aaf5af5afdd4cb2b7b449935c887ab72592a7d3aa29a1beb0c51fec7ae0"
+    },
+    {
+      "id": "event.v5.race-stage-runtime",
+      "file": "production/event_art/v5/race-stage-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "fb9235fd09d1bc32d9612477adde0a362f14f7ad94792404befd84431245f81f"
+    },
+    {
+      "id": "event.v5.fight-stage",
+      "file": "production/event_art/v5/fight-stage.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "424612ffc919b8d71d83fb4b1cad5f87b4f28f9529f678370b35eba94e57c607"
+    },
+    {
+      "id": "event.v5.fight-stage-runtime",
+      "file": "production/event_art/v5/fight-stage-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "481be628c0c7a5d802d8914ee22fcae86678106d467c89ef92fb8497293532bc"
+    },
+    {
+      "id": "event.v5.line-number-1",
+      "file": "production/event_art/v5/line-number-1.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "17459b358e1eef3343c5e9d6c146a6d3f6505c2ac75a08adaabc93ef15f49180"
+    },
+    {
+      "id": "event.v5.line-number-1-runtime",
+      "file": "production/event_art/v5/line-number-1-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "bbef724c7452647b6d8f6b86084f6abd1453da96e49b4c5eb6bab74591a698f1"
+    },
+    {
+      "id": "event.v5.line-number-2",
+      "file": "production/event_art/v5/line-number-2.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "bbe9a944b0268be3fb0c4fc0cfd5bf1b76caa44461c5a4c25b67972f78ace5a3"
+    },
+    {
+      "id": "event.v5.line-number-2-runtime",
+      "file": "production/event_art/v5/line-number-2-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "8538872121bca53b25a2884c21fbf00eb98ce195accc8cec297742ac16345791"
+    },
+    {
+      "id": "event.v5.line-number-3",
+      "file": "production/event_art/v5/line-number-3.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "32bbf25da84724623c44e76a0e417eadc33baaa5ea21371dd6ea8896f26ff2f8"
+    },
+    {
+      "id": "event.v5.line-number-3-runtime",
+      "file": "production/event_art/v5/line-number-3-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "30f951a402e0975e6c8cbfaad3de0d88e635a07f47be5c27259201987a683585"
+    },
+    {
+      "id": "event.v5.line-number-4",
+      "file": "production/event_art/v5/line-number-4.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "d0e906eefed3f959952cfb58757efc81e5d4982234eb624f5ee9fc2785e3fa22"
+    },
+    {
+      "id": "event.v5.line-number-4-runtime",
+      "file": "production/event_art/v5/line-number-4-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "a4ca51926ee6c752137f2c9cce3a06bbfb68692ae0df0cb90e3b147a82d6c982"
+    },
+    {
+      "id": "event.v5.line-number-5",
+      "file": "production/event_art/v5/line-number-5.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "acc5b6975886ccd370fc14b246b241bd4bb454bec11b385d9a9a4efc39a80690"
+    },
+    {
+      "id": "event.v5.line-number-5-runtime",
+      "file": "production/event_art/v5/line-number-5-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "3cfed0e92ca98cb90f46c041acd8abe5c6e7b40c6706efbd425bc808b3997998"
+    },
+    {
+      "id": "event.v5.cars",
+      "file": "production/event_art/v5/cars.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "79c66f1a4214685d54b7d04ca8a556539ebe431cc1ccaad39057f06acb669800"
+    },
+    {
+      "id": "event.v5.robots",
+      "file": "production/event_art/v5/robots.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "a663e07da3dd59a8f6ba640d2b93848f1217852399931bf07c250922c34ee692"
+    },
+    {
+      "id": "event.v5.cars-1-runtime",
+      "file": "production/event_art/v5/cars-1-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "694100209d032262051f7aa97e0d65feed5a73f3b58ee42ec33525b06bc678dc"
+    },
+    {
+      "id": "event.v5.cars-2-runtime",
+      "file": "production/event_art/v5/cars-2-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "272b6b9a2067f2f86a25b003c4e6359407d3816cab807ee8ae2ff9fee5018f5e"
+    },
+    {
+      "id": "event.v5.cars-3-runtime",
+      "file": "production/event_art/v5/cars-3-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "6bbe9918182261a3f0e5626a5fb396790bad9c004c96e00d714e6981fb6caf4b"
+    },
+    {
+      "id": "event.v5.cars-4-runtime",
+      "file": "production/event_art/v5/cars-4-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "5208b6c2b95d19f91d9ab6c7c3ae05dc42de9506fab4a81cf7961eb56e209e09"
+    },
+    {
+      "id": "event.v5.cars-5-runtime",
+      "file": "production/event_art/v5/cars-5-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "0cf7f0cad1c94b8b53b1f5f033cd2c742e7743f99d776afdabb3ae1217e9096a"
+    },
+    {
+      "id": "event.v5.cars-6-runtime",
+      "file": "production/event_art/v5/cars-6-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "545537f893acc5b1992d156cbfc34292358f0b0bee3de973c495d4030f13b874"
+    },
+    {
+      "id": "event.v5.robots-1-runtime",
+      "file": "production/event_art/v5/robots-1-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "d644a15f097d0689865fe8e027b1c7e551e9c4d68928754cfdf380edfa611a9b"
+    },
+    {
+      "id": "event.v5.robots-2-runtime",
+      "file": "production/event_art/v5/robots-2-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "546b4b52d46447578050b500c0e0d66b05c8ab802695b77a42ca62f7d2994341"
+    },
+    {
+      "id": "event.v5.robots-3-runtime",
+      "file": "production/event_art/v5/robots-3-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "83573562753019673aaaee68067871ce47cd6bdb16a8bc0caad079d817d13ee0"
+    },
+    {
+      "id": "event.v5.robots-4-runtime",
+      "file": "production/event_art/v5/robots-4-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "2c0368a4b18ada40506cbe9825f36a0c96e2074b042bde8cc22e99f8fd1acf6f"
+    },
+    {
+      "id": "event.v5.robots-5-runtime",
+      "file": "production/event_art/v5/robots-5-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "222c890bf8fbcad132c6a156fa54cdf23691b3a3d0d4397f4d3138580936302d"
+    },
+    {
+      "id": "event.v5.robots-6-runtime",
+      "file": "production/event_art/v5/robots-6-runtime.png",
+      "category": "runtime",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Packaged event artwork; deterministic runtime composition.",
+      "sha256": "a8002b0d2abb17d27e021f8de0578190a1f6ed557449da4775b064d07764f1dc"
     }
   ]
 }

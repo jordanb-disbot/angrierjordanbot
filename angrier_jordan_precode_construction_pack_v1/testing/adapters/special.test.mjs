@@ -23,7 +23,7 @@ test('wide Line frame is deterministic and unchanged readiness time does not reu
  let current=view,edits=0;const c=new DiscordSpecialCoordinator({publicView:async()=>current},config(),async()=>true);c.payload=async()=>({embeds:[]});
  const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},embeds:[{footer:{text:'special:legacy'}}],edit:async p=>{assert.deepEqual(p.embeds,[]);edits++;}})}})}};
  await c.refresh(client,'id');current={...view,remainingMs:40000};await c.refresh(client,'id');assert.equal(edits,1);current={...current,extensionUsed:true};await c.refresh(client,'id');assert.equal(edits,2);
- const remaining=lineSequence({...view,state:'SETTLING',elapsedMs:4900},'wide');assert.match(remaining.frames[0],/>1<\/text>/);assert.equal(remaining.delays.reduce((a,b)=>a+b,0),5100);
+ const remaining=lineSequence({...view,state:'SETTLING',elapsedMs:4900},'wide');assert.ok(remaining.frames[0].includes('data-countdown-number="1"'));assert.equal(remaining.delays.reduce((a,b)=>a+b,0),5100);
 });
 test('Line success is silent and genuine failures never overwrite the shared message',async()=>{
  for(const fail of [false,true]){const i=interaction();i.customId='line:extend:id';const c=new DiscordSpecialCoordinator({publicView:async()=>view,extend:async()=>{if(fail)throw Error('failure');}},config(),async()=>true);c.refresh=async()=>{};await c.handle(i);assert.equal(i.deferred,true);assert.equal(i.calls.length,fail?1:0);if(fail)assert.equal(i.calls[0].ephemeral,true);}

@@ -8,14 +8,13 @@ import {reviewMembers,reviewPlans} from '../../scripts/event-review-fixtures.mjs
 import {fightSnapshot} from '../../dist/packages/features-events/src/fight.js';
 import {raceSnapshot} from '../../dist/packages/features-events/src/domain.js';
 const common={id:'visual',guildId:'g',channelId:'c',ownerId:'jordan',state:'LOCKED',extensionUsed:false,pool:'1200',bets:[]};
-test('animated Discord attachments retain snapshot data and use bounded 20 fps loops',async()=>{
+test('wide event timelines use one-shot authoritative frames without external copy',async()=>{
  const coordinator=new DiscordEventsCoordinator({}, {},async()=>true);
  for(const kind of ['race','fight']){
   const racers=kind==='fight'?reviewMembers.slice(0,2):reviewMembers,plan=reviewPlans[kind],view={...common,type:kind,racers,...(kind==='fight'?{combat:fightSnapshot(plan,12000,racers)}:{motion:raceSnapshot(plan,8000)})},before=JSON.stringify(view);
-  const result=await coordinator.payload(view),buffer=result.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
-  assert.equal(meta.format,'gif');assert.equal(meta.pages,24);assert.equal(meta.loop,0);assert.ok(meta.delay.every(n=>n===50));assert.equal(meta.width,440);assert.ok(buffer.length<2*1024*1024);assert.equal(result.embeds[0].toJSON().image.url,'attachment://event.gif');assert.equal(result.components.length,0);assert.equal(JSON.stringify(view),before);
-  const first=await sharp(buffer,{page:0,pages:1}).raw().toBuffer(),later=await sharp(buffer,{page:6,pages:1}).raw().toBuffer();assert.notDeepEqual(first,later,'Cosmetic motion must render different frames');
-  for(const phase of [0,.25,.5,.75]){const svg=kind==='fight'?renderFight(view,{phase}):renderRace(view,'compact',{phase});if(kind==='fight')for(const hp of view.combat.hp)assert.ok(svg.includes('>'+hp+' HP<'));else for(const row of view.motion.rows)assert.ok(svg.includes(Math.floor(row.progress)+'%'));}
+  const result=await coordinator.payload(view,{timeline:{racers,startedAt:new Date(Date.now()+600000).toISOString(),[kind==='fight'?'fightPlan':'plan']:plan}}),buffer=result.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
+  assert.equal(meta.format,'gif');assert.ok(meta.pages>1&&meta.pages<=64);assert.equal(meta.loop,1);assert.equal(meta.width,960);assert.ok(buffer.length<10*1024*1024);assert.deepEqual(result.embeds,[]);assert.equal(JSON.stringify(view),before);
+  const nodes=result.components.flatMap(c=>c.toJSON().components);assert.equal(nodes.some(c=>c.type===10),false);
  }
 });
 test('Fight combat frames keep a stable canvas while escaped names and approved move logs update',()=>{
