@@ -9,30 +9,54 @@ import type {MusicActor,MusicPolicy,MusicState} from '../../../../packages/featu
 import {renderMusicController,renderMusicStrip,renderMusicNotice,renderMusicList} from '../../../../packages/features-music/src/render.js';
 import {memberArt} from './member-art.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+import {musicDiagnostic} from '../music/music-diagnostics.js';
 
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|StringSelectMenuInteraction;
 type AnyInteraction=Interaction|AutocompleteInteraction;
 export type MusicAccessResolver=(guild:Guild,member:GuildMember)=>Promise<{eligible:boolean;isDj:boolean}>;
 export const MUSIC_COMMANDS=new Set(['play','music','playlist']);
+export type MusicAutocompleteTimer=(callback:()=>void,delayMs:number)=>()=>void;
+const autocompleteTimer:MusicAutocompleteTimer=(callback,delayMs)=>{const timer=setTimeout(callback,delayMs);return()=>clearTimeout(timer);};
 type Rows=(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[];
 const whole=(value:string,label:string)=>{if(!/^\d+$/.test(value)||!Number.isSafeInteger(Number(value)))throw new DomainError('MUSIC_VALUE',`Enter a whole ${label}.`);return Number(value);};
 function seekPosition(value:string){if(!/^\d+(?::[0-5]\d){0,2}$/.test(value))throw new DomainError('MUSIC_SEEK','Use seconds, minutes:seconds or hours:minutes:seconds.');const seconds=value.split(':').reduce((total,part)=>total*60+Number(part),0);if(!Number.isSafeInteger(seconds*1000))throw new DomainError('MUSIC_SEEK','Choose a valid playback position.');return seconds*1000;}
 /** Saves intents and renders actual persisted state. It never connects to a music provider or claims an intent played audio. */
 export class DiscordMusicCoordinator {
- constructor(private repo:PrismaMusicRepository,private config:ConfigService,private loadCatalog:(()=>Promise<AuthorizedMusicCatalog>)|null,private resolveActor:MusicAccessResolver,private now=()=>Date.now(),private resolutionService?:MusicResolutionService){}
+ constructor(private repo:PrismaMusicRepository,private config:ConfigService,private loadCatalog:(()=>Promise<AuthorizedMusicCatalog>)|null,private resolveActor:MusicAccessResolver,private now=()=>Date.now(),private resolutionService?:MusicResolutionService,private scheduleAutocomplete:MusicAutocompleteTimer=autocompleteTimer){}
  private catalog(){return this.loadCatalog?this.loadCatalog():Promise.resolve(new AuthorizedMusicCatalog([]));}
  private resolution(){if(!this.resolutionService)throw new DomainError('MUSIC_UNAVAILABLE','Music source resolution is unavailable.');return this.resolutionService;}
  private async context(i:AnyInteraction):Promise<MusicActor>{
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use music in a server voice channel’s text chat.');
   if(await this.config.get(i.guildId,'music.enabled')!==true)throw new DomainError('MUSIC_DISABLED','Music is not enabled yet.');
   const channel=await i.guild.channels.fetch(i.channelId,{force:true});if(!channel||channel.type!==ChannelType.GuildVoice)throw new DomainError('MUSIC_LOCATION','Join a voice channel and open its embedded text chat to use music.');
-  const member=await i.guild.members.fetch({user:i.user.id,force:true}),voice=await i.guild.voiceStates.fetch(i.user.id,{force:true});
+  const member=await i.guild.members.fetch({user:i.user.id,force:true}),voice=await i.guild.voiceStates.fetch(i.user.id,{force:true}).catch(error=>{if(error&&typeof error==='object'&&'code' in error&&error.code===10065)throw new DomainError('MUSIC_LOCATION','Join this voice channel and open its text chat before using music.');throw error;});
   if(member.user.bot||member.isCommunicationDisabled()||voice.channelId!==channel.id||!member.permissionsIn(channel).has(PermissionFlagsBits.ViewChannel|PermissionFlagsBits.Connect))throw new DomainError('MUSIC_LOCATION','Join this voice channel with current access before using its music controls.');
   const access=await this.resolveActor(i.guild,member);if(!access.eligible)throw new DomainError('MUSIC_RESTRICTED','Music is unavailable to you here.');
   return{guildId:i.guildId,userId:i.user.id,voiceChannelId:voice.channelId,textChannelId:channel.id,eligible:true,isDj:access.isDj};
  }
  private async policy(guildId:string):Promise<MusicPolicy>{return musicPolicy({queueMaxTracks:Number(await this.config.get(guildId,'music.queue_max_tracks')),defaultVolume:Number(await this.config.get(guildId,'music.default_volume')),defaultLoop:await this.config.get(guildId,'music.loop_default') as MusicPolicy['defaultLoop'],defaultAutoplay:await this.config.get(guildId,'music.autoplay_default')===true});}
- async autocomplete(i:AutocompleteInteraction){try{if(i.commandName!=='play'){await i.respond([]);return;}await this.context(i);const query=String(i.options.getFocused());if(this.resolutionService){const tracks=await this.resolutionService.search(query,25,AbortSignal.timeout(2200));await i.respond(tracks.filter(track=>track.reference.length<=100).map(track=>({name:`${track.title} — ${track.artist}`.slice(0,100),value:track.reference})));return;}const catalog=await this.catalog();await i.respond(catalog.autocomplete(query));}catch{if(!i.responded)await i.respond([]);}}
+ async autocomplete(i:AutocompleteInteraction){
+  if(i.responded)return;
+  const controller=new AbortController();let finished=false;
+  // One budget includes fresh access checks and any lazy provider startup. Allow
+  // cancellation a short turn to return safe partial results before the hard cutoff.
+  const cancelResults=this.scheduleAutocomplete(()=>controller.abort(new DOMException('Autocomplete deadline','TimeoutError')),2200);
+  let cancelCutoff=()=>{};
+  const cutoff=new Promise<{name:string;value:string}[]>(resolve=>{cancelCutoff=this.scheduleAutocomplete(()=>resolve([]),2250);});
+  const work=(async()=>{
+   if(i.commandName!=='play')return[];
+   await this.context(i);if(finished||controller.signal.aborted)return[];
+   const query=String(i.options.getFocused());
+   if(this.resolutionService){
+    const tracks=await this.resolutionService.search(query,25,controller.signal);
+    return tracks.filter(track=>track.reference.length<=100).map(track=>({name:`${track.title} — ${track.artist}`.slice(0,100),value:track.reference}));
+   }
+   const catalog=await this.catalog();return finished||controller.signal.aborted?[]:catalog.autocomplete(query);
+  })().catch(error=>{if(!controller.signal.aborted&&!(error instanceof DomainError))console.warn('Music autocomplete diagnostic: '+musicDiagnostic(error));return[];});
+  const choices=await Promise.race([work,cutoff]);finished=true;cancelResults();cancelCutoff();
+  // A failed response can be ambiguous. Never retry it or let late work respond.
+  if(!i.responded)try{await i.respond(choices);}catch{/* Interaction expired or response delivery is uncertain. */}
+ }
  private async notice(i:Interaction,title:string,message:string,components:Rows=[],list?:{title:string;detail?:string;badge?:string}[],subtitle=''){await i.editReply({content:message,embeds:[],files:[new AttachmentBuilder(await rasterizeSvg(list?.length?renderMusicList(title,subtitle,list,'Use the controls below.'):renderMusicNotice(title,message)),{name:'music-notice.png'})],components,allowedMentions:{parse:[]}});}
  private async player(actor:MusicActor,allowOtherVoice=false){const saved=await this.repo.read(actor.guildId);if(!saved)throw new DomainError('MUSIC_EMPTY','The jukebox is empty. Use /play and choose a recording.');assertMusicActor(saved.state,actor,allowOtherVoice);return saved;}
  private async listeners(i:Interaction,actor:MusicActor):Promise<string[]>{
@@ -87,7 +111,7 @@ export class DiscordMusicCoordinator {
   else if(command==='shuffle')control=this.shuffle(saved.state,i.id);
   else control=this.buttonControl(command,saved.state);
   await this.repo.control(request,saved.state.revision,control);await this.showPlayer(i,actor,'Music control saved; playback changes await transport confirmation.');
- }catch(error){const message=error instanceof DomainError?error.message:'Music could not be completed. No playback success has been assumed.';try{if(i.deferred||i.replied)await this.notice(i,'Music unavailable',message);else await i.reply({ephemeral:true,content:message,allowedMentions:{parse:[]}});}catch{/* Discord may have expired the interaction; never log private source data. */}}}
+ }catch(error){if(!(error instanceof DomainError))console.warn('Music interaction diagnostic: '+musicDiagnostic(error));const message=error instanceof DomainError?error.message:'Music could not be completed. No playback success has been assumed.';try{if(i.deferred||i.replied)await this.notice(i,'Music unavailable',message);else await i.reply({ephemeral:true,content:message,allowedMentions:{parse:[]}});}catch{/* Discord may have expired the interaction; never log private source data. */}}}
  private buttonControl(control:string,state:MusicState):MusicControl {if(['pause','resume','previous','replay','stop','leave','clear'].includes(control))return{kind:control as 'pause'|'resume'|'previous'|'replay'|'stop'|'leave'|'clear'};if(control==='loop')return{kind:'loop',mode:state.loop==='off'?'track':state.loop==='track'?'queue':'off'};if(control==='autoplay')return{kind:'autoplay',enabled:!state.autoplay};if(/^volume_\d+$/.test(control))return{kind:'volume',percent:whole(control.slice(7),'volume')};throw new DomainError('MUSIC_CONTROL','Use a supported music control.');}
  private shuffle(state:MusicState,seed:string):MusicControl{return{kind:'shuffle',entryIds:[...state.queue].sort((a,b)=>createHash('sha256').update(seed+':'+a.id).digest('hex').localeCompare(createHash('sha256').update(seed+':'+b.id).digest('hex'))).map(entry=>entry.id)};}
  private entryAt(state:MusicState,value:string){const position=whole(value,'queue position');const entry=state.queue[position-1];if(position<1||!entry)throw new DomainError('MUSIC_POSITION','Choose a current queue track number.');return entry.id;}

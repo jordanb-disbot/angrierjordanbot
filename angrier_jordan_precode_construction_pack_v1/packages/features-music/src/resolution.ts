@@ -64,7 +64,11 @@ export class MusicResolutionService {
  async search(text:string,limit:number,signal:AbortSignal):Promise<MusicMetadata[]>{
   if(!text.trim()||text.length>300||/[\u0000-\u001f]/.test(text)||!Number.isSafeInteger(limit)||limit<1||limit>25)throw new DomainError('MUSIC_QUERY','Enter a song or artist name.');
   const found=new Map<string,MusicMetadata>();
-  for(const source of MUSIC_SEARCH_ORDER){if(signal.aborted)throw new DomainError('MUSIC_CANCELLED','The search was cancelled.');let rows:MusicMetadata[];try{rows=await this.provider.search(source,{text:text.trim()},limit,signal);}catch{if(signal.aborted)throw new DomainError('MUSIC_CANCELLED','The search was cancelled.');continue;}
+  for(const source of MUSIC_SEARCH_ORDER){
+   // Autocomplete can exhaust its deadline while filling remaining result slots.
+   // Keep prior validated choices on a timeout; explicit cancellation still wins.
+   if(signal.aborted){if(found.size>0&&signal.reason?.name==='TimeoutError')break;throw new DomainError('MUSIC_CANCELLED','The search was cancelled.');}
+   let rows:MusicMetadata[];try{rows=await this.provider.search(source,{text:text.trim()},limit,signal);}catch{if(signal.aborted){if(found.size>0&&signal.reason?.name==='TimeoutError')break;throw new DomainError('MUSIC_CANCELLED','The search was cancelled.');}continue;}
    for(const row of rows.slice(0,limit)){try{const track=publicMusicMetadata(row);if(playable(track)&&!found.has(key(track)))found.set(key(track),track);}catch{}}
    if(found.size>=limit)break;
   }

@@ -15,6 +15,7 @@ import {DiscordJsVoiceGateway} from './discord-voice-gateway.js';
 import {DiscordVoiceHandshake,type DiscordVoiceGateway,type DiscordVoiceHandshakeOptions} from './discord-voice.js';
 import {MusicPlayerSynchronizer} from './player-synchronizer.js';
 import {MusicRuntime} from './music-runtime.js';
+import {musicDiagnostic} from './music-diagnostics.js';
 
 export interface MusicApplicationOptions {
  client:Client;db:PrismaClient;config:ConfigService;guildId:string;
@@ -43,12 +44,13 @@ export class MusicApplication {
  #voice:VoiceConnection|undefined;#gateway:VoiceGateway|undefined;#runtime:MusicRuntime|undefined;#sync:MusicPlayerSynchronizer|undefined;
  #starting:Promise<void>|undefined;#closed=false;#ready=false;
  #service:MusicResolutionService;#voiceSequence=0;#departedAtRevision:number|undefined;
+ #lastDiagnostic:string|undefined;
  #reconnect:ReturnType<typeof setTimeout>|undefined;#refreshRetry:ReturnType<typeof setTimeout>|undefined;#watchdog:ReturnType<typeof setTimeout>|undefined;#retryDelay=1000;#readySince:number|undefined;
  constructor(options:MusicApplicationOptions,dependencies:MusicApplicationDependencies={}){
   this.#options=options;this.#dependencies=dependencies;this.#repo=dependencies.repository??new PrismaMusicRepository(options.db);
   const service=new MusicResolutionService({
-   search:async(...args)=>{await this.start();return this.#node!.client().search(...args);},
-   resolve:async(reference,limit,signal)=>{if(reference.startsWith('catalog:')&&options.directAudio){const found=(await this.#catalog()).resolve(reference);return{tracks:found.status==='available'?[found.track.metadata]:[],truncated:false};}await this.start();return this.#node!.client().resolve(reference,limit,signal);}
+   search:async(...args)=>{try{await this.start();const result=await this.#node!.client().search(...args);this.#lastDiagnostic=undefined;return result;}catch(error){this.#diagnose(error);throw error;}},
+   resolve:async(reference,limit,signal)=>{if(reference.startsWith('catalog:')&&options.directAudio){const found=(await this.#catalog()).resolve(reference);return{tracks:found.status==='available'?[found.track.metadata]:[],truncated:false};}try{await this.start();const result=await this.#node!.client().resolve(reference,limit,signal);this.#lastDiagnostic=undefined;return result;}catch(error){this.#diagnose(error);throw error;}}
   });
   this.#service=service;
   this.coordinator=new DiscordMusicCoordinator(this.#repo,options.config,options.directAudio?()=>this.#catalog():null,options.access,dependencies.now??Date.now,service);
@@ -56,6 +58,7 @@ export class MusicApplication {
  }
  get ready(){return this.#ready&&!this.#closed&&this.#node?.ready===true;}
  toJSON(){return{ready:this.ready};}
+ #diagnose(error:unknown){const diagnostic=musicDiagnostic(error);if(diagnostic!==this.#lastDiagnostic){this.#lastDiagnostic=diagnostic;console.warn('Music diagnostic: '+diagnostic);}}
  async #enabled(guildId:string){return!this.#closed&&guildId===this.#options.guildId&&await this.#options.config.get(guildId,'music.enabled')===true;}
  async #catalog(){
   if(!this.#options.directAudio)return new AuthorizedMusicCatalog([]);
