@@ -6477,6 +6477,15 @@
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Shared deterministic Economy and Items lounge frames.",
       "sha256": "34a331d64a4bf1c85c10566b848b3d40accfb8d85e2b48580b19d77ab450b064"
+    },
+    {
+      "id": "profiles.premium-presentation",
+      "file": "packages/features-profiles/src/premium-render.ts",
+      "category": "renderer",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Owner-directed Poppins/Cinzel premium profile, showcase, leaderboard and records presentations.",
+      "sha256": "9aebb5a81ba20dd802c8fd1a3473e69f4e80c783287e11e7722ac07381c5a284"
     }
   ]
 }
