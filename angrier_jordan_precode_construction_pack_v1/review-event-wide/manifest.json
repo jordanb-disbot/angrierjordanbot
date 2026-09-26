@@ -1,0 +1,94 @@
+{
+  "source": "Deterministic production payloads with fixture members. NOT live Discord screenshots.",
+  "approval": "Pending owner live review",
+  "files": [
+    {
+      "file": "race-open.png",
+      "sha256": "1c7a49af9b6f69643945ed3ed9c7fae1c4c7072ae501937eeb112fed3d24526d",
+      "controls": [
+        "Join Race",
+        "+30 Seconds",
+        "Rules",
+        "Bet · Jordan",
+        "Bet · Alex",
+        "Bet · Sam",
+        "Bet · Morgan",
+        "Bet · Taylor",
+        "Bet · Casey"
+      ]
+    },
+    {
+      "file": "race-locked.png",
+      "sha256": "d90cf0b9797bee2fc7bfb3385b572ab020c7bb54b8c074c1951483317f4d840d",
+      "controls": []
+    },
+    {
+      "file": "race-closed.png",
+      "sha256": "67a65e2b2294a2d2d8db8acc462504a1485eef6159b8caacf0f24bd22061eb12",
+      "controls": []
+    },
+    {
+      "file": "race-cancelled.png",
+      "sha256": "64e94a1d78a0527720e1c6a59eae24a590c0bad6f935a5eaabe410a1756f05db",
+      "controls": []
+    },
+    {
+      "file": "fight-open.png",
+      "sha256": "5336c2497251e243c75d6d3dff49d26cb134d1fa79026924d05744c6438fd5eb",
+      "controls": [
+        "+30 Seconds",
+        "Rules",
+        "Bet · Jordan",
+        "Bet · Alex"
+      ]
+    },
+    {
+      "file": "fight-locked.png",
+      "sha256": "b1f91fd73ba52553cffcbafd21a5f752845fa8ab4a7c4f5a3404e17345439603",
+      "controls": []
+    },
+    {
+      "file": "fight-closed.png",
+      "sha256": "d4db418c60a0d069289b85c2e73c2faff9f3b6cfdf7a99b3b6326d5f464288c5",
+      "controls": []
+    },
+    {
+      "file": "fight-cancelled.png",
+      "sha256": "1454f9dcc7257ff1d2e2aafe053c060506f64f5527f951d3134a64884f66dbc5",
+      "controls": []
+    },
+    {
+      "file": "line-open.png",
+      "sha256": "388f18ec6f7a2b8c2d37690915fdba52b34dd2720874dab1022f2049ec044db3",
+      "controls": [
+        "I’m In",
+        "I Need a Second",
+        "+30 Seconds",
+        "Start Countdown",
+        "Cancel Line",
+        "Check-ins"
+      ]
+    },
+    {
+      "file": "line-locked.gif",
+      "sha256": "946be19687fda29f9c5e390e90632f42b33cbf202e0d8c9a97419e8611bb7616",
+      "controls": [
+        "Countdown live"
+      ]
+    },
+    {
+      "file": "line-closed.png",
+      "sha256": "a714b95d8eba3a03c97931c21406d09fa2e851ac575ce2b3c486912b0c20b3df",
+      "controls": [
+        "Check-ins"
+      ]
+    },
+    {
+      "file": "line-cancelled.png",
+      "sha256": "7cece01ffb102f4e764133f061860e4b6e5e37f7ccf4958f67f4d1acb7927f00",
+      "controls": [
+        "Check-ins"
+      ]
+    }
+  ]
+}

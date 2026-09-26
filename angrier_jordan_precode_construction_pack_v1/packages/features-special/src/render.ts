@@ -22,7 +22,8 @@ function powder(p:number){const expansion=.3+Math.sin(Math.min(p,1)*Math.PI/2)*.
  for(let i=0;i<7;i++){const a=i/7*Math.PI*2+.2,r=(139+rnd(i+900)*56)*expansion;out+=`<g transform="translate(${325+Math.cos(a)*r} ${490+Math.sin(a)*r*.72+p*p*35}) rotate(${i*43+p*75})" opacity="${Math.max(0,1-p*1.2)}"><path d="M-3 -17Q2 -12 3 0L1 18H-2L-4 -4Z" fill="url(#brass)" stroke="#372416"/><path d="M-4 -10H4V-4H-3Z" fill="#674329"/></g>`;}return out+'</g>';
 }
 /** Uses the locked Line composition, with every name/count/timer read from the actual view. */
-export function renderLine(view:LineView,elapsedMs=view.elapsedMs){
+export function renderLine(view:LineView,elapsedMs=view.elapsedMs,layout:'compact'|'wide'='compact'){
+ if(layout==='wide')return renderWideLine(view,elapsedMs);
  const host=short(view.members.find(m=>m.userId===view.ownerId)?.name??'Host'),ready=view.members.filter(m=>m.status==='ready').length,waiting=view.members.length-ready,live=view.state==='SETTLING',motion=lineFrame(elapsedMs),done=view.state==='CLOSED'||live&&motion.phase==='complete';
  if(live||done){let body=header('One room. One shared moment.',done?'LINE COMPLETE':motion.phase==='burst'?'THE MOMENT':'COUNTDOWN LIVE')+panel(24,257,602,467,'#835CAF')+'<rect x="34" y="267" width="582" height="447" rx="8" fill="none" stroke="#D4BA77" stroke-opacity=".22"/>';
   if(done)body+='<ellipse cx="325" cy="466" rx="236" ry="198" fill="url(#halo)"/><circle cx="325" cy="438" r="74" fill="#0E3233" fill-opacity=".8" stroke="#B69559"/><path d="M289 438 314 462 362 413" stroke="#74E6BC" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'+head(325,562,'A moment for the Chairs.',32,'#F0E9F7',mid)+text(325,604,'Line complete.',21,'#BBDCD0',mid);
@@ -44,4 +45,30 @@ export function renderLine(view:LineView,elapsedMs=view.elapsedMs){
  return frame(body+footer());
 }
 /** Resume only the remaining authoritative frames after restart; never loop/replay 5. */
-export function lineSequence(view:LineView){const frames:string[]=[],delays:number[]=[];let cursor=Math.max(0,Math.ceil(view.elapsedMs/10)*10);while(cursor<5800){const end=cursor<5000?Math.min(5000,(Math.floor(cursor/250)+1)*250):Math.min(5800,(Math.floor((cursor-5000)/50)+1)*50+5000);frames.push(renderLine(view,cursor));delays.push(end-cursor);cursor=end;}frames.push(renderLine({...view,state:'CLOSED'},5800));delays.push(1000);return{frames,delays};}
+export function lineSequence(view:LineView,layout:'compact'|'wide'='compact'){const frames:string[]=[],delays:number[]=[];let cursor=Math.max(0,Math.ceil(view.elapsedMs/10)*10);while(cursor<5800){const end=cursor<5000?Math.min(5000,(Math.floor(cursor/250)+1)*250):Math.min(5800,(Math.floor((cursor-5000)/50)+1)*50+5000);frames.push(renderLine(view,cursor,layout));delays.push(end-cursor);cursor=end;}frames.push(renderLine({...view,state:'CLOSED'},5800,layout));delays.push(1000);return{frames,delays};}
+
+/** Landscape runtime edition uses the approved lounge, materials and countdown particles. */
+function renderWideLine(view:LineView,elapsedMs:number){
+ const ready=view.members.filter(m=>m.status==='ready').length,waiting=view.members.length-ready,host=short(view.members.find(m=>m.userId===view.ownerId)?.name??'Host',24),motion=lineFrame(elapsedMs),live=view.state==='SETTLING',done=view.state==='CLOSED'||live&&motion.phase==='complete',cancelled=view.state==='CANCELLED';
+ const state=done?'LINE COMPLETE':cancelled?'LINE CANCELLED':live?'COUNTDOWN LIVE':view.state==='LOCKED'?'ENTRIES LOCKED':'READINESS OPEN';
+ let body=text(480,38,'ANGRIER JORDAN · ONE SHARED MOMENT',14,'#C8A1FF',mid)+head(480,80,'Line Time',38,'#E6EAF0',mid)+text(480,110,state,15,'#E4C67F',mid);
+ body+=panel(24,132,534,388,'#A779D1')+panel(578,132,358,388,'#796341');
+ if(live&&!done){
+  body+='<g transform="translate(-34 -153)">';
+  if(motion.phase==='burst')body+=powder(motion.progress);
+  else body+='<ellipse cx="325" cy="484" rx="238" ry="192" fill="url(#halo)"/><circle cx="325" cy="484" r="140" fill="#061C25" stroke="#A88950"/><circle cx="325" cy="484" r="130" fill="none" stroke="#C8A1FF" stroke-width="4" stroke-dasharray="'+((motion.number!-motion.progress)/5*2*Math.PI*130)+' 1000" transform="rotate(-90 325 484)"/>'+head(325,536,motion.number!,156,'#F3ECFF',mid);
+  body+='</g>'+text(291,490,motion.phase==='burst'?'One glorious cloud of chaos.':'Together in the lounge.',18,'#D9CCE7',mid);
+ }else if(done||cancelled){body+='<ellipse cx="291" cy="310" rx="240" ry="168" fill="url(#halo)"/><circle cx="291" cy="295" r="81" fill="#0E3233" stroke="#C0A264"/>'+(cancelled?'<path d="M265 269 317 321M317 269 265 321" stroke="#D7BCF8" stroke-width="5"/>':'<path d="M249 296 279 323 337 269" stroke="#74E6BC" stroke-width="6" fill="none"/>')+head(291,429,cancelled?'Until next time, Chairs.':'A moment for the Chairs.',28,'#F0E9F7',mid)+text(291,472,cancelled?'Line cancelled.':'Line complete.',20,'#C5DDD4',mid);
+ }else{
+  body+=head(291,177,'The Chairs are gathering',26,'#E6EAF0',mid);
+  for(const[i,m]of view.members.slice(0,8).entries()){const x=158+(i%2)*266,y=225+Math.floor(i/2)*67;body+=text(x,y,short(m.name,20),19,'#E6EAF0',mid)+text(x,y+23,m.status==='ready'?'READY':'ONE SECOND',12,m.status==='ready'?'#68E0B7':'#F3CD80',mid);}
+  body+=text(291,499,view.members.length>8?('+'+(view.members.length-8)+' more · open Check-ins'):'Your seat in the shared moment.',14,'#C6D7D2',mid);
+ }
+ body+=head(757,177,String(view.members.length)+' gathered',27,'#E6EAF0',mid)+head(757,247,String(ready)+' ready',32,'#68E0B7',mid)+text(757,282,String(waiting)+' need a second',19,'#F3CD80',mid)+'<path d="M612 308H902" stroke="#A98C50" stroke-opacity=".5"/>'+text(757,341,host,21,'#E6EAF0',mid)+text(757,367,'YOUR HOST',12,'#D9C186',mid);
+ const copy=done?'The lounge is always here.':cancelled?'No action needed.':live?'One room. One shared moment.':view.state==='LOCKED'?'The host may start or cancel.':'Check in using the controls below.';
+ for(const[i,line]of wrap(copy,30).entries())body+=text(757,416+i*25,line,17,'#CCDAD6',mid);
+ body+=text(757,489,view.extensionUsed?'HOST EXTENSION USED':'ONE COMMUNITY · ONE COUNTDOWN',11,'#CBB4E5',mid)+panel(24,536,912,60,'#796341');
+ const note=live&&view.shame?view.shame.text:done?'Line complete. Sit. Play. Belong.':cancelled?'Start a new gathering with !line':view.state==='OPEN'?'Readiness closes at the time shown above · the host may start early.':'Check-ins saved · only the host can continue.';
+ for(const[i,line]of wrap(note,87).slice(0,2).entries())body+=text(480,561+i*22,line,17,'#E6EAF0',mid);
+ return '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620">'+defs+'<defs><clipPath id="wide"><rect width="960" height="620" rx="18"/></clipPath></defs><g clip-path="url(#wide)"><image href="'+lounge+'" width="960" height="620" preserveAspectRatio="xMidYMid slice"/><rect width="960" height="620" fill="url(#wash)"/>'+body+'</g><rect x="1" y="1" width="958" height="618" rx="18" fill="none" stroke="#A469E2" stroke-width="2"/><rect x="7" y="7" width="946" height="606" rx="13" fill="none" stroke="#D9BC75" stroke-opacity=".4"/><path d="M15 38V15H38M922 605H945V582" fill="none" stroke="#F4C542"/></svg>';
+}
