@@ -4,6 +4,8 @@
 
 This document prepares a controlled test and owner review; it does not provision a node, request secrets, enable a feature or authorize deployment. [The source contract](MUSIC_SOURCE_CONTRACT.md) and [approved visual system](APPROVED_VISUAL_SYSTEM.md) remain authoritative. Record the final offline results in [Music readiness](PHASE_23_MUSIC_READINESS.md) before offering the test-node handoff below.
 
+For a migrated disposable database with no test server record, use the [supported minimal server bootstrap commands](SERVER_BOOTSTRAP.md). Bootstrap does not seed demo data or enable Music. The separate test-only ConfigService opt-in command is an explicit owner action; live acceptance remains pending.
+
 ## Evidence before the owner handoff
 
 | Evidence | Recorded result |

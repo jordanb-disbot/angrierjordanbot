@@ -1,3 +1,5 @@
+import {DiscordServerBootstrap} from './discord/server-bootstrap.js';
+import {PrismaServerBootstrapRepository} from '../../../packages/database/src/prisma-server-bootstrap.js';
 import {MusicApplication} from './music/music-application.js';
 import {musicAccess} from './music/music-access.js';
 import {MUSIC_COMMANDS} from './discord/music-coordinator.js';
@@ -101,13 +103,14 @@ export async function startProductionBot():Promise<void>{
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
   const enableEconomySmoke=process.env.ENABLE_ECONOMY_SMOKE==='true';
   const db=getPrismaClient();
+  const serverBootstrap=new DiscordServerBootstrap(new PrismaServerBootstrapRepository(db));
   const audit=new AuditService(new PrismaAuditSink(db));
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
   const jobRepo=new PrismaJobRepository(db);
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration]});
   const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const}),async()=>{try{return{name:'music',status:!music||await config.get(guildId,'music.enabled')!==true||music.ready?'ok' as const:'degraded' as const};}catch{return{name:'music',status:'degraded' as const};}}]);
   const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
-    client.on(event,(...args)=>lifecycle.run(()=>listener(...args),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
+    client.on(event,(...args)=>lifecycle.run(()=>serverBootstrap.run(event,args,()=>listener(...args)),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
   };
   const promptRepo=new PrismaWyrPromptRepository(db);
   const sessionRepo=new PrismaWyrSessionRepository(db);
@@ -275,7 +278,11 @@ export async function startProductionBot():Promise<void>{
   let soloSweep:ReturnType<typeof setInterval>|undefined;
   let familySweep:ReturnType<typeof setInterval>|undefined;
 
+  on(Events.GuildCreate,async()=>{}); // The shared event boundary commits the observed server first.
   client.once(Events.ClientReady,ready=>lifecycle.run(async()=>{
+    const configuredServer=ready.guilds.cache.get(guildId)??await ready.guilds.fetch({guild:guildId,force:true});
+    await serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]);
+    if(lifecycle.isStopping)return;
     if(music&&await config.get(guildId,'music.enabled')===true){try{await music.start();}catch{console.error('Music node unavailable; durable recovery remains pending.');}}
     if(enablePartySmoke||enableWyrSmoke)await seedPartyContent(db);
     if(enableSocialSmoke)await seedSocialContent(db);
@@ -324,6 +331,7 @@ export async function startProductionBot():Promise<void>{
     const observedJoin=member.joinedAt?new Date(member.joinedAt.getTime()):null;
     // Enqueue synchronously: lifecycle.run tracks this promise without delaying the transition's place in the queue.
     const pending=familyMembership.live(async()=>{
+    await serverBootstrap.beforeEvent(Events.GuildMemberAdd,[member]);
     const familyActive=tracked&&await familyEnabled();
     if(familyActive){
       if(!observedJoin)throw new Error('Family member has no authoritative join timestamp.');
@@ -349,13 +357,13 @@ export async function startProductionBot():Promise<void>{
   client.on(Events.GuildMemberRemove,member=>{
     if(lifecycle.isStopping)return;
     const observation=member.guild.id===guildId&&!member.user.bot?familyMembership.observe():undefined;
-    const pending=familyMembership.live(async()=>{if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave');},observation);
+    const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildMemberRemove,[member]);if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave');},observation);
     lifecycle.run(()=>pending,()=>console.error('Member departure processing failed; recovery remains pending.'));
   });
   client.on(Events.GuildBanAdd,ban=>{
     if(lifecycle.isStopping)return;
     const observation=ban.guild.id===guildId&&!ban.user.bot?familyMembership.observe():undefined;
-    const pending=familyMembership.live(async()=>{if(!ban.user.bot)await familyDeparture(ban.guild.id,ban.user.id,'ban');},observation);
+    const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildBanAdd,[ban]);if(!ban.user.bot)await familyDeparture(ban.guild.id,ban.user.id,'ban');},observation);
     lifecycle.run(()=>pending,()=>console.error('Member ban processing failed; recovery remains pending.'));
   });
   on(Events.ChannelCreate,async channel=>{if(enableJailSmoke)await jail.reconcileNewChannel(channel);});
