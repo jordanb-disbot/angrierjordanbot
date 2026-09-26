@@ -1,10 +1,10 @@
 import {randomUUID} from 'node:crypto';
-import {Status,type Client} from 'discord.js';
+import {PermissionFlagsBits,Status,type Client} from 'discord.js';
 import type {DiscordVoiceGateway,VoiceGatewayEvent,VoiceGatewayPacket,VoiceGatewaySnapshot} from './discord-voice.js';
+import {musicTrace} from './music-diagnostics.js';
 
 export class DiscordVoiceGatewayError extends Error {
- readonly code='VOICE_GATEWAY';
- constructor(){super('The Discord voice gateway is unavailable.');this.name='DiscordVoiceGatewayError';}
+ constructor(readonly code:'VOICE_GATEWAY'|'VOICE_PERMISSIONS'='VOICE_GATEWAY'){super('The Discord voice gateway is unavailable.');this.name='DiscordVoiceGatewayError';}
 }
 const unavailable=():never=>{throw new DiscordVoiceGatewayError();};
 const object=(value:unknown):Record<string,unknown>|null=>typeof value==='object'&&value!==null&&!Array.isArray(value)?value as Record<string,unknown>:null;
@@ -66,14 +66,32 @@ export class DiscordJsVoiceGateway implements DiscordVoiceGateway {
   let set=this.#subscriptions.get(guildId);if(!set){set=new Set();this.#subscriptions.set(guildId,set);}set.add(listener);
   return()=>{set!.delete(listener);if(!set!.size&&this.#subscriptions.get(guildId)===set)this.#subscriptions.delete(guildId);};
  }
- async send(guildId:string,packet:VoiceGatewayPacket,signal:AbortSignal):Promise<void>{
+ async send(guildId:string,packet:VoiceGatewayPacket,signal:AbortSignal,beforeSend?:()=>Promise<void>):Promise<void>{
+  let targetChannel:string|undefined;
   try{
-   const {guild}=this.#guild(guildId),data=object(packet?.d);
+   const {guild,state}=this.#guild(guildId),epoch=state.epoch,shard=guild.shard,data=object(packet?.d);
    if(signal.aborted||packet?.op!==4||!data||data.guild_id!==guildId||data.self_mute!==false||data.self_deaf!==true||data.channel_id!==null&&!snowflake(data.channel_id))return unavailable();
-   if(data.channel_id!==null){const channel=guild.channels.cache.get(data.channel_id as string);if(!channel?.isVoiceBased())return unavailable();}
+   const channelId=data.channel_id as string|null;
+   targetChannel=channelId??undefined;
+   if(channelId!==null){
+    const botId=this.#client.user!.id;
+    const [channel,bot]=await Promise.all([guild.channels.fetch(channelId,{force:true}),guild.members.fetch({user:botId,force:true})]);
+    if(!channel?.isVoiceBased()||channel.id!==channelId||channel.guild.id!==guildId||bot.id!==botId||bot.guild.id!==guildId)return unavailable();
+    const required=PermissionFlagsBits.ViewChannel|PermissionFlagsBits.Connect|PermissionFlagsBits.Speak;
+    if(!channel.permissionsFor(bot)?.has(required))throw new DiscordVoiceGatewayError('VOICE_PERMISSIONS');
+   }
+   if(signal.aborted)return unavailable();
+   await beforeSend?.();
+   const current=this.#guild(guildId);
+   if(signal.aborted||current.guild!==guild||current.state.epoch!==epoch||current.guild.shard!==shard)return unavailable();
    // Project a fixed opcode shape. No caller-supplied extra fields reach Discord.
-   guild.shard.send({op:4,d:{guild_id:guildId,channel_id:data.channel_id as string|null,self_mute:false,self_deaf:true}});
-  }catch{return unavailable();}
+   shard.send({op:4,d:{guild_id:guildId,channel_id:channelId,self_mute:false,self_deaf:true}});
+  }catch(error){
+   if(error instanceof DiscordVoiceGatewayError&&error.code==='VOICE_PERMISSIONS'){
+    const denied=new DiscordVoiceGatewayError('VOICE_PERMISSIONS');musicTrace('voice.join.failure',{guildId,channelId:targetChannel,error:denied});throw denied;
+   }
+   return unavailable();
+  }
  }
  #raw(input:unknown,shardId:unknown){
   if(this.#closed||!integer(shardId))return;const packet=object(input);if(!packet||packet.op!==0||!integer(packet.s)||typeof packet.t!=='string')return;
@@ -87,9 +105,11 @@ export class DiscordJsVoiceGateway implements DiscordVoiceGateway {
   if(packet.t==='VOICE_STATE_UPDATE'){
    if(data.user_id!==this.#client.user?.id||data.channel_id!==null&&!snowflake(data.channel_id)||data.channel_id!==null&&!text(data.session_id,256))return;
    fields={guildId:data.guild_id,userId:data.user_id as string,channelId:data.channel_id as string|null,...(data.channel_id!==null?{sessionId:data.session_id as string}:{})};
+   musicTrace('voice.state.received',{guildId:data.guild_id,...(data.channel_id!==null?{channelId:data.channel_id as string}:{})});
   }else{
    if(data.endpoint!==null&&(!text(data.endpoint,255)||!text(data.token,2048)))return;
    fields={guildId:data.guild_id,endpoint:data.endpoint as string|null,...(data.endpoint!==null?{token:data.token as string}:{})};
+   musicTrace('voice.server.received',{guildId:data.guild_id});
   }
   this.#emit(data.guild_id,Object.freeze({kind:'dispatch',epoch:state.epoch,sequence:packet.s,type:packet.t,data:new VoiceDispatchData(fields)}));
  }

@@ -3,6 +3,7 @@ import type {PrismaMusicRepository,MusicTransportEvent} from '../../../../packag
 import type {MusicState,MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
 import {projectLavalinkEvent,type LavalinkEvent,type LavalinkPlayerBinding} from './lavalink-events.js';
 import type {LavalinkPlayerObservation} from './lavalink-client.js';
+import {musicTrace} from './music-diagnostics.js';
 
 type Repository=Pick<PrismaMusicRepository,'read'|'intent'|'ownsIntentLease'|'applyTransportEvent'|'recover'|'reserveController'>;
 export interface MusicRuntimeOptions {
@@ -70,7 +71,7 @@ export class MusicRuntime {
   if(projected.kind==='playerUpdate'){await this.#poll(state);await this.#options.refreshController(event.guildId);return;}
   const mutation:MusicTransportEvent=projected.kind==='trackStart'?{kind:'track-start',at:(this.#options.now??Date.now)(),positionMs:state.positionMs}:projected.kind==='trackEnd'?{kind:'track-end',reason:projected.reason}:{kind:'observation',status:'FAILED',at:(this.#options.now??Date.now)(),positionMs:state.positionMs};
   const applied=await this.#apply(state,context.socketEpoch,context.sequence,mutation);
-  if(!applied.ignored&&projected.kind==='trackStart'){this.#bindings.set(event.guildId,projected.binding);await this.#poll(state);}
+  if(!applied.ignored&&projected.kind==='trackStart'){musicTrace('playback.started',{guildId:event.guildId,channelId:state.voiceChannelId});this.#bindings.set(event.guildId,projected.binding);await this.#poll(state);}
   if(!applied.ignored&&projected.kind==='trackEnd')this.#bindings.delete(event.guildId);
   if(applied.needsControllerRefresh)await this.#options.refreshController(event.guildId);
  });}

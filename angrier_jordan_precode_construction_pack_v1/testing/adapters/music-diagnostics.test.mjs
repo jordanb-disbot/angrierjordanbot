@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {musicDiagnostic} from '../../dist/apps/bot/src/music/music-diagnostics.js';
+import {musicDiagnostic,musicTrace} from '../../dist/apps/bot/src/music/music-diagnostics.js';
 test('Music diagnostic exposes reviewed boundary category but never secrets or arbitrary provider errors',()=>{
  for(const code of ['LAVALINK_NODE_POLICY','LAVALINK_SOURCE','LAVALINK_TRANSPORT','LAVALINK_SESSION_SETUP','LAVALINK_CONNECTION','LAVALINK_CLOSED','LAVALINK_READY_TIMEOUT','PRIVATE_TOKEN','LAVALINK_PRIVATE_TOKEN',null]){
   const output=musicDiagnostic(Object.assign(Error('PRIVATE_PASSWORD https://secret.invalid/?token=PRIVATE_TOKEN'),{code,cause:{password:'PRIVATE_PASSWORD'}}));
@@ -8,4 +8,10 @@ test('Music diagnostic exposes reviewed boundary category but never secrets or a
  }
  assert.match(musicDiagnostic({code:'LAVALINK_NODE_POLICY'}),/^LAVALINK_NODE_POLICY:/);
  assert.equal(musicDiagnostic(null),'MUSIC_BOUNDARY: music operation could not be completed.');
+});
+
+test('Music trace projects only reviewed stages, public IDs and fixed failure categories',()=>{
+ const lines=[],original=console.info;console.info=line=>lines.push(line);
+ try{musicTrace('voice.join.failure',{guildId:'111111111111111111',channelId:'222222222222222222',phase:'selection.read',error:Object.assign(new Error('PRIVATE_TOKEN'),{code:'VOICE_TIMEOUT'}),token:'PRIVATE_TOKEN',sessionId:'PRIVATE_SESSION',endpoint:'https://private.invalid'});musicTrace('PRIVATE_STAGE',{guildId:'111111111111111111'});musicTrace('member.voice.detected',{guildId:'PRIVATE_TOKEN',channelId:'PRIVATE_URL'});}finally{console.info=original;}
+ assert.equal(lines.length,2);assert.match(lines[0],/111111111111111111/);assert.match(lines[0],/222222222222222222/);assert.match(lines[0],/VOICE_TIMEOUT/);assert.ok(!/PRIVATE|sessionId|endpoint|token/i.test(lines.join('\n')));assert.equal(lines[1],'Music trace: member.voice.detected {}');
 });

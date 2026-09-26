@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ChannelType,Collection,MessageFlags,PermissionFlagsBits} from 'discord.js';
+import {ChannelType,Collection,MessageFlags,PermissionFlagsBits,CommandInteractionOptionResolver} from 'discord.js';
+import {readFileSync} from 'node:fs';
 import {DomainError} from '../../dist/packages/core/src/errors.js';
 import {DiscordMusicCoordinator} from '../../dist/apps/bot/src/discord/music-coordinator.js';
 import {AuthorizedMusicCatalog} from '../../dist/packages/features-music/src/catalog.js';
@@ -17,10 +18,22 @@ function fixture(options={}){
  const values={'music.enabled':true,'music.queue_max_tracks':10,'music.default_volume':65,'music.loop_default':'off','music.autoplay_default':false,...options.values};
  let state=options.state??createMusicState(g,actor,policy).state;const repo={read:async()=>({state,controllerMessageId:message}),enqueue:async(request,entries,p,confirm)=>{calls.enqueue.push({request,entries,confirm});state=enqueueMusic(state,request.actor,entries,p).state;return{jobId:'intent'};},control:async(request,revision,operation)=>{calls.control.push({request,revision,operation});assert.equal(revision,state.revision);state=controlMusic(state,request.actor,operation).state;return{jobId:'intent'};},skip:async(request,generation,ids)=>{calls.skip.push({request,generation,ids});return{skipped:false,votes:1,needed:2};},requestCatalogEnqueue:async(request,ids,source,p)=>{const entries=ids.map((id,n)=>({id:request.requestKey+'-'+n,requesterUserId:request.actor.userId,track:source.resolve(id).track.metadata}));return{kind:'applied',count:entries.length,skippedCount:0,result:await repo.enqueue(request,entries,p)};},historyPage:async()=>({items:[],hasOlder:false,hasNewer:false}),playlistPage:async()=>({items:[],total:0,page:0,pages:1}),...options.repo};
  const access=options.access??(async()=>({eligible:true,isDj:true})),coordinator=new DiscordMusicCoordinator(repo,{get:async(_,key)=>values[key]},async()=>{calls.catalog++;return options.loadCatalog?options.loadCatalog():catalog();},access,()=>1000,options.service,options.autocompleteTimer);
- function interaction(overrides={}){const replies=[],responses=[];return{replies,responses,id:'999999999999999999',guildId:g,guild,channelId:vc,user:{id:u},client:{user:{id:bot}},commandName:'play',deferred:false,replied:false,responded:false,message:{id:message,author:{id:bot},flags:{has:flag=>flag===MessageFlags.Ephemeral}},options:{getString:(key)=>key==='query_or_link'?'catalog:chair-song':null,getInteger:()=>null,getBoolean:()=>null,getSubcommand:()=> 'nowplaying',getFocused:()=> 'chair'},isChatInputCommand:()=>true,isButton:()=>false,isStringSelectMenu:()=>false,deferReply:async function(input){assert.equal(input.ephemeral,true);this.deferred=true;},editReply:async function(payload){this.replied=true;replies.push(payload);},reply:async payload=>replies.push(payload),respond:async function(input){this.responded=true;responses.push(input);},...overrides};}
+ function interaction(overrides={}){const replies=[],responses=[];return{replies,responses,id:'999999999999999999',guildId:g,guild,channelId:vc,user:{id:u},client:{user:{id:bot}},commandName:'play',deferred:false,replied:false,responded:false,message:{id:message,author:{id:bot},flags:{has:flag=>flag===MessageFlags.Ephemeral}},options:{getString:(key)=>key==='query'?'catalog:chair-song':null,getInteger:()=>null,getBoolean:()=>null,getSubcommand:()=> 'nowplaying',getFocused:()=> 'chair'},isChatInputCommand:()=>true,isButton:()=>false,isStringSelectMenu:()=>false,deferReply:async function(input){assert.equal(input.ephemeral,true);this.deferred=true;},editReply:async function(payload){this.replied=true;replies.push(payload);},reply:async payload=>replies.push(payload),respond:async function(input){this.responded=true;responses.push(input);},...overrides};}
  return{calls,members,voices,guild,channel,coordinator,interaction,state:()=>state};
 }
 const playingState=()=>{const track=catalog().resolve('catalog:chair-song').track.metadata;return enqueueMusic(createMusicState(g,actor,policy).state,actor,[{id:'a',requesterUserId:u,track}],policy).state;};
+
+test('Registered /play autocomplete option reaches resolution and queue through the real Discord option resolver',async()=>{
+ const registration=JSON.parse(readFileSync(new URL('../../generated/discord/application_commands.json',import.meta.url),'utf8')).find(command=>command.name==='play');
+ const option=registration.options.find(option=>option.autocomplete);assert.equal(option.name,'query');
+ const selected='https://www.youtube.com/watch?v=aaaaaaaaaaa',track={provider:'youtube',reference:selected,title:'Selected recording',artist:'Artist',album:null,durationMs:100000,artworkUrl:null,seekable:true},calls=[];
+ const service=new MusicResolutionService({search:async()=>{throw Error('Selected URL must not rerun text search');},resolve:async(reference)=>{calls.push(['resolve',reference]);return{tracks:[track],truncated:false};}});
+ const f=fixture({state:playingState(),service,repo:{requestResolvedTracks:async(request,tracks,resolver)=>{assert.equal(resolver,service);assert.equal(request.actor.guildId,g);assert.equal(request.actor.voiceChannelId,vc);assert.equal(request.actor.textChannelId,vc);calls.push(['queue',tracks[0].reference]);return{kind:'applied',count:1,skippedCount:0,result:{jobId:'persisted-job'}};}}});
+ const options=new CommandInteractionOptionResolver({},[{name:option.name,type:option.type,value:selected}],{});
+ assert.throws(()=>options.getString('query_or_link',true),{code:'CommandInteractionOptionNotFound'});
+ const i=f.interaction({options});await f.coordinator.handle(i);
+ assert.deepEqual(calls,[['resolve',selected],['queue',selected]]);assert.ok(i.replies.length);assert.ok(!i.replies.some(reply=>/could not be completed|Music unavailable/.test(reply.content??'')));
+});
 
 test('Discord Unknown Voice State asks member to join without searching or enqueueing',async()=>{let searches=0;const f=fixture({service:{search:async()=>{searches++;return[];}}});f.guild.voiceStates.fetch=async()=>{throw Object.assign(Error('private provider details'),{code:10065});};const i=f.interaction();await f.coordinator.handle(i);assert.match(i.replies[0].content,/Join this voice channel/);assert.doesNotMatch(i.replies[0].content,/private/);await f.coordinator.autocomplete(f.interaction());assert.equal(searches,0);assert.equal(f.calls.enqueue.length,0);});
 

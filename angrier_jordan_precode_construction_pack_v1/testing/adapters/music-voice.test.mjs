@@ -6,10 +6,18 @@ const guildId='111111111111111111',channelId='222222222222222222',botId='3333333
 const fence=(revision=1,generation=1,guild=guildId)=>({guildId:guild,revision,generation});
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 const rejected=(operation,code)=>assert.rejects(async()=>operation(),{code});
+
+test('Join stage diagnostics distinguish success and failure without exposing credentials or raw errors',async t=>{
+ const traces=[];t.mock.method(console,'info',message=>traces.push(message));
+ const ready=setup(),pending=ready.manager.join(fence(),channelId);await tick();ready.state();ready.server();await pending;ready.manager.shutdown();
+ const failed=setup({onSend:async()=>{throw new TypeError('SECRET_TOKEN SECRET_SESSION https://SECRET_ENDPOINT');}});await rejected(()=>failed.manager.join(fence(),channelId),'VOICE_GATEWAY');failed.manager.shutdown();
+ assert.deepEqual(traces.map(line=>line.split(' ')[2]),['voice.join.start','voice.join.success','voice.join.start','voice.join.failure']);
+ assert.ok(traces.every(line=>line.includes(guildId)&&line.includes(channelId)));assert.doesNotMatch(traces.join('\n'),/SECRET|discord\.media|sessionId|token|endpoint/);
+});
 function setup(overrides={}){
  let epoch='gateway-1',sequence=0;const listeners=new Set(),calls=[];
  const emit=(type,data,meta={})=>{const value={kind:'dispatch',epoch,sequence:++sequence,type,data,...meta};sequence=Math.max(sequence,value.sequence);for(const fn of listeners)fn(value);};
- const gateway={snapshot:()=>({epoch,sequence}),subscribe:(_guild,listener)=>{listeners.add(listener);return()=>listeners.delete(listener);},send:async(guild,packet,signal)=>{calls.push({guild,packet,signal});await overrides.onSend?.({guild,packet,signal,emit});}};
+ const gateway={snapshot:()=>({epoch,sequence}),subscribe:(_guild,listener)=>{listeners.add(listener);return()=>listeners.delete(listener);},send:async(guild,packet,signal,beforeSend)=>{await beforeSend?.();calls.push({guild,packet,signal});await overrides.onSend?.({guild,packet,signal,emit});}};
  const options={botId,gateway,isCurrent:async()=>true,timeoutMs:200,...overrides};delete options.onSend;
  const manager=new DiscordVoiceHandshake(options);
  return{manager,gateway,calls,listeners,emit,state:(changes={},meta={})=>emit('VOICE_STATE_UPDATE',{guild_id:guildId,user_id:botId,channel_id:channelId,session_id:'SECRET_SESSION',...changes},meta),server:(changes={},meta={})=>emit('VOICE_SERVER_UPDATE',{guild_id:guildId,token:'SECRET_TOKEN',endpoint:'voice.discord.media:443',...changes},meta),disconnect:()=>{for(const fn of listeners)fn({kind:'disconnected',epoch});},epoch:value=>{epoch=value;sequence=0;}};

@@ -1,5 +1,6 @@
 import type {MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
 import type {LavalinkVoiceState} from './lavalink-client.js';
+import {musicTrace} from './music-diagnostics.js';
 
 export interface VoiceGatewaySnapshot {epoch:string;sequence:number;}
 export type VoiceGatewayEvent=
@@ -10,8 +11,8 @@ export interface VoiceGatewayPacket {op:4;d:{guild_id:string;channel_id:string|n
 export interface DiscordVoiceGateway {
  snapshot(guildId:string):VoiceGatewaySnapshot;
  subscribe(guildId:string,listener:(event:VoiceGatewayEvent)=>void):()=>void;
- /** Enqueue synchronously/in order; never enqueue a packet after its signal aborts. */
- send(guildId:string,packet:VoiceGatewayPacket,signal:AbortSignal):Promise<void>;
+ /** Recheck authority after asynchronous preflight; never enqueue after abort. */
+ send(guildId:string,packet:VoiceGatewayPacket,signal:AbortSignal,beforeSend?:()=>Promise<void>):Promise<void>;
 }
 export interface DiscordVoiceHandshakeOptions {
  botId:string;gateway:DiscordVoiceGateway;isCurrent:(fence:MusicTransportFence)=>Promise<boolean>;timeoutMs?:number;
@@ -94,6 +95,7 @@ export class DiscordVoiceHandshake {
    if(controller.signal.aborted){abort();return;}controller.signal.addEventListener('abort',abort,{once:true});
   });
   try{
+   if(channelId!==null)musicTrace('voice.join.start',{guildId:fence.guildId,channelId});
    // Check persistent authority before subscribing/sending; no credentials are reused.
    await wait(this.#current(fence,ticket));const initial=this.#snapshot(fence.guildId);epoch=initial.epoch;
    if(channelId!==null&&this.#quarantined.get(fence.guildId)===epoch)fail('VOICE_UNCERTAIN');
@@ -118,10 +120,14 @@ export class DiscordVoiceHandshake {
      server={token:data.token,endpoint:data.endpoint};changed();
     }
    });
-   // Subscription can synchronously flush old events. Capture the outbound barrier last.
-   await wait(this.#current(fence,ticket,epoch));const beforeSend=this.#snapshot(fence.guildId);barrier=beforeSend.sequence;lastSequence=barrier;
-   if(controller.signal.aborted)fail('VOICE_ABORTED');
-   sent=true;await wait(this.#gateway.send(fence.guildId,{op:4,d:{guild_id:fence.guildId,channel_id:channelId,self_mute:false,self_deaf:true}},controller.signal));
+   // Permission reads may await the network. Ignore events until their final
+   // authority check, then capture a fresh outbound barrier before opcode 4.
+   const beforeSend=async()=>{
+    await this.#current(fence,ticket,epoch);if(controller.signal.aborted)fail('VOICE_ABORTED');
+    const outbound=this.#snapshot(fence.guildId);barrier=outbound.sequence;lastSequence=barrier;
+    sessionId=null;server=null;disconnected=false;version++;sent=true;
+   };
+   await wait(this.#gateway.send(fence.guildId,{op:4,d:{guild_id:fence.guildId,channel_id:channelId,self_mute:false,self_deaf:true}},controller.signal,beforeSend));
    while(true){
     if(disconnected&&channelId!==null)fail('VOICE_DISCONNECTED');
     if(channelId===null?disconnected:sessionId!==null&&server!==null){
@@ -129,11 +135,13 @@ export class DiscordVoiceHandshake {
      confirmed=true;
      if(channelId===null){this.#quarantined.delete(fence.guildId);return;}
      const voice:LavalinkVoiceState={sessionId:sessionId!,token:server!.token,endpoint:server!.endpoint,channelId};
+     musicTrace('voice.join.success',{guildId:fence.guildId,channelId});
      return new DiscordVoiceCredentials(voice,()=>this.#current(fence,ticket,epoch));
     }
     await wait(new Promise<void>(resolve=>{wake=resolve;}));
    }
   }catch(error){
+   if(channelId!==null)musicTrace('voice.join.failure',{guildId:fence.guildId,channelId,error});
    if(sent&&!confirmed&&epoch)this.#quarantined.set(fence.guildId,epoch);
    throw redacted(error,'VOICE_GATEWAY');
   }finally{clearTimeout(timer);signal?.removeEventListener('abort',cancel);try{unsubscribe?.();}catch{/* Never propagate gateway adapter errors or data. */}if(this.#active.get(fence.guildId)===controller)this.#active.delete(fence.guildId);}

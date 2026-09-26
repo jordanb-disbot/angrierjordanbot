@@ -1,6 +1,7 @@
 import type {MusicMetadata,MusicState,MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
 import {LavalinkBoundaryError,type LavalinkPlayerPatch,type LavalinkRestClient,type LavalinkTrackHandle} from './lavalink-client.js';
 import type {DiscordVoiceHandshake} from './discord-voice.js';
+import {musicTrace} from './music-diagnostics.js';
 
 type PlayerClient=Pick<LavalinkRestClient,'updatePlayer'|'destroyPlayer'>;
 type VoiceClient=Pick<DiscordVoiceHandshake,'join'|'disconnect'>;
@@ -42,10 +43,16 @@ export class MusicPlayerSynchronizer {
     if(replace||prior?.volume!==input.volume)patch.volume=input.volume;
     if(!reconnect&&!Object.keys(patch).length)return{accepted:true as const,changed:false};
     await check();
+    const update=async(patch:LavalinkPlayerPatch)=>{
+     if(patch.track)musicTrace('track.handoff',{guildId:input.guildId,channelId:input.channelId});
+     musicTrace('player.update.start',{guildId:input.guildId,channelId:input.channelId});
+     try{await this.#client.updatePlayer(fence,patch,signal);musicTrace('player.update.success',{guildId:input.guildId,channelId:input.channelId});}
+     catch(error){musicTrace('player.update.failure',{guildId:input.guildId,channelId:input.channelId,error});throw error;}
+    };
     if(reconnect){
      mutationStarted=true;const credentials=await this.#voice.join(fence,input.channelId,signal);
-     await credentials.consume(async voice=>{await check();await this.#client.updatePlayer(fence,{...patch,voice},signal);});
-    }else{mutationStarted=true;await this.#client.updatePlayer(fence,patch,signal);}
+     await credentials.consume(async voice=>{await check();await update({...patch,voice});});
+    }else{mutationStarted=true;await update(patch);}
     await check();this.#applied.set(input.guildId,{channelId:input.channelId,generation:input.generation,entryId:input.entry?.id??null,paused,volume:input.volume});
     return{accepted:true as const,changed:true};
    }catch(error){

@@ -9,6 +9,22 @@ export function musicDiagnostic(error:unknown):string {
   case 'LAVALINK_TRANSPORT':return 'LAVALINK_TRANSPORT: node request failed or exceeded its deadline.';
   case 'LAVALINK_SESSION_SETUP':return 'LAVALINK_SESSION_SETUP: node session setup failed.';
   case 'LAVALINK_CONNECTION':case 'LAVALINK_CLOSED':case 'LAVALINK_READY_TIMEOUT':return 'LAVALINK_CONNECTION: node session is unavailable.';
+  case 'CommandInteractionOptionNotFound':return 'DISCORD_OPTION_MISSING: registered command option was not available.';
+  case 'VOICE_TIMEOUT':case 'VOICE_GATEWAY':case 'VOICE_PERMISSIONS':case 'VOICE_UNCERTAIN':case 'VOICE_GATEWAY_CHANGED':case 'VOICE_GATEWAY_DISCONNECTED':return `${code}: Discord voice handshake could not be confirmed.`;
+  case 'MUSIC_SYNC_UNAVAILABLE':case 'MUSIC_SYNC_RECOVERY_REQUIRED':case 'MUSIC_SYNC_STALE':return `${code}: player synchronization could not be confirmed.`;
   default:return error instanceof TypeError?'MUSIC_TYPE_ERROR: adapter operation failed.':'MUSIC_BOUNDARY: music operation could not be completed.';
  }
+}
+
+const stages=['interaction.received','context.read','member.voice.detected','selection.read','selection.received','resolution.request','resolution.ready','queue.persisted','interaction.failure','node.session.ready','job.start','job.failure','voice.join.start','voice.join.success','voice.join.failure','voice.state.received','voice.server.received','player.update.start','player.update.success','player.update.failure','track.handoff','playback.started'] as const;
+export type MusicTraceStage=typeof stages[number];
+/** Fixed stages and projected IDs only: never log the supplied object or error itself. */
+export function musicTrace(stage:MusicTraceStage,details:{guildId?:string|null|undefined;channelId?:string|null|undefined;error?:unknown;phase?:MusicTraceStage;selectionKind?:'reference'|'text'}={}){
+ if(!stages.includes(stage))return;
+ const safe:Record<string,string>={};
+ for(const key of ['guildId','channelId'] as const)if(typeof details[key]==='string'&&/^[1-9]\d{16,19}$/.test(details[key]!))safe[key]=details[key]!;
+ if(details.phase&&stages.includes(details.phase))safe.phase=details.phase;
+ if(details.selectionKind==='reference'||details.selectionKind==='text')safe.selectionKind=details.selectionKind;
+ if(details.error!==undefined)safe.failure=musicDiagnostic(details.error);
+ console.info('Music trace: '+stage+' '+JSON.stringify(safe));
 }
