@@ -1,6 +1,6 @@
 # Gate C — Music acceptance record
 
-**Status: PENDING. Live node/provider/Discord playback checks: NOT RUN. Production Music: disabled.**
+**Visual approval: PASSED by owner on 2026-09-26 (f98de3c). Gate C functional/live acceptance: PENDING. Live checks: NOT RUN. Production Music: disabled.**
 
 This document prepares a controlled test and owner review; it does not provision a node, request secrets, enable a feature or authorize deployment. [The source contract](MUSIC_SOURCE_CONTRACT.md) and [approved visual system](APPROVED_VISUAL_SYSTEM.md) remain authoritative. Record the final offline results in [Music readiness](PHASE_23_MUSIC_READINESS.md) before offering the test-node handoff below.
 
@@ -70,14 +70,16 @@ The [foundation gallery](../review-phase-23-foundation/index.html) contains 23 s
 
 ## Owner decision
 
-Gate C remains pending until the owner reviews the Music presentation/product behavior and the recorded acceptance evidence. Capture the decision against a specific commit/gallery manifest, with any accepted limitations and remaining failures. Do not claim Gate C approval from a successful build or a fixture gallery. Production release authorization remains separate even after approval.
+Music presentation is owner-approved. Gate C remains pending until functional/live acceptance evidence is complete and reviewed. Capture the decision against a specific commit/gallery manifest, with any accepted limitations and remaining failures. Do not claim Gate C approval from a successful build or a fixture gallery. Production release authorization remains separate even after approval.
 
 | Decision field | Value |
 | --- | --- |
-| Owner decision/date | PENDING |
-| Reviewed commit/gallery manifest | PENDING |
+| Owner visual decision/date | APPROVED — 2026-09-26 |
+| Reviewed commit/gallery manifest | f98de3c; docs/approved_visuals/music-2026-09-26.json |
 | Live matrix record | NOT RUN |
-| Accepted limitations / required follow-up | PENDING |
+| Accepted presentation / required follow-up | Current native controls, stacking and truncation approved; live rows C01–C14 outstanding |
 | Production deployment authorization | NOT PROVIDED |
 
 Music presentation revision 01 uses the reference-inspired modular AJ layout; see [visual review notes](MUSIC_VISUAL_REVISION_01.md). This revision does not approve Gate C or change playback behavior.
+
+The next action is described in [Gate C remaining work and first action](GATE_C_NEXT_ACTION.md). The live evidence ledger is [music-live-acceptance.json](../testing/music-node/music-live-acceptance.json); it begins with no claimed live passes.

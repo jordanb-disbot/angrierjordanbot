@@ -1,4 +1,4 @@
-# Music visual revision 01 — owner review pending
+# Music visual revision 01 — owner approved 2026-09-26
 
 The owner-supplied Music board is composition inspiration only. This revision inherits the approved AJ lounge shell, packaged materials, palette, Space Grotesk headings and Inter body. No reference artwork/text/logos were copied. Approved Line, Race, Fight, standard-window and Gate B files are untouched.
 
@@ -25,6 +25,10 @@ Gallery: [Music review](../review-phase-23-foundation/index.html). Its manifest 
 
 Validation: bot build and full preflight passed; 285 runtime tests and 368 adapter tests passed. All 392 production asset hashes and 46 Music review-image hashes verified. The 38 immutable references and 144 approved Gate B images remain unchanged. Prior 24 PostgreSQL tests remain the persistence baseline; no domain or migration changes were made in this presentation pass. Secret/local-file scan passed. Music remains disabled. No deployment or Gate C approval is implied.
 
-Owner review requested: full-player composition, compact pinned layout, list density/readability, and the Music-specific modular treatment within the approved AJ visual family. Live voice/provider acceptance is still pending separately under [Gate C](GATE_C_MUSIC_ACCEPTANCE.md).
+Owner approved the full-player composition, compact pinned layout, list density/readability, and Music-specific modular treatment within the approved AJ visual family. Live voice/provider acceptance is still pending separately under [Gate C](GATE_C_MUSIC_ACCEPTANCE.md).
 
 The 46-image gallery includes full player states, compact pinned playing/recovery/idle/long-title states, autoplay, requested-versus-audio source attribution, recording choice, confirmation, queue/long queue, history, playlists and permission/unavailable notices. Native buttons remain on both player forms; gallery previews are deliberately noninteractive.
+
+## Owner decision — 2026-09-26
+
+APPROVED at `f98de3c`. All listed Music surfaces and current native controls, stacking and truncation are now visual source-of-truth. The Music approval manifest freezes the reviewed package. Earlier review requests above are resolved. Gate C live/functional acceptance remains pending; no production authorization.

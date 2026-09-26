@@ -6141,8 +6141,8 @@
       "file": "packages/features-music/src/render.ts",
       "category": "runtime",
       "canonical": true,
-      "status": "ENGINEERING_FIXTURE_GATE_C_PENDING",
-      "usage": "AJ modular Music full player, compact pinned strip, list panels and notices; Gate C owner visual review pending.",
+      "status": "VISUAL_APPROVED_LIVE_ACCEPTANCE_PENDING",
+      "usage": "Owner-approved Music visual system at f98de3c (2026-09-26): full/compact player, lists, notices and native controls. Live functional Gate C pending.",
       "sha256": "95af036a6b94704a2bacf3638762d6fb93f2c984c6798073d17980b9193ef87f"
     }
   ]

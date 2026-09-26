@@ -29,3 +29,7 @@ See [PHASE_23_MUSIC_READINESS.md](PHASE_23_MUSIC_READINESS.md) for the implement
 Do not inspect or print secret files for documentation work. Test database access remains restricted to the ignored project-root `.env.test.local` value `TEST_DATABASE_URL`; never select a production database for acceptance. The disposable Railway project `upbeat-kindness` is test-only.
 
 Music presentation revision 01 uses the reference-inspired modular AJ layout; see [visual review notes](MUSIC_VISUAL_REVISION_01.md). This revision does not approve Gate C or change playback behavior.
+
+## Owner Music visual approval — 2026-09-26
+
+Music visuals at `f98de3c` are APPROVED and hash-locked in `docs/approved_visuals/music-2026-09-26.json`. Gate C is now waiting only on remaining functional/live acceptance; do not redesign Music or repeat visual approval absent an objective live usability defect. Offline integration and mocks are complete. Follow [the next action plan](GATE_C_NEXT_ACTION.md); production remains disabled.

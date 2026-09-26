@@ -1,0 +1,114 @@
+{
+  "gate": "C",
+  "visualApproval": {
+    "status": "APPROVED",
+    "date": "2026-09-26",
+    "commit": "f98de3c2ffd3b02aa2d742862b68f2dd52d06f63"
+  },
+  "functionalStatus": "NOT_RUN",
+  "productionAuthorized": false,
+  "testedCommit": null,
+  "testedAt": null,
+  "environment": "TEST_ONLY",
+  "evidenceRules": "Public recording references and sanitized observations only. No credentials, tokens, encoded tracks or transient playback URLs.",
+  "cases": [
+    {
+      "id": "C01",
+      "title": "Text search and YouTube Music / YouTube / SoundCloud playback",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C02",
+      "title": "Spotify / Apple metadata, playlists and accurate playback attribution",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C03",
+      "title": "ISRC and ambiguous/version/duration matching",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C04",
+      "title": "Actual pause/resume/seek/previous/replay/volume and authority",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C05",
+      "title": "Eligible listener skip votes with membership changes",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C06",
+      "title": "Queue ordering, loop, duplicates and batch confirmation",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C07",
+      "title": "Playlist ownership and restart persistence",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C08",
+      "title": "Pinned controller and permission recovery",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C09",
+      "title": "Deleted/uncertain controller and channel relocation",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C10",
+      "title": "Real node/worker restart and fresh track resolution",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C11",
+      "title": "Bot and listener departure recovery",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C12",
+      "title": "Autoplay, disablement and competing requests",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C13",
+      "title": "Concurrent commands and stale generation/lease controls",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    },
+    {
+      "id": "C14",
+      "title": "Feature disablement and shutdown",
+      "status": "NOT_RUN",
+      "observation": "",
+      "evidence": []
+    }
+  ]
+}

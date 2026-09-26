@@ -15,3 +15,7 @@ Do not overwrite the approved snapshots when generating new runtime reviews. A m
 ## Gate B owner approval — 2026-09-25
 
 Gate B is PASSED. The owner approved the complete corrected review gallery from commit `3837503`: 70 review items and two internal estate fixtures, 144 desktop/mobile images. [The Gate B approval manifest](approved_visuals/gate-b-2026-09-25.json) locks their hashes. These approved centered, content-sized lounge panels, member portraits, privacy-preserving fallbacks, voting and feed treatments are the current source-of-truth alongside Gate A. Do not redesign them. Native Discord control/modal limitations remain documented. This is owner visual approval, not live Discord acceptance, feature enablement or production deployment authorization. Gates C–E remain pending.
+
+## Music owner visual approval — 2026-09-26
+
+The owner approved the Music presentation at commit `f98de3c2ffd3b02aa2d742862b68f2dd52d06f63`: full player, compact/pinned player, search, queue, playlists, source/status surfaces, error/unavailable states and current Discord-native controls. Preserve the AJ palette/materials/fonts, desktop/mobile stacking and truncation. The [Music approval manifest](approved_visuals/music-2026-09-26.json) freezes 46 images and the gallery/control metadata. Do not alter these layouts except for an objective usability defect found in live acceptance. Gate C visual approval is PASSED; functional/live acceptance remains pending. Production Music remains disabled; deployment is not authorized.

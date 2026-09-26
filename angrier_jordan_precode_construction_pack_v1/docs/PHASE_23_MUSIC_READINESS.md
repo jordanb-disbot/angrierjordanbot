@@ -35,7 +35,7 @@ Offline tests use injected provider, Discord and transport boundaries. PostgreSQ
 | Registration/help/settings/wiring checks | PASS; 256 settings generated, optional music.dj_role added |
 | Approved visual locks and secret scan | PASS; 38 immutable references + 144 approved Gate B images unchanged; no detected secret/local paths |
 | Real node/provider/Discord voice acceptance | NOT RUN |
-| Owner Gate C review | PENDING |
+| Owner Gate C review | Visuals APPROVED; functional/live acceptance PENDING |
 
 ## Remaining acceptance work
 
@@ -44,3 +44,7 @@ Follow [GATE_C_MUSIC_ACCEPTANCE.md](GATE_C_MUSIC_ACCEPTANCE.md) for the controll
 The current [foundation gallery](../review-phase-23-foundation/index.html) contains 23 fictional scenarios / 46 desktop/mobile images, including source attribution, private choices/confirmations, queue/history/playlists and notices. It is not a live Discord capture or the complete Gate C package. The final package must include desktop/mobile controller states, requested/playback source attribution, selection/confirmation/error flows and the live evidence listed in the acceptance document. Preserve [the approved visual system](APPROVED_VISUAL_SYSTEM.md), Space Grotesk/Inter, the immutable Gate A/B references and deterministic runtime rendering. No redesign or runtime AI artwork is authorized.
 
 Music presentation revision 01 uses the reference-inspired modular AJ layout; see [visual review notes](MUSIC_VISUAL_REVISION_01.md). This revision does not approve Gate C or change playback behavior.
+
+## Owner Music visual approval — 2026-09-26
+
+Music visuals at `f98de3c` are APPROVED and hash-locked in `docs/approved_visuals/music-2026-09-26.json`. Gate C is now waiting only on remaining functional/live acceptance; do not redesign Music or repeat visual approval absent an objective live usability defect. Offline integration and mocks are complete. Follow [the next action plan](GATE_C_NEXT_ACTION.md); production remains disabled.
