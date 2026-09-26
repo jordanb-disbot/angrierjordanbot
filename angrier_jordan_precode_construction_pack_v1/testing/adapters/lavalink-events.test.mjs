@@ -35,6 +35,17 @@ test('Depth bounds reject nested payloads while quoted braces and escaped quotes
 test('Stats, plugin events, unsupported voice/stuck events and non-string event types are ignored',()=>{
  for(const event of [{op:'stats',cpu:{secret:'SECRET'}},{op:'futureOp',guildId},{op:'event',guildId,type:'PluginEvent',secret:'SECRET'},{op:'event',guildId,type:'WebSocketClosedEvent',reason:'SECRET'},{op:'event',guildId,type:'TrackStuckEvent',thresholdMs:100},{op:'event',guildId,type:{toString:'bad'}}])assert.equal(parse(event),null);
 });
+test('Validated stuck and voice socket-close frames emit only fixed diagnostics and retain null projections',t=>{
+ const traces=[];t.mock.method(console,'info',line=>traces.push(line));
+ assert.equal(parse(rawTrack('TrackStuckEvent',{thresholdMs:100,reason:'SECRET_REASON',exception:{message:'SECRET_MESSAGE'}})),null);
+ assert.equal(parse({op:'event',type:'WebSocketClosedEvent',guildId,code:4006,byRemote:true,reason:'SECRET_REASON',sessionId:'SECRET_SESSION',token:'SECRET_TOKEN'}),null);
+ assert.deepEqual(traces,['Music trace: playback.stuck '+JSON.stringify({guildId}),'Music trace: voice.socket.closed '+JSON.stringify({guildId})]);assert.doesNotMatch(traces.join('\n'),/SECRET|encoded|reason|token|sessionId/);
+});
+test('Malformed or uncorrelated stuck and voice-close frames cannot produce diagnostic claims',t=>{
+ const traces=[];t.mock.method(console,'info',line=>traces.push(line));
+ for(const frame of [rawTrack('TrackStuckEvent',{thresholdMs:-1}),rawTrack('TrackStuckEvent',{thresholdMs:100,track:{}}),rawTrack('TrackStuckEvent',{thresholdMs:100,guildId:'SECRET'}),{op:'event',type:'WebSocketClosedEvent',guildId,code:'SECRET',byRemote:true},{op:'event',type:'WebSocketClosedEvent',guildId,code:4006,byRemote:'yes'},{op:'event',type:'WebSocketClosedEvent',guildId:'SECRET',code:4006,byRemote:true}])assert.equal(parse(frame),null);
+ assert.deepEqual(traces,[]);
+});
 
 test('Track callbacks require valid public entry ID and exact integer generation in namespaced userdata',()=>{
  for(const correlation of [undefined,{}, {entryId,generation:'3'}, {entryId,generation:-1}, {entryId,generation:1.5}, {entryId:'https://private.invalid/secret',generation},{entryId:'x'.repeat(101),generation}]){const frame=rawTrack();frame.track.userData={ajMusic:correlation};assert.equal(parse(frame),null);}

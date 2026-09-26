@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ChannelType,Collection,MessageFlags,PermissionFlagsBits,CommandInteractionOptionResolver} from 'discord.js';
 import {readFileSync} from 'node:fs';
+import sharp from 'sharp';
 import {DomainError} from '../../dist/packages/core/src/errors.js';
 import {DiscordMusicCoordinator} from '../../dist/apps/bot/src/discord/music-coordinator.js';
 import {AuthorizedMusicCatalog} from '../../dist/packages/features-music/src/catalog.js';
@@ -22,6 +23,30 @@ function fixture(options={}){
  return{calls,members,voices,guild,channel,coordinator,interaction,state:()=>state};
 }
 const playingState=()=>{const track=catalog().resolve('catalog:chair-song').track.metadata;return enqueueMusic(createMusicState(g,actor,policy).state,actor,[{id:'a',requesterUserId:u,track}],policy).state;};
+
+test('Recording choice preview stays near square while every native selection remains available',async()=>{
+ const choices=Array.from({length:25},(_,n)=>({provider:'youtube',reference:'https://www.youtube.com/watch?v='+String(n).padStart(11,'0'),title:'Recording '+(n+1),artist:'Artist',album:null,durationMs:120000,artworkUrl:null,seekable:true}));
+ const f=fixture({service:{search:async()=>choices},repo:{openMusicSearch:async()=>({kind:'resolution-choice',sessionId:'selection',version:4,title:'Choose the exact recording',choices})}}),i=f.interaction({options:{getString:()=> 'recording'}});
+ await f.coordinator.handle(i);const reply=i.replies.at(-1),picker=reply.components[0].components[0].toJSON(),image=await sharp(reply.files[0].attachment).metadata();
+ assert.equal(picker.options.length,25);assert.equal(picker.options[24].label,'Recording 25');assert.equal(picker.options[24].value,'24');assert.equal(picker.custom_id,`music:resolvepick:${u}:selection:4`);
+ assert.match(reply.files[0].description,/25 choices · First 2 shown; all choices in menu/);assert.equal(image.width,440);assert.ok(image.height<=540,`Selection preview should avoid a tall feed thumbnail, got ${image.height}px`);assert.ok(image.width/image.height>=.8);assert.equal(f.calls.enqueue.length,0);
+});
+
+test('Catalog choices preserve all native options while using the same two-row preview',async()=>{
+ const tracks=Array.from({length:8},(_,n)=>({id:'catalog-'+n,metadata:{title:'Recording '+n,artist:'Artist'}}));
+ const f=fixture({loadCatalog:async()=>({search:()=>tracks})}),i=f.interaction({options:{getString:()=> 'recording'}});await f.coordinator.handle(i);
+ const reply=i.replies.at(-1),picker=reply.components[0].components[0].toJSON(),image=await sharp(reply.files[0].attachment).metadata();
+ assert.equal(picker.options.length,8);assert.equal(picker.options[7].value,'catalog:catalog-7');assert.match(reply.files[0].description,/8 results · First 2 shown; all results in menu/);assert.equal(image.width,440);assert.ok(image.height<=540);assert.equal(f.calls.enqueue.length,0);
+});
+
+test('Player native buttons use practical playback, queue and settings rows with unchanged authority IDs',async()=>{
+ for(const paused of [false,true]){const state=playingState();if(paused)state.desiredStatus='PAUSED';const f=fixture({state}),payload=await f.coordinator.payload(state,{ownerId:u}),rows=payload.components.map(row=>row.toJSON());
+  assert.deepEqual(rows.map(row=>row.components.map(button=>button.label)),[['Previous',paused?'Resume':'Pause','Skip','Stop'],['Queue','Shuffle','Loop'],['Volume','Autoplay','Refresh']]);
+  assert.deepEqual(rows.map(row=>row.components.length),[4,3,3]);assert.ok(rows.every(row=>row.type===1));const buttons=rows.flatMap(row=>row.components);assert.equal(new Set(buttons.map(button=>button.custom_id)).size,10);
+  for(const button of buttons)assert.ok(button.custom_id.startsWith(`music:control:${g}:${state.revision}:${state.generation}:`)&&button.custom_id.endsWith(':'+u));
+  assert.equal(buttons.find(button=>button.label==='Stop').style,4);assert.equal(buttons.find(button=>button.label===(paused?'Resume':'Pause')).style,1);
+ }
+});
 
 test('Registered /play autocomplete option reaches resolution and queue through the real Discord option resolver',async()=>{
  const registration=JSON.parse(readFileSync(new URL('../../generated/discord/application_commands.json',import.meta.url),'utf8')).find(command=>command.name==='play');

@@ -1,4 +1,5 @@
 import type {MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
+import {musicTrace} from './music-diagnostics.js';
 
 export const LAVALINK_MESSAGE_MAX_BYTES=131072;
 export const LAVALINK_MESSAGE_MAX_DEPTH=32;
@@ -68,10 +69,21 @@ export function parseLavalinkMessage(raw:string|Uint8Array,onReady?:(ready:Reado
   const state=object(message.state);if(!state||!integer(state.position,604800000)||!integer(state.time,8640000000000000)||typeof state.connected!=='boolean')return null;
   return Object.freeze({kind:'playerUpdate',guildId:message.guildId,positionMs:state.position,at:state.time,connected:state.connected});
  }
- if(message.op!=='event'||typeof message.type!=='string'||!['TrackStartEvent','TrackEndEvent','TrackExceptionEvent'].includes(message.type))return null;
+ if(message.op!=='event'||typeof message.type!=='string')return null;
+ // Diagnostic-only events: never turn an unbound voice close or a stuck report
+ // into playback state, and never forward provider reasons, exceptions or tracks.
+ if(message.type==='WebSocketClosedEvent'){
+  if(integer(message.code,65535)&&typeof message.byRemote==='boolean')musicTrace('voice.socket.closed',{guildId:message.guildId});
+  return null;
+ }
+ if(!['TrackStartEvent','TrackEndEvent','TrackExceptionEvent','TrackStuckEvent'].includes(message.type))return null;
  const track=object(message.track),userData=object(track?.userData),correlation=object(userData?.ajMusic);
  if(!correlation||!identifier(correlation.entryId)||!integer(correlation.generation))return null;
  const base={guildId:message.guildId,entryId:correlation.entryId,generation:correlation.generation};
+ if(message.type==='TrackStuckEvent'){
+  if(integer(message.thresholdMs,604800000))musicTrace('playback.stuck',{guildId:message.guildId});
+  return null;
+ }
  if(message.type==='TrackStartEvent')return Object.freeze({kind:'trackStart',...base});
  if(message.type==='TrackEndEvent')return endReason(message.reason)?Object.freeze({kind:'trackEnd',...base,reason:message.reason}):null;
  if(!object(message.exception))return null;

@@ -66,4 +66,15 @@ test('Music PostgreSQL ownership, durable intents, transport observations and pl
   assert.deepEqual(retried,applied);assert.deepEqual(await repo.read(g),saved);assert.deepEqual(await db.gameSession.findMany({where:{guildId:g,type:'music.resolution'}}),sessions);assert.deepEqual(await db.scheduledJob.findMany({where:{guildId:g}}),jobs);
   const receipts=await db.operationReceipt.findMany({where:{guildId:g}});assert.equal(receipts.length,1);assert.equal(receipts[0].key,'music:resolved:'+req.requestKey);assert.deepEqual(receipts[0].result,applied);assert.deepEqual(resolutions,[{reference:selected.reference,limit:policy.queueMaxTracks},{reference:selected.reference,limit:policy.queueMaxTracks}]);
  });
+ await t.test('persisted search choice survives Topic labels and duration rounding but rejects real recording changes',async()=>{
+  const g='777777777777777770',who={...actor,guildId:g},selected=publicTrack('ddddddddddd',{artist:'Fixture Artist',durationMs:180000});await db.guild.create({data:{id:g,name:'Stable selection fixture'}});
+  let fresh={...selected,artist:'FIXTURE ARTIST - Topic',durationMs:179000};const service=new MusicResolutionService({search:async()=>[selected],resolve:async()=>({tracks:fresh?[fresh]:[],truncated:false})});
+  const search=await repo.openMusicSearch(request('stable-search',who),[selected]);const applied=await new PrismaMusicRepository(db).chooseResolvedTrack(request('stable-pick',who),search.sessionId,search.version,0,service,policy);
+  assert.equal(applied.kind,'applied');const saved=await repo.read(g);assert.equal(saved.state.current.track.reference,selected.reference);assert.equal(saved.state.current.track.artist,fresh.artist);assert.equal(saved.state.observedStatus,'DISCONNECTED');assert.equal(await db.scheduledJob.count({where:{guildId:g,jobType:'music.reconcile'}}),1);
+  for(const [name,changed]of [['version',{...selected,title:selected.title+' (Live)'}],['identity',{...selected,reference:'https://www.youtube.com/watch?v=eeeeeeeeeee'}],['duration',{...selected,durationMs:175000}],['missing',null]]){
+   const next=await repo.openMusicSearch(request('reject-'+name,who),[selected]);fresh=changed;
+   await assert.rejects(repo.chooseResolvedTrack(request('pick-'+name,who),next.sessionId,next.version,0,service,policy),{code:'MUSIC_SELECTION_CHANGED'});
+   assert.deepEqual(await repo.read(g),saved);assert.equal((await db.gameSession.findUnique({where:{id:next.sessionId}})).state,'OPEN');
+  }
+ });
  }finally{assert.match(schema,/^aj_music_test_[0-9a-f]{32}$/);try{if(connected)await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);}finally{await db.$disconnect();}}});

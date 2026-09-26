@@ -36,7 +36,12 @@ export class MusicPlayerSynchronizer {
     const reconnect=!prior||prior.channelId!==input.channelId;
     const replace=reconnect||prior.generation!==input.generation||prior.entryId!==(input.entry?.id??null);
     if(replace){
-     if(input.entry){await check();patch.track=await this.#resolve(input.entry.track,signal);patch.entryId=input.entry.id;patch.position=input.positionMs;}
+     if(input.entry){
+      await check();musicTrace('track.load.start',{guildId:input.guildId,channelId:input.channelId});
+      try{patch.track=await this.#resolve(input.entry.track,signal);musicTrace('track.load.success',{guildId:input.guildId,channelId:input.channelId});}
+      catch(error){musicTrace('track.load.failure',{guildId:input.guildId,channelId:input.channelId,error});throw error;}
+      patch.entryId=input.entry.id;patch.position=input.positionMs;
+     }
      else patch.track=null;
     }
     if(replace||prior?.paused!==paused)patch.paused=paused;

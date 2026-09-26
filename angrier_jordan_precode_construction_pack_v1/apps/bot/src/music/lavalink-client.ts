@@ -1,3 +1,5 @@
+import {sameMusicRecording} from '../../../../packages/features-music/src/resolution.js';
+import {musicTrace} from './music-diagnostics.js';
 import {normalizeMusicReference,safeMusicArtworkUrl,type MusicPublicProvider} from '../../../../packages/features-music/src/provider-references.js';
 import type {MusicResolutionProvider,MusicSearchSource,MusicSearchRequest} from '../../../../packages/features-music/src/resolution.js';
 import type {MusicMetadata,MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
@@ -79,6 +81,7 @@ export class LavalinkRestClient implements MusicResolutionProvider {
   try{
    return await Promise.race([interrupted,(async()=>{
     const response=await this.#fetch(this.#origin+path,{method,headers:{Authorization:this.#password,Accept:'application/json',...(body===undefined?{}:{'Content-Type':'application/json'})},...(body===undefined?{}:{body:JSON.stringify(body)}),redirect:'error',signal:controller.signal});
+    if(/^\/v4\/sessions\/[^/]+\/players\//.test(path))musicTrace('player.http.response',{status:response.status});
     if(response.redirected||response.status>=300&&response.status<400)fail('LAVALINK_REDIRECT');
     if(!response.ok)fail(response.status>=500?'LAVALINK_TRANSPORT':'LAVALINK_HTTP');
     if(method==='DELETE'){if(response.status!==204)fail('LAVALINK_RESPONSE');return null;}
@@ -134,7 +137,7 @@ export class LavalinkRestClient implements MusicResolutionProvider {
   const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(parsed!.reference),undefined,signal));
   if(result?.loadType==='empty')return{tracks:[],truncated:false};
   if(result?.loadType==='track'&&parsed!.kind==='track'){
-   const row=this.#metadata(result.data,parsed!.provider);if(!row||row.reference!==parsed!.reference)fail('LAVALINK_SOURCE');return{tracks:[row!],truncated:false};
+   musicTrace('provider.load.result',{reference:parsed!.reference,loadType:result.loadType as string});const row=this.#metadata(result.data,parsed!.provider);if(!row||row.reference!==parsed!.reference)fail('LAVALINK_SOURCE');return{tracks:[row!],truncated:false};
   }
   if(result?.loadType!=='playlist'||parsed!.kind!=='collection')fail('LAVALINK_SOURCE');
   const data=object(result!.data);if(!Array.isArray(data?.tracks))fail('LAVALINK_SOURCE');
@@ -160,7 +163,9 @@ export class LavalinkRestClient implements MusicResolutionProvider {
   const parsed=normalizeMusicReference(track?.reference);if(!parsed||parsed.kind!=='track'||!['youtube','youtube_music','soundcloud'].includes(parsed.provider)||track.provider!==parsed.provider)fail('LAVALINK_SOURCE');
   this.#enabled(parsed!.provider);if(signal?.aborted)fail('LAVALINK_ABORTED');await this.#verifyNode();
   const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(parsed!.reference),undefined,signal)),data=object(result?.data),metadata=this.#metadata(data,parsed!.provider);
+  musicTrace('provider.load.result',{reference:parsed!.reference,loadType:result?.loadType as string});
   if(result?.loadType!=='track'||!metadata||metadata.reference!==parsed!.reference||!text(data?.encoded,65536))fail('LAVALINK_SOURCE');
+  if(['youtube','youtube_music'].includes(track.provider)&&!sameMusicRecording(track,metadata!))fail('LAVALINK_TRACK_CHANGED');
   const handle=Object.freeze({});this.#tracks.set(handle,{encoded:data!.encoded as string,seekable:metadata!.seekable,length:metadata!.durationMs??0});return handle;
  }
  async updateSession(options:{resuming:boolean;timeout:number},signal?:AbortSignal):Promise<LavalinkAcknowledgement>{
@@ -197,6 +202,7 @@ export class LavalinkRestClient implements MusicResolutionProvider {
   if(patch.volume!==undefined){if(!integer(patch.volume,1,100))fail('LAVALINK_VOLUME');body.volume=patch.volume;}
   if(patch.voice!==undefined){const voice=patch.voice;if(!object(voice)||!text(voice.token,2048)||!text(voice.sessionId,256)||!snowflake(voice.channelId)||!text(voice.endpoint,255)||!/^[a-zA-Z0-9.-]+(?::\d{1,5})?$/.test(voice.endpoint))fail('LAVALINK_VOICE');body.voice={token:voice.token,endpoint:voice.endpoint,sessionId:voice.sessionId,channelId:voice.channelId};}
   if(!Object.keys(body).length)fail('LAVALINK_INPUT');
+  musicTrace('player.update.start',{guildId:fence.guildId,hasTrack:patch.track!==undefined&&patch.track!==null,voiceReady:patch.voice!==undefined});
   return this.#mutate(fence,async()=>{const response=object(await this.#request('PATCH','/v4/sessions/'+this.#sessionId+'/players/'+fence.guildId+'?noReplace=false',body,signal));if(response?.guildId!==fence.guildId)fail('LAVALINK_RESPONSE');},signal);
  }
  destroyPlayer(fenceInput:MusicTransportFence,signal?:AbortSignal):Promise<LavalinkAcknowledgement>{const fence=this.#fence(fenceInput);return this.#mutate(fence,async()=>{await this.#request('DELETE','/v4/sessions/'+this.#sessionId+'/players/'+fence.guildId,undefined,signal);},signal);}
@@ -216,6 +222,7 @@ export class LavalinkRestClient implements MusicResolutionProvider {
    let track:LavalinkPlayerObservation['track']=null;
    if(response!.track!==null){const data=object(object(response!.track)?.userData),correlation=object(data?.ajMusic);if(!correlation||!text(correlation.entryId,100)||!/^[-a-zA-Z0-9_]+$/.test(correlation.entryId)||!integer(correlation.generation,0,Number.MAX_SAFE_INTEGER))fail('LAVALINK_RESPONSE');track={entryId:correlation!.entryId as string,generation:correlation!.generation as number};}
    await this.#current(fence,true);
+   musicTrace('player.observed',{guildId:fence.guildId,connected:state!.connected as boolean,hasTrack:track!==null});
    return{guildId:fence.guildId,paused:response!.paused as boolean,connected:state!.connected as boolean,positionMs:state!.position as number,at:state!.time as number,track};
   });
  }

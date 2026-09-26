@@ -10,6 +10,19 @@ test('Playback trace requires a current correlated and persisted TrackStart even
  f.repo.applyTransportEvent=async()=>({ignored:true,needsControllerRefresh:false});await f.runtime.event(start,{socketEpoch:'epoch',sequence:3});assert.deepEqual(traces,[]);
  f.repo.applyTransportEvent=async()=>({ignored:false,needsControllerRefresh:false});await f.runtime.event(start,{socketEpoch:'epoch',sequence:4});assert.deepEqual(traces,['Music trace: playback.started '+JSON.stringify({guildId:g,channelId:channel})]);
 });
+test('Playback exception and end traces require accepted current persisted events',async t=>{
+ const traces=[];t.mock.method(console,'info',message=>traces.push(message));const f=fixture(),exception={...start,kind:'trackException',error:'PLAYABLE_SOURCE_FAILED'},ended={...start,kind:'trackEnd',reason:'loadFailed'};
+ await f.runtime.event({...exception,generation:2},{socketEpoch:'epoch',sequence:1});assert.deepEqual(traces,[]);
+ f.repo.applyTransportEvent=async()=>({ignored:true,needsControllerRefresh:false});await f.runtime.event(exception,{socketEpoch:'epoch',sequence:2});await f.runtime.event(ended,{socketEpoch:'epoch',sequence:3});assert.deepEqual(traces,[]);
+ f.repo.applyTransportEvent=async()=>({ignored:false,needsControllerRefresh:false});await f.runtime.event(exception,{socketEpoch:'epoch',sequence:4});await f.runtime.event(ended,{socketEpoch:'epoch',sequence:5});assert.deepEqual(traces.map(line=>line.split(' ')[2]),['playback.exception','playback.ended']);assert.ok(traces.every(line=>line.endsWith(JSON.stringify({guildId:g,channelId:channel}))));
+});
+test('Player read diagnostics deduplicate the same failure and fence and reset after a successful read',async t=>{
+ const traces=[];t.mock.method(console,'info',message=>traces.push(message));const f=fixture(),successful=f.options.readPlayer,fail=async()=>{throw Error('SECRET_TOKEN https://private-player');};f.options.readPlayer=fail;
+ await f.runtime.reconcile(job);await f.runtime.reconcile(job);assert.equal(traces.length,1);
+ f.state.revision++;await f.runtime.reconcile(job);assert.equal(traces.length,2);
+ f.options.readPlayer=successful;await f.runtime.reconcile(job);f.options.readPlayer=fail;await f.runtime.reconcile(job);assert.equal(traces.length,3);assert.ok(traces.every(line=>line.includes('player.read.failure')));assert.doesNotMatch(traces.join('\n'),/SECRET|private-player|https:|token|sessionId/);
+ f.runtime.close();await assert.rejects(f.runtime.reconcile(job),{code:'MUSIC_DISABLED'});assert.equal(traces.length,3);
+});
 test('no active job grants mutation authority; reconciliation requires the shared live lease',async()=>{const f=fixture();assert.equal(await f.runtime.isCurrent({guildId:g,revision:2,generation:3}),false);f.setLease(false);await assert.rejects(f.runtime.reconcile(job),{code:'MUSIC_LEASE'});assert.deepEqual(f.calls,[]);});
 test('REST acknowledgement and connected telemetry alone cannot manufacture playback history',async()=>{const f=fixture();await f.runtime.reconcile(job);assert.ok(f.calls.some(c=>c[0]==='sync'));assert.deepEqual(f.mutations,[]);await f.runtime.event({kind:'playerUpdate',guildId:g,positionMs:100,at:2000,connected:true},{socketEpoch:'epoch',sequence:1});assert.deepEqual(f.mutations,[]);});
 test('correlated start establishes binding; pause telemetry is read and applied separately',async()=>{const f=fixture();f.setObservation({guildId:g,paused:true,connected:true,positionMs:100,at:2000,track:{entryId:'entry',generation:3}});await f.runtime.event(start,{socketEpoch:'epoch',sequence:1});assert.equal(f.mutations[0].e.kind,'track-start');assert.equal(f.mutations[1].e.status,'PAUSED');assert.notEqual(f.mutations[0].r.socketEpoch,f.mutations[1].r.socketEpoch);});

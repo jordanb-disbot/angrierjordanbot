@@ -3,7 +3,7 @@ import type {PrismaMusicRepository,MusicTransportEvent} from '../../../../packag
 import type {MusicState,MusicTransportFence} from '../../../../packages/features-music/src/interfaces.js';
 import {projectLavalinkEvent,type LavalinkEvent,type LavalinkPlayerBinding} from './lavalink-events.js';
 import type {LavalinkPlayerObservation} from './lavalink-client.js';
-import {musicTrace} from './music-diagnostics.js';
+import {musicDiagnostic,musicTrace} from './music-diagnostics.js';
 
 type Repository=Pick<PrismaMusicRepository,'read'|'intent'|'ownsIntentLease'|'applyTransportEvent'|'recover'|'reserveController'>;
 export interface MusicRuntimeOptions {
@@ -22,6 +22,7 @@ export interface MusicRuntimeOptions {
 export class MusicRuntime {
  #options:MusicRuntimeOptions;#tails=new Map<string,Promise<unknown>>();#active=new Map<string,ScheduledJob>();
  #bindings=new Map<string,LavalinkPlayerBinding>();#abort=new AbortController();#pollSequence=0;
+ #readFailures=new Map<string,string>();
  constructor(options:MusicRuntimeOptions){this.#options=options;}
  #lane<T>(guildId:string,work:()=>Promise<T>):Promise<T>{const task=(this.#tails.get(guildId)??Promise.resolve()).catch(()=>{}).then(work);this.#tails.set(guildId,task);void task.finally(()=>{if(this.#tails.get(guildId)===task)this.#tails.delete(guildId);}).catch(()=>{});return task;}
  async isCurrent(fence:MusicTransportFence,operation:'read'|'write'='write'){
@@ -55,7 +56,8 @@ export class MusicRuntime {
  }
  async #poll(state:MusicState){
   const fence={guildId:state.guildId,revision:state.revision,generation:state.generation};let observation:LavalinkPlayerObservation;
-  try{observation=await this.#options.readPlayer(fence);}catch{return;}
+  try{observation=await this.#options.readPlayer(fence);this.#readFailures.delete(state.guildId);}
+  catch(error){const key=`${fence.revision}:${fence.generation}:${musicDiagnostic(error)}`;if(!this.#abort.signal.aborted&&this.#readFailures.get(state.guildId)!==key){this.#readFailures.set(state.guildId,key);musicTrace('player.read.failure',{guildId:state.guildId,channelId:state.voiceChannelId,error});}return;}
   if(this.#abort.signal.aborted||!await this.isCurrent(fence,'read'))return;
   const binding=this.#bindings.get(state.guildId);
   if(state.current&&(!binding||binding.socketEpoch!==this.#options.socketEpoch||binding.generation!==state.generation||binding.entryId!==state.current.id||observation.track?.entryId!==state.current.id||observation.track.generation!==state.generation))return;
@@ -71,9 +73,11 @@ export class MusicRuntime {
   if(projected.kind==='playerUpdate'){await this.#poll(state);await this.#options.refreshController(event.guildId);return;}
   const mutation:MusicTransportEvent=projected.kind==='trackStart'?{kind:'track-start',at:(this.#options.now??Date.now)(),positionMs:state.positionMs}:projected.kind==='trackEnd'?{kind:'track-end',reason:projected.reason}:{kind:'observation',status:'FAILED',at:(this.#options.now??Date.now)(),positionMs:state.positionMs};
   const applied=await this.#apply(state,context.socketEpoch,context.sequence,mutation);
+  if(!applied.ignored&&projected.kind==='trackException')musicTrace('playback.exception',{guildId:event.guildId,channelId:state.voiceChannelId});
+  if(!applied.ignored&&projected.kind==='trackEnd')musicTrace('playback.ended',{guildId:event.guildId,channelId:state.voiceChannelId});
   if(!applied.ignored&&projected.kind==='trackStart'){musicTrace('playback.started',{guildId:event.guildId,channelId:state.voiceChannelId});this.#bindings.set(event.guildId,projected.binding);await this.#poll(state);}
   if(!applied.ignored&&projected.kind==='trackEnd')this.#bindings.delete(event.guildId);
   if(applied.needsControllerRefresh)await this.#options.refreshController(event.guildId);
  });}
- close(){this.#abort.abort();this.#bindings.clear();}
+ close(){this.#abort.abort();this.#bindings.clear();this.#readFailures.clear();}
 }

@@ -32,6 +32,21 @@ const artist=(value:string)=>normalize(value.replace(/\s*-\s*topic$/i,''));
 function variants(value:string){const s=normalize(value),result:string[]=[];for(const [key,pattern] of [['live',/\blive\b/],['remix',/\bremix(?:ed)?\b/],['cover',/\bcover\b/],['karaoke',/\bkaraoke\b/],['instrumental',/\binstrumental\b/],['sped',/\bsped up\b|\bnightcore\b/],['slowed',/\bslowed\b/],['acoustic',/\bacoustic\b/],['remaster',/\bremaster(?:ed)?\b/],['clean',/\bclean\b/]] as const)if(pattern.test(s))result.push(key);return result.join('|');}
 const key=(track:MusicMetadata)=>JSON.stringify([track.provider,track.reference]);
 const playable=(track:MusicMetadata)=>['youtube','youtube_music','soundcloud','authorized_catalog'].includes(track.provider);
+/** A selected recording is anchored to its public provider ID, never a search rank or encoded handle.
+ * YouTube search and direct loading decorate labels differently and round durations to seconds.
+ * Only those presentation differences are tolerated; version/identity changes still fail closed.
+ */
+export function sameMusicRecording(saved:MusicMetadata,fresh:MusicMetadata):boolean {
+ if(saved.provider!==fresh.provider||saved.reference!==fresh.reference)return false;
+ if(!['youtube','youtube_music'].includes(saved.provider))return ['title','artist','album','durationMs','isrc','explicit'].every(k=>(saved[k as keyof MusicMetadata]??null)===(fresh[k as keyof MusicMetadata]??null));
+ if(normalize(saved.title)!==normalize(fresh.title)||variants(saved.title)!==variants(fresh.title)||artist(saved.artist)!==artist(fresh.artist))return false;
+ if(saved.durationMs===null||fresh.durationMs===null){if(saved.durationMs!==fresh.durationMs)return false;}
+ else if(Math.abs(saved.durationMs-fresh.durationMs)>1000)return false;
+ if(saved.isrc&&fresh.isrc&&saved.isrc!==fresh.isrc)return false;
+ if(saved.explicit!=null&&fresh.explicit!=null&&saved.explicit!==fresh.explicit)return false;
+ if(saved.album&&fresh.album&&normalize(saved.album)!==normalize(fresh.album))return false;
+ return true;
+}
 /** Conservative identity matching; search relevance alone is never proof of a recording match. */
 export function scoreMusicMatch(request:MusicMetadata,candidate:MusicMetadata):MusicMatch {
  const wanted=validateMusicMetadata(request),track=validateMusicMetadata(candidate);

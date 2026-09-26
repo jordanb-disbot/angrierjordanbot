@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {MusicResolutionService,scoreMusicMatch} from '../../.test-build/packages/features-music/src/resolution.js';
+import {MusicResolutionService,scoreMusicMatch,sameMusicRecording} from '../../.test-build/packages/features-music/src/resolution.js';
 const signal=()=>new AbortController().signal;
 const track=(changes={})=>({provider:'spotify',reference:'https://open.spotify.com/track/1234567890123456789012',title:'A Quiet Room',artist:'Fixture Artist',album:'Lounge',durationMs:180000,artworkUrl:null,seekable:true,isrc:'USAAA2600001',...changes});
 const candidate=(changes={})=>track({provider:'youtube',reference:changes.provider==='soundcloud'?'https://soundcloud.com/artist/track':'https://www.youtube.com/watch?v=aaaaaaaaaaa',...changes});
@@ -31,4 +31,13 @@ test('explicit cancellation still rejects a search even after valid partial choi
 });
 test('empty results and ordinary initial provider errors continue through SoundCloud fallback',async()=>{
  const calls=[],good=candidate({provider:'soundcloud'}),service=new MusicResolutionService({search:async source=>{calls.push(source);if(source==='youtube_music')return[];if(source==='youtube')throw Error('Unavailable');return[good];},resolve:async()=>({tracks:[],truncated:false})});assert.deepEqual(await service.search('song',25,signal()),[good]);assert.deepEqual(calls,['youtube_music','youtube','soundcloud']);
+});
+
+test('same selected YouTube ID tolerates Topic suffix, case and one-second search rounding only',()=>{
+ const saved=candidate({artist:'Fixture Artist',durationMs:180000});
+ assert.equal(sameMusicRecording(saved,{...saved,artist:'FIXTURE ARTIST - Topic',durationMs:179000,isrc:null,album:null}),true);
+ for(const changes of [{reference:'https://www.youtube.com/watch?v=bbbbbbbbbbb'},{provider:'youtube_music'},{title:'Other Room'},{title:'A Quiet Room (Live)'},{title:'A Quiet Room (Remastered)'},{artist:'Different Artist'},{durationMs:178999},{durationMs:null},{isrc:'USAAA2600002'},{explicit:true}]){
+  const before={...saved,explicit:false};assert.equal(sameMusicRecording(before,{...before,...changes}),false,JSON.stringify(changes));
+ }
+ assert.equal(sameMusicRecording(track(),track({artist:'Fixture Artist - Topic'})),false);
 });

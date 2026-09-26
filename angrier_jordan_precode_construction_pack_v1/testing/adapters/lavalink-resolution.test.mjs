@@ -68,3 +68,9 @@ test('Persisted guard distinguishes read telemetry from mutation authorization',
  const operations=[],guildId='111111111111111111';const {client}=setup({isCurrent:async(_fence,operation)=>{operations.push(operation);return true;},reply:(_url,init)=>init.method==='GET'?{guildId,paused:false,state:{connected:true,position:0,time:1},track:null}:{guildId}});
  const fence={guildId,revision:1,generation:1};await client.readPlayer(fence);await client.updatePlayer(fence,{paused:true});assert.deepEqual(operations,['read','read','write','write']);
 });
+
+test('Fresh playback handle accepts stable YouTube decoration but rejects changed recording metadata',async()=>{
+ const env=setup({reply:{loadType:'track',data:raw(yt,'youtube',{author:'ARTIST - Topic',length:89000})}});assert.deepEqual(await env.client.loadPlayableTrack(meta()),{});
+ for(const extra of [{title:'Different Song'},{author:'Other Artist'},{title:'Song (Live)'},{length:88000}]){const bad=setup({reply:{loadType:'track',data:raw(yt,'youtube',extra)}});await rejected(()=>bad.client.loadPlayableTrack(meta()),'LAVALINK_TRACK_CHANGED');}
+ const missing=setup({reply:{loadType:'empty',data:{}}});await rejected(()=>missing.client.loadPlayableTrack(meta()),'LAVALINK_SOURCE');
+});
