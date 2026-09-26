@@ -6486,6 +6486,24 @@
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-directed Poppins/Cinzel premium profile, showcase, leaderboard and records presentations.",
       "sha256": "9aebb5a81ba20dd802c8fd1a3473e69f4e80c783287e11e7722ac07381c5a284"
+    },
+    {
+      "id": "crime-premium-runtime",
+      "file": "packages/features-crime/src/premium-render.ts",
+      "category": "renderer",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Crime Wanted, incidents, bail and supporting surfaces",
+      "sha256": "e97f13272ef5697520f91e88c2fa6a60ea063fd34d9ee79f59d71ab4931240f4"
+    },
+    {
+      "id": "economy-statement-runtime",
+      "file": "packages/features-economy/src/statement-render.ts",
+      "category": "renderer",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wide paginated in-frame account statement",
+      "sha256": "56d9bd99a45dd5457b95ce32f5acedc68194d745186493590e8967e5c1874a26"
     }
   ]
 }
