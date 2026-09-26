@@ -78,3 +78,5 @@ test('cold startup parks saved playback and repeated worker ticks never join voi
 test('A committed control with a raced player refresh schedules refresh without a stale success error',async()=>{
  const f=fixture();try{await f.app.start();f.app.publication.ensure=async()=>{throw Object.assign(Error('changed during rendering'),{code:'MUSIC_STALE'});};await f.app.coordinator.presentPlayer(guildId);assert.ok(f.calls.some(c=>c[0]==='wake-worker'));assert.ok(f.calls.some(c=>c[0]==='refresh-intent'));assert.equal(f.app.ready,true);}finally{f.app.close();}
 });
+
+test('Explicit refresh polls without a worker wake; completed controls avoid a redundant poll',async()=>{const f=fixture();try{await f.app.start();await f.app.coordinator.presentPlayer(guildId);assert.equal(f.calls.filter(c=>c[0]==='observation').length,0);f.calls.length=0;await f.app.coordinator.presentPlayer(guildId,true);assert.equal(f.calls.some(c=>c[0]==='wake-worker'),false);assert.ok(f.calls.some(c=>c[0]==='publication-ensure'));}finally{f.app.close();}});

@@ -5,7 +5,7 @@ import type {PrismaMusicRepository} from '../../../../packages/features-music/sr
 import type {MusicState} from '../../../../packages/features-music/src/interfaces.js';
 import type {DiscordMusicCoordinator} from './music-coordinator.js';
 
-type Repository=Pick<PrismaMusicRepository,'read'|'reserveController'|'controllerPublication'|'finalizeController'|'controllerCleanupIntent'|'releaseUnsentController'>;
+type Repository=Pick<PrismaMusicRepository,'read'|'reserveController'|'controllerPublication'|'finalizeController'|'controllerCleanupIntent'|'releaseUnsentController'|'retireController'>;
 type PayloadFactory=DiscordMusicCoordinator['payload'];
 export type MusicPublicationResult={kind:'published'|'refreshed'|'retired'|'obsolete'|'missing';messageId?:string};
 export class MusicPublicationError extends Error {constructor(public readonly code:string){super('The music controller update could not be confirmed.');this.name='MusicPublicationError';}}
@@ -51,13 +51,14 @@ export class DiscordMusicPublication {
  async ensure(client:Client,guildId:string):Promise<MusicPublicationResult>{return this.boundary(()=>this.serial(guildId,()=>this.ensureInternal(client,guildId)));}
  private async ensureInternal(client:Client,guildId:string):Promise<MusicPublicationResult>{
   await this.allowed(guildId);const saved=await this.repo.read(guildId);if(!saved)return{kind:'missing'};
+  if(saved.state.desiredStatus==='DISCONNECTED'){await this.repo.retireController(guildId,saved.state.revision);return{kind:'retired'};}
   if(saved.controllerMessageId)return this.refreshInternal(client,guildId);
   const reserved=await this.repo.reserveController(guildId,saved.state.revision);return reserved.kind==='publication'?this.publishInternal(client,reserved.jobId):this.refreshInternal(client,guildId);
  }
  async publish(client:Client,jobId:string):Promise<MusicPublicationResult>{return this.boundary(async()=>{const p=await this.repo.controllerPublication(jobId);return this.serial(p.job.guildId,()=>this.publishInternal(client,jobId));});}
  private async publishInternal(client:Client,jobId:string):Promise<MusicPublicationResult>{
   let publication=await this.repo.controllerPublication(jobId);const guildId=publication.job.guildId;
-  if(publication.obsolete&&publication.payload.deliveryState==='PENDING')return{kind:'obsolete'};
+  if((publication.obsolete||publication.state?.desiredStatus==='DISCONNECTED')&&publication.payload.deliveryState==='PENDING')return{kind:'obsolete'};
   // Even after disable/relocation, reconcile an already-started send so its confirmed
   // message gets a durable cleanup intent. This never authorizes a new disabled send.
   if(publication.payload.deliveryState==='PENDING')await this.allowed(guildId);
@@ -100,7 +101,7 @@ export class DiscordMusicPublication {
  }
  async refresh(client:Client,guildId:string):Promise<MusicPublicationResult>{return this.boundary(()=>this.serial(guildId,()=>this.refreshInternal(client,guildId)));}
  private async refreshInternal(client:Client,guildId:string):Promise<MusicPublicationResult>{
-  await this.allowed(guildId);const saved=await this.repo.read(guildId);if(!saved)return{kind:'missing'};if(!saved.controllerMessageId)return this.ensureInternal(client,guildId);
+  await this.allowed(guildId);const saved=await this.repo.read(guildId);if(!saved)return{kind:'missing'};if(saved.state.desiredStatus==='DISCONNECTED'){await this.repo.retireController(guildId,saved.state.revision);return{kind:'retired'};}if(!saved.controllerMessageId)return this.ensureInternal(client,guildId);
   const channel=await this.channel(client,guildId,saved.state.textChannelId,true),messageId=saved.controllerMessageId,message=await this.message(client,channel,messageId);
   if(!message){const current=await this.active(guildId,channel.id,messageId);if(!current)return{kind:'obsolete'};const reserved=await this.repo.reserveController(guildId,current.state.revision,messageId);return reserved.kind==='publication'?this.publishInternal(client,reserved.jobId):{kind:'obsolete'};}
   const marker=deliveryMarker(message);if(!marker)fail('MUSIC_MARKER');

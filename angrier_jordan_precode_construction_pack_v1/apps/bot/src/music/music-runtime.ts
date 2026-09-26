@@ -28,9 +28,10 @@ export class MusicRuntime {
  /** Re-read Discord after an in-flight join/move settles instead of dropping its voice event. */
  afterCurrentWork<T>(guildId:string,work:()=>Promise<T>):Promise<T>{return this.#lane(guildId,work);}
  async isCurrent(fence:MusicTransportFence,operation:'read'|'write'='write'){
-  if(this.#abort.signal.aborted||!await this.#options.enabled(fence.guildId))return false;
-  if(operation==='write'){const job=this.#active.get(fence.guildId);return Boolean(job?.leaseToken&&await this.#options.repository.ownsIntentLease(job.id,job.leaseToken,fence));}
-  const row=await this.#options.repository.read(fence.guildId);return row?.state.revision===fence.revision&&row.state.generation===fence.generation;
+  if(this.#abort.signal.aborted)return false;
+  const job=this.#active.get(fence.guildId);if(operation==='write'&&!job?.leaseToken)return false;
+  const [enabled,current]=await Promise.all([this.#options.enabled(fence.guildId),operation==='write'?this.#options.repository.ownsIntentLease(job!.id,job!.leaseToken!,fence):this.#options.repository.read(fence.guildId).then(row=>row?.state.revision===fence.revision&&row.state.generation===fence.generation)]);
+  return !this.#abort.signal.aborted&&enabled&&current;
  }
  async recover(guildId:string,resumeActive=true){return this.#lane(guildId,async()=>{if(this.#abort.signal.aborted)return;this.#bindings.delete(guildId);if(await this.#options.repository.read(guildId))await this.#options.repository.recover(guildId,'node-'+this.#options.socketEpoch,resumeActive);});}
  async reconcile(job:ScheduledJob){return this.#lane(job.guildId,async()=>{

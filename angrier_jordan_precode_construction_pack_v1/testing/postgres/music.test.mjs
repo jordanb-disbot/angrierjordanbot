@@ -95,4 +95,12 @@ test('Music PostgreSQL ownership, durable intents, transport observations and pl
  assert.ok(a.length+b.length>0);assert.ok(other.length>0);assert.ok([...a,...b].every(job=>job.jobType==='music.reconcile'));assert.ok(other.every(job=>job.jobType!=='music.reconcile'));
  const all=[...a,...b,...other];assert.equal(new Set(all.map(job=>job.id)).size,all.length);assert.ok(all.every(job=>job.leaseToken));
  });
+ await t.test('confirmed departure retires one Jukebox, never recreates it while stopped, and permits a fresh player',async()=>{
+ const g='music-retirement',who={...dj,guildId:g};await db.guild.create({data:{id:g,name:g}});await repo.enqueue(request('retire-start',who),[entry('retire-track')],policy);let state=(await repo.read(g)).state;const reserved=await repo.reserveController(g,state.revision),delivery=new PrismaJobDeliveryRepository(db,reserved.jobId);await delivery.claim();await delivery.complete('888888888888888887');await repo.finalizeController(reserved.jobId,'888888888888888887');
+ await repo.control(request('retire-stop',who),state.revision,{kind:'stop'});state=(await repo.read(g)).state;assert.equal((await repo.retireController(g,state.revision)).retired,false);assert.equal((await repo.read(g)).controllerMessageId,'888888888888888887');
+ await repo.applyTransportEvent({guildId:g,socketEpoch:'retire',sequence:1,expectedRevision:state.revision,generation:state.generation,entryId:null},{kind:'observation',status:'DISCONNECTED',positionMs:0,at:Date.now()});
+ // The previous unconfirmed attempt must not permanently consume retirement.
+ assert.equal((await repo.retireController(g,state.revision)).retired,true);await repo.retireController(g,state.revision);assert.equal((await repo.read(g)).controllerMessageId,null);assert.equal((await repo.reserveController(g,state.revision)).kind,'inactive');assert.equal(await db.scheduledJob.count({where:{guildId:g,jobType:'music.controller.cleanup'}}),1);
+ await repo.enqueue(request('retire-replay',who),[entry('new-track')],policy);const active=(await repo.read(g)).state;assert.equal((await repo.reserveController(g,active.revision)).kind,'publication');await assert.rejects(repo.retireController(g,state.revision),{code:'MUSIC_STALE'});
+ });
 }finally{assert.match(schema,/^aj_music_test_[0-9a-f]{32}$/);try{if(connected)await db.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);}finally{await db.$disconnect();}}});

@@ -43,3 +43,7 @@ test('Progress refreshes coalesce to fifteen seconds while explicit Refresh read
  await update(2);now=5000;await update(3);now=15999;await update(4);assert.equal(f.calls.filter(c=>c[0]==='refresh').length,1);now=16000;await update(5);assert.equal(f.calls.filter(c=>c[0]==='refresh').length,2);
  const reads=f.calls.filter(c=>c[0]==='read').length;await f.runtime.refresh(g);assert.equal(f.calls.filter(c=>c[0]==='read').length,reads+1);f.runtime.close();await f.runtime.refresh(g);assert.equal(f.calls.filter(c=>c[0]==='read').length,reads+1);
 });
+
+test('Transport authority reads run concurrently, stay fresh, and reject close while in flight',async()=>{
+ const f=fixture();let checks=0;f.options.synchronize=async()=>{let release;const gate=new Promise(resolve=>release=resolve),order=[];f.options.enabled=async()=>{order.push('enabled');await gate;return true;};f.repo.ownsIntentLease=async()=>{order.push('lease');await gate;return true;};const pending=f.runtime.isCurrent({guildId:g,revision:2,generation:3});assert.deepEqual(order,['enabled','lease']);f.runtime.close();release();assert.equal(await pending,false);checks++;};await assert.rejects(f.runtime.reconcile(job));assert.equal(checks,1);
+});
