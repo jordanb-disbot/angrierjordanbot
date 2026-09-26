@@ -3,8 +3,8 @@ import {DomainError,type ConfigService} from '../../../../packages/core/src/inde
 import {parseChairismLink,normalizeQuoteText,chairismOptions,chairismJump} from '../../../../packages/features-chairisms/src/domain.js';
 import type {ChairismSecurity,ChairismPublisher,ChairismBrowser,ChairismContext,ChairismReference,ChairismBrowseQuery} from '../../../../packages/features-chairisms/src/interfaces.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
-import {brandedNotice} from '../../../../packages/features-events/src/gate-b-visual.js';
-async function notice(message:string){return [new AttachmentBuilder(await rasterizeSvg(brandedNotice('Chairisms',message,'ANGRIER JORDAN · CHAIRS')),{name:'chairisms-window.png'})];}
+import {renderChairismNotice} from '../../../../packages/features-chairisms/src/presentation.js';
+async function notice(message:string){return [new AttachmentBuilder(await rasterizeSvg(renderChairismNotice(message)),{name:'chairisms-window.png'})];}
 export const CHAIRISM_COMMANDS=new Set(['quote','chairisms','Create Chairism']);
 type Interaction=ChatInputCommandInteraction|MessageContextMenuCommandInteraction|ButtonInteraction;
 /** Security and durable publication are required injected boundaries: no permissive default. */

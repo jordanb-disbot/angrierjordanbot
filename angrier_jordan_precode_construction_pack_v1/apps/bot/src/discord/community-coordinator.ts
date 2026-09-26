@@ -3,11 +3,10 @@ import {DeliveryEngine,DomainError,PermissionEngine,type ConfigService,type Staf
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaCommunityRepository,type CommunityContext,type CommunityStart,type CommunityView} from '../../../../packages/features-community/src/prisma-repository.js';
 import {COMMUNITY_KINDS,SUGGESTION_STATUSES,type CommunityKind} from '../../../../packages/features-community/src/domain.js';
-import {COMMUNITY_TITLES,communityTranscript,renderCommunity} from '../../../../packages/features-community/src/render.js';
+import {COMMUNITY_TITLES,communityTranscript,renderCommunity,renderCommunityNotice} from '../../../../packages/features-community/src/render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {memberArt} from './member-art.js';
-import {brandedNotice} from '../../../../packages/features-events/src/gate-b-visual.js';
-async function notice(title:string,message:string){return [new AttachmentBuilder(await rasterizeSvg(brandedNotice(title,message,'ANGRIER JORDAN · COMMUNITY')),{name:'community-window.png'})];}
+async function notice(title:string,message:string){return [new AttachmentBuilder(await rasterizeSvg(renderCommunityNotice(title,message)),{name:'community-window.png'})];}
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction|StringSelectMenuInteraction|UserSelectMenuInteraction;
 type Row=ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>|ActionRowBuilder<UserSelectMenuBuilder>;
 export const COMMUNITY_COMMANDS=new Set<string>(COMMUNITY_KINDS);

@@ -6008,7 +6008,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Approved shared visual system with private Battleship rendering",
-      "sha256": "10b55ae8b54a20f3c77e2037285cacde3dffd2325be757d736217b1c935a160e"
+      "sha256": "7bf52f8e017eeef891289270f1acebf852f05f63855e3698d77b53ac2e949116"
     },
     {
       "id": "party.runtime.renderer",
@@ -6017,7 +6017,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "588d3fa71e68f2d1a3f6369861dae61f55a0ce83913368cf0c0930b7cc4fb17a"
+      "sha256": "19ceea5293370930ea489c00a914ef02a58690fc2ea6c63fd0777ee5cdf41d1a"
     },
     {
       "id": "crime.runtime.renderer",
@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba"
+      "sha256": "a4e4bae44579fffd589f61ec7cf256e168e8dacab798693558b767754a137af3"
     },
     {
       "id": "family.runtime.renderer",
@@ -6071,7 +6071,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188"
+      "sha256": "0753b19f751c472b074d9244b5238965a25410e294860dbc9033250c78c721bc"
     },
     {
       "id": "chairisms.browser",
@@ -6080,7 +6080,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c"
+      "sha256": "cc14c5c326af84c8f37c4a295a8816612ff249aa1426b48f873091986eb2a053"
     },
     {
       "id": "casino.runtime.renderer",
@@ -6521,7 +6521,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-requested wide cobalt Games presentation.",
-      "sha256": "e6994e9a98e5f1fd7a37937a1f4e5aafd3610402d56be54c4c36e00ef7365764"
+      "sha256": "c16f273977cffd4e4e3379cf39f142d1c16002d8e25a5ded2376849bbeac6165"
     },
     {
       "id": "solo.premium.renderer",
@@ -6530,7 +6530,16 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-requested wide cobalt Games presentation.",
-      "sha256": "7900665d37780373c09ed70950355b85bae47d577c7f737a2f3a8c646821c206"
+      "sha256": "5ed28cd92e2d6b0c60c481e590b61069869dea371275b68c9be421291b175d6e"
+    },
+    {
+      "id": "chairisms.presentation",
+      "file": "packages/features-chairisms/src/presentation.ts",
+      "category": "renderer",
+      "usage": "Wide amber Chairisms browser and quote materials",
+      "canonical": true,
+      "sha256": "23505d77708d623e79fb3859872f46dcd75b64b829613c3c3e665f506029a790",
+      "status": "OWNER_REVIEW_PENDING"
     }
   ]
 }
