@@ -75,6 +75,7 @@ model Member {
   inventory InventoryEntry[]
   achievements MemberAchievement[]
   tutorials TutorialProgress[]
+  loreProgress LoreProgress[]
   presence MemberPresenceState?
   selfRoles SelfRoleSelection[]
   roleSnapshots MemberRoleSnapshot[]
@@ -550,6 +551,12 @@ model IntroductionPrompt {
   placeholder String?
   required Boolean @default(false)
   maxLength Int @default(500)
+  minLength Int?
+  inputStyle String @default("paragraph")
+  showOnCard Boolean @default(true)
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   enabled Boolean @default(true)
   form IntroductionForm @relation(fields:[formId], references:[id], onDelete:Cascade)
   @@index([formId,sortOrder])
@@ -562,8 +569,37 @@ model IntroductionSubmission {
   formVersion Int
   answers Json
   outputMessageId String?
+  outputChannelId String?
+  publishedRevision Int @default(0)
   updatedAt DateTime @updatedAt
   @@unique([guildId,userId])
+}
+
+model IntroductionFormConfig {
+  guildId String @id
+  sourceFingerprint String?
+  introductionChannelId String?
+  panelMessageId String?
+  headerText String @default("PULL UP A CHAIR")
+  footerText String @default("Welcome to Chairs. Make yourself comfortable.")
+  showAvatar Boolean @default(true)
+  showDisplayName Boolean @default(true)
+  showJoinDate Boolean @default(false)
+  allowAdminIntroConfig Boolean @default(false)
+  version Int @default(1)
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model LoreProgress {
+  guildId String
+  userId String
+  chapterId String
+  currentPage Int @default(0)
+  contentVersion Int @default(1)
+  completedAt DateTime?
+  lastActivityAt DateTime @default(now())
+  member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)
+  @@id([guildId,userId,chapterId])
 }
 
 model CustomCommand {
@@ -680,6 +716,9 @@ model TutorialProgress {
   guildId String
   userId String
   lessonId String
+  currentStep Int @default(0)
+  contentVersion Int @default(1)
+  lastActivityAt DateTime @default(now())
   completedAt DateTime?
   dismissed Boolean @default(false)
   member Member @relation(fields:[guildId,userId], references:[guildId,userId], onDelete:Cascade)

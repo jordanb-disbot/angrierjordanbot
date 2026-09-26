@@ -1,3 +1,5 @@
+> **OWNER GATE B PASSED — 2026-09-25.** The owner approved the complete revised gallery at commit `3837503`. Earlier pending statements below are historical. Approval does not enable production features or certify live Discord acceptance. See [approval manifest](../docs/approved_visuals/gate-b-2026-09-25.json).
+
 # Gate B integration and owner review — 2026-09-25
 
 Historical integration evidence from the first Gate B package. Its visual counts and pending layout preferences are superseded by [the current visual corrections report](VISUAL_CORRECTIONS.md).

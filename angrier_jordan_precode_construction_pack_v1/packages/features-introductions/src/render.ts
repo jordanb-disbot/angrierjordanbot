@@ -1,0 +1,3 @@
+import {centeredBlock,centeredHeading,portrait} from '../../features-events/src/gate-b-visual.js';
+import {shell,panel,ink} from '../../features-events/src/visual.js';
+export function renderIntroduction(text:string,name:string,avatarData:string|undefined,showAvatar:boolean,page:number,total:number){const head=centeredHeading('ANGRIER JORDAN · CHAIRS','Pull Up a Chair',total>1?`Introduction · ${page+1} of ${total}`:'Introduction');let y=head.height,svg=head.svg;if(showAvatar){svg+=portrait('intro',name,avatarData,220,y);y+=100;}const block=centeredBlock(text,y+30,{size:16,width:358,lineHeight:23,gap:0}),height=block.height+52;return shell(y+height+20,svg+panel(18,y,404,height,ink.teal)+block.svg);}

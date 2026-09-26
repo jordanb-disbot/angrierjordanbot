@@ -1,3 +1,5 @@
+> **OWNER GATE B PASSED — 2026-09-25.** The owner approved the complete revised gallery at commit `3837503`. Earlier pending statements below are historical. Approval does not enable production features or certify live Discord acceptance. See [approval manifest](../docs/approved_visuals/gate-b-2026-09-25.json).
+
 # Gate B visual corrections — owner review pending
 
 All images are deterministic fictional fixture renders, **not live Discord screenshots**. No Gate B approval is inferred. Approved Line, Race, Fight and standard-window references remain unchanged. No feature flags, persistent contracts, financial logic, timers, voting eligibility or settlement rules changed.

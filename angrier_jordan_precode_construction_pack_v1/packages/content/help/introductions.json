@@ -1,0 +1,28 @@
+{
+  "title": "Introduce yourself",
+  "commands": [
+    "introduce",
+    "introduce_edit",
+    "introduce_preview",
+    "intro_config"
+  ],
+  "body": "Use /introduce in the introductions channel. Create, Edit and Preview are private buttons. Publish is an explicit separate action; previews match the public card. Editing updates your existing introduction.",
+  "fields": {
+    "answers": "Complete required fields. Optional answers may be blank. Only fields configured for the card are published."
+  },
+  "examples": [
+    "/introduce",
+    "/introduce → Create",
+    "/introduce → Edit",
+    "/introduce → Preview"
+  ],
+  "tutorial": {
+    "steps": [
+      "Open /introduce in the configured introductions channel.",
+      "Choose Create or Edit and complete each private form page.",
+      "Use Preview to check the complete public card.",
+      "Choose Publish only when ready; leaving the private form does not publish.",
+      "Use Edit later to update the same introduction."
+    ]
+  }
+}

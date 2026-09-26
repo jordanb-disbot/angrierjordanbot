@@ -1,0 +1,29 @@
+{
+  "title": "Learn and belong",
+  "commands": [
+    "help",
+    "tutorial",
+    "tldr_chat",
+    "tldr_events",
+    "lore"
+  ],
+  "body": "Learning windows are private and reflect enabled commands and your current permissions. Lore remains unavailable until authentic owner-approved chapters are published. Reading progress is saved; completing all three chapters earns Chair Historian once, with no Ottoman reward.",
+  "fields": {
+    "command": "Search enabled commands available to you.",
+    "time": "Choose an offered recap window; chat recaps belong in main chat and event recaps in the bot channel."
+  },
+  "examples": [
+    "/help",
+    "/tutorial",
+    "/lore"
+  ],
+  "tutorial": {
+    "steps": [
+      "Open /help for a searchable quick reference or /tutorial for learning paths.",
+      "Choose a path and command; use Next and Back to explore its fields and example.",
+      "Practice is an example review only: it never executes a command or spends Ottomans.",
+      "Use Continue for your saved lesson or Restart to start that lesson again.",
+      "Lore content is owner-authored. Read each available chapter in order using the private reader controls."
+    ]
+  }
+}

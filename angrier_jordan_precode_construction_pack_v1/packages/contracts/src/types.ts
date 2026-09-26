@@ -1,5 +1,5 @@
 export type StaffRole = 'member' | 'recliner' | 'chaise_lounge' | 'throne';
-export type CommandType = 'slash' | 'legacy_text' | 'special_text' | 'context_message';
+export type CommandType = 'slash' | 'legacy_text' | 'special_text' | 'context_message' | 'component';
 export type SettingType = 'boolean' | 'integer' | 'choice' | 'discord_channel' | 'discord_role' | 'json' | 'string';
 export type Risk = 'normal' | 'high' | 'critical' | 'security' | 'financial' | 'locked';
 
@@ -11,6 +11,7 @@ export interface CommandOptionContract {
   choices?: string[];
   min?: number;
   max?: number;
+  autocomplete?: boolean;
 }
 
 export interface CommandContract {
@@ -27,6 +28,7 @@ export interface CommandContract {
   ephemeralDefault: boolean;
   helpId: string | null;
   tutorialId: string | null;
+  actions?: {id:string;name:string;description:string;permissions:string[];channels:string[];options:CommandOptionContract[];aliases:string[]}[];
 }
 export interface SettingContract {
   key: string;

@@ -1,3 +1,10 @@
+import {DiscordSocialCoordinator,SOCIAL_COMMANDS} from './discord/social-coordinator.js';
+import {PrismaSocialRepository} from '../../../packages/features-social/src/prisma-repository.js';
+import {seedSocialContent} from '../../../packages/features-social/src/content.js';
+import {DiscordIntroductionsCoordinator,INTRODUCTION_COMMANDS} from './discord/introductions-coordinator.js';
+import {PrismaIntroductionsRepository} from '../../../packages/features-introductions/src/prisma-repository.js';
+import {DiscordLearningCoordinator} from './discord/learning-coordinator.js';
+import {PrismaLearningRepository} from '../../../packages/features-learning/src/prisma-repository.js';
 import {DiscordChairismsCoordinator,CHAIRISM_COMMANDS} from './discord/chairisms-coordinator.js';
 import {DiscordChairismSecurity} from './discord/chairisms-security.js';
 import {DiscordChairismPublication} from './discord/chairisms-publication.js';
@@ -67,6 +74,9 @@ export async function startProductionBot():Promise<void>{
   const lifecycle=new RuntimeLifecycle();
   let initialized=false;
   const token=required('DISCORD_TOKEN');const applicationId=required('DISCORD_APPLICATION_ID');const guildId=required('DISCORD_GUILD_ID');
+  const enableLearningSmoke=process.env.ENABLE_LEARNING_SMOKE==='true';
+  const enableSocialSmoke=process.env.ENABLE_SOCIAL_SMOKE==='true';
+  const enableIntroductionsSmoke=process.env.ENABLE_INTRODUCTIONS_SMOKE==='true';
   const enableWyrSmoke=process.env.ENABLE_WYR_SMOKE==='true';
   const enableOnboardingSmoke=process.env.ENABLE_ONBOARDING_SMOKE==='true';
   const enableJailSmoke=process.env.ENABLE_JAIL_SMOKE==='true';
@@ -124,6 +134,9 @@ export async function startProductionBot():Promise<void>{
   const eventsRepo=new PrismaEventsRepository(db);
   const events=new DiscordEventsCoordinator(eventsRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
   const eligibleGame=async(g:string,u:string,capability:string)=>{if(!new PermissionEngine(CAPABILITY_MATRIX.capabilities).can('member',capability)||await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';};
+  const social=new DiscordSocialCoordinator(new PrismaSocialRepository(db),config,(g,u)=>eligibleGame(g,u,'social.use'));
+  const learning=new DiscordLearningCoordinator(new PrismaLearningRepository(db),config,(g,u)=>eligibleGame(g,u,'learning.use'),flag=>({economy:enableEconomySmoke,roles:enableOnboardingSmoke,jail:enableJailSmoke,moderation:enableModerationSmoke,security:enableSecuritySmoke,profile:enableProfilesSmoke,casino:enableCasinoSmoke,race:enableEventsSmoke,fight:enableEventsSmoke,line:enableSpecialSmoke,social:enableSocialSmoke,introductions:enableIntroductionsSmoke,core:enableLearningSmoke,tutorial:enableLearningSmoke,lore:enableLearningSmoke}[flag]??true));
+  const introductions=new DiscordIntroductionsCoordinator(new PrismaIntroductionsRepository(db),config,(g,u)=>eligibleGame(g,u,'introductions.use'),async(g,u)=>{const server=await client.guilds.fetch(g),member=await server.members.fetch({user:u,force:true});return server.ownerId===u||member.permissions.has('Administrator');});
   const special=new DiscordSpecialCoordinator(new PrismaSpecialRepository(db),config,(g,u)=>eligibleGame(g,u,'special.use'));
   const soloRepo=new PrismaSoloRepository(db),solo=new DiscordSoloCoordinator(soloRepo,config,(g,u)=>eligibleGame(g,u,'solo.use'));
   const pvp=new DiscordPvpCoordinator(new PrismaPvpRepository(db),config,(g,u)=>eligibleGame(g,u,'pvp.play'));
@@ -221,6 +234,9 @@ export async function startProductionBot():Promise<void>{
     'events.close_betting':async job=>{const p=job.payload as {guildId:string;sessionId:string};await events.advance(client,p.guildId,p.sessionId,false);},
     'events.settle':async job=>{const p=job.payload as {guildId:string;sessionId:string};await events.advance(client,p.guildId,p.sessionId,true);},
     'casino.expire':async job=>{const p=job.payload as {guildId:string;sessionId:string};await casinoRepo.expire(p.guildId,p.sessionId);await casino.refresh(client,p.sessionId);},
+    'social.publish':async job=>{if(!enableSocialSmoke)throw new Error('Social runtime disabled; retain delivery.');await social.deliver(client,job.id);},
+    'intro.publish':async job=>{if(!enableIntroductionsSmoke)throw new Error('Introduction runtime disabled; retain delivery.');await introductions.publish(client,job.id);},
+    'intro.panel':async job=>{if(!enableIntroductionsSmoke)throw new Error('Introduction runtime disabled; retain delivery.');await introductions.publishPanel(client,job.id);},
     'lottery.draw':async job=>{const p=job.payload as {guildId:string;roundId:string};await lotteryRepo.draw(p.guildId,p.roundId);if(enableCasinoSmoke&&await config.get(p.guildId,'features.lottery')===true)await lotteryRepo.schedule(p.guildId);},
     'casino.jackpot_announce':async job=>{if(!enableCasinoSmoke)throw new Error('Casino runtime disabled; retain pending delivery.');await casinoAnnouncements.deliver(client,job);},
     'lottery.announce':async job=>{if(!enableCasinoSmoke)throw new Error('Casino runtime disabled; retain pending delivery.');await casinoAnnouncements.deliver(client,job);},
@@ -237,6 +253,7 @@ export async function startProductionBot():Promise<void>{
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
   });
   const worker=new SchedulerWorker(scheduler,5_000);
+  let introSweep:ReturnType<typeof setInterval>|undefined;
   let eventSweep:ReturnType<typeof setInterval>|undefined;
   let voiceSweep:ReturnType<typeof setInterval>|undefined;
   let wyrSweep:ReturnType<typeof setInterval>|undefined;
@@ -250,8 +267,10 @@ export async function startProductionBot():Promise<void>{
 
   client.once(Events.ClientReady,ready=>lifecycle.run(async()=>{
     if(enablePartySmoke||enableWyrSmoke)await seedPartyContent(db);
+    if(enableSocialSmoke)await seedSocialContent(db);
+    if(enableIntroductionsSmoke)await introductions.sweep(ready);
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>(enableChairismsSmoke&&((c.type===3&&c.name==="Create Chairism")||(c.type===1&&(c.name==="quote"||c.name==="chairisms"))))||c.type===1&&(c.name==='status'||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&COMMUNITY_COMMANDS.has(c.name)))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&c.name==='fight')||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>(enableChairismsSmoke&&((c.type===3&&c.name==="Create Chairism")||(c.type===1&&(c.name==="quote"||c.name==="chairisms"))))||c.type===1&&(c.name==='status'||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&COMMUNITY_COMMANDS.has(c.name)))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&c.name==='fight')||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});
     if(await familyEnabled()){
       try{await ensureFamilyMembership();}
@@ -270,6 +289,7 @@ export async function startProductionBot():Promise<void>{
     pvpSweep=setInterval(()=>lifecycle.run(()=>pvp.sweep(ready),()=>console.error('Skill-game recovery pending.')),10_000);
     partySweep=setInterval(()=>lifecycle.run(()=>party.sweep(ready),()=>console.error('Party recovery pending.')),5000);
     crimeSweep=setInterval(()=>lifecycle.run(()=>crime.sweep(ready),()=>console.error('Crime recovery pending.')),5000);
+    if(enableIntroductionsSmoke)introSweep=setInterval(()=>lifecycle.run(()=>introductions.sweep(ready),()=>console.error('Introduction recovery pending.')),10000);
     if(enableCommunitySmoke)communitySweep=setInterval(()=>lifecycle.run(()=>community.sweep(ready),()=>console.error('Community recovery pending.')),5000);
     const snapshot=await health.check();
     console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
@@ -328,12 +348,13 @@ export async function startProductionBot():Promise<void>{
     lifecycle.run(()=>pending,()=>console.error('Member ban processing failed; recovery remains pending.'));
   });
   on(Events.ChannelCreate,async channel=>{if(enableJailSmoke)await jail.reconcileNewChannel(channel);});
-  on(Events.MessageCreate,async message=>{await settleHandlers([...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  on(Events.MessageCreate,async message=>{await settleHandlers([...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
   on(Events.GuildAuditLogEntryCreate,async(entry,guild)=>{if(enableSecuritySmoke)await security.handleAuditEntry(entry,guild);});
 
   on(Events.VoiceStateUpdate,async(_before,after)=>{if(enableProfilesSmoke)await profiles.sampleVoice(client,after.guild.id);});
   on(Events.InteractionCreate,async interaction=>{
     try{
+      if(interaction.isAutocomplete()){if(enableSocialSmoke&&interaction.commandName==='social')await social.autocomplete(interaction);else if(enableLearningSmoke&&interaction.commandName==='help')await learning.autocomplete(interaction);else await interaction.respond([]);return;}
       if(interaction.guildId&&interaction.isRepliable()){
         const command=interaction.isChatInputCommand()?interaction.commandName:undefined;
         const subcommand=interaction.isChatInputCommand()?interaction.options.getSubcommand(false)??undefined:undefined;
@@ -342,6 +363,9 @@ export async function startProductionBot():Promise<void>{
         if(!moderationSafe&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are currently in moderation Hotseat. Only jail-safe commands are available until release.'});return;}
         if(command!=='rules'&&component!=='onboard:ack_rules'&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await interaction.reply({ephemeral:true,content:'You are in crime jail. Use /crime bail, or ask another member to pay your bail.'});return;}
       }
+      if((interaction.isChatInputCommand()&&SOCIAL_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('social:'))){if(!enableSocialSmoke){await interaction.reply({ephemeral:true,content:'Social features are not enabled yet.'});return;}await social.handle(interaction);return;}
+      if((interaction.isChatInputCommand()&&INTRODUCTION_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('intro:'))){if(!enableIntroductionsSmoke){await interaction.reply({ephemeral:true,content:'Introductions are not enabled yet.'});return;}await introductions.handle(interaction);return;}
+      if((interaction.isChatInputCommand()&&['help','tutorial','lore','tldr'].includes(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('learn:'))){if(!enableLearningSmoke){await interaction.reply({ephemeral:true,content:'Learning features are not enabled yet.'});return;}await learning.handle(interaction);return;}
       if(((interaction.isChatInputCommand()||interaction.isMessageContextMenuCommand())&&CHAIRISM_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('chairism:'))){if(!enableChairismsSmoke){await interaction.reply({ephemeral:true,content:'Chairisms are not enabled yet.'});return;}await chairisms.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&interaction.commandName==='family')||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('family:'))){if(!enableFamilySmoke){await interaction.reply({ephemeral:true,content:'Family features are not enabled yet.'});return;}if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'Use family features in the server.'});return;}if(await config.get(interaction.guildId,'features.family')===true&&!familyMembership.ready){await interaction.reply({ephemeral:true,content:'Family membership recovery is in progress. Please try again shortly.'});lifecycle.run(ensureFamilyMembership,()=>console.error('Family membership recovery remains pending.'));return;}await(await familyFor(interaction.guildId)).coordinator.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&COMMUNITY_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit()||interaction.isStringSelectMenu()||interaction.isUserSelectMenu())&&interaction.customId.startsWith('community:'))){if(!enableCommunitySmoke){await interaction.reply({ephemeral:true,content:'Community tools are not enabled yet.'});return;}await community.handle(interaction);return;}
@@ -420,7 +444,7 @@ export async function startProductionBot():Promise<void>{
   let shutdownPromise:Promise<void>|undefined;
   const shutdown=()=>shutdownPromise??(shutdownPromise=(async()=>{
     lifecycle.stopAdmission();initialized=false;worker.stop();
-    if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);
+    if(introSweep)clearInterval(introSweep);if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);
     if(familySweep)clearInterval(familySweep);if(communitySweep)clearInterval(communitySweep);if(crimeSweep)clearInterval(crimeSweep);if(partySweep)clearInterval(partySweep);if(pvpSweep)clearInterval(pvpSweep);if(specialSweep)clearInterval(specialSweep);if(soloSweep)clearInterval(soloSweep);
     const deadline=setTimeout(()=>{console.error('Shutdown deadline reached; durable work will recover on restart.');process.exit(1);},25_000);deadline.unref();
     try{

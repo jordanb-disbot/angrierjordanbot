@@ -9,7 +9,7 @@ if(result.status!==0)process.exit(result.status??1);
 
 mkdirSync(new URL('../.test-build/content/fight/',import.meta.url),{recursive:true});
 cpSync(new URL('../content/fight/',import.meta.url),new URL('../.test-build/content/fight/',import.meta.url),{recursive:true});
-for(const dir of ['packages/content/economy','packages/features-party/content','packages/features-special/content','packages/features-special/assets','production/theme','production/event_art/v3']){
+for(const dir of ['packages/content/help','packages/content/economy','packages/features-party/content','packages/features-social/content','packages/features-special/content','packages/features-special/assets','production/theme','production/event_art/v3']){
  mkdirSync(new URL('../.test-build/'+dir+'/',import.meta.url),{recursive:true});
  cpSync(new URL('../'+dir+'/',import.meta.url),new URL('../.test-build/'+dir+'/',import.meta.url),{recursive:true});
 }

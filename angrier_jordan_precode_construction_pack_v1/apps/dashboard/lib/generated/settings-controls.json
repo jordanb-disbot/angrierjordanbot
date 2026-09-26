@@ -1,5 +1,5 @@
 {
-  "count": 244,
+  "count": 255,
   "controls": [
     {
       "key": "server.timezone",
@@ -1141,7 +1141,7 @@
       "label": "Enabled",
       "description": "",
       "kind": "toggle",
-      "defaultValue": true,
+      "defaultValue": false,
       "risk": "normal",
       "editableBy": [
         "throne",
@@ -4643,6 +4643,199 @@
         "chairisms.cooldown_seconds",
         "chairisms.excluded_channel_ids"
       ]
+    },
+    {
+      "key": "features.social",
+      "section": "features",
+      "label": "Social",
+      "description": "Keep off until social acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.haiku",
+      "section": "features",
+      "label": "Haiku",
+      "description": "Keep off until haiku acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.lore",
+      "section": "features",
+      "label": "Lore",
+      "description": "Keep off until lore acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.learning",
+      "section": "features",
+      "label": "Learning",
+      "description": "Keep off until learning acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.tldr",
+      "section": "features",
+      "label": "Tldr",
+      "description": "Keep off until tldr acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "features.introductions",
+      "section": "features",
+      "label": "Introductions",
+      "description": "Keep off until introductions acceptance passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "social.throttle_seconds",
+      "section": "social",
+      "label": "Throttle Seconds",
+      "description": "Technical social reaction anti-spam throttle.",
+      "kind": "number",
+      "defaultValue": 3,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 1,
+      "max": 30
+    },
+    {
+      "key": "social.roast_back_seconds",
+      "section": "social",
+      "label": "Roast Back Seconds",
+      "description": "One-use Roast Back availability after confirmed publication.",
+      "kind": "number",
+      "defaultValue": 900,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 30,
+      "max": 3600
+    },
+    {
+      "key": "haiku.response_probability",
+      "section": "haiku",
+      "label": "Response Probability",
+      "description": "Probability of a complaint for a valid haiku; bounded0–0.5. Specialized editor required.",
+      "kind": "json-editor",
+      "defaultValue": 0.2,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
+    },
+    {
+      "key": "haiku.channel_cooldown_seconds",
+      "section": "haiku",
+      "label": "Channel Cooldown Seconds",
+      "description": "Minimum interval between passive haiku complaints per channel.",
+      "kind": "number",
+      "defaultValue": 300,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [],
+      "min": 30,
+      "max": 3600
+    },
+    {
+      "key": "introductions.form",
+      "section": "introductions",
+      "label": "Form",
+      "description": "Published versioned introduction form/card configuration. Shared draft validation and specialized editor required.",
+      "kind": "json-editor",
+      "defaultValue": null,
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "blocked",
+      "dependsOn": []
     }
   ]
 }

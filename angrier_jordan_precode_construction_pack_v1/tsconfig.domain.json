@@ -28,7 +28,10 @@
     "packages/features-crime/src/**/*.ts",
     "packages/features-community/src/**/*.ts",
     "packages/features-family/src/**/*.ts",
-    "packages/features-chairisms/src/**/*.ts"
+    "packages/features-chairisms/src/**/*.ts",
+    "packages/features-social/src/**/*.ts",
+    "packages/features-introductions/src/**/*.ts",
+    "packages/features-learning/src/**/*.ts"
   ],
   "exclude": [
     "apps/bot/src/discord/**/*.ts",

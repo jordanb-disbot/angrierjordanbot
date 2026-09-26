@@ -1,0 +1,588 @@
+{
+  "gate": "B",
+  "status": "PASSED",
+  "approvedBy": "Owner",
+  "date": "2026-09-25",
+  "sourceCommit": "38375036e0da95c273621c6e079254104fa46afd",
+  "scope": "Owner approved the complete updated review gallery. Preserve Gate B as visual source-of-truth alongside Gate A. No production or live acceptance authorization.",
+  "reviewCount": 70,
+  "diagnosticCount": 2,
+  "files": [
+    {
+      "file": "review-gate-b/family-events/marriage-desktop.png",
+      "sha256": "e6ffa8c5a2f253c1f93d95ad95d0c9b6f3d116d0d1898a0bef26c95f6df00555"
+    },
+    {
+      "file": "review-gate-b/family-events/marriage-mobile.png",
+      "sha256": "4a5a71c695a7d03fa40b0f0a3da2a43adb3d99dfcac3f6c11b0e1693c6af5c99"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-pending-desktop.png",
+      "sha256": "7584d300c5ec48e9f42ccacf71c45a6a2b9b3cb305ca5e7f2165b1b7f994ba84"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-pending-mobile.png",
+      "sha256": "13b7a4660b6e16987801c9dacc7da8a8f1e09252d77ab69e08140274fb6bac1b"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-blessing-desktop.png",
+      "sha256": "797b3aeb24f4361b524e407fdeae9d06333185717b76419f383722add76e74dd"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-blessing-mobile.png",
+      "sha256": "4c5efe06e445e80109b58eedee5244cdf1d74feeef646eeb9f7a37e671340d6a"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-declined-desktop.png",
+      "sha256": "de6ee404871248a7f1b2fb3c24f71310dee00f45a6adc6966e3821c5bde8646d"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-declined-mobile.png",
+      "sha256": "e377c7c94c10edfc060c8deb833042f6251d95d1b483a685aedcf64a3bb67b0b"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-expired-desktop.png",
+      "sha256": "c9d11493c80c5bbc59f298e7ec8f7b73ddb2a47c4580e8cf1deb6602c17c1644"
+    },
+    {
+      "file": "review-gate-b/family-events/proposal-expired-mobile.png",
+      "sha256": "095ec1288defeec60a2a810d03f4145b8a57b3f845a6540d8871729f49976026"
+    },
+    {
+      "file": "review-gate-b/family-events/marriage-live-vote-desktop.png",
+      "sha256": "773c730bcbd24ccde45b5eaed582208209bfb782e8777b4aa56d340f4a14cfc4"
+    },
+    {
+      "file": "review-gate-b/family-events/marriage-live-vote-mobile.png",
+      "sha256": "db564ce6e6d284d37324c09925025cd2f34c43a507b51d6c96a6c018500aaec2"
+    },
+    {
+      "file": "review-gate-b/family-events/marriage-blessing-consumed-desktop.png",
+      "sha256": "8260c37a7ce686d3f3a65ca766aefa918e16e75c9f53cd4f7425b173c0079707"
+    },
+    {
+      "file": "review-gate-b/family-events/marriage-blessing-consumed-mobile.png",
+      "sha256": "3f396fe806430ab81a44863a7aa3f75bde06b7a15c35a8b207568d9470e2cfed"
+    },
+    {
+      "file": "review-gate-b/family-events/divorce-desktop.png",
+      "sha256": "cfc06a67a4ec45c576545f390b31484e54e3d38cafdc6de700c61c80789ed7f7"
+    },
+    {
+      "file": "review-gate-b/family-events/divorce-mobile.png",
+      "sha256": "d0ef605b8510c7e5667681fc32dda441024235abc63f8f7e1df3139e4be05efc"
+    },
+    {
+      "file": "review-gate-b/family-events/divorce-large-value-desktop.png",
+      "sha256": "636739508a39c3276d15bc3f28455391be32c0efe7667478d2d72e8b17112c00"
+    },
+    {
+      "file": "review-gate-b/family-events/divorce-large-value-mobile.png",
+      "sha256": "e718e1bed5dff24f74fcf1aedf359edce3b3864217c9b40d548de16a75dca56a"
+    },
+    {
+      "file": "review-gate-b/family-events/inheritance-desktop.png",
+      "sha256": "a7d276755a397c3f2fbafb388008ecc4fbffa663d9733d6013451b69d91a0fd8"
+    },
+    {
+      "file": "review-gate-b/family-events/inheritance-mobile.png",
+      "sha256": "6ad03abd5175fbf34e8335c8b1bf3e59df2c54e1069b4798882f55f6efde9f18"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-no-heir-desktop.png",
+      "sha256": "b892eeb78316d22a0bc9f2847690b276f5d892d9df4426416621f275356047fa"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-no-heir-mobile.png",
+      "sha256": "0e4b65ad341d0a3da1c68b91089bbbad27703227e51e9cae829f5235b0abead6"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-empty-desktop.png",
+      "sha256": "8104640b7dd552964f925220b9c81724791af318f594e846fc6be7d5950d81e9"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-empty-mobile.png",
+      "sha256": "4512e412bbed395c8ecef90ecc36a221bf061c241c78bca0fb7f50e065dc096a"
+    },
+    {
+      "file": "review-gate-b/family-events/auction-win-desktop.png",
+      "sha256": "f0341b8f1b54fe4d1e3151d7517c05da643cf5cb33d9cdce00256b2a211ec44a"
+    },
+    {
+      "file": "review-gate-b/family-events/auction-win-mobile.png",
+      "sha256": "9639a6549f2363b02d4930bf90057c2f30ab4311d21d6d3066aa3e5d7776e02d"
+    },
+    {
+      "file": "review-gate-b/family-events/auction-open-desktop.png",
+      "sha256": "d88068239db958e1fce1e2bf5c1518c09274f0a970a24f7247c9b4f6b791595d"
+    },
+    {
+      "file": "review-gate-b/family-events/auction-open-mobile.png",
+      "sha256": "1a899f7736547020d6f2533cb23e6da9afc8969311cf3db20c29cd4fdd883a68"
+    },
+    {
+      "file": "review-gate-b/family-events/auction-refund-desktop.png",
+      "sha256": "6faeee8448b6d26c18a09c8134699b4e562fa352758b225567107d97f75c9ee8"
+    },
+    {
+      "file": "review-gate-b/family-events/auction-refund-mobile.png",
+      "sha256": "e477c88404f1186461186f07c833e00f7c4d411439f047155fa3942046bdae41"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-auction-win-desktop.png",
+      "sha256": "5e5397599f7efbd171d02cf481cc8a9a815f64d79f8770544e0ee19da101f18a"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-auction-win-mobile.png",
+      "sha256": "6e6a2ccbca38797b7b721e6186220aae707b5a50f59665b8ad826111b940fa0a"
+    },
+    {
+      "file": "review-gate-b/family-events/adoption-pending-desktop.png",
+      "sha256": "f9ea31a8ea2969feb5657f23ba346d1fd52adde838b80be24120027bd0ef4fa1"
+    },
+    {
+      "file": "review-gate-b/family-events/adoption-pending-mobile.png",
+      "sha256": "7189839cce5f54d5bd8da5c243e0bc146ff4d582ac45104f15f5d4bc97d146c8"
+    },
+    {
+      "file": "review-gate-b/family-events/adoption-accepted-desktop.png",
+      "sha256": "f9aeee79525b9b0bfa1e1f61f5855d5078aac5c97dff77ca50ddf8e11c3cc354"
+    },
+    {
+      "file": "review-gate-b/family-events/adoption-accepted-mobile.png",
+      "sha256": "303635b0e960f724f5164e700d77457b3a2340071d0c7da91e5f5a7012434a64"
+    },
+    {
+      "file": "review-gate-b/family-events/adoption-declined-desktop.png",
+      "sha256": "30756b1175e521e2ac77c6c80263e1687472cecb1b45e11117752f7ef55741fc"
+    },
+    {
+      "file": "review-gate-b/family-events/adoption-declined-mobile.png",
+      "sha256": "5839dec70428f81a178a44318fba0b6c4cf7fb7d7d8370c168f97ee39ba1e02f"
+    },
+    {
+      "file": "review-gate-b/family-events/family-ended-desktop.png",
+      "sha256": "fadcb0f766af8e5c8bca49b5dbfbfd10e9b9c88a83f95ace3df33657976daa4e"
+    },
+    {
+      "file": "review-gate-b/family-events/family-ended-mobile.png",
+      "sha256": "b4d3510766b61ad38476ab3ea0b6a4898ff025958de0d85467f8d98438cc1f60"
+    },
+    {
+      "file": "review-gate-b/family-events/arrest-desktop.png",
+      "sha256": "a0505430bd0d7c00c09f0b38f17bfd036b476cc8b070b31057fc5663907499a6"
+    },
+    {
+      "file": "review-gate-b/family-events/arrest-mobile.png",
+      "sha256": "b28fdebb24ab42112556fdaec077ad2ce694a789a79da6df358409ddfd21c3c1"
+    },
+    {
+      "file": "review-gate-b/family-events/fmk-result-desktop.png",
+      "sha256": "47fbcfd23f5d233df6b67f8abf7eee6e15b6b4d8b5c64f24341d3805506ee0b9"
+    },
+    {
+      "file": "review-gate-b/family-events/fmk-result-mobile.png",
+      "sha256": "c71032b9ef19049adcec466e3a47b2d29cc1ee3ea94bcf12f288c1c763953413"
+    },
+    {
+      "file": "review-gate-b/family-events/voting-result-desktop.png",
+      "sha256": "74a6d0813113ff8f2c6f70b706aa7ce543bb5a28ec93ed5362189a9d55ff1835"
+    },
+    {
+      "file": "review-gate-b/family-events/voting-result-mobile.png",
+      "sha256": "5199cda6f79b8fa0f98080772443b9dddd405776492f2f7f8bbcb7093f69556f"
+    },
+    {
+      "file": "review-gate-b/family-events/arrest-fallback-extreme-desktop.png",
+      "sha256": "ab8af6f34f5f1fb311bd7863d4dd910ee438d14b2dca811d0034a109c95a7e04"
+    },
+    {
+      "file": "review-gate-b/family-events/arrest-fallback-extreme-mobile.png",
+      "sha256": "470d29579848ea9ad9d72aa29d7800ee9767a8711daa61533cada7a54ae1b5d9"
+    },
+    {
+      "file": "review-gate-b/family-events/robbery-members-desktop.png",
+      "sha256": "6ec180a10ad3ffea3d9f77cd0125f858d7e54f088f0c564165787b5202175db8"
+    },
+    {
+      "file": "review-gate-b/family-events/robbery-members-mobile.png",
+      "sha256": "b716b965cf3b80becfd27a88463fde18e40b08132c8a6a68e86ca2629ada087f"
+    },
+    {
+      "file": "review-gate-b/family-events/fmk-fallback-extreme-desktop.png",
+      "sha256": "b31ef33d654446b1d16060c3dec0ff6e14eb29de2635a970e4db5d1b46b2f3eb"
+    },
+    {
+      "file": "review-gate-b/family-events/fmk-fallback-extreme-mobile.png",
+      "sha256": "a058c7510ab80e1049fa5b3e4f35116e8a959865ce038ba44a937c0c2aad6d24"
+    },
+    {
+      "file": "review-gate-b/family-events/voting-open-desktop.png",
+      "sha256": "e5d9e3c14979914fe3f9566811d3360209e6f77de2dcedb6d4f75da46faebeb0"
+    },
+    {
+      "file": "review-gate-b/family-events/voting-open-mobile.png",
+      "sha256": "79d8c5da225e2f20407154e112bd402d37415e71234c1ee53a47c94e64c746be"
+    },
+    {
+      "file": "review-gate-b/family-events/voting-long-copy-desktop.png",
+      "sha256": "81bc3bcc898cd935ffd4725fac2b1eaf81d59d5d5d8a473a9d00871a0c3a41db"
+    },
+    {
+      "file": "review-gate-b/family-events/voting-long-copy-mobile.png",
+      "sha256": "ae0f80f4e054406e4a2434e9fc23be965e28e1263e5cbb0f70b296c43af441b4"
+    },
+    {
+      "file": "review-gate-b/family-events/family-fallback-short-desktop.png",
+      "sha256": "a4b83acb9e70d95f07e9725bf3b58074c2007477fcb2ae38db5940e388706a62"
+    },
+    {
+      "file": "review-gate-b/family-events/family-fallback-short-mobile.png",
+      "sha256": "7752b1c5fb2d10f0316b5e7b664c348b6a400458062f5c0aa2da228916349991"
+    },
+    {
+      "file": "review-gate-b/family-events/family-tree-empty-desktop.png",
+      "sha256": "ddbb46af4f2daed2cfce8d0ae170fae9304bca90a10ed749ca714b5241453f46"
+    },
+    {
+      "file": "review-gate-b/family-events/family-tree-empty-mobile.png",
+      "sha256": "3d866879e74f9997764e1f4b8726fa8ab3675c89d67b8ba1e30b1746f72439d8"
+    },
+    {
+      "file": "review-gate-b/family-events/family-tree-large-desktop.png",
+      "sha256": "c5349d0ba26271f50130e4f1dfa1e5ab7a6b4d73d610e77aa1bdee1886a7450e"
+    },
+    {
+      "file": "review-gate-b/family-events/family-tree-large-mobile.png",
+      "sha256": "ee1093641c0f4b74a13707fbd8141fcc015c1369fc69a04f29170e66e72ca0c0"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/major-casino-win-desktop.png",
+      "sha256": "2e75537f442874067c651d8e960e32d99251cce183c8af464833b7d042c06f8f"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/major-casino-win-mobile.png",
+      "sha256": "44bdb20cf3333c40b2f69af6c63b67446f42794bc20937e85396898ef87bace9"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/lottery-winner-desktop.png",
+      "sha256": "2e34f1ea1fde684b0330cba6efdd828ea73bb8769b0e2e40b12622d1b2d74abd"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/lottery-winner-mobile.png",
+      "sha256": "c8404f340b90ac77abbd25ed2d32b01d650862bf07d14c24aabf669fec663fad"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/chair-pot-desktop.png",
+      "sha256": "212dcf05ce45715b21a0d8288b747dc57ed743da5e3fc2f6ed8d22d9a85fd855"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/chair-pot-mobile.png",
+      "sha256": "f85c6f0baa1f0689f56a92e9c1b4300e57a60027f8289f35745a2642ac04d6a2"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/weekly-spotlight-desktop.png",
+      "sha256": "efc9db42c09586b4e3277f03205e35d0cd583c8bd470eb3ba95ea8c62d3f44b3"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/weekly-spotlight-mobile.png",
+      "sha256": "87d00b6a9d057ef978f9af5cb6ce513e77cf251ef6933b11429883c674299508"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/major-record-desktop.png",
+      "sha256": "82b07fb6940a4da381857459468cf8d4935680ba078176bfebfc1ec3c6348fbc"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/major-record-mobile.png",
+      "sha256": "d791be41abc51d1a2ce1f048d3f2f6663435348e1ef7f176b8813f70fc52b845"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/chair-pot-long-values-desktop.png",
+      "sha256": "aa3bc912d816d059256f5b293357eb9d717d56693c8f8e2de7ece738ceeae79d"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/chair-pot-long-values-mobile.png",
+      "sha256": "a5e33bcd37cc905f508d86c5a8264ddcd3a6273d7c62320a8e00c8433a48c065"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/weekly-spotlight-empty-desktop.png",
+      "sha256": "72e97472ea74b4ed63e0b58420ca00035f079ec23001e9243d2e73a359e6eb3c"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/weekly-spotlight-empty-mobile.png",
+      "sha256": "50ed5371701d9c3a831b6b5978af27d880d6636ca35620fa105583019107e982"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/weekly-spotlight-long-names-desktop.png",
+      "sha256": "a9f3c51f989608694f7ba0de4d1853d393391587728906fac209a3a2203e3753"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/weekly-spotlight-long-names-mobile.png",
+      "sha256": "d6bc5b47f038dc078562da1df956e930dfe965c3b4e2134c37cdb734ef199166"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/records-empty-desktop.png",
+      "sha256": "29235cf8529d1303763a424db7f2c3355625e5f09f35c8c2ef2d6e4ffae38f57"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/records-empty-mobile.png",
+      "sha256": "556db2d41f8c2eb56714fa1965e9f8e076839452cce28cf5eb93e7af78d5e241"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/records-long-values-desktop.png",
+      "sha256": "ec603d52461ccc3a6e4ca2e35cb4c2aa4f728c2a8697e11b76aa7104aca085de"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/records-long-values-mobile.png",
+      "sha256": "67b0a45eccaf6b4a25fc0bf53acdc3be0836157bcdd51736c032f27bf70136c9"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/member-profile-desktop.png",
+      "sha256": "76ea5278f6c0dd5703ce6fb23fe4ba0432662deb9f552eb74a80fb8f4bd0f1ea"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/member-profile-mobile.png",
+      "sha256": "cc8a5ed1808112008341c24cecdc96688873933fe6c5ad8bf46b0ed3fbba0fa6"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/record-announcement-desktop.png",
+      "sha256": "2188c917bd3d02db993fde7f22770fdbb29c3fe95419569a8ec286a2a5b6390d"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/record-announcement-mobile.png",
+      "sha256": "3abba4d637d85ab746731226a204e0c35f1aad2edcf63e1a83f3eb4ba6515044"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/casino-avatar-fallback-desktop.png",
+      "sha256": "1c3f66bf0521b672a58af349c88e75a7cf47823cf800018cab3680140190feb8"
+    },
+    {
+      "file": "review-gate-b/casino-profiles/casino-avatar-fallback-mobile.png",
+      "sha256": "e9e129e0470e7bcaac5635e4dfb8e0bb2bd996065e49a2d2e90bad89eefd6689"
+    },
+    {
+      "file": "review-gate-b/community/poll-hidden-desktop.png",
+      "sha256": "3d5fdafb36495460932b5f0f98d319523c0ef2d25a258262b287e0e8171f55d8"
+    },
+    {
+      "file": "review-gate-b/community/poll-hidden-mobile.png",
+      "sha256": "233ae0ceedec794d17f1c2152a8e48d4d233d66a6ac236eaf6c62424f2c16f57"
+    },
+    {
+      "file": "review-gate-b/community/poll-ranked-result-desktop.png",
+      "sha256": "7b0454d7bd79d65799eb4e6ab4b44c13acd7298b78d4233cc2c130253d7e07ac"
+    },
+    {
+      "file": "review-gate-b/community/poll-ranked-result-mobile.png",
+      "sha256": "6e9d701ab232efcf485e7487c1cef69dc884cec8ab53709f723bab145ab63f68"
+    },
+    {
+      "file": "review-gate-b/community/suggestion-desktop.png",
+      "sha256": "d603d48ce0faa71f1103013f462573b2ca173a9d568c4bbf72e5da0322ad5fed"
+    },
+    {
+      "file": "review-gate-b/community/suggestion-mobile.png",
+      "sha256": "7caf1e559ec1ea88064c0fa5fa7a9189b72c81cd52cc451f2d7ed460df0095cb"
+    },
+    {
+      "file": "review-gate-b/community/ama-open-desktop.png",
+      "sha256": "05497097d851ea9bcd8b389f5c523dc085419a95e3728400cc1b955f31bf7c8f"
+    },
+    {
+      "file": "review-gate-b/community/ama-open-mobile.png",
+      "sha256": "2050cd6466d56931a33dbb6d634fef556c06d54cd2f39d362c0fa801d43f598b"
+    },
+    {
+      "file": "review-gate-b/community/ama-answer-desktop.png",
+      "sha256": "07e6874a6a1aaac90e5d3d6b33bc2f02dc4a45d0b91ae0a1ec92668726dd7b73"
+    },
+    {
+      "file": "review-gate-b/community/ama-answer-mobile.png",
+      "sha256": "5dc94caad6276ce67d73f986216d406a839cf1f42104c081fdc581270f2439c9"
+    },
+    {
+      "file": "review-gate-b/community/ama-declined-desktop.png",
+      "sha256": "a528e633837c703c075c5984c847857446268dce9cd4c14b68ff573c8fb4d06d"
+    },
+    {
+      "file": "review-gate-b/community/ama-declined-mobile.png",
+      "sha256": "2666921240df7f3432af5ec2b27440474917c24c6b03176f4ac51c9fda576608"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-paid-desktop.png",
+      "sha256": "cbe0c4e7dba74993240eb5dd230db7141efdd17d4ba183884a39a872535e1c93"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-paid-mobile.png",
+      "sha256": "f5f921a8a2d0fc4db0e112b7b0fb4ca9b6468448e7008f1805d4297f37d786d6"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-pending-desktop.png",
+      "sha256": "cec3491e5344c55b5eebdcc3076a6c82fa4cb769d649f2312be318f80ea76c46"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-pending-mobile.png",
+      "sha256": "002ad6270cb0022a655226b2591ba85135dc209b035d69015a8094e85bf4e31a"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-empty-desktop.png",
+      "sha256": "fef45db1af9dc0bdad0615bae0160502ccbd3b932c8356d01ad8176bd37e68e5"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-empty-mobile.png",
+      "sha256": "c1f6ba420337c534c37cd0718fb9f59302640990c4d3c859a6364f5a083ef1e3"
+    },
+    {
+      "file": "review-gate-b/community/long-text-desktop.png",
+      "sha256": "86a5509d58cb06141f8f98310dfccff2fc6c6405de37275b732f10281cf31367"
+    },
+    {
+      "file": "review-gate-b/community/long-text-mobile.png",
+      "sha256": "8d8fe9a75e56d98b55cfda424c23d6b4832abd73b798d726889273d95fcb1fec"
+    },
+    {
+      "file": "review-gate-b/community/poll-private-desktop.png",
+      "sha256": "382b5a1bd0d0cfb5bfb6edc9c2b89006b49e31c8d529fbc3fb347137d532bf39"
+    },
+    {
+      "file": "review-gate-b/community/poll-private-mobile.png",
+      "sha256": "1d81545dc2772ace9066d55ccbe916a10e26fea9a37ae8a91c8ae1384bb9079a"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-confirm-desktop.png",
+      "sha256": "c7a2b26cf4b953c7cc8021a109fb120cb81c1286dbf96d046bd3ec2c85d7ca93"
+    },
+    {
+      "file": "review-gate-b/community/giveaway-confirm-mobile.png",
+      "sha256": "e806d44295e3f3d5c6e5486f8ad5b4d8ac29b28fc91a702ab8d5762e345df9ec"
+    },
+    {
+      "file": "review-gate-b/community/staff-denied-desktop.png",
+      "sha256": "88418029e4917377ea6aaf145f63b276ac8ac31f82ce14083e025d732fdfeb36"
+    },
+    {
+      "file": "review-gate-b/community/staff-denied-mobile.png",
+      "sha256": "333940781583f47cf347625624d73b484d23c4fe3ad72d41de3dce1a997dabdd"
+    },
+    {
+      "file": "review-gate-b/chairisms/publication-desktop.png",
+      "sha256": "7e3734208ea85b0a3d27ba0bfd778851968f8778794b3f41cb2d949f78d7b94d"
+    },
+    {
+      "file": "review-gate-b/chairisms/publication-mobile.png",
+      "sha256": "96184fe7df400d7f5d7fbe7f51940d49719e0053ab7ce0e91ee7b289fa7de2c9"
+    },
+    {
+      "file": "review-gate-b/chairisms/reply-desktop.png",
+      "sha256": "c35e5993a3999cd41a510540e0c9b9a63f40fc9986a2a7cfade3fd2dac0824b1"
+    },
+    {
+      "file": "review-gate-b/chairisms/reply-mobile.png",
+      "sha256": "d1ed2b2af0c53b9d5222056bfcb7b4bf01e5dac96b11f7c9f18d6e07252a3d6d"
+    },
+    {
+      "file": "review-gate-b/chairisms/image-desktop.png",
+      "sha256": "640dcc16c525924d050bf0f0a896af4b87c883459b48dd078d1bfa89902b7df7"
+    },
+    {
+      "file": "review-gate-b/chairisms/image-mobile.png",
+      "sha256": "ce5c2785770bff479d4c22ae7830d2260b3b0842d5a6f4c0374431d44bcba18f"
+    },
+    {
+      "file": "review-gate-b/chairisms/long-text-desktop.png",
+      "sha256": "17e2caa14712e183e71e13c852cf0151324fc8467218d28e78c518ff1112820a"
+    },
+    {
+      "file": "review-gate-b/chairisms/long-text-mobile.png",
+      "sha256": "80fd0ff3c999b9cbf72a53f9ffda6b87bbabdf8ac5eac41b09392edbe1de59b2"
+    },
+    {
+      "file": "review-gate-b/chairisms/selector-desktop.png",
+      "sha256": "38f4c5a168286ddfe012395d7e7924f4d8ee107a1d73a0435ace49abe8f3d8df"
+    },
+    {
+      "file": "review-gate-b/chairisms/selector-mobile.png",
+      "sha256": "b0fdc0ce041684c605b1a924a30ab5e6c74878774ae2c70a2d02b235b1fe893a"
+    },
+    {
+      "file": "review-gate-b/chairisms/protected-desktop.png",
+      "sha256": "8974acbe3348e502efd903749db7b581f193d650b3c8e37422e4cc906f0d8724"
+    },
+    {
+      "file": "review-gate-b/chairisms/protected-mobile.png",
+      "sha256": "cf43e46229b948e3eb95c1547e1d864e2dfef794a1cf490ae8851e7589d42a00"
+    },
+    {
+      "file": "review-gate-b/chairisms/error-desktop.png",
+      "sha256": "05f9902cb998b8e08a984d3aa3789f90773238c9d42124085b2e8593f041bb70"
+    },
+    {
+      "file": "review-gate-b/chairisms/error-mobile.png",
+      "sha256": "72520d3df01f49b942c41e05002caceec79cbfcc799275cb1808f8e3f8ce373d"
+    },
+    {
+      "file": "review-gate-b/chairisms/empty-desktop.png",
+      "sha256": "23265946c21c36ece0a29a2fd0fe40b5a358bcb14bf2d09f96d3fbb55a3f0aa8"
+    },
+    {
+      "file": "review-gate-b/chairisms/empty-mobile.png",
+      "sha256": "e79b7cd7298268409f5fd4bd6802b77bdc9733102ac88adbccc6f495ee945fcf"
+    },
+    {
+      "file": "review-gate-b/superlative/winner-desktop.png",
+      "sha256": "78200bd3789a31c705a36d0f3b4836fc6d6f4bbcfd29adf9b2e1413179a6fd9f"
+    },
+    {
+      "file": "review-gate-b/superlative/winner-mobile.png",
+      "sha256": "198bf24f1413dd107c9c682cf250263eb28355f83fb146e5e6e3b4ad0f0e96df"
+    },
+    {
+      "file": "review-gate-b/superlative/nominations-desktop.png",
+      "sha256": "e86777d8147542d7e52e2fc7d686c2dfc1d339533dd28490a7e2b0fd3c787565"
+    },
+    {
+      "file": "review-gate-b/superlative/nominations-mobile.png",
+      "sha256": "7d9100f09903010767a9e31eabb144fa741b6fd651d1e832cea5de4cea0f0941"
+    },
+    {
+      "file": "review-gate-b/superlative/voting-desktop.png",
+      "sha256": "9ea4b57353c58872a7626c3378eb6e983c9a575216383058655d2e7fbf5f982a"
+    },
+    {
+      "file": "review-gate-b/superlative/voting-mobile.png",
+      "sha256": "74e1acf7380c5a49af0e3d9afb421e865a6a2f7fd98125bb98f34646f7a0900a"
+    },
+    {
+      "file": "review-gate-b/superlative/empty-desktop.png",
+      "sha256": "6f9a730fa55f517c3fd7aa95bac3b4a5fc4808539d5368c01631dc9b820c0f11"
+    },
+    {
+      "file": "review-gate-b/superlative/empty-mobile.png",
+      "sha256": "b549f3bbca7397de608f59fa61a83f0bcf800d3a17994690e3d45ced931156bb"
+    },
+    {
+      "file": "review-gate-b/superlative/long-name-desktop.png",
+      "sha256": "7605270bd9b92ed6707e7d1143939603de0ba3dfa24958647e9aa468d7e62d06"
+    },
+    {
+      "file": "review-gate-b/superlative/long-name-mobile.png",
+      "sha256": "657062c37ace0299cc2f250adf74db074273bc1d6f7c3530fcb58d487e066167"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-waiting-desktop.png",
+      "sha256": "0f406c76f4c1182ace5a448cf9b7bc46bd41aa35fd46a6dd07ec9e5de2fdbee2"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-waiting-mobile.png",
+      "sha256": "fd8d45574e3c5feafa424260cf0aaa2fbe1553247da762d4fb723cc38f0c02e1"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-returned-desktop.png",
+      "sha256": "90b709ddf0e488de37c775b2e4e7ccf39fb9d3b7c1cec02bf2c13a83e7b64d50"
+    },
+    {
+      "file": "review-gate-b/family-events/estate-returned-mobile.png",
+      "sha256": "415aea80d48961d9cc67dfab3d74c15a07ec343c691e21b623ea56fb13d4403b"
+    }
+  ]
+}

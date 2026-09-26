@@ -34,7 +34,8 @@
     "validate:visual-lock": "node scripts/validate-visual-lock.mjs",
     "start:worker": "node dist/apps/bot/src/index.js",
     "start:dashboard": "node scripts/start-dashboard.mjs",
-    "db:migrate:production": "node scripts/migrate-production.mjs"
+    "db:migrate:production": "node scripts/migrate-production.mjs",
+    "validate:command-shapes": "node scripts/command-shape-audit.mjs"
   },
   "type": "module",
   "packageManager": "npm@11.6.0",

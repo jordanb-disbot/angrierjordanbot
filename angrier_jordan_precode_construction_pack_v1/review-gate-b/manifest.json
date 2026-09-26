@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "status": "OWNER_GATE_B_PENDING",
+  "status": "OWNER_GATE_B_PASSED",
   "fixture": true,
   "liveDiscordCapture": false,
   "reviewCount": 70,
@@ -41,7 +41,7 @@
         "interactive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -52,6 +52,7 @@
         "mobile": "4a5a71c695a7d03fa40b0f0a3da2a43adb3d99dfcac3f6c11b0e1693c6af5c99"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 1
     },
     {
@@ -81,7 +82,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -92,6 +93,7 @@
         "mobile": "13b7a4660b6e16987801c9dacc7da8a8f1e09252d77ab69e08140274fb6bac1b"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 2
     },
     {
@@ -121,7 +123,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -132,6 +134,7 @@
         "mobile": "4c5efe06e445e80109b58eedee5244cdf1d74feeef646eeb9f7a37e671340d6a"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 3
     },
     {
@@ -147,7 +150,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -158,6 +161,7 @@
         "mobile": "e377c7c94c10edfc060c8deb833042f6251d95d1b483a685aedcf64a3bb67b0b"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 4
     },
     {
@@ -173,7 +177,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -184,6 +188,7 @@
         "mobile": "095ec1288defeec60a2a810d03f4145b8a57b3f845a6540d8871729f49976026"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 5
     },
     {
@@ -220,7 +225,7 @@
         "interactive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -231,6 +236,7 @@
         "mobile": "db564ce6e6d284d37324c09925025cd2f34c43a507b51d6c96a6c018500aaec2"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 6
     },
     {
@@ -268,7 +274,7 @@
         "interactive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -279,6 +285,7 @@
         "mobile": "3f396fe806430ab81a44863a7aa3f75bde06b7a15c35a8b207568d9470e2cfed"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 7
     },
     {
@@ -295,7 +302,7 @@
         "destructive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -306,6 +313,7 @@
         "mobile": "d0ef605b8510c7e5667681fc32dda441024235abc63f8f7e1df3139e4be05efc"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 8
     },
     {
@@ -322,7 +330,7 @@
         "destructive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -333,6 +341,7 @@
         "mobile": "e718e1bed5dff24f74fcf1aedf359edce3b3864217c9b40d548de16a75dca56a"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 9
     },
     {
@@ -349,7 +358,7 @@
         "destructive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -360,6 +369,7 @@
         "mobile": "6ad03abd5175fbf34e8335c8b1bf3e59df2c54e1069b4798882f55f6efde9f18"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 10
     },
     {
@@ -376,7 +386,7 @@
         "destructive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -387,6 +397,7 @@
         "mobile": "0e4b65ad341d0a3da1c68b91089bbbad27703227e51e9cae829f5235b0abead6"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 11
     },
     {
@@ -403,7 +414,7 @@
         "destructive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -414,6 +425,7 @@
         "mobile": "4512e412bbed395c8ecef90ecc36a221bf061c241c78bca0fb7f50e065dc096a"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 12
     },
     {
@@ -429,7 +441,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -440,6 +452,7 @@
         "mobile": "9639a6549f2363b02d4930bf90057c2f30ab4311d21d6d3066aa3e5d7776e02d"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 13
     },
     {
@@ -463,7 +476,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -474,6 +487,7 @@
         "mobile": "1a899f7736547020d6f2533cb23e6da9afc8969311cf3db20c29cd4fdd883a68"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 14
     },
     {
@@ -489,7 +503,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -500,6 +514,7 @@
         "mobile": "e477c88404f1186461186f07c833e00f7c4d411439f047155fa3942046bdae41"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 15
     },
     {
@@ -515,7 +530,7 @@
         "financial"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -526,6 +541,7 @@
         "mobile": "6e6a2ccbca38797b7b721e6186220aae707b5a50f59665b8ad826111b940fa0a"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 16
     },
     {
@@ -554,7 +570,7 @@
         "interactive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -565,6 +581,7 @@
         "mobile": "7189839cce5f54d5bd8da5c243e0bc146ff4d582ac45104f15f5d4bc97d146c8"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 17
     },
     {
@@ -587,7 +604,7 @@
         "interactive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -598,6 +615,7 @@
         "mobile": "303635b0e960f724f5164e700d77457b3a2340071d0c7da91e5f5a7012434a64"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 18
     },
     {
@@ -613,7 +631,7 @@
         "informational"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -624,6 +642,7 @@
         "mobile": "5839dec70428f81a178a44318fba0b6c4cf7fb7d7d8370c168f97ee39ba1e02f"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 19
     },
     {
@@ -639,7 +658,7 @@
         "destructive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -650,6 +669,7 @@
         "mobile": "b4d3510766b61ad38476ab3ea0b6a4898ff025958de0d85467f8d98438cc1f60"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 20
     },
     {
@@ -673,7 +693,7 @@
         "financial"
       ],
       "renderer": "packages/features-crime/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -684,6 +704,7 @@
         "mobile": "b28fdebb24ab42112556fdaec077ad2ce694a789a79da6df358409ddfd21c3c1"
       },
       "rendererHash": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1",
+      "ownerApproval": "APPROVED",
       "number": 21
     },
     {
@@ -712,7 +733,7 @@
         "interactive"
       ],
       "renderer": "packages/features-party/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -723,6 +744,7 @@
         "mobile": "c71032b9ef19049adcec466e3a47b2d29cc1ee3ea94bcf12f288c1c763953413"
       },
       "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "ownerApproval": "APPROVED",
       "number": 22
     },
     {
@@ -751,7 +773,7 @@
         "interactive"
       ],
       "renderer": "packages/features-party/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -762,6 +784,7 @@
         "mobile": "5199cda6f79b8fa0f98080772443b9dddd405776492f2f7f8bbcb7093f69556f"
       },
       "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "ownerApproval": "APPROVED",
       "number": 23
     },
     {
@@ -785,7 +808,7 @@
         "moderation-related"
       ],
       "renderer": "packages/features-crime/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -796,6 +819,7 @@
         "mobile": "470d29579848ea9ad9d72aa29d7800ee9767a8711daa61533cada7a54ae1b5d9"
       },
       "rendererHash": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1",
+      "ownerApproval": "APPROVED",
       "number": 24
     },
     {
@@ -833,7 +857,7 @@
         "financial"
       ],
       "renderer": "packages/features-crime/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -844,6 +868,7 @@
         "mobile": "b716b965cf3b80becfd27a88463fde18e40b08132c8a6a68e86ca2629ada087f"
       },
       "rendererHash": "ccafd3fee32675b20bda9985cddbaa8cfad5f7a30d545f44c3b7c1bb1bf9f1a1",
+      "ownerApproval": "APPROVED",
       "number": 25
     },
     {
@@ -872,7 +897,7 @@
         "interactive"
       ],
       "renderer": "packages/features-party/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -883,6 +908,7 @@
         "mobile": "a058c7510ab80e1049fa5b3e4f35116e8a959865ce038ba44a937c0c2aad6d24"
       },
       "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "ownerApproval": "APPROVED",
       "number": 26
     },
     {
@@ -929,7 +955,7 @@
         "interactive"
       ],
       "renderer": "packages/features-party/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -940,6 +966,7 @@
         "mobile": "79d8c5da225e2f20407154e112bd402d37415e71234c1ee53a47c94e64c746be"
       },
       "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "ownerApproval": "APPROVED",
       "number": 27
     },
     {
@@ -968,7 +995,7 @@
         "interactive"
       ],
       "renderer": "packages/features-party/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -979,6 +1006,7 @@
         "mobile": "ae0f80f4e054406e4a2434e9fc23be965e28e1263e5cbb0f70b296c43af441b4"
       },
       "rendererHash": "f1026f5093378f3a1c3c537bd706c03c5d76a6d8231994af5247ef9911f2ab59",
+      "ownerApproval": "APPROVED",
       "number": 28
     },
     {
@@ -1007,7 +1035,7 @@
         "interactive"
       ],
       "renderer": "packages/features-family/src/render.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -1018,6 +1046,7 @@
         "mobile": "7752b1c5fb2d10f0316b5e7b664c348b6a400458062f5c0aa2da228916349991"
       },
       "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "APPROVED",
       "number": 29
     },
     {
@@ -1033,7 +1062,7 @@
         "informational"
       ],
       "renderer": "apps/bot/src/discord/family-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -1044,6 +1073,7 @@
         "mobile": "3d866879e74f9997764e1f4b8726fa8ab3675c89d67b8ba1e30b1746f72439d8"
       },
       "rendererHash": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157",
+      "ownerApproval": "APPROVED",
       "number": 30
     },
     {
@@ -1059,7 +1089,7 @@
         "informational"
       ],
       "renderer": "apps/bot/src/discord/family-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "visibility": "member-facing attachment with actual coordinator controls in review metadata",
@@ -1070,6 +1100,7 @@
         "mobile": "ee1093641c0f4b74a13707fbd8141fcc015c1369fc69a04f29170e66e72ca0c0"
       },
       "rendererHash": "8b220576f51fd218eedf6b7eccb9ad1a6882727248061c324ab8214884e70157",
+      "ownerApproval": "APPROVED",
       "number": 31
     },
     {
@@ -1087,7 +1118,7 @@
       "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
       "desktop": "review-gate-b/casino-profiles/major-casino-win-desktop.png",
       "mobile": "review-gate-b/casino-profiles/major-casino-win-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
@@ -1099,6 +1130,7 @@
         "mobile": "44bdb20cf3333c40b2f69af6c63b67446f42794bc20937e85396898ef87bace9"
       },
       "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "ownerApproval": "APPROVED",
       "number": 32
     },
     {
@@ -1113,7 +1145,7 @@
       "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
       "desktop": "review-gate-b/casino-profiles/lottery-winner-desktop.png",
       "mobile": "review-gate-b/casino-profiles/lottery-winner-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1125,6 +1157,7 @@
         "mobile": "c8404f340b90ac77abbd25ed2d32b01d650862bf07d14c24aabf669fec663fad"
       },
       "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "ownerApproval": "APPROVED",
       "number": 33
     },
     {
@@ -1139,7 +1172,7 @@
       "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
       "desktop": "review-gate-b/casino-profiles/chair-pot-desktop.png",
       "mobile": "review-gate-b/casino-profiles/chair-pot-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1151,6 +1184,7 @@
         "mobile": "f85c6f0baa1f0689f56a92e9c1b4300e57a60027f8289f35745a2642ac04d6a2"
       },
       "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "ownerApproval": "APPROVED",
       "number": 34
     },
     {
@@ -1164,7 +1198,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
       "desktop": "review-gate-b/casino-profiles/weekly-spotlight-desktop.png",
       "mobile": "review-gate-b/casino-profiles/weekly-spotlight-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1176,6 +1210,7 @@
         "mobile": "87d00b6a9d057ef978f9af5cb6ce513e77cf251ef6933b11429883c674299508"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 35
     },
     {
@@ -1192,7 +1227,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderRecords",
       "desktop": "review-gate-b/casino-profiles/major-record-desktop.png",
       "mobile": "review-gate-b/casino-profiles/major-record-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
@@ -1204,6 +1239,7 @@
         "mobile": "d791be41abc51d1a2ce1f048d3f2f6663435348e1ef7f176b8813f70fc52b845"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 36
     },
     {
@@ -1218,7 +1254,7 @@
       "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
       "desktop": "review-gate-b/casino-profiles/chair-pot-long-values-desktop.png",
       "mobile": "review-gate-b/casino-profiles/chair-pot-long-values-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1230,6 +1266,7 @@
         "mobile": "a5e33bcd37cc905f508d86c5a8264ddcd3a6273d7c62320a8e00c8433a48c065"
       },
       "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "ownerApproval": "APPROVED",
       "number": 37
     },
     {
@@ -1243,7 +1280,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
       "desktop": "review-gate-b/casino-profiles/weekly-spotlight-empty-desktop.png",
       "mobile": "review-gate-b/casino-profiles/weekly-spotlight-empty-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1255,6 +1292,7 @@
         "mobile": "50ed5371701d9c3a831b6b5978af27d880d6636ca35620fa105583019107e982"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 38
     },
     {
@@ -1268,7 +1306,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderSpotlight",
       "desktop": "review-gate-b/casino-profiles/weekly-spotlight-long-names-desktop.png",
       "mobile": "review-gate-b/casino-profiles/weekly-spotlight-long-names-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1280,6 +1318,7 @@
         "mobile": "d6bc5b47f038dc078562da1df956e930dfe965c3b4e2134c37cdb734ef199166"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 39
     },
     {
@@ -1296,7 +1335,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderRecords",
       "desktop": "review-gate-b/casino-profiles/records-empty-desktop.png",
       "mobile": "review-gate-b/casino-profiles/records-empty-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
@@ -1308,6 +1347,7 @@
         "mobile": "556db2d41f8c2eb56714fa1965e9f8e076839452cce28cf5eb93e7af78d5e241"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 40
     },
     {
@@ -1324,7 +1364,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderRecords",
       "desktop": "review-gate-b/casino-profiles/records-long-values-desktop.png",
       "mobile": "review-gate-b/casino-profiles/records-long-values-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
@@ -1336,6 +1376,7 @@
         "mobile": "67b0a45eccaf6b4a25fc0bf53acdc3be0836157bcdd51736c032f27bf70136c9"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 41
     },
     {
@@ -1352,7 +1393,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderProfile",
       "desktop": "review-gate-b/casino-profiles/member-profile-desktop.png",
       "mobile": "review-gate-b/casino-profiles/member-profile-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
@@ -1364,6 +1405,7 @@
         "mobile": "cc8a5ed1808112008341c24cecdc96688873933fe6c5ad8bf46b0ed3fbba0fa6"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 42
     },
     {
@@ -1377,7 +1419,7 @@
       "renderer": "packages/features-profiles/src/render.ts#renderRecords",
       "desktop": "review-gate-b/casino-profiles/record-announcement-desktop.png",
       "mobile": "review-gate-b/casino-profiles/record-announcement-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "No interactive controls for this announcement.",
@@ -1389,6 +1431,7 @@
         "mobile": "3abba4d637d85ab746731226a204e0c35f1aad2edcf63e1a83f3eb4ba6515044"
       },
       "rendererHash": "8da9887cc2f6f3723904c8c1b1cf965f875271ba028563bd5949eeea21eef730",
+      "ownerApproval": "APPROVED",
       "number": 43
     },
     {
@@ -1406,7 +1449,7 @@
       "renderer": "packages/features-casino/src/render.ts#renderCasinoResult",
       "desktop": "review-gate-b/casino-profiles/casino-avatar-fallback-desktop.png",
       "mobile": "review-gate-b/casino-profiles/casino-avatar-fallback-mobile.png",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "controlsShown": [],
       "controlsNote": "Native Discord controls listed above are outside this runtime attachment and are not pictured.",
@@ -1418,6 +1461,7 @@
         "mobile": "e9e129e0470e7bcaac5635e4dfb8e0bb2bd996065e49a2d2e90bad89eefd6689"
       },
       "rendererHash": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f",
+      "ownerApproval": "APPROVED",
       "number": 44
     },
     {
@@ -1452,7 +1496,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1463,6 +1507,7 @@
         "mobile": "233ae0ceedec794d17f1c2152a8e48d4d233d66a6ac236eaf6c62424f2c16f57"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 45
     },
     {
@@ -1485,7 +1530,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1496,6 +1541,7 @@
         "mobile": "6e9d701ab232efcf485e7487c1cef69dc884cec8ab53709f723bab145ab63f68"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 46
     },
     {
@@ -1530,7 +1576,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1541,6 +1587,7 @@
         "mobile": "7caf1e559ec1ea88064c0fa5fa7a9189b72c81cd52cc451f2d7ed460df0095cb"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 47
     },
     {
@@ -1581,7 +1628,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1592,6 +1639,7 @@
         "mobile": "2050cd6466d56931a33dbb6d634fef556c06d54cd2f39d362c0fa801d43f598b"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 48
     },
     {
@@ -1614,7 +1662,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1625,6 +1673,7 @@
         "mobile": "5dc94caad6276ce67d73f986216d406a839cf1f42104c081fdc581270f2439c9"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 49
     },
     {
@@ -1647,7 +1696,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1658,6 +1707,7 @@
         "mobile": "2666921240df7f3432af5ec2b27440474917c24c6b03176f4ac51c9fda576608"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 50
     },
     {
@@ -1686,7 +1736,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1697,6 +1747,7 @@
         "mobile": "f5f921a8a2d0fc4db0e112b7b0fb4ca9b6468448e7008f1805d4297f37d786d6"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 51
     },
     {
@@ -1725,7 +1776,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1736,6 +1787,7 @@
         "mobile": "002ad6270cb0022a655226b2591ba85135dc209b035d69015a8094e85bf4e31a"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 52
     },
     {
@@ -1758,7 +1810,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1769,6 +1821,7 @@
         "mobile": "c1f6ba420337c534c37cd0718fb9f59302640990c4d3c859a6364f5a083ef1e3"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 53
     },
     {
@@ -1803,7 +1856,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1814,6 +1867,7 @@
         "mobile": "8d8fe9a75e56d98b55cfda424c23d6b4832abd73b798d726889273d95fcb1fec"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 54
     },
     {
@@ -1848,7 +1902,7 @@
         "interactive"
       ],
       "renderer": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -1859,6 +1913,7 @@
         "mobile": "1d81545dc2772ace9066d55ccbe916a10e26fea9a37ae8a91c8ae1384bb9079a"
       },
       "rendererHash": "15b528ec0ba5b85e458728a459f683b77d291373cf064e4fa249b0266d11cf5c",
+      "ownerApproval": "APPROVED",
       "number": 55
     },
     {
@@ -1880,7 +1935,7 @@
         "financial"
       ],
       "renderer": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -1891,6 +1946,7 @@
         "mobile": "e806d44295e3f3d5c6e5486f8ad5b4d8ac29b28fc91a702ab8d5762e345df9ec"
       },
       "rendererHash": "15b528ec0ba5b85e458728a459f683b77d291373cf064e4fa249b0266d11cf5c",
+      "ownerApproval": "APPROVED",
       "number": 56
     },
     {
@@ -1905,7 +1961,7 @@
         "moderation-related"
       ],
       "renderer": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -1916,6 +1972,7 @@
         "mobile": "333940781583f47cf347625624d73b484d23c4fe3ad72d41de3dce1a997dabdd"
       },
       "rendererHash": "15b528ec0ba5b85e458728a459f683b77d291373cf064e4fa249b0266d11cf5c",
+      "ownerApproval": "APPROVED",
       "number": 57
     },
     {
@@ -1931,7 +1988,7 @@
       ],
       "renderer": "packages/features-chairisms/src/render.ts",
       "adapter": "apps/bot/src/discord/chairisms-publication.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1942,6 +1999,7 @@
         "mobile": "96184fe7df400d7f5d7fbe7f51940d49719e0053ab7ce0e91ee7b289fa7de2c9"
       },
       "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "ownerApproval": "APPROVED",
       "number": 58
     },
     {
@@ -1957,7 +2015,7 @@
       ],
       "renderer": "packages/features-chairisms/src/render.ts",
       "adapter": "apps/bot/src/discord/chairisms-publication.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1968,6 +2026,7 @@
         "mobile": "d1ed2b2af0c53b9d5222056bfcb7b4bf01e5dac96b11f7c9f18d6e07252a3d6d"
       },
       "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "ownerApproval": "APPROVED",
       "number": 59
     },
     {
@@ -1983,7 +2042,7 @@
       ],
       "renderer": "packages/features-chairisms/src/render.ts",
       "adapter": "apps/bot/src/discord/chairisms-publication.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -1994,6 +2053,7 @@
         "mobile": "ce5c2785770bff479d4c22ae7830d2260b3b0842d5a6f4c0374431d44bcba18f"
       },
       "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "ownerApproval": "APPROVED",
       "number": 60
     },
     {
@@ -2009,7 +2069,7 @@
       ],
       "renderer": "packages/features-chairisms/src/render.ts",
       "adapter": "apps/bot/src/discord/chairisms-publication.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -2020,6 +2080,7 @@
         "mobile": "80fd0ff3c999b9cbf72a53f9ffda6b87bbabdf8ac5eac41b09392edbe1de59b2"
       },
       "rendererHash": "88f8380058827a9bf400a40d099d3a73f2069bae169851dc46e5f2de2c515188",
+      "ownerApproval": "APPROVED",
       "number": 61
     },
     {
@@ -2059,7 +2120,7 @@
         "interactive"
       ],
       "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -2070,6 +2131,7 @@
         "mobile": "b0fdc0ce041684c605b1a924a30ab5e6c74878774ae2c70a2d02b235b1fe893a"
       },
       "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "ownerApproval": "APPROVED",
       "number": 62
     },
     {
@@ -2084,7 +2146,7 @@
         "informational"
       ],
       "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -2095,6 +2157,7 @@
         "mobile": "cf43e46229b948e3eb95c1547e1d864e2dfef794a1cf490ae8851e7589d42a00"
       },
       "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "ownerApproval": "APPROVED",
       "number": 63
     },
     {
@@ -2109,7 +2172,7 @@
         "informational"
       ],
       "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -2120,6 +2183,7 @@
         "mobile": "72520d3df01f49b942c41e05002caceec79cbfcc799275cb1808f8e3f8ce373d"
       },
       "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "ownerApproval": "APPROVED",
       "number": 64
     },
     {
@@ -2134,7 +2198,7 @@
         "informational"
       ],
       "renderer": "apps/bot/src/discord/chairisms-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": true,
@@ -2145,6 +2209,7 @@
         "mobile": "e79b7cd7298268409f5fd4bd6802b77bdc9733102ac88adbccc6f495ee945fcf"
       },
       "rendererHash": "d06778b01a235f2a46a92b2eb206215021416658f1eaa02b770ff2fc2c03369c",
+      "ownerApproval": "APPROVED",
       "number": 65
     },
     {
@@ -2167,7 +2232,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -2178,6 +2243,7 @@
         "mobile": "198bf24f1413dd107c9c682cf250263eb28355f83fb146e5e6e3b4ad0f0e96df"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 66
     },
     {
@@ -2206,7 +2272,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -2217,6 +2283,7 @@
         "mobile": "7d9100f09903010767a9e31eabb144fa741b6fd651d1e832cea5de4cea0f0941"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 67
     },
     {
@@ -2245,7 +2312,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -2256,6 +2323,7 @@
         "mobile": "74e1acf7380c5a49af0e3d9afb421e865a6a2f7fd98125bb98f34646f7a0900a"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 68
     },
     {
@@ -2278,7 +2346,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -2289,6 +2357,7 @@
         "mobile": "b549f3bbca7397de608f59fa61a83f0bcf800d3a17994690e3d45ced931156bb"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 69
     },
     {
@@ -2311,7 +2380,7 @@
       ],
       "renderer": "packages/features-community/src/render.ts",
       "adapter": "apps/bot/src/discord/community-coordinator.ts",
-      "status": "READY FOR OWNER REVIEW",
+      "status": "APPROVED_BY_OWNER",
       "fixture": true,
       "liveDiscordCapture": false,
       "private": false,
@@ -2322,6 +2391,7 @@
         "mobile": "657062c37ace0299cc2f250adf74db074273bc1d6f7c3530fcb58d487e066167"
       },
       "rendererHash": "c3c30bd983809cf2b510bf253b6ed957b574023b5fc79cc41b586a1a6d511dba",
+      "ownerApproval": "APPROVED",
       "number": 70
     },
     {
@@ -2347,7 +2417,8 @@
         "desktop": "0f406c76f4c1182ace5a448cf9b7bc46bd41aa35fd46a6dd07ec9e5de2fdbee2",
         "mobile": "fd8d45574e3c5feafa424260cf0aaa2fbe1553247da762d4fb723cc38f0c02e1"
       },
-      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "INTERNAL_FIXTURE"
     },
     {
       "id": "estate-returned",
@@ -2372,7 +2443,8 @@
         "desktop": "90b709ddf0e488de37c775b2e4e7ccf39fb9d3b7c1cec02bf2c13a83e7b64d50",
         "mobile": "415aea80d48961d9cc67dfab3d74c15a07ec343c691e21b623ea56fb13d4403b"
       },
-      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711"
+      "rendererHash": "7e71953128d4306d799cc08f978edc8aef7009b1ae12e9d338b6af5e5613f711",
+      "ownerApproval": "INTERNAL_FIXTURE"
     }
   ]
 }

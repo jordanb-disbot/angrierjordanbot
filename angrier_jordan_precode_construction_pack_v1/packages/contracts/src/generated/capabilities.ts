@@ -271,6 +271,24 @@ export const CAPABILITY_MATRIX = {
       "recliner",
       "chaise_lounge",
       "throne"
+    ],
+    "social.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
+    ],
+    "learning.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
+    ],
+    "introductions.use": [
+      "member",
+      "recliner",
+      "chaise_lounge",
+      "throne"
     ]
   },
   "rules": [

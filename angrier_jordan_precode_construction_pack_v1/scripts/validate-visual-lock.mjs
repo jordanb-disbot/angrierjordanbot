@@ -6,3 +6,7 @@ for(const entry of manifest.files){if(createHash('sha256').update(fs.readFileSyn
 const theme=JSON.parse(fs.readFileSync(new URL('../production/theme/brand.json',import.meta.url),'utf8'));
 if(theme.typography.heading!=='Space Grotesk'||theme.typography.body!=='Inter')throw new Error('Approved typography changed');
 console.log('Approved visual reference lock PASS: '+manifest.files.length+' immutable files.');
+const gateB=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/gate-b-2026-09-25.json',import.meta.url),'utf8'));
+if(gateB.status!=='PASSED')throw new Error('Gate B approval status changed');
+for(const entry of gateB.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+entry.file,import.meta.url))).digest('hex')!==entry.sha256)throw new Error('Approved Gate B visual changed: '+entry.file);}
+console.log('Approved Gate B visual lock PASS: '+gateB.files.length+' fixture images.');

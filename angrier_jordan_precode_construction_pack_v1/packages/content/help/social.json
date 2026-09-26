@@ -1,0 +1,29 @@
+{
+  "title": "Social reactions",
+  "commands": [
+    "social_react",
+    "roast",
+    "notmad",
+    "haiku"
+  ],
+  "body": "Choose a reaction by its searchable name. Targeted reactions require an eligible member. Roast privacy is checked before publication and again for the one-use Roast Back. Notmad is server-owner only. Haiku is an exact joke, not a profiling tool.",
+  "fields": {
+    "action": "Search all38 approved reactions; aliases like touch grass and type shit are supported.",
+    "member": "Choose the target member when required by the selected reaction."
+  },
+  "examples": [
+    "/social react action:compliment member:@ExampleMember",
+    "/social roast member:@ExampleMember",
+    "/social notmad",
+    "/haiku"
+  ],
+  "tutorial": {
+    "steps": [
+      "Open /social react and search for the reaction.",
+      "Select an eligible member when the reaction needs a target.",
+      "Review before submitting: reactions appear publicly in the configured main chat.",
+      "For roasts, the target may Roast Back once while the control is available. Privacy and confinement still apply.",
+      "Use /privacy roast to control whether you may be targeted."
+    ]
+  }
+}

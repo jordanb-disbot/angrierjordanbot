@@ -1,7 +1,7 @@
 {
   "version": 3,
   "source_of_truth": "Canonical Build Specification v2026-09-21 + PostgreSQL live config",
-  "setting_count": 244,
+  "setting_count": 255,
   "settings": [
     {
       "key": "server.timezone",
@@ -1075,7 +1075,7 @@
       "key": "music.enabled",
       "section": "music",
       "type": "boolean",
-      "default": true,
+      "default": false,
       "editable_by": [
         "throne",
         "chaise_lounge"
@@ -4401,6 +4401,188 @@
         "chairisms.cooldown_seconds",
         "chairisms.excluded_channel_ids"
       ]
+    },
+    {
+      "key": "features.social",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Keep off until social acceptance passes.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
+      "key": "features.haiku",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Keep off until haiku acceptance passes.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
+      "key": "features.lore",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Keep off until lore acceptance passes.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
+      "key": "features.learning",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Keep off until learning acceptance passes.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
+      "key": "features.tldr",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Keep off until tldr acceptance passes.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
+      "key": "features.introductions",
+      "section": "features",
+      "type": "boolean",
+      "default": false,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Keep off until introductions acceptance passes.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
+      "key": "social.throttle_seconds",
+      "section": "social",
+      "type": "integer",
+      "default": 3,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Technical social reaction anti-spam throttle.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": [],
+      "min": 1,
+      "max": 30
+    },
+    {
+      "key": "social.roast_back_seconds",
+      "section": "social",
+      "type": "integer",
+      "default": 900,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "One-use Roast Back availability after confirmed publication.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": [],
+      "min": 30,
+      "max": 3600
+    },
+    {
+      "key": "haiku.response_probability",
+      "section": "haiku",
+      "type": "json",
+      "default": 0.2,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Probability of a complaint for a valid haiku; bounded0–0.5. Specialized editor required.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "blocked",
+      "depends_on": []
+    },
+    {
+      "key": "haiku.channel_cooldown_seconds",
+      "section": "haiku",
+      "type": "integer",
+      "default": 300,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Minimum interval between passive haiku complaints per channel.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": [],
+      "min": 30,
+      "max": 3600
+    },
+    {
+      "key": "introductions.form",
+      "section": "introductions",
+      "type": "json",
+      "default": null,
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Published versioned introduction form/card configuration. Shared draft validation and specialized editor required.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "blocked",
+      "depends_on": []
     }
   ]
 }

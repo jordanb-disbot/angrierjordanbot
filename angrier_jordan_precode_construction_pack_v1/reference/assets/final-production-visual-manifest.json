@@ -6117,6 +6117,24 @@
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Centered Gate B lounge composition and framed member portraits; owner approval pending.",
       "sha256": "93d819f95fe8b69c6e8ac06df04f60653faa6c3aad0781de6b11b08a0ea5003a"
+    },
+    {
+      "id": "introductions.runtime",
+      "file": "packages/features-introductions/src/render.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
+      "sha256": "97166667dee8b5dd00a6c3ee4820b4f6eda4384d3f81d8949d8b3a63945d202d"
+    },
+    {
+      "id": "social.runtime",
+      "file": "packages/features-social/src/render.ts",
+      "category": "runtime",
+      "canonical": true,
+      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
+      "sha256": "730a704a7d6c195678eaddefd9a517e892fad33017ae29a267a7b53746c2b096"
     }
   ]
 }

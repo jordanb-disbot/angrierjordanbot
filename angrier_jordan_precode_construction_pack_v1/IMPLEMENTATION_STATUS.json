@@ -2,24 +2,25 @@
   "date": "2026-09-25",
   "source_of_truth": "CODEX_MASTER_HANDOFF_2026-09-25.md, then canonical 2026-09-21 contract",
   "checkpoint": 19,
-  "checkpoint_name": "Family persistence recovery and preserved Community/Chairisms integration",
-  "status": "PERSISTENCE_ACCEPTANCE_PASSED_GATE_B_OWNER_REVIEW_PENDING",
+  "checkpoint_name": "Gate B approved; Phase 22 member content and social runtime",
+  "status": "GATE_B_PASSED_PHASE_22_IN_PROGRESS",
   "registry": {
-    "interactions": 192,
-    "settings": 244,
-    "capabilities": 53,
+    "interactions": 155,
+    "settings": 255,
+    "capabilities": 56,
     "generated_application_commands": 65,
     "top_level_chat_input_commands": 64
   },
   "database": {
-    "schema_version": "0020_typed_item_escrow",
-    "prisma_models": 90
+    "schema_version": "0021_phase22_member_content",
+    "prisma_models": 92
   },
   "visual_library": {
-    "assets_and_templates": 385,
+    "assets_and_templates": 391,
     "embedded": true,
     "wyr_visual_standard_approved": true,
-    "permanent_visual_system": "production/theme/brand.json"
+    "permanent_visual_system": "production/theme/brand.json",
+    "gate_b_authority": "docs/approved_visuals/gate-b-2026-09-25.json"
   },
   "implemented": [
     "Golden WYR vertical slice and approved deterministic runtime renderer",
@@ -50,7 +51,7 @@
   ],
   "verification": {
     "preflight": "PASS",
-    "domain_tests": 207,
+    "domain_tests": 233,
     "domain_tests_failed": 0,
     "typescript_domain_typecheck": "PASS",
     "production_wiring_structure": "PASS",
@@ -62,7 +63,7 @@
     "full_workspace_typecheck": "PASS",
     "dashboard_production_build": "PASS",
     "dependency_lockfile": "package-lock.json",
-    "adapter_tests": 134,
+    "adapter_tests": 202,
     "postgres_item_acceptance": "PASS_11_TESTS",
     "full_build": "PASS",
     "postgres_migrations": "PASS_0001_THROUGH_0020_IN_ISOLATED_TEST_SCHEMAS",
@@ -97,7 +98,8 @@
     "generated_output_sync": "PASS_192_COMMANDS_244_SETTINGS_53_CAPABILITIES_NO_CODEGEN_DRIFT",
     "family_recovery_report": "docs/FAMILY_PERSISTENCE_RECOVERY.md",
     "implementation_ci": "https://github.com/jordanb-disbot/angrierjordanbot/actions/runs/36207522614",
-    "implementation_commit": "1588a3c9c3677cfd81bd424f7408466cfe126abb"
+    "implementation_commit": "1588a3c9c3677cfd81bd424f7408466cfe126abb",
+    "visual_revision_commit": "38375036e0da95c273621c6e079254104fa46afd"
   },
   "feature_flags": {
     "party_games": "KEEP_OFF",
@@ -140,7 +142,7 @@
     "ENABLE_CHAIRISMS_SMOKE": false,
     "features.chairisms": false
   },
-  "next_checkpoint": "Gate B integration/owner review, then remaining roadmap; no production enablement or live Discord acceptance yet",
+  "next_checkpoint": "Phase 22 Lore / Introductions / Tutorial / TLDR / Social / Haiku, then Phase 23 Music and owner Gate C",
   "phase_09": {
     "implementation": "domain, PostgreSQL adapter and Discord controls present",
     "acceptance": "PostgreSQL concurrency/idempotency/restart gate passed; live Discord pending",
@@ -150,7 +152,6 @@
     "implementation": "Domain, persistence, guarded Discord adapter and database acceptance implemented; live acceptance pending",
     "remaining": [
       "Live Discord acceptance",
-      "Approved visual review",
       "Record producers for later feature phases"
     ]
   },
@@ -158,8 +159,7 @@
     "implementation": "Reusable source-aware wager escrow, casino, lottery, records and restart recovery; flags off",
     "acceptance": "PASS_10_POSTGRES_TESTS; live Discord pending",
     "remaining": [
-      "Live Discord acceptance",
-      "Owner visual review"
+      "Live Discord acceptance"
     ]
   },
   "phase_12": {
@@ -181,5 +181,22 @@
       "deployment_authorized": false
     }
   ],
-  "baseline_checkpoint": 8
+  "baseline_checkpoint": 8,
+  "owner_gates": {
+    "A": "PASSED",
+    "B": "PASSED_2026-09-25",
+    "C": "PENDING_MUSIC",
+    "D": "PENDING_DASHBOARD",
+    "E": "PENDING_FINAL_VISUAL"
+  },
+  "phase_22": {
+    "status": "IN_PROGRESS_FLAGS_OFF",
+    "command_reconciliation": "APPROVED_SOCIAL_REACT_AUTOCOMPLETE_AND_PRIVATE_INTRODUCE_BUTTONS",
+    "lore": "IMPLEMENTATION READY / CONTENT PENDING OWNER AUTHORING",
+    "lore_content": "NO_APPROVED_PROSE_OWNER_CONFIRMED; no generated prose; features.lore=false",
+    "acceptance": "PASS: 26 PostgreSQL tests across learning (9), introductions and social (17); isolated disposable schemas; no live Discord acceptance",
+    "offline": "Build and preflight pass: 233 runtime tests, 202 adapter tests",
+    "remaining": "Tutorial contextual/custom-command integration and path restart, broader typed TLDR notable events, final Phase22 integration; live Discord pending",
+    "fixtures": "review-phase-22/index.html"
+  }
 }

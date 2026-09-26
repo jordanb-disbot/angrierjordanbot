@@ -1,0 +1,97 @@
+{
+  "fixture": true,
+  "liveDiscordCapture": false,
+  "status": "ENGINEERING_FIXTURES_NOT_OWNER_APPROVED",
+  "items": [
+    {
+      "id": "introduction-preview",
+      "renderer": "packages/features-introductions/src/render.ts",
+      "files": [
+        {
+          "file": "review-phase-22/introduction-preview-desktop.png",
+          "width": 440,
+          "height": 443,
+          "sha256": "5872aec00a3d82fbba537777136d7255889cd75f9bfe0c08cc91e8e2ab186926"
+        },
+        {
+          "file": "review-phase-22/introduction-preview-mobile.png",
+          "width": 360,
+          "height": 362,
+          "sha256": "37e4bf8f66b6c4223ab04eace0db6b97d412f4d7bbc32ce85f0fcd968a821c04"
+        }
+      ]
+    },
+    {
+      "id": "introduction-long-name",
+      "renderer": "packages/features-introductions/src/render.ts",
+      "files": [
+        {
+          "file": "review-phase-22/introduction-long-name-desktop.png",
+          "width": 440,
+          "height": 466,
+          "sha256": "ee3bba94c969f28a9227b8d32b97d00a2b6666433e49e5ee77cca7c852e33ed5"
+        },
+        {
+          "file": "review-phase-22/introduction-long-name-mobile.png",
+          "width": 360,
+          "height": 381,
+          "sha256": "9696e5ebb84532e199677443f793ad10faed5a8adff02cbfecf0b280fb476318"
+        }
+      ]
+    },
+    {
+      "id": "social-reaction",
+      "renderer": "packages/features-social/src/render.ts",
+      "files": [
+        {
+          "file": "review-phase-22/social-reaction-desktop.png",
+          "width": 440,
+          "height": 233,
+          "sha256": "4e006ffde579b2b1d711aaa826117a5e2fb546cc37c5182d94f908b9ebbc14a9"
+        },
+        {
+          "file": "review-phase-22/social-reaction-mobile.png",
+          "width": 360,
+          "height": 191,
+          "sha256": "7f1bbfb3b6b02aa58ef8e8b4dfd35ec5675d0ebfea34166aa9e156afcd341222"
+        }
+      ]
+    },
+    {
+      "id": "lore-content-pending",
+      "renderer": "packages/features-events/src/gate-b-visual.ts",
+      "files": [
+        {
+          "file": "review-phase-22/lore-content-pending-desktop.png",
+          "width": 440,
+          "height": 256,
+          "sha256": "f2a0b40e7ae508d7a1bdd10087cfa967f31aa395922a19479ab4de5efd086966"
+        },
+        {
+          "file": "review-phase-22/lore-content-pending-mobile.png",
+          "width": 360,
+          "height": 209,
+          "sha256": "35cdbdaa47c2b5902014c6efe7cc45a876c45c4538e633a10e36fe617a504cff"
+        }
+      ]
+    },
+    {
+      "id": "tutorial-home",
+      "renderer": "packages/features-events/src/gate-b-visual.ts",
+      "files": [
+        {
+          "file": "review-phase-22/tutorial-home-desktop.png",
+          "width": 440,
+          "height": 279,
+          "sha256": "34c9ac3fea65483a7b374dfdc3b45eca17fc3b4ed6583c241fd1671b04476a4e"
+        },
+        {
+          "file": "review-phase-22/tutorial-home-mobile.png",
+          "width": 360,
+          "height": 228,
+          "sha256": "17dfe50599b5a062ae0e59ba5b220dc7c50147da8367e22cb2dae26a0b16046e"
+        }
+      ]
+    }
+  ]
+}

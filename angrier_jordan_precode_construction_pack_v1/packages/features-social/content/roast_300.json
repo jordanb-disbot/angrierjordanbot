@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "ROAST-0001",
+    "intensity": "mild",
+    "text": "You have the confidence of a folding chair on ice. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0002",
+    "intensity": "angry",
+    "text": "You bring the energy of a weather app during a mountain storm. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0003",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a chair missing exactly one screw. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0004",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of someone assembling IKEA furniture without the instructions. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0005",
+    "intensity": "mild",
+    "text": "You carry yourself like a microwave set to “vibes”. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0006",
+    "intensity": "angry",
+    "text": "Your planning process resembles an alarm clock with trust issues. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0007",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a GPS that says “good luck”. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0008",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a résumé written immediately after happy hour. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0009",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a group chat after midnight. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0010",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a smoke detector with a low battery at 3 AM. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0011",
+    "intensity": "brutal",
+    "text": "You have the confidence of a shopping cart with one bad wheel. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0012",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a “quick fix” that takes four hours. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0013",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a group project where everyone thought someone else was doing it. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0014",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a meeting that could have been a message. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0015",
+    "intensity": "brutal",
+    "text": "You carry yourself like a printer asked to do one simple thing. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0016",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles an elevator button being pressed twelve times. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0017",
+    "intensity": "mild",
+    "text": "You radiate the competence of a rental car check-engine light. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0018",
+    "intensity": "angry",
+    "text": "You approach common sense like a folding chair on ice. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0019",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a weather app during a mountain storm. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0020",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a chair missing exactly one screw. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0021",
+    "intensity": "mild",
+    "text": "You have the confidence of someone assembling IKEA furniture without the instructions. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0022",
+    "intensity": "angry",
+    "text": "You bring the energy of a microwave set to “vibes”. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0023",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of an alarm clock with trust issues. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0024",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a GPS that says “good luck”. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0025",
+    "intensity": "mild",
+    "text": "You carry yourself like a résumé written immediately after happy hour. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0026",
+    "intensity": "angry",
+    "text": "Your planning process resembles a group chat after midnight. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0027",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a smoke detector with a low battery at 3 AM. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0028",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a shopping cart with one bad wheel. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0029",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a “quick fix” that takes four hours. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0030",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a group project where everyone thought someone else was doing it. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0031",
+    "intensity": "brutal",
+    "text": "You have the confidence of a Wi-Fi signal in a concrete basement. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0032",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a recipe that says “measure with your heart”. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0033",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of an elevator button being pressed twelve times. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0034",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a rental car check-engine light. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0035",
+    "intensity": "brutal",
+    "text": "You carry yourself like a folding chair on ice. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0036",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a weather app during a mountain storm. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0037",
+    "intensity": "mild",
+    "text": "You radiate the competence of a chair missing exactly one screw. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0038",
+    "intensity": "angry",
+    "text": "You approach common sense like someone assembling IKEA furniture without the instructions. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0039",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a microwave set to “vibes”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0040",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of an alarm clock with trust issues. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0041",
+    "intensity": "mild",
+    "text": "You have the confidence of a GPS that says “good luck”. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0042",
+    "intensity": "angry",
+    "text": "You bring the energy of a résumé written immediately after happy hour. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0043",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a group chat after midnight. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0044",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a smoke detector with a low battery at 3 AM. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0045",
+    "intensity": "mild",
+    "text": "You carry yourself like a shopping cart with one bad wheel. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0046",
+    "intensity": "angry",
+    "text": "Your planning process resembles a printer asked to do one simple thing. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0047",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a password written on a sticky note labeled PASSWORD. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0048",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a Wi-Fi signal in a concrete basement. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0049",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a recipe that says “measure with your heart”. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0050",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of an elevator button being pressed twelve times. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0051",
+    "intensity": "brutal",
+    "text": "You have the confidence of a rental car check-engine light. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0052",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a folding chair on ice. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0053",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a weather app during a mountain storm. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0054",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a chair missing exactly one screw. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0055",
+    "intensity": "brutal",
+    "text": "You carry yourself like someone assembling IKEA furniture without the instructions. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0056",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a microwave set to “vibes”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0057",
+    "intensity": "mild",
+    "text": "You radiate the competence of an alarm clock with trust issues. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0058",
+    "intensity": "angry",
+    "text": "You approach common sense like a GPS that says “good luck”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0059",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a résumé written immediately after happy hour. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0060",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a group chat after midnight. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0061",
+    "intensity": "mild",
+    "text": "You have the confidence of a group project where everyone thought someone else was doing it. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0062",
+    "intensity": "angry",
+    "text": "You bring the energy of a meeting that could have been a message. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0063",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a printer asked to do one simple thing. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0064",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a password written on a sticky note labeled PASSWORD. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0065",
+    "intensity": "mild",
+    "text": "You carry yourself like a Wi-Fi signal in a concrete basement. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0066",
+    "intensity": "angry",
+    "text": "Your planning process resembles a recipe that says “measure with your heart”. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0067",
+    "intensity": "brutal",
+    "text": "You radiate the competence of an elevator button being pressed twelve times. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0068",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a rental car check-engine light. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0069",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a folding chair on ice. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0070",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a weather app during a mountain storm. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0071",
+    "intensity": "brutal",
+    "text": "You have the confidence of a chair missing exactly one screw. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0072",
+    "intensity": "nuclear",
+    "text": "You bring the energy of someone assembling IKEA furniture without the instructions. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0073",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a microwave set to “vibes”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0074",
+    "intensity": "angry",
+    "text": "You somehow have the timing of an alarm clock with trust issues. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0075",
+    "intensity": "brutal",
+    "text": "You carry yourself like a GPS that says “good luck”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0076",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a shopping cart with one bad wheel. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0077",
+    "intensity": "mild",
+    "text": "You radiate the competence of a “quick fix” that takes four hours. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0078",
+    "intensity": "angry",
+    "text": "You approach common sense like a group project where everyone thought someone else was doing it. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0079",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a meeting that could have been a message. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0080",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a printer asked to do one simple thing. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0081",
+    "intensity": "mild",
+    "text": "You have the confidence of a password written on a sticky note labeled PASSWORD. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0082",
+    "intensity": "angry",
+    "text": "You bring the energy of a Wi-Fi signal in a concrete basement. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0083",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a recipe that says “measure with your heart”. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0084",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of an elevator button being pressed twelve times. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0085",
+    "intensity": "mild",
+    "text": "You carry yourself like a rental car check-engine light. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0086",
+    "intensity": "angry",
+    "text": "Your planning process resembles a folding chair on ice. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0087",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a weather app during a mountain storm. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0088",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a chair missing exactly one screw. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0089",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of someone assembling IKEA furniture without the instructions. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0090",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a microwave set to “vibes”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0091",
+    "intensity": "brutal",
+    "text": "You have the confidence of a group chat after midnight. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0092",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a smoke detector with a low battery at 3 AM. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0093",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a shopping cart with one bad wheel. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0094",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a “quick fix” that takes four hours. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0095",
+    "intensity": "brutal",
+    "text": "You carry yourself like a group project where everyone thought someone else was doing it. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0096",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a meeting that could have been a message. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0097",
+    "intensity": "mild",
+    "text": "You radiate the competence of a printer asked to do one simple thing. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0098",
+    "intensity": "angry",
+    "text": "You approach common sense like a password written on a sticky note labeled PASSWORD. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0099",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a Wi-Fi signal in a concrete basement. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0100",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a recipe that says “measure with your heart”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0101",
+    "intensity": "mild",
+    "text": "You have the confidence of an elevator button being pressed twelve times. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0102",
+    "intensity": "angry",
+    "text": "You bring the energy of a rental car check-engine light. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0103",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a folding chair on ice. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0104",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a weather app during a mountain storm. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0105",
+    "intensity": "mild",
+    "text": "You carry yourself like a chair missing exactly one screw. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0106",
+    "intensity": "angry",
+    "text": "Your planning process resembles a GPS that says “good luck”. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0107",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a résumé written immediately after happy hour. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0108",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a group chat after midnight. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0109",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a smoke detector with a low battery at 3 AM. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0110",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a shopping cart with one bad wheel. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0111",
+    "intensity": "brutal",
+    "text": "You have the confidence of a “quick fix” that takes four hours. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0112",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a group project where everyone thought someone else was doing it. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0113",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a meeting that could have been a message. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0114",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a printer asked to do one simple thing. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0115",
+    "intensity": "brutal",
+    "text": "You carry yourself like a password written on a sticky note labeled PASSWORD. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0116",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a Wi-Fi signal in a concrete basement. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0117",
+    "intensity": "mild",
+    "text": "You radiate the competence of a recipe that says “measure with your heart”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0118",
+    "intensity": "angry",
+    "text": "You approach common sense like an elevator button being pressed twelve times. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0119",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a rental car check-engine light. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0120",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a folding chair on ice. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0121",
+    "intensity": "mild",
+    "text": "You have the confidence of a microwave set to “vibes”. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0122",
+    "intensity": "angry",
+    "text": "You bring the energy of an alarm clock with trust issues. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0123",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a GPS that says “good luck”. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0124",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a résumé written immediately after happy hour. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0125",
+    "intensity": "mild",
+    "text": "You carry yourself like a group chat after midnight. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0126",
+    "intensity": "angry",
+    "text": "Your planning process resembles a smoke detector with a low battery at 3 AM. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0127",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a shopping cart with one bad wheel. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0128",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a “quick fix” that takes four hours. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0129",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a group project where everyone thought someone else was doing it. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0130",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a meeting that could have been a message. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0131",
+    "intensity": "brutal",
+    "text": "You have the confidence of a printer asked to do one simple thing. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0132",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a password written on a sticky note labeled PASSWORD. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0133",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a Wi-Fi signal in a concrete basement. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0134",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a recipe that says “measure with your heart”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0135",
+    "intensity": "brutal",
+    "text": "You carry yourself like an elevator button being pressed twelve times. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0136",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a chair missing exactly one screw. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0137",
+    "intensity": "mild",
+    "text": "You radiate the competence of someone assembling IKEA furniture without the instructions. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0138",
+    "intensity": "angry",
+    "text": "You approach common sense like a microwave set to “vibes”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0139",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of an alarm clock with trust issues. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0140",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a GPS that says “good luck”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0141",
+    "intensity": "mild",
+    "text": "You have the confidence of a résumé written immediately after happy hour. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0142",
+    "intensity": "angry",
+    "text": "You bring the energy of a group chat after midnight. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0143",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a smoke detector with a low battery at 3 AM. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0144",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a shopping cart with one bad wheel. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0145",
+    "intensity": "mild",
+    "text": "You carry yourself like a “quick fix” that takes four hours. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0146",
+    "intensity": "angry",
+    "text": "Your planning process resembles a group project where everyone thought someone else was doing it. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0147",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a meeting that could have been a message. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0148",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a printer asked to do one simple thing. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0149",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a password written on a sticky note labeled PASSWORD. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0150",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a Wi-Fi signal in a concrete basement. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0151",
+    "intensity": "brutal",
+    "text": "You have the confidence of a folding chair on ice. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0152",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a weather app during a mountain storm. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0153",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a chair missing exactly one screw. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0154",
+    "intensity": "angry",
+    "text": "You somehow have the timing of someone assembling IKEA furniture without the instructions. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0155",
+    "intensity": "brutal",
+    "text": "You carry yourself like a microwave set to “vibes”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0156",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles an alarm clock with trust issues. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0157",
+    "intensity": "mild",
+    "text": "You radiate the competence of a GPS that says “good luck”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0158",
+    "intensity": "angry",
+    "text": "You approach common sense like a résumé written immediately after happy hour. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0159",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a group chat after midnight. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0160",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a smoke detector with a low battery at 3 AM. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0161",
+    "intensity": "mild",
+    "text": "You have the confidence of a shopping cart with one bad wheel. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0162",
+    "intensity": "angry",
+    "text": "You bring the energy of a “quick fix” that takes four hours. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0163",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a group project where everyone thought someone else was doing it. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0164",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a meeting that could have been a message. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0165",
+    "intensity": "mild",
+    "text": "You carry yourself like a printer asked to do one simple thing. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0166",
+    "intensity": "angry",
+    "text": "Your planning process resembles an elevator button being pressed twelve times. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0167",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a rental car check-engine light. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0168",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a folding chair on ice. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0169",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a weather app during a mountain storm. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0170",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a chair missing exactly one screw. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0171",
+    "intensity": "brutal",
+    "text": "You have the confidence of someone assembling IKEA furniture without the instructions. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0172",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a microwave set to “vibes”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0173",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of an alarm clock with trust issues. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0174",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a GPS that says “good luck”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0175",
+    "intensity": "brutal",
+    "text": "You carry yourself like a résumé written immediately after happy hour. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0176",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a group chat after midnight. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0177",
+    "intensity": "mild",
+    "text": "You radiate the competence of a smoke detector with a low battery at 3 AM. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0178",
+    "intensity": "angry",
+    "text": "You approach common sense like a shopping cart with one bad wheel. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0179",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a “quick fix” that takes four hours. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0180",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a group project where everyone thought someone else was doing it. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0181",
+    "intensity": "mild",
+    "text": "You have the confidence of a Wi-Fi signal in a concrete basement. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0182",
+    "intensity": "angry",
+    "text": "You bring the energy of a recipe that says “measure with your heart”. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0183",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of an elevator button being pressed twelve times. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0184",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a rental car check-engine light. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0185",
+    "intensity": "mild",
+    "text": "You carry yourself like a folding chair on ice. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0186",
+    "intensity": "angry",
+    "text": "Your planning process resembles a weather app during a mountain storm. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0187",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a chair missing exactly one screw. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0188",
+    "intensity": "nuclear",
+    "text": "You approach common sense like someone assembling IKEA furniture without the instructions. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0189",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a microwave set to “vibes”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0190",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of an alarm clock with trust issues. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0191",
+    "intensity": "brutal",
+    "text": "You have the confidence of a GPS that says “good luck”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0192",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a résumé written immediately after happy hour. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0193",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a group chat after midnight. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0194",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a smoke detector with a low battery at 3 AM. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0195",
+    "intensity": "brutal",
+    "text": "You carry yourself like a shopping cart with one bad wheel. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0196",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a printer asked to do one simple thing. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0197",
+    "intensity": "mild",
+    "text": "You radiate the competence of a password written on a sticky note labeled PASSWORD. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0198",
+    "intensity": "angry",
+    "text": "You approach common sense like a Wi-Fi signal in a concrete basement. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0199",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a recipe that says “measure with your heart”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0200",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of an elevator button being pressed twelve times. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0201",
+    "intensity": "mild",
+    "text": "You have the confidence of a rental car check-engine light. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0202",
+    "intensity": "angry",
+    "text": "You bring the energy of a folding chair on ice. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0203",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a weather app during a mountain storm. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0204",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a chair missing exactly one screw. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0205",
+    "intensity": "mild",
+    "text": "You carry yourself like someone assembling IKEA furniture without the instructions. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0206",
+    "intensity": "angry",
+    "text": "Your planning process resembles a microwave set to “vibes”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0207",
+    "intensity": "brutal",
+    "text": "You radiate the competence of an alarm clock with trust issues. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0208",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a GPS that says “good luck”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0209",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a résumé written immediately after happy hour. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0210",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a group chat after midnight. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0211",
+    "intensity": "brutal",
+    "text": "You have the confidence of a group project where everyone thought someone else was doing it. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0212",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a meeting that could have been a message. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0213",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a printer asked to do one simple thing. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0214",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a password written on a sticky note labeled PASSWORD. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0215",
+    "intensity": "brutal",
+    "text": "You carry yourself like a Wi-Fi signal in a concrete basement. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0216",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a recipe that says “measure with your heart”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0217",
+    "intensity": "mild",
+    "text": "You radiate the competence of an elevator button being pressed twelve times. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0218",
+    "intensity": "angry",
+    "text": "You approach common sense like a rental car check-engine light. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0219",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a folding chair on ice. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0220",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a weather app during a mountain storm. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0221",
+    "intensity": "mild",
+    "text": "You have the confidence of a chair missing exactly one screw. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0222",
+    "intensity": "angry",
+    "text": "You bring the energy of someone assembling IKEA furniture without the instructions. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0223",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a microwave set to “vibes”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0224",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of an alarm clock with trust issues. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0225",
+    "intensity": "mild",
+    "text": "You carry yourself like a GPS that says “good luck”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0226",
+    "intensity": "angry",
+    "text": "Your planning process resembles a shopping cart with one bad wheel. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0227",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a “quick fix” that takes four hours. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0228",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a group project where everyone thought someone else was doing it. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0229",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a meeting that could have been a message. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0230",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a printer asked to do one simple thing. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0231",
+    "intensity": "brutal",
+    "text": "You have the confidence of a password written on a sticky note labeled PASSWORD. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0232",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a Wi-Fi signal in a concrete basement. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0233",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a recipe that says “measure with your heart”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0234",
+    "intensity": "angry",
+    "text": "You somehow have the timing of an elevator button being pressed twelve times. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0235",
+    "intensity": "brutal",
+    "text": "You carry yourself like a rental car check-engine light. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0236",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a folding chair on ice. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0237",
+    "intensity": "mild",
+    "text": "You radiate the competence of a weather app during a mountain storm. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0238",
+    "intensity": "angry",
+    "text": "You approach common sense like a chair missing exactly one screw. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0239",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of someone assembling IKEA furniture without the instructions. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0240",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a microwave set to “vibes”. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0241",
+    "intensity": "mild",
+    "text": "You have the confidence of a group chat after midnight. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0242",
+    "intensity": "angry",
+    "text": "You bring the energy of a smoke detector with a low battery at 3 AM. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0243",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a shopping cart with one bad wheel. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0244",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a “quick fix” that takes four hours. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0245",
+    "intensity": "mild",
+    "text": "You carry yourself like a group project where everyone thought someone else was doing it. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0246",
+    "intensity": "angry",
+    "text": "Your planning process resembles a meeting that could have been a message. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0247",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a printer asked to do one simple thing. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0248",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a password written on a sticky note labeled PASSWORD. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0249",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a Wi-Fi signal in a concrete basement. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0250",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a recipe that says “measure with your heart”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0251",
+    "intensity": "brutal",
+    "text": "You have the confidence of an elevator button being pressed twelve times. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0252",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a rental car check-engine light. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0253",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a folding chair on ice. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0254",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a weather app during a mountain storm. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0255",
+    "intensity": "brutal",
+    "text": "You carry yourself like a chair missing exactly one screw. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0256",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a GPS that says “good luck”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0257",
+    "intensity": "mild",
+    "text": "You radiate the competence of a résumé written immediately after happy hour. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0258",
+    "intensity": "angry",
+    "text": "You approach common sense like a group chat after midnight. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0259",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a smoke detector with a low battery at 3 AM. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0260",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a shopping cart with one bad wheel. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0261",
+    "intensity": "mild",
+    "text": "You have the confidence of a “quick fix” that takes four hours. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0262",
+    "intensity": "angry",
+    "text": "You bring the energy of a group project where everyone thought someone else was doing it. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0263",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a meeting that could have been a message. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0264",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a printer asked to do one simple thing. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0265",
+    "intensity": "mild",
+    "text": "You carry yourself like a password written on a sticky note labeled PASSWORD. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0266",
+    "intensity": "angry",
+    "text": "Your planning process resembles a Wi-Fi signal in a concrete basement. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0267",
+    "intensity": "brutal",
+    "text": "You radiate the competence of a recipe that says “measure with your heart”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0268",
+    "intensity": "nuclear",
+    "text": "You approach common sense like an elevator button being pressed twelve times. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0269",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of a rental car check-engine light. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0270",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a folding chair on ice. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0271",
+    "intensity": "brutal",
+    "text": "You have the confidence of a microwave set to “vibes”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0272",
+    "intensity": "nuclear",
+    "text": "You bring the energy of an alarm clock with trust issues. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0273",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a GPS that says “good luck”. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0274",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a résumé written immediately after happy hour. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0275",
+    "intensity": "brutal",
+    "text": "You carry yourself like a group chat after midnight. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0276",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a smoke detector with a low battery at 3 AM. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0277",
+    "intensity": "mild",
+    "text": "You radiate the competence of a shopping cart with one bad wheel. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0278",
+    "intensity": "angry",
+    "text": "You approach common sense like a “quick fix” that takes four hours. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0279",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a group project where everyone thought someone else was doing it. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0280",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a meeting that could have been a message. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0281",
+    "intensity": "mild",
+    "text": "You have the confidence of a printer asked to do one simple thing. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0282",
+    "intensity": "angry",
+    "text": "You bring the energy of a password written on a sticky note labeled PASSWORD. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0283",
+    "intensity": "brutal",
+    "text": "Your decision-making has the structural integrity of a Wi-Fi signal in a concrete basement. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0284",
+    "intensity": "nuclear",
+    "text": "You somehow have the timing of a recipe that says “measure with your heart”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0285",
+    "intensity": "mild",
+    "text": "You carry yourself like an elevator button being pressed twelve times. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0286",
+    "intensity": "angry",
+    "text": "Your planning process resembles a chair missing exactly one screw. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0287",
+    "intensity": "brutal",
+    "text": "You radiate the competence of someone assembling IKEA furniture without the instructions. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0288",
+    "intensity": "nuclear",
+    "text": "You approach common sense like a microwave set to “vibes”. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0289",
+    "intensity": "mild",
+    "text": "Your social instincts have the precision of an alarm clock with trust issues. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0290",
+    "intensity": "angry",
+    "text": "You make questionable choices with the confidence of a GPS that says “good luck”. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0291",
+    "intensity": "brutal",
+    "text": "You have the confidence of a résumé written immediately after happy hour. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0292",
+    "intensity": "nuclear",
+    "text": "You bring the energy of a group chat after midnight. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0293",
+    "intensity": "mild",
+    "text": "Your decision-making has the structural integrity of a smoke detector with a low battery at 3 AM. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0294",
+    "intensity": "angry",
+    "text": "You somehow have the timing of a shopping cart with one bad wheel. Nobody can accuse you of being predictable.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0295",
+    "intensity": "brutal",
+    "text": "You carry yourself like a “quick fix” that takes four hours. The lounge is taking notes.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0296",
+    "intensity": "nuclear",
+    "text": "Your planning process resembles a group project where everyone thought someone else was doing it. Please continue; the case study needs data.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0297",
+    "intensity": "mild",
+    "text": "You radiate the competence of a meeting that could have been a message. Honestly, it is almost impressive.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0298",
+    "intensity": "angry",
+    "text": "You approach common sense like a printer asked to do one simple thing. You have turned this into performance art.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0299",
+    "intensity": "brutal",
+    "text": "Your social instincts have the precision of a password written on a sticky note labeled PASSWORD. Angrier Jordan respects the commitment to the bit.",
+    "enabled": true
+  },
+  {
+    "id": "ROAST-0300",
+    "intensity": "nuclear",
+    "text": "You make questionable choices with the confidence of a Wi-Fi signal in a concrete basement. Nobody can accuse you of being predictable.",
+    "enabled": true
+  }
+]
