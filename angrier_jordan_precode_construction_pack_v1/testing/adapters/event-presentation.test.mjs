@@ -13,7 +13,7 @@ test('wide event timelines use one-shot authoritative frames without external co
  for(const kind of ['race','fight']){
   const racers=kind==='fight'?reviewMembers.slice(0,2):reviewMembers,plan=reviewPlans[kind],view={...common,type:kind,racers,...(kind==='fight'?{combat:fightSnapshot(plan,12000,racers)}:{motion:raceSnapshot(plan,8000)})},before=JSON.stringify(view);
   const result=await coordinator.payload(view,{timeline:{racers,startedAt:new Date(Date.now()+600000).toISOString(),[kind==='fight'?'fightPlan':'plan']:plan}}),buffer=result.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
-  assert.equal(meta.format,'gif');assert.ok(meta.pages>1&&meta.pages<=64);assert.equal(meta.loop,1);assert.equal(meta.width,960);assert.ok(buffer.length<10*1024*1024);assert.deepEqual(result.embeds,[]);assert.equal(JSON.stringify(view),before);
+  assert.equal(meta.format,'gif');assert.ok(meta.pages>1&&meta.pages<=64);assert.equal(meta.loop,1);assert.equal(meta.width,1200);assert.ok(buffer.length<10*1024*1024);assert.deepEqual(result.embeds,[]);assert.equal(JSON.stringify(view),before);
   const nodes=result.components.flatMap(c=>c.toJSON().components);assert.equal(nodes.some(c=>c.type===10),false);
  }
 });

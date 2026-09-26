@@ -31,7 +31,7 @@ test('Race and Fight render fixed wide frames, hide IDs, and skip unchanged uplo
   let view={id:'internal-session',type,guildId:'g',channelId:'main',messageId:'m',state:'OPEN',expiresAt:new Date(),racers,pool:'12345678901234567890',extensionUsed:false};
   const c=new DiscordEventsCoordinator({publicView:async()=>view},config(true),async()=>true);
   const payload=await c.payload(view);assert.doesNotMatch(nativeText(payload),/internal-session/);
-  const {default:sharp}=await import('sharp');const meta=await sharp(payload.files[0].attachment).metadata();assert.equal(meta.width,960);assert.equal(meta.height,640);
+  const {default:sharp}=await import('sharp');const meta=await sharp(payload.files[0].attachment).metadata();assert.equal(meta.width,1200);assert.equal(meta.height,640);
   let edits=0;c.payload=async()=>({});const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},edit:async()=>{edits++;}})}})}};
   await c.refresh(client,view.id);await c.refresh(client,view.id);assert.equal(edits,1);
   view={...view,pool:'200'};await c.refresh(client,view.id);assert.equal(edits,2);

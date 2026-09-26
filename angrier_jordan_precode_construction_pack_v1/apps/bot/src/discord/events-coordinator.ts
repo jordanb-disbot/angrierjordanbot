@@ -76,23 +76,36 @@ export class DiscordEventsCoordinator {
   if(!silent)await i.deleteReply();
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public card refresh is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied||silent&&i.deferred)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
- async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData}={}){
-  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
-  const render=(imageView:RaceView=view,phase=0)=>{const motion={phase,...(options.callout?{callout:options.callout.replace(/<@&[^>]+>\s*/g,'')}: {})};return fight?renderFight(imageView,motion,'wide'):renderRace(imageView,'wide',motion);};
+ async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData;nowMs?:number}={}){
+  const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10),waiting=view.state==='OPEN'&&options.animate!==false&&waitingMs>0;
+  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||waiting||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
+  const render=(imageView:RaceView=view,phase=0,remaining=waitingMs)=>{const motion={phase,waitingMs:remaining,...(options.callout?{callout:options.callout.replace(/<@&[^>]+>\s*/g,'')}: {})};return fight?renderFight(imageView,motion,'wide'):renderRace(imageView,'wide',motion);};
   let image:Buffer|undefined;
   if(!options.retainImageUrl){
    if(animate&&saved?.startedAt&&plan){
     // Only locked wagers and rendered snapshots leave this process; the private plan is never serialized in the payload.
     const end=Math.ceil(plan.durationMs/10)*10,times=[0];
     if(fight&&saved.fightPlan){for(const beat of saved.fightPlan.beats){const at=Math.ceil(beat.atMs/10)*10,previous=times.at(-1)!;if(at-previous>=20)times.push(Math.floor((previous+at)/20)*10);if(at>times.at(-1)!)times.push(at);}}
-    else for(let at=500;at<end;at+=500)times.push(at);
+    else for(let i=1;i<60;i++)times.push(Math.round(end*Math.pow(i/60,.8)/10)*10);
     if(times.at(-1)!<end)times.push(end);
-    const frames=times.map(at=>render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},at/1000%1));
+    const frames=times.map(at=>render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},fight?at/1000%1:at/end));
     image=await rasterizeTimeline(frames,times.map((at,index)=>index+1<times.length?times[index+1]!-at:1000),new Date(saved.startedAt).getTime());
+   }else if(waiting){
+    const steps=Math.min(60,Math.ceil(waitingMs/1000)),step=Math.max(10,Math.ceil(waitingMs/steps/10)*10),times=Array.from({length:steps},(_,i)=>i*step).filter(at=>at<waitingMs);times.push(waitingMs);
+    image=await rasterizeTimeline(times.map(at=>render(view,0,Math.max(0,waitingMs-at))),times.map((at,i)=>i+1<times.length?times[i+1]!-at:1000),now);
    }else image=await rasterizeSvg(render());
   }
-  if(open){components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...(fight?[]:[new ButtonBuilder().setCustomId('event:join:'+view.id).setLabel('Join Race').setStyle(ButtonStyle.Primary).setDisabled(view.racers.length>=6)]),new ButtonBuilder().setCustomId(prefix+':extend:'+view.id).setLabel('+30 Seconds').setStyle(ButtonStyle.Secondary).setDisabled(view.extensionUsed),new ButtonBuilder().setCustomId(prefix+':rules:'+view.id).setLabel('Rules').setStyle(ButtonStyle.Secondary)));
-   for(let start=0;start<view.racers.length;start+=3)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...view.racers.slice(start,start+3).map(r=>new ButtonBuilder().setCustomId(`${prefix}:bet:${view.id}:${r.userId}`).setLabel(`Bet · ${r.name}`.slice(0,80)).setStyle(ButtonStyle.Secondary))));
+  if(open){
+   const join=new ButtonBuilder().setCustomId('event:join:'+view.id).setLabel('Join Race').setStyle(ButtonStyle.Primary).setDisabled(view.racers.length>=6);
+   const secondary=[new ButtonBuilder().setCustomId(prefix+':extend:'+view.id).setLabel('+30 Seconds').setStyle(ButtonStyle.Secondary).setDisabled(view.extensionUsed),new ButtonBuilder().setCustomId(prefix+':rules:'+view.id).setLabel('Rules').setStyle(ButtonStyle.Secondary)];
+   const bets=view.racers.map(r=>new ButtonBuilder().setCustomId(prefix+':bet:'+view.id+':'+r.userId).setLabel('Bet · '+r.name.slice(0,24)).setStyle(fight?ButtonStyle.Primary:ButtonStyle.Secondary));
+   if(!fight&&bets.length<=1){components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(join,...bets));components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...secondary));}
+   else{
+    if(!fight)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(join,...secondary));
+    const size=Math.ceil(bets.length/Math.max(1,Math.ceil(bets.length/3)));
+    for(let start=0;start<bets.length;start+=size)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...bets.slice(start,start+size)));
+    if(fight)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...secondary));
+   }
   }
   return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(options.callout?{callout:options.callout}:{})});
  }
@@ -102,7 +115,7 @@ export class DiscordEventsCoordinator {
   const saved=view.state==='LOCKED'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
   let payload=await this.payload(view,retainImageUrl?{retainImageUrl}:saved?.state==='LOCKED'?{timeline:saved.data}:{});
   // Rendering may span the end of a round. Never overwrite a persisted result/cancellation with stale live art.
-  if(view.state==='LOCKED'){const latest=await this.repo.publicView(id);if(latest.state!==view.state){view=latest;key=version(view);payload=await this.payload(view);}}
+  if(view.state==='LOCKED'||view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=version(view);const latestSaved=view.state==='LOCKED'&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;payload=await this.payload(view,latestSaved?.state==='LOCKED'?{timeline:latestSaved.data}:{});}}
   await message.edit(payload);
   if(view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
   this.publishedVersions.set(id,key);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
