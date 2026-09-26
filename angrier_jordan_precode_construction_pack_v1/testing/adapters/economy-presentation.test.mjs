@@ -29,3 +29,20 @@ test('Dense six-section inventory and empty collection remain bounded and determ
  const a=renderEconomyPresentation(input);assert.equal((a.match(/data-economy-section/g)??[]).length,6);assert.equal(a,renderEconomyPresentation(input));
  assert.match(renderEconomyPresentation({title:'Inventory',description:'No items yet.'}),/No items yet\./);
 });
+
+test('Purpose-built product and collection cards expose bounded names, distinct motifs and large type',()=>{
+ const cards=[['Folding Chair','folding chair'],['Barstool','stool'],['Recliner','recliner chair'],['Chaise Lounge','chaise chair'],['Throne','throne'],['Undiscovered','hidden']].map(([name,motif])=>({name,motif,detail:'Owned 1 · Discovered',badge:'COLLECTIBLE'}));
+ const svg=renderEconomyPresentation({title:'Five Seats',mode:'collection',summary:'5 / 6 discovered',cards});
+ assert.equal((svg.match(/data-item-card=/g)??[]).length,6);
+ for(const card of cards)assert.ok(svg.includes(`data-item-motif="${card.motif}"`));
+ assert.ok(svg.includes('font-size="28" font-weight="700"'));
+ assert.ok(svg.includes('font-size="24" font-weight="600"'));
+ assert.doesNotMatch(svg,/The lounge ledger/);
+ assert.equal(svg,renderEconomyPresentation({title:'Five Seats',mode:'collection',summary:'5 / 6 discovered',cards}));
+});
+test('Shop and workshop retain empty-state instructions without inventing products',()=>{
+ for(const mode of ['shop','inventory','collection','craft']){
+  const svg=renderEconomyPresentation({title:mode,mode,cards:[],description:'Find a recipe through normal play.'});
+  assert.ok(svg.includes('Find a recipe through normal play.'));assert.equal((svg.match(/data-item-card=/g)??[]).length,0);
+ }
+});
