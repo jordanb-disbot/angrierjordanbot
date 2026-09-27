@@ -13,7 +13,7 @@ export const INTRO_DEFAULTS=[
  {id:'chair',label:'Favorite type of chair?',cardLabel:'Favorite type of chair?',required:false,maxLength:300,inputStyle:'paragraph'}
 ] as const;
 export function activePrompts(form:IntroForm){return form.prompts.filter(p=>p.enabled&&!p.deletedAt).sort((a,b)=>a.sortOrder-b.sortOrder||a.id.localeCompare(b.id));}
-export function promptPages(form:IntroForm){const prompts=activePrompts(form);return Array.from({length:Math.ceil(prompts.length/5)},(_,n)=>prompts.slice(n*5,n*5+5));}
+export function promptPages(form:IntroForm,pageSize:3|5=3){const prompts=activePrompts(form);return Array.from({length:Math.ceil(prompts.length/pageSize)},(_,n)=>prompts.slice(n*pageSize,n*pageSize+pageSize));}
 export function validateIntroForm(form:IntroForm,config:IntroConfig){
  if(typeof form?.title!=='string'||!Array.isArray(form.prompts)||typeof config?.headerText!=='string'||typeof config.footerText!=='string'||['showAvatar','showDisplayName','showJoinDate','allowAdminIntroConfig'].some(key=>typeof config[key as keyof IntroConfig]!=='boolean'))throw new DomainError('INTRO_FORM','The form configuration is invalid.');
  for(const p of form.prompts)if(!p||typeof p.id!=='string'||typeof p.label!=='string'||typeof p.cardLabel!=='string'||p.placeholder!==null&&typeof p.placeholder!=='string'||['required','enabled','showOnCard'].some(key=>typeof p[key as keyof IntroPrompt]!=='boolean')||p.deletedAt!==null&&!Number.isFinite(new Date(p.deletedAt).getTime()))throw new DomainError('INTRO_PROMPT','A prompt has invalid field types.');
@@ -23,8 +23,8 @@ export function validateIntroForm(form:IntroForm,config:IntroConfig){
  if(publicBudget>10000)throw new DomainError('INTRO_CARD_LIMIT','Visible prompt character limits must total at most 10,000 characters, including labels.');
  if(!config.headerText.trim()||config.headerText.length>80||config.footerText.length>300)throw new DomainError('INTRO_CARD_CONFIG','Use a header of 1–80 and a welcome message of at most 300 characters.');
 }
-export function saveAnswers(draft:IntroDraft,page:number,submitted:Record<string,string>):IntroDraft {
- const prompts=promptPages(draft.form)[page];if(!Number.isInteger(page)||!prompts)throw new DomainError('INTRO_PAGE','Open a current form page.');
+export function saveAnswers(draft:IntroDraft,page:number,submitted:Record<string,string>,pageSize:3|5=3):IntroDraft {
+ const prompts=promptPages(draft.form,pageSize)[page];if(!Number.isInteger(page)||!prompts)throw new DomainError('INTRO_PAGE','Open a current form page.');
  const allowed=new Set(prompts.map(p=>p.id));if(Object.keys(submitted).some(id=>!allowed.has(id)))throw new DomainError('INTRO_FIELD','This field does not belong to this form page.');
  const answers={...draft.answers};for(const p of prompts){const value=(submitted[p.id]??'').replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').trim();if(value.length>p.maxLength||value.length>0&&value.length<(p.minLength??0)||p.required&&!value)throw new DomainError('INTRO_ANSWER',`Check “${p.cardLabel}”: ${p.required?'an answer is required; ':''}use ${p.minLength??0}–${p.maxLength} characters.`);answers[p.id]=value;}
  return{...draft,answers,page,previewedVersion:null};
