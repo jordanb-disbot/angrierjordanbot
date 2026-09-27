@@ -6124,8 +6124,8 @@
       "category": "runtime",
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
-      "usage": "Deterministic structured six-question plum/brass introduction card with member avatar and Space Grotesk/Inter.",
-      "sha256": "10f5c6a4509b3a0a6bb56cfb1de118be321d69a10934c214833c3fdbf0c815e1"
+      "usage": "Deterministic centered five-question Chairs introduction card and unified private form panel.",
+      "sha256": "eaff065c0a2ea55b289d18fa0ff5fbbcbed95cbeab8738ada88e174560d247cf"
     },
     {
       "id": "social.runtime",

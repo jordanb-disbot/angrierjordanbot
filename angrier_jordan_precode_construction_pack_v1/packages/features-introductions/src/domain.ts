@@ -7,7 +7,6 @@ export interface IntroContext {guildId:string;channelId:string;userId:string;req
 export const INTRO_DEFAULTS=[
  {id:'name',label:'What should we call you?',cardLabel:'What should we call you?',required:false,maxLength:80,inputStyle:'short'},
  {id:'doc',label:'What is your drug of choice?',cardLabel:'What is your drug of choice?',required:false,maxLength:100,inputStyle:'short'},
- {id:'character',label:'What fictional character would you choose to get high with?',cardLabel:'What fictional character would you choose to get high with?',required:false,maxLength:400,inputStyle:'paragraph'},
  {id:'opinion',label:'What is your most controversial opinion?',cardLabel:'What is your most controversial opinion?',required:false,maxLength:700,inputStyle:'paragraph'},
  {id:'last_meal',label:'If on death row, what would your last meal be?',cardLabel:'If on death row, what would your last meal be?',required:false,maxLength:500,inputStyle:'paragraph'},
  {id:'chair',label:'What is your favorite type of chair?',cardLabel:'What is your favorite type of chair?',required:false,maxLength:300,inputStyle:'paragraph'}

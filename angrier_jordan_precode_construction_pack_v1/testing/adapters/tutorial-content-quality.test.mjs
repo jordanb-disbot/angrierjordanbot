@@ -43,7 +43,7 @@ test('community admin guidance uses mapped AJ authority and owner joke uses actu
 test('learning facts preserve prefix commands, privacy, costs and safe practice boundaries',()=>{
  assert.equal(byId('race').example,'!race');assert.equal(byId('line').example,'!line');assert.match(combined('fight'),/without an acceptance step/);
  assert.match(combined('tldr_chat'),/does not summarize/);assert.match(combined('tldr_events'),/confirmed/);
- assert.match(combined('introduce'),/Blank answers are omitted/);assert.match(combined('introduce'),/same post/);
+ assert.match(combined('introduce'),/Blank answers appear as Not shared/);assert.match(combined('introduce'),/same post/);
  assert.match(combined('tutorial'),/does not execute protected actions or spend Ottomans/);
  assert.match(combined('crime_bail'),/moderation Hotseat remains/);assert.match(combined('family_divorce'),/seven days/);
 });

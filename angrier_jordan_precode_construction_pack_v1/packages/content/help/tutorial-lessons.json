@@ -74,9 +74,9 @@
     },
     "introduce": {
       "purpose": "Create a private introduction draft, preview the public card and publish only when ready. Later edits update your existing introduction instead of making a second post.",
-      "controls": "Open /introduce in the introductions channel. Create Introduction and Edit My Introduction open private form pages; Preview shows what will publish. Answer Name, Location, DOC, How’d you find the server, Fun fact about you?, and Favorite type of chair?. Blank answers are omitted.",
+      "controls": "Open /introduce in the introductions channel. Create Introduction and Edit My Introduction open one private text area with five numbered questions; Preview shows what will publish. Keep the headings and answer below each one. Blank answers appear as Not shared.",
       "steps": [
-        "Complete the form pages with only information you want to share publicly; saving a page keeps a private draft.",
+        "Answer all five questions in the single private form, sharing only what you want; saving keeps a private draft.",
         "Choose Preview and check the member card. Go Back lets you revise it before publication.",
         "Choose Publish explicitly. For a later change, reopen /introduce, edit, preview again and publish the update to the same post."
       ],

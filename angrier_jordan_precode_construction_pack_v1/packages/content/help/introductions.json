@@ -8,7 +8,7 @@
   ],
   "body": "Use /introduce in the introductions channel. Create, Edit and Preview are private buttons. Publish is an explicit separate action; previews match the public card. Editing updates your existing introduction.",
   "fields": {
-    "answers": "Answer Name, Location, DOC, How’d you find the server, Fun fact about you?, and Favorite type of chair?. Optional blank answers stay off the card."
+    "answers": "One private text area contains five numbered questions: what to call you, drug of choice, controversial opinion, last meal, and favorite chair. Keep the headings and answer beneath each one. Optional blank answers appear as Not shared on the card."
   },
   "examples": [
     "/introduce",
@@ -19,7 +19,7 @@
   "tutorial": {
     "steps": [
       "Open /introduce in the configured introductions channel.",
-      "Choose Create or Edit and complete each private form page.",
+      "Choose Create or Edit and complete the five questions in one private text area.",
       "Use Preview to check the complete public card.",
       "Choose Publish only when ready; leaving the private form does not publish.",
       "Use Edit later to update the same introduction."

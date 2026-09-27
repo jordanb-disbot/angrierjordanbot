@@ -34,7 +34,7 @@ test('changed private hub artwork gets a new hashed attachment while retaining t
 
 test('confirmed publication immediately requests panel reconciliation',async()=>{const f=publicationFixture({prior:null});let sweeps=0;f.coordinator.sweep=async()=>{sweeps++;assert.equal(f.counters().finalizations,1);};await f.coordinator.publish(f.client,'job');assert.equal(sweeps,1);});
 
-test('six questions open in one text area, save atomically, and reopen with all answers',async()=>{
+test('five questions open in one text area, save atomically, and reopen with all answers',async()=>{
  const {INTRO_DEFAULTS,saveAnswers,introductionAnswerSheet}=await import('../../dist/packages/features-introductions/src/domain.js');
  let data=structuredClone(draft);data.form.prompts=INTRO_DEFAULTS.map((p,n)=>({...p,sortOrder:n,placeholder:null,minLength:null,enabled:true,showOnCard:true,deletedAt:null}));
  const r=repo();r.view=async()=>({id:'draft',version:0,data});let saves=0;r.save=async(c,id,v,page,answers,size)=>{assert.equal(size,100);data=saveAnswers(data,page,answers,size);saves++;};
@@ -48,5 +48,5 @@ test('six questions open in one text area, save atomically, and reopen with all 
  await coordinator().handle(interaction({isChatInputCommand:()=>false,isButton:()=>true,customId:'intro:edit:draft:0:0',showModal:async m=>{modal=m;}}));
  assert.equal(modal.components[0].components[0].data.value,introductionAnswerSheet(data));
  const client={guilds:{fetch:async()=>({members:{fetch:async()=>({displayName:'Member'})}})}};
- const payload=await coordinator().cardPayload(client,g,u,data,'six-questions');assert.equal(payload.files.length,1,'one complete image, never sliced between rows');assert.equal(payload.components.length,1);
+ const payload=await coordinator().cardPayload(client,g,u,data,'five-questions');assert.equal(payload.files.length,1,'one complete image, never sliced between rows');assert.equal(payload.components.length,1);
 });
