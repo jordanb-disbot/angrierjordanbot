@@ -1,21 +1,34 @@
-import {chairismFrame,chairismPlate,chairismHeading} from './presentation.js';
+import {chairismFrame,chairismPlate,chairismTextBlock} from './presentation.js';
 import {esc,ink,text} from '../../features-events/src/visual.js';
-import {centeredBlock,portrait} from '../../features-events/src/gate-b-visual.js';
+import {portrait} from '../../features-events/src/gate-b-visual.js';
 import {validateSnapshot} from './domain.js';
 import type {ChairismQuote,ChairismSnapshot} from './interfaces.js';
 export interface ChairismRenderOptions {number?:number;showSourceChannel?:boolean;}
-function quoteBlock(q:ChairismQuote,top:number,label='THE MOMENT',width=1140,x=30,minHeight=320,layout:'short'|'long'='short'){
- const cx=x+width/2,name=centeredBlock(q.displayName,top+86,{size:30,color:ink.warm,width:width-280,cx:cx+66,weight:700}),stampY=top+86+Math.max(48,name.height),quoteY=stampY+78;
- const baseline=centeredBlock(q.text,quoteY,{size:width<1000?34:44,color:ink.white,width:width-104,cx,weight:600,lineHeight:width<1000?48:59}),h=Math.max(minHeight,quoteY-top+baseline.height+38);
- const areaTop=quoteY-18,areaHeight=h-(areaTop-top)-30;let size=layout==='long'?40:50;let quote=centeredBlock(q.text,areaTop,{size,color:ink.white,width:width-112,cx,weight:700,lineHeight:size*1.3});while(quote.height>areaHeight&&size>24){size-=2;quote=centeredBlock(q.text,areaTop,{size,color:ink.white,width:width-112,cx,weight:700,lineHeight:size*1.3});}
- return {height:h,body:chairismPlate(top,h,x,width)+portrait('chairism-'+q.userId+'-'+top+'-'+x,q.displayName,q.avatarDataUri,x+105,top+34,116)+text(cx+66,top+41,label,20,ink.warm,'text-anchor="middle" letter-spacing="3" font-weight="700"')+`<path d="M ${x+48} ${stampY+24} H ${x+width-48}" stroke="${ink.gold}" opacity=".32"/>`+name.svg+text(cx+66,stampY,new Date(q.timestamp).toISOString().slice(0,16).replace('T',' ')+' UTC',22,ink.white,'text-anchor="middle"')+text(x+53,areaTop+46,'“',60,ink.gold,'text-anchor="middle" font-family="Cinzel" opacity=".7"')+`<g transform="translate(0 ${Math.max(16,(areaHeight-quote.height)/2)})">${quote.svg}</g>`};
+function quoteBlock(q:ChairismQuote,top:number,label='CHAIRISMS',layout:'short'|'long'='short'){
+ const x=30,width=1140,quoteX=830,quoteWidth=580;
+ const centered=(value:string,y:number,options:Parameters<typeof chairismTextBlock>[3])=>{const block=chairismTextBlock(value,quoteX,y,options);return {...block,svg:block.svg.replaceAll('text-anchor="start"','text-anchor="middle"')};};
+ const authorMeasure=centered(q.displayName,0,{size:30,width:quoteWidth,lineHeight:39});
+ const minimum=centered(q.text,0,{size:32,width:quoteWidth,lineHeight:42});
+ const height=Math.max(560,minimum.height+authorMeasure.height+196);
+ const areaTop=top+106,areaHeight=height-166,leading=layout==='long'?1.3:1.25;
+ let size=layout==='long'?58:66;
+ let measure=centered(q.text,0,{size,width:quoteWidth,lineHeight:Math.ceil(size*leading)});
+ while(measure.height+authorMeasure.height+66>areaHeight&&size>32){size-=2;measure=centered(q.text,0,{size,width:quoteWidth,lineHeight:Math.ceil(size*leading)});}
+ const blockHeight=measure.height+authorMeasure.height+66;
+ const quoteTop=areaTop+(areaHeight-blockHeight)/2+size;
+ const quote=centered(q.text,quoteTop,{size,width:quoteWidth,weight:500,lineHeight:Math.ceil(size*leading)});
+ const authorY=quoteTop+quote.height-Math.ceil(size*leading)+52;
+ const author=centered(q.displayName,authorY,{size:30,color:ink.warm,width:quoteWidth,weight:500,lineHeight:39});
+ const stampY=authorY+author.height-39+34;
+ const key=('chairism-'+q.userId+'-'+top).replace(/[^a-zA-Z0-9_-]/g,'_');
+ const hasPhoto=q.avatarDataUri&&/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(q.avatarDataUri)&&q.avatarDataUri.length<=1_400_000;
+ const photo=hasPhoto?`<defs><clipPath id="portrait-${key}"><rect x="40" y="${top+10}" width="490" height="${height-20}" rx="16"/></clipPath><linearGradient id="fade-${key}"><stop offset="0" stop-color="white"/><stop offset=".68" stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="mask-${key}"><rect x="40" y="${top+10}" width="490" height="${height-20}" fill="url(#fade-${key})"/></mask><linearGradient id="shade-${key}" x2="0" y2="1"><stop stop-color="#051822" stop-opacity="0"/><stop offset=".72" stop-color="#051822" stop-opacity=".05"/><stop offset="1" stop-color="#051822" stop-opacity=".7"/></linearGradient></defs><g clip-path="url(#portrait-${key})" mask="url(#mask-${key})"><image href="${esc(q.avatarDataUri!)}" x="40" y="${top+10}" width="490" height="${height-20}" preserveAspectRatio="xMidYMid slice"/><rect x="40" y="${top+10}" width="490" height="${height-20}" fill="url(#shade-${key})"/></g>`:portrait(key,q.displayName,undefined,272,top+(height-180)/2,180);
+ return {height,body:chairismPlate(top,height,x,width)+photo+text(quoteX,top+61,label,20,ink.warm,'text-anchor="middle" letter-spacing="3" font-family="Space Grotesk" font-weight="500"')+`<path d="M${quoteX-41} ${top+79}H${quoteX+41}" stroke="${ink.gold}" stroke-opacity=".6"/>`+quote.svg+author.svg+text(quoteX,stampY,new Date(q.timestamp).toISOString().slice(0,16).replace('T',' ')+' UTC',20,ink.muted,'text-anchor="middle"')};
 }
 export function renderChairism(snapshot:ChairismSnapshot,options:ChairismRenderOptions={}){
- validateSnapshot(snapshot);let body=chairismHeading('Chairisms'),y=174;
- const image=(top:number,h:number)=>chairismPlate(top,h,610,560)+`<image href="${esc(snapshot.imageDataUri!)}" x="634" y="${top+24}" width="512" height="${h-48}" preserveAspectRatio="xMidYMid meet"/>`;
- if(snapshot.reply&&snapshot.imageDataUri){const main=quoteBlock(snapshot.quote,y);body+=main.body;y+=main.height+16;const reply=quoteBlock(snapshot.reply,y,'IN REPLY TO',560,30,380);body+=reply.body+image(y,reply.height);y+=reply.height+16;}
- else if(snapshot.reply){const left=quoteBlock(snapshot.quote,y,'THE MOMENT',560),right=quoteBlock(snapshot.reply,y,'IN REPLY TO',560,610),h=Math.max(left.height,right.height);body+=quoteBlock(snapshot.quote,y,'THE MOMENT',560,30,h).body+quoteBlock(snapshot.reply,y,'IN REPLY TO',560,610,h).body;y+=h+16;}
- else if(snapshot.imageDataUri){const main=quoteBlock(snapshot.quote,y,'THE MOMENT',560,30,380);body+=main.body+image(y,main.height);y+=main.height+16;}
- else{const main=quoteBlock(snapshot.quote,y,'THE MOMENT',1140,30,320,snapshot.layout??'short');body+=main.body;y+=main.height+16;}
- const labels=[options.number===undefined?'':`Chairism #${options.number}`,options.showSourceChannel&&snapshot.sourceChannelLabel?'#'+snapshot.sourceChannelLabel:''].filter(Boolean);body+=text(600,y+24,labels.join(' · ')||'A SERVER MOMENT · KEPT IN THE CHAIRS LOUNGE',23,ink.warm,'text-anchor="middle" font-weight="600"');return chairismFrame(y+52,body);
+ validateSnapshot(snapshot);let body='',y=26;
+ const main=quoteBlock(snapshot.quote,y,'CHAIRISMS',snapshot.layout??'short');body+=main.body;y+=main.height+16;
+ if(snapshot.reply){const reply=quoteBlock(snapshot.reply,y,'IN REPLY TO');body+=reply.body;y+=reply.height+16;}
+ if(snapshot.imageDataUri){const height=480;body+=chairismPlate(y,height)+`<image href="${esc(snapshot.imageDataUri)}" x="54" y="${y+24}" width="1092" height="${height-48}" preserveAspectRatio="xMidYMid meet"/>`;y+=height+16;}
+ const labels=[options.number===undefined?'':`Chairism #${options.number}`,options.showSourceChannel&&snapshot.sourceChannelLabel?'#'+snapshot.sourceChannelLabel:''].filter(Boolean);body+=text(1122,y+18,labels.join(' · ')||'KEPT IN THE CHAIRS LOUNGE',20,ink.warm,'text-anchor="end"');return chairismFrame(y+40,body);
 }

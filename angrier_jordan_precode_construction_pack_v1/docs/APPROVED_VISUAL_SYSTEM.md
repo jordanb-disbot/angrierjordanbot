@@ -1,5 +1,9 @@
 # Permanent Angrier Jordan visual system
 
+## Chairisms owner visual approval — 2026-09-27
+
+The owner approved the portrait-led Chairisms revision: quoted member profile image filling the left panel, quotation and attribution centered within the right panel, adaptive font sizing, and existing amber/navy lounge materials with Space Grotesk/Inter. The [approval manifest](approved_visuals/chairisms-2026-09-27.json) records 16 immutable short/long/reply/image/archive/notice desktop and mobile review images. Preserve this typography placement for future Chairisms changes. Fixture identities are fictional; runtime captures the quoted member's actual Discord profile image. This approves presentation, not production deployment. The separate wheelchair race revision remains pending explicit visual approval.
+
 The owner approved Gate A and the current Line, Race, Fight and standard-window presentation on 2026-09-25. This supersedes earlier pending/rejected revision notes. Approval locks the visual system, not unimplemented Line functionality or live Discord acceptance.
 
 Immutable review snapshots and SHA-256 fingerprints live in [the approval manifest](approved_visuals/locked-2026-09-25/manifest.json). The standard-window image includes the approved basic game window. These are production design references; fixture identities are not real runtime state.
@@ -19,3 +23,7 @@ Gate B is PASSED. The owner approved the complete corrected review gallery from 
 ## Music owner visual approval — 2026-09-26
 
 The owner approved the Music presentation at commit `f98de3c2ffd3b02aa2d742862b68f2dd52d06f63`: full player, compact/pinned player, search, queue, playlists, source/status surfaces, error/unavailable states and current Discord-native controls. Preserve the AJ palette/materials/fonts, desktop/mobile stacking and truncation. The [Music approval manifest](approved_visuals/music-2026-09-26.json) freezes 46 images and the gallery/control metadata. Do not alter these layouts except for an objective usability defect found in live acceptance. Gate C visual approval is PASSED; functional/live acceptance remains pending. Production Music remains disabled; deployment is not authorized.
+
+## Race / Line motion approval — 2026-09-27
+
+The owner approved the six wheelchair racer designs and the reviewed 20fps `!race` / `!line` animations. Preserve the approved lounge styling, exact countdown and authoritative race motion. The [approval manifest](approved_visuals/smooth-events-2026-09-27.json) locks the review GIFs and all six wheelchair runtime assets. Portrait and Chairisms are excluded from this approval batch. This is visual approval; live Discord acceptance remains pending and production deployment is not authorized by this approval.

@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-27",
+  "files": [
+    {
+      "sha256": "84b83b785e31279607cf379fc970257bd72c2a0f3f56e7602a3b6758939de3cf",
+      "file": "docs/approved_visuals/smooth-events-2026-09-27/race.gif"
+    },
+    {
+      "sha256": "269fa329d9124d3fb7090cdfc243268316b6636dc016c7c539c4f00c0deceb6a",
+      "file": "docs/approved_visuals/smooth-events-2026-09-27/line.gif"
+    },
+    {
+      "sha256": "0935c8a3def3e4512af4d7372f3414a2a33533b3be4496ee6bcf2b194fb70e14",
+      "file": "docs/approved_visuals/smooth-events-2026-09-27/report.json"
+    },
+    {
+      "sha256": "ea2c6f87ba3dd5332dd942f9067cf0b8a3c110e7b1897071e4bc717b280350f8",
+      "file": "docs/approved_visuals/smooth-events-2026-09-27/index.html"
+    },
+    {
+      "sha256": "ba384e77ad5d7d985027ec6c0099c30e74eb1afbe5cbebba0707de467ec6e9d0",
+      "file": "production/event_art/v6/wheelchair-1-runtime.png"
+    },
+    {
+      "sha256": "a5e60955e6b397458468e9262ecc02ef45df9ef9b35573aea23b0f6c8d92786f",
+      "file": "production/event_art/v6/wheelchair-2-runtime.png"
+    },
+    {
+      "sha256": "6095251e4dffc067449ebbaf57e3a93515bb94a6b4232a7d1bffe56ef6d2d6c4",
+      "file": "production/event_art/v6/wheelchair-3-runtime.png"
+    },
+    {
+      "sha256": "bf1dceffd699c4cdde9627e0d1846c60eb248114918ca5194d46efdc7c019886",
+      "file": "production/event_art/v6/wheelchair-4-runtime.png"
+    },
+    {
+      "sha256": "eeb05edd3d87ab83ef0636bf3a55edad07d46c8fabb1ba0efcc217c9021a8d66",
+      "file": "production/event_art/v6/wheelchair-5-runtime.png"
+    },
+    {
+      "sha256": "df1e1c645cbf852179e836fe386b453378338e7f98949d374d2a095636735de9",
+      "file": "production/event_art/v6/wheelchair-6-runtime.png"
+    }
+  ],
+  "status": "VISUAL_APPROVED",
+  "functionalStatus": "LIVE_DISCORD_ACCEPTANCE_PENDING",
+  "productionDeploymentAuthorized": false,
+  "scope": "Six wheelchair race skins and the reviewed 20fps !race / !line motion. Portrait and Chairisms excluded from this batch.",
+  "ownerInstruction": "approve",
+  "approvedBy": "Owner"
+}

@@ -4,7 +4,8 @@ export const ink=theme.palette;
 export const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const assets=new Map<string,string>();
 export function imageAsset(file:string){if(!assets.has(file))assets.set(file,`data:image/${file.endsWith('.webp')?'webp':'png'};base64,`+readFileSync(new URL('../../../production/event_art/v3/'+file,import.meta.url)).toString('base64'));return assets.get(file)!;}
-export function art(kind:'race_chair'|'robo_fighter',n:number){return imageAsset(`${kind}_${n}.png`);}
+export function raceWheelchair(n=1){const skin=Math.max(1,Math.min(6,Math.trunc(n)));return imageAsset(`../v6/wheelchair-${skin}-runtime.png`);}
+export function art(kind:'race_chair'|'robo_fighter',n:number){return kind==='race_chair'?raceWheelchair(n):imageAsset(`${kind}_${n}.png`);}
 export function text(x:number,y:number,value:string,size=16,color:string=ink.white,extra=''){return `<text x="${x}" y="${y}" font-size="${size}" fill="${color}" ${extra}>${esc(value)}</text>`;}
 export function lines(value:string,max=38){const result:string[]=[];let line='';for(const word of value.split(/\s+/)){if(line&&line.length+word.length+1>max){result.push(line);line='';}line+=(line?' ':'')+word;}if(line)result.push(line);return result;}
 export function panel(x:number,y:number,width:number,height:number,accent=ink.teal){return `<rect x="${x}" y="${y+3}" width="${width}" height="${height}" rx="10" fill="#000" opacity=".4"/><rect x="${x}" y="${y}" width="${width}" height="${height}" rx="10" fill="url(#glass)" stroke="${accent}" stroke-opacity=".65"/><path d="M${x+12} ${y+1}H${x+width-12}" stroke="#DDFBF7" stroke-opacity=".15"/>`;}

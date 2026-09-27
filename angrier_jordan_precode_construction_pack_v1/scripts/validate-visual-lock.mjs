@@ -15,3 +15,18 @@ const music=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/music-2
 if(music.status!=='VISUAL_APPROVED')throw new Error('Music visual approval status changed');
 for(const entry of music.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+entry.file,import.meta.url))).digest('hex')!==entry.sha256)throw new Error('Approved Music visual changed: '+entry.file);}
 console.log('Approved Music visual lock PASS: '+music.files.length+' files (46 images plus gallery/control metadata).');
+
+const motion=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/smooth-events-2026-09-27.json',import.meta.url),'utf8'));
+if(motion.status!=='VISUAL_APPROVED')throw new Error('Race/Line motion approval status changed');
+for(const entry of motion.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+entry.file,import.meta.url))).digest('hex')!==entry.sha256)throw new Error('Approved Race/Line visual changed: '+entry.file);}
+console.log('Approved Race/Line motion lock PASS: '+motion.files.length+' files.');
+
+const profiles=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/profiles-2026-09-27.json',import.meta.url),'utf8'));
+if(profiles.status!=='VISUAL_APPROVED')throw new Error('Profile visual approval status changed');
+for(const entry of profiles.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+entry.file,import.meta.url))).digest('hex')!==entry.sha256)throw new Error('Approved Profile visual changed: '+entry.file);}
+console.log('Approved Profile visual lock PASS: '+profiles.files.length+' files.');
+
+const chairisms=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/chairisms-2026-09-27.json',import.meta.url),'utf8'));
+if(chairisms.status!=='VISUAL_APPROVED')throw new Error('Chairisms visual approval status changed');
+for(const entry of chairisms.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+entry.file,import.meta.url))).digest('hex')!==entry.sha256)throw new Error('Approved Chairisms visual changed: '+entry.file);}
+console.log('Approved Chairisms visual lock PASS: '+chairisms.files.length+' files.');

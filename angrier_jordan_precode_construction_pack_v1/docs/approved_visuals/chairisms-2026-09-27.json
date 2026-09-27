@@ -1,0 +1,73 @@
+{
+  "status": "VISUAL_APPROVED",
+  "approvedBy": "Owner",
+  "date": "2026-09-27",
+  "scope": "Chairisms portrait composition, centered quotation and attribution, adaptive font sizing, amber/navy lounge materials and Space Grotesk/Inter. Runtime uses the quoted member profile picture. Review identities are fictional. Wheelchair race approval is not inferred from this Chairisms approval.",
+  "productionDeploymentAuthorized": false,
+  "files": [
+    {
+      "sha256": "e69ff5ffe152b0b22b8a7b033d978d15272f73544eca750bd44dedd8f1ebbdfd",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/short.png"
+    },
+    {
+      "sha256": "1a4f3ee67350e1713f61bcd4124953d7b2e39582f1ec1f6e133f64fab9568c45",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/short-mobile.png"
+    },
+    {
+      "sha256": "ad21651dbf79761eca52c29947a261940c6bef949a486288dbc49ece38528c0c",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/reply.png"
+    },
+    {
+      "sha256": "aa1cd7d644f59a031862101f8d11d4e393ab96b1d94f2b6eefc38d30c09b7ced",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/reply-mobile.png"
+    },
+    {
+      "sha256": "dbf14fccdc2963dcad630a77ec34547033b988791177203374dca479aea666ed",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/image.png"
+    },
+    {
+      "sha256": "423b2e84024cabc7c69ffc9728a787d5ae9fa7b3b40c4650158ab2a72ca91317",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/image-mobile.png"
+    },
+    {
+      "sha256": "032b1a2bc787448f55ee97f8c72bfd56982013357a356dbfd5734348d14ff55c",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/long.png"
+    },
+    {
+      "sha256": "086dfd0040af8ea20bb359edb97cd15baa81de477b98c33aeba7aaed1f9c7dc5",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/long-mobile.png"
+    },
+    {
+      "sha256": "b7f8c0ba2b3062d831adbe811643bf5e2a8af3a4d01cdf6df50409e365308f7d",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/reply-image.png"
+    },
+    {
+      "sha256": "022e83ef905425f42f62833ffa3c9a53a365da3dc6e89b987d1ba408bace0ee7",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/reply-image-mobile.png"
+    },
+    {
+      "sha256": "af44e79056bb72856e7e140e35c78d3934fd41395366cf6f27ee5b6fb8e76925",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/long-name.png"
+    },
+    {
+      "sha256": "0b47812e90bb23b9d3f6d5e48dea38f1798d575789f0d3f3e236982e9650cdf2",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/long-name-mobile.png"
+    },
+    {
+      "sha256": "e422983072d26247244e12ecd7cdd53cfba8e05a3eeac54c0028a755282257a1",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/archive.png"
+    },
+    {
+      "sha256": "9df35039af6f416645a898e5a1ff24b7aea20151fa12d301295f513b5f90d74f",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/archive-mobile.png"
+    },
+    {
+      "sha256": "6895cdc461f99c5fc7b56ccc1e8502fbfad7ff263567d4314bae4eec980a4717",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/notice.png"
+    },
+    {
+      "sha256": "d3d61166956ab32f15e9996f5abcb53f8124c55079371fc1939e4c204c244e8b",
+      "file": "docs/approved_visuals/chairisms-2026-09-27/notice-mobile.png"
+    }
+  ]
+}

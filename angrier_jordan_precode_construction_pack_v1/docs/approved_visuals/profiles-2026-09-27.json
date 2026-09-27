@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-27",
+  "status": "VISUAL_APPROVED",
+  "approvedBy": "Owner",
+  "ownerInstruction": "Approved",
+  "scope": "Member profile: final table alignment, readability, approved brand colors and member profile picture. Includes private-activity presentation. Does not grant new approval to other gallery feature families.",
+  "productionDeploymentAuthorized": false,
+  "files": [
+    {
+      "file": "docs/approved_visuals/profiles-2026-09-27/profile.png",
+      "sha256": "f8f05c9c7643d2c347bc589b554006e278905c9d0c2203a46ac5cada40cea5dc"
+    },
+    {
+      "file": "docs/approved_visuals/profiles-2026-09-27/profile-mobile.png",
+      "sha256": "2c2c08c4dbf396961beb25dab25491b7aea171db05194fb1423d45de95f72741"
+    },
+    {
+      "file": "docs/approved_visuals/profiles-2026-09-27/hidden.png",
+      "sha256": "90d02bc0895b0e058c3b6b41ba4c5eff4ff39e52a410d3b9c9cabee250432310"
+    },
+    {
+      "file": "docs/approved_visuals/profiles-2026-09-27/hidden-mobile.png",
+      "sha256": "7a9bcb44d46c6c142bb62eeea0ffa502560bb50faa55b131da282fbebd4077b2"
+    }
+  ]
+}

@@ -59,7 +59,7 @@ test('live Race and Fight keep one authoritative in-frame timeline for the whole
   const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>message}})}},repo={publicView:async()=>view,get:async()=>({state:view.state,data})};
   const c=new DiscordEventsCoordinator(repo,config(true),async()=>true);
   await c.refresh(client,view.id);assert.equal(edits.length,1);assert.equal(edits[0].files[0].name,`${type}-locked.gif`);assert.equal(edits[0].files[0].attachment.subarray(0,3).toString(),'GIF');assert.equal(nativeText(edits[0]),'');
-  const {default:sharp}=await import('sharp');const metadata=await sharp(edits[0].files[0].attachment,{animated:true}).metadata();assert.equal(metadata.loop,1);assert.ok(metadata.pages>1&&metadata.pages<=64);assert.doesNotMatch(JSON.stringify(edits[0].components),/tracks|usedMoveIds|winnerId|fightPlan/);
+  const {default:sharp}=await import('sharp');const metadata=await sharp(edits[0].files[0].attachment,{animated:true}).metadata();assert.equal(metadata.loop,1);assert.ok(metadata.pages>1&&metadata.pages<=401);assert.doesNotMatch(JSON.stringify(edits[0].components),/tracks|usedMoveIds|winnerId|fightPlan/);
   await c.refresh(client,view.id);assert.equal(edits.length,1);
   view={...view,motion:{rows:[{userId:'2',place:1,progress:48},{userId:'1',place:2,progress:43}]},combat:{hp:[60,49],log:['Chair Two counters.']}};
   await c.refresh(client,view.id);assert.equal(edits.length,1,'saved progress advances within the existing timeline without Discord edits');
@@ -72,7 +72,7 @@ test('authoritative timeline crops elapsed frames after rasterization and holds 
  const {default:sharp}=await import('sharp'),frames=['#ff0000','#00ff00','#0000ff'].map(fill=>`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16" fill="${fill}"/></svg>`);
  const live=await rasterizeTimeline(frames,[10000,20000,1000],Date.now()-15000),meta=await sharp(live,{animated:true}).metadata();assert.equal(meta.pages,2);assert.equal(meta.loop,1);assert.ok(meta.delay[0]<=15000&&meta.delay[0]>10000);const first=await sharp(live).removeAlpha().raw().toBuffer();assert.deepEqual([...first.subarray(0,3)],[0,255,0]);
  const finished=await rasterizeTimeline(frames,[10000,20000,1000],Date.now()-60000),last=await sharp(finished).removeAlpha().raw().toBuffer();assert.deepEqual([...last.subarray(0,3)],[0,0,255]);assert.equal((await sharp(finished,{animated:true}).metadata()).pages??1,1);
- assert.throws(()=>rasterizeTimeline(frames,[10000,20000,1],Date.now()),/Invalid/);assert.throws(()=>rasterizeTimeline(Array(65).fill(frames[0]),Array(65).fill(10),Date.now()),/Invalid/);
+ assert.throws(()=>rasterizeTimeline(frames,[10000,20000,1],Date.now()),/Invalid/);assert.throws(()=>rasterizeTimeline(Array(513).fill(frames[0]),Array(513).fill(10),Date.now()),/Invalid/);
 });
 
 test('completion during live rendering cannot overwrite the saved finale',async()=>{

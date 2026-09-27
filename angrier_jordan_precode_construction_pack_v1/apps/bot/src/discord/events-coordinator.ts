@@ -11,6 +11,7 @@ import {fightSnapshot} from '../../../../packages/features-events/src/fight.js';
 import {renderRace} from '../../../../packages/features-events/src/render.js';
 import {renderEventNotice} from '../../../../packages/features-events/src/wide-render.js';
 import {rasterizeSvg,rasterizeTimeline} from '../../../../packages/renderer/src/raster.js';
+import {AnimationAssets} from '../../../../packages/renderer/src/animation-assets.js';
 import {eventWindow} from './event-window.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
@@ -123,10 +124,11 @@ export class DiscordEventsCoordinator {
     // Only locked wagers and rendered snapshots leave this process; the private plan is never serialized in the payload.
     const end=Math.ceil(plan.durationMs/10)*10,times=[0];
     if(fight&&saved.fightPlan){for(const beat of saved.fightPlan.beats){const at=Math.ceil(beat.atMs/10)*10,previous=times.at(-1)!;if(at-previous>=20)times.push(Math.floor((previous+at)/20)*10);if(at>times.at(-1)!)times.push(at);}}
-    else for(let i=1;i<60;i++)times.push(Math.round(end*Math.pow(i/60,.8)/10)*10);
+    else for(let at=50;at<end;at+=50)times.push(at);
     if(times.at(-1)!<end)times.push(end);
-    const frames=times.map(at=>render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},fight?at/1000%1:at/end));
-    image=await rasterizeTimeline(frames,times.map((at,index)=>index+1<times.length?times[index+1]!-at:1000),new Date(saved.startedAt).getTime());
+    const artwork=new AnimationAssets();
+    const frames=times.map(at=>artwork.pack(render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},fight?at/1000%1:at/end)));
+    image=await rasterizeTimeline(frames,times.map((at,index)=>index+1<times.length?times[index+1]!-at:1000),new Date(saved.startedAt).getTime(),artwork.assets);
    }else if(waiting){
     const steps=Math.min(60,Math.ceil(waitingMs/1000)),step=Math.max(10,Math.ceil(waitingMs/steps/10)*10),times=Array.from({length:steps},(_,i)=>i*step).filter(at=>at<waitingMs);times.push(waitingMs);
     image=await rasterizeTimeline(times.map(at=>render(view,0,Math.max(0,waitingMs-at))),times.map((at,i)=>i+1<times.length?times[i+1]!-at:1000),now);

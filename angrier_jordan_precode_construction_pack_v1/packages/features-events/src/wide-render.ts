@@ -1,11 +1,11 @@
 import type {RaceView} from './prisma-repository.js';
-import {imageAsset,ink,shell,text,lines,type EventMotion} from './visual.js';
+import {imageAsset,raceWheelchair,ink,shell,text,lines,type EventMotion} from './visual.js';
 const mid='text-anchor="middle"';
 const short=(s:string,n=22)=>s.length>n?s.slice(0,n-1)+'…':s;
 const title=(x:number,y:number,s:string,size=28,color:string=ink.white)=>text(x,y,s,size,color,`${mid} font-family="Space Grotesk" font-weight="700"`);
 const panel=(x:number,y:number,w:number,h:number,accent:string=ink.teal)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="#041923" fill-opacity=".7" stroke="${accent}" stroke-opacity=".7"/><path d="M${x+12} ${y+2}H${x+w-12}" stroke="#F7E5AC" stroke-opacity=".25"/>`;
 const skin=(n=1)=>Math.max(1,Math.min(6,Math.trunc(n)));
-const car=(n=1)=>imageAsset('../v5/cars-'+skin(n)+'-runtime.png'),robot=(n=1)=>imageAsset('../v5/robots-'+skin(n)+'-runtime.png');
+const robot=(n=1)=>imageAsset('../v5/robots-'+skin(n)+'-runtime.png');
 function frame(body:string,scene='lounge-stage-runtime.png',expanded=false){return shell(640,'<image href="'+imageAsset('../v5/'+scene)+'" width="1200" height="640" preserveAspectRatio="xMidYMid slice"/>'+ '<rect x="13" y="13" width="1174" height="614" rx="20" fill="none" stroke="url(#gold)" stroke-width="3"/><rect x="21" y="21" width="1158" height="598" rx="14" fill="none" stroke="#10B981" stroke-opacity=".4"/>'+'<!--event-scene-end-->'+(expanded?body:'<g transform="translate(120 0)">'+body+'</g>'),0,1200);}
 function heading(name:string,state:string){return title(480,45,'ANGRIER JORDAN · PRIVATE LOUNGE EVENTS',16,ink.teal)+title(480,91,name,43)+title(480,125,state,20,ink.warm);}
 function pool(view:RaceView,label:string){return panel(32,553,896,60,ink.gold)+title(480,581,(view.result?.pool??view.pool)+' Ottomans · '+label,25)+text(480,603,view.result?.refunded?'FULL REFUND · NO RAKE':'SIT. PLAY. BELONG.',14,ink.warm,mid);}
@@ -27,13 +27,13 @@ export function renderWideRace(view:RaceView,motion:EventMotion={}){
    body+='<path d="M'+start+' '+(y+h-9)+'H'+finish+'" stroke="#B99859" stroke-width="2" stroke-dasharray="18 9"/>';
    for(let k=0;k<6;k++)body+='<rect x="'+(finish+(k%2)*8)+'" y="'+(y+8+Math.floor(k/2)*Math.max(10,(h-18)/3))+'" width="8" height="'+Math.max(10,(h-18)/3)+'" fill="'+(k%2?'#F4C542':'#E6EAF0')+'"/>';
    if(near)body+='<ellipse cx="'+(x+size/2)+'" cy="'+(y+h/2)+'" rx="'+size+'" ry="'+(h*.4)+'" fill="url(#lamp)" opacity="'+((progress-80)/20)+'"/>';
-   body+='<image data-race-progress="'+progress+'" data-race-nose="'+(x+size*.88)+'" href="'+car(r.chair)+'" x="'+x+'" y="'+(y+2)+'" width="'+size+'" height="'+size+'"/>';
+   body+='<image data-race-progress="'+progress+'" data-race-nose="'+(x+size*.88)+'" href="'+raceWheelchair(r.chair)+'" x="'+x+'" y="'+(y+2)+'" width="'+size+'" height="'+size+'"/>';
   }
  }else{
   if(!cancelled)body+=waitingClock(motion.waitingMs??0,view.extensionUsed?90000:60000,32,132,1136,view.pool);
   const n=Math.max(1,view.racers.length),cols=n<=2?n:3,rows=Math.ceil(n/cols),w=1136/cols,top=cancelled?146:203,h=((cancelled?535:617)-top)/rows;
   for(const[i,r]of view.racers.entries()){const x=32+i%cols*w,y=top+Math.floor(i/cols)*h,cx=x+w/2;
-   body+=panel(x+3,y,w-6,h-8,i%2?ink.gold:ink.teal)+title(cx,y+31,short(r.name,22),28)+'<ellipse cx="'+cx+'" cy="'+(y+h-25)+'" rx="'+(w*.4)+'" ry="22" fill="url(#aura)"/><image href="'+car(r.chair)+'" x="'+(x+12)+'" y="'+(y+35)+'" width="'+(w-24)+'" height="'+(h-49)+'"/>';
+   body+=panel(x+3,y,w-6,h-8,i%2?ink.gold:ink.teal)+title(cx,y+31,short(r.name,22),28)+'<ellipse cx="'+cx+'" cy="'+(y+h-25)+'" rx="'+(w*.4)+'" ry="22" fill="url(#aura)"/><image href="'+raceWheelchair(r.chair)+'" x="'+(x+12)+'" y="'+(y+35)+'" width="'+(w-24)+'" height="'+(h-49)+'"/>';
   }
  }
  return frame(body+(view.state==='OPEN'?'':'<g transform="translate(120 0)">'+pool(view,live?(finished?'finish line reached':'race pool'):short(motion.callout??'total pool',48))+'</g>'),'lounge-stage-runtime.png',true);
@@ -57,7 +57,7 @@ export function renderWideFight(view:RaceView,motion:EventMotion={}){
 /** Terminal scene persists on the original message; only settled outcomes reach this composition. */
 function grandFinale(view:RaceView,kind:'race'|'fight'){
  const winner=view.racers.find(r=>r.userId===view.winnerId),loser=view.racers.find(r=>r.userId!==view.winnerId),name=short(winner?.name??'Winner',28),size=name.length>20?40:54;
- let body=(kind==='race'?'<image data-winner-chair="'+skin(winner?.chair)+'" href="'+car(winner?.chair)+'" x="170" y="135" width="620" height="432"/>':'<image data-winner-chair="'+skin(winner?.chair)+'" href="'+robot(winner?.chair)+'" x="80" y="145" width="500" height="422"/><g opacity=".58" transform="translate(760 445) rotate(65)"><image href="'+robot(loser?.chair)+'" x="-125" y="-125" width="250" height="250"/></g>');
+ let body=(kind==='race'?'<image data-winner-chair="'+skin(winner?.chair)+'" href="'+raceWheelchair(winner?.chair)+'" x="170" y="135" width="620" height="432"/>':'<image data-winner-chair="'+skin(winner?.chair)+'" href="'+robot(winner?.chair)+'" x="80" y="145" width="500" height="422"/><g opacity=".58" transform="translate(760 445) rotate(65)"><image href="'+robot(loser?.chair)+'" x="-125" y="-125" width="250" height="250"/></g>');
  body+='<rect x="160" y="19" width="640" height="130" rx="12" fill="#06131D" fill-opacity=".72"/>'+title(480,49,kind==='race'?'CHAMPION OF THE CHAIRS':'ARENA CHAMPION',25,ink.gold)+title(480,105,name,size)+text(480,136,'ANGRIER JORDAN · THE GRAND FINALE',15,ink.teal,mid);
  if(kind==='fight')body+=panel(614,535,301,34,ink.gold)+text(765,559,'DEFEATED · '+short(loser?.name??'Opponent',16),18,ink.white,mid);
  body+=panel(30,575,900,45,ink.gold)+title(480,594,short((view.result?.pool??view.pool)+' Ottomans · '+(view.result?.refunded?'FULL REFUND':'Rake '+(view.result?.rake??'0')),70),20,ink.gold)+text(480,613,kind==='race'?'VICTORY LANE · SIT. PLAY. BELONG.':'THE FINAL BELL BELONGS TO YOU',15,ink.white,mid);

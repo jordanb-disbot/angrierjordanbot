@@ -87,9 +87,9 @@ export class DiscordSpecialCoordinator {
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public update is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The Line update could not be completed. Check its saved state before retrying.';if(i.replied||i.deferred)await i.followUp({ephemeral:true,content});else await i.reply({ephemeral:true,content});}}
  async payload(view:LineView,callout?:string){
-  const live=view.state==='SETTLING'&&view.elapsedMs<(view.durationMs??LINE_DURATION_MS),sequence=live?lineSequence(view,'wide'):null,animated=Boolean(sequence&&sequence.frames.length>1),waiting=view.state==='OPEN'&&view.remainingMs>0;
+  const live=view.state==='SETTLING'&&view.elapsedMs<(view.durationMs??LINE_DURATION_MS),sequence=live?lineSequence(view,'wide',true):null,animated=Boolean(sequence&&sequence.frames.length>1),waiting=view.state==='OPEN'&&view.remainingMs>0;
   let image:Buffer;
-  if(sequence&&animated)image=await rasterizeSequence(sequence.frames,sequence.delays);
+  if(sequence&&animated)image=await rasterizeSequence(sequence.frames,sequence.delays,sequence.assets);
   else if(waiting){
    const now=Date.now(),remaining=Math.ceil(view.remainingMs/10)*10,steps=Math.min(60,Math.ceil(remaining/1000)),step=Math.ceil(remaining/steps/10)*10,times=Array.from({length:steps},(_,i)=>i*step).filter(at=>at<remaining);times.push(remaining);
    image=await rasterizeTimeline(times.map(at=>renderLine({...view,remainingMs:Math.max(0,remaining-at)},0,'wide',callout)),times.map((at,i)=>i+1<times.length?times[i+1]!-at:1000),now);

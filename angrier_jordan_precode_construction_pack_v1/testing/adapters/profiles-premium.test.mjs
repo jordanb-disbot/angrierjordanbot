@@ -7,7 +7,7 @@ function interaction(commandName='leaderboard',customId,values=[]){const calls=[
 const imageOnly=p=>{assert.equal(p.content,undefined);assert.equal(p.embeds[0].data.title,undefined);assert.equal(p.embeds[0].data.description,undefined);assert.ok(p.files[0].attachment.length>0);};
 test('premium typography and safe portraits retain exact values and escaped identities',()=>{
  const svg=renderPremiumLeaderboard({category:'wealth',page:0,pages:1,rows:[{rank:1,name:'<Chair & Member>',value:'9223372036854775807',avatarData:'https://invalid.test/avatar'}]});
- assert.match(svg,/Poppins/);assert.match(svg,/Cinzel/);assert.match(svg,/&lt;Chair &amp; Member&gt;/);assert.match(svg,/9223372036854775807/);assert.doesNotMatch(svg,/href="https:/);
+ assert.match(svg,/Inter/);assert.match(svg,/Space Grotesk/);assert.doesNotMatch(svg,/Poppins|Cinzel/);assert.match(svg,/&lt;Chair &amp; Member&gt;/);assert.match(svg,/9223372036854775807/);assert.doesNotMatch(svg,/href="https:/);
 });
 test('hidden activity, empty records and empty showcase are intentional branded states',()=>{
  assert.match(renderPremiumProfile({name:'Jordan',sections:[{label:'Activity',value:'Activity statistics are private.'}]}),/statistics are private/);

@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "695721d2c04d55e85217b84df2cbe09b76ca2b8ce347641e299244201305c8ee"
+      "sha256": "2b1400508ce9e5848205493c41f134c34c618460ed7f3dda3b5b73d493d7263f"
     },
     {
       "id": "line.approved.lounge",
@@ -6069,9 +6069,9 @@
       "file": "packages/features-chairisms/src/render.ts",
       "category": "runtime",
       "canonical": true,
-      "status": "IMPLEMENTED_FLAGGED_OFF",
+      "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "850a34a240bbf63c6bc83cac965134a62c9149f3029af74cecfe501ed9e71af8"
+      "sha256": "78e3005e2384b87f3a3e94db19896a152b1be2c2dbb9a7cb90d4290c16a22b0a"
     },
     {
       "id": "chairisms.browser",
@@ -6080,7 +6080,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "750863f9a0e71122e74df946240877411f0b6b09d3c2ad069059517a8c71d511"
+      "sha256": "2e410912879956f011fece292c74fadbe583b224f0dd09d5740499cd3a49c4c1"
     },
     {
       "id": "casino.runtime.renderer",
@@ -6484,8 +6484,8 @@
       "category": "renderer",
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
-      "usage": "Owner-directed Poppins/Cinzel premium profile, showcase, leaderboard and records presentations.",
-      "sha256": "9aebb5a81ba20dd802c8fd1a3473e69f4e80c783287e11e7722ac07381c5a284"
+      "usage": "Readable member profile tables, Discord portraits, records, standings and showcase using approved brand tokens",
+      "sha256": "a8406b76d3c3e13019c805a779abfacf1d7eb5e550272705b664411662171ce7"
     },
     {
       "id": "crime-premium-runtime",
@@ -6538,7 +6538,7 @@
       "category": "renderer",
       "usage": "Wide amber Chairisms browser and quote materials",
       "canonical": true,
-      "sha256": "25a4026a6459009ae3b6d65254f7cc80e1d9450cc9b186b1b137b1826dc079be",
+      "sha256": "4075db35863b9aa39afa3455a1d98464a26b265f521111479365c8786e415ae8",
       "status": "OWNER_REVIEW_PENDING"
     },
     {
@@ -6575,6 +6575,132 @@
       "usage": "Deterministic casino reels, card suits, wheel, dice, coins and tickets",
       "canonical": true,
       "sha256": "5857093b27babd06e6d15818c2461394488a8cf0221be0e05063ddc6748655ee"
+    },
+    {
+      "id": "race.wheelchair.1.source",
+      "file": "production/event_art/v6/wheelchair-1.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 1; packaged deterministic artwork, no runtime AI",
+      "sha256": "64b81e65c1086ac20b584e709f9abb738f0f2ec63a390da75d1f6a4bbb5b1c64"
+    },
+    {
+      "id": "race.wheelchair.1.runtime",
+      "file": "production/event_art/v6/wheelchair-1-runtime.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 1; packaged deterministic artwork, no runtime AI",
+      "sha256": "ba384e77ad5d7d985027ec6c0099c30e74eb1afbe5cbebba0707de467ec6e9d0"
+    },
+    {
+      "id": "race.wheelchair.2.source",
+      "file": "production/event_art/v6/wheelchair-2.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 2; packaged deterministic artwork, no runtime AI",
+      "sha256": "60d0439bfbade1228bd2574d73cfde628ad4dac8eaf89ba2571e9f8307f2f3de"
+    },
+    {
+      "id": "race.wheelchair.2.runtime",
+      "file": "production/event_art/v6/wheelchair-2-runtime.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 2; packaged deterministic artwork, no runtime AI",
+      "sha256": "a5e60955e6b397458468e9262ecc02ef45df9ef9b35573aea23b0f6c8d92786f"
+    },
+    {
+      "id": "race.wheelchair.3.source",
+      "file": "production/event_art/v6/wheelchair-3.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 3; packaged deterministic artwork, no runtime AI",
+      "sha256": "ef63312358e88492cbb043bc0dd02837efa4f801d2b06f95d64f27c4c61fe300"
+    },
+    {
+      "id": "race.wheelchair.3.runtime",
+      "file": "production/event_art/v6/wheelchair-3-runtime.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 3; packaged deterministic artwork, no runtime AI",
+      "sha256": "6095251e4dffc067449ebbaf57e3a93515bb94a6b4232a7d1bffe56ef6d2d6c4"
+    },
+    {
+      "id": "race.wheelchair.4.source",
+      "file": "production/event_art/v6/wheelchair-4.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 4; packaged deterministic artwork, no runtime AI",
+      "sha256": "7699fb5072e1d56b8b1fb60b301a9dfc90ea6b2597e71c8cfedf07804ed7532c"
+    },
+    {
+      "id": "race.wheelchair.4.runtime",
+      "file": "production/event_art/v6/wheelchair-4-runtime.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 4; packaged deterministic artwork, no runtime AI",
+      "sha256": "bf1dceffd699c4cdde9627e0d1846c60eb248114918ca5194d46efdc7c019886"
+    },
+    {
+      "id": "race.wheelchair.5.source",
+      "file": "production/event_art/v6/wheelchair-5.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 5; packaged deterministic artwork, no runtime AI",
+      "sha256": "24c3c0348c36a62ad85b4b885b4049f08be1feb48725fe08159756a1f31ace06"
+    },
+    {
+      "id": "race.wheelchair.5.runtime",
+      "file": "production/event_art/v6/wheelchair-5-runtime.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 5; packaged deterministic artwork, no runtime AI",
+      "sha256": "eeb05edd3d87ab83ef0636bf3a55edad07d46c8fabb1ba0efcc217c9021a8d66"
+    },
+    {
+      "id": "race.wheelchair.6.source",
+      "file": "production/event_art/v6/wheelchair-6.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 6; packaged deterministic artwork, no runtime AI",
+      "sha256": "17be023916cff6f02db7ad6160c37409aecc35b06c49a791b8e705dd98931664"
+    },
+    {
+      "id": "race.wheelchair.6.runtime",
+      "file": "production/event_art/v6/wheelchair-6-runtime.png",
+      "category": "runtime.art",
+      "canonical": true,
+      "status": "OWNER_REVIEW_PENDING",
+      "usage": "Wheelchair racer 6; packaged deterministic artwork, no runtime AI",
+      "sha256": "df1e1c645cbf852179e836fe386b453378338e7f98949d374d2a095636735de9"
+    },
+    {
+      "id": "race.wheelchairs.wide.renderer",
+      "file": "packages/features-events/src/wide-render.ts",
+      "category": "runtime.renderer",
+      "canonical": true,
+      "usage": "Shared deterministic event presentation with wheelchair race skins",
+      "sha256": "e0918d6cf59ecc0728fb624b23631240dbc08611f4d9472a9a8d25c562179fa3",
+      "status": "OWNER_REVIEW_PENDING"
+    },
+    {
+      "id": "events.shared.visual",
+      "file": "packages/features-events/src/visual.ts",
+      "category": "runtime.renderer",
+      "canonical": true,
+      "usage": "Shared deterministic event presentation with wheelchair race skins",
+      "sha256": "912a80c556b9e16e167bc75c767a9515d1258f1acd3803078e64171254794e2e",
+      "status": "OWNER_REVIEW_PENDING"
     }
   ]
 }

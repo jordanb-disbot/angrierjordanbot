@@ -36,13 +36,13 @@ export function rasterizeLoop(frames:string[],delayMs=50):Promise<Buffer>{
 }
 
 /** One authoritative sequence, played once. Used by Line; never restarts a countdown. */
-export function rasterizeSequence(frames:string[],delaysMs:number[]):Promise<Buffer>{
- if(frames.length<2||frames.length>64||frames.length!==delaysMs.length||delaysMs.some(n=>!Number.isInteger(n)||n<10||n>60_000||n%10!==0))throw new Error('Invalid one-shot animation sequence.');
- return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,delaysMs,oneShot:true},error=>{if(error)child.kill();});});
+export function rasterizeSequence(frames:string[],delaysMs:number[],assets?:string[]):Promise<Buffer>{
+ if(frames.length<2||frames.length>512||frames.length!==delaysMs.length||delaysMs.some(n=>!Number.isInteger(n)||n<10||n>60_000||n%10!==0))throw new Error('Invalid one-shot animation sequence.');
+ return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,assets,delaysMs,oneShot:true},error=>{if(error)child.kill();});});
 }
 
 /** Saved event time owns playback. Elapsed frames are removed after rasterization, before encoding. */
-export function rasterizeTimeline(frames:string[],delaysMs:number[],startAtMs:number):Promise<Buffer>{
- if(frames.length<2||frames.length>64||frames.length!==delaysMs.length||!Number.isFinite(startAtMs)||delaysMs.some(n=>!Number.isInteger(n)||n<10||n>60_000||n%10!==0))throw new Error('Invalid authoritative animation timeline.');
- return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,delaysMs,startAtMs,oneShot:true},error=>{if(error)child.kill();});});
+export function rasterizeTimeline(frames:string[],delaysMs:number[],startAtMs:number,assets?:string[]):Promise<Buffer>{
+ if(frames.length<2||frames.length>512||frames.length!==delaysMs.length||!Number.isFinite(startAtMs)||delaysMs.some(n=>!Number.isInteger(n)||n<10||n>60_000||n%10!==0))throw new Error('Invalid authoritative animation timeline.');
+ return new Promise((resolve,reject)=>{const child=rendererWorker(),id=++sequence;pending.set(id,{resolve,reject});child.ref();child.channel?.ref();child.send({id,frames,assets,delaysMs,startAtMs,oneShot:true},error=>{if(error)child.kill();});});
 }

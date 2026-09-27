@@ -1,0 +1,24 @@
+[
+  {
+    "name": "race",
+    "renderMs": 13081,
+    "bytes": 1244785,
+    "pages": 310,
+    "width": 480,
+    "height": 256,
+    "loop": 1,
+    "durationMs": 16440,
+    "maxMotionDelay": 50
+  },
+  {
+    "name": "line",
+    "renderMs": 10268,
+    "bytes": 1289985,
+    "pages": 181,
+    "width": 480,
+    "height": 256,
+    "loop": 1,
+    "durationMs": 10000,
+    "maxMotionDelay": 50
+  }
+]
