@@ -15,6 +15,7 @@ export interface ModerationRepository {
   listNotes(guildId:string,userId:string,limit:number):Promise<ModNoteRecord[]>;
   findActiveCases(guildId:string,userId:string,actionTypes:readonly string[]):Promise<ModerationCaseRecord[]>;
   upsertExpiryJob(input:{guildId:string;caseId:number;jobType:'moderation.timeout_expire'|'moderation.temp_ban_expire';dueAt:Date;userId:string}):Promise<void>;
+  getTemporaryBanExpiry(caseId:number):Promise<{guildId:string;userId:string;dueAt:Date;status:string}|null>;
   cancelExpiryJobs(caseId:number):Promise<void>;
   requestReview(input:{caseId:number;userId:string;text?:string;now:Date}):Promise<{appealId:string;caseId:number;existing:boolean}>;
   getAppeal(appealId:string):Promise<AppealRecord|null>;

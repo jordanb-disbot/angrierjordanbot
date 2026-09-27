@@ -68,13 +68,17 @@ export class DiscordModerationCoordinator {
     const userId=typeof data.userId==='string'?data.userId:'';
     if(jobType==='moderation.evidence_expire'){const evidenceId=typeof data.evidenceId==='string'?data.evidenceId:'';if(evidenceId)await this.service.purgeEvidence(evidenceId);return;}
     if(!caseId||!userId)return;
-    const c=await this.service.requireCase(caseId).catch(()=>null);if(!c||!['ACTIVE','APPEALED'].includes(c.status))return;
-    const server=client.guilds.cache.get(c.guildId);if(!server){await this.service.expire(caseId,'Temporary moderation action expired while server was unavailable.');return;}
     if(jobType==='moderation.temp_ban_expire'){
-      const ban=await server.bans.fetch(userId).catch(()=>null);
-      if(ban)await server.members.unban(userId,`Temporary ban expired — case #${caseId}`).catch(error=>{throw error;});
+      const c=await this.service.dueTemporaryBan(caseId,userId);if(!c)return;
+      const server=client.guilds.cache.get(c.guildId);
+      if(!server)throw new Error('Temporary ban expiry requires the server to be available.');
+      const ban=await server.bans.fetch(userId).catch(error=>{if(error?.code===10026)return null;throw error;});
+      if(!await this.service.dueTemporaryBan(caseId,userId))return;
+      if(ban)await server.members.unban(userId,`Temporary ban expired — case #${caseId}`);
       await this.service.expire(caseId,'Temporary ban expired.',{autoUnbanned:Boolean(ban)});return;
     }
+    const c=await this.service.requireCase(caseId).catch(()=>null);if(!c||!['ACTIVE','APPEALED'].includes(c.status))return;
+    const server=client.guilds.cache.get(c.guildId);if(!server){await this.service.expire(caseId,'Temporary moderation action expired while server was unavailable.');return;}
     if(jobType==='moderation.timeout_expire'){
       await this.service.expire(caseId,'Timeout expired.');
     }
