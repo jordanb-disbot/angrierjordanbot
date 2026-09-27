@@ -6,7 +6,7 @@
       "controls": "Run /roles and choose DM Status, Gender, Age, Region, Interests / Substances, Notification Pings or Personalities. Then use that category’s role menu. Single-select replaces its previous choice; multi-select permits several. Clear choices to remove roles. Reopening shows current selections.",
       "steps": [
         "Choose a category before choosing roles. DM Status, Gender, Age and Region keep at most one selection; Interests / Substances, Notification Pings and Personalities permit several.",
-        "Choose your new roles or deselect ones you no longer want. REDOSE is under Notification Pings. Personalities are optional member roles, not earned or staff badges.",
+        "Choose your new roles or deselect ones you no longer want. Notification Pings offers Line Ping (!line), Race Ping (!race), VC Ping (!VC), and Chess Ping (!Chess). Personalities are optional member roles, not earned or staff badges.",
         "Check the updated selections, then reopen /roles later to verify them. AJ rejects missing or unmanageable choices safely.",
         "Only approved self-assignable roles appear: below AJ, unmanaged and without Discord permission bits. Protected, staff, system and earned roles are excluded; Practice changes none of them."
       ],
@@ -534,23 +534,23 @@
     },
     "special_vc": {
       "purpose": "Send the configured voice-chat invitation in main chat. Only the configured opt-in role is notified, and availability depends on your current roles and enabled server settings. There is no Special Command cooldown.",
-      "controls": "Type !vc as its own message in main chat. The trigger is removed and AJ posts the configured invitation; this does not move members into voice.",
+      "controls": "Type !VC as its own message in main chat. The trigger is removed and AJ posts the configured invitation; this does not move members into voice.",
       "steps": [
         "Check that you intend to notify the optional invitation role.",
-        "Type !vc in the configured main chat, not as a slash command.",
+        "Type !VC in the configured main chat, not as a slash command.",
         "Use the invitation to organize the activity; tutorial Practice does not send the ping."
       ],
-      "completion": "You know !vc is an opt-in notification rather than a game or forced voice action. Next: exit before sending the real invitation."
+      "completion": "You know !VC is an opt-in notification rather than a game or forced voice action. Next: exit before sending the real invitation."
     },
     "special_chess": {
       "purpose": "Send the configured chess invitation in main chat. Only the configured opt-in role is notified, and availability depends on your current roles and enabled server settings. There is no Special Command cooldown.",
-      "controls": "Type !chess as its own message in main chat. The trigger is removed and AJ posts the configured invitation; this does not start a native chess game.",
+      "controls": "Type !Chess as its own message in main chat. The trigger is removed and AJ posts the configured invitation; this does not start a native chess game.",
       "steps": [
         "Check that you intend to notify the optional invitation role.",
-        "Type !chess in the configured main chat, not as a slash command.",
+        "Type !Chess in the configured main chat, not as a slash command.",
         "Use the invitation to organize the activity; tutorial Practice does not send the ping."
       ],
-      "completion": "You know !chess is an opt-in notification rather than a game or forced voice action. Next: exit before sending the real invitation."
+      "completion": "You know !Chess is an opt-in notification rather than a game or forced voice action. Next: exit before sending the real invitation."
     },
     "truthordare": {
       "purpose": "Start Truth or Dare in the games channel for yourself or an optional target member. The target’s answer is entered privately before publication; reading a prompt alone does not submit an answer.",

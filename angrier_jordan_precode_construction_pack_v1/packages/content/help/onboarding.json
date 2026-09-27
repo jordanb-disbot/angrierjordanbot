@@ -14,7 +14,7 @@
   "tutorial": {
     "steps": [
       "Choose a category before choosing roles. DM Status, Gender, Age and Region keep at most one selection; Interests / Substances, Notification Pings and Personalities permit several.",
-      "Choose your new roles or deselect ones you no longer want. REDOSE is under Notification Pings. Personalities are optional member roles, not earned or staff badges.",
+      "Choose your new roles or deselect ones you no longer want. Notification Pings offers Line Ping (!line), Race Ping (!race), VC Ping (!VC), and Chess Ping (!Chess). Personalities are optional member roles, not earned or staff badges.",
       "Check the updated selections, then reopen /roles later to verify them. AJ rejects missing or unmanageable choices safely.",
       "Only approved self-assignable roles appear: below AJ, unmanaged and without Discord permission bits. Protected, staff, system and earned roles are excluded; Practice changes none of them."
     ]

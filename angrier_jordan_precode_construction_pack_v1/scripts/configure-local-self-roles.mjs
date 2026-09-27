@@ -10,7 +10,7 @@ export const categories=[
  ['regions','Region','single',['North America','South America','Europe','Africa','Asia','Oceania']],
  ['vices','Interests / Substances','multi',['Stimulants','Dissociatives','Hallucinogens','Depressants','Cannabinoids']],
  ['personalities','Personalities','multi',['Morning Perch','Night Recliner','BeanBag','Swivel Chair','Wobbly Stool','Ghost Chair']],
- ['pings','Notification Pings','multi',['Chess Ping','Race Ping','VC Ping','REDOSE']],
+ ['pings','Notification Pings','multi',['Line Ping','Race Ping','VC Ping','Chess Ping']],
 ];
 const normalize=s=>s.toLowerCase().replace(/[^a-z0-9+]/g,'');
 // The existing disposable server uses this spelling; keep its name and ID unchanged.
@@ -25,7 +25,12 @@ export function planSelfRoles(roles,botRoleIds,configRows,guildId){
   const matches=roles.filter(r=>names.some(name=>normalize(r.name)===normalize(name)));
   if(matches.length!==1){rejected.push({label,reason:matches.length?'Ambiguous duplicate names':'Not found in test server'});return[];}
   const r=matches[0],references=configRows.filter(c=>JSON.stringify(c.value,(_,v)=>typeof v==='bigint'?v.toString():v).includes('"'+r.id+'"')).map(c=>c.key);
-  const protectedReferences=references;
+  const trigger={'Line Ping':'!line','Race Ping':'!race','VC Ping':'!vc','Chess Ping':'!chess'}[label];
+  const protectedReferences=references.filter(key=>{
+   if(key!=='special_commands.builtin_role_map'||!trigger)return true;
+   const value=configRows.find(row=>row.key===key)?.value;
+   return !value||value[trigger]!==r.id||Object.entries(value).some(([k,v])=>v===r.id&&k!==trigger);
+  });
   const reason=r.id===guildId?'Everyone role':r.managed?'Integration-managed role':r.position>=top?'Not below AJ':BigInt(r.permissions)!==0n?'Has Discord permission bits':protectedReferences.length?'Protected/configured use: '+protectedReferences.join(', '):null;
   if(reason){rejected.push({label,reason});return[];}
   return[{roleId:r.id,label:r.name,enabled:true}];

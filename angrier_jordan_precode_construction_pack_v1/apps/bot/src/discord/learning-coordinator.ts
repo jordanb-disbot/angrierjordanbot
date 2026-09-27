@@ -1,5 +1,5 @@
 import {lessonCopy,hasAuthoredLesson} from '../../../../packages/features-learning/src/tutorial-content.js';
-import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,PermissionFlagsBits,StringSelectMenuBuilder,type AutocompleteInteraction,type ButtonInteraction,type ChatInputCommandInteraction,type StringSelectMenuInteraction} from 'discord.js';
+import {ActionRowBuilder,ButtonBuilder,ButtonStyle,PermissionFlagsBits,StringSelectMenuBuilder,type AutocompleteInteraction,type ButtonInteraction,type ChatInputCommandInteraction,type StringSelectMenuInteraction} from 'discord.js';
 import {COMMANDS} from '../../../../packages/contracts/src/generated/commands.js';
 import type {CommandContract} from '../../../../packages/contracts/src/types.js';
 import {DomainError,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
@@ -7,7 +7,7 @@ import {PrismaLearningRepository} from '../../../../packages/features-learning/s
 import {LORE_CHAPTERS,validateReadingPage,TUTORIAL_PATHS,conversationSnapshot,tldrDuration} from '../../../../packages/features-learning/src/domain.js';
 import {learningWindow} from '../../../../packages/features-learning/src/visual.js';
 import {createHash} from 'node:crypto';
-import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+import {displayFrames,wideDisplay,displayNotice,type DisplayFrame} from './wide-display.js';
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|StringSelectMenuInteraction;
 const buttons=(rows:{id:string;label:string;disabled?:boolean;reset?:boolean;primary?:boolean}[])=>new ActionRowBuilder<ButtonBuilder>().addComponents(rows.map(r=>new ButtonBuilder().setCustomId(r.id).setLabel(r.label).setStyle(r.reset?ButtonStyle.Danger:r.primary?ButtonStyle.Primary:ButtonStyle.Secondary).setDisabled(r.disabled??false)));
 const pathModules:Record<string,string[]>={discord:['core'],start:['onboarding','roles','lore','introductions'],identity:['profile','roles'],economy:['economy','items'],games:['casino','race','fight','line','party_games','pvp','solo_games','special_commands'],family:['crime','family'],music:['music'],community:['community','chairisms','introductions','social'],safety:['privacy','jail','moderation','security'],staff:['moderation','security','jail'],admin:['dashboard','custom_commands']};
@@ -31,15 +31,15 @@ export class DiscordLearningCoordinator {
   const flags=new Map<string,Promise<unknown>>();const flag=(key:string)=>{let value=flags.get(key);if(!value){value=this.config.get(i.guildId!,key);flags.set(key,value);}return value;};
   const result:CommandContract[]=[];for(const c of COMMANDS as readonly CommandContract[]){if((c.type!=='slash'&&!c.registered.startsWith('!'))||(c.module==='special_commands'||c.featureFlag==='line')&&!specials.some(s=>s.trigger===c.registered)||!this.runtimeEnabled(c.featureFlag)||![...labels].filter(p=>['member','recliner','chaise_lounge','throne'].includes(p)).some(p=>new PermissionEngine({command:c.permissions as ('member'|'recliner'|'chaise_lounge'|'throne')[]}).can(p as 'member','command')))continue;if(c.module==='dashboard'&&!owner&&!admin)continue;if(c.id==='notmad'&&!owner)continue;const key=flagKeys[c.featureFlag]??'features.'+c.featureFlag;if(!this.config.definition(key)||await flag(key)!==true)continue;result.push(c);}
   for(const special of specials){if(result.some(c=>c.registered===special.trigger))continue;result.push({id:'special_custom_'+special.trigger.slice(1),preferred:special.trigger,registered:special.trigger,type:'special_text',module:'special_commands',handler:'special.custom',featureFlag:'special_commands',permissions:['member'],channels:['main_chat'],options:[],ephemeralDefault:false,helpId:'special',tutorialId:'special_commands'});}
-  return result;
+  return result.map(c=>c.id==='special_vc'?{...c,registered:'!VC'}:c.id==='special_chess'?{...c,registered:'!Chess'}:c);
  }
  async autocomplete(i:AutocompleteInteraction){if(!i.guildId||!i.guild||await this.config.get(i.guildId,'features.learning')!==true||!await this.eligible(i.guildId,i.user.id)){await i.respond([]);return;}const query=String(i.options.getFocused()).toLowerCase();const commands=await this.allowed(i);await i.respond(commands.filter(c=>(c.registered+' '+c.id).toLowerCase().includes(query)).slice(0,25).map(c=>({name:c.registered.slice(0,100),value:c.id})));}
+ private readonly artwork=new Map<string,Promise<DisplayFrame[]>>();
  private async window(i:Interaction,title:string,copy:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[]){
-  if(!components.length&&copy.length<240&&!title.includes('snapshot')){await i.editReply({content:copy,embeds:[],attachments:[],components,allowedMentions:{parse:[]}});return;}
-  const svg=learningWindow(title,copy),name='learning-'+createHash('sha256').update(svg).digest('hex').slice(0,16)+'.png';
-  const existing=!i.isChatInputCommand()?i.message?.attachments?.find(a=>a.name===name):undefined;
-  const files=existing?[]:[new AttachmentBuilder(await rasterizeSvg(svg),{name,description:(title+'. '+copy).slice(0,1024)})];
-  await i.editReply({content:null,embeds:[new EmbedBuilder().setImage('attachment://'+name)],attachments:existing?[{id:existing.id}]:[],files,components,allowedMentions:{parse:[]}});
+  if(!components.length&&copy.length<240&&!title.includes('snapshot')){await i.editReply(displayNotice(copy));return;}
+  const svg=learningWindow(title,copy),name='learning-'+createHash('sha256').update(svg).digest('hex').slice(0,16);
+  let art=this.artwork.get(name);if(!art){art=displayFrames(svg,name,title+'. '+copy).catch(error=>{this.artwork.delete(name);throw error;});this.artwork.set(name,art);if(this.artwork.size>32)this.artwork.delete(this.artwork.keys().next().value!);}
+  await i.editReply(wideDisplay(await art,components,undefined,!i.isChatInputCommand()?i.message?.attachments?.values():undefined));
  }
  async handle(i:Interaction){try{
   if(!i.guildId||!i.guild)throw new DomainError('SERVER_ONLY','Use this in the server.');
@@ -72,7 +72,7 @@ export class DiscordLearningCoordinator {
   }
   const lessonCommands=commands.filter(hasAuthoredLesson);
   const action=parts[3];
-  if((!action||action==='home')&&!lessonCommands.length){await i.editReply({content:'No lessons are available to you yet. Your saved progress is safe; check back when a learning path is available.',embeds:[],attachments:[],components:[buttons([{id:'learn:tutorial:'+i.user.id+':exit',label:'Exit Tutorial'}])],allowedMentions:{parse:[]}});return;}
+  if((!action||action==='home')&&!lessonCommands.length){await i.editReply(displayNotice('No lessons are available to you yet. Your saved progress is safe; check back when a learning path is available.',[buttons([{id:'learn:tutorial:'+i.user.id+':exit',label:'Exit Tutorial'}])]));return;}
   if(!action||action==='home'){await this.window(i,'Show Me Around','LEARNING PATHS\nChoose a subject using the menu below.\n\nYOUR JOURNEY\nLearning path → Lesson → Practice → Progress\n\nPRIVATE & SAFE\nLessons save your place. Practice never spends Ottomans or changes protected server state.',[new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId('learn:tutorial:'+i.user.id+':path').setPlaceholder('Choose a path').addOptions(TUTORIAL_PATHS.filter(([key])=>lessonCommands.some(c=>key==='finder'||pathModules[key]?.includes(c.module))).map(([value,label])=>({value,label})))),buttons([{id:'learn:tutorial:'+i.user.id+':progress',label:'Progress'},{id:'learn:tutorial:'+i.user.id+':continue',label:'Continue'},{id:'learn:tutorial:'+i.user.id+':exit',label:'Exit Tutorial'}])]);return;}
   if(action==='progress'||action==='continue'){const progress=await this.repo.tutorialProgress(i.guildId,i.user.id),visible=progress.filter(p=>lessonCommands.some(c=>c.id===p.lessonId));if(action==='continue'){const last=visible.sort((a,b)=>b.lastActivityAt.getTime()-a.lastActivityAt.getTime())[0],cmd=commands.find(c=>c.id===last?.lessonId);if(cmd&&last){await this.lesson(i,cmd,last.currentStep);return;}}await this.window(i,'Your Learning Progress',visible.map(p=>commands.find(c=>c.id===p.lessonId)!.registered+': '+(p.completedAt?'complete':'step '+(p.currentStep+1))).join('\n')||'No lessons completed yet.',[buttons([{id:'learn:tutorial:'+i.user.id+':home',label:'Learning Paths'},{id:'learn:tutorial:'+i.user.id+':continue',label:'Continue',primary:true},{id:'learn:tutorial:'+i.user.id+':exit',label:'Exit Tutorial'}])]);return;}
   if(action==='restartpathconfirm'){await this.window(i,'Restart this path?','This resets saved progress for the available lessons in this path. Your server state and Ottomans are unchanged.',[buttons([{id:'learn:tutorial:'+i.user.id+':restartpath:'+parts[4],label:'Restart path',reset:true},{id:'learn:tutorial:'+i.user.id+':pathpage:'+parts[4]+':0',label:'Go back'}])]);return;}
@@ -89,7 +89,7 @@ export class DiscordLearningCoordinator {
   }
   if(action==='restartconfirm'){const command=lessonCommands.find(c=>c.id===parts[4]);if(!command)throw new DomainError('TUTORIAL_COMMAND','This command is unavailable.');await this.window(i,'Restart this lesson?','Your saved lesson will return to its first step.',[buttons([{id:'learn:tutorial:'+i.user.id+':restart:'+command.id+':0',label:'Restart',reset:true},{id:'learn:tutorial:'+i.user.id+':step:'+command.id+':'+(parts[5]??0),label:'Go back'}])]);return;}
   const id=i.isStringSelectMenu()?i.values[0]:parts[4],command=lessonCommands.find(c=>c.id===id);if(!command)throw new DomainError('TUTORIAL_COMMAND','This command is unavailable.');const step=action==='lesson'?0:Number(parts[5]??0);if(action!=='practice')await this.repo.tutorialStep(i.guildId,i.user.id,command.id,step,i.id,action==='restart');await this.lesson(i,command,step,false,action==='practice');
- }catch(error){const content=error instanceof DomainError?error.message:'This private window could not be completed. Saved progress remains available.';if(i.deferred)await i.editReply({content,embeds:[],attachments:[],components:[],allowedMentions:{parse:[]}});else await i.reply({content,ephemeral:true,allowedMentions:{parse:[]}});}}
+ }catch(error){const content=error instanceof DomainError?error.message:'This private window could not be completed. Saved progress remains available.';if(i.deferred)await i.editReply(displayNotice(content));else await i.reply({content,ephemeral:true,allowedMentions:{parse:[]}});}}
  private async lesson(i:Interaction,c:CommandContract,step:number,help=false,practice=false){
   const authored=lessonCopy(c),required=c.options.filter(o=>o.required).map(o=>o.name).join(', ')||'None',optional=c.options.filter(o=>!o.required).map(o=>o.name).join(', ')||'None';
   const pages=['PURPOSE\n'+authored.purpose,'FIELDS\n'+authored.fields,'HOW TO USE IT\n'+authored.steps.map((line,n)=>(n+1)+'. '+line).join('\n')+'\n\nEXAMPLE\n'+authored.example,'LESSON COMPLETE\n'+authored.completion+'\n\nPROGRESS\n'+c.registered+' · 4 of 4 pages complete. Your lesson progress is saved. Other lessons in the path are tracked separately.'];

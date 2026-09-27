@@ -1,15 +1,17 @@
+import {normalizeNotificationTrigger,notificationRole,notificationMessage} from './notification-roles.js';
 import {eventTiming} from './event-performance.js';
 import {eventWindow,hasLineIdentity} from './event-window.js';
 import {LINE_DURATION_MS} from '../../../../packages/features-special/src/domain.js';
-import {randomInt} from 'node:crypto';
+import {randomInt,createHash} from 'node:crypto';
 import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,type Client,type Message,type ButtonInteraction} from 'discord.js';
 import {DeliveryEngine,DomainError,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaSpecialRepository,type LineView} from '../../../../packages/features-special/src/prisma-repository.js';
-import {validateBuiltinRoleMap,validateCustomSpecialCommands,mayInvokeSpecial,specialNotificationRole,type SpecialCommand} from '../../../../packages/features-special/src/domain.js';
+import {validateBuiltinRoleMap,validateCustomSpecialCommands,mayInvokeSpecial,type SpecialCommand} from '../../../../packages/features-special/src/domain.js';
 import {renderLine,lineSequence} from '../../../../packages/features-special/src/render.js';
 import {rasterizeSvg,rasterizeSequence,rasterizeTimeline} from '../../../../packages/renderer/src/raster.js';
 import builtinCallouts from '../../../../packages/features-special/content/builtin_callouts.json' with {type:'json'};
+export const specialDeliveryUrl=(marker:string)=>'https://discord.com/#'+createHash('sha256').update(marker).digest('hex');
 export class DiscordSpecialCoordinator {
  private readonly refreshes=new Map<string,Promise<void>>();
  private readonly publishedVersions=new Map<string,string>();
@@ -38,7 +40,7 @@ export class DiscordSpecialCoordinator {
  }
  async visibleCommands(guildId:string,roleIds:ReadonlySet<string>){if(await this.config.get(guildId,'features.special_commands')!==true||await this.config.get(guildId,'special_commands.enabled')!==true)return[];const lineEnabled=await this.config.get(guildId,'features.line')===true;return(await this.definitions(guildId)).filter(d=>d.enabled&&d.responsePool.length&&mayInvokeSpecial(d.allowedRoleIds,roleIds)&&(d.trigger!=='!line'||lineEnabled));}
  async message(message:Message){
-  const trigger=message.content.trim();if(!/^![a-z][a-z0-9_-]{0,31}$/.test(trigger)||trigger==='!race'||message.author.bot||!message.guildId||!message.guild)return;
+  const trigger=normalizeNotificationTrigger(message.content);if(!/^![a-z][a-z0-9_-]{0,31}$/.test(trigger)||trigger==='!race'||message.author.bot||!message.guildId||!message.guild)return;
   const definition=(await this.definitions(message.guildId)).find(d=>d.trigger===trigger);if(!definition)return;
   // Known unauthorized triggers are always removed, including wrong-channel triggers.
   await message.delete();if(!definition.enabled)return;
@@ -47,17 +49,19 @@ export class DiscordSpecialCoordinator {
   if(!definition.responsePool.length)throw new DomainError('SPECIAL_CONTENT','Configure an authored response pool before enabling this Special Command.');
   if(!message.channel.isSendable())return;
   const context={guildId:message.guildId,channelId:message.channelId,userId:message.author.id,requestKey:message.id};
-  const role=definition.notificationRoleId?await message.guild.roles.fetch(definition.notificationRoleId):null,notification=specialNotificationRole(role??undefined,message.guildId)??null;
+  const notification=await notificationRole(message.guild,message.channelId,definition.notificationRoleId,this.config)??null;
   const content=definition.responsePool[randomInt(definition.responsePool.length)]!;
   if(trigger==='!line'){try{const started=await this.repo.start(context,member.displayName,{content,notificationRoleId:notification});if(started.jobId)await this.deliver(message.client,started.jobId);return;}catch(error){if(error instanceof DomainError&&error.code==='LINE_ACTIVE')return;throw error;}}
   const {jobId}=await this.repo.queueCallout(context,content,notification);await this.deliver(message.client,jobId);
  }
  async deliver(client:Client,jobId:string){const{payload:p}=await this.repo.callout(jobId),channel=await client.channels.fetch(p.channelId);if(!channel?.isSendable()||!('messages' in channel))throw new Error('Special Command destination unavailable.');
-  const guild=await client.guilds.fetch(p.guildId),role=p.notificationRoleId?await guild.roles.fetch(p.notificationRoleId):null,notification=specialNotificationRole(role??undefined,p.guildId);
+  const delivery=this.repo.delivery(jobId),state=await delivery.read();
+  // Permission errors must leave new delivery PENDING; recovery of an existing send needs no new ping permission.
+  const notification=state.state==='PENDING'?await notificationRole(await client.guilds.fetch(p.guildId),p.channelId,p.notificationRoleId,this.config):undefined;
   const marker='special:'+jobId;
-  const messageId=await new DeliveryEngine(this.repo.delivery(jobId)).deliver(marker,{
-   find:async marker=>{const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===client.user?.id&&(m.embeds.some(e=>e.footer?.text===marker)||Boolean(p.sessionId&&hasLineIdentity(m.components,p.sessionId))))?.id??null;},
-   send:async marker=>{const callout=`${notification?'<@&'+notification+'> ':''}${p.content}`,mentions={parse:[] as never[],roles:notification?[notification]:[]};if(p.sessionId){const view=await this.repo.publicView(p.sessionId),{content,...line}=await this.payload(view,callout),sent=await channel.send({...line,allowedMentions:mentions});this.publishedVersions.set(p.sessionId,JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]));return sent.id;}return(await channel.send({embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle('Chairs, assemble.').setColor(0x0ea5a6).setFooter({text:marker})],content:callout,allowedMentions:mentions})).id;}
+  const messageId=await new DeliveryEngine(delivery).deliver(marker,{
+   find:async marker=>{const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===client.user?.id&&(m.embeds.some(e=>e.url===specialDeliveryUrl(marker)||e.footer?.text===marker)||Boolean(p.sessionId&&hasLineIdentity(m.components,p.sessionId))))?.id??null;},
+   send:async marker=>{const {callout,allowedMentions:mentions}=notificationMessage(notification,p.content);if(p.sessionId){const view=await this.repo.publicView(p.sessionId),{content,...line}=await this.payload(view,callout),sent=await channel.send({...line,allowedMentions:mentions});this.publishedVersions.set(p.sessionId,JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]));return sent.id;}return(await channel.send({embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle('Chairs, assemble.').setColor(0x0ea5a6).setURL(specialDeliveryUrl(marker))],content:callout,allowedMentions:mentions})).id;}
   });if(p.sessionId)await this.repo.linkMessage(p.sessionId,p.guildId,messageId);
  }
  async handle(i:ButtonInteraction){try{

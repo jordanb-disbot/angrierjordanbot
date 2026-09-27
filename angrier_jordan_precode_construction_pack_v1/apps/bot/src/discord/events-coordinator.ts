@@ -1,7 +1,8 @@
+import {notificationRole,notificationMessage} from './notification-roles.js';
 import {presentationKey} from '../../../../packages/features-events/src/presentation-key.js';
 import {eventTiming} from './event-performance.js';
 import {renderFight} from '../../../../packages/features-events/src/fight-render.js';
-import {PermissionFlagsBits,ActionRowBuilder,ButtonBuilder,ButtonStyle,ModalBuilder,TextInputBuilder,TextInputStyle,type Client,type Message,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction} from 'discord.js';
+import {PermissionFlagsBits,ActionRowBuilder,ButtonBuilder,ButtonStyle,ModalBuilder,TextInputBuilder,TextInputStyle,type Client,type Message,type GuildMember,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction} from 'discord.js';
 import {DomainError,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaEventsRepository,type EventContext,type EventPolicy,type RaceData,type RaceView,type PreparedEventClose} from '../../../../packages/features-events/src/prisma-repository.js';
@@ -14,6 +15,7 @@ import {eventWindow} from './event-window.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
 export class DiscordEventsCoordinator {
+ private readonly racePublications=new Map<string,Promise<void>>();
  private readonly refreshes=new Map<string,Promise<void>>();
  private readonly publishedVersions=new Map<string,string>();
  private readonly liveImages=new Map<string,string>();
@@ -53,17 +55,28 @@ export class DiscordEventsCoordinator {
   const roles=access?.['!race'];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
   try{await this.guard(message.guildId,message.author.id,message.channelId);}catch{return;}
   if(!message.channel.isSendable())return;
+  // Same-trigger retries share publication work; the persisted link covers later replays.
+  const key=message.guildId+':'+message.id,existing=this.racePublications.get(key);if(existing){await existing;return;}
+  const publication=this.publishRace(message,member);this.racePublications.set(key,publication);
+  try{await publication;}finally{if(this.racePublications.get(key)===publication)this.racePublications.delete(key);}
+ }
+ private async publishRace(message:Message,member:GuildMember){
+  if(!message.guild||!message.guildId||!message.channel.isSendable())return;
   let id:string|undefined;
   try{
-   id=(await this.repo.startRace({guildId:message.guildId,channelId:message.channelId,userId:member.id,requestKey:message.id},{userId:member.id,name:member.displayName,avatarUrl:member.displayAvatarURL({size:128,extension:'png'})})).sessionId;
    const roleMap=await this.config.get(message.guildId,'special_commands.builtin_role_map') as Record<string,unknown>,role=roleMap?.['!race'];
-   const notificationRole=typeof role==='string'?message.guild.roles.cache.get(role):undefined;
-   const notification=notificationRole&&notificationRole.id!==message.guildId&&!notificationRole.managed&&notificationRole.permissions.bitfield===0n?notificationRole.id:undefined;
-   const initial=await this.repo.publicView(id);const {content:_clearContent,...payload}=await this.payload(initial,{callout:`${notification?'<@&'+notification+'> ':''}${callouts[eventRandom(callouts.length)]}`});
-   const sent=await message.channel.send({...payload,allowedMentions:{parse:[],roles:notification?[notification]:[]}});
+   const notification=await notificationRole(message.guild,message.channelId,typeof role==='string'?role:null,this.config);
+   id=(await this.repo.startRace({guildId:message.guildId,channelId:message.channelId,userId:member.id,requestKey:message.id},{userId:member.id,name:member.displayName,avatarUrl:member.displayAvatarURL({size:128,extension:'png'})})).sessionId;
+   const initial=await this.repo.publicView(id);if(initial.messageId)return;
+   if(initial.state!=='OPEN')return;
+   const {callout,allowedMentions}=notificationMessage(notification,callouts[eventRandom(callouts.length)]!);
+   const {content:_clearContent,...payload}=await this.payload(initial,{callout});
+   // Discord additionally deduplicates overlapping network sends for this trigger.
+   const sent=await message.channel.send({...payload,allowedMentions,nonce:message.id,enforceNonce:true});
    await this.repo.linkMessage(id,message.guildId,sent.id);this.publishedVersions.set(id,this.publicationKey(initial));this.prepare(initial);
   }catch(error){if(id)await this.repo.cancel(message.guildId,id,'Race could not be published; wagers refunded.');if(error instanceof DomainError&&error.code==='EVENT_ACTIVE')return;throw error;}
  }
+
  async startFight(i:ChatInputCommandInteraction){let id:string|undefined,published=false;try{
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use Fight in the server.');
   const target=i.options.getUser('member',true);if(target.id===i.user.id||target.bot)throw new DomainError('FIGHT_TARGET','Choose another eligible member.');

@@ -17,7 +17,7 @@ test('unreviewed admin and component records cannot become selectable generic le
 });
 test('roles lesson teaches all seven real categories, selection modes, removal and safe Practice',()=>{
  const copy=combined('roles');for(const category of ['DM Status','Gender','Age','Region','Interests / Substances','Personalities','Notification Pings'])assert.ok(copy.includes(category),category);
- for(const expected of [/single-select/i,/multi-select/i,/Clear choices/,/Reopening/,/REDOSE/,/setup is incomplete/,/below AJ/,/unmanaged/,/permission bits/,/Practice changes none/])assert.match(copy,expected);
+ for(const expected of [/single-select/i,/multi-select/i,/Clear choices/,/Reopening/,/Line Ping/,/setup is incomplete/,/below AJ/,/unmanaged/,/permission bits/,/Practice changes none/])assert.match(copy,expected);
  assert.doesNotMatch(copy,/Morning Porch/);
 });
 test('immediate item mutations are taught accurately rather than inventing confirmations',()=>{

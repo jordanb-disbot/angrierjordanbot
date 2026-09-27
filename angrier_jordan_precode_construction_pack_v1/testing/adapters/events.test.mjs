@@ -82,10 +82,10 @@ test('completion during live rendering cannot overwrite the saved finale',async(
 });
 test('Race prefix preserves only the authorized role mention outside its artwork',async()=>{
  const sent=[],view={id:'round',state:'OPEN',expiresAt:new Date(),racers:[{userId:'member',name:'Jordan',chair:1}],pool:'0',extensionUsed:false},member={id:'member',displayName:'Jordan',displayAvatarURL:()=>undefined,roles:{cache:new Map()}};
- const message={id:'trigger',content:'!race',author:{id:'member',bot:false},guildId:'g',guild:{members:{fetch:async()=>member},roles:{cache:new Map([['123456789012345678',{id:'123456789012345678',managed:false,permissions:{bitfield:0n}}]])}},channelId:'main',delete:async()=>{},channel:{isSendable:()=>true,send:async payload=>{sent.push(payload);return{id:'published'};}}};
+ const message={id:'trigger',content:'!race',author:{id:'member',bot:false},guildId:'g',guild:{id:'g',members:{fetch:async()=>member},roles:{fetch:async()=>({id:'123456789012345678',mentionable:true,managed:false,permissions:{bitfield:0n}})}},channelId:'main',delete:async()=>{},channel:{isSendable:()=>true,send:async payload=>{sent.push(payload);return{id:'published'};}}};
  const settings={get:async(_g,k)=>k==='channels.main_chat'?'main':k==='special_commands.access_roles'?{'!race':[]}:k==='special_commands.builtin_role_map'?{'!race':'123456789012345678'}:true};
  await new DiscordEventsCoordinator({startRace:async()=>({sessionId:'round'}),publicView:async()=>view,linkMessage:async()=>{}},settings,async()=>true).message(message);
- assert.equal(sent.length,1);assert.equal('content' in sent[0],false);assert.equal(sent[0].flags,MessageFlags.IsComponentsV2);assert.equal(nativeText(sent[0]),'<@&123456789012345678>');assert.deepEqual(sent[0].allowedMentions,{parse:[],roles:['123456789012345678']});
+ assert.equal(sent.length,1);assert.equal('content' in sent[0],false);assert.equal(sent[0].flags,MessageFlags.IsComponentsV2);assert.equal(nativeText(sent[0]),'<@&123456789012345678>');assert.deepEqual(sent[0].allowedMentions,{parse:[],roles:['123456789012345678'],users:[],repliedUser:false});
 });
 
 test('Race and Fight rules remain private and put authored copy entirely inside branded graphics',async()=>{

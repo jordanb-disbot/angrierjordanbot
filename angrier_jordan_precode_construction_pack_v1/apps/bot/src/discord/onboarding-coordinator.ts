@@ -1,5 +1,5 @@
 import {
-  ActionRowBuilder,AttachmentBuilder,EmbedBuilder,MediaGalleryBuilder,MediaGalleryItemBuilder,ButtonBuilder,ButtonStyle,ContainerBuilder,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
+  ActionRowBuilder,ButtonBuilder,ButtonStyle,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
   type ButtonInteraction,type ChatInputCommandInteraction,type GuildMember,type PartialGuildMember,type StringSelectMenuInteraction,
 } from 'discord.js';
 import type { ConfigService } from '../../../../packages/core/src/index.js';
@@ -7,12 +7,12 @@ import { DomainError } from '../../../../packages/core/src/index.js';
 import type { OnboardingService, RestorePlan, RoleSnapshot, SelfRolePanelDefinition } from '../../../../packages/features-onboarding/src/index.js';
 import {readFileSync} from 'node:fs';
 import {renderOnboarding,rulesSections,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
-import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+import {displayFrames,wideDisplay,frameGallery,type DisplayFrame} from './wide-display.js';
 
 const rules=JSON.parse(readFileSync(new URL('../../../../packages/content/onboarding/rules.json',import.meta.url),'utf8')) as {title:string;sections:GuidanceSection[]};
-let rulesArt:Promise<Buffer[]>|undefined;
-let rolesArt:Promise<Buffer>|undefined;
-function rulesImages(){return rulesArt??=Promise.all(rules.sections.flatMap(section=>rulesSections(section.body).map((page,index,pages)=>rasterizeSvg(renderOnboarding(rules.title,'Our shared space · read before acknowledging',[{title:section.title+(pages.length>1?` · ${index+1}/${pages.length}`:''),body:page[0]!.body}]))))).catch(error=>{rulesArt=undefined;throw error;});}
+let rulesArt:Promise<DisplayFrame[]>|undefined;
+let rolesArt:Promise<DisplayFrame[]>|undefined;
+function rulesImages(){return rulesArt??=Promise.all(rules.sections.flatMap((section,sectionIndex)=>rulesSections(section.body).map((page,index,pages)=>displayFrames(renderOnboarding(rules.title,'Our shared space · read before acknowledging',[{title:section.title+(pages.length>1?` · ${index+1}/${pages.length}`:''),body:page[0]!.body}]),'chairs-rules-'+sectionIndex+'-'+index,rules.title+' · '+section.title)))).then(pages=>pages.flat()).catch(error=>{rulesArt=undefined;throw error;});}
 
 const roleId=async(config:ConfigService,guildId:string,key:string):Promise<string|null>=>{
   const value=await config.get(guildId,key);return typeof value==='string'&&value?value:null;
@@ -57,9 +57,8 @@ export class DiscordOnboardingCoordinator {
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
     await interaction.deferReply({ephemeral:true});
     const images=await rulesImages();
-    const files=images.map((buffer,i)=>new AttachmentBuilder(buffer,{name:`chairs-rules-${i+1}.png`,description:`${rules.title}, page ${i+1}.`}));
     const ack=new ButtonBuilder().setCustomId('onboard:ack_rules').setLabel('Acknowledge Rules').setStyle(ButtonStyle.Success);
-    await interaction.editReply({embeds:files.map((_,i)=>new EmbedBuilder().setColor(0x773747).setImage(`attachment://chairs-rules-${i+1}.png`)),files,components:[new ActionRowBuilder<ButtonBuilder>().addComponents(ack)],allowedMentions:{parse:[]}});
+    await interaction.editReply(wideDisplay(images,[new ActionRowBuilder<ButtonBuilder>().addComponents(ack)]));
   }
 
   async handleRulesAck(interaction:ButtonInteraction):Promise<void>{
@@ -104,7 +103,7 @@ export class DiscordOnboardingCoordinator {
     if(categoryKey==='_category'){
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),key=interaction.values[0];
       if(!state.panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
-      await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),false,key));return;
+      await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
     }
     const member=await interaction.guild.members.fetch(interaction.user.id);
     const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
@@ -134,7 +133,7 @@ export class DiscordOnboardingCoordinator {
       throw error;
     }
     const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-    await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),false,categoryKey));
+    await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
   }
 
   private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){
@@ -155,10 +154,10 @@ export class DiscordOnboardingCoordinator {
         components.push(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(menu));
       }
     }
-    const containers:ContainerBuilder[]=[new ContainerBuilder().setAccentColor(0x773747).addMediaGalleryComponents(new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL('attachment://your-roles.png').setDescription('Choose your roles. Saved selections appear in the menus. Clear a selection to remove it.')))];
-    for(let i=0;i<components.length;i+=9){const container=new ContainerBuilder().setAccentColor(0x773747);for(const c of components.slice(i,i+9)){if(c instanceof TextDisplayBuilder)container.addTextDisplayComponents(c);else container.addActionRowComponents(c);}containers.push(container);}
-    const art=includeArtwork?await(rolesArt??=rasterizeSvg(renderOnboarding('Your Place in Chairs','Choose the details that feel like you',[{title:'YOUR ROLES · YOUR CHOICE',body:'Select from the categories below. Clear a selection to remove it. Changes are saved immediately; reopen /roles to see your choices.'},{title:'APPROVED SELF-ASSIGNABLE ROLES',body:'Only configured member roles are available. Staff and protected roles cannot be self-assigned.'}])).catch(error=>{rolesArt=undefined;throw error;})):null;
-    return {flags:MessageFlags.IsComponentsV2 as const,components:containers,...(art?{files:[new AttachmentBuilder(art,{name:'your-roles.png'})],attachments:[]}:{}),allowedMentions:{parse:[] as never[]}};
+    const art=await(rolesArt??=displayFrames(renderOnboarding('Your Place in Chairs','Choose the details that feel like you',[{title:'YOUR ROLES · YOUR CHOICE',body:'Select from the categories below. Clear a selection to remove it. Changes are saved immediately; reopen /roles to see your choices.'},{title:'APPROVED SELF-ASSIGNABLE ROLES',body:'Only configured member roles are available. Staff and protected roles cannot be self-assigned.'}]),'your-roles','Choose your roles. Saved selections appear in the menus.').catch(error=>{rolesArt=undefined;throw error;}));
+    if(includeArtwork)return wideDisplay(art,components);
+    // Existing gallery attachments remain while native selections update.
+    return {flags:MessageFlags.IsComponentsV2 as const,content:null,embeds:[],components:[...art.map(frame=>frameGallery(frame.name,frame.description)),...components],allowedMentions:{parse:[] as never[]}};
   }
 
   async restoreAfterPunishment(member:GuildMember):Promise<void>{const plan=await this.service.buildPostPunishmentRestorePlan(member.guild.id,member.id);await this.applyRestorePlan(member,plan);}
