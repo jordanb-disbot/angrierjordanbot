@@ -6089,7 +6089,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "9ddf447b3b74e1ca1989aefc86020543c7bc72eb28ab25c96ad1ce8fe4b519c3"
+      "sha256": "34a1900950d895574f054deaf5fb02002d318af25cc719015912047f77fb6d40"
     },
     {
       "id": "profiles.runtime.renderer",
@@ -6567,6 +6567,14 @@
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
       "sha256": "e2cc1879317b7e424933b0550fb70430adf8436d1b493063e1741f5ec7e94833"
+    },
+    {
+      "id": "casino.runtime.game_art",
+      "file": "packages/features-casino/src/game-art.ts",
+      "category": "runtime.renderer",
+      "usage": "Deterministic casino reels, card suits, wheel, dice, coins and tickets",
+      "canonical": true,
+      "sha256": "5857093b27babd06e6d15818c2461394488a8cf0221be0e05063ddc6748655ee"
     }
   ]
 }

@@ -1,9 +1,11 @@
 import {esc,imageAsset} from '../../features-events/src/visual.js';
 import {portrait} from '../../features-events/src/gate-b-visual.js';
 import {wrapText} from '../../renderer/src/text-layout.js';
-export interface CasinoResultRenderInput {title:string;memberName?:string;avatarData?:string;subtitle:string;amount:string;amountLabel:string;details:{label:string;value:string}[];}
+import {renderCasinoGame,type CasinoVisual} from './game-art.js';
+export interface CasinoResultRenderInput {title:string;memberName?:string;avatarData?:string;subtitle:string;amount:string;amountLabel:string;details:{label:string;value:string}[];visual?:CasinoVisual;wager?:string;net?:string;}
 /** Deterministic felt-and-brass composition; full bleed landscape artwork. */
 export function renderCasinoResult(data:CasinoResultRenderInput):string{
+ if(data.visual)return renderCasinoGame(data);
  const txt=(x:number,y:number,value:string,size=26,color='#E6EAF0',font='Poppins')=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${font}" font-size="${size}" font-weight="700" fill="${color}">${esc(value)}</text>`;
  const block=(value:string,x:number,y:number,width:number,size=26)=>{const lines=wrapText(value,width,size);return{svg:lines.map((line,n)=>txt(x,y+n*(size+10),line,size)).join(''),height:lines.length*(size+10)};};
  let y=data.amount?362:172,details='';for(const detail of data.details){const lines=block(detail.value,600,y+58,1030);const h=lines.height+78;details+=`<rect x="42" y="${y}" width="1116" height="${h}" rx="16" fill="url(#felt)" stroke="#A68D54" stroke-opacity=".7"/>`+txt(600,y+29,detail.label.toUpperCase(),19,'#D8BD79')+lines.svg;y+=h+14;}
