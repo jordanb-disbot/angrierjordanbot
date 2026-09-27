@@ -30,3 +30,8 @@ const chairisms=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/cha
 if(chairisms.status!=='VISUAL_APPROVED')throw new Error('Chairisms visual approval status changed');
 for(const entry of chairisms.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+entry.file,import.meta.url))).digest('hex')!==entry.sha256)throw new Error('Approved Chairisms visual changed: '+entry.file);}
 console.log('Approved Chairisms visual lock PASS: '+chairisms.files.length+' files.');
+
+const entry=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/race-line-entry-2026-09-27.json',import.meta.url),'utf8'));
+if(entry.status!=='VISUAL_APPROVED')throw new Error('Race/Line entry approval status changed');
+for(const file of entry.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+file.file,import.meta.url))).digest('hex')!==file.sha256)throw new Error('Approved Race/Line entry changed: '+file.file);}
+console.log('Approved Race/Line entry lock PASS: '+entry.files.length+' files.');

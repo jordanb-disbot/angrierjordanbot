@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-27",
+  "status": "VISUAL_APPROVED",
+  "approvedBy": "Owner",
+  "ownerInstruction": "approve",
+  "implementationCommit": "f98ad10",
+  "scope": "Refined shared !race and /race entry card and !line entry/locked cards. Performance implementation accepted; production latency and live acceptance are not claimed verified.",
+  "files": [
+    {
+      "file": "docs/approved_visuals/race-line-entry-2026-09-27/race-entry.png",
+      "sha256": "4ad996e069a71a3b35e8c842572044125b6530e56bdc898a377aeee03701cecb"
+    },
+    {
+      "file": "docs/approved_visuals/race-line-entry-2026-09-27/line-entry.png",
+      "sha256": "c3a76194150e2acfa0870c74180704753d1dce24ac3c0e02636ea1bf705620e6"
+    },
+    {
+      "file": "docs/approved_visuals/race-line-entry-2026-09-27/line-locked.png",
+      "sha256": "0a9e74e98db4cfeda17b898468f7b7514f73fe1614e97c6bd0cc644628f59253"
+    }
+  ]
+}

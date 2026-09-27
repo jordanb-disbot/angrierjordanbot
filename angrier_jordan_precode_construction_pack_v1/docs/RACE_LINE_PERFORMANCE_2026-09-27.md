@@ -12,7 +12,7 @@ Owner requested this implementation and a push to master. `/race` is restored al
 
 ## Entry visual changes
 
-Race uses a six-lane grid, wheelchair artwork, open-seat placeholders, clear member names, entry deadline, pool and action areas. Line separates host/count, ready and waiting members, deadline/status and host controls. Frames remain 1200×640 with approved lounge art, teal/emerald and brass, Space Grotesk/Inter. No waiting flashes or animation; existing live motion/finales are preserved. Review images: `review-entry-refinement/index.html`. These are the requested refinement, not a new immutable owner approval.
+Race uses a six-lane grid, wheelchair artwork, open-seat placeholders, clear member names, entry deadline, pool and action areas. Line separates host/count, ready and waiting members, deadline/status and host controls. Frames remain 1200×640 with approved lounge art, teal/emerald and brass, Space Grotesk/Inter. No waiting flashes or animation; existing live motion/finales are preserved. Review images: `review-entry-refinement/index.html`. Owner approved this refinement after commit `f98ad10`. Immutable visual references are recorded in `docs/approved_visuals/race-line-entry-2026-09-27.json`. Live production latency remains to be measured.
 
 ## Validation and limits
 
