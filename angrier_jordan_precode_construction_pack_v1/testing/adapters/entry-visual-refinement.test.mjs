@@ -15,12 +15,14 @@ test('Race waiting art reserves a live timer region and shows the full grid with
 test('Race waiting art shows open seats and the minimum-player readiness state',()=>{
  const svg=renderRace({...base,racers:reviewMembers.slice(0,1)},'wide',{waitingMs:1000});
  assert.match(svg,/1 racer · 5 open/);assert.match(svg,/Need 2 racers/);assert.match(svg,/An open seat awaits/);
+ assert.ok(svg.includes('fill="#041923" fill-opacity=".82"'));
 });
 test('Line readiness separates saved statuses, escapes names and handles overflow without claiming automatic start',()=>{
  const members=Array.from({length:13},(_,i)=>({userId:String(i),name:i===0?'<Morgan & Co>':'Member '+i,status:i<7?'ready':'waiting'}));
  const view={...base,ownerId:'0',members,remainingMs:60000,elapsedMs:0};
  const svg=renderLine(view,0,'wide');
  assert.match(svg,/LIVE COUNTDOWN/);assert.match(svg,/Time remaining updates below/);assert.match(svg,/EXTENSION/);assert.match(svg,/Available once/);assert.doesNotMatch(svg,/Closes |12:34:56 UTC|STARTS IN|<Morgan/);
+ assert.match(svg,/linearGradient id="waitingGlass"/);assert.match(svg,/fill="url\(#waitingGlass\)" stroke="#10B981"/);
  assert.match(svg,/&lt;Morgan &amp; Co&gt;/);assert.match(svg,/READY TO GO/);assert.match(svg,/NEED A SECOND/);assert.match(svg,/\+2 more/);assert.match(svg,/\+1 more/);
  const locked=renderLine({...view,state:'LOCKED'},0,'wide');assert.match(locked,/Waiting for the host/);assert.doesNotMatch(locked,/Closes 12:34:56/);
  const extended=renderLine({...view,extensionUsed:true,remainingMs:90000},0,'wide');assert.match(extended,/Used · check-ins preserved/);assert.doesNotMatch(extended,/12:34:56 UTC/);
