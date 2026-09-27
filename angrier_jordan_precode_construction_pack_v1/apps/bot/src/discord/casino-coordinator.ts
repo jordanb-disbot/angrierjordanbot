@@ -57,7 +57,7 @@ export class DiscordCasinoCoordinator {
    id=(await this.casino.start(c,previous.data.game,BigInt(previous.data.stake),previous.data.selection,policy)).sessionId;
   }else if(i.isButton()&&parts[1]==='act')id=(await this.casino.action(c,parts[3]!,Number(parts[4]),parts[5] as 'hit'|'stand'|'double'|'split',policy)).sessionId;
   else throw new DomainError('CASINO_CONTROL','Open a casino game to continue.');
-  const message=await i.editReply(await this.roundPayload(id,i.client,i.isButton()?i.message?.attachments?.values():undefined));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
+  const message=await i.editReply(await this.roundPayload(id,i.client,i.isButton()&&i.customId.startsWith('casino:act:')?i.message?.attachments?.values():undefined));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
  }catch(error){const content=error instanceof DomainError?error.message:'The wager could not be completed. Your saved round can be checked before retrying.';if(i.deferred){if(!validated){if(!(i.isButton()&&i.customId.startsWith('casino:act:')||i.isModalSubmit()&&i.isFromMessage()))await i.deleteReply();await i.followUp({ephemeral:true,content});}else if(i.isButton()&&i.customId.startsWith('casino:act:'))await i.followUp({ephemeral:true,content});else await i.editReply(await this.presentation({title:'Wager unavailable',subtitle:'No new result confirmed',amount:'',amountLabel:'',details:[{label:'What happened',value:content}]}));}else await i.reply({ephemeral:true,content});}}
  private async roundPayload(id:string,client?:Client,existing?:Iterable<{id:string;name:string}>){
   const round=await this.casino.get(id),policy=await this.policy(round.guildId),ownerId=round.ownerUserId!,d=round.data,closed=round.state==='CLOSED';
