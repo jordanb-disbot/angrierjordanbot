@@ -68,9 +68,9 @@ function renderWideLine(view:LineView,elapsedMs:number,callout=''){
 
  }
  if(view.state==='OPEN'||view.state==='LOCKED'){
-  const locked=view.state==='LOCKED',deadline=view.expiresAt?new Date(view.expiresAt).toISOString().slice(11,19)+' UTC':'Pending';
+  const locked=view.state==='LOCKED';
   body=text(40,45,'ANGRIER JORDAN · LOUNGE EVENTS',15,'#C8A1FF','letter-spacing="2"')+head(40,91,'Line Time',40)+text(40,122,'Check in. Gather together. Share the moment.',19,'#E4C67F');
-  body+=panel(830,33,330,91)+text(850,60,locked?'CHECK-INS SAVED':'READINESS OPEN',15,locked?'#E4C67F':'#68E0B7','letter-spacing="1.5"')+head(850,91,locked?'Waiting for the host':'Closes '+deadline,21)+text(850,112,view.extensionUsed?'Host extension used':'The host may start early',13,'#B4C8CA');
+  body+=panel(830,33,330,91)+text(850,58,locked?'CHECK-INS SAVED':'LIVE COUNTDOWN',13,locked?'#E4C67F':'#68E0B7','font-weight="700" letter-spacing="1.7"')+head(850,91,locked?'Waiting for the host':'Readiness is open',22)+text(850,112,locked?'Host controls below':'Time remaining updates below',13,'#B4C8CA');
   body+=panel(32,148,352,364,'#AF7AE1')+'<image href="'+eventScene('line-countdown.png')+'" x="48" y="166" width="320" height="325" preserveAspectRatio="xMidYMid slice" opacity=".38"/><rect x="49" y="167" width="318" height="328" rx="10" fill="#051822" fill-opacity=".48"/>'+text(208,200,'THE LOUNGE IS GATHERING',13,'#E4C67F',mid)+head(208,280,view.members.length,62,'#E6EAF0',mid)+text(208,311,'CHAIRS CHECKED IN',14,'#B4C8CA',mid)+'<path d="M81 339H335" stroke="#E4C67F" stroke-opacity=".35"/>'+text(208,372,short(host,22),22,'#E6EAF0',mid)+text(208,399,'YOUR HOST',12,'#E4C67F',mid)+text(208,467,locked?'Ready for the countdown':'Choose your status below',18,'#D7C5F1',mid);
   for(const [groupIndex,members] of [ready,waiting].entries()){
    const x=400+groupIndex*392,color=groupIndex?'#E4C67F':'#68E0B7';
@@ -79,7 +79,7 @@ function renderWideLine(view:LineView,elapsedMs:number,callout=''){
    if(!members.length)body+=text(x+20,247,'An open seat awaits.',20,'#B4C8CA');
    if(members.length>5)body+=text(x+20,492,'+'+(members.length-5)+' more · view Check-ins',14,'#B4C8CA');
   }
-  body+=panel(32,530,1136,82)+text(54,558,locked?'HOST CONTROLS':'YOUR NEXT MOVE',12,'#C8A1FF','letter-spacing="1.4"')+text(54,588,locked?'Start Countdown or Cancel Line': 'Choose your check-in below',23)+'<path d="M661 546V596" stroke="#E4C67F" stroke-opacity=".25"/>'+text(686,558,'ONE COMMUNITY · ONE COUNTDOWN',12,'#E4C67F','letter-spacing="1.2"')+text(686,587,view.extensionUsed?'Extension used · check-ins preserved':'The host can start early or extend once',19,'#B4C8CA');
+  body+=panel(32,530,1136,82)+text(54,558,locked?'HOST CONTROLS':'YOUR NEXT MOVE',12,'#C8A1FF','letter-spacing="1.4"')+text(54,588,locked?'Start Countdown or Cancel Line':'Choose your check-in below',23)+'<path d="M661 546V596" stroke="#E4C67F" stroke-opacity=".25"/>'+text(686,558,'EXTENSION',12,'#E4C67F','letter-spacing="1.2"')+text(686,587,view.extensionUsed?'Used · check-ins preserved':'Available once · host may start early',19,'#B4C8CA');
  }
  if(done){
   body='<image href="'+eventScene('line-powder.png')+'" x="180" y="142" width="840" height="434"/>';

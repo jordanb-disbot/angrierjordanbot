@@ -20,7 +20,7 @@ function blockedConfig(i){
  const gate=new Promise(resolve=>{release=resolve;}),seen=new Promise(resolve=>{entered=resolve;});
  return {seen,release,config:{get:async()=>{assert.deepEqual(i.calls,['ack'],'ACK must precede even the first config read');entered();await gate;return false;}}};
 }
-for(const customId of ['event:join:round','event:extend:round','fight:extend:round','line:ready:round','line:waiting:round','line:extend:round','line:start:round','line:cancel:round']){
+for(const customId of ['event:join:round','event:extend:round','event:start_now:round','fight:extend:round','line:ready:round','line:waiting:round','line:extend:round','line:start:round','line:cancel:round']){
  test(`${customId.split(':').slice(0,2).join(':')} acknowledges before blocked guard and rejects privately without mutation`,async()=>{
   const i=interaction(customId),blocked=blockedConfig(i),Coordinator=customId.startsWith('line:')?DiscordSpecialCoordinator:DiscordEventsCoordinator;
   const work=new Coordinator(forbidden,blocked.config,async()=>true).handle(i);

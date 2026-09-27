@@ -1,0 +1,46 @@
+{
+  "kind": "deterministic-production-renderer-fixture",
+  "fictionalMembers": true,
+  "liveDiscordCapture": false,
+  "widths": {
+    "desktop": 1200,
+    "mobile": 390
+  },
+  "records": [
+    {
+      "name": "race-waiting",
+      "desktopSha256": "33a9577ab54144ea989b5907ea9238b131cb7652da939dac1eb48c7214eb9129",
+      "mobileSha256": "82cc2b9376ad9a8afcb367c98b007c5295d725e3ef68c6e2f03037e221870755"
+    },
+    {
+      "name": "race-live",
+      "desktopSha256": "98baef650dde05e3fd3a3466194550766afe635bb63d99d86ce7dbb576b64ea3",
+      "mobileSha256": "6c9ca2d80bd2307e5b5f6deb758ead42c2514bb814f7a8d0ce99ee4b9ffa4ce0"
+    },
+    {
+      "name": "race-finale",
+      "desktopSha256": "a09d64e3db530d7bd70a0338f65d7a9014328e290ea4325d23f4d7bbff19ac0a",
+      "mobileSha256": "4f9ae2b0cc213dfc439fdd2f57470fe0f4526f905c6fe606c0a4290eeea053c9"
+    },
+    {
+      "name": "line-waiting",
+      "desktopSha256": "d93cde5845d347747b9503eae84bb1de66d8a7aa5a5b270eb950e12a3a72d794",
+      "mobileSha256": "7fa8e1ee1b2d381abe201ebaec5e75ddc19ac932f0bf14ed3fa6024bb9f4b241"
+    },
+    {
+      "name": "line-extended",
+      "desktopSha256": "5cc4e93bac2bcbb528597a313478dd8ae1c9252e49093148e454016d8765542a",
+      "mobileSha256": "40a1eaca5d3b016478e94f8a32ab315da8acd19e4c255fcb9562fba071855b46"
+    },
+    {
+      "name": "line-countdown",
+      "desktopSha256": "bf83ea97f66bd6ef9c27b07f8227c4bc5fda2830526f776372c2534bf27fb0bd",
+      "mobileSha256": "b4c817d11946f250624841b706afc89f0cb4a34d51dfce2c3e9127f44a16e2f1"
+    },
+    {
+      "name": "line-finale",
+      "desktopSha256": "cf171c05d44054d58424f6af13bce1d44c4b1e15371cf31ba2d86aed0c923495",
+      "mobileSha256": "66f557ed61b09d20e68e704c0e1a7a2f9c6f6b89b0aa3a69fa7ccc0756c904da"
+    }
+  ]
+}

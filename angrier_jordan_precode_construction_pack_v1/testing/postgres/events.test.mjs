@@ -43,6 +43,25 @@ test('Phase 12 PostgreSQL Race event acceptance',async t=>{
   await t.test('NO_WINNING_BETS_REFUND restores wallet and bank once but records the race normally',async()=>{
    await atomic.run('events','bank-test','bank-test',async(tx,ledger)=>{await ledger.apply({guildId:'events',idempotencyKey:'move-bank',lines:[{userId:'bettor',bucket:'wallet',amount:-9450n,reason:'Test bank transfer'},{userId:'bettor',bucket:'bank',amount:9450n,reason:'Test bank transfer'}]});return{ok:true}});const before=await account('bettor');const second=(await repo.startRace(context('second'),racer('host'))).sessionId;await repo.join(context('second-join','a'),second,racer('a'));await repo.bet(context('loser-bet','bettor'),second,'a',1000n,policy);now=new Date(now.getTime()+60001);await repo.closeBetting('events',second);now=new Date(now.getTime()+30000);await Promise.all(Array.from({length:4},()=>repo.settle('events',second,policy)));await new PrismaEventsRepository(db,()=>0,()=>now).settle('events',second,policy);const state=await repo.get(second),after=await account('bettor');assert.equal(state.state,'CLOSED');assert.equal(state.data.winnerId,'host');assert.equal(state.data.result.settlement,'NO_WINNING_BETS_REFUND');assert.equal(state.data.result.rake,'0');assert.equal(after.wallet,before.wallet);assert.equal(after.bank,before.bank);assert.equal((await db.memberGameStats.findUniqueOrThrow({where:{guildId_userId_gameKey:{guildId:'events',userId:'host',gameKey:'race'}}})).wins,2);
   });
+  await t.test('Start Now is host-only, keeps the two-racer minimum, and locks once across concurrent clicks and the old expiry job',async()=>{
+   const early=(await repo.startRace(context('early'),racer('host'))).sessionId;
+   await assert.rejects(()=>repo.startNow(context('early-foreign','a'),early),{code:'HOST_ONLY'});
+   await assert.rejects(()=>repo.startNow(context('early-underfilled'),early),{code:'RACE_MINIMUM'});
+   assert.equal((await repo.get(early)).state,'OPEN');
+   await repo.join(context('early-join','a'),early,racer('a'));
+   const prepared=await repo.prepareClose('events',early);
+   const attempts=await Promise.allSettled([repo.startNow(context('early-click-one'),early,prepared),repo.startNow(context('early-click-two'),early,prepared)]);
+   assert.equal(attempts.filter(result=>result.status==='fulfilled').length,1);
+   assert.equal(attempts.filter(result=>result.status==='rejected'&&result.reason.code==='RACE_STARTED').length,1);
+   const locked=await repo.get(early);assert.equal(locked.state,'LOCKED');assert.equal(locked.data.startedAt,now.toISOString());
+   assert.equal(presentationKey(locked.data.plan),presentationKey(prepared.data.plan));
+   assert.equal(await db.scheduledJob.count({where:{executionKey:'events:settle:'+early}}),1);
+   now=new Date(now.getTime()+60001);await repo.closeBetting('events',early);
+   assert.equal((await repo.get(early)).state,'LOCKED');
+   assert.equal(await db.scheduledJob.count({where:{executionKey:'events:settle:'+early}}),1);
+   now=new Date(Math.max(now.getTime(),locked.expiresAt.getTime()+1));await repo.settle('events',early);
+   assert.equal((await repo.get(early)).state,'CLOSED');
+  });
   await t.test('underfilled race cancels and refunds; active Fight prevents a Race',async()=>{
    const third=(await repo.startRace(context('third'),racer('host'))).sessionId;await repo.bet(context('third-bet','a'),third,'host',100n,policy);now=new Date(now.getTime()+60001);await repo.closeBetting('events',third);assert.equal((await repo.get(third)).state,'CANCELLED');assert.equal((await account('a')).wallet,10000n);const fight=await db.gameSession.create({data:{guildId:'events',channelId:'main',type:'fight',state:'OPEN',data:{}}});await assert.rejects(()=>repo.startRace(context('blocked'),racer('host')),{code:'EVENT_ACTIVE'});await assert.rejects(()=>db.gameSession.create({data:{guildId:'events',channelId:'main',type:'race',state:'OPEN',data:{}}}),{code:'P2002'});await db.gameSession.update({where:{id:fight.id},data:{state:'CANCELLED'}});
   });

@@ -39,11 +39,11 @@ export function renderWideRace(view:RaceView,motion:EventMotion={}){
  }
  return frame(body+('<g transform="translate(120 0)">'+pool(view,live?(finished?'finish line reached':'race pool'):short(motion.callout??'total pool',48))+'</g>'),'lounge-stage-runtime.png',true);
 }
-/** Static entry artwork stays truthful between updates; Discord owns the live deadline. */
+/** Static waiting artwork leaves the changing countdown to lightweight Discord text. */
 function raceEntry(view:RaceView){
- const deadline=view.expiresAt?new Date(view.expiresAt).toISOString().slice(11,19)+' UTC':'Pending';
+ const seats=Math.max(0,6-view.racers.length),ready=view.racers.length>=2;
  let body=text(40,45,'ANGRIER JORDAN · LOUNGE EVENTS',15,ink.teal,'letter-spacing="2"')+text(40,91,'Chair Race',40,ink.white,'font-family="Space Grotesk" font-weight="700"')+text(40,122,'Take your seat. Back your favourite.',19,ink.warm);
- body+=panel(830,33,330,91,ink.gold)+text(850,60,'ENTRY OPEN',15,ink.teal,'font-weight="600" letter-spacing="1.5"')+text(850,91,'Closes '+deadline,21,ink.white)+text(850,112,view.extensionUsed?'Host extension used':'Join using the controls below',13,ink.warm);
+ body+=panel(830,33,330,91,ink.gold)+text(850,58,'LIVE COUNTDOWN',13,ink.teal,'font-weight="700" letter-spacing="1.7"')+text(850,91,'Race begins soon',23,ink.white,'font-family="Space Grotesk" font-weight="700"')+text(850,112,'Time remaining updates below',13,ink.warm);
  const cols=3,w=376,h=185;
  for(let i=0;i<6;i++){
   const r=view.racers[i],x=32+i%cols*380,y=148+Math.floor(i/cols)*h;
@@ -51,7 +51,7 @@ function raceEntry(view:RaceView){
   body+=panel(x,y,w,h-12,i%2?ink.gold:ink.teal)+text(x+18,y+27,'LANE '+String(i+1).padStart(2,'0'),12,ink.teal,'letter-spacing="1.5"')+text(x+18,y+55,short(r.name,22),24,ink.white,'font-family="Space Grotesk" font-weight="600"');
   body+='<ellipse cx="'+(x+w/2)+'" cy="'+(y+h-30)+'" rx="130" ry="15" fill="url(#aura)"/><image href="'+raceWheelchair(r.chair)+'" x="'+(x+48)+'" y="'+(y+60)+'" width="280" height="'+(h-81)+'" preserveAspectRatio="xMidYMid meet"/>';
  }
- body+=panel(32,530,1136,82,ink.gold)+text(54,557,'ON THE GRID',12,ink.teal,'letter-spacing="1.4"')+text(54,588,view.racers.length+' racers',25,ink.white,'font-family="Space Grotesk" font-weight="600"')+'<path d="M291 546V596M653 546V596" stroke="'+ink.warm+'" stroke-opacity=".23"/>'+text(316,557,'RACE POOL',12,ink.teal,'letter-spacing="1.4"')+text(316,588,short(view.pool,18)+' Ottomans',25,ink.warm)+text(680,557,'YOUR NEXT MOVE',12,ink.teal,'letter-spacing="1.4"')+text(680,586,'Join the grid · place your bet below',21,ink.white);
+ body+=panel(32,530,1136,82,ink.gold)+text(54,557,'ON THE GRID',12,ink.teal,'letter-spacing="1.4"')+text(54,588,view.racers.length+' '+(view.racers.length===1?'racer':'racers')+' · '+seats+' open',23,ink.white,'font-family="Space Grotesk" font-weight="600"')+'<path d="M347 546V596M641 546V596M856 546V596" stroke="'+ink.warm+'" stroke-opacity=".23"/>'+text(370,557,'READINESS',12,ink.teal,'letter-spacing="1.4"')+text(370,587,ready?'Ready to start':'Need 2 racers',20,ready?ink.teal:ink.warm)+text(663,557,'RACE POOL',12,ink.teal,'letter-spacing="1.4"')+text(663,587,short(view.pool,10)+' Ottomans',20,ink.warm)+text(878,557,'YOUR NEXT MOVE',12,ink.teal,'letter-spacing="1.4"')+text(878,586,'Join · wager',19,ink.white);
  return frame(body,'lounge-stage-runtime.png',true);
 }
 /** Combat animation adds energy only: actual HP and moves come from the persisted timeline. */

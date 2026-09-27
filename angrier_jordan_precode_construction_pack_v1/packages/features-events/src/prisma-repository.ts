@@ -87,19 +87,32 @@ export class PrismaEventsRepository {
   const recent=s.type==='fight'?await this.recentMoves(this.db,guildId,id):[];
   return{sessionId:id,guildId,type:s.type,version:s.version,participantFingerprint:requestFingerprint(data.racers),recentMoveFingerprint:requestFingerprint(recent),data:this.preparePlan(s.type,data.racers,recent)};
  }
- async closeBetting(guildId:string,id:string,prepared?:PreparedEventClose){return this.atomic.run(guildId,'event:close:'+id,id,async(tx,ledger)=>{
-  const s=await new PrismaTransactionSessions(tx).get<RaceData>(id);if(!s||s.guildId!==guildId||!['race','fight'].includes(s.type))throw new DomainError('EVENT_MISSING','Event unavailable.');
-  if(s.state!=='OPEN')return{sessionId:id};if(!s.expiresAt||s.expiresAt>this.clock())throw new DomainError('NOT_DUE','The event window remains open.');
-  if(s.data.racers.length<2){await this.cancelInside(tx,ledger,s,'Not enough racers; all wagers refunded.');return{sessionId:id};}
-  if(s.type==='fight'&&await this.fighterAbsent(tx,s)){await this.cancelInside(tx,ledger,s,'A fighter left; all wagers refunded.');return{sessionId:id};}
+ private async lockEvent(tx:Prisma.TransactionClient,guildId:string,id:string,s:Session<RaceData>,prepared?:PreparedEventClose){
   const recent=s.type==='fight'?await this.recentMoves(tx,guildId,id):[];
-  // Validate outcome inputs inside the serializable close transaction. Wagers and
-  // extensions can change the version without changing these inputs.
+  // Validate prepared outcome inputs inside the serializable transaction. Joining
+  // and betting share the session version with this transition.
   const reusable=prepared?.sessionId===id&&prepared.guildId===guildId&&prepared.type===s.type&&prepared.participantFingerprint===requestFingerprint(s.data.racers)&&prepared.recentMoveFingerprint===requestFingerprint(recent)&&Boolean(s.type==='fight'?prepared.data.fightPlan:prepared.data.plan);
   const nextPlan=reusable?prepared!.data:this.preparePlan(s.type,s.data.racers,recent),durationMs=(nextPlan.fightPlan??nextPlan.plan)!.durationMs;
   const now=this.clock(),expiresAt=new Date(now.getTime()+durationMs),data={...s.data,...nextPlan,startedAt:now.toISOString()};
   await new SessionEngine(new PrismaTransactionSessions(tx)).transition<RaceData>(id,['OPEN'],'LOCKED',s=>({...s,data,expiresAt}));
   await tx.scheduledJob.create({data:{guildId,jobType:'events.settle',executionKey:'events:settle:'+id,dueAt:expiresAt,payload:{guildId,sessionId:id}}});return{sessionId:id};
+ }
+ async startNow(c:EventContext,id:string,prepared?:PreparedEventClose){return this.atomic.run(c.guildId,'event:start-now:'+c.requestKey,requestFingerprint({id,userId:c.userId,channelId:c.channelId}),async tx=>{
+  const s=await new PrismaTransactionSessions(tx).get<RaceData>(id);
+  if(!s||s.guildId!==c.guildId||s.channelId!==c.channelId||s.type!=='race')throw new DomainError('EVENT_MISSING','This Race is unavailable.');
+  if(s.ownerUserId!==c.userId)throw new DomainError('HOST_ONLY','Only the Race host can start it early.');
+  if(s.state!=='OPEN'||!s.expiresAt||s.expiresAt<=this.clock())throw new DomainError('RACE_STARTED','The Race waiting room has closed.');
+  if(s.data.racers.length<2)throw new DomainError('RACE_MINIMUM','At least two racers are needed to start.');
+  // The existing scheduled close becomes a harmless no-op once the state locks.
+  // Lock and settlement scheduling remain a single atomic Race transition.
+  return this.lockEvent(tx,c.guildId,id,s,prepared);
+ });}
+ async closeBetting(guildId:string,id:string,prepared?:PreparedEventClose){return this.atomic.run(guildId,'event:close:'+id,id,async(tx,ledger)=>{
+  const s=await new PrismaTransactionSessions(tx).get<RaceData>(id);if(!s||s.guildId!==guildId||!['race','fight'].includes(s.type))throw new DomainError('EVENT_MISSING','Event unavailable.');
+  if(s.state!=='OPEN')return{sessionId:id};if(!s.expiresAt||s.expiresAt>this.clock())throw new DomainError('NOT_DUE','The event window remains open.');
+  if(s.data.racers.length<2){await this.cancelInside(tx,ledger,s,'Not enough racers; all wagers refunded.');return{sessionId:id};}
+  if(s.type==='fight'&&await this.fighterAbsent(tx,s)){await this.cancelInside(tx,ledger,s,'A fighter left; all wagers refunded.');return{sessionId:id};}
+  return this.lockEvent(tx,guildId,id,s,prepared);
  });}
  async settle(guildId:string,id:string,policy?:EventPolicy){return this.atomic.run(guildId,'event:settle:'+id,id,async(tx,ledger)=>{
   const s=await new PrismaTransactionSessions(tx).get<RaceData>(id);if(!s||s.guildId!==guildId||!['race','fight'].includes(s.type))throw new DomainError('EVENT_MISSING','Event unavailable.');

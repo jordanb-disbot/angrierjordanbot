@@ -1,6 +1,6 @@
 import {normalizeNotificationTrigger,notificationRole,notificationMessage} from './notification-roles.js';
 import {eventTiming} from './event-performance.js';
-import {eventWindow,hasLineIdentity} from './event-window.js';
+import {eventWindow,hasLineIdentity,waitingCountdown} from './event-window.js';
 import {LINE_DURATION_MS} from '../../../../packages/features-special/src/domain.js';
 import {randomInt,createHash} from 'node:crypto';
 import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,type Client,type Message,type ButtonInteraction} from 'discord.js';
@@ -14,6 +14,8 @@ import builtinCallouts from '../../../../packages/features-special/content/built
 export const specialDeliveryUrl=(marker:string)=>'https://discord.com/#'+createHash('sha256').update(marker).digest('hex');
 export class DiscordSpecialCoordinator {
  private readonly refreshes=new Map<string,Promise<void>>();
+ private readonly countdowns=new Map<string,string>();
+ private readonly waitingMessages=new Map<string,Message>();
  private readonly publishedVersions=new Map<string,string>();
  private readonly finales=new Map<string,{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>}>();
  private readonly preparing=new Set<string>();
@@ -63,7 +65,7 @@ export class DiscordSpecialCoordinator {
   const marker='special:'+jobId;
   const messageId=await new DeliveryEngine(delivery).deliver(marker,{
    find:async marker=>{const messages=await channel.messages.fetch({limit:100});return messages.find(m=>m.author.id===client.user?.id&&(m.embeds.some(e=>e.url===specialDeliveryUrl(marker)||e.footer?.text===marker)||Boolean(p.sessionId&&hasLineIdentity(m.components,p.sessionId))))?.id??null;},
-   send:async marker=>{const {callout,allowedMentions:mentions}=notificationMessage(notification,p.content);if(p.sessionId){const view=await this.repo.publicView(p.sessionId),{content,...line}=await this.payload(view,callout),sent=await channel.send({...line,allowedMentions:mentions});this.publishedVersions.set(p.sessionId,JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]));this.prepareFinale(view);return sent.id;}return(await channel.send({embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle('Chairs, assemble.').setColor(0x0ea5a6).setURL(specialDeliveryUrl(marker))],content:callout,allowedMentions:mentions})).id;}
+   send:async marker=>{const {callout,allowedMentions:mentions}=notificationMessage(notification,p.content);if(p.sessionId){const view=await this.repo.publicView(p.sessionId),{content,...line}=await this.payload(view,callout),sent=await channel.send({...line,allowedMentions:mentions});this.publishedVersions.set(p.sessionId,JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]));this.prepareFinale(view);this.waitingMessages.set(p.sessionId,sent);if(view.state==='OPEN')this.countdowns.set(p.sessionId,waitingCountdown(view.expiresAt));return sent.id;}return(await channel.send({embeds:[new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle('Chairs, assemble.').setColor(0x0ea5a6).setURL(specialDeliveryUrl(marker))],content:callout,allowedMentions:mentions})).id;}
   });if(p.sessionId)await this.repo.linkMessage(p.sessionId,p.guildId,messageId);
  }
  async handle(i:ButtonInteraction){try{
@@ -89,20 +91,36 @@ export class DiscordSpecialCoordinator {
   else throw new DomainError('LINE_CONTROL','This Line control is unavailable.');
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public update is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The Line update could not be completed. Check its saved state before retrying.';if(i.replied||i.deferred)await i.followUp({ephemeral:true,content});else await i.reply({ephemeral:true,content});}}
- async payload(view:LineView,callout?:string){
+ async payload(view:LineView,callout?:string,options:{imageUrl?:string}={}){
   const live=view.state==='SETTLING'&&view.elapsedMs<(view.durationMs??LINE_DURATION_MS),sequence=live?lineSequence(view,'wide',true):null,animated=Boolean(sequence&&sequence.frames.length>1),waiting=view.state==='OPEN'&&view.remainingMs>0;
-  let image:Buffer;
-  if(sequence&&animated)image=await rasterizeSequence(sequence.frames,sequence.delays,sequence.assets);
-  else image=await rasterizeSvg(renderLine(view,view.elapsedMs,'wide',callout));
+  let image:Buffer|undefined;
+  if(!options.imageUrl){
+   if(sequence&&animated)image=await rasterizeSequence(sequence.frames,sequence.delays,sequence.assets);
+   else image=await rasterizeSvg(renderLine(view,view.elapsedMs,'wide',callout));
+  }
   const filename=animated?'line-live.gif':'line.png',components:ActionRowBuilder<ButtonBuilder>[]=[];
   const roster=new ButtonBuilder().setCustomId('line:roster:'+view.id+':0').setLabel('Check-ins').setStyle(ButtonStyle.Secondary);
   if(view.state==='OPEN')components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('line:ready:'+view.id).setLabel('I’m In').setStyle(ButtonStyle.Success),new ButtonBuilder().setCustomId('line:waiting:'+view.id).setLabel('I Need a Second').setStyle(ButtonStyle.Secondary),roster));
   if(['OPEN','LOCKED'].includes(view.state))components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('line:start:'+view.id).setLabel('Start Countdown').setStyle(ButtonStyle.Primary),...(view.state==='OPEN'?[new ButtonBuilder().setCustomId('line:extend:'+view.id).setLabel('+30 Seconds').setStyle(ButtonStyle.Secondary).setDisabled(view.extensionUsed)]:[roster]),new ButtonBuilder().setCustomId('line:cancel:'+view.id).setLabel('Cancel Line').setStyle(ButtonStyle.Danger)));
   if(live)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('line:status:'+view.id).setLabel('Countdown live').setStyle(ButtonStyle.Secondary).setDisabled(true)));
   if(['CLOSED','CANCELLED'].includes(view.state))components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(roster));
-  return eventWindow({title:'Line Time',description:view.state==='OPEN'?`Readiness ends <t:${Math.floor(view.expiresAt!.getTime()/1000)}:R> → five-second countdown → powder finale.`:view.state==='LOCKED'?'Preparing the countdown.':view.state==='CANCELLED'?'Line cancelled.':view.state==='CLOSED'?'Line complete.':'Five seconds. One shared moment.',filename,image,rows:components,accent:0xa469e2,...(callout?{callout}:{})});
+  const statusRoster=(status:'ready'|'waiting')=>{const members=view.members.filter(m=>m.status===status),names=members.slice(0,6).map(m=>m.name.replace(/[`*_~>|@\r\n]/g,'').slice(0,24));return names.join(' · ')+(members.length>6?` · +${members.length-6} more`:'' )||'None yet';};
+  const countdown=view.state==='OPEN'?`**READINESS CLOSES IN ${waitingCountdown(view.expiresAt)}** · ${view.extensionUsed?'extension used':'extension available'}\n**Ready:** ${statusRoster('ready')}\n**Need a second:** ${statusRoster('waiting')}`:undefined;
+  return eventWindow({title:'Line Time',description:view.state==='OPEN'?'Check in before the live timer reaches zero.':view.state==='LOCKED'?'Preparing the countdown.':view.state==='CANCELLED'?'Line cancelled.':view.state==='CLOSED'?'Line complete.':'Five seconds. One shared moment.',filename,...(image?{image}:{}),rows:components,accent:0xa469e2,...(options.imageUrl?{imageUrl:options.imageUrl}:{}),...(countdown?{countdown}:{}),...(callout?{callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve(),current=previous.catch(()=>{}).then(async()=>{let view=await this.repo.publicView(id);if(!view.messageId)return;let key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);if(this.publishedVersions.get(id)===key)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Line channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Line message author mismatch.');if(view.state==='SETTLING'&&message.attachments?.some(a=>a.name==='line-live.gif')){this.publishedVersions.set(id,key);return;}let payload=await this.payload(view);if(view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);payload=await this.payload(view);}}if(view.state==='SETTLING'){const latest=await this.repo.publicView(id);if(latest.state==='SETTLING'&&latest.elapsedMs>=(latest.durationMs??LINE_DURATION_MS)){await this.repo.complete(latest.guildId,id);payload=await this.payload(await this.repo.publicView(id));}else if(latest.state!=='SETTLING')payload=await this.payload(latest);}await eventTiming('line.edit-upload',()=>message.edit(payload));this.publishedVersions.set(id,key);this.prepareFinale(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve(),current=previous.catch(()=>{}).then(async()=>{let view=await this.repo.publicView(id);if(!view.messageId)return;let key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);if(this.publishedVersions.get(id)===key){await this.refreshCountdown(client,view);return;}const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Line channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Line message author mismatch.');if(view.state==='SETTLING'&&message.attachments?.some(a=>a.name==='line-live.gif')){this.publishedVersions.set(id,key);return;}let payload=await this.payload(view);if(view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=JSON.stringify([view.state,view.members,view.extensionUsed,view.state==='OPEN'?view.expiresAt:null]);payload=await this.payload(view);}}if(view.state==='SETTLING'){const latest=await this.repo.publicView(id);if(latest.state==='SETTLING'&&latest.elapsedMs>=(latest.durationMs??LINE_DURATION_MS)){await this.repo.complete(latest.guildId,id);payload=await this.payload(await this.repo.publicView(id));}else if(latest.state!=='SETTLING')payload=await this.payload(latest);}const edited=await eventTiming('line.edit-upload',()=>message.edit(payload));this.publishedVersions.set(id,key);if(view.state==='OPEN'){this.waitingMessages.set(id,edited);this.countdowns.set(id,waitingCountdown(view.expiresAt));}else{this.waitingMessages.delete(id);this.countdowns.delete(id);}this.prepareFinale(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
+ private async refreshCountdown(client:Client,view:LineView){
+  if(view.state!=='OPEN'){this.waitingMessages.delete(view.id);this.countdowns.delete(view.id);return;}
+  if(!view.messageId||view.remainingMs<=0)return;
+  const countdown=waitingCountdown(view.expiresAt);if(this.countdowns.get(view.id)===countdown)return;
+  const latest=await this.repo.publicView(view.id);if(latest.state!=='OPEN'||latest.expiresAt?.getTime()!==view.expiresAt?.getTime())return;
+  let message=this.waitingMessages.get(view.id);
+  if(!message){const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))return;message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Line message author mismatch.');}
+  const imageUrl=message.attachments?.find(a=>a.name==='line.png')?.url??'attachment://line.png';
+  const payload=await this.payload(latest,undefined,{imageUrl});
+  const edited=await eventTiming('line.countdown-edit',()=>message!.edit(payload));
+  this.waitingMessages.set(view.id,edited);this.countdowns.set(view.id,countdown);
+ }
  async advance(client:Client,guildId:string,id:string,complete:boolean){if(complete){await this.repo.complete(guildId,id);await this.refresh(client,id);return;}
   const previous=this.refreshes.get(id)??Promise.resolve(),current=previous.catch(()=>{}).then(async()=>{const before=await this.repo.publicView(id);if(!['OPEN','LOCKED'].includes(before.state))return;
    // Prepare the complete one-shot before starting the persisted clock, just like host start.
