@@ -1,3 +1,4 @@
+import {beginJailDiagnostic} from './jail-send-diagnostics.js';
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -172,16 +173,28 @@ export class DiscordJailCoordinator {
   }
 
   private async handleSend(interaction: ChatInputCommandInteraction) {
+    const diagnostic=beginJailDiagnostic(interaction.id);
+    const stage=(name:string)=>{if(diagnostic){diagnostic.state.stage=name;diagnostic.log();}};
+    try {
+    stage('actor-fetch');
     const actor = await interaction.guild!.members.fetch(interaction.user.id);
+    stage('staff-authority');
     await this.requireStaff(actor, 'recliner');
+    stage('target-fetch');
     let target = await this.targetMember(interaction, true);
+    stage('command-options');
     const duration = interaction.options.getString('duration', true);
     const reason = interaction.options.getString('reason', true);
+    stage('target-validation');
     await this.validateTarget(actor, target);
 
+    stage('administrator-suspension-check');
     const suspended = await this.prepareAdministratorSuspension(actor, target);
+    stage('member-access-config');
     const accessId = await roleId(this.config, target.guild.id, 'roles.member_access');
+    stage('channel-reconciliation');
     await this.reconcileGuild(interaction.guild!);
+    stage('jailed-role-check');
     const jailed = await this.requireJailedRole(interaction.guild!);
     const removedRoleIds: string[] = [];
 
@@ -189,23 +202,34 @@ export class DiscordJailCoordinator {
     try {
       // Explicit member-access allows override a different role's deny. Suspend access
       // as well as approved admin roles, using returned members rather than gateway cache timing.
+    stage('role-removal');
       const toRemove = new Set([...suspended, ...(accessId && target.roles.cache.has(accessId) ? [accessId] : [])]);
       for (const id of toRemove) {
         target = await target.roles.remove(id, 'Temporary role suspension for moderation Hotseat.');
         removedRoleIds.push(id);
+        if(diagnostic&&id===accessId)diagnostic.state.foldingRemoved=true;
       }
+    stage('jailed-role-add');
       target = await target.roles.add(jailed, 'Moderation Hotseat confinement.');
 
+    stage('administrator-bypass-check');
+      if(diagnostic)diagnostic.state.jailedAdded=true;
       if (target.permissions.has(PermissionFlagsBits.Administrator)) {
         throw new DomainError('ADMINISTRATOR_BYPASS', 'This member still has Administrator permission, so Hotseat confinement would not be effective.');
       }
 
+    stage('hotseat-config');
       const hotseatId = await hotseatChannelId(this.config, target.guild.id);
+    stage('normal-channel-containment');
+      if(diagnostic){try{const permissions=hotseatId?target.guild.channels.cache.get(hotseatId)?.permissionsFor(target):null;diagnostic.state.hotseatView=permissions?.has(PermissionFlagsBits.ViewChannel)??false;diagnostic.state.hotseatSend=permissions?.has(PermissionFlagsBits.SendMessages)??false;}catch(e){diagnostic.log(e);}}
       const visible = this.visibleOrdinaryChannels(target, hotseatId);
+      if(diagnostic)diagnostic.state.normalContainment=visible.size===0;
       if (visible.size) {
         throw new DomainError('CONFINEMENT_INCOMPLETE', `Hotseat would not fully contain this member. ${visible.size} normal channel(s) remain visible.`);
       }
 
+    stage('sentence-create');
+      if(diagnostic)diagnostic.state.sentenceCreationStarted=true;
       result = await this.service.send({
         guildId: target.guild.id,
         userId: target.id,
@@ -216,20 +240,31 @@ export class DiscordJailCoordinator {
         // never by the unconditional suspended-admin-role restoration path.
         suspendedRoleIds: removedRoleIds.filter(id => id !== accessId),
       });
+      if(diagnostic)diagnostic.state.sentenceCreationCompleted=true;
     } catch (error) {
-      target = await target.roles.remove(jailed, 'Rolling back incomplete Hotseat confinement.').catch(() => target);
+      diagnostic?.log(error);
+      if(diagnostic)diagnostic.state.rollbackStarted=true;
+      stage('rollback');
+      let rollbackOk=true;
+      target = await target.roles.remove(jailed, 'Rolling back incomplete Hotseat confinement.').catch(e => {rollbackOk=false;diagnostic?.log(e);return target;});
       for (const id of removedRoleIds) {
-        target = await target.roles.add(id, 'Rolling back incomplete Hotseat confinement.').catch(() => target);
+        target = await target.roles.add(id, 'Rolling back incomplete Hotseat confinement.').catch(e => {rollbackOk=false;diagnostic?.log(e);return target;});
       }
+      if(diagnostic)diagnostic.state.rollbackCompleted=rollbackOk;
       throw error;
     }
 
+    stage('hotseat-card');
     let cardDelivered = true;
     await this.postHotseatCard(target, result.sentence, result.caseRecord.id, 'entered').catch(() => { cardDelivered = false; });
+    stage('member-dm');
     await target.send({
       content: `You have been placed in the server Hotseat. Reason: ${reason}\nCase #${result.caseRecord.id}. Use \`/jail status\`, \`/jail reason\`, or Request Review in the Hotseat card.`,
     }).catch(() => undefined);
+    stage('interaction-result');
     await interaction.editReply({ content: `${target} is now in Hotseat. Case #${result.caseRecord.id}.${cardDelivered ? '' : ' The Hotseat notice could not be delivered; confinement is active. Do not resend the punishment.'}` });
+    stage('complete');
+    } catch(error){diagnostic?.log(error);throw error;}
   }
 
   private async handleRelease(interaction: ChatInputCommandInteraction) {
