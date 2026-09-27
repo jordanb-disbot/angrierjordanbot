@@ -14,7 +14,7 @@ const groups={
  CASINO:['features.casino','features.lottery'],PROFILES:['features.profiles','features.activity','features.spotlight'],
  ITEMS:['features.items'],ECONOMY:[],FAMILY:['features.family'],JAIL:[],MODERATION:[],SECURITY:[]
 };
-const excluded=new Set(['JAIL','MODERATION','SECURITY']);
+const excluded=new Set(['MODERATION','SECURITY']);
 const channelInputs={ACCEPTANCE_MAIN_CHAT_CHANNEL_ID:'channels.main_chat',ACCEPTANCE_BOT_CHANNEL_ID:'channels.bot_channel',ACCEPTANCE_GAMES_CHANNEL_ID:'channels.games_channel',ACCEPTANCE_INTRODUCTION_CHANNEL_ID:'channels.introduction_channel'};
 export function acceptancePlan(musicText,testText){
  const target=testServerTarget(musicText,testText),local=parseEnv(musicText),environment={...local,NODE_ENV:'development',DATABASE_URL:target.databaseUrl},settings=new Map();
