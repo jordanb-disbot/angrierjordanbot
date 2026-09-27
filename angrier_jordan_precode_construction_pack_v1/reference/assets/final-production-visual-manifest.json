@@ -6017,7 +6017,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "19ceea5293370930ea489c00a914ef02a58690fc2ea6c63fd0777ee5cdf41d1a"
+      "sha256": "c5ea6306bd977fe0c45bfb28d33f337e1cc13a9500be85f5741093b1ed5e031a"
     },
     {
       "id": "crime.runtime.renderer",
@@ -6089,7 +6089,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "df16c8e7153947463c8a1db194a91a798dd764352fec67de96b9e52e36caa54f"
+      "sha256": "9ddf447b3b74e1ca1989aefc86020543c7bc72eb28ab25c96ad1ce8fe4b519c3"
     },
     {
       "id": "profiles.runtime.renderer",

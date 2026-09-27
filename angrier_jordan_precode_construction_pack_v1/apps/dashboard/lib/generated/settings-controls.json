@@ -1,5 +1,5 @@
 {
-  "count": 256,
+  "count": 257,
   "controls": [
     {
       "key": "server.timezone",
@@ -4799,6 +4799,23 @@
       "restartRequired": false,
       "mutable": true,
       "dashboardWrite": "blocked",
+      "dependsOn": []
+    },
+    {
+      "key": "haiku.additional_channel_ids",
+      "section": "haiku",
+      "label": "Additional Channel Ids",
+      "description": "Additional channels for passive Haiku replies alongside main chat. At most 20 unique channel IDs. Channel cooldowns remain independent.",
+      "kind": "json-editor",
+      "defaultValue": [],
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
       "dependsOn": []
     },
     {

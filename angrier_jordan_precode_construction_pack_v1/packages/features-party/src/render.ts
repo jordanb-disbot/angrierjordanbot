@@ -22,13 +22,27 @@ function fmkCards(trio:{userId:string;name:string}[],assignments:Record<string,s
  bottom=top+height;}
  return{svg:body,bottom};
 }
+/** Landscape FMK keeps the three faces together at Discord display width. */
+function fmkStage(trio:{userId:string;name:string}[],assignments:Record<string,string>,art:Record<string,PartyArt>,chooser:string,counters:PartyView['subjectCounters'],result:PartyView['result'],privateView=false){
+ let body=header('Fuck, Marry, Kill',privateView?'PRIVATE ASSIGNMENT · NOTHING IS PUBLIC UNTIL SUBMIT':result?'THE VERDICT · '+result.label:'THE LOUNGE VERDICT · VOTING OPEN');
+ body+=text(600,202,'Chosen by '+chooser,23,'#DBE9FA','text-anchor="middle" font-weight="700"');
+ for(const [n,m] of trio.entries()){const x=30+n*384,cx=x+186,a=art[m.userId],role=Object.entries(assignments).find(([,id])=>id===m.userId)?.[0].toUpperCase()??'CHOOSE',accent=['#B7D6FA','#E6C578','#97CBBE'][n]!;
+ body+=panel(x,218,372,366,accent)+'<rect x="'+(x+10)+'" y="228" width="352" height="212" rx="12" fill="#425A70" opacity=".7"/>'+portrait('fmk-stage-'+n,m.name,a?.avatarData,cx,232,200)+center(a?.name??m.name,469,29,328,cx).svg+text(cx,545,role,37,accent,'text-anchor="middle" font-family="Cinzel" font-weight="700"');
+ const counts=counters?.[m.userId];if(counts)body+=text(cx,572,'F '+counts.fucked+'   ·   M '+counts.married+'   ·   K '+counts.killed,19,'#DBE9FA','text-anchor="middle"');
+ }
+ body+=panel(30,601,1140,88,result?ink.gold:PARTY_GAMES_ACCENT);
+ const copy=privateView?'Assign Fuck, then Marry. The remaining member is Kill.':result?Object.entries(result.totals).map(([id,count])=>(id==='agree'?'Agree':id==='disagree'?'Disagree':id)+': '+count+' votes · '+(result.percentages[id]??0)+'%').join('     |     '):'Agree or Disagree · Anonymous ballots · The chooser cannot vote';
+ body+=center(copy,639,24,1070).svg+text(600,672,privateView?'Submit Choices when ready':result?'THE LOUNGE HAS SPOKEN · SIT. PLAY. BELONG.':'Change your vote until close',18,'#C2D8EC','text-anchor="middle" letter-spacing="1"');
+ return frame(720,body).replace('#26313B','#385065').replace('#18232D','#263D50').replace('#101C26','#182C40');
+}
 /** Explicitly private projection; public DRAFT views never include this trio. */
 export function renderPartyDraft(v:{trio:{userId:string;name:string}[];fuck?:string|undefined;marry?:string|undefined},art:Record<string,PartyArt>={},chooser='The chooser'){
  const assignments:Record<string,string>={};if(v.fuck)assignments.fuck=v.fuck;if(v.marry)assignments.marry=v.marry;if(v.fuck&&v.marry){const left=v.trio.find(m=>m.userId!==v.fuck&&m.userId!==v.marry);if(left)assignments.kill=left.userId;}
- const cards=fmkCards(v.trio,assignments,undefined,art,204),note=center(chooser+' · Assign Fuck, then Marry; the remaining member is Kill. Private choices · nothing is public until Submit',cards.bottom+56,24);return frame(cards.bottom+note.height+91,header('Fuck, Marry, Kill','PRIVATE ASSIGNMENT · CHOOSE YOUR THREE')+cards.svg+note.svg);
+ return fmkStage(v.trio,assignments,art,chooser,undefined,undefined,true);
 }
 /** Public projections only: submitted private choices never enter the feed artwork. */
 export function renderParty(v:PartyView,memberArt:Record<string,PartyArt>={}){
+ if(v.game==='fmk'&&v.state!=='DRAFT'&&v.trio&&v.assignments)return fmkStage(v.trio,v.assignments,memberArt,memberArt[v.ownerId??'']?.name??'The chooser',v.subjectCounters,v.result);
  const state=v.state==='CLOSED'?'ROUND COMPLETE':v.phase==='runoff'?'RUNOFF · 30 SECONDS':v.phase==='vote'?'VOTING · totals hidden until close':v.phase==='submissions'?'SUBMISSIONS · WRITE YOUR ENDING':v.phase==='story'?'THE STORY TABLE':v.phase==='answer'?'THE FLOOR IS YOURS':'CHOOSE THE NEXT MOVE';
  let body=header(PARTY_TITLES[v.game],state),y=202;
  const section=(copy:string,size=30,tone:string=ink.gold)=>{const b=center(copy,y+46,size);body+=panel(42,y,1116,b.height+64,tone)+b.svg;y+=b.height+86;};

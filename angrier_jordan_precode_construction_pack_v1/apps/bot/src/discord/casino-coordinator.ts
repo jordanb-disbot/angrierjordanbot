@@ -1,8 +1,9 @@
+import {createHash} from 'node:crypto';
+import {displayFrames,wideDisplay,type DisplayFrame,type DisplayControl} from './wide-display.js';
 import {memberArt} from './member-art.js';
 import {renderCasinoResult} from '../../../../packages/features-casino/src/render.js';
-import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import casinoHelp from '../../../../packages/content/help/casino.json' with {type:'json'};
-import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,ModalBuilder,TextInputBuilder,TextInputStyle,type Client,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction} from 'discord.js';
+import {ActionRowBuilder,ButtonBuilder,ButtonStyle,ModalBuilder,TextInputBuilder,TextInputStyle,type Client,type ButtonInteraction,type ChatInputCommandInteraction,type ModalSubmitInteraction} from 'discord.js';
 import {DomainError,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaCasinoRepository,type CasinoContext,type CasinoPolicy} from '../../../../packages/features-casino/src/prisma-repository.js';
@@ -10,9 +11,12 @@ import {PrismaLotteryRepository} from '../../../../packages/features-casino/src/
 import {cardLabel,handValue,type CasinoGame,type ChairSymbol} from '../../../../packages/features-casino/src/domain.js';
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export const CASINO_COMMANDS=new Set(['casino','lottery']);
-const card=(title:string,description:string)=>new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setTitle(title).setDescription(description).setColor(0x14B8A6);
 export class DiscordCasinoCoordinator {
  constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
+ private identities=new Map<string,{expires:number;value:ReturnType<typeof memberArt>}>();
+ private identity(client:Client,guildId:string,userId:string){const key=guildId+':'+userId,old=this.identities.get(key);if(old&&old.expires>Date.now())return old.value;const value=memberArt(client,guildId,userId);this.identities.set(key,{expires:Date.now()+60000,value});if(this.identities.size>64)this.identities.delete(this.identities.keys().next().value!);return value;}
+ private artwork=new Map<string,Promise<DisplayFrame[]>>();
+ private async presentation(input:Parameters<typeof renderCasinoResult>[0],controls:DisplayControl[]=[],existing?:Iterable<{id:string;name:string}>){const svg=renderCasinoResult(input),key=createHash('sha256').update(svg).digest('hex').slice(0,24);let frames=this.artwork.get(key);if(!frames){frames=displayFrames(svg,'casino-'+key,[input.title,input.subtitle,input.amountLabel+' '+input.amount,...input.details.map(d=>d.label+': '+d.value)].join(' · '));this.artwork.set(key,frames);if(this.artwork.size>32)this.artwork.delete(this.artwork.keys().next().value!);frames.catch(()=>this.artwork.delete(key));}return wideDisplay(await frames,controls,undefined,existing);}
  private async policy(guildId:string):Promise<CasinoPolicy>{
   const keys=['casino.min_bet','casino.max_bet','casino.chair_pot_contribution_percent','casino.chair_symbols','casino.slots_wagers','casino.roulette_choices','casino.dice_choices'];const v=await Promise.all(keys.map(k=>this.config.get(guildId,k)));
   if(!Array.isArray(v[3])||!Array.isArray(v[4])||!Array.isArray(v[5])||!Array.isArray(v[6]))throw new DomainError('CASINO_CONFIG','Casino configuration is unavailable.');
@@ -24,22 +28,25 @@ export class DiscordCasinoCoordinator {
   if(['coinflip','roulette','dice'].includes(game)){const choice=new TextInputBuilder().setCustomId('selection').setLabel(game==='coinflip'?'heads or tails':game==='dice'?'Mode: high':'red/black/odd/even/low/high/number:0–36').setStyle(TextInputStyle.Short).setRequired(true).setMaxLength(20);if(game==='dice')choice.setValue('high');modal.addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(choice));}
   return modal;
  }
- async handle(i:Interaction){try{
+ async handle(i:Interaction){let validated=false;try{
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use casino controls in the server.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':'),isLottery=i.isChatInputCommand()?i.commandName==='lottery':(['lottery','tickets'].includes(parts[1]??'')||(parts[1]==='help'&&parts[3]==='lottery'));
+  const opensModal=i.isChatInputCommand()&&i.commandName==='casino'||i.isButton()&&parts[1]==='lottery';
+  if(!opensModal){if(i.isButton()&&parts[1]==='act'||i.isModalSubmit()&&isLottery&&i.isFromMessage())await i.deferUpdate();else await i.deferReply({ephemeral:isLottery||parts[1]==='help'});}
   if(await this.config.get(i.guildId,isLottery?'features.lottery':'features.casino')!==true)throw new DomainError('CASINO_DISABLED',`${isLottery?'Lottery':'Casino'} controls are not enabled yet.`);
   const capability=isLottery?'lottery.use':'casino.use';if(!new PermissionEngine({[capability]:CAPABILITY_MATRIX.capabilities[capability]}).can('member',capability)||!await this.eligible(i.guildId,i.user.id))throw new DomainError('CASINO_RESTRICTED','Wager controls are unavailable while restricted.');
   if(parts.length&&parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own wager controls.');
   const channel=await this.config.get(i.guildId,'channels.bot_channel');if(channel&&channel!==i.channelId)throw new DomainError('CASINO_CHANNEL','Use casino and lottery commands in the configured bot channel.');
-  if(i.isButton()&&parts[1]==='help'){const game=parts[3] as keyof typeof casinoHelp.games;await i.reply({ephemeral:true,embeds:[card(casinoHelp.title,casinoHelp.body+'\n\n'+(casinoHelp.games[game]??''))]});return;}
+  validated=true;
+  if(i.isButton()&&parts[1]==='help'){const game=parts[3] as keyof typeof casinoHelp.games;await i.editReply(await this.presentation({title:'Table Rules',subtitle:'Casino · '+game,amount:'',amountLabel:'',details:[{label:'Before you play',value:casinoHelp.body},{label:'How it works',value:casinoHelp.games[game]??''}]}));return;}
   if(i.isChatInputCommand()&&i.commandName==='casino'){const game=i.options.getSubcommand(),modal=this.modal(i.user.id,game);if(game==='slots'){const sizes=await this.config.get(i.guildId,'casino.slots_wagers');if(Array.isArray(sizes)){const input=(modal.components[0] as ActionRowBuilder<TextInputBuilder>).components[0]!;input.setPlaceholder(sizes.join(', ').slice(0,100));}}await i.showModal(modal);return;}
   if(i.isButton()&&parts[1]==='lottery'){await i.showModal(this.modal(i.user.id,'lottery',true));return;}
-  const update=i.isButton()&&parts[1]==='act';if(update)await i.deferUpdate();else await i.deferReply({ephemeral:isLottery});
+
   const c:CasinoContext={guildId:i.guildId,userId:i.user.id,channelId:i.channelId,requestKey:i.id};
   if(isLottery){
    const price=BigInt(Number(await this.config.get(i.guildId,'lottery.ticket_price')));
    if(i.isModalSubmit()){const raw=i.fields.getTextInputValue('amount');if(!/^\d{1,2}$/.test(raw))throw new DomainError('TICKET_QUANTITY','Enter a whole ticket quantity.');await this.lottery.buy(c,Number(raw),price);}
-   const state=await this.lottery.current(i.guildId,i.user.id);await i.editReply({embeds:[card('Weekly Lottery',`Ticket price: **${price} Ottomans**\nYour tickets: **${state.memberTickets} / 20**\nTicket-funded pot: **${state.round?.pot??0n} Ottomans**\nDraw: <t:${Math.floor(state.drawAt.getTime()/1000)}:F>\nOne winner receives the full pot. No rake or rollover.`)],components:[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('casino:lottery:'+i.user.id).setLabel('Buy Tickets').setStyle(ButtonStyle.Primary).setDisabled(state.memberTickets>=20))]});return;
+   const state=await this.lottery.current(i.guildId,i.user.id);await i.editReply(await this.presentation({title:'Weekly Lottery',subtitle:'Your tickets · private',amount:String(state.round?.pot??0n),amountLabel:'Ticket-funded pot',details:[{label:'Your entry',value:state.memberTickets+' / 20 tickets · '+price+' Ottomans each'},{label:'Draw',value:state.drawAt.toISOString().replace('T',' ').replace('.000Z',' UTC')},{label:'Prize',value:'One winner receives the full pot. No rake or rollover.'}]},[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('casino:lottery:'+i.user.id).setLabel('Buy Tickets').setStyle(ButtonStyle.Primary).setDisabled(state.memberTickets>=20))]));return;
   }
   const policy=await this.policy(i.guildId);let id:string;
   if(i.isModalSubmit()){
@@ -50,20 +57,18 @@ export class DiscordCasinoCoordinator {
    id=(await this.casino.start(c,previous.data.game,BigInt(previous.data.stake),previous.data.selection,policy)).sessionId;
   }else if(i.isButton()&&parts[1]==='act')id=(await this.casino.action(c,parts[3]!,Number(parts[4]),parts[5] as 'hit'|'stand'|'double'|'split',policy)).sessionId;
   else throw new DomainError('CASINO_CONTROL','Open a casino game to continue.');
-  const message=await i.editReply(await this.roundPayload(id,i.client));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
- }catch(error){const content=error instanceof DomainError?error.message:'The wager could not be completed. Your saved round can be checked before retrying.';if(i.deferred){if(i.isButton()&&i.customId.startsWith('casino:act:'))await i.followUp({ephemeral:true,content});else await i.editReply({content});}else await i.reply({ephemeral:true,content});}}
- private async roundPayload(id:string,client?:Client){
-  const round=await this.casino.get(id),policy=await this.policy(round.guildId),ownerId=round.ownerUserId!,d=round.data,closed=round.state==='CLOSED';let text=`Wager: **${d.stake} Ottomans**\n`;
-  if(d.blackjack){text+=`Dealer: ${closed?d.blackjack.dealer.map(cardLabel).join(' '):cardLabel(d.blackjack.dealer[0]!)+' · hidden'}\n`;text+=d.blackjack.hands.map((h,n)=>`${n===d.blackjack!.active&&!closed?'→ ':''}Hand ${n+1}: ${h.cards.map(cardLabel).join(' ')} · ${handValue(h.cards).total} · ${h.stake} Ottomans`).join('\n');if(!closed)text+='\nTimeout automatically stands remaining hands.';}
-  else text+=`Result: ${(d.symbols??[]).map(s=>policy.symbols.find(x=>x.id===s)?.name??s).join(' · ')}\n`;
-  if(closed)text+=`\n**${d.outcome}** · Returned: **${d.payout} Ottomans**`;
+  const message=await i.editReply(await this.roundPayload(id,i.client,i.isButton()?i.message?.attachments?.values():undefined));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
+ }catch(error){const content=error instanceof DomainError?error.message:'The wager could not be completed. Your saved round can be checked before retrying.';if(i.deferred){if(!validated){if(!(i.isButton()&&i.customId.startsWith('casino:act:')||i.isModalSubmit()&&i.isFromMessage()))await i.deleteReply();await i.followUp({ephemeral:true,content});}else if(i.isButton()&&i.customId.startsWith('casino:act:'))await i.followUp({ephemeral:true,content});else await i.editReply(await this.presentation({title:'Wager unavailable',subtitle:'No new result confirmed',amount:'',amountLabel:'',details:[{label:'What happened',value:content}]}));}else await i.reply({ephemeral:true,content});}}
+ private async roundPayload(id:string,client?:Client,existing?:Iterable<{id:string;name:string}>){
+  const round=await this.casino.get(id),policy=await this.policy(round.guildId),ownerId=round.ownerUserId!,d=round.data,closed=round.state==='CLOSED';
   const controls=new ActionRowBuilder<ButtonBuilder>();if(closed)controls.addComponents(new ButtonBuilder().setCustomId(`casino:again:${ownerId}:${id}`).setLabel('Play Again').setStyle(ButtonStyle.Primary));else for(const action of ['hit','stand','double','split'])controls.addComponents(new ButtonBuilder().setCustomId(`casino:act:${ownerId}:${id}:${round.version}:${action}`).setLabel(action[0]!.toUpperCase()+action.slice(1)).setStyle(action==='stand'?ButtonStyle.Secondary:ButtonStyle.Primary));
   controls.addComponents(new ButtonBuilder().setCustomId('casino:help:'+ownerId+':'+d.game).setLabel('Rules').setStyle(ButtonStyle.Secondary));
-  const identity=closed&&client?await memberArt(client,round.guildId,ownerId):undefined;
-  const attachment=closed?new AttachmentBuilder(await rasterizeSvg(renderCasinoResult({memberName:identity?.name??'Member',avatarData:identity?.avatarData??'',title:d.game[0]!.toUpperCase()+d.game.slice(1)+' Result',subtitle:'Settled round · '+(d.outcome??'Complete'),amount:d.payout??'0',amountLabel:'Returned',details:[{label:'Wager',value:d.stake+' Ottomans'},{label:'Result',value:d.blackjack?d.blackjack.hands.map((h,n)=>'Hand '+(n+1)+': '+h.cards.map(cardLabel).join(' ')+' · '+handValue(h.cards).total).join(' / '):(d.symbols??[]).map(s=>policy.symbols.find(x=>x.id===s)?.name??s).join(' · ')}]})),{name:'casino-result.png'}):undefined;
-  const embed=card('Casino · '+d.game,text).setFooter({text:'casino:'+id});if(attachment)embed.setImage('attachment://casino-result.png');
-  return{embeds:[embed],files:attachment?[attachment]:[],attachments:[],components:[controls],allowedMentions:{parse:[] as never[]}};
+  const identity=client?await this.identity(client,round.guildId,ownerId):undefined;
+  const details=[{label:'Wager',value:d.stake+' Ottomans'+(d.selection?' · '+d.selection:'')}];
+  if(d.blackjack){details.push({label:'Dealer',value:closed?d.blackjack.dealer.map(cardLabel).join(' '):cardLabel(d.blackjack.dealer[0]!)+' · hidden'});for(const [n,h] of d.blackjack.hands.entries())details.push({label:'Hand '+(n+1)+(n===d.blackjack.active&&!closed?' · your move':''),value:h.cards.map(cardLabel).join(' ')+' · '+handValue(h.cards).total+' points · '+h.stake+' Ottomans'});if(!closed)details.push({label:'At the table',value:'Hit · Stand · Double · Split. Timeout stands remaining hands.'});}
+  else details.push({label:'Result',value:(d.symbols??[]).map(symbol=>policy.symbols.find(x=>x.id===symbol)?.name??symbol).join(' · ')});
+  return this.presentation({memberName:identity?.name??'Member',avatarData:identity?.avatarData??'',title:d.game[0]!.toUpperCase()+d.game.slice(1)+(closed?' Result':' · Your Turn'),subtitle:closed?'Settled · '+(d.outcome??'Complete'):'Round in progress',amount:closed?d.payout??'0':d.stake,amountLabel:closed?'Returned':'Wager',details},[controls],existing);
  }
- async refresh(client:Client,id:string){const round=await this.casino.get(id);if(!round.messageId)return;const channel=await client.channels.fetch(round.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Casino message channel unavailable.');const message=await channel.messages.fetch(round.messageId);if(message.author.id!==client.user?.id)throw new Error('Casino message owner mismatch.');await message.edit(await this.roundPayload(id,client));}
+ async refresh(client:Client,id:string){const round=await this.casino.get(id);if(!round.messageId)return;const channel=await client.channels.fetch(round.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Casino message channel unavailable.');const message=await channel.messages.fetch(round.messageId);if(message.author.id!==client.user?.id)throw new Error('Casino message owner mismatch.');const payload=await this.roundPayload(id,client,message.attachments.values());if(payload.files.length===0&&JSON.stringify(message.components.map(c=>c.toJSON()))===JSON.stringify(payload.components.map(c=>c.toJSON())))return;await message.edit(payload);}
 
 }

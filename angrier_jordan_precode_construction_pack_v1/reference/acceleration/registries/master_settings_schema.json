@@ -4551,6 +4551,22 @@
       "depends_on": []
     },
     {
+      "key": "haiku.additional_channel_ids",
+      "section": "haiku",
+      "type": "json",
+      "default": [],
+      "editable_by": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restart_required": false,
+      "description": "Additional channels for passive Haiku replies alongside main chat. At most 20 unique channel IDs. Channel cooldowns remain independent.",
+      "risk": "high",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
       "key": "haiku.channel_cooldown_seconds",
       "section": "haiku",
       "type": "integer",
