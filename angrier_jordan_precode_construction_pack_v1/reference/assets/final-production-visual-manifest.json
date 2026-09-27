@@ -6124,8 +6124,8 @@
       "category": "runtime",
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
-      "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
-      "sha256": "ff7078d57cedb4dc16077258e5fdf52e842ea6cd4d855fa0b5878a69e439741b"
+      "usage": "Deterministic structured six-question plum/brass introduction card with member avatar and Space Grotesk/Inter.",
+      "sha256": "10f5c6a4509b3a0a6bb56cfb1de118be321d69a10934c214833c3fdbf0c815e1"
     },
     {
       "id": "social.runtime",

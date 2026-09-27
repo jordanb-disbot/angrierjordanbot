@@ -13,16 +13,16 @@ export class PrismaIntroductionsRepository {
  /** Input must come from the already-published shared ConfigService; this is a materialized runtime form. */
  async configure(guildId:string,channelId:string,settings:PublishedIntroSettings|null){
   if(!/^\d{17,20}$/.test(channelId))throw new DomainError('INTRO_CHANNEL','The introductions channel is not configured.');
-  const fingerprint=requestFingerprint({channelId,settings,questionRevision:2}),previous=await this.db.introductionFormConfig.findUnique({where:{guildId}});if(previous?.sourceFingerprint===fingerprint)return;
+  const fingerprint=requestFingerprint({channelId,settings,questionRevision:3}),previous=await this.db.introductionFormConfig.findUnique({where:{guildId}});if(previous?.sourceFingerprint===fingerprint)return;
   const key='intro:configuration:'+fingerprint+':'+(previous?.version??0);
-  await this.atomic.run(guildId,key,requestFingerprint({channelId,settings,questionRevision:2}),async tx=>{
+  await this.atomic.run(guildId,key,requestFingerprint({channelId,settings,questionRevision:3}),async tx=>{
    const config=await tx.introductionFormConfig.upsert({where:{guildId},update:{},create:{guildId,introductionChannelId:channelId}});
    if(config.sourceFingerprint===fingerprint)return{applied:true};
    let form=await tx.introductionForm.findFirst({where:{guildId,enabled:true},include:{prompts:true},orderBy:[{version:'desc'},{id:'asc'}]});
    if(!form){form=await tx.introductionForm.create({data:{guildId,title:'Your introduction',prompts:{create:INTRO_DEFAULTS.map((p,n)=>({...p,id:guildId+'_'+p.id,sortOrder:n,placeholder:null,minLength:null,showOnCard:true}))}},include:{prompts:true}});}
    // Stable IDs and stored answers survive; retired answers are never reinterpreted.
    const originalPrompts=form.prompts;
-   if(!settings&&originalPrompts.filter(p=>p.enabled&&!p.deletedAt).length===5&&['name','age','from','about','why'].every(id=>originalPrompts.some(p=>p.id===guildId+'_'+id&&p.enabled&&!p.deletedAt))){
+   if(!settings&&[['name','age','from','about','why'],['name','from','doc','discovery','fun_fact','chair']].some(ids=>originalPrompts.filter(p=>p.enabled&&!p.deletedAt).length===ids.length&&ids.every(id=>originalPrompts.some(p=>p.id===guildId+'_'+id&&p.enabled&&!p.deletedAt)))){
     const currentIds=new Set(INTRO_DEFAULTS.map(p=>guildId+'_'+p.id));
     for(const p of form.prompts)if(!currentIds.has(p.id))await tx.introductionPrompt.update({where:{id:p.id},data:{enabled:false,deletedAt:this.clock()}});
     for(const [n,p] of INTRO_DEFAULTS.entries()){const id=guildId+'_'+p.id,fields={...p,id,sortOrder:n,placeholder:null,minLength:null,showOnCard:true,enabled:true,deletedAt:null};await tx.introductionPrompt.upsert({where:{id},create:{...fields,formId:form.id},update:fields});}
@@ -52,7 +52,7 @@ export class PrismaIntroductionsRepository {
  });}
  async view(c:IntroContext,id:string){return this.checked(this.db,c,id);}
  private async checked(tx:Prisma.TransactionClient,c:IntroContext,id:string){const row=await tx.gameSession.findUnique({where:{id}});if(!row||row.type!=='introduction'||row.guildId!==c.guildId||row.ownerUserId!==c.userId||row.channelId!==c.channelId)throw new DomainError('INTRO_OWNER','Open your own introduction in the introductions channel.');if(row.state!=='DRAFT'||!row.expiresAt||row.expiresAt<=this.clock())throw new DomainError('INTRO_EXPIRED','This draft has expired or was submitted. Open /introduce again.');return{...row,data:row.data as unknown as IntroDraft};}
- async save(c:IntroContext,id:string,version:number,page:number,values:Record<string,string>,pageSize:3|5=3){return this.atomic.run(c.guildId,'intro:save:'+c.requestKey,requestFingerprint({c,id,version,page,values,pageSize}),async tx=>{const row=await this.checked(tx,c,id);if(row.version!==version)throw new DomainError('INTRO_STALE','This form changed. Open the current page again.');const data=saveAnswers(row.data,page,values,pageSize);await new SessionEngine(new PrismaTransactionSessions(tx)).transition<IntroDraft>(id,['DRAFT'],'DRAFT',s=>({...s,data}));return{id};});}
+ async save(c:IntroContext,id:string,version:number,page:number,values:Record<string,string>,pageSize:3|5|100=3){return this.atomic.run(c.guildId,'intro:save:'+c.requestKey,requestFingerprint({c,id,version,page,values,pageSize}),async tx=>{const row=await this.checked(tx,c,id);if(row.version!==version)throw new DomainError('INTRO_STALE','This form changed. Open the current page again.');const data=saveAnswers(row.data,page,values,pageSize);await new SessionEngine(new PrismaTransactionSessions(tx)).transition<IntroDraft>(id,['DRAFT'],'DRAFT',s=>({...s,data}));return{id};});}
  async preview(c:IntroContext,id:string){return this.atomic.run(c.guildId,'intro:preview:'+c.requestKey,requestFingerprint({c,id}),async tx=>{const row=await this.checked(tx,c,id);validateAnswers(row.data);await new SessionEngine(new PrismaTransactionSessions(tx)).transition<IntroDraft>(id,['DRAFT'],'DRAFT',s=>({...s,data:{...row.data,previewedVersion:s.version}}));return{id};});}
  async enqueue(c:IntroContext,id:string,version:number){return this.atomic.run(c.guildId,'intro:publish:'+c.requestKey,requestFingerprint({c,id,version}),async tx=>{
   const row=await this.checked(tx,c,id);if(row.version!==version||row.data.previewedVersion!==version)throw new DomainError('INTRO_PREVIEW','Preview your current answers before choosing Publish.');validateAnswers(row.data);
