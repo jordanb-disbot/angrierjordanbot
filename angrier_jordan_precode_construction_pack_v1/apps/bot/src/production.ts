@@ -1,3 +1,4 @@
+import {startupDiagnostics as startup} from './startup-diagnostics.js';
 import {runWithJailSendAcknowledgement} from './discord/jail-interaction-ack.js';
 import {runWithDailyAcknowledgement,replyDailyRestriction} from './discord/daily-interaction-ack.js';
 import {DiscordServerBootstrap} from './discord/server-bootstrap.js';
@@ -77,6 +78,7 @@ const required=(name:string)=>{const value=process.env[name];if(!value)throw new
 const ECONOMY_COMMANDS=new Set(['daily','weekly','work','fish','dig','scavenge','statement','inventory','bank','transfer']);
 
 export async function startProductionBot():Promise<void>{
+  startup.mark('runtime-config-validation');
   const runtime=validateRuntimeEnvironment(process.env,'worker');
   const lifecycle=new RuntimeLifecycle();
   let initialized=false;
@@ -104,16 +106,19 @@ export async function startProductionBot():Promise<void>{
   const enableProfilesSmoke=process.env.ENABLE_PROFILES_SMOKE==='true';
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
   const enableEconomySmoke=process.env.ENABLE_ECONOMY_SMOKE==='true';
+  startup.mark('database-client-construction (connection is lazy)');
   const db=getPrismaClient();
-  const serverBootstrap=new DiscordServerBootstrap(new PrismaServerBootstrapRepository(db));
+  const serverBootstrap=new DiscordServerBootstrap(new PrismaServerBootstrapRepository(db),{onFailure:error=>{if(!initialized)startup.fail(error);}});
   const audit=new AuditService(new PrismaAuditSink(db));
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
   const jobRepo=new PrismaJobRepository(db,{notIn:['music.reconcile']});
+  startup.mark('discord-client-construction');
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration]});
   const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const}),async()=>{try{return{name:'music',status:!music||await config.get(guildId,'music.enabled')!==true||music.ready?'ok' as const:'degraded' as const};}catch{return{name:'music',status:'degraded' as const};}}]);
   const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
     client.on(event,(...args)=>lifecycle.run(()=>runWithDailyAcknowledgement(event,args,enableEconomySmoke,()=>runWithJailSendAcknowledgement(event,args,enableJailSmoke,()=>serverBootstrap.run(event,args,()=>listener(...args)))),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
   };
+  startup.mark('feature-construction');
   const promptRepo=new PrismaWyrPromptRepository(db);
   const sessionRepo=new PrismaWyrSessionRepository(db);
   const wyrService=new WyrService(promptRepo,sessionRepo,new SystemClock(),new CuidLikeIds());
@@ -267,6 +272,7 @@ export async function startProductionBot():Promise<void>{
     'security.state_expire':async job=>{await security.handleExpiryJob(job.payload);},
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
   });
+  startup.mark('scheduled-job-construction');
   const worker=new SchedulerWorker(scheduler,5_000);
   const musicWorker=new SchedulerWorker(new IdempotentScheduler(new PrismaJobRepository(db,{in:['music.reconcile']}),{'music.reconcile':async job=>{if(!music)throw new Error('Music runtime disabled.');await music.reconcile(job);}}),5_000);
   let introSweep:ReturnType<typeof setInterval>|undefined;
@@ -283,28 +289,32 @@ export async function startProductionBot():Promise<void>{
 
   on(Events.GuildCreate,async()=>{}); // The shared event boundary commits the observed server first.
   client.once(Events.ClientReady,ready=>lifecycle.run(async()=>{
+    try{
+    startup.mark('discord-ready-guild-fetch');
     const configuredServer=ready.guilds.cache.get(guildId)??await ready.guilds.fetch({guild:guildId,force:true});
-    await serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]);
+    await startup.run('database-connection-schema-bootstrap (migrations external)',()=>serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]));
     if(lifecycle.isStopping)return;
     if(music&&await config.get(guildId,'music.enabled')===true){try{await music.start();}catch{console.error('Music node unavailable; durable recovery remains pending.');}}
-    if(enablePartySmoke||enableWyrSmoke)await seedPartyContent(db);
-    if(enableSocialSmoke)await seedSocialContent(db);
-    if(enableIntroductionsSmoke)await introductions.sweep(ready);
+    if(enablePartySmoke||enableWyrSmoke)await startup.run('party-content-bootstrap',()=>seedPartyContent(db));
+    if(enableSocialSmoke)await startup.run('social-content-bootstrap',()=>seedSocialContent(db));
+    if(enableIntroductionsSmoke)await startup.run('introductions-bootstrap',()=>introductions.sweep(ready));
+    startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
     const enabled=registration.filter((c:{name?:string;type?:number})=>(enableChairismsSmoke&&((c.type===3&&c.name==="Create Chairism")||(c.type===1&&(c.name==="quote"||c.name==="chairisms"))))||c.type===1&&(c.name==='status'||(enableMusicSmoke&&Boolean(c.name&&MUSIC_COMMANDS.has(c.name)))||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&COMMUNITY_COMMANDS.has(c.name)))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&c.name==='fight')||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
-    await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});
+    await startup.run('command-registration',()=>new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled}));
+    startup.mark('family-bootstrap');
     if(await familyEnabled()){
       try{await ensureFamilyMembership();}
       catch{console.error('Family membership census is unavailable; Family actions remain paused for recovery.');}
     }
     if(enableFamilySmoke&&!lifecycle.isStopping)familySweep=setInterval(()=>lifecycle.run(async()=>{if(await familyEnabled()&&!familyMembership.ready)await ensureFamilyMembership();},()=>console.error('Family membership recovery remains pending.')),30_000);
-    if(enableProfilesSmoke){await profileRepo.resetVoiceAfterRestart(guildId);await profiles.reconcile(guildId);await profiles.sampleVoice(ready,guildId);if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>profiles.sampleVoice(ready,guildId),()=>console.error('Activity voice sampling failed.')),30_000);}
-    if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await lotteryRepo.schedule(guildId);
-    const recovered=await wyr.recover(ready);if(enableJailSmoke){await jail.reconcileSchedules(guildId);const guild=ready.guilds.cache.get(guildId);if(guild)await jail.reconcileGuild(guild);}if(enableEconomySmoke)await economy.reconcileInterestSchedule(guildId);if(lifecycle.isStopping)return;await Promise.all([worker.runOnce(),musicWorker.runOnce()]);if(lifecycle.isStopping)return;worker.start();musicWorker.start();
-    await events.sweep(ready);if(lifecycle.isStopping)return;
+    if(enableProfilesSmoke){await startup.run('profile-voice-reset',()=>profileRepo.resetVoiceAfterRestart(guildId));await startup.run('profiles-bootstrap',()=>profiles.reconcile(guildId));await startup.run('profile-voice-sample',()=>profiles.sampleVoice(ready,guildId));if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>profiles.sampleVoice(ready,guildId),()=>console.error('Activity voice sampling failed.')),30_000);}
+    if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await startup.run('lottery-schedule',()=>lotteryRepo.schedule(guildId));
+    const recovered=await startup.run('wyr-recovery',()=>wyr.recover(ready));if(enableJailSmoke){await startup.run('jail-schedules',()=>jail.reconcileSchedules(guildId));const guild=ready.guilds.cache.get(guildId);if(guild)await startup.run('jail-permissions',()=>jail.reconcileGuild(guild));}if(enableEconomySmoke)await startup.run('economy-schedule',()=>economy.reconcileInterestSchedule(guildId));if(lifecycle.isStopping)return;await startup.run('scheduled-job-initialization',()=>Promise.all([worker.runOnce(),musicWorker.runOnce()]));if(lifecycle.isStopping)return;worker.start();musicWorker.start();
+    await startup.run('events-bootstrap',()=>events.sweep(ready));if(lifecycle.isStopping)return;
     eventSweep=setInterval(()=>lifecycle.run(()=>events.sweep(ready),()=>console.error('Event recovery or rendering failed; durable jobs retained.')),1500);
     wyrSweep=setInterval(()=>lifecycle.run(()=>wyr.closeDue(ready),()=>console.error('WYR close failed; persisted recovery retained.')),5_000);
-    await special.sweep(ready);await solo.recover(ready);await pvp.sweep(ready);await party.sweep(ready);await crime.sweep(ready);if(enableCommunitySmoke)await community.sweep(ready);if(lifecycle.isStopping)return;
+    await startup.run('special-bootstrap',()=>special.sweep(ready));await startup.run('solo-bootstrap',()=>solo.recover(ready));await startup.run('pvp-bootstrap',()=>pvp.sweep(ready));await startup.run('party-bootstrap',()=>party.sweep(ready));await startup.run('crime-bootstrap',()=>crime.sweep(ready));if(enableCommunitySmoke)await startup.run('community-bootstrap',()=>community.sweep(ready));if(lifecycle.isStopping)return;
     specialSweep=setInterval(()=>lifecycle.run(()=>special.sweep(ready),()=>console.error('Line recovery pending.')),1000);
     soloSweep=setInterval(()=>lifecycle.run(()=>solo.recover(ready),()=>console.error('Solo recovery pending.')),10_000);
     pvpSweep=setInterval(()=>lifecycle.run(()=>pvp.sweep(ready),()=>console.error('Skill-game recovery pending.')),10_000);
@@ -312,9 +322,10 @@ export async function startProductionBot():Promise<void>{
     crimeSweep=setInterval(()=>lifecycle.run(()=>crime.sweep(ready),()=>console.error('Crime recovery pending.')),5000);
     if(enableIntroductionsSmoke)introSweep=setInterval(()=>lifecycle.run(()=>introductions.sweep(ready),()=>console.error('Introduction recovery pending.')),10000);
     if(enableCommunitySmoke)communitySweep=setInterval(()=>lifecycle.run(()=>community.sweep(ready),()=>console.error('Community recovery pending.')),5000);
-    const snapshot=await health.check();
+    const snapshot=await startup.run('readiness-health-check',()=>health.check());
     console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
     initialized=true;
+    }catch(error){startup.fail(error);throw error;}
   },()=>{console.error('Bot initialization failed; readiness remains unavailable.');process.exitCode=1;void shutdown();}));
 
   const settleHandlers=async(tasks:Promise<unknown>[])=>{const results=await Promise.allSettled(tasks);if(results.some(result=>result.status==='rejected'))console.error('A Discord feature handler failed; durable recovery remains available.');};
@@ -464,7 +475,7 @@ export async function startProductionBot():Promise<void>{
     }
   });
 
-  const server=await startRuntimeHealth(runtime.port,()=>initialized&&client.isReady()&&!lifecycle.isStopping,()=>db.$queryRaw`SELECT 1`);
+  const server=await startup.run('http-readiness-server-startup',()=>startRuntimeHealth(runtime.port,()=>initialized&&client.isReady()&&!lifecycle.isStopping,()=>db.$queryRaw`SELECT 1`));
   let shutdownPromise:Promise<void>|undefined;
   const shutdown=()=>shutdownPromise??(shutdownPromise=(async()=>{
     lifecycle.stopAdmission();initialized=false;worker.stop();musicWorker.stop();music?.close();
@@ -477,5 +488,5 @@ export async function startProductionBot():Promise<void>{
     }finally{clearTimeout(deadline);}
   })());
   process.once('SIGINT',()=>{void shutdown();});process.once('SIGTERM',()=>{void shutdown();});
-  try{await client.login(token);}catch{await shutdown();throw new Error('Discord login failed.');}
+  try{await startup.run('discord-login',()=>client.login(token));}catch{await shutdown();throw new Error('Discord login failed.');}
 }

@@ -2,13 +2,13 @@ import {Events} from 'discord.js';
 import {normalizeServerBootstrapInput,type ServerBootstrapRepository,type ServerBootstrapSource} from '../../../../packages/core/src/server-bootstrap.js';
 
 export interface ObservedDiscordServer {id:string;name?:string|null;}
-export interface DiscordServerBootstrapOptions {maxCachedServers?:number;cacheTtlMs?:number;now?:()=>number;}
+export interface DiscordServerBootstrapOptions {maxCachedServers?:number;cacheTtlMs?:number;now?:()=>number;onFailure?:(error:unknown)=>void;}
 const record=(value:unknown):Record<string,unknown>|null=>typeof value==='object'&&value!==null?value as Record<string,unknown>:null;
 const unavailable=()=>new Error('Server initialization is unavailable; retry the event after recovery.');
 /** Bot observations only. Jobs/member input must never invent server records here. */
 export class DiscordServerBootstrap {
  #pending=new Map<string,Promise<void>>();#successful=new Map<string,number>();#max:number;#ttl:number;#now:()=>number;
- constructor(private repository:ServerBootstrapRepository,options:DiscordServerBootstrapOptions={}){
+ constructor(private repository:ServerBootstrapRepository,private options:DiscordServerBootstrapOptions={}){
   this.#max=options.maxCachedServers??1000;this.#ttl=options.cacheTtlMs??300000;this.#now=options.now??Date.now;
   if(!Number.isSafeInteger(this.#max)||this.#max<1||this.#max>10000||!Number.isSafeInteger(this.#ttl)||this.#ttl<1||this.#ttl>3600000)throw unavailable();
  }
@@ -22,7 +22,7 @@ export class DiscordServerBootstrap {
   const operation=Promise.resolve().then(()=>this.repository.ensure(input)).then(()=>{
    this.#successful.delete(input.guildId);this.#successful.set(input.guildId,this.#now()+this.#ttl);
    while(this.#successful.size>this.#max)this.#successful.delete(this.#successful.keys().next().value!);
-  }).catch(()=>{throw unavailable();}).finally(()=>{if(this.#pending.get(input.guildId)===operation)this.#pending.delete(input.guildId);});
+  }).catch(error=>{try{this.options.onFailure?.(error);}catch{}throw unavailable();}).finally(()=>{if(this.#pending.get(input.guildId)===operation)this.#pending.delete(input.guildId);});
   this.#pending.set(input.guildId,operation);return operation;
  }
  /** Full barrier: finish every observed server prerequisite before startup work. */
