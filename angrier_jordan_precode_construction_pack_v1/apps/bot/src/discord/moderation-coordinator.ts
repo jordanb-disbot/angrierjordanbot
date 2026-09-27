@@ -1,3 +1,4 @@
+import {beginTimeoutDiagnostic} from './mod-timeout-diagnostics.js';
 import {createCipheriv,createHash,randomBytes} from 'node:crypto';
 import {
   ActionRowBuilder,
@@ -93,11 +94,26 @@ export class DiscordModerationCoordinator {
   }
 
   private async timeout(i:ChatInputCommandInteraction){
-    const actor=await this.actor(i,'recliner');const target=await this.target(i);await this.validateTarget(actor,target,true);
-    const reason=i.options.getString('reason',true);const parsed=parseTimeoutDuration(i.options.getString('duration',true));const seconds=parsed.seconds!;
-    const c=await this.service.prepare({guildId:i.guildId!,subjectUserId:target.id,actorUserId:actor.id,actionType:'TIMEOUT',reason,sourceChannelId:i.channelId,durationSeconds:seconds});
-    try{await target.timeout(seconds*1000,`${reason} — case #${c.id}`);await this.service.finalize(c.id,'ACTIVE',{actorUserId:actor.id,eventKind:'TIMEOUT_APPLIED',metadata:{endsAt:new Date(Date.now()+seconds*1000).toISOString()}});const due=await this.service.scheduleTemporaryCase(c,target.id,seconds,'moderation.timeout_expire');await this.notifyMember(target,c,'Timeout',`${reason}\nDuration: ${parsed.label}\nEnds: ${discordTime(due)}`).catch(()=>undefined);await i.reply({ephemeral:true,content:`${target} was timed out for ${parsed.label}. Case #${c.id}.`});}
-    catch(error){await target.timeout(null,'Rolling back failed timeout case persistence.').catch(()=>undefined);await this.service.enforcementFailed(c.id,actor.id,reason,error);throw error;}
+    const diagnostic=beginTimeoutDiagnostic(i.id);
+    const step=async<T>(stage:string,work:()=>Promise<T>):Promise<T>=>{diagnostic?.(stage,'start');try{const result=await work();diagnostic?.(stage,'completed');return result;}catch(error){diagnostic?.(stage,'failed',error);throw error;}};
+    const actor=await step('authority-check',()=>this.actor(i,'recliner'));
+    const target=await step('target-fetch',()=>this.target(i));
+    await step('target-validation',()=>this.validateTarget(actor,target,true));
+    let reason:string,parsed:ReturnType<typeof parseTimeoutDuration>;
+    try{reason=i.options.getString('reason',true);parsed=parseTimeoutDuration(i.options.getString('duration',true));diagnostic?.('parsed-duration','completed',undefined,parsed.seconds);}catch(error){diagnostic?.('parsed-duration','failed',error);throw error;}
+    const seconds=parsed.seconds!;
+    const c=await step('case-creation',()=>this.service.prepare({guildId:i.guildId!,subjectUserId:target.id,actorUserId:actor.id,actionType:'TIMEOUT',reason,sourceChannelId:i.channelId,durationSeconds:seconds}));
+    try{
+      await step('discord-timeout-mutation',()=>target.timeout(seconds*1000,`${reason} — case #${c.id}`));
+      await step('case-finalize',()=>this.service.finalize(c.id,'ACTIVE',{actorUserId:actor.id,eventKind:'TIMEOUT_APPLIED',metadata:{endsAt:new Date(Date.now()+seconds*1000).toISOString()}}));
+      const due=await step('expiry-schedule',()=>this.service.scheduleTemporaryCase(c,target.id,seconds,'moderation.timeout_expire'));
+      await step('member-notice',()=>this.notifyMember(target,c,'Timeout',`${reason}\nDuration: ${parsed.label}\nEnds: ${discordTime(due)}`)).catch(()=>undefined);
+      diagnostic?.('staff-log-write','not-in-existing-timeout-path');
+      await step('interaction-reply',()=>i.reply({ephemeral:true,content:`${target} was timed out for ${parsed.label}. Case #${c.id}.`}));
+    }catch(error){
+      await step('rollback-timeout',()=>target.timeout(null,'Rolling back failed timeout case persistence.')).catch(()=>undefined);
+      await step('cleanup-case',()=>this.service.enforcementFailed(c.id,actor.id,reason,error));throw error;
+    }
   }
 
   private async untimeout(i:ChatInputCommandInteraction){
