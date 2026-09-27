@@ -77,8 +77,9 @@ export function verifyFoldingGate({roles,channels,mappings}){
  return ids;
 }
 
-export async function enableProductionOnboarding({db,config,get,write=console.log}){
+export async function enableProductionOnboarding({db,config,get,write=console.log,diagnostic=()=>{}}){
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
+ diagnostic('STAGE: discord_inventory');
  const [roles,channels,me,configRows,panels]=await Promise.all([
   get(`/guilds/${GUILD}/roles`),get(`/guilds/${GUILD}/channels`),get('/users/@me'),
   db.configValue.findMany({where:{guildId:GUILD},select:{key:true,value:true}}),db.selfRolePanel.findMany({where:{guildId:GUILD}}),
@@ -90,13 +91,17 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
  check(!panels.some(row=>row.enabled&&row.name!=='Default Roles'),'OTHER_ENABLED_PANEL_REVIEW_REQUIRED');
  const rows=[...configRows];
  for(const key of protectedKeys)if(!rows.some(row=>row.key===key))rows.push({key,value:(await config.getWithMetadata(GUILD,key)).value});
+ diagnostic('STAGE: role_resolution');
  const planned=planProductionSelfRoles({roles,botMember,configRows:rows,guildId:GUILD,existingPanel:existing});
  const mappings=Object.fromEntries(await Promise.all(gateKeys.map(async key=>[key,(await config.getWithMetadata(GUILD,key)).value])));
+ diagnostic('STAGE: channel_permissions');
  const gated=verifyFoldingGate({roles,channels,mappings});
+ diagnostic('STAGE: restoration_policy');
  for(const [key,expected] of Object.entries(restoreExpected))check((await config.getWithMetadata(GUILD,key)).value===expected,'RESTORATION_POLICY_INVALID');
  const top=Math.max(0,...roles.filter(role=>botMember.roles.includes(role.id)).map(role=>role.position));
  check(folding.position<top,'AJ_BELOW_FOLDING');
  const desired={categories:planned.categories};
+ diagnostic('STAGE: audited_writes');
  if(!existing?.enabled||!isDeepStrictEqual(existing.config,desired)){
   // The panel and its audit event commit together. Member roles and selections are never mutated.
   await db.$transaction(async tx=>{
@@ -108,6 +113,7 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
   const current=await config.getWithMetadata(GUILD,key);
   if(current.version===0||!isDeepStrictEqual(current.value,value))await config.set({guildId:GUILD,key,value,expectedVersion:current.version,source:'operator.production-onboarding-enablement',requestId:randomUUID()});
  }
+ diagnostic('STAGE: persisted_verification');
  const saved=await db.selfRolePanel.findUnique({where:{guildId_name:{guildId:GUILD,name:'Default Roles'}}});
  check(saved?.enabled&&isDeepStrictEqual(saved.config,desired),'PANEL_VERIFY_FAILED');
  for(const [key,value] of [['roles.member_access',FOLDING_CHAIR],['roles_panel.enabled',true]]){
@@ -121,13 +127,16 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
  write(`PASS: roles.member_access=${FOLDING_CHAIR}; roles_panel.enabled=true.`);
 }
 
-export async function main(env=process.env,{connect,fetcher=fetch,write=console.log,error=console.error}={}){
+export async function main(env=process.env,{connect,fetcher=fetch,write=console.log,error=console.error,diagnostic=error}={}){
  let db;
  try{
+  diagnostic('STAGE: target_validation');
   const target=productionOnboardingTarget(env);
+  diagnostic('STAGE: dependency_initialization');
   const connection=connect?await connect(target):await connectProduction(target);db=connection.db;
   const get=async path=>{check(env.DISCORD_TOKEN,'DISCORD_TOKEN_MISSING');const response=await fetcher('https://discord.com/api/v10'+path,{headers:{Authorization:'Bot '+env.DISCORD_TOKEN},signal:AbortSignal.timeout(15000)});check(response.ok,'DISCORD_READ_FAILED');return response.json();};
-  await enableProductionOnboarding({...connection,get,write});
+  diagnostic('STAGE: prerequisites');
+  await enableProductionOnboarding({...connection,get,write,diagnostic});
  }catch(cause){
   const safe=/^[A-Z][A-Z0-9_]+$/.test(cause?.message??'')?cause.message:'PRODUCTION_ONBOARDING_FAILED';
   error('FAIL: '+safe+'. No exception details displayed.');return 1;

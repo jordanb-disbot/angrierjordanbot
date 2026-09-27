@@ -43,6 +43,7 @@ test('production target requires the named guild and private production PostgreS
  for(const patch of [{NODE_ENV:'test'},{AJ_DATABASE_PURPOSE:'test'},{DISCORD_GUILD_ID:'1524964384642957435'},{DATABASE_URL:'postgresql://test:test@public.example/railway'}])assert.throws(()=>productionOnboardingTarget({...valid,...patch}));
  const errors=[];
  assert.equal(await main({...valid,NODE_ENV:'test',DISCORD_TOKEN:'never-print-token'},{connect:()=>assert.fail('must reject before connecting'),error:s=>errors.push(s)}),1);
+ assert.deepEqual(errors.map(line=>line.split(':')[0]),['STAGE','FAIL']);
  assert.doesNotMatch(errors.join(''),/never-print-token|test:test|postgresql:/);
 });
 
@@ -100,6 +101,16 @@ test('Folding Chair gate catches an everyone View Channel bypass',()=>{
  assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[mainChatId]);
  const everyone=f.channels[0].permission_overwrites.find(o=>o.id===guildId);everyone.deny='0';everyone.allow=String(1n<<10n);
  assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/EVERYONE_VIEW_BYPASS/);
+});
+
+test('sanitized stage markers locate a channel-gate failure before any write',async()=>{
+ const f=enableFixture(),stages=[];
+ const everyone=f.channels[0].permission_overwrites.find(row=>row.id===guildId);
+ everyone.allow=String(1n<<10n);everyone.deny='0';
+ await assert.rejects(()=>enableProductionOnboarding({db:f.db,config:f.config,get:f.get,diagnostic:line=>stages.push(line)}),/EVERYONE_VIEW_BYPASS/);
+ assert.deepEqual(stages,['STAGE: discord_inventory','STAGE: role_resolution','STAGE: channel_permissions']);
+ assert.equal(f.writes.length,0);assert.equal(f.panelWrites.length,0);assert.equal(f.audits.length,0);
+ assert.doesNotMatch(stages.join(''),/postgresql:|Bot |DISCORD_TOKEN/);
 });
 
 test('a failed setting write prints no PASS and retries without changing member roles',async()=>{
