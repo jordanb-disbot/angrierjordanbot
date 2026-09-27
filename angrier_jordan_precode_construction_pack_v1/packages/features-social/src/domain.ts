@@ -34,4 +34,4 @@ export function detectHaiku(text:string):readonly string[]|null{
  return part===3&&count===0?groups.map(g=>g.join(' ')):null;
 }
 /** Stable sampling prevents gateway replay from turning a skipped detection into a response. */
-export function sampleHaiku(messageId:string,probability:number){if(!Number.isFinite(probability)||probability<0||probability>0.5)throw new DomainError('HAIKU_CONFIG','Haiku response frequency is unavailable.');let h=2166136261;for(const char of messageId)h=Math.imul(h^char.charCodeAt(0),16777619);return(h>>>0)/4294967296<probability;}
+export function sampleHaiku(messageId:string,probability:number){if(!Number.isFinite(probability)||probability<0||probability>0.8)throw new DomainError('HAIKU_CONFIG','Haiku response frequency is unavailable.');let h=2166136261;for(const char of messageId)h=Math.imul(h^char.charCodeAt(0),16777619);return(h>>>0)/4294967296<probability;}
