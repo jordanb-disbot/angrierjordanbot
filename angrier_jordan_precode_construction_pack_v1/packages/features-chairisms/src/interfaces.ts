@@ -3,7 +3,7 @@ export interface ChairismContext {guildId:string;channelId:string;userId:string;
 export interface ChairismReference {channelId:string;messageId:string;}
 export interface ChairismOptions {includeReply:boolean;includeImage:boolean;}
 export interface ChairismQuote {userId:string;displayName:string;text:string;timestamp:string;avatarDataUri?:string;}
-export interface ChairismSnapshot {quote:ChairismQuote;source?:ChairismReference;sourceChannelLabel?:string;reply?:ChairismQuote;replySource?:ChairismReference;imageDataUri?:string;imageAttachmentId?:string;}
+export interface ChairismSnapshot {layout?:'short'|'long';quote:ChairismQuote;source?:ChairismReference;sourceChannelLabel?:string;reply?:ChairismQuote;replySource?:ChairismReference;imageDataUri?:string;imageAttachmentId?:string;}
 export interface ChairismInspection {reference:ChairismReference;hasReply:boolean;hasImage:boolean;}
 export interface ChairismSecurity {
  /** Reject inaccessible/private/staff/evidence/DM/deleted/disallowed-bot sources before returning metadata. */
