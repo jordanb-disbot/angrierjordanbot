@@ -8,8 +8,9 @@ function interaction(customId){
  return {customId,guildId:'server',guild:{},channelId:'main',user:{id:'member'},message:{id:'message'},calls:[],deferred:false,
   isButton:()=>true,isModalSubmit:()=>false,
   deferUpdate:async function(){this.calls.push('ack');this.deferred=true;},
-  deferReply:async function(){this.calls.push('ack');this.deferred=true;},
+  deferReply:async function(payload){this.calls.push('ack');this.deferred=true;this.private=payload?.ephemeral;},
   deleteReply:async function(){this.calls.push('delete');},
+  editReply:async function(payload){this.calls.push(['edit',payload]);},
   reply:async function(payload){this.calls.push(['reply',payload]);},
   followUp:async function(payload){this.calls.push(['private',payload]);}
  };
@@ -42,5 +43,5 @@ test('wager buttons retain modal acknowledgement and private roster keeps reply 
  }
  const i=interaction('line:roster:round:0');
  await new DiscordSpecialCoordinator({publicView:async()=>({guildId:'server',channelId:'main',ownerId:'member',members:[{userId:'member',status:'ready'}]})},settings,async()=>true).handle(i);
- assert.equal(i.calls.length,1);assert.equal(i.calls[0][0],'reply');assert.equal(i.calls[0][1].ephemeral,true);assert.equal(i.deferred,false);
+ assert.equal(i.calls.length,2);assert.equal(i.calls[0],'ack');assert.equal(i.calls[1][0],'edit');assert.equal(i.private,true);assert.equal(i.deferred,true);
 });

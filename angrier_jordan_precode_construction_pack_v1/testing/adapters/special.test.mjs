@@ -20,7 +20,7 @@ test('restart refresh never publishes outdated countdown after rasterization cro
 
 
 test('wide Line frame is deterministic and unchanged readiness time does not reupload',async()=>{
- const svg=renderLine(view,0,'wide');assert.match(svg,/width="1200" height="640"/);assert.notEqual(svg,renderLine({...view,remainingMs:40000},0,'wide'));assert.match(svg,/STARTS IN 01:00/);assert.match(renderLine({...view,remainingMs:40000},0,'wide'),/STARTS IN 00:40/);assert.match(svg,/Host &lt;&amp;&gt;/);
+ const svg=renderLine(view,0,'wide');assert.match(svg,/width="1200" height="640"/);assert.equal(svg,renderLine({...view,remainingMs:40000},0,'wide'));assert.doesNotMatch(svg,/STARTS IN/);assert.match(svg,/READINESS OPEN/);assert.match(svg,/Host &lt;&amp;&gt;/);
  let current=view,edits=0;const c=new DiscordSpecialCoordinator({publicView:async()=>current},config(),async()=>true);c.payload=async()=>({embeds:[]});
  const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},embeds:[{footer:{text:'special:legacy'}}],edit:async p=>{assert.deepEqual(p.embeds,[]);edits++;}})}})}};
  await c.refresh(client,'id');current={...view,remainingMs:40000};await c.refresh(client,'id');assert.equal(edits,1);current={...current,extensionUsed:true};await c.refresh(client,'id');assert.equal(edits,2);

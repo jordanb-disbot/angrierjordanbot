@@ -503,14 +503,14 @@
       "completion": "You understand the battleship board, consent and wager settlement. Next: challenge another member only when both can take timely turns."
     },
     "race": {
-      "purpose": "Use !race. Starter is Racer 1; 2–6 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15–20 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
-      "controls": "Type !race in main chat. Join the race while entrant slots remain, or select a racer for a private wager. Only the host can use the one +30 Seconds extension; filled racer slots do not close betting.",
+      "purpose": "Use !race or /race. Starter is Racer 1; 2–6 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15–20 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
+      "controls": "Type !race or /race in main chat. Join the race while entrant slots remain, or select a racer for a private wager. Only the host can use the one +30 Seconds extension; filled racer slots do not close betting.",
       "steps": [
-        "Use the prefix !race, then wait for at least two racers within the entry window.",
+        "Use !race or /race, then wait for at least two racers within the entry window.",
         "Select one contestant and confirm a wager only if intended. Later additions stay on that contestant and within the total wager limit.",
         "Watch the final race result and actual payout or refund. An unbacked winner refunds all wagers without erasing the race outcome."
       ],
-      "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race only in main chat when you want to start a real event."
+      "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race or /race only in main chat when you want to start a real event."
     },
     "fight": {
       "purpose": "Use /fight @member. Two eligible fighters start immediately without acceptance. Betting lasts 30 seconds with one host +30 extension. Fair 50/50 outcome; 100 HP and synchronized approved combat actions. Fighter departure before settlement cancels with refunds. No join or rematch control. Both fighters begin at 100 HP. Combat targets 22–28 seconds, never beyond 30 seconds. The latest three exchanges, numeric HP and bars show the same saved combat state. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
@@ -1001,6 +1001,16 @@
         "Wait if throttled; tutorial Practice does not create a post or trigger passive recognition."
       ],
       "completion": "You can distinguish the fixed Haiku command from passive recognition. Next: return to Social reactions for searchable member actions."
+    },
+    "race_slash": {
+      "purpose": "Use !race or /race. Starter is Racer 1; 2–6 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15–20 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
+      "controls": "Type !race or /race in main chat. Join the race while entrant slots remain, or select a racer for a private wager. Only the host can use the one +30 Seconds extension; filled racer slots do not close betting.",
+      "steps": [
+        "Use !race or /race, then wait for at least two racers within the entry window.",
+        "Select one contestant and confirm a wager only if intended. Later additions stay on that contestant and within the total wager limit.",
+        "Watch the final race result and actual payout or refund. An unbacked winner refunds all wagers without erasing the race outcome."
+      ],
+      "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race or /race only in main chat when you want to start a real event."
     }
   }
 }

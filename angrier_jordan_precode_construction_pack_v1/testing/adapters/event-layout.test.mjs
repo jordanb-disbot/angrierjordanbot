@@ -17,7 +17,7 @@ test('cinematic frames contain branded waiting clocks and no redundant odds labe
   for(const remaining of [60000,30000,1000,0]){
    const svg=type==='race'?render(view,'wide',{waitingMs:remaining}):render(view,{waitingMs:remaining},'wide');
    assert.ok(svg.includes('width="1200" height="640"'));
-   assert.ok(svg.includes('data-waiting-seconds="'+remaining/1000+'"'));
+   if(type==='fight')assert.ok(svg.includes('data-waiting-seconds="'+remaining/1000+'"'));else assert.match(svg,/UTC/);
    assert.ok(!svg.includes('EQUAL ODDS'));
   }
  }
@@ -34,12 +34,12 @@ test('saved race motion never resets and the winner reaches the marked finish',(
   }
  }
 });
-test('waiting galleries count down once to zero with no looping metadata',async()=>{
+test('Fight waiting gallery counts down once while Race entry is a single static frame',async()=>{
  const c=new DiscordEventsCoordinator({}, {},async()=>true);
  for(const type of ['race','fight']){
   const p=await c.payload({...base,type,expiresAt:new Date(now+3000),racers:reviewMembers.slice(0,2)},{nowMs:now});
   const buffer=p.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
-  assert.equal(meta.width,1200);assert.equal(meta.loop,1);assert.equal(meta.delay.reduce((a,b)=>a+b,0),4000);
+  assert.equal(meta.width,1200);if(type==='race'){assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);continue;}assert.equal(meta.loop,1);assert.equal(meta.delay.reduce((a,b)=>a+b,0),4000);
   assert.equal(buffer.indexOf('NETSCAPE'),-1);assert.equal(buffer.indexOf('ANIMEXTS'),-1);
   const first=await sharp(buffer,{page:0}).raw().toBuffer(),last=await sharp(buffer,{page:meta.pages-1}).raw().toBuffer();assert.notDeepEqual(first,last);
  }

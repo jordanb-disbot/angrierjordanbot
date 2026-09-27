@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "2b1400508ce9e5848205493c41f134c34c618460ed7f3dda3b5b73d493d7263f"
+      "sha256": "5caabba22628a53251504fb450853d44178bc4ce49ccc59dfdf27f7eda7fd0a7"
     },
     {
       "id": "line.approved.lounge",
@@ -6690,7 +6690,7 @@
       "category": "runtime.renderer",
       "canonical": true,
       "usage": "Shared deterministic event presentation with wheelchair race skins",
-      "sha256": "e0918d6cf59ecc0728fb624b23631240dbc08611f4d9472a9a8d25c562179fa3",
+      "sha256": "3088c4912d40e9b99aad07c7571997b1ec681785ab17a671441ebd66a97b3fc1",
       "status": "OWNER_REVIEW_PENDING"
     },
     {

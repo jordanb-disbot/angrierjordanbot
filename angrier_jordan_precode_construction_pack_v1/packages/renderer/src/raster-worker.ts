@@ -56,7 +56,8 @@ async function handle(message:RenderMessage){
   process.send?.({id:message.id,png:output.toString('base64')});
  }catch{process.send?.({id:message.id,error:'SVG rasterization failed.'});}
 }
-// Keep concurrent event requests within one raw-pixel budget.
+// Each parent lane owns one serial worker; animation requests stay within one
+// raw-pixel budget while static cards use their independent worker.
 let queue=Promise.resolve();
 process.on('message',(message:RenderMessage)=>{queue=queue.then(()=>handle(message));});
 process.on('disconnect',()=>process.exit(0));

@@ -10,7 +10,7 @@ const controlsOf=payload=>nested(payload).filter(c=>c.type===1).flatMap(c=>c.com
 const nativeText=payload=>nested(payload).filter(c=>c.type===10).map(c=>c.content).join('\n');
 const forbidden=new Proxy({},{get:()=>()=>{throw new Error('Repository must not be reached');}});
 const config=enabled=>({get:async(_g,k)=>k==='features.race'?enabled:k==='channels.main_chat'?'main':null});
-const interaction=()=>({guildId:'g',guild:{},channelId:'main',user:{id:'member'},customId:'event:join:round',calls:[],deferred:false,isButton:()=>true,isModalSubmit:()=>false,reply:async function(p){this.calls.push(p)},editReply:async function(p){this.calls.push(p)},deferReply:async function(){this.deferred=true},deferUpdate:async function(){this.deferred=true},followUp:async function(p){this.calls.push(p)}});
+const interaction=()=>({guildId:'g',guild:{},channelId:'main',user:{id:'member'},customId:'event:join:round',calls:[],deferred:false,isButton:()=>true,isModalSubmit:()=>false,reply:async function(p){this.calls.push(p)},editReply:async function(p){this.calls.push(p)},deferReply:async function(p){this.deferred=true;this.private=p?.ephemeral},deferUpdate:async function(){this.deferred=true},followUp:async function(p){this.calls.push(p)}});
 test('event flag and containment block stale controls before repository access',async()=>{for(const enabled of [false,true]){const i=interaction();await new DiscordEventsCoordinator(forbidden,config(enabled),async()=>false).handle(i);assert.match(i.calls[0].content,enabled?/restricted/:/not enabled/);}});
 test('event controls are limited to configured main chat',async()=>{const i=interaction();i.channelId='bot';await new DiscordEventsCoordinator(forbidden,config(true),async()=>true).handle(i);assert.match(i.calls[0].content,/main chat/);});
 test('unauthorized special trigger is deleted silently before any session starts',async()=>{
@@ -46,7 +46,7 @@ test('Race/Fight successful controls are silent; errors after acknowledgement st
 });
 test('wager submit retains explicit modal but deletes redundant success response',async()=>{
  const i=interaction();i.customId='event:wager:member:round:racer';i.isButton=()=>false;i.isModalSubmit=()=>true;i.fields={getTextInputValue:()=> '25'};i.deleteReply=async()=>i.calls.push('deleted');
- const c=new DiscordEventsCoordinator({publicView:async()=>({guildId:'g',channelId:'main'}),bet:async()=>({total:25n})},config(true),async()=>true);c.policy=async()=>({});c.refresh=async()=>{};await c.handle(i);assert.deepEqual(i.calls,['deleted']);
+ const c=new DiscordEventsCoordinator({publicView:async()=>({guildId:'g',channelId:'main',racers:[{userId:'racer'}]}),bet:async()=>({total:25n})},config(true),async()=>true);c.policy=async()=>({});c.refresh=async()=>{};await c.handle(i);assert.deepEqual(i.calls,['deleted']);
 });
 
 test('live Race and Fight keep one authoritative in-frame timeline for the whole locked phase and after restart',async()=>{
@@ -89,5 +89,5 @@ test('Race prefix preserves only the authorized role mention outside its artwork
 });
 
 test('Race and Fight rules remain private and put authored copy entirely inside branded graphics',async()=>{
- for(const type of ['race','fight']){const i=interaction();i.customId=(type==='race'?'event':'fight')+':rules:round';const c=new DiscordEventsCoordinator({publicView:async()=>({type,guildId:'g',channelId:'main'})},{get:async(_g,k)=>k==='channels.main_chat'?'main':true},async()=>true);await c.handle(i);assert.equal(i.calls.length,1);assert.equal(i.calls[0].ephemeral,true);assert.equal(nativeText(i.calls[0]),'');assert.deepEqual(i.calls[0].embeds,[]);assert.equal(i.calls[0].files[0].name,'event-rules.png');}
+ for(const type of ['race','fight']){const i=interaction();i.customId=(type==='race'?'event':'fight')+':rules:round';const c=new DiscordEventsCoordinator({publicView:async()=>({type,guildId:'g',channelId:'main'})},{get:async(_g,k)=>k==='channels.main_chat'?'main':true},async()=>true);await c.handle(i);assert.equal(i.calls.length,1);assert.equal(i.private,true);assert.equal(nativeText(i.calls[0]),'');assert.deepEqual(i.calls[0].embeds,[]);assert.equal(i.calls[0].files[0].name,'event-rules.png');}
 });

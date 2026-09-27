@@ -16,7 +16,7 @@ import {eventWindow} from './event-window.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
 export class DiscordEventsCoordinator {
- private readonly racePublications=new Map<string,Promise<void>>();
+ private readonly racePublications=new Map<string,Promise<string|undefined>>();
  private readonly refreshes=new Map<string,Promise<void>>();
  private readonly publishedVersions=new Map<string,string>();
  private readonly liveImages=new Map<string,string>();
@@ -40,41 +40,60 @@ export class DiscordEventsCoordinator {
  }
  private sweeping=false;
  constructor(private readonly repo:PrismaEventsRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
- async policy(guildId:string):Promise<EventPolicy>{return{minBet:BigInt(Number(await this.config.get(guildId,'events.min_bet'))),maxBet:BigInt(Number(await this.config.get(guildId,'events.max_bet')))};}
+ async policy(guildId:string):Promise<EventPolicy>{const [min,max]=await Promise.all(['events.min_bet','events.max_bet'].map(key=>this.config.get(guildId,key)));return{minBet:BigInt(Number(min)),maxBet:BigInt(Number(max))};}
  private async guard(guildId:string,userId:string,channelId:string,kind='race'){
-  if(await this.config.get(guildId,'features.'+kind)!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');
-  if(channelId!==await this.config.get(guildId,'channels.main_chat'))throw new DomainError('EVENT_CHANNEL','Use events in the configured main chat.');
-  if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!await this.eligible(guildId,userId))throw new DomainError('EVENT_RESTRICTED','Event controls are unavailable while restricted.');
+  const [enabled,channel,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),this.config.get(guildId,'channels.main_chat'),this.eligible(guildId,userId)]);
+  if(enabled!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');
+  if(channelId!==channel)throw new DomainError('EVENT_CHANNEL','Use events in the configured main chat.');
+  if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('EVENT_RESTRICTED','Event controls are unavailable while restricted.');
  }
  async message(message:Message){
   if(message.content.trim()!=='!race'||message.author.bot||!message.guildId||!message.guild)return;
+  if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
   if(message.channelId!==await this.config.get(message.guildId,'channels.main_chat'))return;
   // Removal precedes permission evaluation, including the silent unauthorized path.
   try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
-  const member=await message.guild.members.fetch(message.author.id),access=await this.config.get(message.guildId,'special_commands.access_roles') as Record<string,unknown>;
+  const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
   const roles=access?.['!race'];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
   try{await this.guard(message.guildId,message.author.id,message.channelId);}catch{return;}
   if(!message.channel.isSendable())return;
-  // Same-trigger retries share publication work; the persisted link covers later replays.
-  const key=message.guildId+':'+message.id,existing=this.racePublications.get(key);if(existing){await existing;return;}
-  const publication=this.publishRace(message,member);this.racePublications.set(key,publication);
-  try{await publication;}finally{if(this.racePublications.get(key)===publication)this.racePublications.delete(key);}
+  await this.queueRace(message,member);
  }
- private async publishRace(message:Message,member:GuildMember){
+ async startRace(i:ChatInputCommandInteraction){try{
+  if(!i.deferred)await i.deferReply({ephemeral:true});
+  if(!i.guildId||!i.guild||!i.channelId||!i.channel?.isSendable())throw new DomainError('SERVER_ONLY','Use Race in the server main chat.');
+  const [enabled,accessValue,member]=await Promise.all([this.config.get(i.guildId,'special_commands.enabled'),this.config.get(i.guildId,'special_commands.access_roles'),i.guild.members.fetch(i.user.id)]);
+  if(enabled!==true)throw new DomainError('EVENT_DISABLED','Race is not enabled yet.');
+  const roles=(accessValue as Record<string,unknown>)?.['!race'];
+  if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new DomainError('EVENT_CONFIG','Race access roles need configuration.');
+  if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))throw new DomainError('EVENT_RESTRICTED','You do not have access to start Race.');
+  await this.guard(i.guildId,i.user.id,i.channelId);
+  const sent=await this.queueRace({id:i.id,guild:i.guild,guildId:i.guildId,channelId:i.channelId,channel:i.channel},member);
+  if(!sent)throw new DomainError('EVENT_ACTIVE','A Race or Fight is already active here.');
+  await i.deleteReply();
+ }catch(error){const content=error instanceof DomainError?error.message:'Race could not start. Please try again.';if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
+ private async queueRace(source:Pick<Message,'id'|'guild'|'guildId'|'channel'|'channelId'>,member:GuildMember){
+  // Both entry commands share one in-flight publication; the serializable repository
+  // also rejects competing active sessions across workers/restarts.
+  const key=source.guildId+':'+source.channelId,existing=this.racePublications.get(key);if(existing)return existing;
+  const publication=this.publishRace(source,member);this.racePublications.set(key,publication);
+  try{return await publication;}finally{if(this.racePublications.get(key)===publication)this.racePublications.delete(key);}
+ }
+ private async publishRace(message:Pick<Message,'id'|'guild'|'guildId'|'channel'|'channelId'>,member:GuildMember){
   if(!message.guild||!message.guildId||!message.channel.isSendable())return;
   let id:string|undefined;
   try{
    const roleMap=await this.config.get(message.guildId,'special_commands.builtin_role_map') as Record<string,unknown>,role=roleMap?.['!race'];
    const notification=await notificationRole(message.guild,message.channelId,typeof role==='string'?role:null,this.config);
    id=(await this.repo.startRace({guildId:message.guildId,channelId:message.channelId,userId:member.id,requestKey:message.id},{userId:member.id,name:member.displayName,avatarUrl:member.displayAvatarURL({size:128,extension:'png'})})).sessionId;
-   const initial=await this.repo.publicView(id);if(initial.messageId)return;
+   const initial=await this.repo.publicView(id);if(initial.messageId)return initial.messageId;
    if(initial.state!=='OPEN')return;
    const {callout,allowedMentions}=notificationMessage(notification,callouts[eventRandom(callouts.length)]!);
    const {content:_clearContent,...payload}=await this.payload(initial,{callout});
    // Discord additionally deduplicates overlapping network sends for this trigger.
    const sent=await message.channel.send({...payload,allowedMentions,nonce:message.id,enforceNonce:true});
-   await this.repo.linkMessage(id,message.guildId,sent.id);this.publishedVersions.set(id,this.publicationKey(initial));this.prepare(initial);
+   await this.repo.linkMessage(id,message.guildId,sent.id);this.publishedVersions.set(id,this.publicationKey(initial));this.prepare(initial);return sent.id;
   }catch(error){if(id)await this.repo.cancel(message.guildId,id,'Race could not be published; wagers refunded.');if(error instanceof DomainError&&error.code==='EVENT_ACTIVE')return;throw error;}
  }
 
@@ -93,21 +112,22 @@ export class DiscordEventsCoordinator {
  async handle(i:ButtonInteraction|ModalSubmitInteraction){let silent=false;try{
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use event controls in the server.');
   const parts=i.customId.split(':'),action=parts[1],id=action==='wager'?parts[3]:parts[2];if(!id)throw new DomainError('EVENT_CONTROL','This event control is unavailable.');
-  // Acknowledge mutations before configuration/database work; wager buttons must remain available for showModal.
-  if(i.isButton()&&(action==='join'||action==='extend')){silent=true;await eventTiming('event.ack',()=>i.deferUpdate());}
+  if(i.isButton()&&action==='bet'){
+   await i.showModal(new ModalBuilder().setCustomId(`${parts[0]}:wager:${i.user.id}:${id}:${parts[3]}`).setTitle(parts[0]==='fight'?'Fight wager':'Race wager').addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder().setCustomId('amount').setLabel('Ottomans to add to your wager').setStyle(TextInputStyle.Short).setRequired(true).setMaxLength(7))));return;
+  }
+  // Acknowledge before configuration, eligibility, session reads or raster work.
+  if(i.isModalSubmit()&&action==='wager'&&!i.deferred)await i.deferReply({ephemeral:true});
+  if(i.isButton()&&action==='rules'&&!i.deferred)await i.deferReply({ephemeral:true});
+  if(i.isButton()&&(action==='join'||action==='extend')){silent=true;if(!i.deferred)await eventTiming('event.ack',()=>i.deferUpdate());}
   await this.guard(i.guildId,i.user.id,i.channelId,i.customId.startsWith('fight:')?'fight':'race');
   const c:EventContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
   const view=await this.repo.publicView(id);if(view.type&&view.type!==(parts[0]==='fight'?'fight':'race'))throw new DomainError('EVENT_CONTROL','Use the original event controls.');if(view.guildId!==i.guildId||view.channelId!==i.channelId)throw new DomainError('EVENT_CHANNEL','Use this event’s original message.');
-  if(i.isButton()&&action==='rules'){const title=view.type==='fight'?'Fight rules':'Race rules',copy=(view.type==='fight'?eventHelp.fight:eventHelp.race)+'\n\n'+eventHelp.body;const {content:_content,...payload}=eventWindow({title,description:'',filename:'event-rules.png',image:await rasterizeSvg(renderEventNotice(title,copy)),rows:[]});await i.reply({...payload,ephemeral:true});return;}
-  if(i.isButton()&&action==='bet'){
-   if(view.state!=='OPEN'||!view.expiresAt||view.expiresAt<=new Date())throw new DomainError('BETTING_CLOSED','Betting has closed.');
-   if(!view.racers.some(r=>r.userId===parts[3]))throw new DomainError('RACER_MISSING','Choose a current racer.');
-   await i.showModal(new ModalBuilder().setCustomId(`${parts[0]}:wager:${i.user.id}:${id}:${parts[3]}`).setTitle(view.type==='fight'?'Fight wager':'Race wager').addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder().setCustomId('amount').setLabel('Ottomans to add to your wager').setStyle(TextInputStyle.Short).setRequired(true).setMaxLength(7))));return;
-  }
-  silent=i.isButton();if(silent){if(!i.deferred)await (i as ButtonInteraction).deferUpdate();}else await i.deferReply({ephemeral:true});let content='Race updated.';
+  if(i.isButton()&&action==='rules'){const title=view.type==='fight'?'Fight rules':'Race rules',copy=(view.type==='fight'?eventHelp.fight:eventHelp.race)+'\n\n'+eventHelp.body;const {content:_content,...payload}=eventWindow({title,description:'',filename:'event-rules.png',image:await rasterizeSvg(renderEventNotice(title,copy)),rows:[]});await i.editReply(payload);return;}
+  silent=i.isButton();if(silent){if(!i.deferred)await (i as ButtonInteraction).deferUpdate();}else if(!i.deferred)await i.deferReply({ephemeral:true});let content='Race updated.';
   if(i.isButton()&&action==='join'){const member=await i.guild.members.fetch(i.user.id);await this.repo.join(c,id,{userId:member.id,name:member.displayName,avatarUrl:member.displayAvatarURL({size:128,extension:'png'})});content='Your racer spot is saved.';}
   else if(i.isButton()&&action==='extend'){await this.repo.extend(c,id);content=view.type==='fight'?'Betting extended by 30 seconds.':'Entry and betting extended by 30 seconds.';}
   else if(i.isModalSubmit()&&action==='wager'){
+   if(!view.racers.some(r=>r.userId===parts[4]))throw new DomainError('RACER_MISSING','Choose a current racer.');
    if(parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own wager modal.');const raw=i.fields.getTextInputValue('amount');if(!/^\d{1,7}$/.test(raw))throw new DomainError('WAGER_AMOUNT','Enter a whole Ottoman amount.');
    const result=await this.repo.bet(c,id,parts[4]!,BigInt(raw),await this.policy(i.guildId));content=`Wager confirmed: ${result.total} Ottomans total. Your selection is locked.`;
   }else throw new DomainError('EVENT_CONTROL','This event control is unavailable.');
@@ -115,7 +135,7 @@ export class DiscordEventsCoordinator {
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public card refresh is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied||silent&&i.deferred)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
  async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData;nowMs?:number}={}){
-  const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10),waiting=view.state==='OPEN'&&options.animate!==false&&waitingMs>0;
+  const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10),waiting=view.type==='fight'&&view.state==='OPEN'&&options.animate!==false&&waitingMs>0;
   const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||waiting||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
   const render=(imageView:RaceView=view,phase=0,remaining=waitingMs)=>{const motion={phase,waitingMs:remaining,...(options.callout?{callout:options.callout.replace(/<@&[^>]+>\s*/g,'')}: {})};return fight?renderFight(imageView,motion,'wide'):renderRace(imageView,'wide',motion);};
   let image:Buffer|undefined;
@@ -127,7 +147,8 @@ export class DiscordEventsCoordinator {
     else for(let at=50;at<end;at+=50)times.push(at);
     if(times.at(-1)!<end)times.push(end);
     const artwork=new AnimationAssets();
-    const frames=times.map(at=>artwork.pack(render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},fight?at/1000%1:at/end)));
+    const frames:string[]=[];
+    for(const [index,at] of times.entries()){frames.push(artwork.pack(render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},fight?at/1000%1:at/end)));if(index%16===15)await new Promise<void>(resolve=>setImmediate(resolve));}
     image=await rasterizeTimeline(frames,times.map((at,index)=>index+1<times.length?times[index+1]!-at:1000),new Date(saved.startedAt).getTime(),artwork.assets);
    }else if(waiting){
     const steps=Math.min(60,Math.ceil(waitingMs/1000)),step=Math.max(10,Math.ceil(waitingMs/steps/10)*10),times=Array.from({length:steps},(_,i)=>i*step).filter(at=>at<waitingMs);times.push(waitingMs);
@@ -148,7 +169,7 @@ export class DiscordEventsCoordinator {
   }
   return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(options.callout?{callout:options.callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;this.prepare(view);const version=(value:RaceView)=>this.publicationKey(value);let key=version(view);if(this.publishedVersions.get(id)===key)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view);if(this.publishedVersions.get(id)===key)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
   const filename=`${view.type==='fight'?'fight':'race'}-locked.gif`,existing=view.state==='LOCKED'?message.attachments?.find(attachment=>attachment.name===filename):undefined;
   const retainImageUrl=view.state==='LOCKED'?(existing?.url??this.liveImages.get(id)):undefined;
   const saved=view.state==='LOCKED'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
@@ -160,7 +181,7 @@ export class DiscordEventsCoordinator {
   if(view.state==='LOCKED'||view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=version(view);const latestSaved=view.state==='LOCKED'&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;payload=await this.payload(view,latestSaved?.state==='LOCKED'?{timeline:latestSaved.data}:{});}}
   await eventTiming('event.edit-upload',()=>message.edit(payload));
   if(view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
-  this.publishedVersions.set(id,key);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
+  this.publishedVersions.set(id,key);this.prepare(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
  async sweep(client:Client){if(this.sweeping)return;this.sweeping=true;try{for(const event of await this.repo.active()){
   if(event.expiresAt&&event.expiresAt<=new Date()){await this.advance(client,event.guildId,event.id,event.state==='LOCKED');continue;}
   await this.refresh(client,event.id);

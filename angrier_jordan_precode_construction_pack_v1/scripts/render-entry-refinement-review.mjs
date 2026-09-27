@@ -1,0 +1,11 @@
+import {mkdir,writeFile} from 'node:fs/promises';
+import {renderRace} from '../dist/packages/features-events/src/render.js';
+import {renderLine} from '../dist/packages/features-special/src/render.js';
+import {rasterizeSvg} from '../dist/packages/renderer/src/raster.js';
+import {reviewMembers} from './event-review-fixtures.mjs';
+const folder=new URL('../review-entry-refinement/',import.meta.url);await mkdir(folder,{recursive:true});
+const base={id:'review',state:'OPEN',racers:reviewMembers,pool:'1200',expiresAt:new Date('2100-01-01T19:42:00Z'),extensionUsed:false};
+const line={...base,ownerId:'fixture-0',members:reviewMembers.map((m,i)=>({...m,status:i<4?'ready':'waiting'})),elapsedMs:0,remainingMs:60000};
+for(const [name,svg] of [['race-entry',renderRace(base,'wide')],['line-entry',renderLine(line,0,'wide')],['line-locked',renderLine({...line,state:'LOCKED'},0,'wide')]])await writeFile(new URL(name+'.png',folder),await rasterizeSvg(svg));
+await writeFile(new URL('index.html',folder),'<!doctype html><meta charset="utf-8"><title>Race and Line entry refinement</title><style>body{margin:32px auto;max-width:1200px;background:#0B1220;color:#E6EAF0;font:18px system-ui}img{width:100%;height:auto}h1{color:#FFE29A}section{margin:32px 0}</style><h1>Race and Line entry refinement</h1><p>Fictional review data. Same Race card for !race and /race. Existing live motion and finale remain unchanged.</p>'+['race-entry','line-entry','line-locked'].map(name=>'<section><h2>'+name+'</h2><img src="'+name+'.png"></section>').join(''));
+console.log('PASS: entry refinement review rendered');

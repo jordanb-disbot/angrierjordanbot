@@ -7,7 +7,7 @@ const authored=JSON.parse(readFileSync(new URL('../../packages/content/help/tuto
 const byId=id=>{const c=COMMANDS.find(c=>c.id===id);assert.ok(c,id);return lessonCopy(c);};
 const combined=id=>{const c=byId(id);return[c.purpose,c.fields,...c.steps,c.completion].join('\n');};
 test('every authored lesson has four useful teaching pages and a concrete next action',()=>{
- const selected=COMMANDS.filter(hasAuthoredLesson);assert.equal(selected.length,100);
+ const selected=COMMANDS.filter(hasAuthoredLesson);assert.equal(selected.length,101);
  for(const c of selected){const copy=lessonCopy(c);for(const [page,value]of Object.entries({purpose:copy.purpose,inputs:copy.fields,workflow:copy.steps.join('\n'),completion:copy.completion})){assert.ok(value.trim().length>=80,`${c.id}: ${page} needs usable detail`);assert.doesNotMatch(value,/not been authored|Quick reference for|Follow its displayed controls where offered|No inputs are documented|has not been authored|placeholder/i,`${c.id}: ${page}`);}assert.ok(copy.steps.length>=3,c.id);assert.equal(new Set(copy.steps).size,copy.steps.length,c.id);assert.match(copy.completion,/Next:/,c.id);assert.ok(copy.example.startsWith(c.registered),c.id);for(const field of c.options.filter(o=>o.required))assert.ok(copy.example.includes(field.name+':'),c.id+': example missing '+field.name);}
  assert.equal(Object.keys(authored).length,selected.length);
 });

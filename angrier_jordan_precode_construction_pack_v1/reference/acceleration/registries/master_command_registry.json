@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 155,
+  "command_count": 156,
   "commands": [
     {
       "id": "help",
@@ -807,6 +807,29 @@
       "status": "locked",
       "preferred_invocation": "!race",
       "registration_path": "!race"
+    },
+    {
+      "id": "race_slash",
+      "command": "/race",
+      "type": "slash",
+      "module": "race",
+      "description": "Start the same Chair Race as !race in main chat.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "race.specialRace",
+      "feature_flag": "race",
+      "ephemeral_default": false,
+      "help_id": "race",
+      "tutorial_id": "games",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/race",
+      "registration_path": "/race"
     },
     {
       "id": "fight",

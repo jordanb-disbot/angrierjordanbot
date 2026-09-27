@@ -55,7 +55,9 @@ function renderWideLine(view:LineView,elapsedMs:number,callout=''){
  const panel=(x:number,y:number,w:number,h:number,accent='#C1A364')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="url(#loungeGlass)" stroke="${accent}" stroke-opacity=".72"/><path d="M${x+12} ${y+2}H${x+w-12}" stroke="#F7E5AC" stroke-opacity=".25"/><path d="M${x+8} ${y+25}V${y+8}H${x+25}M${x+w-25} ${y+h-8}H${x+w-8}V${y+h-25}" fill="none" stroke="#D5AE62" stroke-opacity=".75"/>`;
 
  const ready=view.members.filter(m=>m.status==='ready'),waiting=view.members.filter(m=>m.status==='waiting'),host=short(view.members.find(m=>m.userId===view.ownerId)?.name??'Host',24),motion=lineFrame(elapsedMs,view.durationMs??LINE_DURATION_MS),live=view.state==='SETTLING',done=view.state==='CLOSED'||live&&motion.phase==='complete',cancelled=view.state==='CANCELLED';
- let body=text(600,40,'ANGRIER JORDAN · PRIVATE LOUNGE EVENTS',16,'#C8A1FF',mid)+head(600,89,'Line Time',46,'#E6EAF0',mid)+text(600,125,done?'SIT. PLAY. BELONG.':cancelled?'UNTIL NEXT TIME':live?'ONE ROOM · ONE SHARED MOMENT':'READY CHECK · COUNTDOWN · GRAND FINALE',20,'#E4C67F',mid);
+ let body='';
+ if(view.state!=='OPEN'&&view.state!=='LOCKED'){
+ body=text(600,40,'ANGRIER JORDAN · PRIVATE LOUNGE EVENTS',16,'#C8A1FF',mid)+head(600,89,'Line Time',46,'#E6EAF0',mid)+text(600,125,done?'SIT. PLAY. BELONG.':cancelled?'UNTIL NEXT TIME':live?'ONE ROOM · ONE SHARED MOMENT':'READY CHECK · COUNTDOWN · GRAND FINALE',20,'#E4C67F',mid);
  body+=panel(30,146,1140,62,'#C1A364')+head(600,184,host+' · Host',28,'#E6EAF0',mid)+panel(30,221,264,328,'#10B981')+panel(906,221,264,328,'#C1A364')+panel(306,221,588,328,'#AF7AE1');
  for(const[groupIndex,members]of [ready,waiting].entries()){const x=162+groupIndex*876;body+=head(x,258,(groupIndex?'ONE SECOND · ':'READY · ')+members.length,22,groupIndex?'#F4C542':'#68E0B7',mid);for(const[i,m]of members.slice(0,5).entries())body+=head(x,305+i*44,short(m.name,17),26,'#E6EAF0',mid);if(!members.length)body+=text(x,379,'An open seat.',20,'#B4CECA',mid);if(members.length>5)body+=text(x,534,'+'+(members.length-5)+' more',17,'#D0C0EA',mid);}
  body+='<g clip-path="url(#stage)"><image href="'+eventScene('line-countdown.png')+'" x="0" y="0" width="1200" height="640" preserveAspectRatio="xMidYMid slice"/></g>';
@@ -64,6 +66,21 @@ function renderWideLine(view:LineView,elapsedMs:number,callout=''){
  else{body+='<circle cx="600" cy="368" r="102" fill="#071F28" fill-opacity=".7" stroke="#BF9F60" stroke-width="3"/>'+head(600,373,String(view.members.length),94,'#E4D0FF',mid)+text(600,416,'CHAIRS GATHERED',19,'#E4C67F',mid)+head(600,496,'STARTS IN '+String(Math.floor(Math.max(0,Math.ceil(view.remainingMs/1000))/60)).padStart(2,'0')+':'+String(Math.max(0,Math.ceil(view.remainingMs/1000))%60).padStart(2,'0'),30,'#F4D17B',mid);}
  body+=panel(30,562,1140,54,'#BBA16A')+head(600,596,done?'SIT. PLAY. BELONG.':cancelled?'A NEW MOMENT AWAITS':live&&motion.phase==='burst'?'ONE GLORIOUS CLOUD OF CHAOS':live?'5 · 4 · 3 · 2 · 1':(short(callout.replace(/<@&\d+>/g,'').trim(),64)||'CHECK IN BELOW · THE HOST MAY START EARLY'),21,'#E6EAF0',mid);
 
+ }
+ if(view.state==='OPEN'||view.state==='LOCKED'){
+  const locked=view.state==='LOCKED',deadline=view.expiresAt?new Date(view.expiresAt).toISOString().slice(11,19)+' UTC':'Pending';
+  body=text(40,45,'ANGRIER JORDAN · LOUNGE EVENTS',15,'#C8A1FF','letter-spacing="2"')+head(40,91,'Line Time',40)+text(40,122,'Check in. Gather together. Share the moment.',19,'#E4C67F');
+  body+=panel(830,33,330,91)+text(850,60,locked?'CHECK-INS SAVED':'READINESS OPEN',15,locked?'#E4C67F':'#68E0B7','letter-spacing="1.5"')+head(850,91,locked?'Waiting for the host':'Closes '+deadline,21)+text(850,112,view.extensionUsed?'Host extension used':'The host may start early',13,'#B4C8CA');
+  body+=panel(32,148,352,364,'#AF7AE1')+'<image href="'+eventScene('line-countdown.png')+'" x="48" y="166" width="320" height="325" preserveAspectRatio="xMidYMid slice" opacity=".38"/><rect x="49" y="167" width="318" height="328" rx="10" fill="#051822" fill-opacity=".48"/>'+text(208,200,'THE LOUNGE IS GATHERING',13,'#E4C67F',mid)+head(208,280,view.members.length,62,'#E6EAF0',mid)+text(208,311,'CHAIRS CHECKED IN',14,'#B4C8CA',mid)+'<path d="M81 339H335" stroke="#E4C67F" stroke-opacity=".35"/>'+text(208,372,short(host,22),22,'#E6EAF0',mid)+text(208,399,'YOUR HOST',12,'#E4C67F',mid)+text(208,467,locked?'Ready for the countdown':'Choose your status below',18,'#D7C5F1',mid);
+  for(const [groupIndex,members] of [ready,waiting].entries()){
+   const x=400+groupIndex*392,color=groupIndex?'#E4C67F':'#68E0B7';
+   body+=panel(x,148,376,364,groupIndex?'#C1A364':'#10B981')+text(x+20,184,groupIndex?'NEED A SECOND':'READY TO GO',15,color,'font-weight="600" letter-spacing="1.2"')+head(x+354,185,members.length,24,color,'text-anchor="end"')+'<path d="M'+(x+20)+' 204H'+(x+356)+'" stroke="'+color+'" stroke-opacity=".25"/>';
+   for(const [i,m] of members.slice(0,5).entries()){const y=242+i*46;body+='<circle cx="'+(x+25)+'" cy="'+(y-7)+'" r="4" fill="'+color+'"/>'+text(x+44,y,short(m.name,23),22);}
+   if(!members.length)body+=text(x+20,247,'An open seat awaits.',20,'#B4C8CA');
+   if(members.length>5)body+=text(x+20,492,'+'+(members.length-5)+' more · view Check-ins',14,'#B4C8CA');
+  }
+  body+=panel(32,530,1136,82)+text(54,558,locked?'HOST CONTROLS':'YOUR NEXT MOVE',12,'#C8A1FF','letter-spacing="1.4"')+text(54,588,locked?'Start Countdown or Cancel Line': 'Choose your check-in below',23)+'<path d="M661 546V596" stroke="#E4C67F" stroke-opacity=".25"/>'+text(686,558,'ONE COMMUNITY · ONE COUNTDOWN',12,'#E4C67F','letter-spacing="1.2"')+text(686,587,view.extensionUsed?'Extension used · check-ins preserved':'The host can start early or extend once',19,'#B4C8CA');
+ }
  if(done){
   body='<image href="'+eventScene('line-powder.png')+'" x="180" y="142" width="840" height="434"/>';
   body+='<rect x="279" y="24" width="642" height="140" rx="14" fill="#06131D" fill-opacity=".72"/>'+text(600,57,'ANGRIER JORDAN · THE GRAND FINALE',18,'#D1ABFF',mid)+head(600,111,'LINE COMPLETE',56,'#F4D17B',mid);

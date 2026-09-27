@@ -17,6 +17,7 @@ function waitingClock(remainingMs:number,totalMs:number,x=32,y=553,width=896,poo
 /** Position and finish arrival both consume the persisted race snapshot; no modulo motion. */
 export function renderWideRace(view:RaceView,motion:EventMotion={}){
  if(view.state==='CLOSED')return grandFinale(view,'race');
+ if(view.state==='OPEN')return raceEntry(view);
  const live=view.state==='LOCKED',cancelled=view.state==='CANCELLED',finished=!!view.motion?.finished;
  let body='<g transform="translate(120 0)">'+heading('Chair Race',live?(finished?'THE FINISH LINE · OFFICIAL RESULT NEXT':'LIVE STANDINGS · BETTING LOCKED'):cancelled?'RACE CANCELLED':'TAKE YOUR SEAT · BACK YOUR FAVOURITE')+'</g>';
  if(live&&view.motion){
@@ -36,7 +37,22 @@ export function renderWideRace(view:RaceView,motion:EventMotion={}){
    body+=panel(x+3,y,w-6,h-8,i%2?ink.gold:ink.teal)+title(cx,y+31,short(r.name,22),28)+'<ellipse cx="'+cx+'" cy="'+(y+h-25)+'" rx="'+(w*.4)+'" ry="22" fill="url(#aura)"/><image href="'+raceWheelchair(r.chair)+'" x="'+(x+12)+'" y="'+(y+35)+'" width="'+(w-24)+'" height="'+(h-49)+'"/>';
   }
  }
- return frame(body+(view.state==='OPEN'?'':'<g transform="translate(120 0)">'+pool(view,live?(finished?'finish line reached':'race pool'):short(motion.callout??'total pool',48))+'</g>'),'lounge-stage-runtime.png',true);
+ return frame(body+('<g transform="translate(120 0)">'+pool(view,live?(finished?'finish line reached':'race pool'):short(motion.callout??'total pool',48))+'</g>'),'lounge-stage-runtime.png',true);
+}
+/** Static entry artwork stays truthful between updates; Discord owns the live deadline. */
+function raceEntry(view:RaceView){
+ const deadline=view.expiresAt?new Date(view.expiresAt).toISOString().slice(11,19)+' UTC':'Pending';
+ let body=text(40,45,'ANGRIER JORDAN · LOUNGE EVENTS',15,ink.teal,'letter-spacing="2"')+text(40,91,'Chair Race',40,ink.white,'font-family="Space Grotesk" font-weight="700"')+text(40,122,'Take your seat. Back your favourite.',19,ink.warm);
+ body+=panel(830,33,330,91,ink.gold)+text(850,60,'ENTRY OPEN',15,ink.teal,'font-weight="600" letter-spacing="1.5"')+text(850,91,'Closes '+deadline,21,ink.white)+text(850,112,view.extensionUsed?'Host extension used':'Join using the controls below',13,ink.warm);
+ const cols=3,w=376,h=185;
+ for(let i=0;i<6;i++){
+  const r=view.racers[i],x=32+i%cols*380,y=148+Math.floor(i/cols)*h;
+  if(!r){body+=panel(x,y,w,h-12,ink.teal)+text(x+18,y+27,'LANE '+String(i+1).padStart(2,'0'),12,ink.teal,'letter-spacing="1.5"')+'<circle cx="'+(x+188)+'" cy="'+(y+84)+'" r="20" fill="none" stroke="'+ink.teal+'" stroke-opacity=".5"/><path d="M'+(x+178)+' '+(y+84)+'h20M'+(x+188)+' '+(y+74)+'v20" stroke="'+ink.warm+'" stroke-opacity=".65"/>'+text(x+188,y+135,'An open seat awaits',18,ink.muted,mid);continue;}
+  body+=panel(x,y,w,h-12,i%2?ink.gold:ink.teal)+text(x+18,y+27,'LANE '+String(i+1).padStart(2,'0'),12,ink.teal,'letter-spacing="1.5"')+text(x+18,y+55,short(r.name,22),24,ink.white,'font-family="Space Grotesk" font-weight="600"');
+  body+='<ellipse cx="'+(x+w/2)+'" cy="'+(y+h-30)+'" rx="130" ry="15" fill="url(#aura)"/><image href="'+raceWheelchair(r.chair)+'" x="'+(x+48)+'" y="'+(y+60)+'" width="280" height="'+(h-81)+'" preserveAspectRatio="xMidYMid meet"/>';
+ }
+ body+=panel(32,530,1136,82,ink.gold)+text(54,557,'ON THE GRID',12,ink.teal,'letter-spacing="1.4"')+text(54,588,view.racers.length+' racers',25,ink.white,'font-family="Space Grotesk" font-weight="600"')+'<path d="M291 546V596M653 546V596" stroke="'+ink.warm+'" stroke-opacity=".23"/>'+text(316,557,'RACE POOL',12,ink.teal,'letter-spacing="1.4"')+text(316,588,short(view.pool,18)+' Ottomans',25,ink.warm)+text(680,557,'YOUR NEXT MOVE',12,ink.teal,'letter-spacing="1.4"')+text(680,586,'Join the grid · place your bet below',21,ink.white);
+ return frame(body,'lounge-stage-runtime.png',true);
 }
 /** Combat animation adds energy only: actual HP and moves come from the persisted timeline. */
 export function renderWideFight(view:RaceView,motion:EventMotion={}){
