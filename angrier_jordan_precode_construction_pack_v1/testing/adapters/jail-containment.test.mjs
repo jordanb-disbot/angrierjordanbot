@@ -32,7 +32,7 @@ async function fixture({acknowledged=true,extraAllow=false}={}) {
  }
  const main=channel('main',ChannelType.GuildText,true),voice=channel('voice',ChannelType.GuildVoice,true),ordinary=channel('ordinary',ChannelType.GuildText,false);channel('hotseat',ChannelType.GuildText,false);
  const onboarding=new DiscordOnboardingCoordinator(onboardingService,config),coordinator=new DiscordJailCoordinator(service,config,onboarding);
- const interaction=sub=>({guildId:'g',guild,user:{id:'owner'},options:{getSubcommand:()=>sub,getUser:()=>({id:'member'}),getString:k=>k==='duration'?'5m':'Local test'},reply:async()=>{}});
+ const interaction=sub=>({guildId:'g',guild,user:{id:'owner'},options:{getSubcommand:()=>sub,getUser:()=>({id:'member'}),getString:k=>k==='duration'?'5m':'Local test'},reply:async()=>{},deferReply:async()=>{},editReply:async()=>{}});
  return {clock,repo,service,onboardingService,onboarding,coordinator,guild,member,live,calls,main,voice,ordinary,interaction};
 }
 
@@ -71,12 +71,12 @@ test('Rules acknowledgement during a sentence cannot restore normal access',asyn
 });
 
 test('failed sentence persistence restores only roles actually removed and removes the temporary jailed role',async()=>{
- const f=await fixture();f.service.send=async()=>{throw Error('persistence unavailable');};await assert.rejects(()=>f.coordinator.handleCommand(f.interaction('send')),/persistence unavailable/);
+ const f=await fixture();f.service.send=async()=>{throw Error('persistence unavailable');};await f.coordinator.handleCommand(f.interaction('send'));
  assert.deepEqual([...f.live],['folding']);assert.equal(await f.service.activeModeration('g','member'),null);
 });
 
 test('unrelated explicit role allows still reject confinement and restore Folding Chair safely',async()=>{
- const f=await fixture({extraAllow:true});await assert.rejects(()=>f.coordinator.handleCommand(f.interaction('send')),e=>e.code==='CONFINEMENT_INCOMPLETE');
+ const f=await fixture({extraAllow:true});await f.coordinator.handleCommand(f.interaction('send'));
  assert.deepEqual([...f.live].sort(),['extra','folding']);assert.equal(await f.service.activeModeration('g','member'),null);
 });
 
@@ -84,3 +84,15 @@ test('failed durable release restores confinement without granting Folding Chair
  const f=await fixture();await f.coordinator.handleCommand(f.interaction('send'));f.service.release=async()=>{throw Error('release persistence unavailable');};
  await assert.rejects(()=>f.coordinator.handleCommand(f.interaction('release')),/release persistence unavailable/);assert.equal(f.live.has('jailed'),true);assert.equal(f.live.has('folding'),false);assert.ok(await f.service.activeModeration('g','member'));
 });
+
+for(const mode of ['success','containment failure','delivery failure','config failure'])test('send acknowledges before work: '+mode,async()=>{
+ const f=await fixture({extraAllow:mode==='containment failure'}),i=f.interaction('send');let ack=0,edits=[],cards=0;
+ i.deferReply=async()=>{ack++;i.deferred=true;};i.reply=async()=>assert.fail('no second initial reply');i.editReply=async p=>{edits.push(p.content);};
+ const fetch=f.guild.members.fetch;f.guild.members.fetch=async id=>{assert.equal(ack,1);if(mode==='config failure')throw Error('Unavailable');return fetch(id);};
+ f.coordinator.postHotseatCard=async()=>{cards++;if(mode==='delivery failure')throw Error('Discord unavailable');};
+ await f.coordinator.handleCommand(i);assert.equal(ack,1);assert.equal(edits.length,1);
+ if(mode==='containment failure'){assert.match(edits[0],/not fully contain/);assert.equal(cards,0);assert.equal(f.live.has('folding'),true);assert.equal(f.live.has('jailed'),false);}
+ else if(mode==='config failure'){assert.match(edits[0],/could not be completed/);assert.equal(cards,0);assert.equal(f.live.has('folding'),true);}
+ else {assert.equal(cards,1);assert.equal(f.live.has('jailed'),true);assert.match(edits[0],mode==='delivery failure'?/notice could not be delivered; confinement is active/:/now in Hotseat/);}
+});
+test('already deferred send does not acknowledge twice',async()=>{const f=await fixture(),i=f.interaction('send');i.deferred=true;i.deferReply=async()=>assert.fail('duplicate defer');await f.coordinator.handleCommand(i);});

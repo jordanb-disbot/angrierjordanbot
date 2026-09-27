@@ -82,7 +82,12 @@ export class DiscordJailCoordinator {
     }
 
     const subcommand = interaction.options.getSubcommand();
-    if (subcommand === 'send') return this.handleSend(interaction);
+    if (subcommand === 'send') {
+      if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
+      try { await this.handleSend(interaction); }
+      catch (error) { await interaction.editReply({ content: error instanceof DomainError ? error.message : 'Hotseat confinement could not be completed. Check the member’s current status before retrying.' }); }
+      return;
+    }
     if (subcommand === 'release') return this.handleRelease(interaction);
     if (subcommand === 'extend') return this.handleExtend(interaction);
     if (subcommand === 'reduce') return this.handleReduce(interaction);
@@ -219,11 +224,12 @@ export class DiscordJailCoordinator {
       throw error;
     }
 
-    await this.postHotseatCard(target, result.sentence, result.caseRecord.id, 'entered').catch(() => undefined);
+    let cardDelivered = true;
+    await this.postHotseatCard(target, result.sentence, result.caseRecord.id, 'entered').catch(() => { cardDelivered = false; });
     await target.send({
       content: `You have been placed in the server Hotseat. Reason: ${reason}\nCase #${result.caseRecord.id}. Use \`/jail status\`, \`/jail reason\`, or Request Review in the Hotseat card.`,
     }).catch(() => undefined);
-    await interaction.reply({ ephemeral: true, content: `${target} is now in Hotseat. Case #${result.caseRecord.id}.` });
+    await interaction.editReply({ content: `${target} is now in Hotseat. Case #${result.caseRecord.id}.${cardDelivered ? '' : ' The Hotseat notice could not be delivered; confinement is active. Do not resend the punishment.'}` });
   }
 
   private async handleRelease(interaction: ChatInputCommandInteraction) {

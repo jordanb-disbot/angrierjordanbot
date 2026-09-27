@@ -412,12 +412,13 @@ export async function startProductionBot():Promise<void>{
         await items.handle(interaction);return;
       }
       if(interaction.isChatInputCommand()){
+        if(enableJailSmoke&&interaction.commandName==='jail'&&interaction.options.getSubcommand(false)==='send')await interaction.deferReply({ephemeral:true});
         if(enableJailSmoke&&interaction.guildId){
           const active=await jail.isModerationJailed(interaction.guildId,interaction.user.id);
           if(active){
             const jailSub=interaction.commandName==='jail'?interaction.options.getSubcommand(false):null;
             const safe=interaction.commandName==='rules'||interaction.commandName==='help'||(interaction.commandName==='jail'&&(jailSub==='status'||jailSub==='reason'));
-            if(!safe){await interaction.reply({ephemeral:true,content:'You are currently in moderation Hotseat. Only jail-safe commands are available until release.'});return;}
+            if(!safe){const content='You are currently in moderation Hotseat. Only jail-safe commands are available until release.';if(interaction.deferred)await interaction.editReply({content});else await interaction.reply({ephemeral:true,content});return;}
           }
         }
         if(interaction.commandName==='jail'){if(!enableJailSmoke){await interaction.reply({ephemeral:true,content:'Hotseat is not enabled yet.'});return;}await jail.handleCommand(interaction);return;}
@@ -456,7 +457,8 @@ export async function startProductionBot():Promise<void>{
       console.error('Interaction failed; response withheld or marked unsuccessful.');
       const content='That action could not be completed. Angrier Jordan logged the failure.';
       if(interaction.isRepliable()){
-        if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
+        if(interaction.deferred&&!interaction.replied&&interaction.isChatInputCommand()&&interaction.commandName==='jail'&&interaction.options.getSubcommand(false)==='send')await interaction.editReply({content}).catch(()=>undefined);
+        else if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
         else await interaction.reply({ephemeral:true,content}).catch(()=>undefined);
       }
     }
