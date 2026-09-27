@@ -1,0 +1,19 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import * as domain from '../../dist/packages/features-introductions/src/domain.js';
+import {main} from '../../scripts/enable-production-introductions.mjs';
+const env={NODE_ENV:'production',AJ_DATABASE_PURPOSE:'production',DISCORD_GUILD_ID:'1524964384642957432',DATABASE_URL:'postgresql://u:secret@postgres.railway.internal/railway'};
+function fixture(){
+ const rows=new Map(),writes=[],output=[],errors=[];let runtime=null,exists=true;
+ const db={guild:{findUnique:async()=>exists?{}:null},introductionFormConfig:{findUnique:async()=>runtime?.config??null},introductionForm:{findFirst:async()=>runtime?.form??null},$disconnect:async()=>{}};
+ const config={getWithMetadata:async(g,k)=>rows.get(k)??{value:null,version:0},set:async x=>{assert.equal(x.expectedVersion,rows.get(x.key)?.version??0);assert.equal(x.source,'operator.production-introductions-enablement');writes.push(x);rows.set(x.key,{value:x.value,version:x.expectedVersion+1});}};
+ const repo={configure:async(g,c,f)=>{runtime={form:f,config:{...f,introductionChannelId:c}};},configuration:async()=>runtime};
+ return {rows,writes,output,errors,db,config,repo,setMissing:()=>{exists=false;},setRuntime:r=>{runtime=r;},run:()=>main(env,{connect:async()=>({db,config,repo,domain}),write:s=>output.push(s),error:s=>errors.push(s)})};
+}
+test('production guards reject before connection',async()=>{for(const override of [{NODE_ENV:'development'},{AJ_DATABASE_PURPOSE:'test'},{DISCORD_GUILD_ID:'123'},{DATABASE_URL:'postgresql://public/db'},{DATABASE_URL:'https://postgres.railway.internal/db'},{DATABASE_URL:undefined}]){let connected=false;assert.equal(await main({...env,...override},{connect:async()=>{connected=true;},error:()=>{}}),1);assert.equal(connected,false);}});
+test('missing guild prevents writes',async()=>{const f=fixture();f.setMissing();assert.equal(await f.run(),1);assert.equal(f.writes.length,0);});
+test('installs canonical six prompts and only Introduction settings; repeat is idempotent',async()=>{const f=fixture();assert.equal(await f.run(),0);assert.deepEqual(f.writes.map(x=>x.key),['introductions.form','channels.introduction_channel','features.introductions']);assert.deepEqual(f.rows.get('introductions.form').value.prompts.map(p=>p.label),['Name','Location','DOC',"How\'d you find the server",'Fun fact about you?','Favorite type of chair?']);assert.equal(await f.run(),0);assert.equal(f.writes.length,3);});
+test('valid custom published form is preserved',async()=>{const f=fixture();await f.run();const form=f.rows.get('introductions.form');form.value.title='Custom introduction';const count=f.writes.length;assert.equal(await f.run(),0);assert.equal(f.writes.length,count);assert.equal(form.value.title,'Custom introduction');});
+test('valid runtime form is recovered instead of replaced',async()=>{const f=fixture();await f.run();const form=f.rows.get('introductions.form').value;form.title='Preserved runtime';f.setRuntime({form,config:form});f.rows.delete('introductions.form');assert.equal(await f.run(),0);assert.equal(f.rows.get('introductions.form').value.title,'Preserved runtime');});
+test('runtime setup failure does not enable feature and is sanitized',async()=>{const f=fixture();f.repo.configure=async()=>{throw new Error(env.DATABASE_URL);};assert.equal(await f.run(),1);assert.equal(f.rows.has('features.introductions'),false);assert.equal(f.output.length,0);assert.ok(!f.errors.join('').includes('secret'));});
+test('incorrect persisted readback fails verification',async()=>{const f=fixture(),set=f.config.set;f.config.set=async x=>{await set(x);if(x.key==='features.introductions')f.rows.get(x.key).value=false;};assert.equal(await f.run(),1);assert.equal(f.output.length,0);});
