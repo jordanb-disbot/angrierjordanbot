@@ -18,5 +18,6 @@ export async function runWithDailyAcknowledgement<T>(event:string,args:readonly 
 /** Preserve the private denial when the daily button has already been ACKed. */
 export async function replyDailyRestriction(interaction:RepliableInteraction,content:string):Promise<void>{
  if(isDailyRewardButton(interaction)&&(interaction.deferred||interaction.replied))await interaction.followUp({ephemeral:true,content});
+ else if(interaction.isChatInputCommand()&&interaction.commandName==='jail'&&interaction.options.getSubcommand(false)==='send'&&interaction.deferred&&!interaction.replied)await interaction.editReply({content});
  else await interaction.reply({ephemeral:true,content});
 }

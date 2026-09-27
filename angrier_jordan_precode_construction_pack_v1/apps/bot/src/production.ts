@@ -1,3 +1,4 @@
+import {runWithJailSendAcknowledgement} from './discord/jail-interaction-ack.js';
 import {runWithDailyAcknowledgement,replyDailyRestriction} from './discord/daily-interaction-ack.js';
 import {DiscordServerBootstrap} from './discord/server-bootstrap.js';
 import {PrismaServerBootstrapRepository} from '../../../packages/database/src/prisma-server-bootstrap.js';
@@ -111,7 +112,7 @@ export async function startProductionBot():Promise<void>{
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration]});
   const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const}),async()=>{try{return{name:'music',status:!music||await config.get(guildId,'music.enabled')!==true||music.ready?'ok' as const:'degraded' as const};}catch{return{name:'music',status:'degraded' as const};}}]);
   const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
-    client.on(event,(...args)=>lifecycle.run(()=>runWithDailyAcknowledgement(event,args,enableEconomySmoke,()=>serverBootstrap.run(event,args,()=>listener(...args))),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
+    client.on(event,(...args)=>lifecycle.run(()=>runWithDailyAcknowledgement(event,args,enableEconomySmoke,()=>runWithJailSendAcknowledgement(event,args,enableJailSmoke,()=>serverBootstrap.run(event,args,()=>listener(...args)))),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
   };
   const promptRepo=new PrismaWyrPromptRepository(db);
   const sessionRepo=new PrismaWyrSessionRepository(db);
@@ -412,7 +413,6 @@ export async function startProductionBot():Promise<void>{
         await items.handle(interaction);return;
       }
       if(interaction.isChatInputCommand()){
-        if(enableJailSmoke&&interaction.commandName==='jail'&&interaction.options.getSubcommand(false)==='send')await interaction.deferReply({ephemeral:true});
         if(enableJailSmoke&&interaction.guildId){
           const active=await jail.isModerationJailed(interaction.guildId,interaction.user.id);
           if(active){
