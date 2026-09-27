@@ -68,3 +68,11 @@ CI builds the image and checks its non-root user, bot/dashboard output, Prisma C
 ## Official references
 
 Checked on 2026-09-25: [configuration fields](https://docs.railway.com/config-as-code/reference), [monorepo paths](https://docs.railway.com/deployments/monorepo), [deployment lifecycle](https://docs.railway.com/deployments/reference), [health checks](https://docs.railway.com/deployments/healthchecks) and [restart policy](https://docs.railway.com/deployments/restart-policy). Config files declare the official [Railway schema](https://railway.com/railway.schema.json). Direct automated schema retrieval was unavailable in the preparation environment; validate against the current schema and inspect resolved Railway settings before the authorized release.
+
+## Keeping the migration service manual
+
+The migration service must have GitHub autodeploy **Disabled** in Railway Service Settings → Source. This trigger is a Railway service setting, not a `railway/migration.json` field. Keeping the repository connected permits intentional manual deployments. Do not use ordinary pushes, cron, worker pre-deploy, or worker startup to run migrations.
+
+Use config path `/angrier_jordan_precode_construction_pack_v1/railway/migration.json`, root directory `/angrier_jordan_precode_construction_pack_v1`, start command `node scripts/migrate-production.mjs`, one replica, restart policy **Never**, no cron schedule and no HTTP healthcheck. Disable autodeploy before pushing another ordinary release. Cancel queued/building unwanted migration deployments; remove the currently retrying deployment after stopping automatic triggers. Removing that migration deployment does not undo completed database migrations; do not remove the PostgreSQL service or its volume.
+
+For an intentional migration only, select the approved exact release, set `AJ_PRODUCTION_MIGRATIONS_APPROVED=true` and `AJ_MIGRATION_RELEASE` to that release's full SHA, and manually deploy the matching image. Require successful exit, then remove/disable approval. Never update the pinned SHA merely to clear a red status. A rejected run remains a nonzero failure and must not restart. A stopped historical failed deployment may be retained for audit.
