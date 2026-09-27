@@ -116,6 +116,11 @@ export class DiscordOnboardingCoordinator {
     const selectedRoleIds=category.mode==='single'?[...interaction.values]:[...current.filter(id=>!segmentRoleIds.has(id)),...interaction.values];
     const plan=await this.service.planRoleCategoryUpdate({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
     const touched=[...new Set([...plan.addRoleIds,...plan.removeRoleIds])];
+    // A stale or misconfigured panel must never turn an access, staff, custody or DJ role
+    // into a self-assignable option merely because its base permission bits are zero.
+    const protectedKeys=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access','music.dj_role'];
+    const protectedIds=new Set((await Promise.all(protectedKeys.map(key=>this.config.get(interaction.guildId!,key)))).filter((id):id is string=>typeof id==='string'&&Boolean(id)));
+    if([...selectedRoleIds,...touched].some(id=>protectedIds.has(id)))throw new DomainError('ROLE_PROTECTED','A protected server role cannot be selected here. Ask staff to update this panel.');
     for(const id of touched){
       const role=interaction.guild.roles.cache.get(id);
       if(!role)throw new DomainError('ROLE_MISSING','A configured role no longer exists. Ask staff to update this category.');

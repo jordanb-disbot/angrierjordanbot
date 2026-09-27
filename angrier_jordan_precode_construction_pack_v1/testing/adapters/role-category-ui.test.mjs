@@ -26,3 +26,8 @@ test('Stale categories, invalid page/role IDs and unmanageable roles fail withou
  for(const [id,values,code]of [['roles:select:_category',['gone'],'ROLE_CATEGORY_NOT_FOUND'],['roles:select:dm_status:9',['open'],'ROLE_PAGE_STALE'],['roles:select:dm_status:0',['unknown'],'ROLE_OPTION_NOT_AVAILABLE']]){const f=fixture();await assert.rejects(()=>f.coordinator.handleRoleSelect(f.interaction(id,values)),{code});assert.deepEqual(f.effects,['ack']);}
  const f=fixture();f.roles.get('open').editable=false;await assert.rejects(()=>f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['open'])),{code:'ROLE_UNMANAGEABLE'});assert.deepEqual(f.effects,['ack']);
 });
+test('A protected zero-permission access role cannot be self-selected from a misconfigured panel',async()=>{
+ const f=fixture();f.coordinator.config={get:async(_guild,key)=>key==='roles.member_access'?'open':null};
+ await assert.rejects(()=>f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['open'])),{code:'ROLE_PROTECTED'});
+ assert.deepEqual(f.effects,['ack']);assert.equal(f.held.size,0);
+});
