@@ -6557,7 +6557,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
-      "sha256": "6c6e82bad3cca90a5de9d40f85dacd2b2486beebb8ee88e54fae1e0d0d1361d4"
+      "sha256": "1b0fb7ea9cd75747ee664e1c9e5ec369ab458ba2d05f9dc8092d5b3797e49cf3"
     },
     {
       "id": "onboarding.runtime",

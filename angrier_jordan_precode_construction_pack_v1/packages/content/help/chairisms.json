@@ -10,7 +10,7 @@
     "chairism_context"
   ],
   "title": "Chairisms",
-  "body": "Use /quote message or Message → Apps → Create Chairism on an accessible public message from this server. Choose This Message, Include Replied Message, Include Image or both when offered. Every selected source and permission is checked again before posting. Staff/private/evidence/quarantine/excluded channels and unavailable messages are rejected. /quote text always attributes your supplied words to you. Published cards preserve the actual name, portrait, timestamp and selected content in the Chairisms channel. A creation succeeds only after confirmed delivery. Browse recent, member or random published outputs privately; browsing never reveals pending quotes or refetches original content.",
+  "body": "Use /quote message or Message → Apps → Create Chairism on an accessible public message from this server. Choose This Message, Reply, Image or Both when offered. Every selected source and permission is checked again before posting. Staff/private/evidence/quarantine/excluded channels and unavailable messages are rejected. /quote text always attributes your supplied words to you. Published cards preserve the actual name, portrait, timestamp and selected content in the Chairisms channel. A creation succeeds only after confirmed delivery. Browse recent, member or random published outputs privately; browsing never reveals pending quotes or refetches original content.",
   "fields": {
     "message_link": "A real public message link from this server.",
     "text": "Your own words, up to 1200 Unicode characters and 30 lines.",

@@ -1,10 +1,12 @@
 import {readFileSync} from 'node:fs';
 import type {CommandContract,CommandOptionContract} from '../../contracts/src/types.js';
 interface HelpDocument {commands:string[];title?:string;body?:string;games?:Record<string,string>;fields?:Record<string,unknown>;examples?:string[];tutorial?:{steps?:string[]};[key:string]:unknown;}
-export interface LessonCopy {purpose:string;fields:string;example:string;steps:string[];}
+export interface LessonCopy {purpose:string;fields:string;example:string;steps:string[];completion:string;}
 // These are the existing feature-owned, reviewed help sources. Runtime never executes examples.
 const sources=['items','profiles','casino','events','special','solo','pvp','party','channel-games','crime','family','community','chairisms','social','introductions','learning','music','onboarding'];
 const documents:HelpDocument[]=sources.map(name=>JSON.parse(readFileSync(new URL('../../content/help/'+name+'.json',import.meta.url),'utf8')) as HelpDocument);
+interface AuthoredLesson {purpose:string;controls:string;steps:string[];completion:string;}
+const authoredLessons=(JSON.parse(readFileSync(new URL('../../content/help/tutorial-lessons.json',import.meta.url),'utf8')) as {lessons:Record<string,AuthoredLesson>}).lessons;
 const fieldTypes:Record<string,string>={user:'a server member',integer:'a whole number',number:'a number',boolean:'yes or no',channel:'a server channel',role:'a server role',string:'text',choice:'one of the listed choices'};
 function object(value:unknown):Record<string,unknown>|undefined{return value&&typeof value==='object'&&!Array.isArray(value)?value as Record<string,unknown>:undefined;}
 function fieldCopy(c:CommandContract,o:CommandOptionContract,source:HelpDocument|undefined){
@@ -21,14 +23,19 @@ function currentExample(c:CommandContract,source:HelpDocument|undefined){
  return c.registered+c.options.filter(o=>o.required).map(o=>' '+o.name+':'+exampleValue(o)).join('');
 }
 function boundedSteps(steps:string[]){const clean=steps.filter(s=>typeof s==='string'&&s.trim());if(clean.length<=5)return clean;const result=clean.slice(0,4);result.push(clean.slice(4).join(' '));return result;}
-export function hasAuthoredLesson(c:CommandContract):boolean{return c.id.startsWith('special_custom_')||documents.some(d=>d.commands.includes(c.id)&&Boolean(d.body?.trim()||d.games?.[c.id]||typeof d[c.id]==='string')&&Boolean(d.tutorial?.steps?.length));}
+export function hasAuthoredLesson(c:CommandContract):boolean{
+ if(c.id.startsWith('special_custom_'))return true;
+ const lesson=authoredLessons[c.id];
+ return Boolean(lesson&&lesson.purpose.trim()&&lesson.controls.trim()&&lesson.completion.trim()&&lesson.steps.length>=3&&lesson.steps.every(step=>step.trim()));
+}
 /** Registry defines execution paths/fields; feature help supplies actual teaching content. */
 export function lessonCopy(c:CommandContract):LessonCopy{
- if(c.id.startsWith('special_custom_'))return{purpose:'An enabled, role-authorized server Special Command. It sends its configured notification or response in main chat; it does not start a native game.',fields:'No command fields. Your current roles and the published server settings determine availability.',example:c.registered,steps:['Use the configured main chat.','Type '+c.registered+' as its own message.','Angrier Jordan removes the trigger and posts the configured response; only the configured opt-in role may be notified.','This practice example does not send a message or notification.']};
+ if(c.id.startsWith('special_custom_'))return{purpose:'An enabled, role-authorized server Special Command. It sends its configured notification or response in main chat; it does not start a native game.',fields:'Type '+c.registered+' as a standalone message in the configured main chat. AJ removes that trigger and sends the configured response. Only an enabled opt-in role can be notified; the command does not start a game or alter server roles.',example:c.registered,steps:['Use the configured main chat.','Type '+c.registered+' as its own message.','Angrier Jordan removes the trigger and posts the configured response; only the configured opt-in role may be notified.','This practice example does not send a message or notification.'],completion:'You know where to use this enabled notification and who it can notify. Next: exit the tutorial before intentionally typing the real trigger in main chat.'};
  const source=c.id.startsWith('special_custom_')?documents.find(d=>d.commands.includes('line')):documents.find(d=>d.commands.includes(c.id)),detail=source?.games?.[c.id]??(typeof source?.[c.id]==='string'?source[c.id] as string:undefined);
- const purpose=[detail,source?.body].filter((v):v is string=>Boolean(v)).join('\n\n')||`Quick reference for ${c.registered}. Review its fields and usage below.`;
- const fields=c.options.map(o=>fieldCopy(c,o,source)).join('\n')||'This command has no slash-command fields. Follow its displayed controls where offered.';
- const example=currentExample(c,source),authored=source?.tutorial?.steps??[];
+ const authoredLesson=authoredLessons[c.id];
+ const purpose=authoredLesson?.purpose??([detail,source?.body].filter((v):v is string=>Boolean(v)).join('\n\n')||`Quick reference for ${c.registered}. Review its fields and usage below.`);
+ const fields=[c.options.map(o=>fieldCopy(c,o,source)).join('\n'),authoredLesson?.controls].filter(Boolean).join('\n\n')||'No inputs are documented for this command. Use its current help and availability information before running it.';
+ const example=currentExample(c,source),authored=authoredLesson?.steps??source?.tutorial?.steps??[];
  const steps=boundedSteps(authored.length?authored:[`Find ${c.registered} in Discord’s command picker.`,c.options.length?'Review the required and optional fields below.':'Read the command’s current availability and displayed controls.',`Review this example without executing it: ${example}`,'Exit this private walkthrough before using the real command. This walkthrough grants no rewards and changes no server state.']);
- return{purpose,fields,example,steps};
+ return{purpose,fields,example,steps,completion:authoredLesson?.completion??'Return to the command directory for the current help and availability.'};
 }

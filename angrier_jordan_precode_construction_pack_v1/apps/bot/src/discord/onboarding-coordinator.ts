@@ -101,10 +101,16 @@ export class DiscordOnboardingCoordinator {
     const parts=interaction.customId.split(':');
     const categoryKey=parts[2]??'';const segmentIndex=Number(parts[3]??'0');
     await interaction.deferUpdate();
+    if(categoryKey==='_category'){
+      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),key=interaction.values[0];
+      if(!state.panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
+      await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),false,key));return;
+    }
     const member=await interaction.guild.members.fetch(interaction.user.id);
     const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
     const category=stateBefore.panel.categories.find(c=>c.key===categoryKey);
-    if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND',`Unknown role category ${categoryKey}.`);
+    if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
+    if(!Number.isInteger(segmentIndex)||segmentIndex<0||segmentIndex>=Math.ceil(category.options.filter(o=>o.enabled&&!o.archived).length/25))throw new DomainError('ROLE_PAGE_STALE','These choices are no longer available. Reopen /roles.');
     const visibleOptions=category.options.filter(o=>o.enabled&&!o.archived);
     const segmentRoleIds=new Set(visibleOptions.slice(segmentIndex*25,segmentIndex*25+25).map(o=>o.roleId));
     const current=stateBefore.selections.filter(x=>x.active&&x.categoryKey===categoryKey).map(x=>x.roleId);
@@ -113,7 +119,7 @@ export class DiscordOnboardingCoordinator {
     const touched=[...new Set([...plan.addRoleIds,...plan.removeRoleIds])];
     for(const id of touched){
       const role=interaction.guild.roles.cache.get(id);
-      if(!role)throw new DomainError('ROLE_MISSING',`A configured role no longer exists: ${id}`);
+      if(!role)throw new DomainError('ROLE_MISSING','A configured role no longer exists. Ask staff to update this category.');
       if(role.managed||!role.editable)throw new DomainError('ROLE_UNMANAGEABLE',`Angrier Jordan cannot manage ${role.name}.`);
       if(plan.addRoleIds.includes(id)&&role.permissions.bitfield!==0n)throw new DomainError('ROLE_HAS_PERMISSIONS',`${role.name} has Discord permissions and cannot be self-selected.`);
     }
@@ -128,15 +134,19 @@ export class DiscordOnboardingCoordinator {
       throw error;
     }
     const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-    await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),false));
+    await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),false,categoryKey));
   }
 
-  private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true){
+  private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){
     const selected=new Set(selectedRoleIds);
     const components:Array<TextDisplayBuilder|ActionRowBuilder<StringSelectMenuBuilder>>=[];
-    for(const category of panel.categories){
+    if(panel.categories.length)components.push(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId('roles:select:_category').setPlaceholder('Choose a role category').addOptions(panel.categories.slice(0,25).map(c=>({label:c.label,value:c.key,default:c.key===categoryKey,description:c.mode==='single'?'Choose one, or clear your selection':'Choose several, or clear your selections'})))));
+    else components.push(new TextDisplayBuilder().setContent('Role categories have not been configured yet. Please check back after staff completes setup.'));
+    for(const category of panel.categories.filter(c=>c.key===categoryKey)){
       const options=category.options.filter(o=>o.enabled&&!o.archived);
       if(!options.length){components.push(new TextDisplayBuilder().setContent(`**${category.label}**\n_No options configured yet._`));continue;}
+      const current=options.filter(o=>selected.has(o.roleId)).map(o=>o.label);
+      components.push(new TextDisplayBuilder().setContent(`**${category.label} · ${category.mode==='single'?'Choose one':'Choose several'}**\nCurrent: ${current.join(', ')||'No selections'}. Clear the menu to remove selections.`));
       for(let segment=0;segment<Math.ceil(options.length/25);segment++){
         const page=options.slice(segment*25,segment*25+25);
         const label=Math.ceil(options.length/25)>1?`${category.label} (${segment+1}/${Math.ceil(options.length/25)})`:category.label;

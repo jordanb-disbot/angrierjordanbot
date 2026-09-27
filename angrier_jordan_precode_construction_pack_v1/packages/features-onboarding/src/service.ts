@@ -69,18 +69,18 @@ export class OnboardingService {
   async rolePanel(guildId:string,userId:string):Promise<{panel:SelfRolePanelDefinition;selections:SelfRoleSelection[]}>{
     await this.repository.ensureMember(guildId,userId);
     const panel=await this.repository.getSelfRolePanel(guildId);
-    if(!panel||!panel.enabled)throw new DomainError('ROLE_PANEL_DISABLED','The role panel is not currently available.');
+    if(!panel||!panel.enabled)throw new DomainError('ROLE_PANEL_DISABLED','Self-role setup is not complete yet. Please check back after staff configures the panel.');
     return {panel,selections:await this.repository.listSelfRoleSelections(guildId,userId)};
   }
 
   async planRoleCategoryUpdate(input:{guildId:string;userId:string;categoryKey:string;selectedRoleIds:readonly string[]}):Promise<RoleSelectionDelta>{
     const {panel,selections}=await this.rolePanel(input.guildId,input.userId);
     const category=panel.categories.find(c=>c.key===input.categoryKey);
-    if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND',`Unknown role category ${input.categoryKey}.`);
+    if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This role category is no longer available. Reopen /roles.');
     const requested=[...new Set(input.selectedRoleIds)];
     if(category.mode==='single'&&requested.length>1)throw new DomainError('ROLE_CATEGORY_SINGLE_CHOICE',`${category.label} allows at most one selection.`);
     const allowed=new Set(category.options.filter(o=>o.enabled&&!o.archived).map(o=>o.roleId));
-    for(const roleId of requested)if(!allowed.has(roleId))throw new DomainError('ROLE_OPTION_NOT_AVAILABLE',`Role ${roleId} is not selectable in ${category.label}.`);
+    for(const roleId of requested)if(!allowed.has(roleId))throw new DomainError('ROLE_OPTION_NOT_AVAILABLE',`A selected role is no longer available in ${category.label}. Reopen /roles.`);
     const before=selections.filter(s=>s.categoryKey===category.key&&s.active).map(s=>s.roleId);
     const beforeSet=new Set(before),afterSet=new Set(requested);
     return {categoryKey:category.key,addRoleIds:requested.filter(x=>!beforeSet.has(x)),removeRoleIds:before.filter(x=>!afterSet.has(x)),selectedRoleIds:requested};

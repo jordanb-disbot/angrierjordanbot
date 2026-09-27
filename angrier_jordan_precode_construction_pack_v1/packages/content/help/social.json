@@ -8,7 +8,7 @@
   ],
   "body": "Choose a reaction by its searchable name. Targeted reactions require an eligible member. Roast privacy is checked before publication and again for the one-use Roast Back. Notmad is server-owner only. Haiku is an exact joke, not a profiling tool.",
   "fields": {
-    "action": "Search all38 approved reactions; aliases like touch grass and type shit are supported.",
+    "action": "Search all 38 approved reactions; aliases like touch grass and type shit are supported.",
     "member": "Choose the target member when required by the selected reaction."
   },
   "examples": [
