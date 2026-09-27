@@ -169,23 +169,27 @@ export class DiscordJailCoordinator {
   private async handleSend(interaction: ChatInputCommandInteraction) {
     const actor = await interaction.guild!.members.fetch(interaction.user.id);
     await this.requireStaff(actor, 'recliner');
-    const target = await this.targetMember(interaction, true);
+    let target = await this.targetMember(interaction, true);
     const duration = interaction.options.getString('duration', true);
     const reason = interaction.options.getString('reason', true);
     await this.validateTarget(actor, target);
 
     const suspended = await this.prepareAdministratorSuspension(actor, target);
+    const accessId = await roleId(this.config, target.guild.id, 'roles.member_access');
     await this.reconcileGuild(interaction.guild!);
     const jailed = await this.requireJailedRole(interaction.guild!);
     const removedRoleIds: string[] = [];
 
     let result: Awaited<ReturnType<JailService['send']>>;
     try {
-      for (const id of suspended) {
-        await target.roles.remove(id, 'Temporary staff/admin role suspension for moderation Hotseat.');
+      // Explicit member-access allows override a different role's deny. Suspend access
+      // as well as approved admin roles, using returned members rather than gateway cache timing.
+      const toRemove = new Set([...suspended, ...(accessId && target.roles.cache.has(accessId) ? [accessId] : [])]);
+      for (const id of toRemove) {
+        target = await target.roles.remove(id, 'Temporary role suspension for moderation Hotseat.');
         removedRoleIds.push(id);
       }
-      await target.roles.add(jailed, 'Moderation Hotseat confinement.');
+      target = await target.roles.add(jailed, 'Moderation Hotseat confinement.');
 
       if (target.permissions.has(PermissionFlagsBits.Administrator)) {
         throw new DomainError('ADMINISTRATOR_BYPASS', 'This member still has Administrator permission, so Hotseat confinement would not be effective.');
@@ -203,12 +207,14 @@ export class DiscordJailCoordinator {
         actorUserId: actor.id,
         duration,
         reason,
-        suspendedRoleIds: removedRoleIds,
+        // Member access is restored by onboarding after durable release and Rules checks,
+        // never by the unconditional suspended-admin-role restoration path.
+        suspendedRoleIds: removedRoleIds.filter(id => id !== accessId),
       });
     } catch (error) {
-      await target.roles.remove(jailed, 'Rolling back incomplete Hotseat confinement.').catch(() => undefined);
+      target = await target.roles.remove(jailed, 'Rolling back incomplete Hotseat confinement.').catch(() => target);
       for (const id of removedRoleIds) {
-        await target.roles.add(id, 'Rolling back incomplete Hotseat confinement.').catch(() => undefined);
+        target = await target.roles.add(id, 'Rolling back incomplete Hotseat confinement.').catch(() => target);
       }
       throw error;
     }
