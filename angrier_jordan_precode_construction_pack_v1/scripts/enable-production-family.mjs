@@ -14,13 +14,18 @@ export function familyTarget(env){
  return target;
 }
 
-export async function enableProductionFamily({db,config,get,write=console.log}){
+export async function enableProductionFamily({db,config,get,write=console.log,onStage=()=>{}}){
+ onStage('guild');
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
+ onStage('schema');
  check(config.definition(FEATURE)?.type==='boolean','FAMILY_SCHEMA_INVALID');
+ onStage('channel_config');
  const channel=(await config.getWithMetadata(GUILD,'channels.bot_channel')).value;
  check(typeof channel==='string'&&/^[1-9]\d{16,19}$/.test(channel),'FAMILY_BOT_CHANNEL_MISSING');
+ onStage('channel_discord');
  const discordChannel=await get(`/channels/${channel}`);
  check(discordChannel?.id===channel&&discordChannel.guild_id===GUILD&&[0,5].includes(discordChannel.type),'FAMILY_BOT_CHANNEL_INVALID');
+ onStage('policy');
  const values=new Map();
  for(const key of POLICY){
   const definition=config.definition(key),value=(await config.getWithMetadata(GUILD,key)).value;
@@ -29,9 +34,12 @@ export async function enableProductionFamily({db,config,get,write=console.log}){
  }
  check(values.get('family.auction_min_hours')<=values.get('family.auction_max_hours'),'FAMILY_POLICY_INVALID');
  check(values.get('family.cooldown_base_seconds')<=values.get('family.cooldown_max_seconds'),'FAMILY_POLICY_INVALID');
+ onStage('feature_read');
  const before=await config.getWithMetadata(GUILD,FEATURE);
  check(typeof before.value==='boolean','FAMILY_FEATURE_INVALID');
+ onStage('feature_write');
  if(before.value!==true)await config.set({guildId:GUILD,key:FEATURE,value:true,expectedVersion:before.version,source:'operator.production-family-enablement',requestId:randomUUID()});
+ onStage('feature_verify');
  const after=await config.getWithMetadata(GUILD,FEATURE);
  check(after.value===true&&(before.value===true||after.version>before.version),'FAMILY_FEATURE_VERIFY_FAILED');
  write('PASS: production environment, guild, private Railway database, Family secret, and Discord bot channel verified.');
@@ -40,18 +48,19 @@ export async function enableProductionFamily({db,config,get,write=console.log}){
 }
 
 export async function main(env=process.env,{connect,fetcher=fetch,write=console.log,error=console.error}={}){
- let db;
+ let db,stage='target';
  try{
   const target=familyTarget(env);
+  stage='connect';
   const connection=connect?await connect(target):await connectProduction(target);db=connection.db;
   const get=async path=>{
    const response=await fetcher('https://discord.com/api/v10'+path,{method:'GET',headers:{Authorization:'Bot '+env.DISCORD_TOKEN},signal:AbortSignal.timeout(15000)});
    check(response.ok,'DISCORD_READ_FAILED');return response.json();
   };
-  await enableProductionFamily({...connection,get,write});
+  await enableProductionFamily({...connection,get,write,onStage:value=>{stage=value;}});
  }catch(cause){
   const safe=/^[A-Z][A-Z0-9_]+$/.test(cause?.message??'')?cause.message:'PRODUCTION_FAMILY_FAILED';
-  error(`FAIL: ${safe}. No exception details displayed.`);return 1;
+  error(`FAIL: ${safe} at ${stage}. No exception details displayed.`);return 1;
  }finally{if(db)try{await db.$disconnect();}catch{error('FAIL: DATABASE_DISCONNECT_FAILED.');return 1;}}
  return 0;
 }
