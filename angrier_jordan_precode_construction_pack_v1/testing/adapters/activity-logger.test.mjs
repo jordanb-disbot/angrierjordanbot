@@ -17,7 +17,7 @@ function fixture({publicView=false,nonAdminView=false,missing=false}={}){
  const message=(id,content,channelId=OTHER)=>({id,content,channelId,guild,author:{id:'person',bot:false},url:`https://discord.com/channels/${GUILD}/${channelId}/${id}`});
  return{logger,guild,channel,sends,message};
 }
-const text=f=>f.sends.map(row=>JSON.stringify(row.embeds[0].toJSON())).join('\n');
+const text=f=>f.sends.map(row=>row.files[0].description).join('\n');
 
 test('preflight accepts only a private, writable staff channel',async()=>{
  await fixture().logger.preflight(fixture().guild);

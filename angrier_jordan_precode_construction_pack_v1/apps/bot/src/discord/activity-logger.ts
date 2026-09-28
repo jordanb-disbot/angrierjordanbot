@@ -1,9 +1,12 @@
 import {
-  ChannelType,EmbedBuilder,PermissionFlagsBits,
+  ChannelType,PermissionFlagsBits,
   type Guild,type GuildAuditLogsEntry,type GuildBan,type GuildBasedChannel,type GuildMember,type PartialGuildMember,type Message,type PartialMessage,
   type Role,type VoiceState,
 } from 'discord.js';
 import type {ConfigService} from '../../../../packages/core/src/index.js';
+import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+import {createDisplay,wideDisplay} from './wide-display.js';
+import {renderActivityCard} from './activity-card.js';
 
 type Snapshot={authorId:string;channelId:string;content:string;at:number};
 const limit=(value:string,max=900)=>value.length>max?`${value.slice(0,max-1)}…`:value;
@@ -46,8 +49,8 @@ export class DiscordActivityLogger {
 
   private async post(guild:Guild,title:string,body:string,color=0x0EA5A6){
     const channel=await this.destination(guild);if(!channel)return;
-    const embed=new EmbedBuilder().setColor(color).setTitle(title).setDescription(limit(body,3800)).setTimestamp(new Date(this.now())).setFooter({text:'ANGRIER JORDAN · SERVER ACTIVITY'});
-    await channel.send({embeds:[embed],allowedMentions:{parse:[]}});
+    const accent='#'+color.toString(16).padStart(6,'0').toUpperCase(),svg=renderActivityCard(title,limit(body,3800),accent),name='staff-activity-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+    await channel.send(createDisplay(wideDisplay([{name,data:await rasterizeSvg(svg),width:1200,height:Number(/<svg[^>]*height="(\d+)"/.exec(svg)?.[1]??0),description:(title+' · '+body).slice(0,1024)}])));
   }
 
   private remember(message:Message|PartialMessage){

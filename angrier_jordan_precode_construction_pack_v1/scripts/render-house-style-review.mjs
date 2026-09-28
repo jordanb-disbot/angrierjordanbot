@@ -6,6 +6,8 @@ import {renderEconomyPresentation} from '../dist/packages/features-economy/src/p
 import {renderCommunity,superlativeReviewFixture} from '../dist/packages/features-community/src/render.js';
 import {renderSocialResponse} from '../dist/packages/features-social/src/render.js';
 import {learningWindow} from '../dist/packages/features-learning/src/visual.js';
+import {renderActivityCard} from '../dist/apps/bot/src/discord/activity-card.js';
+import {renderChairism} from '../dist/packages/features-chairisms/src/render.js';
 
 const out='review-house-style-2026-09-28';await mkdir(out,{recursive:true});
 const avatar='data:image/png;base64,'+(await readFile('review-profiles/fixture-profile.png')).toString('base64');
@@ -24,7 +26,13 @@ const samples={
  giveaway:renderCommunity({...superlative,kind:'giveaway',state:'OPEN',phase:'open',title:'A gift from the lounge',categories:[],choices:[],prize:{kind:'custom',label:'A night in the VIP chair'},fee:'0',winnerCount:1,entryCount:12}),
  'social-roast':renderSocialResponse('roast','<@1> challenged <@2> to find a better seat.',{'1':'Morgan','2':'Riley'},socialPeople),
  'social-compliment':renderSocialResponse('compliment','<@1> made the lounge a better place today.',{'1':'Morgan'},socialPeople.slice(0,1)),
- 'utility-help':learningWindow('Help','Choose a feature to learn the rules, controls, and what happens next.')
+ 'utility-help':learningWindow('Help','Choose a feature to learn the rules, controls, and what happens next.'),
+ 'utility-directory':learningWindow('Your command directory','GAMES\n/fight  ·  /wyr  ·  /blackjack\n\nCOMMUNITY\n/chairisms  ·  /introductions  ·  /roles\n\nSearch with /help command. Page 1 of 3.'),
+ 'utility-activity-snapshot':learningWindow('Chat activity snapshot','CHAT COUNTS · week\n\n128 member messages\n3,680 words\n\nActivity totals only; this does not summarize the conversation.'),
+ 'moderation-message-edited':renderActivityCard('MESSAGE EDITED','<@Morgan> · <#staff-review> · Jump to message\nBefore\nThe original lounge message.\nAfter\nThe clarified lounge message.','#F4C542'),
+ 'moderation-message-deleted':renderActivityCard('MESSAGE DELETED','<@Riley> · <#staff-review> · Message 12345\nText\nA deleted message retained for the admin-only activity log.','#B42318'),
+ 'moderation-member-updated':renderActivityCard('MEMBER UPDATED','<@Alex>\nRole added: Chaise Lounge\nNickname: Alex → Captain Alex','#10B981'),
+ chairisms:renderChairism({quote:{userId:'fixture',displayName:'Morgan',text:'I came for the conversation. I stayed for the chair.',timestamp:'2026-09-28T18:00:00Z',avatarDataUri:avatar}},{number:42})
 };
 const items=[];for(const[name,svg]of Object.entries(samples)){const data=await rasterizeSvg(svg),desktop=name+'-desktop.png',mobile=name+'-mobile.png';await writeFile(out+'/'+desktop,data);await writeFile(out+'/'+mobile,await sharp(data).resize({width:390}).png().toBuffer());items.push({name,desktop,mobile});}
 const html='<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Angrier Jordan · House style review</title><style>body{background:#0B1220;color:#E6EAF0;font:18px Inter,Arial,sans-serif;max-width:1220px;margin:auto;padding:24px}h1,h2{font-family:"Space Grotesk",sans-serif}section{padding:18px;margin:24px 0;border:1px solid #374151;border-radius:18px;background:#051822}img{display:block;max-width:100%;height:auto;margin:16px 0}.mobile{width:390px}</style><h1>Same house style · rotating approved accents</h1><p>Fictional local fixtures rendered through runtime code. No production deployment.</p>'+items.map(i=>`<section><h2>${i.name}</h2><img src="${i.desktop}"><details><summary>Mobile width</summary><img class="mobile" src="${i.mobile}"></details></section>`).join('');
