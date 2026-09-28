@@ -44,7 +44,7 @@ export class PrismaSoloRepository {
   if(win){const prefix='solo.'+gameKey,records:Record<string,string>={[prefix+'.wins']:String((old?.wins??0)+1)};if(data.puzzle.game==='hangman')records[prefix+'.longest_streak']=String(next.longestStreak);if(next.fastestMs!==undefined)records[prefix+'.fastest_ms']=String(next.fastestMs);if(next.fewestGuesses!==undefined)records[prefix+'.fewest_guesses']=String(next.fewestGuesses);await tx.scheduledJob.create({data:{guildId:s.guildId,jobType:'records.observe',executionKey:'solo:records:'+s.id,dueAt:now,payload:{guildId:s.guildId,userId,records,occurredAt:now.toISOString()}}});}
   await new SessionEngine(new PrismaTransactionSessions(tx)).transition<SoloData>(s.id,['OPEN'],'CLOSED',s=>({...s,data:finished,updatedAt:now}));
  }
- async view(id:string){const row=await this.get(id);return{id:row.id,guildId:row.guildId,channelId:row.channelId,messageId:row.messageId,ownerId:row.ownerUserId!,version:row.version,state:row.state,expiresAt:row.expiresAt,paid:row.data.paid,elapsedMs:row.data.elapsedMs,puzzle:puzzleView(row.data.puzzle)};}
+ async view(id:string){const row=await this.get(id);return{id:row.id,guildId:row.guildId,channelId:row.channelId,messageId:row.messageId,ownerId:row.ownerUserId!,version:row.version,state:row.state,expiresAt:row.expiresAt,paid:row.data.paid,reward:row.data.reward,dailyRewardCap:row.data.dailyRewardCap,elapsedMs:row.data.elapsedMs,puzzle:puzzleView(row.data.puzzle)};}
  async stats(guildId:string,userId:string){return this.db.memberGameStats.findMany({where:{guildId,userId,gameKey:{in:['hangman','wordscramble','mastermind','minesweeper.4','minesweeper.5']}}});}
 }
 export type SoloView=Awaited<ReturnType<PrismaSoloRepository['view']>>;

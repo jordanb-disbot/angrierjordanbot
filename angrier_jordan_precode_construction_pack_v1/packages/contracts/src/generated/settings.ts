@@ -173,6 +173,22 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
+    "key": "channels.one_word_story_channel",
+    "section": "channels_roles",
+    "type": "discord_channel",
+    "default": null,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Dedicated channel for One Word Story; other party games use the games channel.",
+    "risk": "normal",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
     "key": "channels.counting_channel",
     "section": "channels_roles",
     "type": "discord_channel",

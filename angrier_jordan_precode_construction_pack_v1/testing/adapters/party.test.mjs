@@ -5,6 +5,18 @@ import {renderParty} from '../../dist/packages/features-party/src/render.js';
 const forbidden=new Proxy({},{get:()=>()=>{throw Error('Repository not authorized');}}),config=overrides=>({get:async(_g,k)=>({...{'features.party_games':true,'channels.games_channel':'games'},...overrides})[k]});
 const i=()=>({guildId:'g',guild:{},channelId:'games',user:{id:'u'},id:'request',commandName:'wwyd',calls:[],options:{getString:()=>null},isChatInputCommand:()=>true,reply:async function(p){this.calls.push(p)},deferReply:async function(){this.deferred=true;},editReply:async function(p){this.calls.push(p)},isModalSubmit:()=>false,isButton:()=>false});
 test('party and WYR guard flags, configured channel and containment before reads',async()=>{for(const C of [DiscordPartyCoordinator,DiscordWyrCoordinator])for(const[o,eligible,pattern]of [[{'features.party_games':false},true,/not enabled/],[{'channels.games_channel':'other'},true,/games channel/],[{},false,/restricted/]]){const x=i(),coordinator=new C(forbidden,config(o),async()=>eligible);await(C===DiscordPartyCoordinator?coordinator.handle(x):coordinator.handleSlash(x));assert.match(x.calls[0].content,pattern);}});
+test('One Word Story uses its dedicated channel while other party games remain in the main games channel',async()=>{
+ const cfg=config({'channels.one_word_story_channel':'reading'}),starts=[],repo={start:async(_context,options)=>{starts.push(options.game);return{sessionId:'story'};}};
+ const story={...i(),channelId:'reading',commandName:'onewordstory',options:{getInteger:()=>20}};
+ await new DiscordPartyCoordinator(repo,cfg,async()=>true).handle(story);
+ assert.deepEqual(starts,['onewordstory']);assert.match(story.calls[0].content,/ready/);
+ const wrong={...i(),commandName:'onewordstory',options:{getInteger:()=>20}};
+ await new DiscordPartyCoordinator(forbidden,cfg,async()=>true).handle(wrong);
+ assert.match(wrong.calls[0].content,/games channel/);
+ const other={...i(),channelId:'reading',commandName:'wwyd'};
+ await new DiscordPartyCoordinator(forbidden,cfg,async()=>true).handle(other);
+ assert.match(other.calls[0].content,/games channel/);
+});
 const view={id:'round',guildId:'g',channelId:'games',messageId:'m',ownerId:'u',state:'OPEN',version:0,expiresAt:new Date('2026-09-25T12:01:00Z'),extensionUsed:false,game:'wwyd',phase:'vote',category:'Casual',prompt:'A <strange> choice & a chair',options:[{id:'a',text:'Option A'},{id:'b',text:'Option B'}],submissionCount:0,submissions:{},words:[],round:0};
 test('party renderer uses saved escaped prompt without ballot counts or voter identities',()=>{const svg=renderParty(view);assert.match(svg,/A &lt;strange&gt; choice &amp; a chair/);assert.match(svg,/totals hidden/);assert.doesNotMatch(svg,/1 votes|voterUserId/);});
 test('FMK public vote has Agree/Disagree and local Play Again, with no winner claim',async()=>{const v={...view,game:'fmk',options:[{id:'agree',text:'Agree'},{id:'disagree',text:'Disagree'}],trio:[{userId:'a',name:'A'},{userId:'b',name:'B'},{userId:'c',name:'C'}],assignments:{fuck:'a',marry:'b',kill:'c'},subjectCounters:{a:{fucked:1,married:0,killed:0},b:{fucked:0,married:1,killed:0},c:{fucked:0,married:0,killed:1}}};const payload=await new DiscordPartyCoordinator(forbidden,config({}),async()=>true).payload(v),labels=payload.components.flatMap(r=>(r.toJSON().components??[]).map(c=>c.label));assert.ok(labels.includes('Agree'));assert.ok(labels.includes('Disagree'));assert.ok(labels.includes('Play Again'));assert.match(renderParty(v),/Agree or Disagree/);assert.equal(payload.embeds.length,0);assert.deepEqual(payload.allowedMentions,{parse:[]});});

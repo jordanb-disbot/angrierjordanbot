@@ -971,7 +971,7 @@ export const COMMANDS = [
       "member"
     ],
     "channels": [
-      "games_channel"
+      "one_word_story_channel"
     ],
     "options": [
       {

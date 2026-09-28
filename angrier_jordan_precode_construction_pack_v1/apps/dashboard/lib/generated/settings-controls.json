@@ -1,5 +1,5 @@
 {
-  "count": 257,
+  "count": 258,
   "controls": [
     {
       "key": "server.timezone",
@@ -171,6 +171,23 @@
       "section": "channels_roles",
       "label": "Games Channel",
       "description": "Resolved Discord channel ID.",
+      "kind": "channel-select",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "channels.one_word_story_channel",
+      "section": "channels_roles",
+      "label": "One Word Story Channel",
+      "description": "Dedicated channel for One Word Story; other party games use the games channel.",
       "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",

@@ -593,7 +593,7 @@
       "completion": "You can distinguish submitting, voting and a tied runoff in Finish the Sentence. Next: start a new round only when you can follow its phases."
     },
     "onewordstory": {
-      "purpose": "Build a shared story one word at a time in the games channel. Contributors alternate, and the story closes when it reaches the chosen length.",
+      "purpose": "Build a shared story one word at a time in the dedicated story channel. Contributors alternate, and the story closes when it reaches the chosen length.",
       "controls": "Set optional length from 10–200 words, then use Add One Word. Submit a single word and wait for another member’s accepted contribution before adding again. Details shows the story context.",
       "steps": [
         "Choose a story length that fits the participants’ time.",

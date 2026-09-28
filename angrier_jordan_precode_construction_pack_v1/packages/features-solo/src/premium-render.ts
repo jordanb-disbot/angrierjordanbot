@@ -9,9 +9,9 @@ export interface SoloPortrait {name:string;avatarData:string;}
 export function renderPremiumSolo(v:SoloView,title:string,member?:SoloPortrait){
  lounge??='data:image/png;base64,'+readFileSync(new URL('../../../production/event_art/v5/lounge-stage-runtime.png',import.meta.url)).toString('base64');
  chair??='data:image/png;base64,'+readFileSync(new URL('../../../production/event_art/v3/race_chair_1.png',import.meta.url)).toString('base64');
- const p=v.puzzle,closed=p.outcome!=='playing',accent=p.outcome==='won'?'#10B981':closed?'#F4C542':'#3B82F6';
+ const p=v.puzzle,closed=p.outcome!=='playing',rewardsEnabled=v.reward!=='0',accent=p.outcome==='won'?'#10B981':closed?'#F4C542':'#3B82F6';
  let b=t(600,48,'ANGRIER JORDAN · THE PUZZLE LOUNGE',22,'#F4C542')+t(600,112,title,48,'#E6EAF0',true);
- b+=box(35,140,1130,95,accent)+t(620,181,member?.name?.slice(0,45)??'Your solo challenge',28)+t(620,215,closed?p.outcome.toUpperCase()+' · '+v.paid+' Ottomans awarded':'ROUND ACTIVE · NO ENTRY FEE',23,accent);
+ b+=box(35,140,1130,95,accent)+t(620,181,member?.name?.slice(0,45)??'Your solo challenge',28)+t(620,215,closed?p.outcome.toUpperCase()+(rewardsEnabled?' · '+v.paid+' Ottomans awarded':' · JUST FOR FUN'):'ROUND ACTIVE · NO ENTRY FEE',23,accent);
  if(member?.avatarData&&/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(member.avatarData)&&member.avatarData.length<1400000)b+=`<defs><clipPath id="avatar"><circle cx="97" cy="187" r="33"/></clipPath></defs><image href="${member.avatarData}" x="64" y="154" width="66" height="66" clip-path="url(#avatar)"/><circle cx="97" cy="187" r="35" fill="none" stroke="#F4C542" stroke-width="3"/>`;
  b+=box(35,256,1130,480);
  if(p.game==='minesweeper'){
@@ -32,6 +32,6 @@ export function renderPremiumSolo(v:SoloView,title:string,member?:SoloPortrait){
   wrapText(history,1010,27).slice(0,4).forEach((s,n)=>b+=t(600,603+n*31,s,25));
  }
  if(p.outcome==='won'){for(let n=0;n<16;n++){const x=55+n*72,y=124+(n%3)*9;b+=`<path d="M${x} ${y-5}v10m-5-5h10" stroke="#F4C542" stroke-width="2"/>`;}b+=t(1080,215,'VICTORY',21,'#10B981');}
- b+=box(35,756,1130,99,'#F4C542')+t(600,796,closed?'ROUND COMPLETE · PLAY AGAIN BELOW':'USE THE CONTROLS BELOW TO PLAY',28,'#F4C542',true)+t(600,833,closed?'A fresh puzzle awaits.':v.expiresAt?'Closes '+v.expiresAt.toISOString().slice(11,19)+' UTC · Shared daily reward cap':'Shared daily reward cap',24);
+ b+=box(35,756,1130,99,'#F4C542')+t(600,796,closed?'ROUND COMPLETE · PLAY AGAIN BELOW':'USE THE CONTROLS BELOW TO PLAY',28,'#F4C542',true)+t(600,833,closed?'A fresh puzzle awaits.':v.expiresAt?'Closes '+v.expiresAt.toISOString().slice(11,19)+' UTC · '+(rewardsEnabled?'Shared daily reward cap':'No payouts'):(rewardsEnabled?'Shared daily reward cap':'No payouts'),24);
  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="895" viewBox="0 0 1200 895"><defs><linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#26313B" stop-opacity=".94"/><stop offset=".32" stop-color="#18232D" stop-opacity=".97"/><stop offset=".65" stop-color="#101C26" stop-opacity=".96"/><stop offset="1" stop-color="#071521" stop-opacity=".98"/></linearGradient></defs><image href="${lounge}" width="1200" height="895" preserveAspectRatio="xMidYMid slice"/><rect width="1200" height="895" fill="#081220" opacity=".48"/>${b}<rect x="7" y="7" width="1186" height="881" rx="26" fill="none" stroke="#3B82F6" stroke-width="3"/><rect x="18" y="18" width="1164" height="859" rx="20" fill="none" stroke="#F4C542" stroke-width="2"/></svg>`;
 }

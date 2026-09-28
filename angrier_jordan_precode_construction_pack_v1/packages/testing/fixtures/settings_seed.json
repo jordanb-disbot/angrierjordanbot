@@ -9,6 +9,7 @@
   "channels.main_chat": null,
   "channels.bot_channel": null,
   "channels.games_channel": null,
+  "channels.one_word_story_channel": null,
   "channels.counting_channel": null,
   "channels.last_letter_channel": null,
   "channels.staff_log": null,
