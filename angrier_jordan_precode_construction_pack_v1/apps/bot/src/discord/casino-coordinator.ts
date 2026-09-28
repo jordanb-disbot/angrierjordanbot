@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {displayFrames,wideDisplay,type DisplayFrame,type DisplayControl} from './wide-display.js';
 import {memberArt} from './member-art.js';
+import {DisposableCardLifecycle} from './card-lifecycle.js';
 import type {CasinoVisual} from '../../../../packages/features-casino/src/game-art.js';
 import {renderCasinoResult} from '../../../../packages/features-casino/src/render.js';
 import casinoHelp from '../../../../packages/content/help/casino.json' with {type:'json'};
@@ -13,6 +14,7 @@ import {cardLabel,handValue,type CasinoGame,type ChairSymbol} from '../../../../
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export const CASINO_COMMANDS=new Set(['casino','lottery']);
 export class DiscordCasinoCoordinator {
+ private readonly settledCards=new DisposableCardLifecycle(90_000);
  constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  private identities=new Map<string,{expires:number;value:ReturnType<typeof memberArt>}>();
  private identity(client:Client,guildId:string,userId:string){const key=guildId+':'+userId,old=this.identities.get(key);if(old&&old.expires>Date.now())return old.value;const value=memberArt(client,guildId,userId);this.identities.set(key,{expires:Date.now()+60000,value});if(this.identities.size>64)this.identities.delete(this.identities.keys().next().value!);return value;}
@@ -65,6 +67,7 @@ export class DiscordCasinoCoordinator {
   }else if(i.isButton()&&parts[1]==='act')id=(await this.casino.action(c,parts[3]!,Number(parts[4]),parts[5] as 'hit'|'stand'|'double'|'split',policy)).sessionId;
   else throw new DomainError('CASINO_CONTROL','Open a casino game to continue.');
   const message=await i.editReply(await this.roundPayload(id,i.client,i.isButton()&&i.customId.startsWith('casino:act:')?i.message?.attachments?.values():undefined));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
+  const round=await this.casino.get(id);if(round.state==='CLOSED'&&typeof message.delete==='function')await this.settledCards.track(i.guildId+':'+i.channelId+':'+i.user.id+':casino',message);
  }catch(error){const content=error instanceof DomainError?error.message:'The wager could not be completed. Your saved round can be checked before retrying.';if(i.deferred){if(!validated){if(!(i.isButton()&&i.customId.startsWith('casino:act:')||i.isModalSubmit()&&i.isFromMessage()))await i.deleteReply();await i.followUp({ephemeral:true,content});}else if(i.isButton()&&i.customId.startsWith('casino:act:'))await i.followUp({ephemeral:true,content});else await i.editReply(await this.presentation({title:'Wager unavailable',subtitle:'No new result confirmed',amount:'',amountLabel:'',details:[{label:'What happened',value:content}]}));}else await i.reply({ephemeral:true,content});}}
  private async roundPayload(id:string,client?:Client,existing?:Iterable<{id:string;name:string}>){
   const round=await this.casino.get(id),policy=await this.policy(round.guildId),ownerId=round.ownerUserId!,d=round.data,closed=round.state==='CLOSED';
