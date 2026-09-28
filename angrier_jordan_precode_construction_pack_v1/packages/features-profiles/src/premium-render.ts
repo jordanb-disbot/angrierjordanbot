@@ -27,18 +27,18 @@ export function renderPremiumProfile(data:{name:string;avatarData?:string;highli
  body+=panel(45,85,1110,hero,GOLD)+portrait(data.name,data.avatarData,150,104,180,'identity')+name.svg+text(270,170+name.height+19,'A seat in the Chairs',25,MUTED,false,'start');
  const highlights=(data.highlights??[]).slice(0,3);
  highlights.forEach((h,n)=>{const x=270+n*288;body+=text(x,313,h.label,25,MUTED,true,'start')+text(x,347,h.value,38,GOLD,true,'start');});
- const section=(s:{label:string;value:string},x:number,y:number,w:number)=>{
-  let content=text(x+32,y+57,s.label,38,GOLD,true,'start'),cursor=y+85;
+ const section=(s:{label:string;value:string},x:number,y:number,w:number,accent:string)=>{
+  let content=text(x+32,y+57,s.label,38,accent,true,'start'),cursor=y+85;
   const rows=s.value.split('\n').filter(Boolean).filter(row=>!/^Activity this month \/ all time$/i.test(row));
   for(const [n,row]of rows.entries()){
    const split=row.indexOf(':'),label=split>0?row.slice(0,split):'',value=split>0?row.slice(split+1).trim():row;
    const baseline=cursor+39,l=label?block(label,x+32,baseline,300,31,MUTED,false,'start'):undefined,v=block(value,x+(label?355:32),baseline,w-(label?390:64),35,WHITE,false,'start'),h=Math.max(l?.height??0,v.height)+25;
-   content+=`<rect x="${x+18}" y="${cursor}" width="${w-36}" height="${h}" fill="${TEAL}" opacity="${n%2===0?'.055':'.018'}"/><path d="M${x+32} ${cursor}H${x+w-32}" stroke="${MUTED}" stroke-opacity=".18"/>`+(l?.svg??'')+v.svg;cursor+=h;
+   content+=`<rect x="${x+18}" y="${cursor}" width="${w-36}" height="${h}" fill="${accent}" opacity="${n%2===0?'.075':'.025'}"/><path d="M${x+32} ${cursor}H${x+w-32}" stroke="${MUTED}" stroke-opacity=".18"/>`+(l?.svg??'')+v.svg;cursor+=h;
   }
   const height=Math.max(180,cursor-y+22);return {svg:content,height};
  };
  let y=381;
- for(const item of data.sections){const s=section(item,45,y,1110);body+=panel(45,y,1110,s.height,TEAL)+s.svg;y+=s.height+22;}
+ for(const item of data.sections){const label=item.label.toLowerCase(),accent=label.includes('game')||label.includes('community')?'#A469E2':label.includes('economy')||label.includes('family')?brand.palette.emerald:label.includes('honor')||label.includes('showcase')?GOLD:TEAL;const s=section(item,45,y,1110,accent);body+=panel(45,y,1110,s.height,accent)+s.svg;y+=s.height+22;}
  return frame(body,y+10);
 }
 const categoryStyle:Record<string,{title:string;unit:string;accent:string}>={wealth:{title:'Ottoman Elite',unit:'OTTOMANS · WALLET + BANK',accent:GOLD},collections:{title:'Collectors Gallery',unit:'COLLECTION COMPLETION %',accent:brand.palette.emerald},crafting:{title:'Master Chair Builders',unit:'SUCCESSFUL CRAFTS',accent:GOLD},wins:{title:'Champions of the Chairs',unit:'GAME WINS',accent:brand.palette.emerald},gambling:{title:'Casino Honors',unit:'CASINO WINS',accent:GOLD},crime:{title:'Notoriety Board',unit:'SUCCESSFUL ROBBERIES',accent:TEAL},messages:{title:'The Loudest Chairs',unit:'QUALIFYING MESSAGES',accent:TEAL},words:{title:'The Wordsmiths',unit:'QUALIFYING WORDS',accent:TEAL},voice:{title:'Voices of the Lounge',unit:'QUALIFYING VOICE SECONDS',accent:TEAL},spotlight:{title:'Weekly Legends',unit:'SPOTLIGHT AWARDS',accent:GOLD}};
