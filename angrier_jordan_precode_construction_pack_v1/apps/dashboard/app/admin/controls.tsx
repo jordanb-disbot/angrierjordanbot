@@ -9,9 +9,17 @@ const display=(value:unknown)=>value===null?'Not configured':typeof value==='str
 
 export default function SettingsControls({settings,draft,csrf,memberId,isOwner,writesEnabled}:{settings:Control[];draft:ConfigDraft;csrf:string;memberId:string;isOwner:boolean;writesEnabled:boolean}){
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[retry,setRetry]=useState(false),[history,setHistory]=useState<Record<string,Revision[]>>({});
+  const [selectedSection,setSelectedSection]=useState('all'),[query,setQuery]=useState('');
   const lastRequest=useRef<{requestId:string;command:DraftCommand}|null>(null);
   const [values,setValues]=useState<Record<string,unknown>>(()=>Object.fromEntries(settings.map(control=>[control.key,control.value])));
   const sections=[...new Set(settings.map(control=>control.section))];
+  const normalizedQuery=query.trim().toLowerCase();
+  const matchingSettings=settings.filter(control=>{
+    if(selectedSection!=='all'&&control.section!==selectedSection)return false;
+    if(!normalizedQuery)return true;
+    return [control.label,control.key,control.description,control.section].some(value=>value?.toLowerCase().includes(normalizedQuery));
+  });
+  const visibleSections=sections.filter(section=>matchingSettings.some(control=>control.section===section));
   const ownsLock=draft.editorId===memberId;
   const disabled=!writesEnabled||busy;
   async function submit(command:DraftCommand,reuse=false){
@@ -57,8 +65,14 @@ export default function SettingsControls({settings,draft,csrf,memberId,isOwner,w
       </div>}
     </section>
     <div className="operation-status" role="status" aria-live="polite">{message}{retry&&lastRequest.current&&<button disabled={busy} onClick={()=>submit(lastRequest.current!.command,true)}>Retry same request</button>}</div>
-    {sections.map(section=><section id={section} className="window settings-section" key={section}><h2>{section.replaceAll('_',' ')}</h2>
-      {settings.filter(control=>control.section===section).map(control=>{
+    <section className="window settings-browser" aria-label="Browse dashboard settings"><div className="section-title"><div><h2>Settings browser</h2><p className="description">Find a setting, then stage it for review or save low-risk changes live.</p></div><span className="badge">{matchingSettings.length} of {settings.length} visible</span></div>
+      <div className="settings-filter"><label className="settings-search" htmlFor="settings-search"><span>Search settings</span><input id="settings-search" type="search" value={query} placeholder="Name, key, description…" onChange={event=>setQuery(event.target.value)}/></label>
+        <div className="section-filter" aria-label="Filter settings by section"><button type="button" className={selectedSection==='all'?'filter-chip active':'filter-chip'} aria-pressed={selectedSection==='all'} onClick={()=>setSelectedSection('all')}>All settings</button>{sections.map(section=><button type="button" key={section} className={selectedSection===section?'filter-chip active':'filter-chip'} aria-pressed={selectedSection===section} onClick={()=>setSelectedSection(section)}>{section.replaceAll('_',' ')}</button>)}</div>
+      </div>
+      {(query||selectedSection!=='all')&&<button type="button" className="quiet filter-reset" onClick={()=>{setQuery('');setSelectedSection('all')}}>Clear filters</button>}
+    </section>
+    {visibleSections.length?visibleSections.map(section=><section id={section} className="window settings-section" key={section}><h2>{section.replaceAll('_',' ')}</h2>
+      {matchingSettings.filter(control=>control.section===section).map(control=>{
         const id=`setting-${control.key}`,blocked=control.risk==='locked'||control.dashboardWrite==='blocked'||control.kind==='json-editor'||control.editableBy.length===0;
         const live=control.dashboardWrite==='live'&&control.risk==='normal'&&!control.dependsOn?.length;
         return <div className="setting" key={control.key}><div><label htmlFor={id}>{control.label}</label><p className="description" id={`${id}-help`}>{control.description||control.key}</p>
@@ -67,6 +81,6 @@ export default function SettingsControls({settings,draft,csrf,memberId,isOwner,w
             {!blocked&&<div className="actions field-actions">{live&&<button disabled={disabled} onClick={()=>submit({action:'save',key:control.key,value:value(control),baseVersion:control.version})}>Save live</button>}<button disabled={disabled||!ownsLock} onClick={()=>submit({action:'stage',key:control.key,value:value(control),baseVersion:control.version,expectedVersion:draft.version})}>Stage change</button><button className="quiet" disabled={busy} onClick={()=>loadHistory(control.key)}>History</button></div>}
             {history[control.key]&&<div className="history"><p className="description">Retained configuration history</p>{history[control.key]!.length===0?<p className="meta">No saved revisions.</p>:history[control.key]!.map(revision=><div key={revision.version}><span className="meta">Revision {revision.version} · {revision.createdAt}</span><code>{display(revision.value)}</code><button disabled={disabled||!ownsLock||!revision.rollbackSafe} onClick={()=>submit({action:'rollback',key:control.key,toVersion:revision.version,baseVersion:control.version,expectedVersion:draft.version})}>Stage rollback</button></div>)}</div>}
           </div></div>;
-      })}</section>)}
+      })}</section>):<section className="window settings-section empty-settings"><h2>No settings match</h2><p>Try a shorter search or clear the current filters.</p><button type="button" onClick={()=>{setQuery('');setSelectedSection('all')}}>Show all settings</button></section>}
   </>;
 }
