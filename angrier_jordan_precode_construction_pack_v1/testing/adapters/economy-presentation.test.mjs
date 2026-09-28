@@ -46,3 +46,7 @@ test('Shop and workshop retain empty-state instructions without inventing produc
   assert.ok(svg.includes('Find a recipe through normal play.'));assert.equal((svg.match(/data-item-card=/g)??[]).length,0);
  }
 });
+test('Shop and inventory use four full-width mobile-readable cards with prices and quantities',()=>{
+ const cards=Array.from({length:5},(_,n)=>({name:n?'Seat '+n:'Buried Lounge Coaster',badge:'RARE · CHAIR',motif:'chair',price:'1,200 Ottomans',detail:'Available now',quantity:'OWNED ×'+n}));
+ for(const mode of ['shop','inventory']){const svg=renderEconomyPresentation({title:'Collection',mode,cards});assert.match(svg,/width="1200" height="1580"/);assert.equal((svg.match(/width="1116" height="310"/g)??[]).length,4);assert.ok(svg.includes('Buried Lounge Coaster'));assert.ok(!svg.includes('Seat 4'));assert.ok(svg.includes('1,200 Ottomans'));assert.ok(svg.includes('OWNED ×0'));}
+});

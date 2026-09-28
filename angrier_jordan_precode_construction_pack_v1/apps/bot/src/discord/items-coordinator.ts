@@ -32,15 +32,15 @@ export class DiscordItemsCoordinator {
    const view=async()=>svc.view(c.guildId,c.userId);
    const pages=(action:string,page:number,count:number)=>count>1?[row(button(id(action,String(page-1)),'Previous').setDisabled(page===0),button(id(action,String(page+1)),'Next').setDisabled(page===count-1))]:[];
    const showInventory=async(query:Parameters<ItemService['inventory']>[2]={},page=0)=>{
-    const s=await view(),owned=svc.inventory(s,c.userId),all=svc.inventory(s,c.userId,query),v=itemPage(all,page),categories=inventoryCategories(owned);
+    const s=await view(),owned=svc.inventory(s,c.userId),all=svc.inventory(s,c.userId,query),v=itemPage(all,page,4),categories=inventoryCategories(owned);
     const categoryMenu=new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId(id('browsecategory')).setPlaceholder('Inventory category').addOptions([{label:'All categories',value:'all',default:!query.type},...categories.map(type=>({label:type.replaceAll('_',' '),value:type,default:query.type===type}))]));
-    const cards=v.items.map((x,n)=>({...inventoryCard(s,c.userId,x),name:(n+1)+'. '+x.item.name}));
-    await send('Your Inventory',v.items.map((x,n)=>(n+1)+'. '+x.item.name+' · '+cards[n]!.detail+'\nID: '+x.id).join('\n')||'No matching items. Choose All categories or adjust your search.',[categoryMenu,...(v.items.length?[menu('inspect',v.items.map((x,n)=>({label:((n+1)+'. '+x.item.name+' × '+x.quantity).slice(0,100),value:x.id})))]:[]),row(button(id('filter'),'Search / Sort / Page'),button(id('sale','junk'),'Sell All Junk'),button(id('sale','duplicates'),'Sell Duplicates')),row(button(id('category'),'Category Locks'),button(id('help'),'How This Works'))],{mode:'inventory',cards,summary:all.length+' owned entries · Page '+(v.page+1)+'/'+v.pages+' · '+(query.type??'All categories')});
+    const cards=v.items.map(x=>({...inventoryCard(s,c.userId,x),quantity:`OWNED ×${x.quantity}`,status:x.locked?'LOCKED':'READY'}));
+    await send('Your Inventory',v.items.map((x,n)=>(n+1)+'. '+x.item.name+' · '+cards[n]!.detail+'\nID: '+x.id).join('\n')||'No matching items. Choose All categories or adjust your search.',[categoryMenu,...(v.items.length?[menu('inspect',v.items.map((x,n)=>({label:((n+1)+'. '+x.item.name+' × '+x.quantity).slice(0,100),value:x.id})))]:[]),...(Object.keys(query).length?[]:pages('inventorypage',v.page,v.pages)),row(button(id('filter'),'Search / Sort / Page'),button(id('sale','junk'),'Sell All Junk'),button(id('sale','duplicates'),'Sell Duplicates')),row(button(id('category'),'Category Locks'),button(id('help'),'How This Works'))],{mode:'inventory',cards,summary:all.length+' owned entries · Page '+(v.page+1)+'/'+v.pages+' · '+(query.type??'All categories'),imagePrimary:true});
    };
    const showShop=async(page=0)=>{
-    const s=await view(),shop=svc.shop(s,c.userId),v=itemPage(shop.items,page);
-    const cards=v.items.map((x,n)=>({name:(n+1)+'. '+x.name,badge:x.rarity+' · '+x.type,motif:x.name+' '+x.type,detail:x.buyPrice+' Ottomans'+(Array.isArray(x.metadata?.requiresAchievements)?' · Requires '+x.metadata.requiresAchievements.join(', '):' · Select below to buy')}));
-    return await send('Daily Shop','Refresh <t:'+Math.floor(shop.resetAt.getTime()/1000)+':R>\n'+cards.map(x=>x.name+' · '+x.detail).join('\n'),[...(v.items.length?[menu('buy',v.items.map((x,n)=>({label:((n+1)+'. '+x.name).slice(0,100),value:x.id,description:(x.buyPrice+' Ottomans · '+x.rarity).slice(0,100)})))]:[]),...pages('shoppage',v.page,v.pages),row(button(id('help'),'How This Works'))],{mode:'shop',cards,summary:shop.items.length+' products · Page '+(v.page+1)+'/'+v.pages+' · Daily rotation'});
+    const s=await view(),shop=svc.shop(s,c.userId),v=itemPage(shop.items,page,4),owned=svc.inventory(s,c.userId);
+    const cards=v.items.map(x=>({name:x.name,badge:x.rarity+' · '+x.type,motif:x.name+' '+x.type,price:(x.buyPrice??0).toLocaleString('en-US')+' Ottomans',detail:Array.isArray(x.metadata?.requiresAchievements)?'Requires '+x.metadata.requiresAchievements.join(', '):'Available to purchase',quantity:'OWNED ×'+owned.filter(row=>row.itemId===x.id).reduce((sum,row)=>sum+row.quantity,0)}));
+    return await send('Daily Shop','Refresh <t:'+Math.floor(shop.resetAt.getTime()/1000)+':R>\n'+cards.map(x=>x.name+' · '+x.price).join('\n'),[...(v.items.length?[menu('buy',v.items.map((x,n)=>({label:((n+1)+'. '+x.name).slice(0,100),value:x.id,description:(x.buyPrice+' Ottomans · '+x.rarity).slice(0,100)})))]:[]),...pages('shoppage',v.page,v.pages),row(button(id('help'),'How This Works'))],{mode:'shop',cards,summary:shop.items.length+' products · Page '+(v.page+1)+'/'+v.pages+' · Daily rotation',imagePrimary:true});
    };
    const showCollection=async(page=0)=>{
     const s=await view(),progress=svc.collections(s,c.userId),all=collectionCards(s,c.userId),v=itemPage(all,page);
@@ -69,6 +69,7 @@ export class DiscordItemsCoordinator {
     if(parts[1]==='inspect'){const s=await view(),x=svc.inventory(s,c.userId).find(x=>x.id===chosen);if(!x)throw new DomainError('ITEM_MISSING','Item no longer owned.');return await send(x.item.name,`${x.item.rarity} · ${x.item.type}\n${inventoryCard(s,c.userId,x).detail}\nID: ${x.id}`,[row(button(id('lock',`${x.id}:${x.locked?'off':'on'}`),x.locked?'Unlock':'Lock'),...(x.kind==='tool'?[button(id('equip',x.id),'Equip')]:[button(id('sale',`item:${x.id}`),'Sell Item')]),...(['mystery_box','gift_box'].includes(x.item.type)?[button(id('open',x.id),'Open Box')]:[]))],{mode:'inventory',cards:[inventoryCard(s,c.userId,x)],summary:'Owned item · Inspect and manage'});}
    }
    if(i.isButton()){
+    if(parts[1]==='inventorypage')return await showInventory({},Number(parts[3]));
     if(parts[1]==='shoppage')return await showShop(Number(parts[3]));
     if(parts[1]==='collectionpage')return await showCollection(Number(parts[3]));
     if(parts[1]==='craftpage')return await showCraft(Number(parts[3]));

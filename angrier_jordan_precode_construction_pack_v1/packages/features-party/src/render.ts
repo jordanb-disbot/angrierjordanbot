@@ -6,15 +6,15 @@ import type {PartyView} from './prisma-repository.js';
 export const PARTY_TITLES:Record<PartyGame,string>={truthordare:'Truth or Dare',wwyd:'What Would You Do',finishsentence:'Finish the Sentence',onewordstory:'One Word Story',fmk:'Fuck, Marry, Kill'};
 export function partyTranscript(v:PartyView){const out=[PARTY_TITLES[v.game],v.prompt??''];if(v.target)out.push('Target: '+v.target.name);if(v.answer)out.push(v.target?.name+': '+v.answer);if(v.skipped)out.push('Skipped by the target.');if(v.words.length)out.push(v.words.map(w=>w.word).join(' '),'Contributions:',...v.words.map((w,n)=>`${n+1}. ${w.name}: ${w.word}`));if(v.phase!=='submissions')out.push(...Object.entries(v.submissions).map(([,s])=>`${s.name}: ${s.text}`));if(v.assignments)for(const[key,id]of Object.entries(v.assignments)){const name=v.trio?.find(m=>m.userId===id)?.name??'Member',counts=v.subjectCounters?.[id];out.push(`${key.toUpperCase()}: ${name} · Fucked ${counts?.fucked??0} · Married ${counts?.married??0} · Killed ${counts?.killed??0}`);}if(v.result){out.push(v.result.label);for(const o of v.options)out.push(`${o.text}: ${v.result.totals[o.id]??0} (${v.result.percentages[o.id]??0}%)`);}return out.filter(Boolean).join('\n');}
 
-export interface PartyArt {name:string;avatarData:string;}
+export interface PartyArt {name:string;handle?:string;avatarData:string;}
 
 export const PARTY_GAMES_ACCENT='#3B82F6';
 const W=1200;
 function panel(x:number,y:number,width:number,height:number,accent:string=PARTY_GAMES_ACCENT){return '<rect x="'+x+'" y="'+(y+5)+'" width="'+width+'" height="'+height+'" rx="14" fill="#000" opacity=".65"/><rect x="'+x+'" y="'+y+'" width="'+width+'" height="'+height+'" rx="14" fill="url(#party-glass)" stroke="url(#gold)" stroke-width="2"/><rect x="'+(x+6)+'" y="'+(y+6)+'" width="'+(width-12)+'" height="'+(height-12)+'" rx="10" fill="none" stroke="'+accent+'" stroke-opacity=".55"/><path d="M'+(x+16)+' '+(y+42)+'V'+(y+16)+'H'+(x+42)+'M'+(x+width-42)+' '+(y+height-16)+'H'+(x+width-16)+'V'+(y+height-42)+'" fill="none" stroke="url(#gold)" stroke-width="3"/><path d="M'+(x+50)+' '+(y+2)+'H'+(x+width-50)+'" stroke="'+accent+'" stroke-width="3"/>';}
 
 const center=(value:string,y:number,size=26,width=1040,cx=600,color:string=ink.white)=>{const rows=wrapText(value,width,size),line=Math.ceil(size*1.35);return{svg:rows.map((r,n)=>text(cx,y+n*line,r,size,color,'text-anchor="middle" font-weight="600"')).join(''),height:Math.max(1,rows.length)*line};};
-function frame(height:number,body:string){return shell(height,'<defs><linearGradient id="party-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#26313B" stop-opacity=".94"/><stop offset=".32" stop-color="#18232D" stop-opacity=".97"/><stop offset=".65" stop-color="#101C26" stop-opacity=".96"/><stop offset="1" stop-color="#071521" stop-opacity=".98"/></linearGradient></defs><g font-family="Poppins" font-weight="600">'+body+'</g>',0,W).replace('stroke="#00D7CF"','stroke="'+PARTY_GAMES_ACCENT+'"').replaceAll('font-family="Space Grotesk"','font-family="Poppins"');}
-function header(title:string,state:string){return panel(28,26,1144,150,PARTY_GAMES_ACCENT)+text(600,61,'ANGRIER JORDAN · THE GAMES LOUNGE',19,ink.gold,'text-anchor="middle" letter-spacing="3"')+text(600,112,title,45,ink.white,'text-anchor="middle" font-family="Cinzel" font-weight="700"')+text(600,151,state,23,'#A8C9FF','text-anchor="middle"');}
+function frame(height:number,body:string){return shell(height,'<defs><linearGradient id="party-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#26313B" stop-opacity=".94"/><stop offset=".32" stop-color="#18232D" stop-opacity=".97"/><stop offset=".65" stop-color="#101C26" stop-opacity=".96"/><stop offset="1" stop-color="#071521" stop-opacity=".98"/></linearGradient></defs><g font-family="Inter" font-weight="600">'+body+'</g>',0,W).replace('stroke="#00D7CF"','stroke="'+PARTY_GAMES_ACCENT+'"');}
+function header(title:string,state:string){return panel(28,26,1144,150,PARTY_GAMES_ACCENT)+text(600,61,'ANGRIER JORDAN · THE GAMES LOUNGE',19,ink.gold,'text-anchor="middle" letter-spacing="3"')+text(600,112,title,45,ink.white,'text-anchor="middle" font-family="Space Grotesk" font-weight="700"')+text(600,151,state,23,'#A8C9FF','text-anchor="middle"');}
 function fmkCards(trio:{userId:string;name:string}[],assignments:Record<string,string>|undefined,counters:PartyView['subjectCounters'],art:Record<string,PartyArt>,top:number){
  let body='',bottom=top;const nameHeight=Math.max(36,...trio.map(m=>center(art[m.userId]?.name??m.name,0,29,288).height)),height=390+nameHeight;
  for(const[mIndex,m]of trio.entries()){const x=42+mIndex*378,cx=x+180,role=Object.entries(assignments??{}).find(([,id])=>id===m.userId)?.[0].toUpperCase()??'UNASSIGNED',a=art[m.userId],counts=counters?.[m.userId],values=[counts?.fucked??0,counts?.married??0,counts?.killed??0],total=Math.max(1,...values),accent=role==='FUCK'?'#EF4444':role==='MARRY'?ink.gold:role==='KILL'?ink.emerald:PARTY_GAMES_ACCENT;body+=panel(x,top,360,height,accent)+text(cx,top+42,role,30,accent,'text-anchor="middle" font-family="Cinzel" font-weight="700"')+portrait('fmk-'+mIndex,m.name,a?.avatarData,cx,top+62,190);body+=center(a?.name??m.name,top+286,29,288,cx).svg;
@@ -24,21 +24,32 @@ function fmkCards(trio:{userId:string;name:string}[],assignments:Record<string,s
 }
 /** Landscape FMK keeps the three faces together at Discord display width. */
 function fmkStage(trio:{userId:string;name:string}[],assignments:Record<string,string>,art:Record<string,PartyArt>,chooser:string,counters:PartyView['subjectCounters'],result:PartyView['result'],privateView=false){
- let body=header('Fuck, Marry, Kill',privateView?'PRIVATE ASSIGNMENT · NOTHING IS PUBLIC UNTIL SUBMIT':result?'THE VERDICT · '+result.label:'THE LOUNGE VERDICT · VOTING OPEN');
- body+=text(600,202,'Chosen by '+chooser,23,'#DBE9FA','text-anchor="middle" font-weight="700"');
- for(const [n,m] of trio.entries()){const x=30+n*384,cx=x+186,a=art[m.userId],role=Object.entries(assignments).find(([,id])=>id===m.userId)?.[0].toUpperCase()??'CHOOSE',accent=['#B7D6FA','#E6C578','#97CBBE'][n]!;
- body+=panel(x,218,372,366,accent)+'<rect x="'+(x+10)+'" y="228" width="352" height="212" rx="12" fill="#425A70" opacity=".7"/>'+portrait('fmk-stage-'+n,m.name,a?.avatarData,cx,232,200)+center(a?.name??m.name,469,29,328,cx).svg+text(cx,545,role,37,accent,'text-anchor="middle" font-family="Cinzel" font-weight="700"');
- const counts=counters?.[m.userId];if(counts)body+=text(cx,572,'F '+counts.fucked+'   ·   M '+counts.married+'   ·   K '+counts.killed,19,'#DBE9FA','text-anchor="middle"');
+ const accents=['#EF4444','#D568E8','#38BDF8'],roles=['FUCK','MARRY','KILL'],bottom=privateView?'Assign Fuck, then Marry. The remaining member is Kill.':result?`Agree: ${result.totals.agree??0} votes · ${result.percentages.agree??0}%     |     Disagree: ${result.totals.disagree??0} votes · ${result.percentages.disagree??0}%`:'Agree or Disagree · Anonymous votes · The chooser cannot vote';
+ let body='<defs><linearGradient id="fmkFade" x2="0" y2="1"><stop stop-color="#0B1220" stop-opacity="0"/><stop offset="1" stop-color="#0B1220" stop-opacity=".98"/></linearGradient></defs><rect width="1200" height="790" fill="#07111D" opacity=".62"/>';
+ body+=text(32,43,'ANGRIER JORDAN · THE GAMES LOUNGE',20,ink.gold,'font-family="Space Grotesk" font-weight="700" letter-spacing="2"');
+ body+=text(32,101,'FUCK · MARRY · KILL',56,ink.white,'font-family="Space Grotesk" font-weight="700"');
+ body+=text(32,136,privateView?'PRIVATE CHOICES':result?'THE VERDICT · '+result.label:'AUDIENCE VOTE OPEN',24,'#E5C278','font-family="Space Grotesk" font-weight="700"');
+ body+=text(1160,51,'CHOSEN BY',18,ink.muted,'text-anchor="end" letter-spacing="2"')+text(1160,86,chooser,28,ink.white,'text-anchor="end" font-family="Space Grotesk" font-weight="700"');
+ body+='<path d="M30 151H1170" stroke="url(#gold)" stroke-width="2"/>';
+ for(const[n,m]of trio.entries()){
+  const x=30+n*384,cx=x+180,accent=accents[n]!,a=art[m.userId],name=a?.name??m.name,role=Object.entries(assignments).find(([,id])=>id===m.userId)?.[0].toUpperCase()??'PENDING',stats=counters?.[m.userId]??{fucked:0,married:0,killed:0},values=[stats.fucked,stats.married,stats.killed],draws=values.reduce((sum,count)=>sum+count,0),high=Math.max(1,...values),safeAvatar=a?.avatarData&&/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(a.avatarData)&&a.avatarData.length<=1_400_000;
+  body+=`<defs><clipPath id="fmkCrop${n}"><rect x="${x+10}" y="174" width="340" height="244" rx="13"/></clipPath></defs><rect x="${x}" y="164" width="360" height="510" rx="18" fill="#0B1220" stroke="${accent}" stroke-width="3"/><rect x="${x+9}" y="173" width="342" height="492" rx="12" fill="#081722" stroke="${accent}" stroke-opacity=".35"/>`;
+  body+=safeAvatar?`<image href="${a!.avatarData}" x="${x+10}" y="174" width="340" height="244" preserveAspectRatio="xMidYMid slice" clip-path="url(#fmkCrop${n})"/>`:portrait('fmk-stage-'+n,name,a?.avatarData,cx,188,214);
+  body+=`<rect x="${x+10}" y="290" width="340" height="128" fill="url(#fmkFade)"/>`;
+  body+=text(x+26,207,String(n+1).padStart(2,'0'),27,accent,'font-family="Space Grotesk" font-weight="700"')+text(cx,398,role,39,accent,'text-anchor="middle" font-family="Space Grotesk" font-weight="700"');
+  const nameSize=name.length>23?25:name.length>15?28:32,nameLines=wrapText(name,310,nameSize).slice(0,2);
+  nameLines.forEach((line,j)=>body+=text(cx,452+j*34,line,nameSize,ink.white,'text-anchor="middle" font-family="Space Grotesk" font-weight="700"'));
+  const handle=a?.handle?('@'+a.handle.replace(/^@/,'')):'MEMBER';
+  body+=text(cx,525,handle,21,ink.muted,'text-anchor="middle"')+text(x+25,557,`RECORD · ${draws} DRAWS`,19,ink.muted,'font-family="Space Grotesk" font-weight="700" letter-spacing="1"');
+  for(let k=0;k<3;k++){const y=583+k*27,width=Math.max(4,210*values[k]!/high);body+=text(x+25,y,roles[k]![0]!,20,accents[k]!,'font-family="Space Grotesk" font-weight="700"')+`<rect x="${x+58}" y="${y-14}" width="210" height="12" rx="6" fill="#26313B"/><rect x="${x+58}" y="${y-14}" width="${width}" height="12" rx="6" fill="${accents[k]}"/>`+text(x+332,y,String(values[k]),19,ink.white,'text-anchor="end"');}
  }
- body+=panel(30,601,1140,88,result?ink.gold:PARTY_GAMES_ACCENT);
- const copy=privateView?'Assign Fuck, then Marry. The remaining member is Kill.':result?Object.entries(result.totals).map(([id,count])=>(id==='agree'?'Agree':id==='disagree'?'Disagree':id)+': '+count+' votes · '+(result.percentages[id]??0)+'%').join('     |     '):'Agree or Disagree · Anonymous ballots · The chooser cannot vote';
- body+=center(copy,639,24,1070).svg+text(600,672,privateView?'Submit Choices when ready':result?'THE LOUNGE HAS SPOKEN · SIT. PLAY. BELONG.':'Change your vote until close',18,'#C2D8EC','text-anchor="middle" letter-spacing="1"');
- return frame(720,body).replace('#26313B','#385065').replace('#18232D','#263D50').replace('#101C26','#182C40');
+ body+=`<rect x="30" y="689" width="1140" height="72" rx="13" fill="#0A1A27" stroke="${result?ink.gold:ink.teal}" stroke-width="2"/>`+text(600,719,bottom,25,ink.white,'text-anchor="middle" font-family="Inter" font-weight="600"')+text(600,747,privateView?'SUBMIT CHOICES WHEN READY':result?'THE LOUNGE HAS SPOKEN':'VOTES STAY PRIVATE UNTIL CLOSE',17,ink.gold,'text-anchor="middle" font-family="Space Grotesk" font-weight="700" letter-spacing="2"');
+ return shell(790,body,0,W);
 }
 /** Explicitly private projection; public DRAFT views never include this trio. */
-export function renderPartyDraft(v:{trio:{userId:string;name:string}[];fuck?:string|undefined;marry?:string|undefined},art:Record<string,PartyArt>={},chooser='The chooser'){
+export function renderPartyDraft(v:{trio:{userId:string;name:string}[];fuck?:string|undefined;marry?:string|undefined;subjectCounters?:PartyView['subjectCounters']},art:Record<string,PartyArt>={},chooser='The chooser'){
  const assignments:Record<string,string>={};if(v.fuck)assignments.fuck=v.fuck;if(v.marry)assignments.marry=v.marry;if(v.fuck&&v.marry){const left=v.trio.find(m=>m.userId!==v.fuck&&m.userId!==v.marry);if(left)assignments.kill=left.userId;}
- return fmkStage(v.trio,assignments,art,chooser,undefined,undefined,true);
+ return fmkStage(v.trio,assignments,art,chooser,v.subjectCounters,undefined,true);
 }
 /** Public projections only: submitted private choices never enter the feed artwork. */
 export function renderParty(v:PartyView,memberArt:Record<string,PartyArt>={}){

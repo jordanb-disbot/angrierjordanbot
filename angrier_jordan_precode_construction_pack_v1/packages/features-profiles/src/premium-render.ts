@@ -21,28 +21,25 @@ function header(title:string,subtitle:string){const t=block(title,80,108,1040,44
 function frame(body:string,height:number,footer='SIT. PLAY. BELONG.') {const h=height+88;return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="${h}" viewBox="0 0 1200 ${h}"><defs><linearGradient id="glass" x2="0" y2="1"><stop stop-color="#102630" stop-opacity=".96"/><stop offset="1" stop-color="#0B1220" stop-opacity=".97"/></linearGradient><linearGradient id="gold"><stop stop-color="#866128"/><stop offset=".45" stop-color="#FFE3A0"/><stop offset="1" stop-color="#A27D39"/></linearGradient></defs><image href="${art()}" width="1200" height="${h}" preserveAspectRatio="xMidYMid slice"/><rect width="1200" height="${h}" fill="#06141E" opacity=".62"/>${body}<path d="M70 ${height+20}H1130" stroke="url(#gold)" stroke-width="2"/>${text(600,height+57,footer,21,GOLD)}<rect x="5" y="5" width="1190" height="${h-10}" rx="24" fill="none" stroke="${TEAL}" stroke-width="3"/><rect x="17" y="17" width="1166" height="${h-34}" rx="18" fill="none" stroke="url(#gold)" stroke-width="3"/></svg>`;}
 
 /** Caller provides privacy-filtered data only. No truncation of authoritative values. */
-export function renderPremiumProfile(data:{name:string;avatarData?:string;sections:{label:string;value:string}[]}){
- const head=header('Member profile','');let body=head.svg,y=head.height;
- const name=block(data.name,300,y+79,790,44,WHITE,true,'start'),hero=Math.max(210,name.height+120);
- body+=panel(45,y,1110,hero,GOLD)+portrait(data.name,data.avatarData,174,y+24,160,'identity')+name.svg+text(300,y+name.height+66,'A seat in the Chairs',28,MUTED,false,'start');y+=hero+24;
- for(const s of data.sections){
-  const top=y;let inner=text(80,top+49,s.label,33,GOLD,true,'start');y+=76;
-  const rows=s.value.split('\n').filter(Boolean),activity=/^activity/i.test(s.label)&&/this month\s*\/\s*all time/i.test(rows[0]??'');
-  if(activity){inner+=text(80,y+33,'Statistic',25,MUTED,false,'start')+text(786,y+33,'This month',25,MUTED,false,'end')+text(1116,y+33,'All time',25,MUTED,false,'end');y+=56;rows.shift();}
+export function renderPremiumProfile(data:{name:string;avatarData?:string;highlights?:{label:string;value:string}[];sections:{label:string;value:string}[]}){
+ let body=text(45,58,'ANGRIER JORDAN · MEMBER PROFILE',21,brand.palette.emerald,true,'start');
+ const name=block(data.name,270,170,760,54,WHITE,true,'start'),hero=272;
+ body+=panel(45,85,1110,hero,GOLD)+portrait(data.name,data.avatarData,150,104,180,'identity')+name.svg+text(270,170+name.height+19,'A seat in the Chairs',25,MUTED,false,'start');
+ const highlights=(data.highlights??[]).slice(0,3);
+ highlights.forEach((h,n)=>{const x=270+n*288;body+=text(x,313,h.label,25,MUTED,true,'start')+text(x,347,h.value,38,GOLD,true,'start');});
+ const section=(s:{label:string;value:string},x:number,y:number,w:number)=>{
+  let content=text(x+32,y+57,s.label,38,GOLD,true,'start'),cursor=y+85;
+  const rows=s.value.split('\n').filter(Boolean).filter(row=>!/^Activity this month \/ all time$/i.test(row));
   for(const [n,row]of rows.entries()){
-   const colon=row.indexOf(':'),label=colon>0?row.slice(0,colon):'',value=colon>0?row.slice(colon+1).trim():row,pair=activity&&['Messages','Words','Voice seconds'].includes(label)?value.split(' / '):[];
-   // Shared cell baselines and padding keep wrapped rows aligned without clipping values.
-   const baseline=y+43,l=label?block(label,80,baseline,400,29,MUTED,false,'start'):undefined;
-   const values=pair.length===2
-    ?pair.map((v,i)=>block(v,i===0?786:1116,baseline,270,32,WHITE,false,'end'))
-    :[block(value,label?520:80,baseline,label?596:1036,32,WHITE,false,'start')];
-   const height=Math.max(l?.height??0,...values.map(v=>v.height))+32;
-   inner+=`<rect x="65" y="${y}" width="1070" height="${height}" fill="${TEAL}" opacity="${n%2===0?'.045':'.015'}"/><path d="M80 ${y}H1116" stroke="${MUTED}" stroke-opacity=".14"/>`;
-   inner+=(l?.svg??'')+values.map(v=>v.svg).join('');y+=height;
+   const split=row.indexOf(':'),label=split>0?row.slice(0,split):'',value=split>0?row.slice(split+1).trim():row;
+   const baseline=cursor+39,l=label?block(label,x+32,baseline,300,31,MUTED,false,'start'):undefined,v=block(value,x+(label?355:32),baseline,w-(label?390:64),35,WHITE,false,'start'),h=Math.max(l?.height??0,v.height)+25;
+   content+=`<rect x="${x+18}" y="${cursor}" width="${w-36}" height="${h}" fill="${TEAL}" opacity="${n%2===0?'.055':'.018'}"/><path d="M${x+32} ${cursor}H${x+w-32}" stroke="${MUTED}" stroke-opacity=".18"/>`+(l?.svg??'')+v.svg;cursor+=h;
   }
-  const height=y-top+20;body+=panel(45,top,1110,height,TEAL)+inner;y+=44;
- }
- return frame(body,y);
+  const height=Math.max(180,cursor-y+22);return {svg:content,height};
+ };
+ let y=381;
+ for(const item of data.sections){const s=section(item,45,y,1110);body+=panel(45,y,1110,s.height,TEAL)+s.svg;y+=s.height+22;}
+ return frame(body,y+10);
 }
 const categoryStyle:Record<string,{title:string;unit:string;accent:string}>={wealth:{title:'Ottoman Elite',unit:'OTTOMANS · WALLET + BANK',accent:GOLD},collections:{title:'Collectors Gallery',unit:'COLLECTION COMPLETION %',accent:brand.palette.emerald},crafting:{title:'Master Chair Builders',unit:'SUCCESSFUL CRAFTS',accent:GOLD},wins:{title:'Champions of the Chairs',unit:'GAME WINS',accent:brand.palette.emerald},gambling:{title:'Casino Honors',unit:'CASINO WINS',accent:GOLD},crime:{title:'Notoriety Board',unit:'SUCCESSFUL ROBBERIES',accent:TEAL},messages:{title:'The Loudest Chairs',unit:'QUALIFYING MESSAGES',accent:TEAL},words:{title:'The Wordsmiths',unit:'QUALIFYING WORDS',accent:TEAL},voice:{title:'Voices of the Lounge',unit:'QUALIFYING VOICE SECONDS',accent:TEAL},spotlight:{title:'Weekly Legends',unit:'SPOTLIGHT AWARDS',accent:GOLD}};
 export function renderPremiumLeaderboard(data:{category:string;rows:{rank:number;name:string;value:string;avatarData?:string}[];page:number;pages:number}){

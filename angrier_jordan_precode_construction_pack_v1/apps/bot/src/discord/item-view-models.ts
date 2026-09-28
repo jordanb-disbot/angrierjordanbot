@@ -1,7 +1,7 @@
 import type {ItemState} from '../../../../packages/features-economy/src/items-types.js';
 import type {ItemService} from '../../../../packages/features-economy/src/items-service.js';
 export const ITEM_PAGE_SIZE=8;
-export function itemPage<T>(items:T[],requested=0){const pages=Math.max(1,Math.ceil(items.length/ITEM_PAGE_SIZE)),page=Math.min(pages-1,Math.max(0,Number.isFinite(requested)?Math.floor(requested):0));return {items:items.slice(page*ITEM_PAGE_SIZE,(page+1)*ITEM_PAGE_SIZE),page,pages};}
+export function itemPage<T>(items:T[],requested=0,size=ITEM_PAGE_SIZE){const limit=Number.isInteger(size)&&size>0&&size<=ITEM_PAGE_SIZE?size:ITEM_PAGE_SIZE,pages=Math.max(1,Math.ceil(items.length/limit)),page=Math.min(pages-1,Math.max(0,Number.isFinite(requested)?Math.floor(requested):0));return {items:items.slice(page*limit,(page+1)*limit),page,pages};}
 export function inventoryCategories(rows:ReturnType<ItemService['inventory']>){return [...new Set(rows.map(x=>x.item.type))].sort().slice(0,24);}
 export function inventoryCard(state:ItemState,userId:string,x:ReturnType<ItemService['inventory']>[number]){
  const tool=state.members.find(m=>m.userId===userId)?.tools.find(t=>t.id===x.id);

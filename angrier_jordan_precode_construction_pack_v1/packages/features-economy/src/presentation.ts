@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 
 export interface EconomyPresentationSection {name:string;value:string;state?:string;accent?:number}
-export interface EconomyPresentationCard {name:string;detail:string;badge?:string;motif?:string;accent?:number}
+export interface EconomyPresentationCard {name:string;detail:string;badge?:string;motif?:string;accent?:number;price?:string;quantity?:string;status?:string}
 export interface EconomyPresentationInput {
  cards?:EconomyPresentationCard[];mode?:'shop'|'inventory'|'collection'|'craft';summary?:string;
  title:string;description?:string;fields?:{name:string;value:string;inline?:boolean}[];
@@ -26,6 +26,7 @@ function itemMotif(motif:string|undefined,x:number,y:number,accent:string):strin
  return `<g data-item-motif="${escape(key)}" transform="translate(${x} ${y})">${shape}</g>`;
 }
 function renderItemGallery(input:EconomyPresentationInput):string {
+ if(input.mode==='shop'||input.mode==='inventory')return renderStorefront(input);
  const palette=[0xf4c542,0x38bdf8,0xa469e2,0x10b981,0xf59e0b,0x0ea5a6],cards=input.cards?.slice(0,8)??[];
  const columns=cards.length>3?4:3,width=columns===4?1440:1100,center=width/2,rows=Math.max(1,Math.ceil(cards.length/columns)),height=rows===2?1080:710,top=190,footerY=height-100;
  const titles={shop:'THE LOUNGE STOREFRONT',inventory:'YOUR PERSONAL COLLECTION',collection:'THE CHAIR GALLERY',craft:'THE CHAIR WORKSHOP'};
@@ -45,6 +46,25 @@ function renderItemGallery(input:EconomyPresentationInput):string {
  body+=`<rect x="50" y="${footerY}" width="${width-100}" height="65" rx="12" fill="#081B25" stroke="#B9985A"/>`;
  economyWrap(input.footer??'Use the matching controls below',76,1).forEach(t=>body+=text(center,footerY+29,t,22,'#ECE2CB',true));body+=text(center,footerY+52,'SIT. PLAY. BELONG.',17,'#72D5C6',true);
  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="glass" x2="0" y2="1"><stop stop-color="#153D43" stop-opacity=".96"/><stop offset="1" stop-color="#07121D" stop-opacity=".96"/></linearGradient><linearGradient id="brass"><stop stop-color="#77521F"/><stop offset=".48" stop-color="#FFE29A"/><stop offset="1" stop-color="#997132"/></linearGradient><linearGradient id="upholstery" x2="0" y2="1"><stop stop-color="#1B7775"/><stop offset="1" stop-color="#09242C"/></linearGradient></defs><image href="${art()}" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice"/><rect width="${width}" height="${height}" fill="#06151D" opacity=".57"/>${body}<rect x="4" y="4" width="${width-8}" height="${height-8}" rx="19" fill="none" stroke="#0EA5A6" stroke-width="3"/><rect x="14" y="14" width="${width-28}" height="${height-28}" rx="14" fill="none" stroke="url(#brass)" stroke-width="2"/></svg>`;
+}
+/** Four generous cards retain readable names and prices inside Discord's feed width. */
+function renderStorefront(input:EconomyPresentationInput):string{
+ const width=1200,height=1580,cards=input.cards?.slice(0,4)??[],palette=['#F4C542','#38BDF8','#A469E2','#10B981'];
+ let body=text(600,54,'ANGRIER JORDAN · '+(input.mode==='shop'?'THE OTTOMAN EXCHANGE':'THE CHAIR COLLECTION'),21,'#F4C542',true)+text(600,114,input.title,51,'#E6EAF0',true)+text(600,155,economyWrap(input.summary??'',78,1)[0]??'',24,'#C8DDDC');
+ if(!cards.length){body+=`<rect x="42" y="195" width="1116" height="560" rx="22" fill="url(#glass)" stroke="#D4B06C"/>`+itemMotif('chair',600,428,'#10B981')+text(600,615,input.description|| (input.mode==='shop'?'The next rotation is being prepared.':'Your collection starts with one discovery.'),31);}
+ for(const[i,card]of cards.entries()){
+  const x=42,y=190+i*330,accent=color(card.accent??Number.parseInt(palette[i]!.slice(1),16));
+  body+=`<rect x="${x}" y="${y}" width="1116" height="310" rx="20" fill="url(#glass)" stroke="${accent}" stroke-width="2"/><rect x="${x+15}" y="${y+15}" width="210" height="280" rx="15" fill="#0B2630" stroke="${accent}" stroke-opacity=".5"/><ellipse cx="${x+120}" cy="${y+148}" rx="94" ry="108" fill="${accent}" opacity=".09"/>`+itemMotif(card.motif,x+120,y+149,accent);
+  const label=(value:string,atX:number,atY:number,size:number,fill:string,bold=false)=>`<text x="${atX}" y="${atY}" text-anchor="start" font-family="${bold?brand.typography.heading:brand.typography.body}" font-size="${size}" font-weight="${bold?700:500}" fill="${fill}">${escape(value)}</text>`;
+  body+=label((card.badge??'LOUNGE ITEM').toUpperCase(),x+265,y+48,25,accent,true);
+  economyWrap(card.name,30,2).forEach((line,j)=>body+=label(line,x+265,y+99+j*44,39,'#F1F4F7',true));
+  if(card.price)body+=label(card.price,x+265,y+184,38,'#F4C542',true);
+  const detailTop=card.price?y+226:y+192;
+  economyWrap(card.detail,55,card.price?1:2).forEach((line,j)=>body+=label(line,x+265,detailTop+j*34,28,'#D7E5E3'));
+  body+=`<path d="M${x+265} ${y+270}H${x+1080}" stroke="${accent}" stroke-opacity=".45"/>`+label(card.quantity??card.status??(input.mode==='shop'?'SELECT BELOW TO BUY':'SELECT BELOW TO INSPECT'),x+265,y+297,25,accent,true);
+ }
+ body+=`<rect x="42" y="1525" width="1116" height="32" rx="8" fill="#081B25" stroke="#B9985A"/>`+text(600,1549,'SIT. PLAY. BELONG. · USE THE CONTROLS BELOW',21,'#E8D49D',true);
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="glass" x2="0" y2="1"><stop stop-color="#163941"/><stop offset="1" stop-color="#081621"/></linearGradient><linearGradient id="brass"><stop stop-color="#77521F"/><stop offset=".5" stop-color="#FFE29A"/><stop offset="1" stop-color="#997132"/></linearGradient><linearGradient id="upholstery" x2="0" y2="1"><stop stop-color="#1B7775"/><stop offset="1" stop-color="#09242C"/></linearGradient></defs><image href="${art()}" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice"/><rect width="${width}" height="${height}" fill="#06151D" opacity=".7"/>${body}<rect x="4" y="4" width="1192" height="${height-8}" rx="19" fill="none" stroke="#0EA5A6" stroke-width="3"/><rect x="14" y="14" width="1172" height="${height-28}" rx="14" fill="none" stroke="url(#brass)" stroke-width="2"/></svg>`;
 }
 const brand=JSON.parse(readFileSync(new URL('../../../production/theme/brand.json',import.meta.url),'utf8')) as {typography:{heading:string;body:string}};
 let lounge:string|undefined;

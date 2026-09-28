@@ -16,12 +16,12 @@ export async function avatarData(value?:string):Promise<string>{
  }catch{return'';}
 }
 /** Never changes persisted identities or eligibility. Missing Discord/media data is a cosmetic fallback. */
-export async function memberArt(client:Client,serverId:string,memberId:string):Promise<{name:string;avatarData:string}|undefined>{
+export async function memberArt(client:Client,serverId:string,memberId:string):Promise<{name:string;handle:string;avatarData:string}|undefined>{
  try{
   const server=await client.guilds.fetch(serverId);
   const member=await server.members.fetch({user:memberId,force:true}).catch(()=>null);
   const user=member?.user??await client.users.fetch(memberId).catch(()=>null);
   if(!member&&!user)return;
-  return{name:member?.displayName??user!.displayName,avatarData:await avatarData((member??user!).displayAvatarURL({extension:'png',size:128}))};
+  return{name:member?.displayName??user!.displayName,handle:user?.username??'',avatarData:await avatarData((member??user!).displayAvatarURL({extension:'png',size:256}))};
  }catch{return;}
 }
