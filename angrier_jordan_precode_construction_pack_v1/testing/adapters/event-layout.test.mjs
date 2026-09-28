@@ -34,14 +34,15 @@ test('saved race motion never resets and the winner reaches the marked finish',(
   }
  }
 });
-test('Fight waiting gallery counts down once while Race entry is a single static frame',async()=>{
+test('Fight and Race entry cards are immediate static frames with live waiting details',async()=>{
  const c=new DiscordEventsCoordinator({}, {},async()=>true);
  for(const type of ['race','fight']){
   const p=await c.payload({...base,type,expiresAt:new Date(now+3000),racers:reviewMembers.slice(0,2)},{nowMs:now});
   const buffer=p.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
-  assert.equal(meta.width,1200);if(type==='race'){assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);continue;}assert.equal(meta.loop,1);assert.equal(meta.delay.reduce((a,b)=>a+b,0),4000);
+  assert.equal(meta.width,1200);assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);
   assert.equal(buffer.indexOf('NETSCAPE'),-1);assert.equal(buffer.indexOf('ANIMEXTS'),-1);
-  const first=await sharp(buffer,{page:0}).raw().toBuffer(),last=await sharp(buffer,{page:meta.pages-1}).raw().toBuffer();assert.notDeepEqual(first,last);
+  const text=p.components[0].toJSON().components.map(c=>c.content).join('\n');
+  if(type==='fight')assert.match(text,/starts <t:4102444803:R>/);else assert.match(text,/00:03 remaining/);
  }
 });
 test('event controls form balanced member/host/wager groups without changing custom IDs',async()=>{

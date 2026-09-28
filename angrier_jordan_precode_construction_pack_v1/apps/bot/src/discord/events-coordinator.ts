@@ -21,6 +21,11 @@ function raceWaitingText(view:RaceView,now:number){
  const open=6-view.racers.length;
  return `**RACE WAITING ROOM · ${waitingCountdown(view.expiresAt,now)} remaining**\n**Joined (${view.racers.length}/6):** ${names}\n**${open} open ${open===1?'seat':'seats'}** · **Wager pool:** ${view.pool} Ottomans`;
 }
+function fightWaitingText(view:RaceView){
+ const [challenger,target]=view.racers;
+ const deadline=Math.floor((view.expiresAt?.getTime()??Date.now())/1000);
+ return `**FIGHT BETTING WINDOW · starts <t:${deadline}:R>**\n**${challenger?.name??'Challenger'}** vs **${target?.name??'Opponent'}** · **Wager pool:** ${view.pool} Ottomans`;
+}
 export class DiscordEventsCoordinator {
  private readonly racePublications=new Map<string,Promise<string|undefined>>();
  private readonly refreshes=new Map<string,Promise<void>>();
@@ -143,8 +148,8 @@ export class DiscordEventsCoordinator {
   try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public card refresh is pending.'});}
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied||silent&&i.deferred)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
  async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData;nowMs?:number}={}){
-  const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10),waiting=view.type==='fight'&&view.state==='OPEN'&&options.animate!==false&&waitingMs>0;
-  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||waiting||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
+  const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10);
+  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
   const render=(imageView:RaceView=view,phase=0,remaining=waitingMs)=>{const motion={phase,waitingMs:remaining,...(options.callout?{callout:options.callout.replace(/<@&[^>]+>\s*/g,'')}: {})};return fight?renderFight(imageView,motion,'wide'):renderRace(imageView,'wide',motion);};
   let image:Buffer|undefined;
   if(!options.retainImageUrl){
@@ -158,9 +163,6 @@ export class DiscordEventsCoordinator {
     const frames:string[]=[];
     for(const [index,at] of times.entries()){frames.push(artwork.pack(render({...view,...(fight&&saved.fightPlan?{combat:fightSnapshot(saved.fightPlan,at,view.racers)}:saved.plan?{motion:raceSnapshot(saved.plan,at)}:{})},fight?at/1000%1:at/end)));if(index%16===15)await new Promise<void>(resolve=>setImmediate(resolve));}
     image=await rasterizeTimeline(frames,times.map((at,index)=>index+1<times.length?times[index+1]!-at:1000),new Date(saved.startedAt).getTime(),artwork.assets);
-   }else if(waiting){
-    const steps=Math.min(60,Math.ceil(waitingMs/1000)),step=Math.max(10,Math.ceil(waitingMs/steps/10)*10),times=Array.from({length:steps},(_,i)=>i*step).filter(at=>at<waitingMs);times.push(waitingMs);
-    image=await rasterizeTimeline(times.map(at=>render(view,0,Math.max(0,waitingMs-at))),times.map((at,i)=>i+1<times.length?times[i+1]!-at:1000),now);
    }else image=await rasterizeSvg(render());
   }
   if(open){
@@ -176,7 +178,7 @@ export class DiscordEventsCoordinator {
     if(fight)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...secondary));
    }
   }
-  return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(!fight&&open?{countdown:raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
+  return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view):raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
  }
  async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.type==='race'&&view.state==='OPEN'?waitingCountdown(view.expiresAt):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
   const filename=`${view.type==='fight'?'fight':'race'}-locked.gif`,existing=view.state==='LOCKED'?message.attachments?.find(attachment=>attachment.name===filename):undefined;
