@@ -3,6 +3,7 @@ import {pathToFileURL} from 'node:url';
 import {productionTarget,GUILD} from './audit-production-race-line.mjs';
 
 const FEATURE='features.family';
+export const DEFAULT_BOT_CHANNEL='1537333882846842930';
 const POLICY=['family.marriage_vote_hours','family.auction_min_hours','family.auction_max_hours','family.cooldown_base_seconds','family.cooldown_max_seconds','family.cooldown_quiet_hours'];
 const check=(ok,code)=>{if(!ok)throw Error(code);};
 
@@ -20,11 +21,13 @@ export async function enableProductionFamily({db,config,get,write=console.log,on
  onStage('schema');
  check(config.definition(FEATURE)?.type==='boolean','FAMILY_SCHEMA_INVALID');
  onStage('channel_config');
- const channel=(await config.getWithMetadata(GUILD,'channels.bot_channel')).value;
+ const channelBefore=await config.getWithMetadata(GUILD,'channels.bot_channel');
+ const channel=channelBefore.value??DEFAULT_BOT_CHANNEL;
  check(typeof channel==='string'&&/^[1-9]\d{16,19}$/.test(channel),'FAMILY_BOT_CHANNEL_MISSING');
  onStage('channel_discord');
  const discordChannel=await get(`/channels/${channel}`);
  check(discordChannel?.id===channel&&discordChannel.guild_id===GUILD&&[0,5].includes(discordChannel.type),'FAMILY_BOT_CHANNEL_INVALID');
+ check(channelBefore.value!==null||discordChannel.name==='🤖-bots-dont-sit','FAMILY_DEFAULT_CHANNEL_AMBIGUOUS');
  onStage('policy');
  const values=new Map();
  for(const key of POLICY){
@@ -34,6 +37,10 @@ export async function enableProductionFamily({db,config,get,write=console.log,on
  }
  check(values.get('family.auction_min_hours')<=values.get('family.auction_max_hours'),'FAMILY_POLICY_INVALID');
  check(values.get('family.cooldown_base_seconds')<=values.get('family.cooldown_max_seconds'),'FAMILY_POLICY_INVALID');
+ onStage('channel_write');
+ if(channelBefore.value===null)await config.set({guildId:GUILD,key:'channels.bot_channel',value:channel,expectedVersion:channelBefore.version,source:'operator.production-family-enablement',requestId:randomUUID()});
+ const channelAfter=await config.getWithMetadata(GUILD,'channels.bot_channel');
+ check(channelAfter.value===channel,'FAMILY_BOT_CHANNEL_VERIFY_FAILED');
  onStage('feature_read');
  const before=await config.getWithMetadata(GUILD,FEATURE);
  check(typeof before.value==='boolean','FAMILY_FEATURE_INVALID');
@@ -43,6 +50,7 @@ export async function enableProductionFamily({db,config,get,write=console.log,on
  const after=await config.getWithMetadata(GUILD,FEATURE);
  check(after.value===true&&(before.value===true||after.version>before.version),'FAMILY_FEATURE_VERIFY_FAILED');
  write('PASS: production environment, guild, private Railway database, Family secret, and Discord bot channel verified.');
+ write(`PASS: channels.bot_channel=${channel}.`);
  write('PASS: existing Family policy settings verified and preserved.');
  write('PASS: features.family=true; no unrelated settings or Family data changed.');
 }

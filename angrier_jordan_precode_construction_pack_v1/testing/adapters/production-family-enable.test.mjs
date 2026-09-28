@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {enableProductionFamily,familyTarget,main} from '../../scripts/enable-production-family.mjs';
+import {enableProductionFamily,familyTarget,main,DEFAULT_BOT_CHANNEL} from '../../scripts/enable-production-family.mjs';
 import {GUILD} from '../../scripts/audit-production-race-line.mjs';
 
 const BOT_CHANNEL='1524964386077151365';
@@ -27,7 +27,7 @@ function fixture(){
   assert.equal(input.guildId,GUILD);assert.equal(input.source,'operator.production-family-enablement');assert.ok(input.requestId);
   writes.push(input);rows.set(input.key,{value:input.value,version:input.expectedVersion+1});
  }};
- const get=async()=>({id:BOT_CHANNEL,guild_id:GUILD,type:0});
+ const get=async path=>({id:path.split('/').at(-1),guild_id:GUILD,type:0,name:'🤖-bots-dont-sit'});
  const result={db,config,get,rows,writes,output};
  result.run=()=>enableProductionFamily({...result,write:line=>output.push(line)});
  return result;
@@ -38,7 +38,14 @@ test('Family production script writes only canonical feature and preserves exist
  assert.deepEqual(f.writes.map(w=>w.key),['features.family']);
  assert.equal(f.rows.get('features.family').value,true);
  for(const [key,row] of before)if(key!=='features.family')assert.deepEqual(f.rows.get(key),row);
- assert.equal(f.output.length,3);assert.ok(f.output.every(line=>line.startsWith('PASS:')));
+ assert.equal(f.output.length,4);assert.ok(f.output.every(line=>line.startsWith('PASS:')));
+});
+
+test('unset bot-channel mapping resolves to verified production bot channel before enabling Family',async()=>{
+ const f=fixture();f.rows.set('channels.bot_channel',{value:null,version:0});await f.run();
+ assert.equal(f.rows.get('channels.bot_channel').value,DEFAULT_BOT_CHANNEL);
+ assert.deepEqual(f.writes.map(w=>w.key),['channels.bot_channel','features.family']);
+ await f.run();assert.equal(f.writes.length,2);
 });
 
 test('Family production script is idempotent',async()=>{
@@ -46,7 +53,7 @@ test('Family production script is idempotent',async()=>{
 });
 
 test('missing prerequisites block all writes',async()=>{
- for(const mutate of [f=>{f.db.guild.findUnique=async()=>null;},f=>{f.rows.set('channels.bot_channel',{value:null,version:1});},f=>{f.get=async()=>({id:BOT_CHANNEL,guild_id:'999',type:0});},f=>{f.rows.set('family.marriage_vote_hours',{value:25,version:1});},f=>{f.rows.set('family.auction_min_hours',{value:72,version:1});f.rows.set('family.auction_max_hours',{value:1,version:1});}]){
+ for(const mutate of [f=>{f.db.guild.findUnique=async()=>null;},f=>{f.rows.set('channels.bot_channel',{value:'bad',version:1});},f=>{f.get=async()=>({id:BOT_CHANNEL,guild_id:'999',type:0});},f=>{f.rows.set('family.marriage_vote_hours',{value:25,version:1});},f=>{f.rows.set('family.auction_min_hours',{value:72,version:1});f.rows.set('family.auction_max_hours',{value:1,version:1});}]){
   const f=fixture();mutate(f);await assert.rejects(f.run());assert.equal(f.writes.length,0);
  }
 });
