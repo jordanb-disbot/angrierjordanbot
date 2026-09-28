@@ -19,7 +19,8 @@ export async function enableProductionEconomyItems({db,config,get,atomic,grantCa
  const member=await get(`/guilds/${GUILD}/members/${NOT_JORDAN}`);
  check(member?.user?.id===NOT_JORDAN&&member.user.bot!==true,'NOT_JORDAN_MEMBER_INVALID');
  const catalog=await db.catalogItem.findUnique({where:{id:RING}});
- check(catalog?.id===RING&&catalog.type==='family'&&catalog.enabled===true,'FAMILY_RING_CATALOG_UNAVAILABLE');
+ check(catalog?.id===RING,'FAMILY_RING_CATALOG_MISSING');
+ check(catalog.type==='family'&&catalog.enabled===true,'FAMILY_RING_CATALOG_DISABLED_OR_INVALID');
  const existingLock=await db.inventoryCategoryLock.findUnique({where:{guildId_userId_category:{guildId:GUILD,userId:NOT_JORDAN,category:'family'}}});
  check(!existingLock,'FAMILY_INVENTORY_CATEGORY_LOCKED');
  const feature=await config.getWithMetadata(GUILD,'features.items');
@@ -29,7 +30,8 @@ export async function enableProductionEconomyItems({db,config,get,atomic,grantCa
 
  const result=await atomic.run(GUILD,GRANT_KEY,'ring-1-ottomans-25000:v1',async(tx,ledger)=>{
   const currentCatalog=await tx.catalogItem.findUnique({where:{id:RING}});
-  check(currentCatalog?.id===RING&&currentCatalog.type==='family'&&currentCatalog.enabled===true,'FAMILY_RING_CATALOG_UNAVAILABLE');
+  check(currentCatalog?.id===RING,'FAMILY_RING_CATALOG_MISSING');
+  check(currentCatalog.type==='family'&&currentCatalog.enabled===true,'FAMILY_RING_CATALOG_DISABLED_OR_INVALID');
   check(!await tx.inventoryCategoryLock.findUnique({where:{guildId_userId_category:{guildId:GUILD,userId:NOT_JORDAN,category:'family'}}}),'FAMILY_INVENTORY_CATEGORY_LOCKED');
   await tx.member.upsert({where:{guildId_userId:{guildId:GUILD,userId:NOT_JORDAN}},create:{guildId:GUILD,userId:NOT_JORDAN},update:{}});
   const prior=await tx.economyAccount.findUnique({where:{guildId_userId:{guildId:GUILD,userId:NOT_JORDAN}}});
