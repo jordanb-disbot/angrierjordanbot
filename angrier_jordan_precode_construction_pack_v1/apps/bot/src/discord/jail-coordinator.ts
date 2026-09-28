@@ -199,6 +199,7 @@ export class DiscordJailCoordinator {
     const removedRoleIds: string[] = [];
 
     let result: Awaited<ReturnType<JailService['send']>>;
+    let hotseatId: string | null = null;
     try {
       // Explicit member-access allows override a different role's deny. Suspend access
       // as well as approved admin roles, using returned members rather than gateway cache timing.
@@ -219,7 +220,8 @@ export class DiscordJailCoordinator {
       }
 
     stage('hotseat-config');
-      const hotseatId = await hotseatChannelId(this.config, target.guild.id);
+      hotseatId = await hotseatChannelId(this.config, target.guild.id);
+      if (!hotseatId) throw new DomainError('HOTSEAT_NOT_CONFIGURED', 'The Hotseat channel is not configured.');
     stage('normal-channel-containment');
       if(diagnostic){try{const permissions=hotseatId?target.guild.channels.cache.get(hotseatId)?.permissionsFor(target):null;diagnostic.state.hotseatView=permissions?.has(PermissionFlagsBits.ViewChannel)??false;diagnostic.state.hotseatSend=permissions?.has(PermissionFlagsBits.SendMessages)??false;}catch(e){diagnostic.log(e);}}
       const visible = this.visibleOrdinaryChannels(target, hotseatId);
@@ -259,7 +261,7 @@ export class DiscordJailCoordinator {
     await this.postHotseatCard(target, result.sentence, result.caseRecord.id, 'entered').catch(() => { cardDelivered = false; });
     stage('member-dm');
     await target.send({
-      content: `You have been placed in the server Hotseat. Reason: ${reason}\nCase #${result.caseRecord.id}. Use \`/jail status\`, \`/jail reason\`, or Request Review in the Hotseat card.`,
+      content: `You have been placed in the server Hotseat. Go to <#${hotseatId}> to read your notice and request a review.\nReason: ${reason}\nCase #${result.caseRecord.id}. Use \`/jail status\` or \`/jail reason\` for details.`,
     }).catch(() => undefined);
     stage('interaction-result');
     await interaction.editReply({ content: `${target} is now in Hotseat. Case #${result.caseRecord.id}.${cardDelivered ? '' : ' The Hotseat notice could not be delivered; confinement is active. Do not resend the punishment.'}` });
@@ -383,7 +385,7 @@ export class DiscordJailCoordinator {
 
     const container = new ContainerBuilder()
       .setAccentColor(state === 'released' ? 0x10B981 : 0xB42318)
-      .addTextDisplayComponents(new TextDisplayBuilder().setContent(`# ${title}\n<@${member.id}>\n**Reason:** ${sentence.reason}\n**Case:** #${caseId}\n${timing}`));
+      .addTextDisplayComponents(new TextDisplayBuilder().setContent(`# ${title}\n${state === 'entered' ? `<@${member.id}> has entered the Hotseat.` : `<@${member.id}>`}\n**Reason:** ${sentence.reason}\n**Case:** #${caseId}\n${timing}`));
 
     if (sentence.active) {
       container.addActionRowComponents(

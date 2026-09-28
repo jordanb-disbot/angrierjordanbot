@@ -7,7 +7,7 @@ import {AuditService,FixedClock,InMemoryAuditSink} from '../../dist/packages/cor
 import {JailService,InMemoryJailRepository} from '../../dist/packages/features-jail/src/index.js';
 import {OnboardingService,InMemoryOnboardingRepository} from '../../dist/packages/features-onboarding/src/index.js';
 
-async function fixture({acknowledged=true,extraAllow=false}={}) {
+async function fixture({acknowledged=true,extraAllow=false,dmFailure=false}={}) {
  const clock=new FixedClock(new Date()),audit=new AuditService(new InMemoryAuditSink()),repo=new InMemoryJailRepository(),service=new JailService(repo,audit,clock);
  const onboardingRepo=new InMemoryOnboardingRepository(),onboardingService=new OnboardingService(onboardingRepo,audit,clock);
  await onboardingService.memberJoined('g','member');if(acknowledged)await onboardingService.acknowledgeRules('g','member');
@@ -15,26 +15,35 @@ async function fixture({acknowledged=true,extraAllow=false}={}) {
  const values={'roles.member_access':'folding','roles.jailed':'jailed','channels.hotseat_channel':'hotseat','moderation.jail.links_allowed':false,'moderation.jail.attachments_allowed':false};
  const config={get:async(_g,k)=>values[k]??null};
  const roles=new Collection(['folding','jailed','extra'].map(id=>[id,{id,name:id,editable:true,managed:false,permissions:new PermissionsBitField(0n)}]));
- const calls=[],live=new Set(['folding',...(extraAllow?['extra']:[])]);
+ const calls=[],notices=[],live=new Set(['folding',...(extraAllow?['extra']:[])]);
  const guild={id:'g',ownerId:'owner',roles:{cache:roles},channels:{cache:new Collection()},members:{fetch:async id=>id==='owner'?{id:'owner',guild}:member()}};
  function member(ids=[...live]) {
   const cache=new Collection(ids.map(id=>[id,roles.get(id)]));
   // discord.js single-role REST mutations return a clone; the original cache need not change yet.
-  return {id:'member',guild,manageable:true,displayName:'Test member',permissions:new PermissionsBitField(0n),send:async()=>{},
+  return {id:'member',guild,manageable:true,displayName:'Test member',permissions:new PermissionsBitField(0n),send:async payload=>{notices.push({kind:'dm',payload,roles:[...live]});if(dmFailure)throw Error('DMs closed');},
    roles:{cache,remove:async value=>{const id=value.id??value;calls.push('remove:'+id);live.delete(id);return member(ids.filter(x=>x!==id));},
     add:async value=>{const id=value.id??value;calls.push('add:'+id);live.add(id);return member([...new Set([...ids,id])]);}}};
  }
  function channel(id,type,gated) {
   const overwrites=new Map();if(gated)overwrites.set('folding',{ViewChannel:true});if(extraAllow)overwrites.set('extra',{ViewChannel:true});
-  const c={id,type,guild,permissionOverwrites:{edit:async(role,p)=>{overwrites.set(role,p);}},isTextBased:()=>type===ChannelType.GuildText,send:async()=>{},
+  const c={id,type,guild,permissionOverwrites:{edit:async(role,p)=>{overwrites.set(role,p);}},isTextBased:()=>type===ChannelType.GuildText,send:async payload=>{notices.push({kind:'channel',id,payload,roles:[...live]});},
    permissionsFor:m=>{let allowed=!gated;const matches=[...m.roles.cache.keys()].map(id=>overwrites.get(id)).filter(Boolean);if(matches.some(p=>p.ViewChannel===false))allowed=false;if(matches.some(p=>p.ViewChannel===true))allowed=true;return new PermissionsBitField(allowed?P.ViewChannel:0n);}};
   guild.channels.cache.set(id,c);return c;
  }
  const main=channel('main',ChannelType.GuildText,true),voice=channel('voice',ChannelType.GuildVoice,true),ordinary=channel('ordinary',ChannelType.GuildText,false);channel('hotseat',ChannelType.GuildText,false);
  const onboarding=new DiscordOnboardingCoordinator(onboardingService,config),coordinator=new DiscordJailCoordinator(service,config,onboarding);
  const interaction=sub=>({guildId:'g',guild,user:{id:'owner'},options:{getSubcommand:()=>sub,getUser:()=>({id:'member'}),getString:k=>k==='duration'?'5m':'Local test'},reply:async()=>{},deferReply:async()=>{},editReply:async()=>{}});
- return {clock,repo,service,onboardingService,onboarding,coordinator,guild,member,live,calls,main,voice,ordinary,interaction};
+ return {clock,repo,service,onboardingService,onboarding,coordinator,guild,member,live,calls,notices,main,voice,ordinary,interaction};
 }
+
+for(const dmFailure of [false,true])test(`successful Jail send directs member and announces arrival even when DM ${dmFailure?'fails':'works'}`,async()=>{
+ const f=await fixture({dmFailure});await f.coordinator.handleCommand(f.interaction('send'));
+ const arrival=f.notices.find(row=>row.kind==='channel'&&row.id==='hotseat'),dm=f.notices.find(row=>row.kind==='dm');
+ assert.ok(arrival);assert.ok(dm);assert.deepEqual(arrival.roles,['jailed']);assert.deepEqual(dm.roles,['jailed']);
+ assert.match(JSON.stringify(arrival.payload.components[0].toJSON()),/<@member> has entered the Hotseat/);
+ assert.match(dm.payload.content,/<#hotseat>/);assert.doesNotMatch(dm.payload.content,/mov(?:e|ed) you/i);
+ assert.ok(f.notices.indexOf(arrival)<f.notices.indexOf(dm));assert.ok(await f.service.activeModeration('g','member'));
+});
 
 test('Folding Chair override is suspended before containment checks, without relying on gateway cache refresh',async()=>{
  const f=await fixture();await f.coordinator.reconcileGuild(f.guild);
