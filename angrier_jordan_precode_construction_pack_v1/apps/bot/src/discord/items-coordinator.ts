@@ -8,10 +8,11 @@ import {ItemService} from '../../../../packages/features-economy/src/items-servi
 import type {ItemContext,ItemPolicy,ItemRepository} from '../../../../packages/features-economy/src/items-types.js';
 export const ITEM_COMMANDS=new Set(['shop','inventory','gift','unlock','repair','craft','collection']);
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|StringSelectMenuInteraction|ModalSubmitInteraction;
+type ReplyExpiry=(work:()=>void,delayMs:number)=>unknown;
 const button=(id:string,label:string,style:ButtonStyle=ButtonStyle.Secondary)=>new ButtonBuilder().setCustomId(id).setLabel(label).setStyle(style);
 const row=(...buttons:ButtonBuilder[])=>new ActionRowBuilder<ButtonBuilder>().addComponents(buttons);
 export class DiscordItemsCoordinator {
- constructor(private readonly repo:ItemRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
+ constructor(private readonly repo:ItemRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly scheduleReplyExpiry:ReplyExpiry=(work,delayMs)=>{const timer=setTimeout(work,delayMs);timer.unref?.();return timer;}){}
  private async service(g:string){const number=async(k:string)=>Number(await this.config.get(g,k));const repairs={} as ItemPolicy['repairs'];for(const tier of ['cheap','standard','premium'] as const)repairs[tier]={cost:BigInt(await number(`crafting.repair.${tier}_cost`)),min:await number(`crafting.repair.${tier}_restore_min`),max:await number(`crafting.repair.${tier}_restore_max`)};const floor=await number('shop.buyback_floor_percent'),ceiling=await number('shop.buyback_ceiling_percent');if(floor>ceiling)throw new DomainError('BUYBACK_POLICY','Shop pricing is temporarily unavailable.');return new ItemService(this.repo,{bonusSlots:await number('shop.personalized_bonus_slots'),buybackPercent:Math.max(floor,Math.min(ceiling,await number('shop.buyback_percent'))),repairs});}
  async handle(i:Interaction){
   try{
@@ -27,7 +28,7 @@ export class DiscordItemsCoordinator {
    const parts=i.isChatInputCommand()?[]:i.customId.split(':');
    if(parts.length&&parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own item controls.');
    const id=(action:string,arg='')=>`items:${action}:${i.user.id}${arg?':'+arg:''}`;
-   const send=async(title:string,text:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[],presentation:Partial<EconomyPresentationInput>&{imagePrimary?:boolean}={})=>{const payload={...await economyPresentation({title,description:text,...presentation}),components,allowedMentions:{parse:[] as never[]}};if(i.deferred)await i.editReply(payload);else await i.reply({ephemeral:true,...payload});};
+   const send=async(title:string,text:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[],presentation:Partial<EconomyPresentationInput>&{imagePrimary?:boolean;expiresAfterMs?:number}={})=>{const {expiresAfterMs,...visual}=presentation,payload={...await economyPresentation({title,description:text,...visual}),components,allowedMentions:{parse:[] as never[]}};if(i.deferred)await i.editReply(payload);else await i.reply({ephemeral:true,...payload});if(expiresAfterMs!==undefined)this.scheduleReplyExpiry(()=>{void i.deleteReply().catch(()=>undefined);},expiresAfterMs);};
    const menu=(action:string,options:{label:string;value:string;description?:string}[])=>new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId(id(action)).setPlaceholder('Choose an item').addOptions(options.slice(0,25)));
    const view=async()=>svc.view(c.guildId,c.userId);
    const pages=(action:string,page:number,count:number)=>count>1?[row(button(id(action,String(page-1)),'Previous').setDisabled(page===0),button(id(action,String(page+1)),'Next').setDisabled(page===count-1))]:[];
@@ -40,7 +41,7 @@ export class DiscordItemsCoordinator {
    const showShop=async(page=0)=>{
     const s=await view(),shop=svc.shop(s,c.userId),v=itemPage(shop.items,page,4),owned=svc.inventory(s,c.userId);
     const cards=v.items.map(x=>({name:x.name,badge:x.rarity+' · '+x.type,motif:x.name+' '+x.type,price:(x.buyPrice??0).toLocaleString('en-US')+' Ottomans',detail:Array.isArray(x.metadata?.requiresAchievements)?'Requires '+x.metadata.requiresAchievements.join(', '):'Available to purchase',quantity:'OWNED ×'+owned.filter(row=>row.itemId===x.id).reduce((sum,row)=>sum+row.quantity,0)}));
-    return await send('Daily Shop','Refresh <t:'+Math.floor(shop.resetAt.getTime()/1000)+':R>\n'+cards.map(x=>x.name+' · '+x.price).join('\n'),[...(v.items.length?[menu('buy',v.items.map((x,n)=>({label:((n+1)+'. '+x.name).slice(0,100),value:x.id,description:(x.buyPrice+' Ottomans · '+x.rarity).slice(0,100)})))]:[]),...pages('shoppage',v.page,v.pages),row(button(id('help'),'How This Works'))],{mode:'shop',cards,summary:shop.items.length+' products · Page '+(v.page+1)+'/'+v.pages+' · Daily rotation',imagePrimary:true});
+    return await send('Daily Shop','Refresh <t:'+Math.floor(shop.resetAt.getTime()/1000)+':R>\n'+cards.map(x=>x.name+' · '+x.price).join('\n'),[...(v.items.length?[menu('buy',v.items.map((x,n)=>({label:((n+1)+'. '+x.name).slice(0,100),value:x.id,description:(x.buyPrice+' Ottomans · '+x.rarity).slice(0,100)})))]:[]),...pages('shoppage',v.page,v.pages),row(button(id('help'),'How This Works'))],{mode:'shop',cards,summary:shop.items.length+' products · Page '+(v.page+1)+'/'+v.pages+' · Daily rotation',imagePrimary:true,expiresAfterMs:60_000});
    };
    const showCollection=async(page=0)=>{
     const s=await view(),progress=svc.collections(s,c.userId),all=collectionCards(s,c.userId),v=itemPage(all,page);
