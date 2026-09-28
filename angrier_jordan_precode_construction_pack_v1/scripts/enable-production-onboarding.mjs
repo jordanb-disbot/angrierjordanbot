@@ -103,7 +103,37 @@ export function verifyFoldingGate({roles,channels,mappings,onCategories=()=>{},o
  return categoryIds;
 }
 
-export async function enableProductionOnboarding({db,config,get,write=console.log,diagnostic=()=>{}}){
+export async function listGuildMembers(get){
+ const members=[],seen=new Set();let after='0';
+ for(;;){
+  const page=await get(`/guilds/${GUILD}/members?limit=1000&after=${after}`);
+  check(Array.isArray(page)&&page.length<=1000,'MEMBER_INVENTORY_INVALID');
+  for(const member of page){
+   const id=member?.user?.id;
+   check(snowflake(id)&&Array.isArray(member.roles)&&!seen.has(id),'MEMBER_INVENTORY_INVALID');
+   seen.add(id);members.push(member);
+  }
+  if(page.length<1000)return members;
+  const next=page.reduce((max,member)=>BigInt(member.user.id)>BigInt(max)?member.user.id:max,after);
+  check(BigInt(next)>BigInt(after),'MEMBER_INVENTORY_STALLED');after=next;
+ }
+}
+
+export async function backfillFoldingChair({members,jailedIds,jailedRoleId,get,put}){
+ let added=0,already=0,excluded=0;
+ for(const member of members){
+  const id=member.user.id;
+  if(member.user.bot||member.pending||jailedIds.has(id)||jailedRoleId&&member.roles.includes(jailedRoleId)){excluded++;continue;}
+  if(member.roles.includes(FOLDING_CHAIR)){already++;continue;}
+  await put(`/guilds/${GUILD}/members/${id}/roles/${FOLDING_CHAIR}`);
+  const updated=await get(`/guilds/${GUILD}/members/${id}`);
+  check(Array.isArray(updated?.roles)&&updated.roles.includes(FOLDING_CHAIR),'FOLDING_BACKFILL_VERIFY_FAILED');
+  added++;
+ }
+ return {added,already,excluded,total:members.length};
+}
+
+export async function enableProductionOnboarding({db,config,get,put,write=console.log,diagnostic=()=>{}}){
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
  diagnostic('STAGE: discord_inventory');
  const [roles,channels,me,configRows,panels]=await Promise.all([
@@ -126,6 +156,11 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
  for(const [key,expected] of Object.entries(restoreExpected))check((await config.getWithMetadata(GUILD,key)).value===expected,'RESTORATION_POLICY_INVALID');
  const top=Math.max(0,...roles.filter(role=>botMember.roles.includes(role.id)).map(role=>role.position));
  check(folding.position<top,'AJ_BELOW_FOLDING');
+ diagnostic('STAGE: existing_member_inventory');
+ const members=await listGuildMembers(get);
+ const jailed=await db.jailSentence.findMany({where:{guildId:GUILD,active:true},select:{userId:true}});
+ const jailedIds=new Set(jailed.map(row=>row.userId));
+ const jailedRoleId=rows.find(row=>row.key==='roles.jailed')?.value;
  const desired={categories:planned.categories};
  diagnostic('STAGE: audited_writes');
  if(!existing?.enabled||!isDeepStrictEqual(existing.config,desired)){
@@ -145,9 +180,12 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
  for(const [key,value] of [['roles.member_access',FOLDING_CHAIR],['roles_panel.enabled',true]]){
   const saved=await config.getWithMetadata(GUILD,key);check(saved.version>=1&&isDeepStrictEqual(saved.value,value),'SETTING_VERIFY_FAILED');
  }
+ diagnostic('STAGE: existing_member_backfill');
+ const backfill=await backfillFoldingChair({members,jailedIds,jailedRoleId,get,put});
   write('PASS: production guild, private database and AJ role hierarchy verified.');
   write(`PASS: welcome category ${WELCOME_CATEGORY} and landing ${LANDING_CHANNEL} are public; Folding Chair gates member categories ${JSON.stringify(gated)}.`);
-  write('PASS: 7 approved categories and 28 safe current role IDs persisted; existing member roles and selections untouched.');
+  write('PASS: 7 approved categories and 28 safe current role IDs persisted; self-role selections untouched.');
+  write(`PASS: Folding Chair backfill added=${backfill.added} already=${backfill.already} excluded=${backfill.excluded} total=${backfill.total}.`);
   for(const category of planned.categories)write(`PASS: role_map.${category.key}=${JSON.stringify(category.options.map(({label,roleId})=>({label,roleId})))}.`);
   write('PASS: rules/rejoin restoration policy verified.');
  write(`PASS: roles.member_access=${FOLDING_CHAIR}; roles_panel.enabled=true.`);
@@ -160,9 +198,24 @@ export async function main(env=process.env,{connect,fetcher=fetch,write=console.
   const target=productionOnboardingTarget(env);
   diagnostic('STAGE: dependency_initialization');
   const connection=connect?await connect(target):await connectProduction(target);db=connection.db;
-  const get=async path=>{check(env.DISCORD_TOKEN,'DISCORD_TOKEN_MISSING');const response=await fetcher('https://discord.com/api/v10'+path,{headers:{Authorization:'Bot '+env.DISCORD_TOKEN},signal:AbortSignal.timeout(15000)});check(response.ok,'DISCORD_READ_FAILED');return response.json();};
+  const request=async(method,path)=>{
+   check(env.DISCORD_TOKEN,'DISCORD_TOKEN_MISSING');
+   for(let attempt=0;attempt<5;attempt++){
+    const response=await fetcher('https://discord.com/api/v10'+path,{method,headers:{Authorization:'Bot '+env.DISCORD_TOKEN,...(method==='PUT'?{'X-Audit-Log-Reason':'Existing member Folding Chair onboarding backfill'}:{})},signal:AbortSignal.timeout(15000)});
+    if(response.status===429){
+     const body=await response.json();const seconds=Number(body?.retry_after);
+     check(Number.isFinite(seconds)&&seconds>=0&&seconds<=60,'DISCORD_RATE_LIMIT_INVALID');
+     await new Promise(resolve=>setTimeout(resolve,Math.ceil(seconds*1000)+250));continue;
+    }
+    check(response.ok,method==='GET'?'DISCORD_READ_FAILED':'DISCORD_ROLE_ADD_FAILED');
+    if(method==='PUT'){check(response.status===204,'DISCORD_ROLE_ADD_INVALID');return;}
+    return response.json();
+   }
+   throw Error('DISCORD_RATE_LIMIT_EXHAUSTED');
+  };
+  const get=path=>request('GET',path),put=path=>request('PUT',path);
   diagnostic('STAGE: prerequisites');
-  await enableProductionOnboarding({...connection,get,write,diagnostic});
+  await enableProductionOnboarding({...connection,get,put,write,diagnostic});
  }catch(cause){
   const safe=/^[A-Z][A-Z0-9_]+$/.test(cause?.message??'')?cause.message:'PRODUCTION_ONBOARDING_FAILED';
   error('FAIL: '+safe+'. No exception details displayed.');return 1;
