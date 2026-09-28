@@ -53,7 +53,7 @@ import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/
 import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
 import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
-import { Client, DiscordAPIError, Events, GatewayIntentBits, REST, Routes, type ClientEvents } from 'discord.js';
+import { Client, DiscordAPIError, Events, GatewayIntentBits, Partials, REST, Routes, type ClientEvents } from 'discord.js';
 import {validateRuntimeEnvironment} from '../../../packages/core/src/runtime-environment.js';
 import {RuntimeLifecycle} from '../../../packages/core/src/runtime-lifecycle.js';
 import {startRuntimeHealth} from './runtime-health.js';
@@ -73,6 +73,7 @@ import { DiscordOnboardingCoordinator } from './discord/onboarding-coordinator.j
 import { DiscordJailCoordinator } from './discord/jail-coordinator.js';
 import { DiscordModerationCoordinator } from './discord/moderation-coordinator.js';
 import { DiscordSecurityCoordinator } from './discord/security-coordinator.js';
+import { DiscordActivityLogger } from './discord/activity-logger.js';
 import { DiscordEconomyCoordinator } from './discord/economy-coordinator.js';
 
 class CuidLikeIds {next(prefix:string){return `${prefix}_${crypto.randomUUID()}`;}}
@@ -94,6 +95,7 @@ export async function startProductionBot():Promise<void>{
   const enableJailSmoke=process.env.ENABLE_JAIL_SMOKE==='true';
   const enableModerationSmoke=process.env.ENABLE_MODERATION_SMOKE==='true';
   const enableSecuritySmoke=process.env.ENABLE_SECURITY_SMOKE==='true';
+  const enableActivityLoggingSmoke=process.env.ENABLE_ACTIVITY_LOGGING_SMOKE==='true';
   const enableEventsSmoke=process.env.ENABLE_EVENTS_SMOKE==='true';
   const enableSpecialSmoke=process.env.ENABLE_SPECIAL_SMOKE==='true';
   const enableCommunitySmoke=process.env.ENABLE_COMMUNITY_SMOKE==='true';
@@ -115,7 +117,7 @@ export async function startProductionBot():Promise<void>{
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
   const jobRepo=new PrismaJobRepository(db,{notIn:['music.reconcile']});
   startup.mark('discord-client-construction');
-  const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration]});
+  const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration],partials:enableActivityLoggingSmoke?[Partials.Message]:[]});
   const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const}),async()=>{try{return{name:'music',status:!music||await config.get(guildId,'music.enabled')!==true||music.ready?'ok' as const:'degraded' as const};}catch{return{name:'music',status:'degraded' as const};}}]);
   const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
     client.on(event,(...args)=>lifecycle.run(()=>runWithEventAcknowledgement(event,args,{events:enableEventsSmoke,special:enableSpecialSmoke},()=>runWithDailyAcknowledgement(event,args,enableEconomySmoke,()=>runWithJailSendAcknowledgement(event,args,enableJailSmoke,()=>serverBootstrap.run(event,args,()=>listener(...args)))),i=>events.handle(i)),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
@@ -134,6 +136,7 @@ export async function startProductionBot():Promise<void>{
   const moderation=new DiscordModerationCoordinator(moderationService,config);
   const securityService=new SecurityService(new PrismaSecurityRepository(db),audit,new SystemClock());
   const security=new DiscordSecurityCoordinator(securityService,moderationService,config);
+  const activityLogger=enableActivityLoggingSmoke?new DiscordActivityLogger(config,guildId):null;
   const fortunes=JSON.parse(fs.readFileSync(new URL('../../../packages/content/economy/fortune_300.json',import.meta.url),'utf8')) as FortuneEntry[];
   const economyService=new EconomyService(new PrismaEconomyRepository(db),audit,new SystemClock(),undefined,fortunes);
   const economy=new DiscordEconomyCoordinator(economyService,config);
@@ -295,6 +298,7 @@ export async function startProductionBot():Promise<void>{
     startup.mark('discord-ready-guild-fetch');
     const configuredServer=ready.guilds.cache.get(guildId)??await ready.guilds.fetch({guild:guildId,force:true});
     await startup.run('database-connection-schema-bootstrap (migrations external)',()=>serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]));
+    if(activityLogger)await startup.run('activity-log-private-channel-preflight',()=>activityLogger.preflight(configuredServer));
     if(lifecycle.isStopping)return;
     if(music&&await config.get(guildId,'music.enabled')===true){try{await music.start();}catch{console.error('Music node unavailable; durable recovery remains pending.');}}
     if(enablePartySmoke||enableWyrSmoke)await startup.run('party-content-bootstrap',()=>seedPartyContent(db));
@@ -325,7 +329,7 @@ export async function startProductionBot():Promise<void>{
     if(enableIntroductionsSmoke)introSweep=setInterval(()=>lifecycle.run(()=>introductions.sweep(ready),()=>console.error('Introduction recovery pending.')),10000);
     if(enableCommunitySmoke)communitySweep=setInterval(()=>lifecycle.run(()=>community.sweep(ready),()=>console.error('Community recovery pending.')),5000);
     const snapshot=await startup.run('readiness-health-check',()=>health.check());
-    console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
+    console.log(`Angrier Jordan online as ${ready.user.tag}. WYR recovery active=${recovered.active} closed=${recovered.closed}. Onboarding=${enableOnboardingSmoke?'enabled':'disabled'}. Hotseat=${enableJailSmoke?'enabled':'disabled'}. Moderation=${enableModerationSmoke?'enabled':'disabled'}. Security=${enableSecuritySmoke?'enabled':'disabled'}. ActivityLogging=${enableActivityLoggingSmoke?'enabled':'disabled'}. Economy=${enableEconomySmoke?'enabled':'disabled'}. Health=${snapshot.status}.`);
     initialized=true;
     }catch(error){startup.fail(error);throw error;}
   },()=>{console.error('Bot initialization failed; readiness remains unavailable.');process.exitCode=1;void shutdown();}));
@@ -361,7 +365,7 @@ export async function startProductionBot():Promise<void>{
       const current=await discordFamilyMembershipCensus(member.guild).lookup(member.id);
       if(!current.present||current.bot||current.joinedAt?.getTime()!==observedJoin.getTime())return;
     }
-    await settleHandlers([...(enableOnboardingSmoke?[onboarding.handleMemberAdd(member)]:[]),...(enableSecuritySmoke?[security.handleMemberAdd(member)]:[])]);
+    await settleHandlers([...(enableOnboardingSmoke?[onboarding.handleMemberAdd(member)]:[]),...(enableSecuritySmoke?[security.handleMemberAdd(member)]:[]),...(activityLogger?[activityLogger.memberJoin(member)]:[])]);
     if(familyActive&&observedJoin&&await db.member.findUnique({where:{guildId_userId:{guildId,userId:member.id}}})){
       const prior=await db.memberPresenceState.findUnique({where:{guildId_userId:{guildId,userId:member.id}},select:{userId:true,joinedAt:true,leftAt:true}});
       await familyMembershipStore.markPresent(guildId,member.id,prior,observedJoin);
@@ -375,18 +379,32 @@ export async function startProductionBot():Promise<void>{
     const observation=member.guild.id===guildId&&!member.user.bot?familyMembership.observe():undefined;
     const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildMemberRemove,[member]);if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave');},observation);
     lifecycle.run(()=>pending,()=>console.error('Member departure processing failed; recovery remains pending.'));
+    if(activityLogger)lifecycle.run(()=>activityLogger.memberLeave(member),()=>console.error('Member departure logging failed.'));
   });
   client.on(Events.GuildBanAdd,ban=>{
     if(lifecycle.isStopping)return;
     const observation=ban.guild.id===guildId&&!ban.user.bot?familyMembership.observe():undefined;
     const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildBanAdd,[ban]);if(!ban.user.bot)await familyDeparture(ban.guild.id,ban.user.id,'ban');},observation);
     lifecycle.run(()=>pending,()=>console.error('Member ban processing failed; recovery remains pending.'));
+    if(activityLogger)lifecycle.run(()=>activityLogger.banAdded(ban),()=>console.error('Member ban logging failed.'));
   });
-  on(Events.ChannelCreate,async channel=>{if(enableJailSmoke)await jail.reconcileNewChannel(channel);});
-  on(Events.MessageCreate,async message=>{await settleHandlers([...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
-  on(Events.GuildAuditLogEntryCreate,async(entry,guild)=>{if(enableSecuritySmoke)await security.handleAuditEntry(entry,guild);});
+  on(Events.ChannelCreate,async channel=>{await settleHandlers([...(enableJailSmoke?[jail.reconcileNewChannel(channel)]:[]),...(activityLogger?[activityLogger.channelCreated(channel)]:[])]);});
+  on(Events.MessageCreate,async message=>{await settleHandlers([...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  if(activityLogger){
+    on(Events.MessageUpdate,(before,after)=>activityLogger.messageUpdate(before,after));
+    on(Events.MessageDelete,message=>activityLogger.messageDelete(message));
+    on(Events.MessageBulkDelete,messages=>activityLogger.messageDeleteBulk(messages));
+    on(Events.GuildMemberUpdate,(before,after)=>activityLogger.memberUpdate(before,after));
+    on(Events.GuildBanRemove,ban=>activityLogger.banRemoved(ban));
+    on(Events.ChannelDelete,channel=>'guild' in channel?activityLogger.channelDeleted(channel):undefined);
+    on(Events.ChannelUpdate,(before,after)=>'guild' in before&&'guild' in after?activityLogger.channelUpdated(before,after):undefined);
+    on(Events.GuildRoleCreate,role=>activityLogger.roleCreated(role));
+    on(Events.GuildRoleDelete,role=>activityLogger.roleDeleted(role));
+    on(Events.GuildRoleUpdate,(before,after)=>activityLogger.roleUpdated(before,after));
+  }
+  on(Events.GuildAuditLogEntryCreate,async(entry,guild)=>{await settleHandlers([...(enableSecuritySmoke?[security.handleAuditEntry(entry,guild)]:[]),...(activityLogger?[activityLogger.auditEntry(entry,guild)]:[])]);});
 
-  on(Events.VoiceStateUpdate,async(_before,after)=>{await settleHandlers([...(music&&after.guild.id===guildId?[music.voiceChanged(after.guild.id,after.id)]:[]),...(enableProfilesSmoke?[profiles.sampleVoice(client,after.guild.id)]:[])]);});
+  on(Events.VoiceStateUpdate,async(before,after)=>{await settleHandlers([...(music&&after.guild.id===guildId?[music.voiceChanged(after.guild.id,after.id)]:[]),...(enableProfilesSmoke?[profiles.sampleVoice(client,after.guild.id)]:[]),...(activityLogger?[activityLogger.voiceUpdate(before,after)]:[])]);});
   on(Events.InteractionCreate,async interaction=>{
     try{
       // Coordinators acknowledge before their own complete eligibility checks. Avoid duplicate slow global reads.
