@@ -112,11 +112,24 @@ export class DiscordEventsCoordinator {
  async startFight(i:ChatInputCommandInteraction){let id:string|undefined,published=false;try{
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use Fight in the server.');
   const target=i.options.getUser('member',true);if(target.id===i.user.id||target.bot)throw new DomainError('FIGHT_TARGET','Choose another eligible member.');
-  await eventTiming('fight.ack',()=>i.deferReply());await this.guard(i.guildId,i.user.id,i.channelId,'fight');if(!await this.eligible(i.guildId,target.id))throw new DomainError('FIGHT_TARGET','That member cannot participate right now.');
-  const fighters=await Promise.all([i.user.id,target.id].map(user=>i.guild!.members.fetch({user,force:true})));
+  await eventTiming('fight.ack',()=>i.deferReply());
+  // The interaction already supplies the current guild member in normal use. Avoid
+  // two forced REST fetches before the first visible Fight card, while retaining a
+  // fetch fallback for a cold cache.
+  const [,targetEligible]=await Promise.all([
+   this.guard(i.guildId,i.user.id,i.channelId,'fight'),
+   this.eligible(i.guildId,target.id),
+  ]);
+  if(!targetEligible)throw new DomainError('FIGHT_TARGET','That member cannot participate right now.');
+  const member=(user:string)=>i.guild!.members.cache?.get(user)??i.guild!.members.fetch({user});
+  const fighters=await Promise.all([i.user.id,target.id].map(member));
   if(fighters.some(m=>m.isCommunicationDisabled()||!m.permissionsIn(i.channelId!).has(PermissionFlagsBits.ViewChannel|PermissionFlagsBits.SendMessages)))throw new DomainError('FIGHT_TARGET','Both fighters need access to participate in main chat.');
   id=(await this.repo.startFight({guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id},fighters.map(m=>({userId:m.id,name:m.displayName,...(m.joinedAt?{joinedAt:m.joinedAt.toISOString()}:{}),avatarUrl:m.displayAvatarURL({size:128,extension:'png'})})))).sessionId;
-  const initial=await this.repo.publicView(id),message=await i.editReply(await this.payload(initial));published=true;await this.repo.linkMessage(id,i.guildId,message.id);this.publishedVersions.set(id,this.publicationKey(initial));this.prepare(initial);
+  const initial=await this.repo.publicView(id);
+  // The animation lane is independent from static-card delivery. Give it the full
+  // betting window instead of waiting until after Discord receives the opener.
+  this.prepare(initial);
+  const message=await i.editReply(await this.payload(initial));published=true;await this.repo.linkMessage(id,i.guildId,message.id);this.publishedVersions.set(id,this.publicationKey(initial));
  }catch(error){if(id&&i.guildId)await this.repo.cancel(i.guildId,id,'Fight could not be published; wagers refunded.');const content=error instanceof DomainError?error.message:'Fight could not start. Try again when both members are available.';if(published||i.replied)await i.followUp({ephemeral:true,content});else if(i.deferred){await i.deleteReply();await i.followUp({ephemeral:true,content});}else await i.reply({ephemeral:true,content});}}
  async memberLeft(client:Client,guildId:string,userId:string){const affected=(await this.repo.active(guildId)).filter(r=>r.type==='fight');await this.repo.memberLeft(guildId,userId);for(const row of affected)await this.refresh(client,row.id);}
  async verifyFighters(client:Client,id:string){const view=await this.repo.publicView(id);if(view.type!=='fight'||!['OPEN','LOCKED'].includes(view.state))return;const guild=await client.guilds.fetch(view.guildId);for(const fighter of view.racers){try{const current=await guild.members.fetch({user:fighter.userId,force:true});if(fighter.joinedAt&&current.joinedAt&&current.joinedAt.toISOString()!==fighter.joinedAt){await this.repo.cancel(view.guildId,id,'A fighter left and rejoined; all wagers refunded.');return;}}catch(error){if(error&&typeof error==='object'&&'code' in error&&Number(error.code)===10007){await this.repo.memberLeft(view.guildId,fighter.userId);return;}throw error;}}}
@@ -185,9 +198,12 @@ export class DiscordEventsCoordinator {
   const openImage=view.type==='race'&&view.state==='OPEN'?message.attachments?.find(attachment=>attachment.name==='race-open.png')?.url:undefined;
   const retainImageUrl=view.state==='LOCKED'?(existing?.url??this.liveImages.get(id)):sameState?openImage:undefined;
   const saved=view.state==='LOCKED'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
-  const prepared=this.prepared.get(id),fresh=saved?.state==='LOCKED'&&saved.data.startedAt&&Date.now()-new Date(saved.data.startedAt).getTime()<1000;
+  const prepared=this.prepared.get(id);
   const samePlan=saved&&prepared&&presentationKey({plan:saved.data.plan,fightPlan:saved.data.fightPlan})===presentationKey({plan:prepared.preview.data.plan,fightPlan:prepared.preview.data.fightPlan});
-  let payload=!retainImageUrl&&fresh&&samePlan&&prepared?.key===this.visualKey(view)&&prepared.payload?prepared.payload:await eventTiming('event.render',()=>this.payload(view,retainImageUrl?{retainImageUrl}:saved?.state==='LOCKED'?{timeline:saved.data}:{}));
+  // Prepared Fight art is encoded with a future playback origin, so it remains
+  // valid when the durable close job runs a tick after its exact deadline. The
+  // plan and public wagering fingerprint still have to match before reuse.
+  let payload=!retainImageUrl&&samePlan&&prepared?.key===this.visualKey(view)&&prepared.payload?prepared.payload:await eventTiming('event.render',()=>this.payload(view,retainImageUrl?{retainImageUrl}:saved?.state==='LOCKED'?{timeline:saved.data}:{}));
   if(view.state!=='OPEN')this.prepared.delete(id);
   // Rendering may span the end of a round. Never overwrite a persisted result/cancellation with stale live art.
   if(view.state==='LOCKED'||view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=version(view);const latestSaved=view.state==='LOCKED'&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;payload=await this.payload(view,latestSaved?.state==='LOCKED'?{timeline:latestSaved.data}:{});}}

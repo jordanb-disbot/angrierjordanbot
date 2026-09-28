@@ -10,7 +10,7 @@ import {renderFight} from '../../dist/packages/features-events/src/fight-render.
 import {reviewMembers,reviewPlans} from '../../scripts/event-review-fixtures.mjs';
 const view={id:'fixture',type:'fight',guildId:'g',channelId:'c',messageId:'m',state:'OPEN',expiresAt:new Date(Date.now()+60000),racers:reviewMembers.slice(0,2),pool:'0',bets:[],extensionUsed:false};
 
-test('prepared combat publishes without rendering at the phase boundary; stale cache never does',async()=>{
+test('prepared combat publishes after a normal scheduler tick; changed state never uses stale art',async()=>{
  for(const changed of ['none','wagers','plan','old-clock']){
   let current={...view},saved={racers:view.racers,fightPlan:reviewPlans.fight},renders=0;const edits=[];
   const c=new DiscordEventsCoordinator({prepareClose:async()=>({data:saved}),publicView:async()=>current,get:async()=>({state:'LOCKED',data:saved})},{},async()=>true);
@@ -20,7 +20,7 @@ test('prepared combat publishes without rendering at the phase boundary; stale c
   if(changed==='wagers')current={...current,pool:'500'};
   if(changed==='plan')saved={...saved,fightPlan:{...saved.fightPlan,winnerId:'changed'}};
   const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},edit:async p=>edits.push(p)})}})}};
-  await c.refresh(client,'fixture');assert.equal(renders,changed==='none'?1:2);assert.equal(edits.length,1);
+  await c.refresh(client,'fixture');assert.equal(renders,['none','old-clock'].includes(changed)?1:2);assert.equal(edits.length,1);
   await c.refresh(client,'fixture');assert.equal(edits.length,1,'same authoritative timeline is retained');
  }
 });

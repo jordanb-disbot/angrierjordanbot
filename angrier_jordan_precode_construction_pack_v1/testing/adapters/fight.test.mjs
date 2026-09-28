@@ -31,3 +31,12 @@ test('Fight publishes V2 through editReply and publication follow-up failures st
  let cancelled=0;await new DiscordEventsCoordinator({startFight:async()=>({sessionId:'f'}),publicView:async()=>view,linkMessage:async()=>{throw Error('link failed');},cancel:async()=>{cancelled++;}},config,async()=>true).startFight(i);
  assert.equal(edits.length,1);assert.equal(edits[0].components[0].toJSON().type,17);assert.deepEqual(edits[0].embeds,[]);assert.equal(followups.length,1);assert.equal(followups[0].ephemeral,true);assert.equal(cancelled,1);
 });
+
+test('Fight uses cached fighters and begins animation preparation before opening-card rendering',async()=>{
+ const steps=[],view={id:'f',type:'fight',state:'OPEN',expiresAt:new Date(),racers:[{userId:'host',name:'Jordan',chair:1},{userId:'target',name:'Alex',chair:2}],pool:'0',extensionUsed:false};
+ const cached=id=>({id,displayName:id,displayAvatarURL:()=>undefined,isCommunicationDisabled:()=>false,permissionsIn:()=>({has:()=>true})});
+ const i={id:'request',guildId:'g',channelId:'main',user:{id:'host'},options:{getUser:()=>({id:'target',bot:false})},guild:{members:{cache:new Map([['host',cached('host')],['target',cached('target')]]),fetch:async()=>{throw Error('cached Fight members must not be force-fetched');}}},deferred:false,deferReply:async function(){this.deferred=true;},editReply:async payload=>{steps.push('edit');return{id:'published'};},followUp:async()=>{}};
+ const c=new DiscordEventsCoordinator({startFight:async()=>({sessionId:'f'}),publicView:async()=>view,linkMessage:async()=>{}},config,async()=>true);
+ c.prepare=()=>steps.push('prepare');c.payload=async()=>{steps.push('payload');return{components:[],embeds:[]};};
+ await c.startFight(i);assert.deepEqual(steps,['prepare','payload','edit']);
+});
