@@ -13,6 +13,7 @@ test('Fight requires another eligible human and honors its independent flag',asy
 test('Fight betting has two private wager choices and no accept, join or replay state',async()=>{
  const view={id:'f',type:'fight',guildId:'g',channelId:'main',ownerId:'host',state:'OPEN',expiresAt:new Date(Date.now()+30000),extensionUsed:false,racers:[{userId:'host',name:'Jordan',chair:1},{userId:'target',name:'Alex',chair:2}],pool:'200',bets:[]};const coordinator=new DiscordEventsCoordinator({},config,async()=>true),payload=await coordinator.payload(view),controls=controlsOf(payload);assert.equal(controls.filter(c=>c.custom_id.startsWith('fight:bet:')).length,2);assert.ok(controls.every(c=>!/(Accept|Decline|Join|Again|Rematch)/i.test(c.label)));
  let seed=7654;const plan=planFight(view.racers,[],max=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return Math.floor(seed/4294967296*max);});const combat=fightSnapshot(plan,12000,view.racers),svg=renderFight({...view,state:'LOCKED',combat});for(const hp of combat.hp){assert.ok(svg.includes('>'+hp+' HP<'));assert.ok(svg.includes('width="'+162*hp/100+'"'));}
+ const live=await coordinator.payload({...view,state:'LOCKED',combat});assert.equal(live.files[0].name,'fight-locked.png');
  const result=await coordinator.payload({...view,state:'CLOSED',winnerId:plan.winnerId,combat:fightSnapshot(plan,plan.durationMs,view.racers),result:{pool:'200',rake:'10',payouts:{},refunded:false}});assert.equal(controlsOf(result).length,0);
  const calls=[],i={guildId:'g',guild:{},channelId:'main',user:{id:'a'},customId:'fight:bet:f:target',isButton:()=>true,isModalSubmit:()=>false,showModal:async m=>calls.push(m.toJSON())};await new DiscordEventsCoordinator({publicView:async()=>view},config,async()=>true).handle(i);assert.equal(calls[0].custom_id,'fight:wager:a:f:target');
 });
@@ -32,11 +33,11 @@ test('Fight publishes V2 through editReply and publication follow-up failures st
  assert.equal(edits.length,1);assert.equal(edits[0].components[0].toJSON().type,17);assert.deepEqual(edits[0].embeds,[]);assert.equal(followups.length,1);assert.equal(followups[0].ephemeral,true);assert.equal(cancelled,1);
 });
 
-test('Fight uses cached fighters and begins animation preparation before opening-card rendering',async()=>{
+test('Fight uses cached fighters before opening-card rendering',async()=>{
  const steps=[],view={id:'f',type:'fight',state:'OPEN',expiresAt:new Date(),racers:[{userId:'host',name:'Jordan',chair:1},{userId:'target',name:'Alex',chair:2}],pool:'0',extensionUsed:false};
  const cached=id=>({id,displayName:id,displayAvatarURL:()=>undefined,isCommunicationDisabled:()=>false,permissionsIn:()=>({has:()=>true})});
  const i={id:'request',guildId:'g',channelId:'main',user:{id:'host'},options:{getUser:()=>({id:'target',bot:false})},guild:{members:{cache:new Map([['host',cached('host')],['target',cached('target')]]),fetch:async()=>{throw Error('cached Fight members must not be force-fetched');}}},deferred:false,deferReply:async function(){this.deferred=true;},editReply:async payload=>{steps.push('edit');return{id:'published'};},followUp:async()=>{}};
  const c=new DiscordEventsCoordinator({startFight:async()=>({sessionId:'f'}),publicView:async()=>view,linkMessage:async()=>{}},config,async()=>true);
- c.prepare=()=>steps.push('prepare');c.payload=async()=>{steps.push('payload');return{components:[],embeds:[]};};
- await c.startFight(i);assert.deepEqual(steps,['prepare','payload','edit']);
+ c.payload=async()=>{steps.push('payload');return{components:[],embeds:[]};};
+ await c.startFight(i);assert.deepEqual(steps,['payload','edit']);
 });

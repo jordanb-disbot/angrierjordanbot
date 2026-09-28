@@ -10,19 +10,14 @@ import {renderFight} from '../../dist/packages/features-events/src/fight-render.
 import {reviewMembers,reviewPlans} from '../../scripts/event-review-fixtures.mjs';
 const view={id:'fixture',type:'fight',guildId:'g',channelId:'c',messageId:'m',state:'OPEN',expiresAt:new Date(Date.now()+60000),racers:reviewMembers.slice(0,2),pool:'0',bets:[],extensionUsed:false};
 
-test('prepared combat publishes after a normal scheduler tick; changed state never uses stale art',async()=>{
- for(const changed of ['none','wagers','plan','old-clock']){
-  let current={...view},saved={racers:view.racers,fightPlan:reviewPlans.fight},renders=0;const edits=[];
-  const c=new DiscordEventsCoordinator({prepareClose:async()=>({data:saved}),publicView:async()=>current,get:async()=>({state:'LOCKED',data:saved})},{},async()=>true);
-  c.payload=async v=>({files:[{name:'fight-locked.gif'}],marker:++renders});
-  c.prepare(view);await new Promise(resolve=>setImmediate(resolve));assert.equal(renders,1);
-  current={...current,state:'LOCKED'};saved={...saved,startedAt:new Date(Date.now()-(changed==='old-clock'?10000:0)).toISOString()};
-  if(changed==='wagers')current={...current,pool:'500'};
-  if(changed==='plan')saved={...saved,fightPlan:{...saved.fightPlan,winnerId:'changed'}};
-  const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},edit:async p=>edits.push(p)})}})}};
-  await c.refresh(client,'fixture');assert.equal(renders,['none','old-clock'].includes(changed)?1:2);assert.equal(edits.length,1);
-  await c.refresh(client,'fixture');assert.equal(edits.length,1,'same authoritative timeline is retained');
- }
+test('Fight updates its persistent card on each recorded strike without GIF playback',async()=>{
+ let current={...view,state:'LOCKED',combat:{action:{atMs:1400},hp:[91,100],finished:false}},renders=[];const edits=[];
+ const c=new DiscordEventsCoordinator({publicView:async()=>current},{},async()=>true);
+ c.payload=async v=>{renders.push(v.combat.action.atMs);return{files:[{name:'fight-locked.png'}],marker:renders.length};};
+ const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},attachments:new Map(),edit:async p=>edits.push(p)})}})}};
+ await c.refresh(client,'fixture');await c.refresh(client,'fixture');
+ current={...current,combat:{action:{atMs:2800},hp:[91,86],finished:false}};await c.refresh(client,'fixture');
+ assert.deepEqual(renders,[1400,2800]);assert.equal(edits.length,2);
 });
 
 test('scene layer reuse preserves the approved Fight pixels',async()=>{

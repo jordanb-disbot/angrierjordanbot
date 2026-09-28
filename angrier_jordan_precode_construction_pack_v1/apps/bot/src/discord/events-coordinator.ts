@@ -26,6 +26,10 @@ function fightWaitingText(view:RaceView){
  const deadline=Math.floor((view.expiresAt?.getTime()??Date.now())/1000);
  return `**FIGHT BETTING WINDOW · starts <t:${deadline}:R>**\n**${challenger?.name??'Challenger'}** vs **${target?.name??'Opponent'}** · **Wager pool:** ${view.pool} Ottomans`;
 }
+function fightProgress(view:RaceView){
+ const combat=view.combat;
+ return `${combat?.action?.atMs??0}:${combat?.hp.join(',')??'100,100'}:${combat?.finished?'finished':'live'}`;
+}
 export class DiscordEventsCoordinator {
  private readonly racePublications=new Map<string,Promise<string|undefined>>();
  private readonly refreshes=new Map<string,Promise<void>>();
@@ -37,7 +41,7 @@ export class DiscordEventsCoordinator {
  private publicationKey(value:RaceView){return JSON.stringify([value.state,value.expiresAt,value.extensionUsed,value.racers,value.pool,value.bets,value.result,value.winnerId,value.cancelReason]);}
  private visualKey(view:RaceView){return JSON.stringify([view.type,view.racers,view.pool,view.bets,view.extensionUsed]);}
  private prepare(view:RaceView){
-  if(view.state!=='OPEN')return;
+  if(view.type==='fight'||view.state!=='OPEN')return;
   const key=this.visualKey(view);
   if(view.racers.length<2||this.preparing.has(view.id)||this.prepared.get(view.id)?.key===key||typeof this.repo.prepareClose!=='function')return;
   if((view.expiresAt?.getTime()??0)-Date.now()<10000)return;
@@ -126,9 +130,6 @@ export class DiscordEventsCoordinator {
   if(fighters.some(m=>m.isCommunicationDisabled()||!m.permissionsIn(i.channelId!).has(PermissionFlagsBits.ViewChannel|PermissionFlagsBits.SendMessages)))throw new DomainError('FIGHT_TARGET','Both fighters need access to participate in main chat.');
   id=(await this.repo.startFight({guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id},fighters.map(m=>({userId:m.id,name:m.displayName,...(m.joinedAt?{joinedAt:m.joinedAt.toISOString()}:{}),avatarUrl:m.displayAvatarURL({size:128,extension:'png'})})))).sessionId;
   const initial=await this.repo.publicView(id);
-  // The animation lane is independent from static-card delivery. Give it the full
-  // betting window instead of waiting until after Discord receives the opener.
-  this.prepare(initial);
   const message=await i.editReply(await this.payload(initial));published=true;await this.repo.linkMessage(id,i.guildId,message.id);this.publishedVersions.set(id,this.publicationKey(initial));
  }catch(error){if(id&&i.guildId)await this.repo.cancel(i.guildId,id,'Fight could not be published; wagers refunded.');const content=error instanceof DomainError?error.message:'Fight could not start. Try again when both members are available.';if(published||i.replied)await i.followUp({ephemeral:true,content});else if(i.deferred){await i.deleteReply();await i.followUp({ephemeral:true,content});}else await i.reply({ephemeral:true,content});}}
  async memberLeft(client:Client,guildId:string,userId:string){const affected=(await this.repo.active(guildId)).filter(r=>r.type==='fight');await this.repo.memberLeft(guildId,userId);for(const row of affected)await this.refresh(client,row.id);}
@@ -162,7 +163,7 @@ export class DiscordEventsCoordinator {
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied||silent&&i.deferred)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
  async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData;nowMs?:number}={}){
   const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10);
-  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
+  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=!fight&&live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
   const render=(imageView:RaceView=view,phase=0,remaining=waitingMs)=>{const motion={phase,waitingMs:remaining,...(options.callout?{callout:options.callout.replace(/<@&[^>]+>\s*/g,'')}: {})};return fight?renderFight(imageView,motion,'wide'):renderRace(imageView,'wide',motion);};
   let image:Buffer|undefined;
   if(!options.retainImageUrl){
@@ -193,23 +194,20 @@ export class DiscordEventsCoordinator {
   }
   return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view):raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.type==='race'&&view.state==='OPEN'?waitingCountdown(view.expiresAt):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
-  const filename=`${view.type==='fight'?'fight':'race'}-locked.gif`,existing=view.state==='LOCKED'?message.attachments?.find(attachment=>attachment.name===filename):undefined;
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.type==='race'&&view.state==='OPEN'?waitingCountdown(view.expiresAt):view.type==='fight'&&view.state==='LOCKED'?fightProgress(view):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
+  const filename=`${view.type==='fight'?'fight-locked.png':'race-locked.gif'}`,existing=view.state==='LOCKED'&&view.type==='race'?message.attachments?.find(attachment=>attachment.name===filename):undefined;
   const openImage=view.type==='race'&&view.state==='OPEN'?message.attachments?.find(attachment=>attachment.name==='race-open.png')?.url:undefined;
-  const retainImageUrl=view.state==='LOCKED'?(existing?.url??this.liveImages.get(id)):sameState?openImage:undefined;
-  const saved=view.state==='LOCKED'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
+  const retainImageUrl=view.state==='LOCKED'&&view.type==='race'?(existing?.url??this.liveImages.get(id)):sameState?openImage:undefined;
+  const saved=view.state==='LOCKED'&&view.type==='race'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
   const prepared=this.prepared.get(id);
   const samePlan=saved&&prepared&&presentationKey({plan:saved.data.plan,fightPlan:saved.data.fightPlan})===presentationKey({plan:prepared.preview.data.plan,fightPlan:prepared.preview.data.fightPlan});
-  // Prepared Fight art is encoded with a future playback origin, so it remains
-  // valid when the durable close job runs a tick after its exact deadline. The
-  // plan and public wagering fingerprint still have to match before reuse.
   let payload=!retainImageUrl&&samePlan&&prepared?.key===this.visualKey(view)&&prepared.payload?prepared.payload:await eventTiming('event.render',()=>this.payload(view,retainImageUrl?{retainImageUrl}:saved?.state==='LOCKED'?{timeline:saved.data}:{}));
   if(view.state!=='OPEN')this.prepared.delete(id);
   // Rendering may span the end of a round. Never overwrite a persisted result/cancellation with stale live art.
   if(view.state==='LOCKED'||view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=version(view);const latestSaved=view.state==='LOCKED'&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;payload=await this.payload(view,latestSaved?.state==='LOCKED'?{timeline:latestSaved.data}:{});}}
   await eventTiming('event.edit-upload',()=>message.edit(payload));
-  if(view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
-  this.publishedVersions.set(id,key);if(view.type==='race'&&view.state==='OPEN')this.countdownVersions.set(id,waitingCountdown(view.expiresAt));else this.countdownVersions.delete(id);this.prepare(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
+  if(view.type==='race'&&view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
+  this.publishedVersions.set(id,key);if(tick)this.countdownVersions.set(id,tick);else this.countdownVersions.delete(id);this.prepare(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
  async sweep(client:Client){if(this.sweeping)return;this.sweeping=true;try{for(const event of await this.repo.active()){
   if(event.expiresAt&&event.expiresAt<=new Date()){await this.advance(client,event.guildId,event.id,event.state==='LOCKED');continue;}
   await this.refresh(client,event.id);
