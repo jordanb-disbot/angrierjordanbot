@@ -76,7 +76,6 @@ export function verifyFoldingGate({roles,channels,mappings,onCategories=()=>{}})
  const categoryIds=[...new Set(mapped.map(channel=>channel.parent_id))];
  check(categoryIds.length>0,'MEMBER_CATEGORIES_MISSING');
  onCategories(categoryIds);
- check(!categoryIds.includes(landing.parent_id),'LANDING_IN_MEMBER_CATEGORY');
  check(Boolean(effectivePermissions(roles,landing,[])&view),'LANDING_NOT_PUBLIC');
  for(const id of categoryIds){
   const category=channels.find(row=>row.id===id);

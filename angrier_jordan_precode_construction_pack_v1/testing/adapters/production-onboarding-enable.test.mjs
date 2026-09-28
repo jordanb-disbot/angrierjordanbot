@@ -37,7 +37,7 @@ function enableFixture(){
  const channels=[
   {id:mainChatId,guild_id:guildId,type:0,parent_id:memberCategoryId,permission_overwrites:structuredClone(memberOverwrites)},
   {id:memberCategoryId,guild_id:guildId,type:4,permission_overwrites:structuredClone(memberOverwrites)},
-  {id:LANDING_CHANNEL,guild_id:guildId,type:0,parent_id:null,permission_overwrites:[{id:guildId,type:0,allow:String(1n<<10n),deny:'0'}]},
+  {id:LANDING_CHANNEL,guild_id:guildId,type:0,parent_id:memberCategoryId,permission_overwrites:[{id:guildId,type:0,allow:String(1n<<10n),deny:'0'}]},
  ];
  const get=async path=>path===`/guilds/${guildId}/roles`?roles:path===`/guilds/${guildId}/channels`?channels:path==='/users/@me'?{id:botId}:path===`/guilds/${guildId}/members/${botId}`?{user:{id:botId},roles:[botRoleId]}:assert.fail('Unexpected Discord GET '+path);
  return {roles,panels,rows,writes,panelWrites,audits,output,channels,config,db,get,run:()=>enableProductionOnboarding({db,config,get,write:s=>output.push(s)})};
@@ -111,6 +111,7 @@ test('public landing remains visible without Folding Chair while gated member ca
 
 test('new members can see take-a-seat before receiving Folding Chair',()=>{
  const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
+ assert.equal(f.channels[2].parent_id,memberCategoryId,'the public exception may sit inside a gated category');
  assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[memberCategoryId]);
  f.channels[2].permission_overwrites[0].allow='0';
  assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/LANDING_NOT_PUBLIC/);
