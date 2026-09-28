@@ -1,5 +1,13 @@
 # Permanent Angrier Jordan visual system
 
+## Unified card presentation approval — 2026-09-28
+
+The owner approved the FMK, profile, shop, and inventory review in local commit `b7342d0` as the presentation standard moving forward. The [approval manifest](approved_visuals/unified-cards-2026-09-28.json) records the exact desktop and mobile reference images. The approval also covers the matching lifecycle behavior for disposable economy results, temporary non-interactive information, and persistent active sessions. It is visual/UX approval, not production deployment authorization.
+
+Use the same readable hierarchy, generous content area, aligned rows, purposeful imagery, and mobile sizing across future cards. Keep member names and primary outcomes prominent; keep supporting text inside the frame without clipping. Profile Fight and Race records each occupy their own row. Shop and inventory items use full-width rows at mobile feed size. FMK keeps large member imagery and lifetime F/M/K data on each option. Preserve one authoritative active card during a game and remove or expire superseded and disposable output according to the approved lifecycle.
+
+Alternate **approved color themes by feature** while retaining the common lounge materials, frame construction, Space Grotesk headings, Inter body text, and `production/theme/brand.json`. The base midnight/teal/gold theme, emerald/gold economy theme, magenta/violet/cyan social theme, and gold/teal prestige theme are approved examples. Choose an accent for the feature's meaning and maintain readable contrast; do not rotate colors inside one live session or invent a new visual identity. Existing Gate A/B and feature-specific approvals remain valid.
+
 ## Chairisms owner visual approval — 2026-09-27
 
 The owner approved the portrait-led Chairisms revision: quoted member profile image filling the left panel, quotation and attribution centered within the right panel, adaptive font sizing, and existing amber/navy lounge materials with Space Grotesk/Inter. The [approval manifest](approved_visuals/chairisms-2026-09-27.json) records 16 immutable short/long/reply/image/archive/notice desktop and mobile review images. Preserve this typography placement for future Chairisms changes. Fixture identities are fictional; runtime captures the quoted member's actual Discord profile image. This approves presentation, not production deployment. The separate wheelchair race revision remains pending explicit visual approval.

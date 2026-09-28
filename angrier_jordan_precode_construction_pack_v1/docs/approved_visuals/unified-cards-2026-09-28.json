@@ -1,0 +1,18 @@
+{
+  "approvalDate": "2026-09-28",
+  "sourceCommit": "b7342d0",
+  "scope": "FMK, profile, shop, inventory, and associated card lifecycle presentation",
+  "productionDeploymentAuthorized": false,
+  "sha256": {
+    "review-fmk-overhaul/draft.png": "35783ad1c43645366d1c1f1dfebdd9d3931ca0d53a7e8b5f170524fdf47a6f09",
+    "review-fmk-overhaul/vote.png": "87ff19c31dd058d8ea2362a61c1b2a09c8f36436a62a03f283d3c6312d2cc956",
+    "review-fmk-overhaul/verdict.png": "9a5c3d36559837c8b02708517ca4b19e5140d91560332387d1f93bff5920825a",
+    "review-fmk-overhaul/verdict-mobile.png": "e82967051009ba6633fa31ff926672b64b7b4647f67b0f3d679ac72589cc3c24",
+    "review-ux-overhaul/profile.png": "8451eac2a002c38f578d8dfd885996141a87ed994fc19e1b6632e512934f141e",
+    "review-ux-overhaul/profile-mobile.png": "f0dae48fe8c2fa1b225d7079645dd0b539f1d1fd8e49afe6c0a539072462666b",
+    "review-ux-overhaul/shop.png": "374a8c429dbe418e432d4bef629a3048ac6961e4d90dd0d5e14173d6902e26a9",
+    "review-ux-overhaul/shop-mobile.png": "80a7f8f587e5bef9b6b9192a2fd55dd43c3cfb2998eb81e8f47b66c17365b63b",
+    "review-ux-overhaul/inventory.png": "d956de384f9f4586214c13e8b3cdc7f0ab4db53739339d0b0f8fe3d234eeccdc",
+    "review-ux-overhaul/inventory-mobile.png": "852dd58c1f4179ffc8e28425a1002838bf9629a33496ae64712862252594a5a3"
+  }
+}

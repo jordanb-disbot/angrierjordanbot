@@ -35,3 +35,7 @@ const entry=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/race-li
 if(entry.status!=='VISUAL_APPROVED')throw new Error('Race/Line entry approval status changed');
 for(const file of entry.files){if(createHash('sha256').update(fs.readFileSync(new URL('../'+file.file,import.meta.url))).digest('hex')!==file.sha256)throw new Error('Approved Race/Line entry changed: '+file.file);}
 console.log('Approved Race/Line entry lock PASS: '+entry.files.length+' files.');
+
+const unified=JSON.parse(fs.readFileSync(new URL('../docs/approved_visuals/unified-cards-2026-09-28.json',import.meta.url),'utf8'));
+for(const [file,expected] of Object.entries(unified.sha256)){if(createHash('sha256').update(fs.readFileSync(new URL('../'+file,import.meta.url))).digest('hex')!==expected)throw new Error('Approved unified card visual changed: '+file);}
+console.log('Approved unified card visual lock PASS: '+Object.keys(unified.sha256).length+' files.');

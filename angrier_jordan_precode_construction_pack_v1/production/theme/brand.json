@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "authority": "Owner Gate A and visual-system approval, 2026-09-25",
+  "version": 4,
+  "authority": "Owner Gate A/B and unified-card visual approvals, 2026-09-25–2026-09-28",
   "palette": {
     "midnight": "#0B1220",
     "navy": "#051822",
@@ -21,6 +21,12 @@
     "panels": "Inset translucent charcoal with thin teal edge and warm gold highlights",
     "art": "Fixed packaged raster artwork; no runtime generation"
   },
+  "approvedFeatureThemes": {
+    "lounge": ["#0B1220", "#0EA5A6", "#F4C542"],
+    "economy": ["#051822", "#10B981", "#F4C542"],
+    "social": ["#0B1220", "#A469E2", "#38BDF8", "#EF4444"],
+    "prestige": ["#0B1220", "#FFE29A", "#0EA5A6"]
+  },
   "scope": "Permanent Angrier Jordan visual system for all future features",
   "components": {
     "windowRadius": 18,
@@ -33,5 +39,6 @@
     "lineAccent": "#A469E2",
     "fixedFrameDuringAnimation": true
   },
-  "references": "docs/approved_visuals/locked-2026-09-25/manifest.json"
+  "references": "docs/approved_visuals/locked-2026-09-25/manifest.json",
+  "additionalReferences": ["docs/approved_visuals/gate-b-2026-09-25.json", "docs/approved_visuals/unified-cards-2026-09-28.json"]
 }
