@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {productionOnboardingTarget,planProductionSelfRoles,enableProductionOnboarding,verifyFoldingGate,main} from '../../scripts/enable-production-onboarding.mjs';
+import {productionOnboardingTarget,planProductionSelfRoles,enableProductionOnboarding,verifyFoldingGate,LANDING_CHANNEL,main} from '../../scripts/enable-production-onboarding.mjs';
 
 const guildId='1524964384642957432';
 const accessId='1525538959176896562';
@@ -23,6 +23,7 @@ function rolesFixture(){
 function panelFixture(roles){return {name:'Default Roles',enabled:true,config:{categories:names.map(([key,label,mode,options])=>({key,label,mode,options:options.map(name=>({roleId:roles.find(r=>r.name===name).id,label:name,enabled:true}))}))}};}
 const configRows=roles=>[{key:'roles.member_access',value:accessId},{key:'rejoin.restore_self_roles',value:true},{key:'special_commands.builtin_role_map',value:Object.fromEntries(['!line','!race','!vc','!chess'].map(trigger=>[trigger,roles.find(r=>r.name===({ '!line':'Line Ping','!race':'Race Ping','!vc':'VC Ping','!chess':'Chess Ping'}[trigger])).id]))}];
 const mainChatId='1524964386077151365';
+const memberCategoryId='1537594244796260412';
 function enableFixture(){
  const roles=rolesFixture(),panels=[],rows=new Map([...configRows(roles),{key:'channels.main_chat',value:mainChatId},{key:'roles_panel.enabled',value:false},...Object.entries({'onboarding.rules_ack_required':true,'rejoin.require_rules_ack':true,'rejoin.restore_self_roles':true,'rejoin.restore_manual_nonstaff_roles':true,'rejoin.restore_staff_roles':false,'rejoin.restore_nickname':true}).map(([key,value])=>({key,value}))].map(({key,value})=>[key,{value,version:1}]));
  const writes=[],panelWrites=[],audits=[],output=[];
@@ -32,7 +33,12 @@ function enableFixture(){
  }};
  const upsert=async args=>{panelWrites.push(args);const next={id:'panel-id',guildId,name:'Default Roles',enabled:true,config:structuredClone(args.create?.config??args.update?.config)};panels.splice(0,panels.length,next);return structuredClone(next);};
  const db={guild:{findUnique:async()=>({id:guildId})},configValue:{findMany:async()=>[...rows].map(([key,{value}])=>({key,value}))},selfRolePanel:{findMany:async()=>structuredClone(panels),findUnique:async()=>structuredClone(panels[0]??null)},$transaction:async callback=>callback({selfRolePanel:{upsert},auditEvent:{create:async input=>audits.push(input)}})};
- const channels=[{id:mainChatId,guild_id:guildId,type:0,permission_overwrites:[{id:guildId,type:0,allow:'0',deny:String(1n<<10n)},{id:accessId,type:0,allow:String((1n<<10n)|(1n<<11n)),deny:'0'}]}];
+ const memberOverwrites=[{id:guildId,type:0,allow:'0',deny:String(1n<<10n)},{id:accessId,type:0,allow:String((1n<<10n)|(1n<<11n)),deny:'0'}];
+ const channels=[
+  {id:mainChatId,guild_id:guildId,type:0,parent_id:memberCategoryId,permission_overwrites:structuredClone(memberOverwrites)},
+  {id:memberCategoryId,guild_id:guildId,type:4,permission_overwrites:structuredClone(memberOverwrites)},
+  {id:LANDING_CHANNEL,guild_id:guildId,type:0,parent_id:null,permission_overwrites:[{id:guildId,type:0,allow:String(1n<<10n),deny:'0'}]},
+ ];
  const get=async path=>path===`/guilds/${guildId}/roles`?roles:path===`/guilds/${guildId}/channels`?channels:path==='/users/@me'?{id:botId}:path===`/guilds/${guildId}/members/${botId}`?{user:{id:botId},roles:[botRoleId]}:assert.fail('Unexpected Discord GET '+path);
  return {roles,panels,rows,writes,panelWrites,audits,output,channels,config,db,get,run:()=>enableProductionOnboarding({db,config,get,write:s=>output.push(s)})};
 }
@@ -96,19 +102,40 @@ test('everyone channel bypass or bot hierarchy failure prevents every write',asy
  }
 });
 
-test('Folding Chair gate catches an everyone View Channel bypass',()=>{
+test('public landing remains visible without Folding Chair while gated member category is hidden',()=>{
  const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
- assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[mainChatId]);
- const everyone=f.channels[0].permission_overwrites.find(o=>o.id===guildId);everyone.deny='0';everyone.allow=String(1n<<10n);
- assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/EVERYONE_VIEW_BYPASS/);
+ assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[memberCategoryId]);
+ const everyone=f.channels[1].permission_overwrites.find(o=>o.id===guildId);everyone.deny='0';everyone.allow=String(1n<<10n);
+ assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/EVERYONE_CATEGORY_VIEW_BYPASS/);
+});
+
+test('new members can see take-a-seat before receiving Folding Chair',()=>{
+ const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
+ assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[memberCategoryId]);
+ f.channels[2].permission_overwrites[0].allow='0';
+ assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/LANDING_NOT_PUBLIC/);
+});
+
+test('Folding Chair unlocks the synced member category and its child channels',()=>{
+ const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
+ assert.deepEqual(f.channels[0].permission_overwrites,f.channels[1].permission_overwrites,'synced child uses category overwrites');
+ assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[memberCategoryId]);
+ f.channels[1].permission_overwrites.find(row=>row.id===accessId).allow='0';
+ assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/FOLDING_CATEGORY_VIEW_MISSING/);
+});
+
+test('an unsynced public child cannot bypass a gated member category',()=>{
+ const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
+ f.channels[0].permission_overwrites=[{id:guildId,type:0,allow:String(1n<<10n),deny:'0'}];
+ assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/UNSYNCED_MEMBER_VIEW_BYPASS/);
 });
 
 test('sanitized stage markers locate a channel-gate failure before any write',async()=>{
  const f=enableFixture(),stages=[];
- const everyone=f.channels[0].permission_overwrites.find(row=>row.id===guildId);
+ const everyone=f.channels[1].permission_overwrites.find(row=>row.id===guildId);
  everyone.allow=String(1n<<10n);everyone.deny='0';
- await assert.rejects(()=>enableProductionOnboarding({db:f.db,config:f.config,get:f.get,diagnostic:line=>stages.push(line)}),/EVERYONE_VIEW_BYPASS/);
- assert.deepEqual(stages,['STAGE: discord_inventory','STAGE: role_resolution','STAGE: channel_permissions']);
+ await assert.rejects(()=>enableProductionOnboarding({db:f.db,config:f.config,get:f.get,diagnostic:line=>stages.push(line)}),/EVERYONE_CATEGORY_VIEW_BYPASS/);
+ assert.deepEqual(stages,['STAGE: discord_inventory','STAGE: role_resolution','STAGE: channel_permissions',`STAGE: member_category_ids=["${memberCategoryId}"]`]);
  assert.equal(f.writes.length,0);assert.equal(f.panelWrites.length,0);assert.equal(f.audits.length,0);
  assert.doesNotMatch(stages.join(''),/postgresql:|Bot |DISCORD_TOKEN/);
 });

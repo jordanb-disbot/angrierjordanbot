@@ -4,6 +4,7 @@ import {pathToFileURL} from 'node:url';
 import {productionTarget,GUILD,MAIN_CHAT} from './audit-production-race-line.mjs';
 
 export const FOLDING_CHAIR='1525538959176896562';
+export const LANDING_CHANNEL='1525540109414568188';
 export const APPROVED_CATEGORIES=[
  ['dm_status','DM Status','single',['DMs Open','DMs Closed']],
  ['gender','Gender','single',['Male','Female']],
@@ -61,20 +62,37 @@ function effectivePermissions(roles,channel,roleIds){
  return(bits&~deny)|allow;
 }
 
-export function verifyFoldingGate({roles,channels,mappings}){
+export function verifyFoldingGate({roles,channels,mappings,onCategories=()=>{}}){
  const ids=[...new Set(gateKeys.map(key=>mappings[key]).filter(snowflake))];
  check(mappings['channels.main_chat']===MAIN_CHAT,'MAIN_CHAT_MAPPING_INVALID');
- check(ids.length>0,'GATED_CHANNELS_MISSING');
- const view=1n<<10n,send=1n<<11n;
- for(const id of ids){
+ check(ids.length>0,'MEMBER_CHANNEL_MAPPINGS_MISSING');
+ const view=1n<<10n,landing=channels.find(row=>row.id===LANDING_CHANNEL);
+ check(landing?.guild_id===GUILD&&landing.type===0,'LANDING_CHANNEL_INVALID');
+ const mapped=ids.filter(id=>id!==LANDING_CHANNEL).map(id=>{
   const channel=channels.find(row=>row.id===id);
-  check(channel&&channel.guild_id===GUILD&&[0,5,15,16].includes(channel.type),`GATED_CHANNEL_INVALID_${id}`);
-  const everyone=effectivePermissions(roles,channel,[]),member=effectivePermissions(roles,channel,[FOLDING_CHAIR]);
-  check(!(everyone&view),`EVERYONE_VIEW_BYPASS_${id}`);
-  check(Boolean(member&view),`FOLDING_VIEW_MISSING_${id}`);
-  if(id===MAIN_CHAT)check(Boolean(member&send),`FOLDING_SEND_MISSING_${id}`);
+  check(channel?.guild_id===GUILD&&snowflake(channel.parent_id),`MEMBER_CHANNEL_CATEGORY_MISSING_${id}`);
+  return channel;
+ });
+ const categoryIds=[...new Set(mapped.map(channel=>channel.parent_id))];
+ check(categoryIds.length>0,'MEMBER_CATEGORIES_MISSING');
+ onCategories(categoryIds);
+ check(!categoryIds.includes(landing.parent_id),'LANDING_IN_MEMBER_CATEGORY');
+ check(Boolean(effectivePermissions(roles,landing,[])&view),'LANDING_NOT_PUBLIC');
+ for(const id of categoryIds){
+  const category=channels.find(row=>row.id===id);
+  check(category?.guild_id===GUILD&&category.type===4,`MEMBER_CATEGORY_INVALID_${id}`);
+  const everyone=effectivePermissions(roles,category,[]),member=effectivePermissions(roles,category,[FOLDING_CHAIR]);
+  check(!(everyone&view),`EVERYONE_CATEGORY_VIEW_BYPASS_${id}`);
+  check(Boolean(member&view),`FOLDING_CATEGORY_VIEW_MISSING_${id}`);
  }
- return ids;
+ // Discord applies category changes to synced children by copying overwrites.
+ // A deliberately unsynced child is checked using its own effective permissions.
+ for(const channel of channels.filter(row=>categoryIds.includes(row.parent_id)&&row.id!==LANDING_CHANNEL&&[0,2,5,13,15,16].includes(row.type))){
+  const everyone=effectivePermissions(roles,channel,[]),member=effectivePermissions(roles,channel,[FOLDING_CHAIR]);
+  check(!(everyone&view),`UNSYNCED_MEMBER_VIEW_BYPASS_${channel.id}`);
+  check(Boolean(member&view),`FOLDING_MEMBER_VIEW_MISSING_${channel.id}`);
+ }
+ return categoryIds;
 }
 
 export async function enableProductionOnboarding({db,config,get,write=console.log,diagnostic=()=>{}}){
@@ -95,7 +113,7 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
  const planned=planProductionSelfRoles({roles,botMember,configRows:rows,guildId:GUILD,existingPanel:existing});
  const mappings=Object.fromEntries(await Promise.all(gateKeys.map(async key=>[key,(await config.getWithMetadata(GUILD,key)).value])));
  diagnostic('STAGE: channel_permissions');
- const gated=verifyFoldingGate({roles,channels,mappings});
+ const gated=verifyFoldingGate({roles,channels,mappings,onCategories:ids=>diagnostic(`STAGE: member_category_ids=${JSON.stringify(ids)}`)});
  diagnostic('STAGE: restoration_policy');
  for(const [key,expected] of Object.entries(restoreExpected))check((await config.getWithMetadata(GUILD,key)).value===expected,'RESTORATION_POLICY_INVALID');
  const top=Math.max(0,...roles.filter(role=>botMember.roles.includes(role.id)).map(role=>role.position));
@@ -120,7 +138,7 @@ export async function enableProductionOnboarding({db,config,get,write=console.lo
   const saved=await config.getWithMetadata(GUILD,key);check(saved.version>=1&&isDeepStrictEqual(saved.value,value),'SETTING_VERIFY_FAILED');
  }
   write('PASS: production guild, private database and AJ role hierarchy verified.');
-  write(`PASS: Folding Chair gate verified for ${gated.length} configured member channels.`);
+  write(`PASS: landing ${LANDING_CHANNEL} is public; Folding Chair gates member categories ${JSON.stringify(gated)}.`);
   write('PASS: 7 approved categories and 28 safe current role IDs persisted; existing member roles and selections untouched.');
   for(const category of planned.categories)write(`PASS: role_map.${category.key}=${JSON.stringify(category.options.map(({label,roleId})=>({label,roleId})))}.`);
   write('PASS: rules/rejoin restoration policy verified.');
