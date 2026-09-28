@@ -13,6 +13,7 @@ import {renderEventNotice} from '../../../../packages/features-events/src/wide-r
 import {rasterizeSvg,rasterizeTimeline} from '../../../../packages/renderer/src/raster.js';
 import {AnimationAssets} from '../../../../packages/renderer/src/animation-assets.js';
 import {eventWindow,waitingCountdown} from './event-window.js';
+import {funChannelAllowed} from './fun-channels.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
 function raceWaitingText(view:RaceView,now:number){
@@ -48,9 +49,9 @@ export class DiscordEventsCoordinator {
  constructor(private readonly repo:PrismaEventsRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  async policy(guildId:string):Promise<EventPolicy>{const [min,max]=await Promise.all(['events.min_bet','events.max_bet'].map(key=>this.config.get(guildId,key)));return{minBet:BigInt(Number(min)),maxBet:BigInt(Number(max))};}
  private async guard(guildId:string,userId:string,channelId:string,kind='race'){
-  const [enabled,channel,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),this.config.get(guildId,'channels.main_chat'),this.eligible(guildId,userId)]);
+  const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):this.config.get(guildId,'channels.main_chat').then(channel=>channel===channelId),this.eligible(guildId,userId)]);
   if(enabled!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');
-  if(channelId!==channel)throw new DomainError('EVENT_CHANNEL','Use events in the configured main chat.');
+  if(!channelAllowed)throw new DomainError('EVENT_CHANNEL',kind==='fight'?'Use Fight in an approved channel.':'Use events in the configured main chat.');
   if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('EVENT_RESTRICTED','Event controls are unavailable while restricted.');
  }
  async message(message:Message){

@@ -4,6 +4,7 @@ import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import { DeliveryEngine, DomainError, PermissionEngine, type ConfigService } from '../../../../packages/core/src/index.js';
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import type { PrismaWyrPublicationRepository, WyrCategoryInput, WyrService } from '../../../../packages/features-wyr/src/index.js';
+import {funChannelAllowed} from './fun-channels.js';
 
 const validCategories=new Set<WyrCategoryInput>(['Random','Casual','Friends','Dating','Married','Spicy','Unhinged']);
 const png=async(svg:string)=>rasterizeSvg(svg);
@@ -21,7 +22,7 @@ export class DiscordWyrCoordinator {
   private readonly rendered=new Map<string,string>();
   private readonly updates=new Map<string,Promise<void>>();
   constructor(private readonly service:WyrService,private readonly config?:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>=async()=>false,private readonly publication?:PrismaWyrPublicationRepository){}
-  private async guard(i:ChatInputCommandInteraction|ButtonInteraction){if(!i.guildId||!i.guild)throw new DomainError('SERVER_ONLY','Use WYR in the server.');if(!this.config||await this.config.get(i.guildId,'features.party_games')!==true)throw new DomainError('WYR_DISABLED','Party games are not enabled yet.');if(await this.config.get(i.guildId,'channels.games_channel')!==i.channelId)throw new DomainError('WYR_CHANNEL','Use the configured games channel.');if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!await this.eligible(i.guildId,i.user.id))throw new DomainError('WYR_RESTRICTED','Party games are unavailable while restricted.');}
+  private async guard(i:ChatInputCommandInteraction|ButtonInteraction){if(!i.guildId||!i.guild)throw new DomainError('SERVER_ONLY','Use WYR in the server.');if(!this.config||await this.config.get(i.guildId,'features.party_games')!==true)throw new DomainError('WYR_DISABLED','Party games are not enabled yet.');if(!await funChannelAllowed(this.config,i.guildId,i.channelId,'party'))throw new DomainError('WYR_CHANNEL','Use an approved games channel.');if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!await this.eligible(i.guildId,i.user.id))throw new DomainError('WYR_RESTRICTED','Party games are unavailable while restricted.');}
 
   async handleSlash(interaction:ChatInputCommandInteraction):Promise<void>{
     const raw=interaction.options.getString('category')??'Random';

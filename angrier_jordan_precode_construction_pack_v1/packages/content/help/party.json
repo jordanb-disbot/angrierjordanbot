@@ -10,7 +10,7 @@
     "fmk"
   ],
   "title": "Party games",
-  "body": "Start most rounds in the configured games channel; One Word Story runs in its dedicated story channel. Truth or Dare uses private target answers before publication. WYR hides totals until voting closes. WWYD presents authored response choices for anonymous voting. Finish the Sentence collects anonymous answers before voting. Tied votes can move to a runoff. One Word Story alternates contributors and ends at the selected length. FMK keeps your choices private until submission, then exposes Agree/Disagree voting on that result while Play Again creates a fresh trio.",
+  "body": "Start FMK, WYR, WWYD, and Truth or Dare in either approved party channel. Other rounds stay in the configured games channel; One Word Story runs in its dedicated story channel. Truth or Dare uses private target answers before publication. WYR hides totals until voting closes. WWYD presents authored response choices for anonymous voting. Finish the Sentence collects anonymous answers before voting. Tied votes can move to a runoff. One Word Story alternates contributors and ends at the selected length. FMK keeps your choices private until submission, then exposes Agree/Disagree voting on that result while Play Again creates a fresh trio.",
   "fields": {
     "member": "Optional Truth or Dare target; defaults to you.",
     "category": "Choose an authored category or Random.",
@@ -21,7 +21,7 @@
   "tutorial": {
     "lesson_id": "games.party",
     "steps": [
-      "Choose a party game in the games channel, or open One Word Story in its dedicated story channel.",
+      "Choose FMK, WYR, WWYD, or Truth or Dare in either approved party channel. Other games keep their configured channel.",
       "Read the prompt and displayed deadline.",
       "Use the private answer or choice controls where shown.",
       "Vote during the round; only the host can use its one extension.",

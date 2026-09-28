@@ -1,5 +1,5 @@
 {
-  "count": 258,
+  "count": 260,
   "controls": [
     {
       "key": "server.timezone",
@@ -3806,6 +3806,25 @@
       "dependsOn": []
     },
     {
+      "key": "fight.additional_channel_ids",
+      "section": "events",
+      "label": "Additional Channel Ids",
+      "description": "Additional approved Fight channels alongside main chat. At most 10 unique Discord channel IDs.",
+      "kind": "json-editor",
+      "defaultValue": [],
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.main_chat"
+      ]
+    },
+    {
       "key": "events.min_bet",
       "section": "events",
       "label": "Min Bet",
@@ -4112,6 +4131,25 @@
       "description": "Enable accepted party_games runtime. Keep off until acceptance.",
       "kind": "toggle",
       "defaultValue": false,
+      "risk": "security",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.games_channel"
+      ]
+    },
+    {
+      "key": "party_games.additional_channel_ids",
+      "section": "games",
+      "label": "Additional Channel Ids",
+      "description": "Additional channels for FMK, WYR, WWYD, and Truth or Dare alongside the games channel. At most 10 unique Discord channel IDs.",
+      "kind": "json-editor",
+      "defaultValue": [],
       "risk": "security",
       "editableBy": [
         "throne",
