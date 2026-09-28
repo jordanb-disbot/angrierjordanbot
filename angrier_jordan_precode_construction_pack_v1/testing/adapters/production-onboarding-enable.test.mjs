@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {productionOnboardingTarget,planProductionSelfRoles,enableProductionOnboarding,verifyFoldingGate,listGuildMembers,LANDING_CHANNEL,WELCOME_CATEGORY,main} from '../../scripts/enable-production-onboarding.mjs';
+import {productionOnboardingTarget,planProductionSelfRoles,enableProductionOnboarding,verifyFoldingGate,LANDING_CHANNEL,WELCOME_CATEGORY,main} from '../../scripts/enable-production-onboarding.mjs';
 
 const guildId='1524964384642957432';
 const accessId='1525538959176896562';
@@ -27,13 +27,13 @@ const memberCategoryId='1537594244796260412';
 const legacyId='1700000000000000001',existingId='1700000000000000002',jailedId='1700000000000000003',pendingId='1700000000000000004',otherBotId='1700000000000000005';
 function enableFixture(){
  const roles=rolesFixture(),panels=[],rows=new Map([...configRows(roles),{key:'channels.main_chat',value:mainChatId},{key:'roles_panel.enabled',value:false},...Object.entries({'onboarding.rules_ack_required':true,'rejoin.require_rules_ack':true,'rejoin.restore_self_roles':true,'rejoin.restore_manual_nonstaff_roles':true,'rejoin.restore_staff_roles':false,'rejoin.restore_nickname':true}).map(([key,value])=>({key,value}))].map(({key,value})=>[key,{value,version:1}]));
- const writes=[],panelWrites=[],audits=[],output=[],roleAdds=[];
+ const writes=[],panelWrites=[],audits=[],output=[];
  const config={getWithMetadata:async(_guild,key)=>rows.get(key)??{value:null,version:0},get:async(_guild,key)=>rows.get(key)?.value??null,set:async input=>{
   assert.equal(input.guildId,guildId);assert.equal(input.source,'operator.production-onboarding-enablement');assert.ok(input.requestId);assert.equal(input.expectedVersion,rows.get(input.key)?.version??0);
   writes.push(input);rows.set(input.key,{value:structuredClone(input.value),version:input.expectedVersion+1});
  }};
  const upsert=async args=>{panelWrites.push(args);const next={id:'panel-id',guildId,name:'Default Roles',enabled:true,config:structuredClone(args.create?.config??args.update?.config)};panels.splice(0,panels.length,next);return structuredClone(next);};
- const db={guild:{findUnique:async()=>({id:guildId})},configValue:{findMany:async()=>[...rows].map(([key,{value}])=>({key,value}))},selfRolePanel:{findMany:async()=>structuredClone(panels),findUnique:async()=>structuredClone(panels[0]??null)},jailSentence:{findMany:async()=>[{userId:jailedId}]},$transaction:async callback=>callback({selfRolePanel:{upsert},auditEvent:{create:async input=>audits.push(input)}})};
+ const db={guild:{findUnique:async()=>({id:guildId})},configValue:{findMany:async()=>[...rows].map(([key,{value}])=>({key,value}))},selfRolePanel:{findMany:async()=>structuredClone(panels),findUnique:async()=>structuredClone(panels[0]??null)},$transaction:async callback=>callback({selfRolePanel:{upsert},auditEvent:{create:async input=>audits.push(input)}})};
  const memberOverwrites=[{id:guildId,type:0,allow:'0',deny:String(1n<<10n)},{id:accessId,type:0,allow:String((1n<<10n)|(1n<<11n)),deny:'0'}];
  const channels=[
   {id:mainChatId,guild_id:guildId,type:0,parent_id:memberCategoryId,permission_overwrites:structuredClone(memberOverwrites)},
@@ -49,8 +49,7 @@ function enableFixture(){
   {user:{id:otherBotId,bot:true},roles:[]},
  ];
  const get=async path=>path===`/guilds/${guildId}/roles`?roles:path===`/guilds/${guildId}/channels`?channels:path==='/users/@me'?{id:botId}:path===`/guilds/${guildId}/members/${botId}`?{user:{id:botId},roles:[botRoleId]}:path===`/guilds/${guildId}/members?limit=1000&after=0`?structuredClone(members):path.startsWith(`/guilds/${guildId}/members/`)?structuredClone(members.find(member=>member.user.id===path.split('/').at(-1))):assert.fail('Unexpected Discord GET '+path);
- const put=async path=>{roleAdds.push(path);const member=members.find(row=>row.user.id===path.split('/')[4]);assert.equal(path.split('/')[6],accessId);member.roles.push(accessId);};
- return {roles,panels,rows,writes,panelWrites,audits,output,channels,members,roleAdds,config,db,get,put,run:()=>enableProductionOnboarding({db,config,get,put,write:s=>output.push(s)})};
+ return {roles,panels,rows,writes,panelWrites,audits,output,channels,members,config,db,get,run:()=>enableProductionOnboarding({db,config,get,write:s=>output.push(s)})};
 }
 
 test('production target requires the named guild and private production PostgreSQL before connecting',async()=>{
@@ -84,6 +83,8 @@ test('planner rejects missing, ambiguous, managed, permission bearing, elevated 
  for(const mutate of bad){const roles=rolesFixture();mutate(roles);assert.throws(()=>planProductionSelfRoles({roles,botMember:{roles:[botRoleId]},configRows:configRows(roles),guildId}));}
  const roles=rolesFixture(),rows=configRows(roles);rows.push({key:'roles.throne',value:roles.find(r=>r.name==='DMs Open').id});
  assert.throws(()=>planProductionSelfRoles({roles,botMember:{roles:[botRoleId]},configRows:rows,guildId,existingPanel:panelFixture(roles)}));
+ const granted=rolesFixture(),self=granted.find(r=>r.name==='DMs Open');
+ assert.throws(()=>planProductionSelfRoles({roles:granted,channels:[{permission_overwrites:[{id:self.id,allow:String(1n<<10n),deny:'0'}]}],botMember:{roles:[botRoleId]},configRows:configRows(granted),guildId}),/SELF_ROLE_CHANNEL_GRANT/);
 });
 
 test('enablement uses audited settings writes, preserves the existing panel, and is idempotent',async()=>{
@@ -98,28 +99,23 @@ test('enablement uses audited settings writes, preserves the existing panel, and
  const first={settings:f.writes.length,panel:f.panelWrites.length};
  await f.run();
  assert.deepEqual({settings:f.writes.length,panel:f.panelWrites.length},first);
- assert.equal(f.roleAdds.length,1);
- assert.deepEqual(f.members[0].roles,['1700000000000000099',accessId]);
- assert.match(f.output.join('\n'),/backfill added=1 already=1 excluded=3 total=5/);
+ assert.deepEqual(f.members[0].roles,['1700000000000000099']);
+ assert.match(f.output.join('\n'),/existing member roles and self-role selections unchanged/);
  assert.ok(f.output.every(line=>line.startsWith('PASS:')));
 });
 
-test('member inventory paginates by highest user ID without missing the last page',async()=>{
- const first=Array.from({length:1000},(_,index)=>({user:{id:String(1700000000000000000n+BigInt(index+1))},roles:[]}));
- const last={user:{id:'1700000000000001001'},roles:[]},paths=[];
- const members=await listGuildMembers(async path=>{paths.push(path);return paths.length===1?first:[last];});
- assert.equal(members.length,1001);
- assert.deepEqual(paths,[`/guilds/${guildId}/members?limit=1000&after=0`,`/guilds/${guildId}/members?limit=1000&after=${first.at(-1).user.id}`]);
+test('maintenance never writes Discord member roles or requests a member inventory',async()=>{
+ const f=enableFixture(),paths=[];
+ await enableProductionOnboarding({db:f.db,config:f.config,get:async path=>{paths.push(path);return f.get(path);},write:s=>f.output.push(s)});
+ assert.ok(paths.every(path=>!path.includes('/members?')&&!path.includes('/roles/'+accessId)));
+ assert.deepEqual(f.members.map(member=>member.roles),[['1700000000000000099'],[accessId],[],[],[]]);
 });
-
-test('backfill fails closed when a role grant is not confirmed and a rerun repairs it',async()=>{
- const f=enableFixture(),put=f.put;
- await assert.rejects(()=>enableProductionOnboarding({db:f.db,config:f.config,get:f.get,put:async()=>{},write:s=>f.output.push(s)}),/FOLDING_BACKFILL_VERIFY_FAILED/);
- assert.equal(f.output.length,0);
- f.put=put;
- await f.run();
- assert.equal(f.roleAdds.length,1);
- assert.equal(f.members[0].roles.includes(accessId),true);
+test('production entrypoint uses Discord GET only and emits verified PASS output',async()=>{
+ const f=enableFixture(),methods=[],output=[],errors=[];
+ const env={NODE_ENV:'production',AJ_DATABASE_PURPOSE:'production',DISCORD_GUILD_ID:guildId,DATABASE_URL:'postgresql://test:test@db.railway.internal:5432/railway',DISCORD_TOKEN:'fixture-token'};
+ const code=await main(env,{connect:async()=>({db:{...f.db,$disconnect:async()=>{}},config:f.config}),fetcher:async(url,options)=>{methods.push(options.method);return{ok:true,status:200,json:async()=>f.get(new URL(url).pathname.replace('/api/v10',''))};},write:line=>output.push(line),error:line=>errors.push(line)});
+ assert.equal(code,0);assert.ok(methods.length>=4);assert.ok(methods.every(method=>method==='GET'));
+ assert.ok(output.every(line=>line.startsWith('PASS:')));assert.equal(errors.some(line=>line.startsWith('FAIL:')),false);
 });
 
 test('an unchanged approved panel keeps its current IDs and causes no panel rewrite',async()=>{
@@ -129,7 +125,7 @@ test('an unchanged approved panel keeps its current IDs and causes no panel rewr
 
 test('everyone channel bypass or bot hierarchy failure prevents every write',async()=>{
  for(const mutate of [f=>{f.channels[0].permission_overwrites=[];},f=>{f.roles.find(r=>r.id===botRoleId).position=1;},f=>{f.roles.find(r=>r.id===botRoleId).permissions='0';}]){
-  const f=enableFixture();mutate(f);await assert.rejects(f.run());assert.equal(f.writes.length,0);assert.equal(f.panelWrites.length,0);assert.equal(f.audits.length,0);assert.equal(f.roleAdds.length,0);
+  const f=enableFixture();mutate(f);await assert.rejects(f.run());assert.equal(f.writes.length,0);assert.equal(f.panelWrites.length,0);assert.equal(f.audits.length,0);
  }
 });
 
@@ -169,6 +165,13 @@ test('an unsynced public child cannot bypass a gated member category',()=>{
  const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
  f.channels[0].permission_overwrites=[{id:guildId,type:0,allow:String(1n<<10n),deny:'0'}];
  assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/UNSYNCED_MEMBER_VIEW_BYPASS/);
+});
+test('staff-only children may remain hidden from Folding Chair, but an unmapped public category fails',()=>{
+ const f=enableFixture(),mappings={'channels.main_chat':mainChatId};
+ f.channels.push({id:'1700000000000000071',guild_id:guildId,type:0,parent_id:memberCategoryId,permission_overwrites:[{id:guildId,type:0,allow:'0',deny:String(1n<<10n)}]});
+ assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[memberCategoryId]);
+ f.channels.push({id:'1700000000000000072',guild_id:guildId,type:4,permission_overwrites:[{id:guildId,type:0,allow:String(1n<<10n),deny:'0'}]});
+ assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/EVERYONE_CATEGORY_VIEW_BYPASS_1700000000000000072/);
 });
 
 test('preflight reports every category and child bypass before a single fail-closed result',()=>{

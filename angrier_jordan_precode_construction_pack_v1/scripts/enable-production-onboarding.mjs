@@ -27,7 +27,7 @@ const aliases={'Disassociatives':['Dissociatives']};
 
 export const productionOnboardingTarget=productionTarget;
 
-export function planProductionSelfRoles({roles,botMember,configRows,guildId=GUILD,existingPanel}){
+export function planProductionSelfRoles({roles,channels=[],botMember,configRows,guildId=GUILD,existingPanel}){
  check(Array.isArray(roles)&&Array.isArray(botMember?.roles),'ROLE_INVENTORY_INVALID');
  const botRoles=roles.filter(role=>botMember.roles.includes(role.id)),top=Math.max(0,...botRoles.map(role=>role.position));
  const permissions=roles.filter(role=>role.id===guildId||botMember.roles.includes(role.id)).reduce((bits,role)=>bits|BigInt(role.permissions),0n);
@@ -43,6 +43,7 @@ export function planProductionSelfRoles({roles,botMember,configRows,guildId=GUIL
   check(matches.length<=1&&role,'ROLE_MISSING_OR_AMBIGUOUS');
   check(!used.has(role.id),'ROLE_DUPLICATE_OPTION');used.add(role.id);
   check(role.id!==guildId&&!role.managed&&role.position<top&&BigInt(role.permissions)===0n&&!protectedIds.has(role.id),'UNSAFE_SELF_ROLE');
+  check(!channels.some(channel=>channel.permission_overwrites?.some(overwrite=>overwrite.id===role.id&&BigInt(overwrite.allow)!==0n)),'SELF_ROLE_CHANNEL_GRANT');
   const refs=configRows.filter(row=>containsId(row.value,role.id));
   const expectedTrigger=pingTrigger[optionLabel];
   check(refs.every(row=>row.key==='special_commands.builtin_role_map'&&expectedTrigger&&row.value?.[expectedTrigger]===role.id&&Object.entries(row.value).every(([trigger,id])=>id!==role.id||trigger===expectedTrigger)),'SELF_ROLE_HAS_PROTECTED_REFERENCE');
@@ -91,49 +92,23 @@ export function verifyFoldingGate({roles,channels,mappings,onCategories=()=>{},o
   if(everyone&view)issues.push(`EVERYONE_CATEGORY_VIEW_BYPASS_${id}`);
   if(!(member&view))issues.push(`FOLDING_CATEGORY_VIEW_MISSING_${id}`);
  }
+ for(const category of channels.filter(row=>row.type===4&&row.id!==WELCOME_CATEGORY&&!categoryIds.includes(row.id))){
+  if(effectivePermissions(roles,category,[])&view)issues.push(`EVERYONE_CATEGORY_VIEW_BYPASS_${category.id}`);
+ }
  // Discord applies category changes to synced children by copying overwrites.
- // A deliberately unsynced child is checked using its own effective permissions.
+ // Staff-only children may intentionally remain hidden from Folding Chair.
+ // Every child must stay hidden from @everyone; mapped member children must unlock.
  for(const channel of channels.filter(row=>categoryIds.includes(row.parent_id)&&row.id!==LANDING_CHANNEL&&[0,2,5,13,15,16].includes(row.type))){
   const everyone=effectivePermissions(roles,channel,[]),member=effectivePermissions(roles,channel,[FOLDING_CHAIR]);
   if(everyone&view)issues.push(`UNSYNCED_MEMBER_VIEW_BYPASS_${channel.id}`);
-  if(!(member&view))issues.push(`FOLDING_MEMBER_VIEW_MISSING_${channel.id}`);
+  if(ids.includes(channel.id)&&!(member&view))issues.push(`FOLDING_MEMBER_VIEW_MISSING_${channel.id}`);
  }
  for(const code of issues)onIssue(code);
  check(issues.length===0,issues.length===1?issues[0]:'CATEGORY_GATE_REVIEW_REQUIRED');
  return categoryIds;
 }
 
-export async function listGuildMembers(get){
- const members=[],seen=new Set();let after='0';
- for(;;){
-  const page=await get(`/guilds/${GUILD}/members?limit=1000&after=${after}`);
-  check(Array.isArray(page)&&page.length<=1000,'MEMBER_INVENTORY_INVALID');
-  for(const member of page){
-   const id=member?.user?.id;
-   check(snowflake(id)&&Array.isArray(member.roles)&&!seen.has(id),'MEMBER_INVENTORY_INVALID');
-   seen.add(id);members.push(member);
-  }
-  if(page.length<1000)return members;
-  const next=page.reduce((max,member)=>BigInt(member.user.id)>BigInt(max)?member.user.id:max,after);
-  check(BigInt(next)>BigInt(after),'MEMBER_INVENTORY_STALLED');after=next;
- }
-}
-
-export async function backfillFoldingChair({members,jailedIds,jailedRoleId,get,put}){
- let added=0,already=0,excluded=0;
- for(const member of members){
-  const id=member.user.id;
-  if(member.user.bot||member.pending||jailedIds.has(id)||jailedRoleId&&member.roles.includes(jailedRoleId)){excluded++;continue;}
-  if(member.roles.includes(FOLDING_CHAIR)){already++;continue;}
-  await put(`/guilds/${GUILD}/members/${id}/roles/${FOLDING_CHAIR}`);
-  const updated=await get(`/guilds/${GUILD}/members/${id}`);
-  check(Array.isArray(updated?.roles)&&updated.roles.includes(FOLDING_CHAIR),'FOLDING_BACKFILL_VERIFY_FAILED');
-  added++;
- }
- return {added,already,excluded,total:members.length};
-}
-
-export async function enableProductionOnboarding({db,config,get,put,write=console.log,diagnostic=()=>{}}){
+export async function enableProductionOnboarding({db,config,get,write=console.log,diagnostic=()=>{}}){
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
  diagnostic('STAGE: discord_inventory');
  const [roles,channels,me,configRows,panels]=await Promise.all([
@@ -148,7 +123,7 @@ export async function enableProductionOnboarding({db,config,get,put,write=consol
  const rows=[...configRows];
  for(const key of protectedKeys)if(!rows.some(row=>row.key===key))rows.push({key,value:(await config.getWithMetadata(GUILD,key)).value});
  diagnostic('STAGE: role_resolution');
- const planned=planProductionSelfRoles({roles,botMember,configRows:rows,guildId:GUILD,existingPanel:existing});
+ const planned=planProductionSelfRoles({roles,channels,botMember,configRows:rows,guildId:GUILD,existingPanel:existing});
  const mappings=Object.fromEntries(await Promise.all(gateKeys.map(async key=>[key,(await config.getWithMetadata(GUILD,key)).value])));
  diagnostic('STAGE: channel_permissions');
  const gated=verifyFoldingGate({roles,channels,mappings,onCategories:ids=>diagnostic(`STAGE: member_category_ids=${JSON.stringify(ids)}`),onIssue:code=>diagnostic(`WARN: ${code}`)});
@@ -156,11 +131,6 @@ export async function enableProductionOnboarding({db,config,get,put,write=consol
  for(const [key,expected] of Object.entries(restoreExpected))check((await config.getWithMetadata(GUILD,key)).value===expected,'RESTORATION_POLICY_INVALID');
  const top=Math.max(0,...roles.filter(role=>botMember.roles.includes(role.id)).map(role=>role.position));
  check(folding.position<top,'AJ_BELOW_FOLDING');
- diagnostic('STAGE: existing_member_inventory');
- const members=await listGuildMembers(get);
- const jailed=await db.jailSentence.findMany({where:{guildId:GUILD,active:true},select:{userId:true}});
- const jailedIds=new Set(jailed.map(row=>row.userId));
- const jailedRoleId=rows.find(row=>row.key==='roles.jailed')?.value;
  const desired={categories:planned.categories};
  diagnostic('STAGE: audited_writes');
  if(!existing?.enabled||!isDeepStrictEqual(existing.config,desired)){
@@ -180,12 +150,10 @@ export async function enableProductionOnboarding({db,config,get,put,write=consol
  for(const [key,value] of [['roles.member_access',FOLDING_CHAIR],['roles_panel.enabled',true]]){
   const saved=await config.getWithMetadata(GUILD,key);check(saved.version>=1&&isDeepStrictEqual(saved.value,value),'SETTING_VERIFY_FAILED');
  }
- diagnostic('STAGE: existing_member_backfill');
- const backfill=await backfillFoldingChair({members,jailedIds,jailedRoleId,get,put});
   write('PASS: production guild, private database and AJ role hierarchy verified.');
   write(`PASS: welcome category ${WELCOME_CATEGORY} and landing ${LANDING_CHANNEL} are public; Folding Chair gates member categories ${JSON.stringify(gated)}.`);
   write('PASS: 7 approved categories and 28 safe current role IDs persisted; self-role selections untouched.');
-  write(`PASS: Folding Chair backfill added=${backfill.added} already=${backfill.already} excluded=${backfill.excluded} total=${backfill.total}.`);
+  write('PASS: existing member roles and self-role selections unchanged.');
   for(const category of planned.categories)write(`PASS: role_map.${category.key}=${JSON.stringify(category.options.map(({label,roleId})=>({label,roleId})))}.`);
   write('PASS: rules/rejoin restoration policy verified.');
  write(`PASS: roles.member_access=${FOLDING_CHAIR}; roles_panel.enabled=true.`);
@@ -198,24 +166,22 @@ export async function main(env=process.env,{connect,fetcher=fetch,write=console.
   const target=productionOnboardingTarget(env);
   diagnostic('STAGE: dependency_initialization');
   const connection=connect?await connect(target):await connectProduction(target);db=connection.db;
-  const request=async(method,path)=>{
+  const get=async path=>{
    check(env.DISCORD_TOKEN,'DISCORD_TOKEN_MISSING');
    for(let attempt=0;attempt<5;attempt++){
-    const response=await fetcher('https://discord.com/api/v10'+path,{method,headers:{Authorization:'Bot '+env.DISCORD_TOKEN,...(method==='PUT'?{'X-Audit-Log-Reason':'Existing member Folding Chair onboarding backfill'}:{})},signal:AbortSignal.timeout(15000)});
+    const response=await fetcher('https://discord.com/api/v10'+path,{method:'GET',headers:{Authorization:'Bot '+env.DISCORD_TOKEN},signal:AbortSignal.timeout(15000)});
     if(response.status===429){
      const body=await response.json();const seconds=Number(body?.retry_after);
      check(Number.isFinite(seconds)&&seconds>=0&&seconds<=60,'DISCORD_RATE_LIMIT_INVALID');
      await new Promise(resolve=>setTimeout(resolve,Math.ceil(seconds*1000)+250));continue;
     }
-    check(response.ok,method==='GET'?'DISCORD_READ_FAILED':'DISCORD_ROLE_ADD_FAILED');
-    if(method==='PUT'){check(response.status===204,'DISCORD_ROLE_ADD_INVALID');return;}
+    check(response.ok,'DISCORD_READ_FAILED');
     return response.json();
    }
    throw Error('DISCORD_RATE_LIMIT_EXHAUSTED');
   };
-  const get=path=>request('GET',path),put=path=>request('PUT',path);
   diagnostic('STAGE: prerequisites');
-  await enableProductionOnboarding({...connection,get,put,write,diagnostic});
+  await enableProductionOnboarding({...connection,get,write,diagnostic});
  }catch(cause){
   const safe=/^[A-Z][A-Z0-9_]+$/.test(cause?.message??'')?cause.message:'PRODUCTION_ONBOARDING_FAILED';
   error('FAIL: '+safe+'. No exception details displayed.');return 1;
