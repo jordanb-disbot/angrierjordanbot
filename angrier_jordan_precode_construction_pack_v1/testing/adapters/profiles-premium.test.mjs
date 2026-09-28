@@ -20,6 +20,13 @@ test('profile tiles center labels and complete values without wrapping or splitt
  for(const page of pages){assert.doesNotMatch(page,/<tspan/);assert.match(page,/width="1200"/);}
  assert.ok(pages.some(page=>/text-anchor="middle"[^>]*>Top word 1/.test(page)));for(const value of ['chairs · 128','jordan · 94','game · 78'])assert.ok(pages.some(page=>page.includes(value)),value+' is preserved');
 });
+test('words and voice use one complete three-row, two-column activity page',()=>{
+ const values=['Words · today: 132','Voice seconds · today: 540','Words · this week: 920','Voice seconds · this week: 1,800','Words · this month: 3,680','Voice seconds · this month: 7,240'];
+ const pages=renderPremiumProfilePages({name:'Morgan',sections:[{label:'Words and voice · today / week / month',singlePage:true,value:values.join('\n')}]});
+ assert.equal(pages.length,2);for(const value of values)assert.ok(pages[1].includes(value.split(': ')[1]),value+' is visible');
+ const labels=[...pages[1].matchAll(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="middle"[^>]*>(Words · (?:today|this week|this month)|Voice seconds · (?:today|this week|this month))<\/text>/g)].map(m=>({x:Number(m[1]),y:Number(m[2]),label:m[3]}));
+ assert.equal(labels.length,6);assert.equal(new Set(labels.map(x=>x.x)).size,2);assert.equal(new Set(labels.map(x=>x.y)).size,3);
+});
 test('leaderboard uses image-only output and preserves ranks across pages',async()=>{
  const repo={leaderboard:async()=>Array.from({length:8},(_,n)=>({userId:'m'+n,value:100-n}))},c=new DiscordProfilesCoordinator(repo,config,async()=>true);
  const first=interaction();await c.handle(first);imageOnly(first.calls[0]);assert.equal(first.private,true);assert.match(first.calls[0].files[0].description,/1\. Member: 100/);

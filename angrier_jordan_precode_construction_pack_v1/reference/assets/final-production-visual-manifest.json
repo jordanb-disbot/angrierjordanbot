@@ -6485,7 +6485,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Readable member profile tables, Discord portraits, records, standings and showcase using approved brand tokens",
-      "sha256": "382ceacf04a559bccc5fd7b2d5a2363eac5ace74feac8e080f0dc5d919e2a196"
+      "sha256": "e9dc60a8b7cc7d04f3d03a2cd9983b5ab76620a7070f49e52d650446fcbc3c61"
     },
     {
       "id": "crime-premium-runtime",

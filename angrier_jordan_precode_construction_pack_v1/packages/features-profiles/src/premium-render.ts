@@ -26,7 +26,7 @@ function profileLine(value:string,x:number,y:number,width:number,maxSize:number,
  const fitted=textWidth(value,size)>width?` textLength="${width}" lengthAdjust="spacingAndGlyphs"`:'';
  return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${heading?brand.typography.heading:brand.typography.body}" font-size="${size}" font-weight="${heading?700:600}" fill="${color}"${fitted}>${E(value)}</text>`;
 }
-export interface PremiumProfileInput {name:string;avatarData?:string|undefined;highlights?:{label:string;value:string}[];sections:{label:string;value:string}[];compactHero?:boolean;}
+export interface PremiumProfileInput {name:string;avatarData?:string|undefined;highlights?:{label:string;value:string}[];sections:{label:string;value:string;singlePage?:boolean|undefined}[];compactHero?:boolean;}
 /** Caller provides privacy-filtered data only. Every stat keeps its complete value. */
 export function renderPremiumProfile(data:PremiumProfileInput){
  let body=text(45,58,'ANGRIER JORDAN · MEMBER PROFILE',23,brand.palette.emerald,true,'start');
@@ -39,11 +39,11 @@ export function renderPremiumProfile(data:PremiumProfileInput){
    body+=profileLine(h.label,x+129,316,224,28,23,accent,true,'middle')+profileLine(h.value,x+129,369,224,48,30,WHITE,true,'middle');
   }
  }
- const section=(s:{label:string;value:string},y:number,accent:string,secondary:string)=>{
+ const section=(s:{label:string;value:string;singlePage?:boolean|undefined},y:number,accent:string,secondary:string)=>{
   const entries=s.value.split('\n').filter(Boolean).filter(row=>!/^Activity this month \/ all time$/i.test(row)).map(row=>{const split=row.indexOf(':');return{label:split>0?row.slice(0,split):'',value:split>0?row.slice(split+1).trim():row};});
   let grid='',row=0,col=0;
   for(const [n,entry]of entries.entries()){
-   const full=!entry.label||textWidth(entry.label,30)>475||textWidth(entry.value,47)>475||(n===entries.length-1&&col===0);
+   const full=(n===entries.length-1&&col===0)||(!s.singlePage&&(!entry.label||textWidth(entry.label,30)>475||textWidth(entry.value,47)>475));
    if(full&&col){row++;col=0;}
    const x=full?62:62+col*546,tileY=y+82+row*151,width=full?1076:530,tone=n%2?secondary:accent;
    grid+=`<rect x="${x}" y="${tileY}" width="${width}" height="135" rx="15" fill="${tone}" fill-opacity=".11" stroke="${tone}" stroke-opacity=".62"/>`;
@@ -62,9 +62,9 @@ export function renderPremiumProfile(data:PremiumProfileInput){
 export function renderPremiumProfilePages(data:PremiumProfileInput):string[]{
  const cleaned=data.sections.map(s=>({...s,lines:s.value.split('\n').filter(Boolean).filter(line=>!/^Activity this month \/ all time$/i.test(line))}));
  let perPage=4,pages=Infinity;
- while(pages>10){pages=1+cleaned.reduce((total,s)=>total+Math.ceil(Math.max(1,s.lines.length)/perPage),0);if(pages>10)perPage+=2;}
+ while(pages>10){pages=1+cleaned.reduce((total,s)=>total+(s.singlePage?1:Math.ceil(Math.max(1,s.lines.length)/perPage)),0);if(pages>10)perPage+=2;}
  const result=[renderPremiumProfile({...data,sections:[]})];
- for(const section of cleaned)for(let start=0;start<Math.max(1,section.lines.length);start+=perPage)result.push(renderPremiumProfile({name:data.name,avatarData:data.avatarData,compactHero:true,sections:[{label:section.label+(start?' · Continued':''),value:section.lines.slice(start,start+perPage).join('\n')||'No data yet'}]}));
+ for(const section of cleaned)for(let start=0;start<Math.max(1,section.lines.length);start+=section.singlePage?Math.max(1,section.lines.length):perPage)result.push(renderPremiumProfile({name:data.name,avatarData:data.avatarData,compactHero:true,sections:[{label:section.label+(start?' · Continued':''),value:section.lines.slice(start,start+(section.singlePage?section.lines.length:perPage)).join('\n')||'No data yet',singlePage:section.singlePage}]}));
  return result;
 }
 const categoryStyle:Record<string,{title:string;unit:string;accent:string}>={wealth:{title:'Ottoman Elite',unit:'OTTOMANS · WALLET + BANK',accent:GOLD},collections:{title:'Collectors Gallery',unit:'COLLECTION COMPLETION %',accent:brand.palette.emerald},crafting:{title:'Master Chair Builders',unit:'SUCCESSFUL CRAFTS',accent:GOLD},wins:{title:'Champions of the Chairs',unit:'GAME WINS',accent:brand.palette.emerald},gambling:{title:'Casino Honors',unit:'CASINO WINS',accent:GOLD},crime:{title:'Notoriety Board',unit:'SUCCESSFUL ROBBERIES',accent:TEAL},messages:{title:'The Loudest Chairs',unit:'QUALIFYING MESSAGES',accent:TEAL},words:{title:'The Wordsmiths',unit:'QUALIFYING WORDS',accent:TEAL},voice:{title:'Voices of the Lounge',unit:'QUALIFYING VOICE SECONDS',accent:TEAL},spotlight:{title:'Weekly Legends',unit:'SPOTLIGHT AWARDS',accent:GOLD}};

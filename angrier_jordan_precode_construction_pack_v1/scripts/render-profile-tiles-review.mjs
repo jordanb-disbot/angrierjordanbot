@@ -7,12 +7,14 @@ const out='review-profile-tiles-2026-09-28';
 await mkdir(out,{recursive:true});
 const avatarData='data:image/png;base64,'+(await readFile('review-profiles/fixture-profile.png')).toString('base64');
 const view={name:'Morgan',avatarData,highlights:[{label:'OTTOMANS · CURRENT',value:'33,420'},{label:'FMK DRAWS · ALL-TIME',value:'12'},{label:'FAMILY · ACTIVE',value:'0'}],sections:[
- {label:'Activity',value:'Messages · this week: 128\nMessages · this month: 482\nMessages · all-time: 2,410\nWords · this week: 920\nWords · this month: 3,680\nWords · all-time: 18,420\nVoice seconds · this week: 1,800\nVoice seconds · this month: 7,240\nVoice seconds · all-time: 61,400\nTop word 1 · all-time: chairs · 128\nTop word 2 · all-time: jordan · 94\nTop word 3 · all-time: game · 78\nMost-used command · all-time: play'},
+ {label:'Words and voice · today / week / month',singlePage:true,value:'Words · today: 132\nVoice seconds · today: 540\nWords · this week: 920\nVoice seconds · this week: 1,800\nWords · this month: 3,680\nVoice seconds · this month: 7,240'},
+ {label:'Messages and all-time totals',singlePage:true,value:'Messages · today: 24\nMessages · this week: 128\nMessages · this month: 482\nMessages · all-time: 2,410\nWords · all-time: 18,420\nVoice seconds · all-time: 61,400'},
+ {label:'Top words · all-time',singlePage:true,value:'Top word 1: chairs · 128\nTop word 2: jordan · 94\nTop word 3: game · 78\nMost-used command: play'},
  {label:'Games and community',value:'FMK Fucked: 4\nFMK Married: 8\nFMK Killed: 2\nFMK rounds: 12\nAgreement average: 74%\nFight: 8W / 3L\nRace: 2W / 4L'},
  {label:'Economy and Family',value:'Ottomans: 33,420\nBank tier: Standard\nWork jobs: 24\nWork earned: 4,820 Ottomans\nGifts sent: 3\nGifts received: 5\nChair Building: Apprentice\nActive marriages: 0'},
  {label:'Honors and showcase',value:'Spotlight: Triple Threat · permanent\nFeatured achievement: First Craft\nFeatured collectible: Folding Chair'}
 ]};
-const scenarios={normal:view,private:{...view,sections:view.sections.map((s,n)=>n? s:{label:'Activity · Private',value:'Activity statistics are private.'})},long:{...view,name:'A Very Long Member Display Name',sections:view.sections.map((s,n)=>n===3?{...s,value:'Spotlight: Triple Threat · permanent\nFeatured achievement: A Very Long Achievement Name With Meaningful Detail\nFeatured collectible: A Limited Edition Upholstered Recliner From The Lounge'}:s)}};
+const scenarios={normal:view,private:{...view,sections:[{label:'Activity · Private',singlePage:true,value:'Activity statistics are private.'},...view.sections.slice(3)]},long:{...view,name:'A Very Long Member Display Name',sections:view.sections.map((s,n)=>n===5?{...s,value:'Spotlight: Triple Threat · permanent\nFeatured achievement: A Very Long Achievement Name With Meaningful Detail\nFeatured collectible: A Limited Edition Upholstered Recliner From The Lounge'}:s)}};
 const items=[];
 for(const [name,data] of Object.entries(scenarios)){
  const pages=renderPremiumProfilePages(data);
