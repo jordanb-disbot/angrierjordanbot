@@ -1,9 +1,11 @@
 import {randomUUID} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
+import {isDeepStrictEqual} from 'node:util';
 import {productionTarget,GUILD} from './audit-production-race-line.mjs';
 
 export const NOT_JORDAN='1432212068785721424';
 export const RING='family.ring';
+export const FAMILY_IDS=['family.ring','family.blessing','family.wedding_sack'];
 export const GRANT_KEY=`operator:production-economy-items:${GUILD}:${NOT_JORDAN}:ring-1-ottomans-25000:v1`;
 const check=(ok,code)=>{if(!ok)throw Error(code);};
 
@@ -11,20 +13,31 @@ function bankReady(tiers,bps,cap){
  return Array.isArray(tiers)&&tiers.length===5&&tiers.every((row,index)=>row&&row.tier===index+1&&Number.isSafeInteger(row.upgrade_cost)&&row.upgrade_cost>=0&&row.upgrade_cost<=10_000_000&&(index===4?row.cap===null:Number.isSafeInteger(row.cap)&&row.cap>0&&(index===0||row.cap>tiers[index-1].cap)))&&Number.isSafeInteger(bps)&&bps>=0&&bps<=500&&Number.isSafeInteger(cap)&&cap>=0&&cap<=1_000_000;
 }
 
-export async function enableProductionEconomyItems({db,config,get,atomic,grantCatalogReward,write=console.log}){
+export async function enableProductionEconomyItems({db,config,get,atomic,grantCatalogReward,ensureFamilyCatalog,familyCatalogItems,write=console.log}){
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
  check(config.definition('features.items')?.type==='boolean'&&!config.definition('features.economy')&&!config.definition('features.bank'),'CANONICAL_FEATURE_SCHEMA_MISMATCH');
  const tiers=await config.getWithMetadata(GUILD,'economy.bank_tiers'),bps=await config.getWithMetadata(GUILD,'economy.bank_tier5_interest_bps'),cap=await config.getWithMetadata(GUILD,'economy.bank_tier5_interest_cap');
  check(bankReady(tiers.value,bps.value,cap.value),'BANK_CONFIG_INVALID');
  const member=await get(`/guilds/${GUILD}/members/${NOT_JORDAN}`);
  check(member?.user?.id===NOT_JORDAN&&member.user.bot!==true,'NOT_JORDAN_MEMBER_INVALID');
- const catalog=await db.catalogItem.findUnique({where:{id:RING}});
- check(catalog?.id===RING,'FAMILY_RING_CATALOG_MISSING');
- check(catalog.type==='family'&&catalog.enabled===true,'FAMILY_RING_CATALOG_DISABLED_OR_INVALID');
  const existingLock=await db.inventoryCategoryLock.findUnique({where:{guildId_userId_category:{guildId:GUILD,userId:NOT_JORDAN,category:'family'}}});
  check(!existingLock,'FAMILY_INVENTORY_CATEGORY_LOCKED');
  const feature=await config.getWithMetadata(GUILD,'features.items');
  check(typeof feature.value==='boolean','ITEMS_FEATURE_INVALID');
+ check(Array.isArray(familyCatalogItems)&&familyCatalogItems.length===3&&isDeepStrictEqual(familyCatalogItems.map(item=>item.id),FAMILY_IDS),'FAMILY_CATALOG_SOURCE_INVALID');
+ const catalogBefore=await Promise.all(familyCatalogItems.map(item=>db.catalogItem.findUnique({where:{id:item.id}})));
+ for(let index=0;index<familyCatalogItems.length;index++){
+  const row=catalogBefore[index],definition=familyCatalogItems[index];
+  if(row)check(row.name===definition.name&&row.type===definition.type&&row.rarity===definition.rarity&&row.enabled===true&&row.giftable===definition.giftable&&row.sellValue===BigInt(definition.sellValue)&&row.buyPrice!==null&&row.buyPrice>=0n&&row.metadata?.inheritable===definition.metadata.inheritable&&row.metadata?.consumable===definition.metadata.consumable,'FAMILY_CATALOG_EXISTING_ROW_INVALID');
+ }
+ await ensureFamilyCatalog(db);
+ const catalogAfter=await Promise.all(familyCatalogItems.map(item=>db.catalogItem.findUnique({where:{id:item.id}})));
+ for(let index=0;index<familyCatalogItems.length;index++){
+  const row=catalogAfter[index],before=catalogBefore[index],definition=familyCatalogItems[index];
+  check(row?.id===definition.id,'FAMILY_CATALOG_ENSURE_FAILED');
+  if(before)check(isDeepStrictEqual(row,before),'FAMILY_CATALOG_EXISTING_ROW_CHANGED');
+  else check(row.name===definition.name&&row.type===definition.type&&row.rarity===definition.rarity&&row.buyPrice===BigInt(definition.buyPrice)&&row.sellValue===BigInt(definition.sellValue)&&row.enabled===definition.enabled&&row.giftable===definition.giftable&&isDeepStrictEqual(row.metadata,definition.metadata),'FAMILY_CATALOG_ENSURE_FAILED');
+ }
  if(feature.value!==true)await config.set({guildId:GUILD,key:'features.items',value:true,expectedVersion:feature.version,source:'operator.production-economy-items-enablement',requestId:randomUUID()});
  check((await config.getWithMetadata(GUILD,'features.items')).value===true,'ITEMS_FEATURE_VERIFY_FAILED');
 
@@ -49,7 +62,7 @@ export async function enableProductionEconomyItems({db,config,get,atomic,grantCa
  write('PASS: Economy configuration verified; ENABLE_ECONOMY_SMOKE=true required on worker.');
  write('PASS: Bank tiers and interest configuration verified; Bank uses the Economy worker flag.');
  write('PASS: Items/Inventory enabled (features.items=true); ENABLE_ITEMS_SMOKE=true required on worker.');
- write(`PASS: ${RING} catalog verified enabled.`);
+ for(let index=0;index<familyCatalogItems.length;index++)write(`PASS: ${familyCatalogItems[index].id} catalog ${catalogBefore[index]?'existing preserved':'created from source definition'}; enabled=true.`);
  write(`PASS: @NotJordan Discord user ID ${NOT_JORDAN} verified in production guild.`);
  write(`PASS: ${RING} quantity after one-time grant=${result.ringQuantityAfter}; unlocked=true.`);
  write(`PASS: Ottoman balance before=${result.balanceBefore}; after=${result.balanceAfter}; one-time grant=25000.`);
@@ -71,10 +84,10 @@ export async function main(env=process.env,{connect,fetcher=fetch,write=console.
 }
 
 async function connectProduction(target){
- const [{PrismaClient},{PrismaConfigRepository,PrismaAuditSink},{ConfigService},{AuditService},{SETTINGS},{PrismaAtomicOperations},{grantCatalogReward}]=await Promise.all([
-  import('@prisma/client'),import('../dist/packages/database/src/prisma-adapters.js'),import('../dist/packages/core/src/config-service.js'),import('../dist/packages/core/src/audit.js'),import('../dist/packages/contracts/src/generated/settings.js'),import('../dist/packages/database/src/atomic-operations.js'),import('../dist/packages/features-economy/src/catalog-grants.js')]);
+ const [{PrismaClient},{PrismaConfigRepository,PrismaAuditSink},{ConfigService},{AuditService},{SETTINGS},{PrismaAtomicOperations},{grantCatalogReward},{seedFamilyCatalog,FAMILY_CATALOG_ITEMS}]=await Promise.all([
+  import('@prisma/client'),import('../dist/packages/database/src/prisma-adapters.js'),import('../dist/packages/core/src/config-service.js'),import('../dist/packages/core/src/audit.js'),import('../dist/packages/contracts/src/generated/settings.js'),import('../dist/packages/database/src/atomic-operations.js'),import('../dist/packages/features-economy/src/catalog-grants.js'),import('../dist/packages/features-economy/src/catalog-seed.js')]);
  const db=new PrismaClient({datasourceUrl:target.databaseUrl,log:[]});
- return {db,config:new ConfigService(SETTINGS,new PrismaConfigRepository(db),new AuditService(new PrismaAuditSink(db))),atomic:new PrismaAtomicOperations(db),grantCatalogReward};
+ return {db,config:new ConfigService(SETTINGS,new PrismaConfigRepository(db),new AuditService(new PrismaAuditSink(db))),atomic:new PrismaAtomicOperations(db),grantCatalogReward,ensureFamilyCatalog:seedFamilyCatalog,familyCatalogItems:FAMILY_CATALOG_ITEMS};
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)process.exitCode=await main();
