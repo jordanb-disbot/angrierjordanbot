@@ -48,7 +48,7 @@ export default function SettingsControls({settings,draft,csrf,memberId,isOwner,w
     }catch{setMessage('History could not be loaded. Please try again.');}finally{setBusy(false);}
   }
   return <>
-    <section className="window settings-section" aria-labelledby="draft-heading"><div className="section-title"><h2 id="draft-heading">Shared draft</h2><span className="badge">Revision {draft.version}</span></div>
+    <section id="draft" className="window settings-section" aria-labelledby="draft-heading"><div className="section-title"><h2 id="draft-heading">Shared draft</h2><span className="badge">Revision {draft.version}</span></div>
       <p>{draft.editorId?`Editor: ${draft.editorId===memberId?'you':draft.editorId}. The edit lock expires after 15 minutes without an edit or renewal.`:'No Administrator holds the edit lock.'}</p>
       {draft.lastActivityAt!==null&&<p className="description">Last activity: {new Date(draft.lastActivityAt).toISOString().replace('T',' ').replace('.000Z',' UTC')}</p>}
       <div className="actions"><button disabled={disabled} onClick={()=>submit({action:'acquire',expectedVersion:draft.version})}>{ownsLock?'Renew edit lock':'Acquire edit lock'}</button>
@@ -65,7 +65,7 @@ export default function SettingsControls({settings,draft,csrf,memberId,isOwner,w
       </div>}
     </section>
     <div className="operation-status" role="status" aria-live="polite">{message}{retry&&lastRequest.current&&<button disabled={busy} onClick={()=>submit(lastRequest.current!.command,true)}>Retry same request</button>}</div>
-    <section className="window settings-browser" aria-label="Browse dashboard settings"><div className="section-title"><div><h2>Settings browser</h2><p className="description">Find a setting, then stage it for review or save low-risk changes live.</p></div><span className="badge">{matchingSettings.length} of {settings.length} visible</span></div>
+    <section id="settings-browser" className="window settings-browser" aria-label="Browse dashboard settings"><div className="section-title"><div><h2>Settings browser</h2><p className="description">Find a setting, then stage it for review or save low-risk changes live.</p></div><span className="badge">{matchingSettings.length} of {settings.length} visible</span></div>
       <div className="settings-filter"><label className="settings-search" htmlFor="settings-search"><span>Search settings</span><input id="settings-search" type="search" value={query} placeholder="Name, key, description…" onChange={event=>setQuery(event.target.value)}/></label>
         <div className="section-filter" aria-label="Filter settings by section"><button type="button" className={selectedSection==='all'?'filter-chip active':'filter-chip'} aria-pressed={selectedSection==='all'} onClick={()=>setSelectedSection('all')}>All settings</button>{sections.map(section=><button type="button" key={section} className={selectedSection===section?'filter-chip active':'filter-chip'} aria-pressed={selectedSection===section} onClick={()=>setSelectedSection(section)}>{section.replaceAll('_',' ')}</button>)}</div>
       </div>
