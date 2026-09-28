@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "04d30f918a1e2879bd7c0a9f6b4e760939acafc7dfa6cb3b380235fd133d56ca"
+      "sha256": "c105bb37312f15c867e3c1ca459cfa8904ff5687578e7bb966108e861c5ecdcd"
     },
     {
       "id": "family.runtime.renderer",
@@ -6134,7 +6134,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
-      "sha256": "730a704a7d6c195678eaddefd9a517e892fad33017ae29a267a7b53746c2b096"
+      "sha256": "50a05ba055d632df3457b2b9b8462c0c8aeafb8b54142b6c633c41154a1c632d"
     },
     {
       "id": "music.runtime.controller",

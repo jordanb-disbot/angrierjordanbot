@@ -4,6 +4,7 @@ import {portrait} from '../../features-events/src/gate-b-visual.js';
 import type {CommunityView} from './prisma-repository.js';
 
 const amber='#F5BC60',bright='#FFF3D9',muted='#D5C7B5';
+const featureAccent={poll:'#38BDF8',superlatives:'#A469E2',suggest:'#D568E8',ama:'#0EA5A6',giveaway:'#10B981'} as const;
 /** Bounded excerpts preserve a landscape message; the complete record stays in Details. */
 function copy(value:string,cx:number,y:number,width:number,size=30,color=bright,max=5){
  const lines=wrapText(value,width,size),visible=lines.slice(0,max);
@@ -32,7 +33,7 @@ export function renderCommunity(v:CommunityView,avatars:CommunityPortraits={}){
   for(let row=0;row<Math.ceil(cats.length/2);row++){
    const rowCats=cats.slice(row*2,row*2+2),wide=cats.length===1,w=wide?1124:552,h=single?365:330;
    rowCats.forEach((c,col)=>{const x=38+col*572,cx=x+w/2;body+=plate(x,y,w,h);const title=block(c.name,y+40,w-48,27,2,cx,amber);body+=title.svg;
-    if(c.winner){const size=single?142:102,py=y+89;body+=portrait('community-winner-'+row+'-'+col,c.winner.name,avatars[c.winner.id],cx,py,size);body+=block(c.winner.name,py+size+40,w-55,single?40:30,2,cx).svg;body+=text(cx,y+h-24,'SEASON BADGE EARNED',21,ink.emerald,'text-anchor="middle" font-weight="700"');}
+    if(c.winner){const size=single?190:116,py=y+(single?78:89);body+=portrait('community-winner-'+row+'-'+col,c.winner.name,avatars[c.winner.id],cx,py,size);body+=block(c.winner.name,py+size+37,w-55,single?42:30,2,cx).svg;body+=text(cx,y+h-24,'SEASON BADGE EARNED',21,ink.emerald,'text-anchor="middle" font-weight="700"');}
     else if(c.finalists.length){const finalists=c.finalists.slice(0,5),space=(w-35)/finalists.length;finalists.forEach((m,i)=>{const mx=x+18+space*(i+.5);body+=portrait('community-finalist-'+row+'-'+col+'-'+i,m.name,avatars[m.id],mx,y+115,Math.min(82,space-15));body+=block(m.name,y+230,space-12,20,3,mx).svg;});}
     else body+=block(v.phase==='closed'?'No nominations received':'Nominate another member',y+180,w-65,30,3,cx).svg;
    });y+=h+16;
@@ -57,7 +58,8 @@ export function renderCommunity(v:CommunityView,avatars:CommunityPortraits={}){
  }
  const label=award?v.phase==='closed'?single?'Permanent season badge awarded':v.categories.some(c=>c.winner)?'Permanent season badges awarded':'No nominations · no badges awarded':'Anonymous nominations and ballots':v.kind==='giveaway'?closed?v.status==='FULFILLMENT_PENDING'?'Draw saved · organizer fulfillment pending':v.winners?.length?'Draw saved · rewards recorded':'No entries · no prizes awarded':'One entry per member · fees are removed':v.hidden&&!closed?'Results stay hidden until close':v.anonymous?'Anonymous to members':'Member choices are recorded';
  const deadline=v.expiresAt&&!closed?`Closes ${v.expiresAt.toISOString().slice(0,16).replace('T',' ')} UTC`:award?`Season ${v.season} · No Ottoman prize`:'A shared moment · preserved in the lounge';
- body+=footer(y,label,clipped?'Preview · open Details for the complete record':deadline);return frame(y+111,body);
+ body+=footer(y,label,clipped?'Preview · open Details for the complete record':deadline);
+ const accent=featureAccent[v.kind];return frame(y+111,body).replaceAll(amber,accent);
 }
 
 const giveawayCounts=(v:CommunityView)=>{const winners=v.state==='CLOSED'?v.winners?.length??0:v.winnerCount;return `${winners} ${winners===1?'winner':'winners'} · ${v.entryCount} ${v.entryCount===1?'entry':'entries'}`;};

@@ -1,0 +1,17 @@
+{
+  "received": "2026-09-28",
+  "purpose": "Owner-provided visual references for future approval and implementation review",
+  "authorityOrder": [
+    "docs/APPROVED_VISUAL_SYSTEM.md and immutable approved manifests",
+    "production/theme/brand.json",
+    "production/theme/role-colors.json for role identity only",
+    "these reference images"
+  ],
+  "images": [
+    {"file": "brand-style-guide.png", "use": "house style reference", "sha256": "de2c01551d19858f64be0bd0f699ba0b0c37fc9388595680c98d6d5e26563203"},
+    {"file": "ideas-only-examples.png", "use": "ideas only; not a layout or command authority", "sha256": "dd23b9eedf2e3c280a743a66d7cbccca7257ca44bdb30ce0485c59da9daff388"},
+    {"file": "angrier-jordan-bot-imagery.png", "use": "existing bot character and banner imagery reference", "sha256": "0970a3566eedd91e2065c4d1f4f75e860105d0872a531078aae5fefad14ec3f0"},
+    {"file": "correct-role-colors.png", "use": "correct role icon and gradient mapping", "sha256": "fceee95effda1fbe6149f5d5f300b678d504963f065ac97faccb73b68f1e1033"},
+    {"file": "superseded-role-sheet.png", "use": "historical only; do not use for role colors", "sha256": "c030b57fed4a4f0036fe75b5e7044554b0026fd2b0c3914408b94e7fe01cb230"}
+  ]
+}

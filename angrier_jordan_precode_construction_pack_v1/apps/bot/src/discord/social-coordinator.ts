@@ -1,4 +1,5 @@
-import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,type AutocompleteInteraction,type ButtonInteraction,type ChatInputCommandInteraction,type Client,type Guild,type Message} from 'discord.js';
+import {ActionRowBuilder,ButtonBuilder,ButtonStyle,type AutocompleteInteraction,type ButtonInteraction,type ChatInputCommandInteraction,type Client,type Guild,type Message} from 'discord.js';
+import {createHash} from 'node:crypto';
 import {DeliveryEngine,DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {COMMANDS} from '../../../../packages/contracts/src/generated/commands.js';
 import {PrismaSocialRepository} from '../../../../packages/features-social/src/prisma-repository.js';
@@ -6,7 +7,9 @@ import {SOCIAL_ACTIONS,detectHaiku,sampleHaiku,validateSocialPolicy} from '../..
 import type {SocialContext,SocialJob,SocialPolicy} from '../../../../packages/features-social/src/interfaces.js';
 import {renderSocialResponse} from '../../../../packages/features-social/src/render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
-import brand from '../../../../production/theme/brand.json' with {type:'json'};
+import {avatarData} from './member-art.js';
+import {DisposableCardLifecycle} from './card-lifecycle.js';
+import {createDisplay,wideDisplay} from './wide-display.js';
 export const SOCIAL_COMMANDS=new Set(['social','haiku']);
 type SocialInteraction=ChatInputCommandInteraction|ButtonInteraction;
 interface ActionContract {id:string;name?:string;description?:string;aliases?:readonly string[];command?:string;permissions?:readonly string[];channels?:readonly string[];options?:readonly {name:string;required?:boolean}[];}
@@ -15,6 +18,7 @@ export function registeredSocialActions(){const root=(COMMANDS as unknown as rea
 const normalizeSearch=(value:string)=>value.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');
 export function socialActionChoices(query:string){const needle=normalizeSearch(query);return registeredSocialActions().filter(c=>(!c.permissions?.length||c.permissions.includes('member'))&&[c.action,c.name??'',...(c.aliases??[]),c.description??''].some(s=>normalizeSearch(s).includes(needle))).sort((a,b)=>{const rank=(c:ReturnType<typeof registeredSocialActions>[number])=>[c.action,c.name??'',...(c.aliases??[])].some(s=>normalizeSearch(s)===needle)?0:[c.action,c.name??'',...(c.aliases??[])].some(s=>normalizeSearch(s).startsWith(needle))?1:2;return rank(a)-rank(b);}).slice(0,25).map(c=>({name:(c.aliases?.find(alias=>alias.includes(' '))??c.name??c.action).slice(0,100),value:c.action}));}
 export class DiscordSocialCoordinator {
+ private readonly temporaryCards=new DisposableCardLifecycle(300_000);
  constructor(private readonly repo:PrismaSocialRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  private async haikuChannel(guildId:string,channelId:string){const [main,extra]=await Promise.all([this.config.get(guildId,'channels.main_chat'),this.config.get(guildId,'haiku.additional_channel_ids')]);if(extra!==undefined&&(!Array.isArray(extra)||extra.length>20||extra.some(id=>typeof id!=='string'||!/^\d{17,20}$/.test(id))||new Set(extra).size!==extra.length))throw new DomainError('HAIKU_CONFIG','Haiku channels are not configured correctly.');return channelId===main||Array.isArray(extra)&&extra.includes(channelId);}
  private async policy(guildId:string):Promise<SocialPolicy>{const p={throttleSeconds:Number(await this.config.get(guildId,'social.throttle_seconds')),roastBackSeconds:Number(await this.config.get(guildId,'social.roast_back_seconds'))};validateSocialPolicy(p);return p;}
@@ -77,18 +81,20 @@ export class DiscordSocialCoordinator {
   const job=await this.repo.job(jobId),p=job.payload;if(p.cancelled)return null;
   if(p.deliveryState==='PENDING'&&!await this.canPublish(client,p)){await this.repo.cancel(jobId);return null;}
   const channel=await client.channels.fetch(p.channelId);if(!channel?.isSendable()||!('messages' in channel)||!('guildId' in channel)||channel.guildId!==p.guildId)throw new DomainError('SOCIAL_CHANNEL','The social destination is unavailable.');
-  const marker='social:'+jobId,messageId=await new DeliveryEngine(this.repo.delivery(jobId)).deliver(marker,{
-   find:async marker=>{const recent=await channel.messages.fetch({limit:100});return recent.find(m=>m.author.id===client.user?.id&&m.embeds.some(e=>e.footer?.text===marker))?.id??null;},
-   send:async marker=>{
+  const marker='social:'+jobId,filename='social-'+createHash('sha256').update(jobId).digest('hex').slice(0,24)+'.png';let posted:Message|undefined;
+  const messageId=await new DeliveryEngine(this.repo.delivery(jobId)).deliver(marker,{
+   find:async marker=>{const recent=await channel.messages.fetch({limit:100});return recent.find(m=>m.author.id===client.user?.id&&(m.attachments?.some(a=>a.name===filename)||m.embeds.some(e=>e.footer?.text===marker)))?.id??null;},
+   send:async()=>{
     if((await this.repo.job(jobId)).payload.cancelled)throw new DomainError('SOCIAL_RESTRICTED','This response was cancelled.');
     if(!await this.canPublish(client,p))throw new DomainError('SOCIAL_RESTRICTED','This response is no longer eligible to be posted.');
-    const guild=await client.guilds.fetch(p.guildId),names:Record<string,string>={};for(const id of [p.actorId,p.targetId].filter((v):v is string=>Boolean(v)))names[id]=(await this.member(guild,id)).displayName;
-    const card=await rasterizeSvg(renderSocialResponse(p.action,p.content,names)),file=new AttachmentBuilder(card,{name:'social.png',description:p.content.replace(/<@!?(\d+)>/g,(_match,id:string)=>names[id]??'Member').slice(0,1024)});
-    const embed=new EmbedBuilder().setAuthor({name:'Angrier Jordan'}).setColor(brand.palette.teal as `#${string}`).setImage('attachment://social.png').setFooter({text:marker});
+    const guild=await client.guilds.fetch(p.guildId),names:Record<string,string>={},people=[];
+    for(const id of [p.actorId,p.targetId].filter((v):v is string=>Boolean(v))){const member=await this.member(guild,id);names[id]=member.displayName;people.push({id,name:member.displayName,avatarData:await avatarData(member.displayAvatarURL?.({extension:'png',size:256}))});}
+    const svg=renderSocialResponse(p.action,p.content,names,people),card=await rasterizeSvg(svg),description=p.content.replace(/<@!?(\d+)>/g,(_match,id:string)=>names[id]??'Member').slice(0,1024);
     const components=p.sessionId?[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('social:back:'+p.sessionId).setLabel('Roast Back').setStyle(ButtonStyle.Secondary))]:[];
-    return(await channel.send({embeds:[embed],files:[file],components,allowedMentions:{parse:[]}})).id;
+    posted=await channel.send(createDisplay(wideDisplay([{name:filename,data:card,width:1200,height:Number(/<svg[^>]*height="([\d.]+)"/.exec(svg)?.[1]??0),description}],components)));
+    return posted.id;
    }
-  });await this.repo.finalize(jobId,messageId);return messageId;
+  });await this.repo.finalize(jobId,messageId);if(posted&&!p.sessionId&&p.action!=='haiku.passive')await this.temporaryCards.track(`${p.guildId}:${p.channelId}:${p.actorId}:social`,posted);return messageId;
  }
  async message(message:Message){
   if(message.author.bot||message.system||message.webhookId||!message.guildId||!message.guild||!message.channelId||!detectHaiku(message.content))return;

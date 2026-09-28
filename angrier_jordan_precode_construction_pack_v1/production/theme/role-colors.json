@@ -1,0 +1,17 @@
+{
+  "authority": "Owner-corrected role color and icon mapping, 2026-09-28",
+  "reference": "docs/owner_references/2026-09-28/correct-role-colors.png",
+  "scope": "Chair role identity only; feature-family accents continue to use production/theme/brand.json",
+  "roles": [
+    {"name": "The Chairman", "gradient": ["#B87810", "#F4C542"]},
+    {"name": "Throne", "gradient": ["#F4C542", "#D69A24"]},
+    {"name": "Chaise Lounge", "gradient": ["#D69A24", "#49A66F"]},
+    {"name": "Recliner", "gradient": ["#49A66F", "#16E8E3"]},
+    {"name": "Arm Chair", "gradient": ["#16E8E3", "#1683A6"]},
+    {"name": "Folding Chair", "gradient": ["#1683A6", "#356BC2"]},
+    {"name": "Barstool", "gradient": ["#356BC2", "#554FB2"]},
+    {"name": "Restraint Chair", "gradient": ["#554FB2", "#69457D"]},
+    {"name": "Sideline Chair", "gradient": ["#69457D", "#7D455D"]},
+    {"name": "Cuck Chair", "gradient": ["#7D455D", "#985C55"]}
+  ]
+}

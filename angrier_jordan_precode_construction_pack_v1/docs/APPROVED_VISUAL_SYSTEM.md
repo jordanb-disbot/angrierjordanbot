@@ -1,5 +1,11 @@
 # Permanent Angrier Jordan visual system
 
+## Owner reference update — 2026-09-28
+
+Keep the approved modern premium layout, Space Grotesk/Inter hierarchy, generous frame use, balanced centered text, portraits and item art, clean stat tiles, mobile legibility, and polished Discord controls. Rotate approved accents by feature family within the same lounge design language. The base palette and typography remain in `production/theme/brand.json`; role identity gradients are separate and recorded in `production/theme/role-colors.json`.
+
+The owner-supplied [style guide](owner_references/2026-09-28/brand-style-guide.png) is a visual reference, [examples](owner_references/2026-09-28/ideas-only-examples.png) are ideas only, and [bot imagery](owner_references/2026-09-28/angrier-jordan-bot-imagery.png) shows the existing Angrier Jordan character. The [correct role color and icon sheet](owner_references/2026-09-28/correct-role-colors.png) supersedes the earlier [role sheet](owner_references/2026-09-28/superseded-role-sheet.png); never use the earlier sheet for role-color decisions. These are owner-provided references for future review, not permission to replace approved runtime art or enable unfinished production features.
+
 ## Unified card presentation approval — 2026-09-28
 
 The owner approved the FMK, profile, shop, and inventory review in local commit `b7342d0` as the presentation standard moving forward. The [approval manifest](approved_visuals/unified-cards-2026-09-28.json) records the exact desktop and mobile reference images. The approval also covers the matching lifecycle behavior for disposable economy results, temporary non-interactive information, and persistent active sessions. It is visual/UX approval, not production deployment authorization.
