@@ -8,6 +8,7 @@ const REACT=1n<<6n,USE_COMMANDS=1n<<31n,CONNECT=1n<<20n,SPEAK=1n<<21n;
 const PUBLIC_THREADS=1n<<35n,PRIVATE_THREADS=1n<<36n,THREAD_SEND=1n<<38n;
 const NORMAL_DENY=VIEW|SEND|REACT|USE_COMMANDS|CONNECT|SPEAK|PUBLIC_THREADS|PRIVATE_THREADS|THREAD_SEND;
 const HOTSEAT_ALLOW=VIEW|SEND|HISTORY;
+const JAIL_CATEGORY='1554032613939740702';
 const check=(ok,code)=>{if(!ok)throw Error(code);};
 const snowflake=value=>typeof value==='string'&&/^[1-9]\d{16,19}$/.test(value);
 const parseBits=value=>{check(typeof value==='string'&&/^\d+$/.test(value),'OVERWRITE_BITS_INVALID');return BigInt(value);};
@@ -22,15 +23,18 @@ export function planJailPermissions({roles,channels,botMember,botId,roleId,hotse
  check(Boolean(permissions&((1n<<3n)|(1n<<28n)))&&top>role.position,'BOT_JAIL_ROLE_UNMANAGEABLE');
  const hotseat=channels.find(channel=>channel.id===hotseatId);
  check(hotseat?.guild_id===GUILD&&hotseat.type===0,'HOTSEAT_CHANNEL_INVALID');
+ const jailCategory=channels.find(channel=>channel.id===JAIL_CATEGORY);
+ check(jailCategory?.guild_id===GUILD&&jailCategory.type===4,'JAIL_CATEGORY_INVALID');
+ check(hotseat.parent_id===JAIL_CATEGORY,'HOTSEAT_PARENT_CATEGORY_INVALID');
  const targets=[];
  for(const channel of channels){
   check(snowflake(channel.id)&&channel.guild_id===GUILD&&Array.isArray(channel.permission_overwrites),'GUILD_CHANNEL_INVALID');
   const old=channel.permission_overwrites.find(row=>row.id===roleId);
   check(!old||old.type===0,'JAIL_OVERWRITE_INVALID');
-  const allow=old?parseBits(old.allow):0n,deny=old?parseBits(old.deny):0n,isHotseat=channel.id===hotseatId;
-  const nextAllow=isHotseat?allow|HOTSEAT_ALLOW:allow&~NORMAL_DENY;
-  const nextDeny=isHotseat?deny&~HOTSEAT_ALLOW:deny|NORMAL_DENY;
-  targets.push({id:channel.id,name:channel.name??'',type:channel.type,isHotseat,before:old?{allow:old.allow,deny:old.deny}:null,allow:nextAllow.toString(),deny:nextDeny.toString(),change:!old||old.allow!==nextAllow.toString()||old.deny!==nextDeny.toString()});
+  const allow=old?parseBits(old.allow):0n,deny=old?parseBits(old.deny):0n,isHotseat=channel.id===hotseatId,isJailCategory=channel.id===JAIL_CATEGORY;
+  const nextAllow=isHotseat?allow|HOTSEAT_ALLOW:isJailCategory?(allow&~NORMAL_DENY)|VIEW:allow&~NORMAL_DENY;
+  const nextDeny=isHotseat?deny&~HOTSEAT_ALLOW:isJailCategory?(deny|NORMAL_DENY)&~VIEW:deny|NORMAL_DENY;
+  targets.push({id:channel.id,name:channel.name??'',type:channel.type,isHotseat,isJailCategory,before:old?{allow:old.allow,deny:old.deny}:null,allow:nextAllow.toString(),deny:nextDeny.toString(),change:!old||old.allow!==nextAllow.toString()||old.deny!==nextDeny.toString()});
  }
  return targets.sort((a,b)=>(Number(a.isHotseat)-Number(b.isHotseat))||((a.type===4?0:1)-(b.type===4?0:1))||a.id.localeCompare(b.id));
 }
@@ -43,12 +47,12 @@ export async function configureProductionJailPermissions({db,config,audit,get,pu
  check(snowflake(bot?.id),'BOT_ID_INVALID');
  const botMember=await get(`/guilds/${GUILD}/members/${bot.id}`);
  const plan=planJailPermissions({roles,channels,botMember,botId:bot.id,roleId,hotseatId});
- write(`PASS: production guild, private Railway database, configured Jail role ${roleId}, Hotseat ${hotseatId}, bot permissions and hierarchy verified.`);
+ write(`PASS: production guild, private Railway database, configured Jail role ${roleId}, Jail category ${JAIL_CATEGORY}, Hotseat ${hotseatId} inside Jail category, bot permissions and hierarchy verified.`);
  write(`PASS: preflight planned ${plan.length} channel/category overwrites; ${plan.filter(row=>row.change).length} need changes; unrelated roles and settings are out of scope.`);
- if(dryRun){for(const row of plan)write(`PLAN: ${row.type===4?'category':'channel'} ${row.id} ${row.isHotseat?'Hotseat allow view/send/history':'normal deny view/send'} ${row.change?'change':'already_correct'}.`);write('PASS: dry run complete; no Discord or database writes.');return plan;}
+ if(dryRun){for(const row of plan)write(`PLAN: ${row.type===4?'category':'channel'} ${row.id} ${row.isHotseat?'Hotseat allow view/send/history':row.isJailCategory?'Jail category allow view':'normal deny view/send'} ${row.change?'change':'already_correct'}.`);write('PASS: dry run complete; no Discord or database writes.');return plan;}
  for(const row of plan){
   const channel=await get(`/channels/${row.id}`);
-  check(channel?.id===row.id&&channel.guild_id===GUILD&&channel.type===row.type&&Array.isArray(channel.permission_overwrites),'CHANNEL_CHANGED_DURING_REPAIR');
+  check(channel?.id===row.id&&channel.guild_id===GUILD&&channel.type===row.type&&(!row.isHotseat||channel.parent_id===JAIL_CATEGORY)&&Array.isArray(channel.permission_overwrites),'CHANNEL_CHANGED_DURING_REPAIR');
   const current=channel.permission_overwrites.find(overwrite=>overwrite.id===roleId);
   const correct=current?.type===0&&current.allow===row.allow&&current.deny===row.deny;
   if(!correct){
@@ -59,7 +63,7 @@ export async function configureProductionJailPermissions({db,config,audit,get,pu
    check(verified?.id===row.id&&actual?.type===0&&actual.allow===row.allow&&actual.deny===row.deny&&isDeepStrictEqual(otherOverwrites(verified,roleId),unrelated),'JAIL_OVERWRITE_VERIFY_FAILED');
    await audit.record({guildId:GUILD,source:'operator.production-jail-permissions',action:'discord.permission_overwrite.set',targetType:'channel',targetId:row.id,before:row.before,after:{roleId,allow:row.allow,deny:row.deny},requestId:randomUUID(),createdAt:new Date()});
   }
-  write(`PASS: ${row.type===4?'category':'channel'} ${row.id} ${row.isHotseat?'Hotseat view/send/history allowed':'normal view/send denied'}; ${correct?'already_correct':'updated'}; unrelated overwrites preserved.`);
+  write(`PASS: ${row.type===4?'category':'channel'} ${row.id} ${row.isHotseat?'Hotseat view/send/history allowed':row.isJailCategory?'Jail category view allowed':'normal view/send denied'}; ${correct?'already_correct':'updated'}; unrelated overwrites preserved.`);
  }
  write(`PASS: Jail permission maintenance complete for ${plan.length} channels/categories; no other role, setting, or bot configuration changed.`);
  return plan;
