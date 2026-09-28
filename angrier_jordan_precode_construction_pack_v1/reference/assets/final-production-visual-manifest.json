@@ -5972,7 +5972,7 @@
       "usage": "Permanent approved shared visual system",
       "canonical": true,
       "status": "OWNER_APPROVED",
-      "sha256": "8bb7d9c1709d7d85caa4cfa991232b8fc54ece04685ab71abce518b50dc044a9"
+      "sha256": "af5a782a23938ffa01ab7cef3ad4d4fe49bfa6e4701956c333b43094e5047d5c"
     },
     {
       "id": "line.runtime.renderer",
@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "0a669aecc0ce136df2d2843e2e53798d4e1db5c93dbfdea0a8f056d48a25efcf"
+      "sha256": "3696cd26f5eae32673519c3d373548b6f79186b74a4359b376204fce86b48da8"
     },
     {
       "id": "line.approved.lounge",
@@ -5999,7 +5999,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "594565f0640bfdae2330a6d6c47927c39823450ff5b7a811c27403f6799f05a9"
+      "sha256": "5aa21d131446fcdcfb472a28dd4f662a7355573d33d31793b5df7ea1692de670"
     },
     {
       "id": "pvp.runtime.renderer",
@@ -6017,7 +6017,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "c5ea6306bd977fe0c45bfb28d33f337e1cc13a9500be85f5741093b1ed5e031a"
+      "sha256": "d4bf1af95076fb01d01664d05353b8c43f51c9a5fcdc556a5cc66ae29f27868e"
     },
     {
       "id": "crime.runtime.renderer",
@@ -6476,7 +6476,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Shared deterministic Economy and Items lounge frames.",
-      "sha256": "34a331d64a4bf1c85c10566b848b3d40accfb8d85e2b48580b19d77ab450b064"
+      "sha256": "3cbf0b52c07a9d8e21ea4bf8ee3eff7855d02861f080ed906c5128a3721ccf60"
     },
     {
       "id": "profiles.premium-presentation",
@@ -6485,7 +6485,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Readable member profile tables, Discord portraits, records, standings and showcase using approved brand tokens",
-      "sha256": "a8406b76d3c3e13019c805a779abfacf1d7eb5e550272705b664411662171ce7"
+      "sha256": "96013f389da0a40dbff722cbd826075d993508a54d92b5d9f1feba351f7c229e"
     },
     {
       "id": "crime-premium-runtime",
@@ -6530,7 +6530,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-requested wide cobalt Games presentation.",
-      "sha256": "5ed28cd92e2d6b0c60c481e590b61069869dea371275b68c9be421291b175d6e"
+      "sha256": "80801436e20c03f3284fa98a54e59322c563994918649e36c2f1e54548a8e532"
     },
     {
       "id": "chairisms.presentation",
@@ -6690,7 +6690,7 @@
       "category": "runtime.renderer",
       "canonical": true,
       "usage": "Shared deterministic event presentation with wheelchair race skins",
-      "sha256": "f13f6c92364c0f9366a83d081ee3450b64042b0e597c5c03693a784a8ee275db",
+      "sha256": "f9dc69199b7fdb8b9ad7fdab3226a8522539c4ff0a0ee163f8f955db576b7753",
       "status": "OWNER_REVIEW_PENDING"
     },
     {

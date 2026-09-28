@@ -20,7 +20,7 @@ test('unauthorized special trigger is deleted silently before any session starts
 test('public race payload uses production raster, private wager buttons and no replay controls',async()=>{
  const racers=[{userId:'1',name:'Chair One',chair:1},{userId:'2',name:'Chair Two',chair:2}],view={id:'round',guildId:'g',channelId:'main',messageId:'m',ownerId:'1',state:'OPEN',expiresAt:new Date('2026-09-25T12:01:00Z'),extensionUsed:false,racers,pool:'100',bets:[]};
  const coordinator=new DiscordEventsCoordinator(forbidden,config(true),async()=>true),payload=await coordinator.payload(view);const controls=controlsOf(payload);assert.equal(controls.filter(c=>c.custom_id.startsWith('event:bet:')).length,2);assert.equal(controls.filter(c=>c.label==='Join Race').length,1);assert.ok(controls.every(c=>!/(Again|Rematch)/.test(c.label)));assert.equal(payload.flags,MessageFlags.IsComponentsV2);assert.deepEqual(payload.embeds,[]);assert.equal(payload.content,null);assert.equal(nested(payload).filter(c=>c.type===12).length,1);assert.ok(payload.files[0].attachment.length>1000);
- assert.equal(nativeText(payload),'');
+ assert.match(nativeText(payload),/RACE WAITING ROOM · \d\d:\d\d remaining/);
  const closed=await coordinator.payload({...view,state:'CLOSED',winnerId:'1',result:{pool:'100',rake:'5',payouts:{'1':'95'},refunded:false,settlement:'PROPORTIONAL_PAYOUT'}});assert.equal(controlsOf(closed).length,0);assert.equal(nativeText(closed),'');
  const plan=planRace(racers,()=>0),motion=raceSnapshot(plan,7500),svg=renderRace({...view,state:'LOCKED',motion});assert.match(svg,/width="440"/);assert.doesNotMatch(svg,/="NaN"/);for(const r of motion.rows)assert.ok(svg.includes(Math.floor(r.progress)+'%'));
 });
@@ -85,7 +85,7 @@ test('Race prefix preserves only the authorized role mention outside its artwork
  const message={id:'trigger',content:'!race',author:{id:'member',bot:false},guildId:'g',guild:{id:'g',members:{fetch:async()=>member},roles:{fetch:async()=>({id:'123456789012345678',mentionable:true,managed:false,permissions:{bitfield:0n}})}},channelId:'main',delete:async()=>{},channel:{isSendable:()=>true,send:async payload=>{sent.push(payload);return{id:'published'};}}};
  const settings={get:async(_g,k)=>k==='channels.main_chat'?'main':k==='special_commands.access_roles'?{'!race':[]}:k==='special_commands.builtin_role_map'?{'!race':'123456789012345678'}:true};
  await new DiscordEventsCoordinator({startRace:async()=>({sessionId:'round'}),publicView:async()=>view,linkMessage:async()=>{}},settings,async()=>true).message(message);
- assert.equal(sent.length,1);assert.equal('content' in sent[0],false);assert.equal(sent[0].flags,MessageFlags.IsComponentsV2);assert.equal(nativeText(sent[0]),'<@&123456789012345678>');assert.deepEqual(sent[0].allowedMentions,{parse:[],roles:['123456789012345678'],users:[],repliedUser:false});
+ assert.equal(sent.length,1);assert.equal('content' in sent[0],false);assert.equal(sent[0].flags,MessageFlags.IsComponentsV2);assert.match(nativeText(sent[0]),/^<@&123456789012345678>\n\*\*RACE WAITING ROOM/);assert.deepEqual(sent[0].allowedMentions,{parse:[],roles:['123456789012345678'],users:[],repliedUser:false});
 });
 
 test('Race and Fight rules remain private and put authored copy entirely inside branded graphics',async()=>{

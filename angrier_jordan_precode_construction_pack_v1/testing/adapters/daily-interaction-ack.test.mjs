@@ -6,7 +6,7 @@ import {DiscordServerBootstrap} from '../../dist/apps/bot/src/discord/server-boo
 
 function button(action){
  const calls=[];
- const interaction={customId:`economy:daily:${action}`,guildId:'123456789012345678',isButton:()=>true,deferred:false,replied:false,
+ const interaction={customId:`economy:daily:${action}`,guildId:'123456789012345678',isButton:()=>true,isChatInputCommand:()=>false,deferred:false,replied:false,
   async deferUpdate(){calls.push('ack');this.deferred=true;},async reply(payload){calls.push(['reply',payload]);},async followUp(payload){calls.push(['followUp',payload]);}};
  return{interaction,calls};
 }

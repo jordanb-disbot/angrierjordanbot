@@ -7,12 +7,12 @@ import {textWidth} from '../../dist/packages/renderer/src/text-layout.js';
 
 const decode=s=>s.replaceAll('&amp;','&').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&quot;','"').replaceAll('&#39;',"'");
 function assertBounds(svg){
- const height=Number(svg.match(/<svg[^>]*height="([\d.]+)"/)[1]);let checked=0;
+ const canvasWidth=Number(svg.match(/<svg[^>]*width="([\d.]+)"/)[1]),height=Number(svg.match(/<svg[^>]*height="([\d.]+)"/)[1]);let checked=0;
  for(const match of svg.matchAll(/<text\b([^>]*)>([^<]*)<\/text>/g)){
   const attr=Object.fromEntries([...match[1].matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
   const size=Number(attr['font-size']),x=Number(attr.x),y=Number(attr.y),width=textWidth(decode(match[2]),size);
-  assert.equal(attr['text-anchor'],'middle',match[2]);
-  assert.ok(x-width/2>=17&&x+width/2<=423,`Horizontal bounds: ${match[2]}`);
+  const anchor=attr['text-anchor']??'start',left=anchor==='middle'?x-width/2:anchor==='end'?x-width:x;
+  assert.ok(left>=17&&left+width<=canvasWidth-17,`Horizontal bounds: ${match[2]}`);
   assert.ok(y-size>=7&&y+size*.3<height-7,`Vertical bounds: ${match[2]}`);checked++;
  }
  assert.ok(checked>3);
