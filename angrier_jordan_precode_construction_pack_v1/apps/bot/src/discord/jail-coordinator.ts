@@ -59,8 +59,9 @@ export class DiscordJailCoordinator {
     if (!jailedId) return;
     const role = server.roles.cache.get(jailedId);
     if (!role) return;
+    const jailCategoryId = hotseatId ? server.channels.cache.get(hotseatId)?.parentId : null;
     for (const channel of server.channels.cache.values()) {
-      await this.reconcileChannel(channel, role.id, hotseatId, links, attachments);
+      await this.reconcileChannel(channel, role.id, hotseatId, jailCategoryId, links, attachments);
     }
   }
 
@@ -73,7 +74,8 @@ export class DiscordJailCoordinator {
       boolSetting(this.config, server.id, 'moderation.jail.attachments_allowed'),
     ]);
     if (!jailedId) return;
-    await this.reconcileChannel(channel, jailedId, hotseatId, links, attachments);
+    const jailCategoryId = hotseatId ? server.channels.cache.get(hotseatId)?.parentId : null;
+    await this.reconcileChannel(channel, jailedId, hotseatId, jailCategoryId, links, attachments);
   }
 
   async handleCommand(interaction: ChatInputCommandInteraction): Promise<void> {
@@ -227,7 +229,7 @@ export class DiscordJailCoordinator {
       const visible = this.visibleOrdinaryChannels(target, hotseatId);
       if(diagnostic)diagnostic.state.normalContainment=visible.size===0;
       if (visible.size) {
-        throw new DomainError('CONFINEMENT_INCOMPLETE', `Hotseat would not fully contain this member. ${visible.size} normal channel(s) remain visible.`);
+        throw new DomainError('CONFINEMENT_INCOMPLETE', `Hotseat would not fully contain this member. ${visible.size} normal channel(s) remain visible: ${[...visible.keys()].slice(0, 10).map(id => `<#${id}>`).join(', ')}${visible.size > 10 ? ', and more' : ''}. Check their other roles and channel overrides.`);
       }
 
     stage('sentence-create');
@@ -513,11 +515,13 @@ export class DiscordJailCoordinator {
     channel: GuildBasedChannel,
     jailedId: string,
     hotseatId: string | null,
+    jailCategoryId: string | null | undefined,
     links: boolean,
     attachments: boolean,
   ) {
     if (!('permissionOverwrites' in channel)) return;
     const isHotseat = channel.id === hotseatId;
+    const isJailCategory = channel.id === jailCategoryId && channel.type === ChannelType.GuildCategory;
     const permissions = isHotseat
       ? {
           ViewChannel: true,
@@ -532,7 +536,14 @@ export class DiscordJailCoordinator {
           Connect: false,
           Speak: false,
         }
-      : {
+      : isJailCategory ? {
+          ViewChannel: true,
+          SendMessages: false,
+          AddReactions: false,
+          UseApplicationCommands: false,
+          Connect: false,
+          Speak: false,
+        } : {
           ViewChannel: false,
           SendMessages: false,
           AddReactions: false,

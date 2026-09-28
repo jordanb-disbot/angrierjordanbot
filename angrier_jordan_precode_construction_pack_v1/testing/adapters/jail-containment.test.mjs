@@ -24,17 +24,30 @@ async function fixture({acknowledged=true,extraAllow=false,dmFailure=false}={}) 
    roles:{cache,remove:async value=>{const id=value.id??value;calls.push('remove:'+id);live.delete(id);return member(ids.filter(x=>x!==id));},
     add:async value=>{const id=value.id??value;calls.push('add:'+id);live.add(id);return member([...new Set([...ids,id])]);}}};
  }
- function channel(id,type,gated) {
+ function channel(id,type,gated,parentId=null) {
   const overwrites=new Map();if(gated)overwrites.set('folding',{ViewChannel:true});if(extraAllow)overwrites.set('extra',{ViewChannel:true});
-  const c={id,type,guild,permissionOverwrites:{edit:async(role,p)=>{overwrites.set(role,p);}},isTextBased:()=>type===ChannelType.GuildText,send:async payload=>{notices.push({kind:'channel',id,payload,roles:[...live]});},
+  const c={id,type,parentId,guild,permissionOverwrites:{edit:async(role,p)=>{overwrites.set(role,p);}},isTextBased:()=>type===ChannelType.GuildText,send:async payload=>{notices.push({kind:'channel',id,payload,roles:[...live]});},
    permissionsFor:m=>{let allowed=!gated;const matches=[...m.roles.cache.keys()].map(id=>overwrites.get(id)).filter(Boolean);if(matches.some(p=>p.ViewChannel===false))allowed=false;if(matches.some(p=>p.ViewChannel===true))allowed=true;return new PermissionsBitField(allowed?P.ViewChannel:0n);}};
   guild.channels.cache.set(id,c);return c;
  }
- const main=channel('main',ChannelType.GuildText,true),voice=channel('voice',ChannelType.GuildVoice,true),ordinary=channel('ordinary',ChannelType.GuildText,false);channel('hotseat',ChannelType.GuildText,false);
+ const main=channel('main',ChannelType.GuildText,true),voice=channel('voice',ChannelType.GuildVoice,true),ordinary=channel('ordinary',ChannelType.GuildText,false),jailCategory=channel('jail-category',ChannelType.GuildCategory,false);channel('hotseat',ChannelType.GuildText,false,jailCategory.id);
  const onboarding=new DiscordOnboardingCoordinator(onboardingService,config),coordinator=new DiscordJailCoordinator(service,config,onboarding);
  const interaction=sub=>({guildId:'g',guild,user:{id:'owner'},options:{getSubcommand:()=>sub,getUser:()=>({id:'member'}),getString:k=>k==='duration'?'5m':'Local test'},reply:async()=>{},deferReply:async()=>{},editReply:async()=>{}});
- return {clock,repo,service,onboardingService,onboarding,coordinator,guild,member,live,calls,notices,main,voice,ordinary,interaction};
+ return {clock,repo,service,onboardingService,onboarding,coordinator,guild,member,live,calls,notices,main,voice,ordinary,jailCategory,interaction};
 }
+
+test('runtime reconciliation keeps the Jail category visible and normal channels hidden',async()=>{
+ const f=await fixture();await f.coordinator.reconcileGuild(f.guild);
+ const jailed=f.member(['jailed']);assert.equal(f.jailCategory.permissionsFor(jailed).has(P.ViewChannel),true);
+ for(const c of [f.main,f.voice,f.ordinary])assert.equal(c.permissionsFor(jailed).has(P.ViewChannel),false);
+});
+
+test('containment failure identifies remaining visible channels to staff',async()=>{
+ const f=await fixture({extraAllow:true}),replies=[],interaction=f.interaction('send');interaction.editReply=async payload=>replies.push(payload.content);
+ await f.coordinator.handleCommand(interaction);
+ assert.match(replies[0],/<#main>/);assert.match(replies[0],/other roles and channel overrides/);
+ assert.equal(f.live.has('jailed'),false);
+});
 
 for(const dmFailure of [false,true])test(`successful Jail send directs member and announces arrival even when DM ${dmFailure?'fails':'works'}`,async()=>{
  const f=await fixture({dmFailure});await f.coordinator.handleCommand(f.interaction('send'));
