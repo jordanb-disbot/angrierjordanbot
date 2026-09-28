@@ -3,7 +3,7 @@ import {isDeepStrictEqual} from 'node:util';
 import {pathToFileURL} from 'node:url';
 import {productionTarget,GUILD,MAIN_CHAT} from './audit-production-race-line.mjs';
 
-export const FOLDING_CHAIR='1525538959176896562';
+export const FOLDING_CHAIR='1553971398131716117';
 export const LANDING_CHANNEL='1525540109414568188';
 export const WELCOME_CATEGORY='1553926850185666601';
 export const APPROVED_CATEGORIES=[

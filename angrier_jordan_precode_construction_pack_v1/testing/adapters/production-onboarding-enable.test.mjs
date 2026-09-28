@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {productionOnboardingTarget,planProductionSelfRoles,enableProductionOnboarding,verifyFoldingGate,LANDING_CHANNEL,WELCOME_CATEGORY,main} from '../../scripts/enable-production-onboarding.mjs';
 
 const guildId='1524964384642957432';
-const accessId='1525538959176896562';
+const accessId='1553971398131716117';
+const staleAccessId='1525538959176896562';
 const botId='1524964384642957433';
 const botRoleId='1524964384642957434';
 const names=[
@@ -18,7 +19,7 @@ const names=[
 const role=(id,name,position=1,permissions='0')=>({id,name,position,permissions,managed:false});
 function rolesFixture(){
  let index=0;
- return [role(guildId,'@everyone',0),role(accessId,'Folding Chair',50),{...role(botRoleId,'The Chairman',100,String(1n<<28n)),managed:true},...names.flatMap(([, , ,options])=>options.map(name=>role(String(1600000000000000000n+BigInt(index++)),name,index)))];
+ return [role(guildId,'@everyone',0),role(staleAccessId,'Metal Chair',48),role(accessId,'Folding Chair',50),{...role(botRoleId,'The Chairman',100,String(1n<<28n)),managed:true},...names.flatMap(([, , ,options])=>options.map(name=>role(String(1600000000000000000n+BigInt(index++)),name,index)))];
 }
 function panelFixture(roles){return {name:'Default Roles',enabled:true,config:{categories:names.map(([key,label,mode,options])=>({key,label,mode,options:options.map(name=>({roleId:roles.find(r=>r.name===name).id,label:name,enabled:true}))}))}};}
 const configRows=roles=>[{key:'roles.member_access',value:accessId},{key:'rejoin.restore_self_roles',value:true},{key:'special_commands.builtin_role_map',value:Object.fromEntries(['!line','!race','!vc','!chess'].map(trigger=>[trigger,roles.find(r=>r.name===({ '!line':'Line Ping','!race':'Race Ping','!vc':'VC Ping','!chess':'Chess Ping'}[trigger])).id]))}];
@@ -159,6 +160,12 @@ test('Folding Chair unlocks the synced member category and its child channels',(
  assert.deepEqual(verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),[memberCategoryId]);
  f.channels[1].permission_overwrites.find(row=>row.id===accessId).allow='0';
  assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings}),/FOLDING_CATEGORY_VIEW_MISSING/);
+});
+test('stale Metal Chair category grants never count as Folding Chair access',()=>{
+ const f=enableFixture(),mappings={'channels.main_chat':mainChatId},issues=[];
+ for(const channel of [f.channels[0],f.channels[1]])channel.permission_overwrites=channel.permission_overwrites.map(row=>row.id===accessId?{...row,id:staleAccessId}:row);
+ assert.throws(()=>verifyFoldingGate({roles:f.roles,channels:f.channels,mappings,onIssue:code=>issues.push(code)}),/CATEGORY_GATE_REVIEW_REQUIRED/);
+ assert.ok(issues.includes(`FOLDING_CATEGORY_VIEW_MISSING_${memberCategoryId}`));
 });
 
 test('an unsynced public child cannot bypass a gated member category',()=>{
