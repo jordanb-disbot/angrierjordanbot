@@ -21,7 +21,7 @@ test('Phase 10 PostgreSQL privacy, records and Spotlight recovery',async t=>{
   await t.test('duplicate observed messages and commands count exactly once',async()=>{
    await Promise.all(Array.from({length:3},()=>repo.message('profiles','a','msg',at,input)));
    await Promise.all(Array.from({length:3},()=>repo.command('profiles','a','cmd','profile',at)));
-   const p=await repo.profile('profiles','a',at);assert.equal(p.activity.allTime.messages,1);assert.equal(p.activity.allTime.words,4);assert.equal(p.activity.mostCommand,'profile');
+   const p=await repo.profile('profiles','a',at);assert.equal(p.activity.allTime.messages,1);assert.equal(p.activity.week.messages,1);assert.equal(p.activity.week.words,4);assert.equal(p.activity.allTime.words,4);assert.equal(p.activity.mostCommand,'profile');assert.deepEqual(p.activity.topWords,[{word:'chair',count:1},{word:'lounge',count:1}]);
   });
   await t.test('activity privacy hides all routine activity while retaining stored counts',async()=>{await repo.privacy('profiles','a','activity',false);assert.equal((await repo.profile('profiles','a',at)).activity,null);await repo.privacy('profiles','a','roast',false);assert.equal((await repo.profile('profiles','a',at)).state.roastEnabled,false);await repo.privacy('profiles','a','activity',true);assert.equal((await repo.profile('profiles','a',at)).activity.allTime.messages,1);});
   await t.test('weekly co-winners and Triple Threat survive duplicate freeze and restart',async()=>{
