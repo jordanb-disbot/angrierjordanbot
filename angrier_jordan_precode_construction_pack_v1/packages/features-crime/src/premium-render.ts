@@ -5,7 +5,7 @@ const gold='#F2CF86',white='#EFF5F2',teal='#35D0BC',muted='#C3D4D4';
 const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 let room:string|undefined,chair:string|undefined;
 const media=(file:string)=>'data:image/png;base64,'+readFileSync(new URL('../../../production/'+file,import.meta.url)).toString('base64');
-const t=(x:number,y:number,s:string,size=27,color=white,heading=false)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${heading?'Cinzel':'Poppins'}" font-size="${size}" font-weight="700" fill="${color}">${esc(s)}</text>`;
+const t=(x:number,y:number,s:string,size=27,color=white,heading=false)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${heading?'Space Grotesk':'Inter'}" font-size="${size}" font-weight="700" fill="${color}">${esc(s)}</text>`;
 function block(s:string,x:number,y:number,w:number,size=26,color=white,heading=false){const lines=wrapText(s.replace(/\*\*/g,''),w,size),step=Math.ceil(size*1.5);return{svg:lines.map((l,n)=>t(x,y+n*step,l,size,color,heading)).join(''),height:lines.length*step};}
 function panel(x:number,y:number,w:number,h:number,c=gold){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="20" fill="url(#glass)" stroke="${c}" stroke-width="2"/><path d="M${x+15} ${y+50}V${y+15}H${x+60}M${x+w-60} ${y+h-15}H${x+w-15}V${y+h-50}" fill="none" stroke="url(#brass)" stroke-width="3"/>`;}
 const seat=(x:number,y:number,size:number)=>`<image href="${chair??=media('event_art/v3/race_chair_1.png')}" x="${x-size/2}" y="${y}" width="${size}" height="${size}"/>`;

@@ -4,7 +4,7 @@ import type {WyrRuntimeSession,WyrResults} from './types.js';
 const C={blue:'#3B82F6',gold:'#F4C542',white:'#E6EAF0',muted:'#B4C8CA',emerald:'#10B981'};
 let lounge:string|undefined;
 const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-const text=(s:string,x:number,y:number,size=30,color:string=C.white,title=false)=>`<text x="${x}" y="${y}" text-anchor="middle" fill="${color}" font-family="${title?'Cinzel':'Poppins'}" font-weight="700" font-size="${size}">${esc(s)}</text>`;
+const text=(s:string,x:number,y:number,size=30,color:string=C.white,title=false)=>`<text x="${x}" y="${y}" text-anchor="middle" fill="${color}" font-family="${title?'Space Grotesk':'Inter'}" font-weight="700" font-size="${size}">${esc(s)}</text>`;
 function lines(s:string,x:number,y:number,width:number,size=32,color:string=C.white){const rows=wrapText(s,width,size);return{svg:rows.map((r,n)=>text(r,x,y+n*Math.ceil(size*1.4),size,color)).join(''),height:rows.length*Math.ceil(size*1.4)};}
 const panel=(x:number,y:number,w:number,h:number,accent:string)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="24" fill="url(#leather)" stroke="${accent}" stroke-width="3"/><rect x="${x+9}" y="${y+9}" width="${w-18}" height="${h-18}" rx="17" fill="none" stroke="${accent}" opacity=".28"/><path d="M${x+28} ${y+12}H${x+w-28}" stroke="#E6EAF0" stroke-opacity=".2" stroke-width="2"/><path d="M${x+18} ${y+65}V${y+18}H${x+75}M${x+w-75} ${y+h-18}H${x+w-18}V${y+h-65}" fill="none" stroke="url(#brass)" stroke-width="4"/>`;
 function render(s:WyrRuntimeSession,result?:WyrResults){

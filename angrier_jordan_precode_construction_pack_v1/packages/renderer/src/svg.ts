@@ -13,13 +13,13 @@ const wrap=(input:string,maxChars:number):string[]=>{
 };
 export function renderSvg(doc:RenderDocument):string{
   let y=36; const lines:string[]=[];
-  const text=(t:string,x:number,yPos:number,size=22,weight=500,fill=colors.text,anchor='start',family='Poppins, Arial, sans-serif')=>`<text x="${x}" y="${yPos}" font-family="${family}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${esc(t)}</text>`;
+  const text=(t:string,x:number,yPos:number,size=22,weight=500,fill=colors.text,anchor='start',family='Inter, Arial, sans-serif')=>`<text x="${x}" y="${yPos}" font-family="${family}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${esc(t)}</text>`;
   const render=(n:UiNode)=>{
     if(n.kind==='frame'){
       lines.push(`<defs><linearGradient id="ajbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${colors.bg}"/><stop offset="0.58" stop-color="${colors.panel}"/><stop offset="1" stop-color="#07101D"/></linearGradient></defs>`);
       lines.push(`<rect x="20" y="20" width="${doc.width-40}" height="${doc.height-40}" rx="24" fill="url(#ajbg)" stroke="${colors.border}" stroke-width="2"/>`);
       lines.push(`<rect x="20" y="20" width="6" height="${doc.height-40}" rx="3" fill="${colors.teal}"/>`);
-      y=70; lines.push(text(n.title,doc.width/2,y,30,750,colors.gold,'middle','Cinzel, Georgia, serif')); y+=30;
+      y=70; lines.push(text(n.title,doc.width/2,y,30,750,colors.gold,'middle','Space Grotesk, Arial, sans-serif')); y+=30;
       if(n.subtitle){lines.push(text(n.subtitle,doc.width/2,y,15,650,colors.teal,'middle'));y+=28;}
       lines.push(`<line x1="52" y1="${y}" x2="${doc.width-52}" y2="${y}" stroke="${colors.border}"/>`);y+=12;
       for(const c of n.children)render(c); return;

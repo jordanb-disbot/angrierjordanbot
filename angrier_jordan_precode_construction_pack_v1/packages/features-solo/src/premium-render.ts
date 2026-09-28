@@ -3,7 +3,7 @@ import type {SoloView} from './prisma-repository.js';
 import {wrapText} from '../../renderer/src/text-layout.js';
 let lounge:string|undefined,chair:string|undefined;
 const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-const t=(x:number,y:number,s:string,size=30,color='#E6EAF0',heading=false)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${heading?'Cinzel':'Poppins'}" font-size="${size}" font-weight="700" fill="${color}">${esc(s)}</text>`;
+const t=(x:number,y:number,s:string,size=30,color='#E6EAF0',heading=false)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${heading?'Space Grotesk':'Inter'}" font-size="${size}" font-weight="700" fill="${color}">${esc(s)}</text>`;
 const box=(x:number,y:number,w:number,h:number,color='#3B82F6')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="20" fill="url(#glass)" stroke="${color}" stroke-width="2"/><path d="M${x+24} ${y+9}H${x+w-24}" stroke="#E6EAF0" stroke-opacity=".2" stroke-width="2"/><path d="M${x+24} ${y+h-7}H${x+w-24}" stroke="#F4C542" stroke-opacity=".15"/><path d="M${x+12} ${y+42}V${y+12}H${x+46}M${x+w-46} ${y+h-12}H${x+w-12}V${y+h-42}" fill="none" stroke="#F4C542" stroke-width="3"/>`;
 export interface SoloPortrait {name:string;avatarData:string;}
 export function renderPremiumSolo(v:SoloView,title:string,member?:SoloPortrait){

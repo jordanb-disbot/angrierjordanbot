@@ -10,7 +10,7 @@ const view={id:'HIDDEN_INCIDENT',guildId:'g',channelId:'bot',state:'OPEN',versio
 const statement={account:{wallet:1234n,bank:5678n,bankTier:2},liquidNetWorth:6912n,entries:Array.from({length:10},(_,n)=>({amount:BigInt(n%2?-25:250),reason:'daily_reward_'+n,createdAt:now}))};
 test('Crime incidents show both identities, exact windows and no internal IDs across public states',async()=>{
  for(const v of [view,{...view,success:false,stolen:'0',state:'CLOSED'},{...view,returned:true,fightBack:'won'},{...view,caught:true,returned:true,state:'CLOSED',bail:'340',sentenceId:'HIDDEN_SENTENCE'}]){
-  const svg=renderCrimeIncident(v,undefined,undefined,now);assert.doesNotMatch(svg,/HIDDEN_/);assert.match(svg,/Jordan/);assert.match(svg,/Morgan/);assert.match(svg,/ROBBER/);assert.match(svg,/VICTIM/);assert.match(svg,/Poppins/);assert.match(svg,/Cinzel/);
+  const svg=renderCrimeIncident(v,undefined,undefined,now);assert.doesNotMatch(svg,/HIDDEN_/);assert.match(svg,/Jordan/);assert.match(svg,/Morgan/);assert.match(svg,/ROBBER/);assert.match(svg,/VICTIM/);assert.match(svg,/Inter/);assert.match(svg,/Space Grotesk/);
  }
  const svg=renderCrimeIncident(view,undefined,undefined,now);assert.match(svg,/60 seconds remaining/);assert.match(svg,/180 seconds remaining/);
  const p=await new DiscordCrimeCoordinator({}, {},async()=>true).payload(view);

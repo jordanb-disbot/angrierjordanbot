@@ -6,7 +6,7 @@ function plate(label:string,value:string,x:number,y:number,width:number){const h
 /** Distinct deterministic compositions share the approved lounge, owner-requested wine, and brass trim. */
 export function learningWindow(title:string,copy:string){
  const width=1200,heading=prose(title,38,105,1124,44),top=112+heading.height;
- let body=text(38,48,'ANGRIER JORDAN · LEARN & BELONG',20,brass,'letter-spacing="2" font-weight="600"')+`<g font-family="Cinzel">${heading.svg}</g>`,y=top;
+ let body=text(38,48,'ANGRIER JORDAN · LEARN & BELONG',20,brass,'letter-spacing="2" font-weight="600"')+`<g font-family="Space Grotesk">${heading.svg}</g>`,y=top;
  const blocks=copy.split(/\n\s*\n/).filter(Boolean);
  if(title==='Your command directory'){
   const footer=blocks.at(-1)?.startsWith('Search with ')?blocks.pop():undefined;
@@ -32,7 +32,7 @@ export function learningWindow(title:string,copy:string){
  }
  const height=y+64;
  body+=`<path d="M54 ${y+5}H465M735 ${y+5}H1146" stroke="${brass}" stroke-opacity=".5"/>${text(600,y+13,'SIT. PLAY. BELONG.',21,brass,'text-anchor="middle" letter-spacing="2"')}`;
- return shell(height,`<rect width="1200" height="${height}" fill="${wine}" opacity=".45"/><rect x="22" y="22" width="1156" height="${height-44}" rx="12" fill="#101622" fill-opacity=".32" stroke="${brass}" stroke-opacity=".5"/><g font-family="Poppins">${body}</g>`,0,width)
+ return shell(height,`<rect width="1200" height="${height}" fill="${wine}" opacity=".45"/><rect x="22" y="22" width="1156" height="${height-44}" rx="12" fill="#101622" fill-opacity=".32" stroke="${brass}" stroke-opacity=".5"/><g font-family="Inter">${body}</g>`,0,width)
  .replace(/<linearGradient id="glass"[\s\S]*?<\/linearGradient>/,'<linearGradient id="glass" x2="1" y2="1"><stop stop-color="#592A39" stop-opacity=".95"/><stop offset=".55" stop-color="#291D2D" stop-opacity=".96"/><stop offset="1" stop-color="#101622" stop-opacity=".97"/></linearGradient>')
  .replace('stroke="#00D7CF"',`stroke="${brass}"`);
 }

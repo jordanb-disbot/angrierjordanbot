@@ -3294,7 +3294,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: PROFILE",
       "canonical": true,
-      "sha256": "0c7b87540e4acb92b56c192a537fe3c2f3a9aa4b808a99deffdedf4355d0f46b",
+      "sha256": "0bb7d267a140b460ced1081233d2c51357794853ea482976374fbdd4c055573a",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3309,7 +3309,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: RECORDS",
       "canonical": true,
-      "sha256": "c422e4ca8a7e6bed858ad95e2342be4ae946ee064a60433b993f203b5d35b364",
+      "sha256": "a88d5fb0432104120ec6f888d9b50b1046164eec2476e13cb42760aadbd20ad6",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3324,7 +3324,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: OTTOMAN STATEMENT",
       "canonical": true,
-      "sha256": "1e3ca020e8150146888b5914a2aae63db944697cbae6e307473ccff285531653",
+      "sha256": "0aa59cf7eb72192fe1c6307bbe162e7278753d34ca6f9198eee95bee5f43004b",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3339,7 +3339,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: SHOP",
       "canonical": true,
-      "sha256": "d2d51448a89d0c1b10b6b588cc9a9daabe75efec50dbdd0d1ecbab15975ee618",
+      "sha256": "ffbe5260ae3e3e1e7a1ecbeb880438940a309b087516311995afb6f7dda7a34a",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3354,7 +3354,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: INVENTORY",
       "canonical": true,
-      "sha256": "4f6956de9018092ee113f4402237c357dddc5c147bff33d424a9cf86dc7c7c62",
+      "sha256": "d032700401324f979ae531e5a427dc942fe3a902df4e938363644695cd46dbd2",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3369,7 +3369,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: RESULT",
       "canonical": true,
-      "sha256": "c19d272b0f17ef3f00b022cc9e50399fefcccfda7409c4a87cbb905960deac72",
+      "sha256": "612a40edf711c4b2e6a2a3cd17aa81be8ac24f701e96170e58f223b3a9047bef",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3384,7 +3384,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: ANNOUNCEMENT",
       "canonical": true,
-      "sha256": "791d795ea487a46f5316419845bb7bee92f5d6cd77c311a55bd45bd819677012",
+      "sha256": "58af5b623f79395a382c2fa279eae5b0c73784d53d6c799a192c59a3499f4a32",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3399,7 +3399,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: SYSTEM STATUS",
       "canonical": true,
-      "sha256": "a5a68656b943bbab73c788692f8706c1b3c79b3322526ee2ca287b205b2c1b67",
+      "sha256": "3e23cad4c1a75bfd42461492762aa9b9941a39b1ddd918f5714ffab7a85c7340",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3414,7 +3414,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: CHAIRISM",
       "canonical": true,
-      "sha256": "10d70b1b6292f366e60b4c0400487eab10b42624a9f16795481efd42834e5362",
+      "sha256": "e8009be21fac8eefc32e20049ac4b5f2b00c85ac430e97f0b5f50fa4cf9fd0fa",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3429,7 +3429,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: CHAIRISM",
       "canonical": true,
-      "sha256": "35b93ae7accb3a18fc1fd6e5a13ec438011565444daec2e47401a4e68278f3fe",
+      "sha256": "fb7ed96fbff75c220315d404e68356d214bbdfc90b97ebc4648cccd93d168460",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3444,7 +3444,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: CHAIRISM + IMAGE",
       "canonical": true,
-      "sha256": "5b6e3e7fa14180a9252b8db975b0d405286452a44797f885d0d8c2850532d0bf",
+      "sha256": "fa8a42f1df53fa17018474b19ac0f1bb067759411cd1ba092826e930bd676eba",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3459,7 +3459,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: CHAIRISM REPLY",
       "canonical": true,
-      "sha256": "2631997d44547df188636b1933957cf28eeacac29fe349676f355dd0efb937d4",
+      "sha256": "2533ee69b74c45d222665608d120dab8661a6c82fc6f445fa9a4d3d99693f820",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3474,7 +3474,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: NOW PLAYING",
       "canonical": true,
-      "sha256": "c74767734a656f8731b6484e67f9e79af8158820c4d378c514aad3794d2cdaea",
+      "sha256": "457ea35fca7842ade158835f504fe0941cf8a9aedceacddf4379c0431213210d",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3489,7 +3489,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: VOTING",
       "canonical": true,
-      "sha256": "b30ee0cd3fe565ff33e79556b7c6af82420d976840c083a93a4ac20e688f02f0",
+      "sha256": "f56b04e8d157f39e345632e301c3b34eae0c04870b5dd8bae778aa128c204bc7",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3504,7 +3504,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: FUCK • MARRY • KILL",
       "canonical": true,
-      "sha256": "e552157d2f858ce00566af680dd450824d2e6c34dfa38d0ae902c0b13ec00563",
+      "sha256": "c81890c26754e1b339c74a1d9926daaf687419e0084cf92174763d76593c8289",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3519,7 +3519,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: CHAIR RACE",
       "canonical": true,
-      "sha256": "68ff2ebb908cd4cb635ae783b9e204dc86d89bc81c72fab31d5c3290b8d54414",
+      "sha256": "c4679b9537534e38e4811f329c5b6915cae7a6c658a5b138f138429cb5c3138d",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3534,7 +3534,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: ROBO CHAIR FIGHT",
       "canonical": true,
-      "sha256": "7347dbb047ec79914f3795ce8660b37d1c05ab05bbcf2d898aee7a0a87df3624",
+      "sha256": "cf806629fb7eae05317239360249020cb8b9bbd7135ed6c56061509f120cbd4c",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3549,7 +3549,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: !LINE",
       "canonical": true,
-      "sha256": "ce03c87ca1107ac0cdd87310a41ea686f87242bfbd2a974fa3e2009f1b720df5",
+      "sha256": "191b6660bfaae4703a5dc8c459bce041394a9c8f297566ac687963c1397eed27",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3564,7 +3564,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: CRIME / JAIL",
       "canonical": true,
-      "sha256": "4f494bcee0c3bf8ebd743f0837ddab56fc1f89134d4875dfda1a941cd7d785c0",
+      "sha256": "307c75f8d76dd712d3d00ce3a297b58cddf28e0237cfe5656217cc9a84b44445",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3579,7 +3579,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: FAMILY",
       "canonical": true,
-      "sha256": "d644a9c30fe999c17a83ce82008484e3da36fc0010cd3c01f8954913cda65575",
+      "sha256": "e6acdd45ac1581cdacf795b7b4088321aa5b126d38e9a505e7dbb25f98c1bc26",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3594,7 +3594,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: GIVEAWAY",
       "canonical": true,
-      "sha256": "7adc64c71bfeee13a5c511f2384fbfee0b0573ca5ea71973414bd632e931369a",
+      "sha256": "22e2fa4cd6e31484538a09260dada14b3c19858b66535080b154d07b1ef8c63e",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3609,7 +3609,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: SUPERLATIVE",
       "canonical": true,
-      "sha256": "b3c35b33c06a0a8840b14cf0b64f896f9c86d40c33e060b9d98e3f1505b59ab7",
+      "sha256": "8cd43e150847aeda0eb8e804119c0b691cff90404cae79e0e2c45914253a4c2c",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3624,7 +3624,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: POLL",
       "canonical": true,
-      "sha256": "fdea66718d6c6dad92aeb9c9275ba6d58149ffa3f92949e98e52fbad1cb4f15b",
+      "sha256": "b252b4d3e67d42a30a4023285d6f0ebb040ef01333cba2c6135103d1f3242fbe",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3639,7 +3639,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: AMA",
       "canonical": true,
-      "sha256": "e7e4853aca32ac4c6d8ebb8b7c9c7fe17f18f2df9df3ad91c626f0b939a61331",
+      "sha256": "687d878aec2ec0a3821d37676fb466ac387b917f7cdd2a2bf386059056ab24da",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3654,7 +3654,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: SUGGESTION",
       "canonical": true,
-      "sha256": "35732bdeb718b8002681a998054bd1623b0246924d1715fa1de85f77ee10e9e0",
+      "sha256": "7c73d8c7104ee82e993b9fc3b6c4be30d7e92cf181e1fb19b29e67ac32c743ca",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -3669,7 +3669,7 @@
       "category": "templates",
       "usage": "Scalable runtime renderer template: MODERATION",
       "canonical": true,
-      "sha256": "3559be06be068d0698d251dccc3abe90d0040e07ebd81dded0c7cfab7f5e6342",
+      "sha256": "bd703639e7c0ef6b60ad0f29048d88568ed008e030a68ac9578307c47ae01974",
       "notes": "Dynamic tokens use {{token}} placeholders. Render text/data at runtime. Refreshed for v2 palette/style while preserving semantic identity.",
       "dimensions": [
         1200,
@@ -5091,7 +5091,7 @@
       "category": "templates.event_states.race",
       "usage": "!race 60-second racer entry + betting; +30 extends both",
       "canonical": true,
-      "sha256": "68ff2ebb908cd4cb635ae783b9e204dc86d89bc81c72fab31d5c3290b8d54414",
+      "sha256": "c4679b9537534e38e4811f329c5b6915cae7a6c658a5b138f138429cb5c3138d",
       "dimensions": [
         1200,
         675
@@ -5107,7 +5107,7 @@
       "category": "templates.event_states.race",
       "usage": "!race live no-lap sprint",
       "canonical": true,
-      "sha256": "fb0377f49c367d058b3c3b81363193cae6344981e37a9281a2ff68e8d3acad9b",
+      "sha256": "9acea8917eb3454037d6bbeb08c45debc41dda6c3455f3f13055a956b95df02f",
       "dimensions": [
         1200,
         675
@@ -5123,7 +5123,7 @@
       "category": "templates.event_states.race",
       "usage": "!race result; no Play Again",
       "canonical": true,
-      "sha256": "ec516b61380ad1e0f97c6d6768e32dce48e89515f39cbeb826088bdb2d97f470",
+      "sha256": "ee6ba928e76c51b46599563b8ac566c696bf8d562ffc5db444c7673d30ff4554",
       "dimensions": [
         1200,
         675
@@ -5139,7 +5139,7 @@
       "category": "templates.event_states.fight",
       "usage": "/fight @member immediate 30-second betting; no acceptance/open join",
       "canonical": true,
-      "sha256": "7347dbb047ec79914f3795ce8660b37d1c05ab05bbcf2d898aee7a0a87df3624",
+      "sha256": "cf806629fb7eae05317239360249020cb8b9bbd7135ed6c56061509f120cbd4c",
       "dimensions": [
         1200,
         675
@@ -5155,7 +5155,7 @@
       "category": "templates.event_states.fight",
       "usage": "/fight @member live combat",
       "canonical": true,
-      "sha256": "e4eef7e33fbc1e1689ca88479e05794976ce1df102e58b6eefe6e784dcc071ef",
+      "sha256": "5d32e472d7be039f8a08b5f796bf640c89a0e0ded2f22e39657903d8bcfd4c89",
       "dimensions": [
         1200,
         675
@@ -5171,7 +5171,7 @@
       "category": "templates.event_states.fight",
       "usage": "/fight result; no Play Again",
       "canonical": true,
-      "sha256": "a665f207a5074a38af0ec252dacc982922f9dce56d45a2b8b3c760f883c7992a",
+      "sha256": "7f9477c3567bbceb9ec9d18ced50994547065fc4cb9e5fc02ac9b8e163202c0e",
       "dimensions": [
         1200,
         675
@@ -5187,7 +5187,7 @@
       "category": "templates.event_states.line",
       "usage": "!line readiness; no participant cap",
       "canonical": true,
-      "sha256": "ce03c87ca1107ac0cdd87310a41ea686f87242bfbd2a974fa3e2009f1b720df5",
+      "sha256": "191b6660bfaae4703a5dc8c459bce041394a9c8f297566ac687963c1397eed27",
       "dimensions": [
         1200,
         675
@@ -5203,7 +5203,7 @@
       "category": "templates.event_states.line",
       "usage": "!line entry locked; host start/cancel",
       "canonical": true,
-      "sha256": "c682480197b7069fff4afc5cbc255f6f0d95b987da67fe4b84cff63f9efc4b41",
+      "sha256": "5352becbc1b643d7c1f7eda3b447b2871c1397301c438122f4647dcc2a522643",
       "dimensions": [
         1200,
         675
@@ -5219,7 +5219,7 @@
       "category": "templates.event_states.line",
       "usage": "!line 5→1; no 0",
       "canonical": true,
-      "sha256": "9471c7124c90dc161717db0bcef8332f96f335f4ea4a7f0013af562e8d671473",
+      "sha256": "7a2ab7cad4120a4ff1d6a6794f9f3eb27cbc30cea319c12fd2210172221760c5",
       "dimensions": [
         1200,
         675
@@ -5235,7 +5235,7 @@
       "category": "templates.event_states.line",
       "usage": "!line powder-burst terminal state",
       "canonical": true,
-      "sha256": "7b6f9157deedc26ca053d2edb82d090c60e28ff0ac0a1aca3bd3ddbac63326cd",
+      "sha256": "6138209b712e5876359b4178b7d07c7967635e5ca722819ee34636814a5debc3",
       "dimensions": [
         1200,
         675
@@ -5251,7 +5251,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "9dd381f8663e41558f1412015d5b7150152fd214a33eebe7e98c5d1c232e7bfa",
+      "sha256": "6af02eb7c2ec243aa713f7f267e425f012ea3130ce78e989751111ac6fc2bb8e",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5261,7 +5261,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "c934ec185177a848af429baecf035de097a91d02bcf36b1b708ab1c5a656abda",
+      "sha256": "ab7d339a5b6ab0d88077c7c85c4ed609e490ae1a7b6f1f73693baf104270e581",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5271,7 +5271,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "f42c381260a9e98b91dfcb85ce704d0bbae37fe4855583d2f5d3c70d2caa4329",
+      "sha256": "d7b46a33c5ecc8145e372f884dada9bd0a49bc98b7e417fb013f2ca1f40ae347",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5281,7 +5281,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "97cca749a3ae052111baa78ffbe8b9dd4cd793ed69cb4e649a0e4e9d000d5c94",
+      "sha256": "d1f992cbc42f195639afcb8701664d92d5aebdbe8de6283c01ed9508c12ece5a",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5291,7 +5291,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "5b3256f18d874878e85a476091c126a4791e841edac3eea2088f63e297d6f908",
+      "sha256": "a57f83e4bbe98c733eb226689db0877467f37267663437f476e42d4173f1e60d",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5301,7 +5301,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "74c40c5bf95dcba37c5d7a82fd91119e6c7c88939123db1193407e8974093f6e",
+      "sha256": "dac5470ce7b857d32d445c0c90d6e0881f37548b3f61e6bbc1047fd5a130bc51",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5311,7 +5311,7 @@
       "category": "runtime.phase4.casino",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "fc950453558316069e5ee25a5ef90f24a5c5ff2f499aa0acbe16431c09a4f85e",
+      "sha256": "755f6f81e8f1d1e2b147ed72a5bd010b9c6e9ba00aa059da68b32c4493e049bb",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5321,7 +5321,7 @@
       "category": "runtime.phase4.crafting",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "2aabeeec3fae1137b31ac0bd4230d270ceaefe37f231df4970653e748fbb4808",
+      "sha256": "d17a37a013573db11a02066c32997f2680883456270929c306b2cb11caf8e7a6",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5331,7 +5331,7 @@
       "category": "runtime.phase4.crafting",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "c57da72ea274b362cf6ca0879797dc217f8ea0c39cd51296cbbc0f2bfdc4c5f7",
+      "sha256": "282d0108c2d4dd152bbfaca9f0fa7956161e4e6c0b2b6d8e0b44d0489aca3a4e",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5341,7 +5341,7 @@
       "category": "runtime.phase4.crafting",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "ff0d944ec09f51a35e843a10cdd8e59dd0ba7de6a49b022d64fef693b32d93db",
+      "sha256": "f76cdf23658992193cef08d25ca17467eaa029e112cd75e407d7d481773c8da2",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5351,7 +5351,7 @@
       "category": "runtime.phase4.daily",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "b1374e7a2d7827579c984193d57c0122528fea09cb248568fb2277e5e1ee0f31",
+      "sha256": "038bf88c93005ceabc67b912da0f659f280b6887ee35cf714be8e758c1530069",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5361,7 +5361,7 @@
       "category": "runtime.phase4.daily",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "a2fb2c4f80acadcb4fe2df3540b5136104f6c879739b597cc35b9faa432b07dd",
+      "sha256": "5ea322c98d95c4c2ab87da5924891766907dbe940fae29479606dd7e1410a8eb",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5371,7 +5371,7 @@
       "category": "runtime.phase4.daily",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "aa7c243e163c4bf583a0563f64a997fc8f4d2780c1aefa9801ed35fb2f08dcc6",
+      "sha256": "3c218b35ed4c99faee8eb74c1f818974d0e3d5010f56c07cb007d8b163e85f1b",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5381,7 +5381,7 @@
       "category": "runtime.phase4.family",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "68331d05720f57a377ee9c15b71400041dbd8710a07d2ee3d1daaae4108abd71",
+      "sha256": "67f89488dbca1d9f27870476ad6e8aa18e658728414b9b29bc5d50ac94114793",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5391,7 +5391,7 @@
       "category": "runtime.phase4.family",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "a570a89b1ab434b34d15e9e1fb542e55cf9ce52420fa6bc724306b8f42577888",
+      "sha256": "23337e5831ef2a680ce964d502e764393468a3a21f149a92a4641587102188c7",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5401,7 +5401,7 @@
       "category": "runtime.phase4.introduction",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "9d37780d85eb62d199bc21b2b038ab8921e087cb7b71dd5e38ed9b132e296c28",
+      "sha256": "0bdd670f204a6c64e5dd732fa5cda73b4c3d3fbf9cf29ad75ee6f4236537acb8",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5411,7 +5411,7 @@
       "category": "runtime.phase4.introduction",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "0b971c7b742eda406635b4fb16bf86751c69ae885122b3bf191f7b3ec0749eb0",
+      "sha256": "dc7055cef9a23d597d4e8b4eb0a630b7adb8f9a1e89503571d3486f446a9d024",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5421,7 +5421,7 @@
       "category": "runtime.phase4.lore",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "69d80b66faa121548bf6aeefcb3dc209f5e47a9c8b2ac92fd5adaf20ef31546a",
+      "sha256": "65c3d1af165dfa52e10a4ffd233f980d04578c8e8451f6f1e68e2f733cb629cc",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5431,7 +5431,7 @@
       "category": "runtime.phase4.lore",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "a705ef988f37fdf14f0d368d6df4cc62759af810f7073dfac1787f1bc5dadcc4",
+      "sha256": "329fe6e53a886beab627954a97e4b05d649dd7ae70ec9ed08dfa0de4b4387d59",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5441,7 +5441,7 @@
       "category": "runtime.phase4.lore",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "a81dae767ff3e30cc46338144e12034d621a0e887d44a0ae12e65ade136651ed",
+      "sha256": "e9ec3b99e14d7dbf78b6b7fa9f8c339e196dc792889f83285458fe4926cfd131",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5451,7 +5451,7 @@
       "category": "runtime.phase4.moderation",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "1bc9c9b37ea52e2fd06349005456001821aba3226e979b8a0f8b7f843a753636",
+      "sha256": "57312eb37c5b9b4ffb368b4f3319bef968ccaca756f76fabd3d58a278d0c0bb1",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5461,7 +5461,7 @@
       "category": "runtime.phase4.moderation",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "429350eae910c090c64b0385a6c4b8cd0958b1c81222e6837e6773d97321ed13",
+      "sha256": "9f8fea46ef6b3e0dc8aff39d43f06b964657e07bbaef219cac227bb7504130ea",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5471,7 +5471,7 @@
       "category": "runtime.phase4.moderation",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "65b1ea37c838e540cddaa6fa48e613f3790194ee90a7349e807b1cb20ad7c6c1",
+      "sha256": "768803222f373582f80d843febf2b033047190962852e4c415b3fe4f92c8bcb8",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5481,7 +5481,7 @@
       "category": "runtime.phase4.moderation",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "267acc0554d4945443e1a821f7836c3a1f816cfb9d3650204f42c55fc12f20d5",
+      "sha256": "eb7a6a597b011503f3c004ab47395157ab20e0faf6d7eac1fa394041bd7279eb",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5491,7 +5491,7 @@
       "category": "runtime.phase4.onboarding",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "6d0eafc4b26f9861b9388672d3326d369c0f39feee2e8f38d692303795475714",
+      "sha256": "728843e38b37eb989f70677ed2e2c8d7a01aa6cff249d7b1b621413ea01f22dc",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5501,7 +5501,7 @@
       "category": "runtime.phase4.onboarding",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "64b30bed514d3a7abc3a342c6c5453cd2c9c721f8e307fcb3990748141dd19e9",
+      "sha256": "620842f8334a2f95515a153d77e4e19fb98e7d049a98ce655555ac48b56ddaa5",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5511,7 +5511,7 @@
       "category": "runtime.phase4.party",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "3077afceeddcf641563eeffe7d2133c01cb4b2c368bbec9a5227e29f26a7f642",
+      "sha256": "5fe675197b78472c54fc9c558a109a299a7cd0a2aea5a794040309fb97958ff3",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5521,7 +5521,7 @@
       "category": "runtime.phase4.party",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "743d5333e4b3412a013a7aa73c1698459056a583c04b40d11c1cd7f5b1ead743",
+      "sha256": "a039a3f886a35d7f19b9d38babf7c5f25edd17ce963546ab76d0c430c46298f8",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5531,7 +5531,7 @@
       "category": "runtime.phase4.party",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "248bfe870c64541261edaeab719053d6901185f3e49ba86d80e5cfab82a1b973",
+      "sha256": "40fad9944ea009e6bd1bf1c1cc15fef91461d56bb101ad5bbe8f010af077a046",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5541,7 +5541,7 @@
       "category": "runtime.phase4.party",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "d6e34220ac1db09bd1064617a8e87d05d0f11f9dbdf6873972d2003c6b69c39d",
+      "sha256": "b3315944d0036b27fdbd7a0fd37b43375ca7aaff61e868dba8c89e1564c8f318",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5551,7 +5551,7 @@
       "category": "runtime.phase4.party",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "7f23854b6afd57b8ae08bb4bb31187b62b2c0f672773e110ba8574d674844474",
+      "sha256": "2f763550bbdbb13094fdf5af38d497787ba8d26858f5b889304c5b3d15146e03",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5561,7 +5561,7 @@
       "category": "runtime.phase4.repair",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "6bf288d9bf504e7d73a8bb824151d858051d752cf692403b2063b8ddc161ee1a",
+      "sha256": "789e5c2b31af72e792871a429c35ee9b99068aec0ba6038812c168d60a8d0ba2",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5571,7 +5571,7 @@
       "category": "runtime.phase4.repair",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "1575c223a656c687247bccfdb0cb1845d3403553b6a717d78846a9961c042797",
+      "sha256": "7a23d67ba4e8d82d6818b6995c8bf44b33d5bfe28633ef1a8074c35e9ba58457",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5581,7 +5581,7 @@
       "category": "runtime.phase4.roles",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "ad49d3135d45f0be43ce8f48869ebae22438a57b18d25ee0259bf2919033818f",
+      "sha256": "d942ba663de45871e0aca0498b1fe7dee554ab8e5611d05496c5aefdf2780a3f",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5591,7 +5591,7 @@
       "category": "runtime.phase4.tldr",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "cbbbd6902771ab2fd8b1f6bb5825a55fadb0f8820cf8f6fe610fbf7cd447450e",
+      "sha256": "0c9e3ba7698f76dfd375d39586f8ee880872f4f02b45ac9876c370947d9af8b2",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -5601,7 +5601,7 @@
       "category": "runtime.phase4.tldr",
       "usage": "Runtime state template",
       "canonical": true,
-      "sha256": "b339f6622edf1ede20fdaf802e939cd2cd2db64726ce0ddcc0c1825b1e49e2b9",
+      "sha256": "ca5839ef91ff613eb9e5495717e5725d54c6bb29727b01756cedbc28afa48b2c",
       "origin": "Visual Refresh Phase 4",
       "visual_system": "AJ Visual System v2 — approved second style guide"
     },
@@ -6008,7 +6008,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Approved shared visual system with private Battleship rendering",
-      "sha256": "7bf52f8e017eeef891289270f1acebf852f05f63855e3698d77b53ac2e949116"
+      "sha256": "554d05d27f473a6262abf7a5f2f0ca0dfbd1614836e79abf0a0c1b00c85487be"
     },
     {
       "id": "party.runtime.renderer",
@@ -6017,7 +6017,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "d4bf1af95076fb01d01664d05353b8c43f51c9a5fcdc556a5cc66ae29f27868e"
+      "sha256": "7b7d1acd81b2d75c6f4f398cf8b2bfcfe6c9ba6ad3fae7f68cdba7a444f00bd1"
     },
     {
       "id": "crime.runtime.renderer",
@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "2f0753a49383e2d59d3112148eaaae8ce05834585b96d37be0452d301fc00343"
+      "sha256": "04d30f918a1e2879bd7c0a9f6b4e760939acafc7dfa6cb3b380235fd133d56ca"
     },
     {
       "id": "family.runtime.renderer",
@@ -6089,7 +6089,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic Gate B rendering; owner review pending.",
-      "sha256": "34a1900950d895574f054deaf5fb02002d318af25cc719015912047f77fb6d40"
+      "sha256": "6bcda20b6e6a0204efc4d7db70180279af42cb4206610e7fe3836acf3dca8630"
     },
     {
       "id": "profiles.runtime.renderer",
@@ -6494,7 +6494,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Crime Wanted, incidents, bail and supporting surfaces",
-      "sha256": "e97f13272ef5697520f91e88c2fa6a60ea063fd34d9ee79f59d71ab4931240f4"
+      "sha256": "7e03e4f907c2bc59edc87077535e692d28b2b0618550272d8e3453b607f4d271"
     },
     {
       "id": "economy-statement-runtime",
@@ -6503,7 +6503,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Wide paginated in-frame account statement",
-      "sha256": "56d9bd99a45dd5457b95ce32f5acedc68194d745186493590e8967e5c1874a26"
+      "sha256": "a1746a8db78cf44c8f5daf7f09951fbbd8964c7e4609bc4b1a42a4368239fca1"
     },
     {
       "id": "family-premium-runtime",
@@ -6521,7 +6521,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-requested wide cobalt Games presentation.",
-      "sha256": "c16f273977cffd4e4e3379cf39f142d1c16002d8e25a5ded2376849bbeac6165"
+      "sha256": "ca1cf44be2b66fe6bfbf58d2ad138d5d9dafe3b7473e9b289094d511d4961008"
     },
     {
       "id": "solo.premium.renderer",
@@ -6530,7 +6530,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-requested wide cobalt Games presentation.",
-      "sha256": "80801436e20c03f3284fa98a54e59322c563994918649e36c2f1e54548a8e532"
+      "sha256": "0496c83dd08f24fa7506016b92ae91879ebedfe630a1a82b82b96d54a548e7c0"
     },
     {
       "id": "chairisms.presentation",
@@ -6547,7 +6547,7 @@
       "category": "renderer",
       "usage": "Wide weekly honors, portraits and permanent achievement presentation",
       "canonical": true,
-      "sha256": "facca1dab30c9f1ef5b874c1a918b02c226227c9283d6c55f8f0ea5710b77018",
+      "sha256": "66195afea8ab9563c328c41bc5e67128e69accf39246cd4542431c5fcb41246b",
       "status": "OWNER_REVIEW_PENDING"
     },
     {
@@ -6557,7 +6557,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
-      "sha256": "1b0fb7ea9cd75747ee664e1c9e5ec369ab458ba2d05f9dc8092d5b3797e49cf3"
+      "sha256": "a0955c2ebe36526a402b30b5e666de2406875b8633567c0ba21b06814fac0430"
     },
     {
       "id": "onboarding.runtime",
@@ -6566,7 +6566,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
-      "sha256": "e2cc1879317b7e424933b0550fb70430adf8436d1b493063e1741f5ec7e94833"
+      "sha256": "f7ba47fc0738e2fb6399fe17259c463bcabfdff11e59e7ffd843dded6ce052ff"
     },
     {
       "id": "casino.runtime.game_art",
@@ -6574,7 +6574,7 @@
       "category": "runtime.renderer",
       "usage": "Deterministic casino reels, card suits, wheel, dice, coins and tickets",
       "canonical": true,
-      "sha256": "5857093b27babd06e6d15818c2461394488a8cf0221be0e05063ddc6748655ee"
+      "sha256": "c5c690a82622b9e1c550f1535f53612ea608b1f4ea72e9307f166b72608d4686"
     },
     {
       "id": "race.wheelchair.1.source",

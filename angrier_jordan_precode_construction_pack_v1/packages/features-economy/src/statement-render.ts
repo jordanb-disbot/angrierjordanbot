@@ -4,7 +4,7 @@ import type {StatementView} from './types.js';
 let lounge:string|undefined;
 const escape=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const fmt=(n:bigint)=>n.toLocaleString('en-US');
-const text=(x:number,y:number,s:string,size=32,color='#EFF5F2',heading=false)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${heading?'Cinzel':'Poppins'}" font-size="${size}" font-weight="700" fill="${color}">${escape(s)}</text>`;
+const text=(x:number,y:number,s:string,size=32,color='#EFF5F2',heading=false)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="${heading?'Space Grotesk':'Inter'}" font-size="${size}" font-weight="700" fill="${color}">${escape(s)}</text>`;
 const panel=(y:number,h:number,color='#DDB96E')=>`<rect x="30" y="${y}" width="1140" height="${h}" rx="18" fill="url(#glass)" stroke="${color}" stroke-width="2"/><path d="M45 ${y+45}V${y+15}H80M1120 ${y+h-15}H1155V${y+h-45}" stroke="#F2CF86" stroke-width="3" fill="none"/>`;
 /** All statement values remain in the artwork; exact amounts are never abbreviated. */
 export function renderStatement(s:StatementView,page=0,pages=1):string {

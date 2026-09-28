@@ -13,7 +13,7 @@ test('Rules display owner-authored policy with early acknowledgement and no auto
  assert.equal(calls[0][0],'ack');assert.equal(calls[0][1].ephemeral,true);
  const p=calls.at(-1)[1];assert.ok(p.files.length>1&&p.files.length<=10);assert.equal(p.embeds.length,0);assert.equal(p.components.filter(c=>c.toJSON().type===12).length,p.files.length);
  assert.equal(p.components.find(c=>c.toJSON().type===1).toJSON().components[0].custom_id,'onboard:ack_rules');assert.equal(p.content,null);
- for(const section of rules.sections){const pages=rulesSections(section.body);assert.ok(pages.length);for(const page of pages){const svg=renderOnboarding(rules.title,'Read before acknowledging',page);assert.match(svg,/width="1200"/);assert.match(svg,/Poppins/);assert.match(svg,/Cinzel/);assert.doesNotMatch(svg,/intro:|onboard:/);}}
+ for(const section of rules.sections){const pages=rulesSections(section.body);assert.ok(pages.length);for(const page of pages){const svg=renderOnboarding(rules.title,'Read before acknowledging',page);assert.match(svg,/width="1200"/);assert.match(svg,/Inter/);assert.match(svg,/Space Grotesk/);assert.doesNotMatch(svg,/intro:|onboard:/);}}
  assert.match(rules.sections[0].body,/No DOC judgement/);assert.match(rules.sections[1].body,/no needles or IV/);assert.match(rules.sections[2].body,/Server removal/);
 });
 test('Unconfigured role panel acknowledges before reading state and fails compactly',async()=>{
