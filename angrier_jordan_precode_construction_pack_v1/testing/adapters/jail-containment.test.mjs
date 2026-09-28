@@ -26,9 +26,10 @@ async function fixture({acknowledged=true,extraAllow=false,dmFailure=false}={}) 
  }
  function channel(id,type,gated,parentId=null) {
   const overwrites=new Map();if(gated)overwrites.set('folding',{ViewChannel:true});if(extraAllow)overwrites.set('extra',{ViewChannel:true});
-  const c={id,type,parentId,guild,permissionOverwrites:{edit:async(role,p)=>{overwrites.set(role,p);}},isTextBased:()=>type===ChannelType.GuildText,send:async payload=>{notices.push({kind:'channel',id,payload,roles:[...live]});},
-   permissionsFor:m=>{let allowed=!gated;const matches=[...m.roles.cache.keys()].map(id=>overwrites.get(id)).filter(Boolean);if(matches.some(p=>p.ViewChannel===false))allowed=false;if(matches.some(p=>p.ViewChannel===true))allowed=true;return new PermissionsBitField(allowed?P.ViewChannel:0n);}};
-  guild.channels.cache.set(id,c);return c;
+  const c={id,type,parentId,guild,permissionOverwrites:{cache:new Collection(),edit:async(role,p)=>{overwrites.set(role,p);c.permissionOverwrites.cache.set(role,{allow:new PermissionsBitField(p.ViewChannel?P.ViewChannel:0n)});}},isTextBased:()=>type===ChannelType.GuildText,send:async payload=>{notices.push({kind:'channel',id,payload,roles:[...live]});},
+   permissionsFor:m=>{let allowed=!gated;const matches=[...m.roles.cache.keys()].map(id=>overwrites.get(id)).filter(Boolean);if(matches.some(p=>p.ViewChannel===false))allowed=false;if(matches.some(p=>p.ViewChannel===true))allowed=true;if(c.permissionOverwrites.cache.get(m.id)?.allow.has(P.ViewChannel))allowed=true;return new PermissionsBitField(allowed?P.ViewChannel:0n);}};
+  for(const [role,p] of overwrites)c.permissionOverwrites.cache.set(role,{allow:new PermissionsBitField(p.ViewChannel?P.ViewChannel:0n)});
+  c.parent=parentId?guild.channels.cache.get(parentId):null;guild.channels.cache.set(id,c);return c;
  }
  const main=channel('main',ChannelType.GuildText,true),voice=channel('voice',ChannelType.GuildVoice,true),ordinary=channel('ordinary',ChannelType.GuildText,false),jailCategory=channel('jail-category',ChannelType.GuildCategory,false);channel('hotseat',ChannelType.GuildText,false,jailCategory.id);
  const onboarding=new DiscordOnboardingCoordinator(onboardingService,config),coordinator=new DiscordJailCoordinator(service,config,onboarding);
@@ -43,7 +44,8 @@ test('runtime reconciliation keeps the Jail category visible and normal channels
 });
 
 test('containment failure identifies remaining visible channels to staff',async()=>{
- const f=await fixture({extraAllow:true}),replies=[],interaction=f.interaction('send');interaction.editReply=async payload=>replies.push(payload.content);
+ const f=await fixture(),replies=[],interaction=f.interaction('send');interaction.editReply=async payload=>replies.push(payload.content);
+ f.main.permissionOverwrites.cache.set('member',{allow:new PermissionsBitField(P.ViewChannel)});
  await f.coordinator.handleCommand(interaction);
  assert.match(replies[0],/<#main>/);assert.match(replies[0],/other roles and channel overrides/);
  assert.equal(f.live.has('jailed'),false);
@@ -97,8 +99,23 @@ test('failed sentence persistence restores only roles actually removed and remov
  assert.deepEqual([...f.live],['folding']);assert.equal(await f.service.activeModeration('g','member'),null);
 });
 
-test('unrelated explicit role allows still reject confinement and restore Folding Chair safely',async()=>{
+test('conflicting access role is temporarily suspended and durably restored on release',async()=>{
  const f=await fixture({extraAllow:true});await f.coordinator.handleCommand(f.interaction('send'));
+ assert.deepEqual([...f.live],['jailed']);const sentence=await f.service.activeModeration('g','member');assert.deepEqual(sentence.restoration.suspendedRoleIds,['extra']);
+ await f.coordinator.handleCommand(f.interaction('release'));
+ assert.deepEqual([...f.live].sort(),['extra','folding']);
+});
+
+test('conflicting access role is restored after sentence expiry',async()=>{
+ const f=await fixture({extraAllow:true});await f.coordinator.handleCommand(f.interaction('send'));
+ const sentence=await f.service.activeModeration('g','member');f.repo.sentences.get(sentence.id).endsAt=new Date(Date.now()-1000);f.clock.advanceMs(301000);
+ await f.coordinator.handleExpiryJob({guilds:{cache:new Map([['g',f.guild]])}},{sentenceId:sentence.id});
+ assert.deepEqual([...f.live].sort(),['extra','folding']);
+});
+
+test('failed sentence creation rolls back a suspended conflicting access role',async()=>{
+ const f=await fixture({extraAllow:true});f.service.send=async()=>{throw Error('persistence unavailable');};
+ await f.coordinator.handleCommand(f.interaction('send'));
  assert.deepEqual([...f.live].sort(),['extra','folding']);assert.equal(await f.service.activeModeration('g','member'),null);
 });
 
@@ -108,7 +125,8 @@ test('failed durable release restores confinement without granting Folding Chair
 });
 
 for(const mode of ['success','containment failure','delivery failure','config failure'])test('send acknowledges before work: '+mode,async()=>{
- const f=await fixture({extraAllow:mode==='containment failure'}),i=f.interaction('send');let ack=0,edits=[],cards=0;
+ const f=await fixture(),i=f.interaction('send');let ack=0,edits=[],cards=0;
+ if(mode==='containment failure')f.ordinary.permissionOverwrites.cache.set('member',{allow:new PermissionsBitField(P.ViewChannel)});
  i.deferReply=async()=>{ack++;i.deferred=true;};i.reply=async()=>assert.fail('no second initial reply');i.editReply=async p=>{edits.push(p.content);};
  const fetch=f.guild.members.fetch;f.guild.members.fetch=async id=>{assert.equal(ack,1);if(mode==='config failure')throw Error('Unavailable');return fetch(id);};
  f.coordinator.postHotseatCard=async()=>{cards++;if(mode==='delivery failure')throw Error('Discord unavailable');};

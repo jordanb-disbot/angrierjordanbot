@@ -226,7 +226,27 @@ export class DiscordJailCoordinator {
       if (!hotseatId) throw new DomainError('HOTSEAT_NOT_CONFIGURED', 'The Hotseat channel is not configured.');
     stage('normal-channel-containment');
       if(diagnostic){try{const permissions=hotseatId?target.guild.channels.cache.get(hotseatId)?.permissionsFor(target):null;diagnostic.state.hotseatView=permissions?.has(PermissionFlagsBits.ViewChannel)??false;diagnostic.state.hotseatSend=permissions?.has(PermissionFlagsBits.SendMessages)??false;}catch(e){diagnostic.log(e);}}
-      const visible = this.visibleOrdinaryChannels(target, hotseatId);
+      let visible = this.visibleOrdinaryChannels(target, hotseatId);
+      if (visible.size) {
+        const blockingRoles = new Set<string>();
+        for (const channel of visible.values()) {
+          for (const scope of [channel, channel.parent].filter((item): item is GuildBasedChannel => Boolean(item))) {
+            if (!('permissionOverwrites' in scope)) continue;
+            for (const role of target.roles.cache.values()) {
+              if (scope.permissionOverwrites.cache.get(role.id)?.allow.has(PermissionFlagsBits.ViewChannel)) blockingRoles.add(role.id);
+            }
+          }
+        }
+        for (const id of blockingRoles) {
+          const role = target.guild.roles.cache.get(id);
+          if (!role?.editable || role.managed) throw new DomainError('CONFINEMENT_ACCESS_ROLE_UNMANAGEABLE', `Angrier Jordan cannot suspend an access role needed for Hotseat confinement.`);
+        }
+        for (const id of blockingRoles) {
+          target = await target.roles.remove(id, 'Temporary access-role suspension for moderation Hotseat.');
+          removedRoleIds.push(id);
+        }
+        visible = this.visibleOrdinaryChannels(target, hotseatId);
+      }
       if(diagnostic)diagnostic.state.normalContainment=visible.size===0;
       if (visible.size) {
         throw new DomainError('CONFINEMENT_INCOMPLETE', `Hotseat would not fully contain this member. ${visible.size} normal channel(s) remain visible: ${[...visible.keys()].slice(0, 10).map(id => `<#${id}>`).join(', ')}${visible.size > 10 ? ', and more' : ''}. Check their other roles and channel overrides.`);
