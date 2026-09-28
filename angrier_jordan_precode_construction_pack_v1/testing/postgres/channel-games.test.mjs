@@ -13,8 +13,32 @@ test('Channel-game PostgreSQL persistence, concurrency, restoration and automati
  let connected=false;try{try{await db.$connect();connected=true;}catch{assert.fail('Disposable test database connection failed; credentials withheld.');}
  const migration=spawnSync(process.execPath,[require.resolve('prisma/build/index.js'),'migrate','deploy','--schema','packages/database/prisma/schema.prisma'],{env:{...process.env,DATABASE_URL:url.toString()},encoding:'utf8'});assert.equal(migration.status,0,'Isolated migration must succeed.');await db.guild.create({data:{id:'channel',name:'Test Chairs'}});
  let repo=new PrismaChannelGamesRepository(db);const c=(id,userId='a',channelId='count')=>({guildId:'channel',channelId,userId,requestKey:id});
+ await t.test('valid turns persist Channel Games points exactly once without economy writes or routine cards',async()=>{
+  const beforeEconomy=await db.economyTransaction.count();
+  await repo.counting(c('points-count-1','a','points-count'),'1');
+  await repo.counting(c('points-count-1','a','points-count'),'1');
+  await repo.counting(c('points-count-2','b','points-count'),'2');
+  const countA=await db.memberGameStats.findUniqueOrThrow({where:{guildId_userId_gameKey:{guildId:'channel',userId:'a',gameKey:'counting'}}});
+  const countB=await db.memberGameStats.findUniqueOrThrow({where:{guildId_userId_gameKey:{guildId:'channel',userId:'b',gameKey:'counting'}}});
+  assert.equal(countA.metadata.channelPoints,1);assert.equal(countB.metadata.channelPoints,1);
+  await repo.letter(c('points-letter-1','a','points-letter'),'chair',()=>true);
+  await repo.letter(c('points-letter-1','a','points-letter'),'chair',()=>true);
+  const letter=await db.memberGameStats.findUniqueOrThrow({where:{guildId_userId_gameKey:{guildId:'channel',userId:'a',gameKey:'last_letter'}}});
+  assert.equal(letter.metadata.channelPoints,1);
+  assert.equal(await db.scheduledJob.count({where:{guildId:'channel',jobType:'channelgame.announce'}}),0);
+  assert.equal(await db.economyTransaction.count(),beforeEconomy);
+ });
+ await t.test('invalid Last Letter retains its one-point penalty and Counting reset awards nothing',async()=>{
+  await repo.letter(c('points-letter-invalid','b','points-letter'),'apple',()=>true);
+  const letter=await db.memberGameStats.findUniqueOrThrow({where:{guildId_userId_gameKey:{guildId:'channel',userId:'b',gameKey:'last_letter'}}});
+  assert.equal(letter.metadata.channelPoints,-1);
+  await repo.counting(c('points-count-invalid','a','points-count'),'5');
+  const count=await db.memberGameStats.findUniqueOrThrow({where:{guildId_userId_gameKey:{guildId:'channel',userId:'a',gameKey:'counting'}}});
+  assert.equal(count.metadata.channelPoints,1);
+  assert.equal((await repo.get('channel','points-count','counting')).state.count,'0');
+ });
  await t.test('duplicate messages update exactly once after restart',async()=>{await Promise.all([repo.counting(c('1'),'1'),repo.counting(c('1'),'1')]);repo=new PrismaChannelGamesRepository(db);await repo.counting(c('1'),'1');assert.equal((await repo.get('channel','count','counting')).state.count,'1');await assert.rejects(()=>repo.counting(c('1'),'2'),{code:'REPLAY_MISMATCH'});});
- await t.test('same-number racing posts serialize into one valid turn then a visible reset',async()=>{await Promise.all([repo.counting(c('2a','b'),'2'),repo.counting(c('2b','c'),'2')]);const row=await repo.get('channel','count','counting');assert.equal(row.state.count,'0');assert.equal(row.state.restore.count,'2');assert.equal(await db.scheduledJob.count({where:{jobType:'channelgame.announce'}}),1);});
+ await t.test('same-number racing posts serialize into one valid turn then a visible reset',async()=>{const before=await db.scheduledJob.count({where:{jobType:'channelgame.announce'}});await Promise.all([repo.counting(c('2a','b'),'2'),repo.counting(c('2b','c'),'2')]);const row=await repo.get('channel','count','counting');assert.equal(row.state.count,'0');assert.equal(row.state.restore.count,'2');assert.equal(await db.scheduledJob.count({where:{jobType:'channelgame.announce'}}),before+1);});
  await t.test('restore is staff-only, audited once and rejects stale controls',async()=>{const before=await repo.get('channel','count','counting');await assert.rejects(()=>repo.restore(c('restore-bad'),before.version,false),{code:'COUNTING_STAFF'});await Promise.all([repo.restore(c('restore'),before.version,true),repo.restore(c('restore'),before.version,true)]);assert.equal((await repo.get('channel','count','counting')).state.count,'2');assert.equal(await db.auditEvent.count({where:{action:'counting.restore'}}),1);await assert.rejects(()=>repo.restore(c('stale'),before.version,true),{code:'COUNTING_CHANGED'});});
  await t.test('milestone award and announcement are atomic and do not repeat on replay',async()=>{await db.channelGameState.update({where:{guildId_channelId_gameKey:{guildId:'channel',channelId:'count',gameKey:'counting'}},data:{state:{count:'99',lastUserId:'b',awardedThrough:'0'}}});await Promise.all([repo.counting(c('100'),'100'),repo.counting(c('100'),'100')]);assert.equal((await db.memberGameStats.findUnique({where:{guildId_userId_gameKey:{guildId:'channel',userId:'a',gameKey:'counting'}}})).wins,1);assert.equal((await repo.get('channel','count','counting')).state.count,'100');});
  await t.test('last-letter duplicate delivery cannot double-score or double-win',async()=>{await db.channelGameState.create({data:{guildId:'channel',channelId:'letter',gameKey:'last_letter',state:{round:3,lastWord:null,lastUserId:null,used:[],scores:{a:49}}}});await Promise.all([repo.letter(c('word','a','letter'),'chair',()=>true),repo.letter(c('word','a','letter'),'chair',()=>true)]);assert.equal((await db.memberGameStats.findUnique({where:{guildId_userId_gameKey:{guildId:'channel',userId:'a',gameKey:'last_letter'}}})).wins,1);const state=(await repo.get('channel','letter','last_letter')).state;assert.equal(state.round,4);assert.deepEqual(state.scores,{});assert.deepEqual(state.used,[]);});
