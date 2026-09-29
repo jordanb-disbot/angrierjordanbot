@@ -14,6 +14,7 @@ import {rasterizeSvg,rasterizeTimeline} from '../../../../packages/renderer/src/
 import {AnimationAssets} from '../../../../packages/renderer/src/animation-assets.js';
 import {eventWindow,waitingCountdown} from './event-window.js';
 import {funChannelAllowed} from './fun-channels.js';
+import {interactiveGameChannelAllowed} from './interactive-game-channels.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
 function raceWaitingText(view:RaceView,now:number){
@@ -58,15 +59,15 @@ export class DiscordEventsCoordinator {
  constructor(private readonly repo:PrismaEventsRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  async policy(guildId:string):Promise<EventPolicy>{const [min,max]=await Promise.all(['events.min_bet','events.max_bet'].map(key=>this.config.get(guildId,key)));return{minBet:BigInt(Number(min)),maxBet:BigInt(Number(max))};}
  private async guard(guildId:string,userId:string,channelId:string,kind='race'){
-  const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):this.config.get(guildId,'channels.main_chat').then(channel=>channel===channelId),this.eligible(guildId,userId)]);
+  const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):interactiveGameChannelAllowed(this.config,guildId,channelId),this.eligible(guildId,userId)]);
   if(enabled!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');
-  if(!channelAllowed)throw new DomainError('EVENT_CHANNEL',kind==='fight'?'Use Fight in an approved channel.':'Use events in the configured main chat.');
+  if(!channelAllowed)throw new DomainError('EVENT_CHANNEL',kind==='fight'?'Use Fight in an approved channel.':'Use events in Gaming Chair or Bots Don’t Sit.');
   if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('EVENT_RESTRICTED','Event controls are unavailable while restricted.');
  }
  async message(message:Message){
   if(message.content.trim()!=='!race'||message.author.bot||!message.guildId||!message.guild)return;
   if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
-  if(message.channelId!==await this.config.get(message.guildId,'channels.main_chat'))return;
+  if(!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId))return;
   // Removal precedes permission evaluation, including the silent unauthorized path.
   try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;

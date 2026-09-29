@@ -7,6 +7,7 @@ import {renderPvp,renderPrivatePvp,renderPvpNotice,pvpDescription,PVP_RULES} fro
 import {memberArt} from './member-art.js';
 import type {PvpPortraits} from '../../../../packages/features-pvp/src/render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
+import {interactiveGameChannelAllowed} from './interactive-game-channels.js';
 export const PVP_COMMANDS=new Set<string>(Object.keys(gameNames));
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export class DiscordPvpCoordinator {
@@ -21,7 +22,7 @@ export class DiscordPvpCoordinator {
  constructor(private readonly repo:PrismaPvpRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  async policy(guildId:string):Promise<PvpPolicy>{const [enabled,min,max]=await Promise.all(['features.pvp','pvp.min_wager','pvp.max_wager'].map(key=>this.config.get(guildId,key)));return{enabled:enabled===true,minWager:BigInt(Number(min)),maxWager:BigInt(Number(max))};}
  private async member(guild:Guild,userId:string,channelId:string){const member=await guild.members.fetch({user:userId,force:true});if(member.user.bot||member.isCommunicationDisabled()||!member.permissionsIn(channelId).has(PermissionFlagsBits.ViewChannel|PermissionFlagsBits.SendMessages)||!await this.eligible(guild.id,userId))throw new DomainError('PVP_RESTRICTED','Both members need access to this channel and must be eligible to play.');return member;}
- private async guard(i:Interaction){if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use skill games in the server.');if(await this.config.get(i.guildId,'features.pvp')!==true)throw new DomainError('PVP_DISABLED','Skill games are not enabled yet.');if(i.channelId!==await this.config.get(i.guildId,'channels.games_channel'))throw new DomainError('PVP_CHANNEL','Use the configured games channel.');const capabilities:CapabilityMap=CAPABILITY_MATRIX.capabilities;if(!new PermissionEngine({'pvp.play':capabilities['pvp.play']??[]}).can('member','pvp.play'))throw new DomainError('PVP_RESTRICTED','Skill games are unavailable.');await this.member(i.guild,i.user.id,i.channelId);}
+ private async guard(i:Interaction){if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use skill games in the server.');if(await this.config.get(i.guildId,'features.pvp')!==true)throw new DomainError('PVP_DISABLED','Skill games are not enabled yet.');if(!await interactiveGameChannelAllowed(this.config,i.guildId,i.channelId))throw new DomainError('PVP_CHANNEL','Use skill games in Gaming Chair or Bots Don’t Sit.');const capabilities:CapabilityMap=CAPABILITY_MATRIX.capabilities;if(!new PermissionEngine({'pvp.play':capabilities['pvp.play']??[]}).can('member','pvp.play'))throw new DomainError('PVP_RESTRICTED','Skill games are unavailable.');await this.member(i.guild,i.user.id,i.channelId);}
  async start(i:ChatInputCommandInteraction){return this.handle(i);}
  async handle(i:Interaction){let created:string|undefined,updateAck=false;try{
   // Acknowledge before eligibility/config/database work. Modal launch buttons cannot be deferred.

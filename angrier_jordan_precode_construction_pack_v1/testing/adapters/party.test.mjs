@@ -5,12 +5,12 @@ import {renderParty} from '../../dist/packages/features-party/src/render.js';
 const forbidden=new Proxy({},{get:()=>()=>{throw Error('Repository not authorized');}}),config=overrides=>({get:async(_g,k)=>({...{'features.party_games':true,'channels.games_channel':'games'},...overrides})[k]});
 const i=()=>({guildId:'g',guild:{},channelId:'games',user:{id:'u'},id:'request',commandName:'wwyd',calls:[],options:{getString:()=>null},isChatInputCommand:()=>true,reply:async function(p){this.calls.push(p)},deferReply:async function(){this.deferred=true;},editReply:async function(p){this.calls.push(p)},isModalSubmit:()=>false,isButton:()=>false});
 test('party and WYR guard flags, configured channel and containment before reads',async()=>{for(const C of [DiscordPartyCoordinator,DiscordWyrCoordinator])for(const[o,eligible,pattern]of [[{'features.party_games':false},true,/not enabled/],[{'channels.games_channel':'other'},true,/games channel/],[{},false,/restricted/]]){const x=i(),coordinator=new C(forbidden,config(o),async()=>eligible);await(C===DiscordPartyCoordinator?coordinator.handle(x):coordinator.handleSlash(x));assert.match(x.calls[0].content,pattern);}});
-test('One Word Story uses its dedicated channel while other party games remain in the main games channel',async()=>{
+test('One Word Story uses either shared game channel and retains its dedicated channel',async()=>{
  const cfg=config({'channels.one_word_story_channel':'reading'}),starts=[],repo={start:async(_context,options)=>{starts.push(options.game);return{sessionId:'story'};}};
  const story={...i(),channelId:'reading',commandName:'onewordstory',options:{getInteger:()=>20}};
  await new DiscordPartyCoordinator(repo,cfg,async()=>true).handle(story);
  assert.deepEqual(starts,['onewordstory']);assert.match(story.calls[0].content,/ready/);
- const wrong={...i(),commandName:'onewordstory',options:{getInteger:()=>20}};
+ const wrong={...i(),channelId:'other',commandName:'onewordstory',options:{getInteger:()=>20}};
  await new DiscordPartyCoordinator(forbidden,cfg,async()=>true).handle(wrong);
  assert.match(wrong.calls[0].content,/games channel/);
  const other={...i(),channelId:'reading',commandName:'wwyd'};

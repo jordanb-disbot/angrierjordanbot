@@ -19,16 +19,16 @@ test('Fight and selected party games allow their primary and scoped secondary ch
  assert.equal(await funChannelAllowed(config,GUILD,FUN,'party'),false);
 });
 
-test('Fight, FMK, WWYD, Truth or Dare, and WYR accept secondary channel; unrelated party game does not',async()=>{
- const values={'features.fight':true,'features.party_games':true,'channels.main_chat':MAIN_CHAT,'channels.games_channel':GAMES,'fight.additional_channel_ids':[FUN],'party_games.additional_channel_ids':[FUN]};
+test('Interactive games accept Gaming Chair and Bots Don’t Sit while rejecting other channels',async()=>{
+ const values={'features.fight':true,'features.party_games':true,'channels.main_chat':MAIN_CHAT,'channels.games_channel':GAMES,'channels.bot_channel':FUN,'fight.additional_channel_ids':[FUN],'party_games.additional_channel_ids':[FUN]};
  const config={get:async(_g,key)=>values[key]};
  const eligible=async()=>true;
  const fight=new DiscordEventsCoordinator({},config,eligible),party=new DiscordPartyCoordinator({},config,eligible),wyr=new DiscordWyrCoordinator({},config,eligible);
  await fight.guard(GUILD,'member',FUN,'fight');
  for(const game of ['fmk','wwyd','truthordare'])await party.guard(GUILD,'member',FUN,game);
  await wyr.guard({guildId:GUILD,guild:{},channelId:FUN,user:{id:'member'}});
- await assert.rejects(()=>party.guard(GUILD,'member',FUN,'finishsentence'),/approved games channel/);
- await assert.rejects(()=>fight.guard(GUILD,'member',GAMES,'fight'),/approved channel/);
+ await party.guard(GUILD,'member',FUN,'finishsentence');await fight.guard(GUILD,'member',GAMES,'fight');
+ await assert.rejects(()=>party.guard(GUILD,'member','1537683580380123216','finishsentence'),/approved games channel/);
 });
 
 function fixture(){

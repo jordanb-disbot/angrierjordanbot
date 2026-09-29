@@ -11,6 +11,7 @@ import {validateBuiltinRoleMap,validateCustomSpecialCommands,mayInvokeSpecial,ty
 import {renderLine,lineSequence} from '../../../../packages/features-special/src/render.js';
 import {rasterizeSvg,rasterizeSequence,rasterizeTimeline} from '../../../../packages/renderer/src/raster.js';
 import builtinCallouts from '../../../../packages/features-special/content/builtin_callouts.json' with {type:'json'};
+import {interactiveGameChannelAllowed} from './interactive-game-channels.js';
 export const specialDeliveryUrl=(marker:string)=>'https://discord.com/#'+createHash('sha256').update(marker).digest('hex');
 export class DiscordSpecialCoordinator {
  private readonly refreshes=new Map<string,Promise<void>>();
@@ -31,9 +32,9 @@ export class DiscordSpecialCoordinator {
  private sweeping=false;
  constructor(private readonly repo:PrismaSpecialRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  private async guard(guildId:string,userId:string,channelId:string,line=true){
-  const [special,enabled,lineEnabled,channel,eligible]=await Promise.all([this.config.get(guildId,'features.special_commands'),this.config.get(guildId,'special_commands.enabled'),line?this.config.get(guildId,'features.line'):true,this.config.get(guildId,'channels.main_chat'),this.eligible(guildId,userId)]);
+  const [special,enabled,lineEnabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.special_commands'),this.config.get(guildId,'special_commands.enabled'),line?this.config.get(guildId,'features.line'):true,interactiveGameChannelAllowed(this.config,guildId,channelId),this.eligible(guildId,userId)]);
   if(special!==true||enabled!==true||lineEnabled!==true)throw new DomainError('SPECIAL_DISABLED','Special Commands are not enabled yet.');
-  if(channelId!==channel)throw new DomainError('SPECIAL_CHANNEL','Use Special Commands in the configured main chat.');
+  if(!channelAllowed)throw new DomainError('SPECIAL_CHANNEL','Use Special Commands in Gaming Chair or Bots Don’t Sit.');
   if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('SPECIAL_RESTRICTED','Special Command controls are unavailable while restricted.');
  }
  async definitions(guildId:string):Promise<SpecialCommand[]>{

@@ -6,6 +6,7 @@ import {soloDescription,SOLO_RULES,SOLO_TITLES} from '../../../../packages/featu
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {renderPremiumSolo,type SoloPortrait} from '../../../../packages/features-solo/src/premium-render.js';
 import {memberArt} from './member-art.js';
+import {interactiveGameChannelAllowed} from './interactive-game-channels.js';
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export const SOLO_COMMANDS=new Set<string>(SOLO_GAMES);
 export function parseSoloCell(raw:string,size:number){if(!/^\d{1,2}$/.test(raw.trim()))throw new DomainError('SOLO_CELL','Enter the numbered cell shown on the board.');const cell=Number(raw)-1;if(cell<0||cell>=size*size)throw new DomainError('SOLO_CELL','Choose a numbered cell on this board.');return cell;}
@@ -23,11 +24,11 @@ export class DiscordSoloCoordinator {
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use solo games in the server.');
   const modalButton=i.isButton?.()&&['guess','reveal','flag'].includes(i.customId.split(':')[1]??'');
   updating=!!(i.isModalSubmit?.()&&i.isFromMessage()||i.isButton?.()&&i.customId.split(':')[1]==='quit');
-  if(!modalButton){if(updating)await (i as ButtonInteraction|ModalSubmitInteraction).deferUpdate();else if(i.deferReply)await i.deferReply(i.isButton?.()&&i.customId.split(':')[1]==='rules'?{ephemeral:true}:{});}
-  const [enabled,memberEligible,configured]=await Promise.all([this.config.get(i.guildId,'features.solo_games'),this.eligible(i.guildId,i.user.id),this.config.get(i.guildId,'channels.games_channel')]);
+  if(!modalButton){if(updating)await (i as ButtonInteraction|ModalSubmitInteraction).deferUpdate();else if(i.deferReply)await i.deferReply({ephemeral:true});}
+  const [enabled,memberEligible,channelAllowed]=await Promise.all([this.config.get(i.guildId,'features.solo_games'),this.eligible(i.guildId,i.user.id),interactiveGameChannelAllowed(this.config,i.guildId,i.channelId)]);
   if(enabled!==true)throw new DomainError('SOLO_DISABLED','Solo games are not enabled yet.');
   if(!memberEligible)throw new DomainError('SOLO_RESTRICTED','Solo games are unavailable while restricted.');
-  if(typeof configured!=='string'||!configured||configured!==i.channelId)throw new DomainError('SOLO_CHANNEL','Use the configured games channel.');
+  if(!channelAllowed)throw new DomainError('SOLO_CHANNEL','Use solo games in Gaming Chair or Bots Don’t Sit.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':'),c:SoloContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
   if(parts.length&&parts[2]!==i.user.id)throw new DomainError('SOLO_OWNER','Only the member who started this puzzle can use these controls.');
   if(i.isButton()&&parts[1]==='rules'){const view=await this.repo.view(parts[3]!);if(view.guildId!==i.guildId||view.channelId!==i.channelId||view.ownerId!==i.user.id)throw new DomainError('SOLO_MISSING','Use the original puzzle message.');await i.editReply({content:SOLO_RULES[view.puzzle.game]+'\nRounds expire at the shown time. '+(view.reward==='0'?'This round has no payout.':'Wins pay a small reward within a shared rolling 24-hour cap.')+' Play Again creates a new puzzle.'});return;}

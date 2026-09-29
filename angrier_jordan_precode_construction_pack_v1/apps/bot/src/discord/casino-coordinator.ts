@@ -1,7 +1,6 @@
 import {createHash} from 'node:crypto';
 import {displayFrames,wideDisplay,type DisplayFrame,type DisplayControl} from './wide-display.js';
 import {memberArt} from './member-art.js';
-import {DisposableCardLifecycle} from './card-lifecycle.js';
 import type {CasinoVisual} from '../../../../packages/features-casino/src/game-art.js';
 import {renderCasinoResult} from '../../../../packages/features-casino/src/render.js';
 import casinoHelp from '../../../../packages/content/help/casino.json' with {type:'json'};
@@ -10,11 +9,11 @@ import {DomainError,PermissionEngine,type ConfigService} from '../../../../packa
 import {CAPABILITY_MATRIX} from '../../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaCasinoRepository,type CasinoContext,type CasinoPolicy} from '../../../../packages/features-casino/src/prisma-repository.js';
 import {PrismaLotteryRepository} from '../../../../packages/features-casino/src/lottery-repository.js';
+import {interactiveGameChannelAllowed} from './interactive-game-channels.js';
 import {cardLabel,handValue,type CasinoGame,type ChairSymbol} from '../../../../packages/features-casino/src/domain.js';
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export const CASINO_COMMANDS=new Set(['casino','lottery']);
 export class DiscordCasinoCoordinator {
- private readonly settledCards=new DisposableCardLifecycle(90_000);
  constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly onRoundClosed?:(guildId:string,userId:string,sessionId:string)=>Promise<void>){}
  private identities=new Map<string,{expires:number;value:ReturnType<typeof memberArt>}>();
  private identity(client:Client,guildId:string,userId:string){const key=guildId+':'+userId,old=this.identities.get(key);if(old&&old.expires>Date.now())return old.value;const value=memberArt(client,guildId,userId);this.identities.set(key,{expires:Date.now()+60000,value});if(this.identities.size>64)this.identities.delete(this.identities.keys().next().value!);return value;}
@@ -35,11 +34,11 @@ export class DiscordCasinoCoordinator {
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use casino controls in the server.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':'),isLottery=i.isChatInputCommand()?i.commandName==='lottery':(['lottery','tickets'].includes(parts[1]??'')||(parts[1]==='help'&&parts[3]==='lottery'));
   const opensModal=i.isChatInputCommand()&&i.commandName==='casino'||i.isButton()&&parts[1]==='lottery';
-  if(!opensModal){if(i.isButton()&&parts[1]==='act'||i.isModalSubmit()&&isLottery&&i.isFromMessage())await i.deferUpdate();else await i.deferReply({ephemeral:isLottery||parts[1]==='help'});}
+  if(!opensModal){if(i.isButton()&&parts[1]==='act'||i.isModalSubmit()&&isLottery&&i.isFromMessage())await i.deferUpdate();else await i.deferReply({ephemeral:true});}
   if(await this.config.get(i.guildId,isLottery?'features.lottery':'features.casino')!==true)throw new DomainError('CASINO_DISABLED',`${isLottery?'Lottery':'Casino'} controls are not enabled yet.`);
   const capability=isLottery?'lottery.use':'casino.use';if(!new PermissionEngine({[capability]:CAPABILITY_MATRIX.capabilities[capability]}).can('member',capability)||!await this.eligible(i.guildId,i.user.id))throw new DomainError('CASINO_RESTRICTED','Wager controls are unavailable while restricted.');
   if(parts.length&&parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own wager controls.');
-  const channel=await this.config.get(i.guildId,'channels.bot_channel');if(channel&&channel!==i.channelId)throw new DomainError('CASINO_CHANNEL','Use casino and lottery commands in the configured bot channel.');
+  if(!await interactiveGameChannelAllowed(this.config,i.guildId,i.channelId))throw new DomainError('CASINO_CHANNEL','Use casino and lottery commands in Gaming Chair or Bots Don’t Sit.');
   validated=true;
   if(i.isButton()&&parts[1]==='help'){
    const game=parts[3] as keyof typeof casinoHelp.games;
@@ -67,7 +66,7 @@ export class DiscordCasinoCoordinator {
   }else if(i.isButton()&&parts[1]==='act')id=(await this.casino.action(c,parts[3]!,Number(parts[4]),parts[5] as 'hit'|'stand'|'double'|'split',policy)).sessionId;
   else throw new DomainError('CASINO_CONTROL','Open a casino game to continue.');
   const message=await i.editReply(await this.roundPayload(id,i.client,i.isButton()&&i.customId.startsWith('casino:act:')?i.message?.attachments?.values():undefined));await this.casino.linkMessage(id,i.guildId,i.user.id,message.id);
-  const round=await this.casino.get(id);if(round.state==='CLOSED'){await this.onRoundClosed?.(round.guildId,round.ownerUserId!,round.id);if(typeof message.delete==='function')await this.settledCards.track(i.guildId+':'+i.channelId+':'+i.user.id+':casino',message);}
+  const round=await this.casino.get(id);if(round.state==='CLOSED')await this.onRoundClosed?.(round.guildId,round.ownerUserId!,round.id);
  }catch(error){const content=error instanceof DomainError?error.message:'The wager could not be completed. Your saved round can be checked before retrying.';if(i.deferred){if(!validated){if(!(i.isButton()&&i.customId.startsWith('casino:act:')||i.isModalSubmit()&&i.isFromMessage()))await i.deleteReply();await i.followUp({ephemeral:true,content});}else if(i.isButton()&&i.customId.startsWith('casino:act:'))await i.followUp({ephemeral:true,content});else await i.editReply(await this.presentation({title:'Wager unavailable',subtitle:'No new result confirmed',amount:'',amountLabel:'',details:[{label:'What happened',value:content}]}));}else await i.reply({ephemeral:true,content});}}
  private async roundPayload(id:string,client?:Client,existing?:Iterable<{id:string;name:string}>){
   const round=await this.casino.get(id),policy=await this.policy(round.guildId),ownerId=round.ownerUserId!,d=round.data,closed=round.state==='CLOSED';
