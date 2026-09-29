@@ -10,12 +10,16 @@ export async function enableProductionSocialChannel({db,config,get,write=console
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
  const channel=await get(`/channels/${SOCIAL_CHANNEL}`);
  check(channel?.id===SOCIAL_CHANNEL&&channel.guild_id===GUILD&&channel.type===0,'SOCIAL_CHANNEL_INVALID');
- check(config.definition('social.additional_channel_ids')?.type==='json','SOCIAL_CHANNEL_SCHEMA_INVALID');
+ check(config.definition('social.additional_channel_ids')?.type==='json'&&config.definition('features.social')?.type==='boolean','SOCIAL_CHANNEL_SCHEMA_INVALID');
+ const feature=await config.getWithMetadata(GUILD,'features.social');
+ check(typeof feature.value==='boolean','SOCIAL_FEATURE_SETTING_INVALID');
+ if(feature.value!==true)await config.set({guildId:GUILD,key:'features.social',value:true,expectedVersion:feature.version,source:'operator.production-social-channel',requestId:randomUUID()});
  const current=await config.getWithMetadata(GUILD,'social.additional_channel_ids');
  check(Array.isArray(current.value)&&current.value.every(id=>typeof id==='string'&&/^\d{17,20}$/.test(id)),'SOCIAL_CHANNEL_SETTING_INVALID');
  const expected=[...new Set([...current.value,SOCIAL_CHANNEL])];
  if(!isDeepStrictEqual(current.value,expected))await config.set({guildId:GUILD,key:'social.additional_channel_ids',value:expected,expectedVersion:current.version,source:'operator.production-social-channel',requestId:randomUUID()});
  check(isDeepStrictEqual(await config.get(GUILD,'social.additional_channel_ids'),expected),'SOCIAL_CHANNEL_VERIFY_FAILED');
+ write('PASS: features.social=true.');
  write(`PASS: social.additional_channel_ids includes ${SOCIAL_CHANNEL}.`);
  write('PASS: production guild, private Railway database, and social text channel verified.');
  write('PASS: existing social channels and unrelated settings preserved.');
