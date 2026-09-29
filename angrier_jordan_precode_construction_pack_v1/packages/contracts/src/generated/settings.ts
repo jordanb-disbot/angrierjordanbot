@@ -4598,6 +4598,24 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
+    "key": "social.additional_channel_ids",
+    "section": "social",
+    "type": "json",
+    "default": [],
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Additional approved social-reaction channels alongside main chat. At most 10 unique Discord channel IDs.",
+    "risk": "high",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "channels.main_chat"
+    ]
+  },
+  {
     "key": "social.throttle_seconds",
     "section": "social",
     "type": "integer",

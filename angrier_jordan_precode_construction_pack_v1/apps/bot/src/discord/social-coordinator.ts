@@ -20,11 +20,12 @@ export function socialActionChoices(query:string){const needle=normalizeSearch(q
 export class DiscordSocialCoordinator {
  private readonly temporaryCards=new DisposableCardLifecycle(300_000);
  constructor(private readonly repo:PrismaSocialRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
+ private async socialChannel(guildId:string,channelId:string){const [main,extra]=await Promise.all([this.config.get(guildId,'channels.main_chat'),this.config.get(guildId,'social.additional_channel_ids')]);if(extra!==undefined&&(!Array.isArray(extra)||extra.length>10||extra.some(id=>typeof id!=='string'||!/^\d{17,20}$/.test(id))||new Set(extra).size!==extra.length))throw new DomainError('SOCIAL_CONFIG','Social channels are not configured correctly.');return channelId===main||Array.isArray(extra)&&extra.includes(channelId);}
  private async haikuChannel(guildId:string,channelId:string){const [main,extra]=await Promise.all([this.config.get(guildId,'channels.main_chat'),this.config.get(guildId,'haiku.additional_channel_ids')]);if(extra!==undefined&&(!Array.isArray(extra)||extra.length>20||extra.some(id=>typeof id!=='string'||!/^\d{17,20}$/.test(id))||new Set(extra).size!==extra.length))throw new DomainError('HAIKU_CONFIG','Haiku channels are not configured correctly.');return channelId===main||Array.isArray(extra)&&extra.includes(channelId);}
  private async policy(guildId:string):Promise<SocialPolicy>{const p={throttleSeconds:Number(await this.config.get(guildId,'social.throttle_seconds')),roastBackSeconds:Number(await this.config.get(guildId,'social.roast_back_seconds'))};validateSocialPolicy(p);return p;}
  private async guard(guildId:string,userId:string,channelId:string,haiku=false){
   if(await this.config.get(guildId,haiku?'features.haiku':'features.social')!==true)throw new DomainError('SOCIAL_DISABLED',haiku?'Haiku is not enabled yet.':'Social commands are not enabled yet.');
-  if(!haiku){const channel=await this.config.get(guildId,'channels.main_chat');if(channelId!==channel)throw new DomainError('SOCIAL_CHANNEL',typeof channel==='string'?`Use social commands in <#${channel}>.`:'The main chat channel has not been configured.');}
+  if(!haiku&&!await this.socialChannel(guildId,channelId)){const channel=await this.config.get(guildId,'channels.main_chat');throw new DomainError('SOCIAL_CHANNEL',typeof channel==='string'?`Use social commands in <#${channel}>.`:'The main chat channel has not been configured.');}
   if(!await this.eligible(guildId,userId))throw new DomainError('SOCIAL_RESTRICTED','Social commands are unavailable while restricted.');
  }
  private async member(guild:Guild,userId:string){const member=await guild.members.fetch({user:userId,force:true});if(member.user.bot||!await this.eligible(guild.id,userId))throw new DomainError('SOCIAL_MEMBER','Choose an eligible server member.');return member;}
@@ -72,7 +73,7 @@ export class DiscordSocialCoordinator {
  }
  private async canPublish(client:Client,p:SocialJob){
   const haiku=p.action==='haiku.passive';if(await this.config.get(p.guildId,haiku?'features.haiku':'features.social')!==true)throw new DomainError('SOCIAL_DISABLED','Social publication remains disabled.');
-  if(haiku?!await this.haikuChannel(p.guildId,p.channelId):p.channelId!==await this.config.get(p.guildId,'channels.main_chat'))return false;
+  if(haiku?!await this.haikuChannel(p.guildId,p.channelId):!await this.socialChannel(p.guildId,p.channelId))return false;
   const guild=await client.guilds.fetch(p.guildId);
   try{await this.member(guild,p.actorId);if(p.targetId)await this.member(guild,p.targetId);}catch{return false;}
   return p.action!=='roast'||Boolean(p.targetId&&await this.repo.roastAllowed(p.guildId,p.targetId));

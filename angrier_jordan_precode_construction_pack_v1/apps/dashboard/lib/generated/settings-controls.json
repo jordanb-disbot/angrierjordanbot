@@ -1,5 +1,5 @@
 {
-  "count": 263,
+  "count": 264,
   "controls": [
     {
       "key": "server.timezone",
@@ -4853,6 +4853,25 @@
       "mutable": true,
       "dashboardWrite": "draft",
       "dependsOn": []
+    },
+    {
+      "key": "social.additional_channel_ids",
+      "section": "social",
+      "label": "Additional Channel Ids",
+      "description": "Additional approved social-reaction channels alongside main chat. At most 10 unique Discord channel IDs.",
+      "kind": "json-editor",
+      "defaultValue": [],
+      "risk": "high",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "channels.main_chat"
+      ]
     },
     {
       "key": "social.throttle_seconds",

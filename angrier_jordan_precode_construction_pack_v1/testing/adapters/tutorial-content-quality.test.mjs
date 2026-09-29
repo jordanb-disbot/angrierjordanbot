@@ -7,7 +7,7 @@ const authored=JSON.parse(readFileSync(new URL('../../packages/content/help/tuto
 const byId=id=>{const c=COMMANDS.find(c=>c.id===id);assert.ok(c,id);return lessonCopy(c);};
 const combined=id=>{const c=byId(id);return[c.purpose,c.fields,...c.steps,c.completion].join('\n');};
 test('every authored lesson has four useful teaching pages and a concrete next action',()=>{
- const selected=COMMANDS.filter(hasAuthoredLesson);assert.equal(selected.length,101);
+ const selected=COMMANDS.filter(hasAuthoredLesson);assert.equal(selected.length,102);
  for(const c of selected){const copy=lessonCopy(c);for(const [page,value]of Object.entries({purpose:copy.purpose,inputs:copy.fields,workflow:copy.steps.join('\n'),completion:copy.completion})){assert.ok(value.trim().length>=80,`${c.id}: ${page} needs usable detail`);assert.doesNotMatch(value,/not been authored|Quick reference for|Follow its displayed controls where offered|No inputs are documented|has not been authored|placeholder/i,`${c.id}: ${page}`);}assert.ok(copy.steps.length>=3,c.id);assert.equal(new Set(copy.steps).size,copy.steps.length,c.id);assert.match(copy.completion,/Next:/,c.id);assert.ok(copy.example.startsWith(c.registered),c.id);for(const field of c.options.filter(o=>o.required))assert.ok(copy.example.includes(field.name+':'),c.id+': example missing '+field.name);}
  assert.equal(Object.keys(authored).length,selected.length);
 });
@@ -23,8 +23,13 @@ test('roles lesson teaches all seven real categories, selection modes, removal a
 test('immediate item mutations are taught accurately rather than inventing confirmations',()=>{
  assert.match(combined('unlock_all'),/immediately/);assert.match(combined('unlock_all'),/no extra confirmation/);assert.doesNotMatch(combined('unlock_all'),/Confirm Unlock|Cancel keeps/);
  assert.match(combined('repair'),/Selecting a tier immediately pays/);assert.match(combined('repair'),/randomized/);
- assert.match(combined('craft'),/selection|Selecting|select a recipe/);assert.match(combined('craft'),/no separate confirmation/);
+ assert.match(combined('craft'),/selection|Selecting|select a recipe/i);assert.match(combined('craft'),/no separate confirmation/);
  assert.match(combined('shop'),/Submitting that form makes the purchase/);
+});
+test('economy, crafting and family each provide a beginner-focused first path',()=>{
+ assert.match(combined('daily'),/Wallet|Bank/);assert.match(combined('daily'),/\/daily/);
+ assert.match(combined('craft'),/materials|workshop/i);assert.match(combined('craft'),/may return scrap/i);
+ assert.match(combined('family_marry'),/ring|proposal/i);assert.match(combined('family_marry'),/consent|decision|accept/i);
 });
 test('party lessons distinguish WWYD authored buttons from sentence contributions',()=>{
  const w=combined('wwyd'),f=combined('finish');assert.match(w,/starts in voting/);assert.match(w,/response buttons/);assert.doesNotMatch(w,/Submit \/ Revise/);assert.match(f,/Submit \/ Revise/);assert.match(f,/anonymous contributions/);

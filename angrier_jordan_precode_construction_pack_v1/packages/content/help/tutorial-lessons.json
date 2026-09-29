@@ -183,14 +183,15 @@
       "completion": "You can choose a damaged tool, compare tiers and understand the randomized repair result. Next: inspect /inventory before buying another repair."
     },
     "craft": {
-      "purpose": "Use learned, account-bound recipes and available materials to attempt a crafted item. Crafting may fail, consume some materials and return scrap; a recipe is not a guaranteed output.",
-      "controls": "The recipe menu in /craft starts an attempt immediately when you select a recipe. Read its materials and workshop requirements first; equip a usable workshop tool through /inventory before attempting a craft.",
+      "purpose": "Crafting turns learned recipes, materials and a suitable equipped workshop tool into crafted items. An attempt can succeed or fail, so it is a progression system rather than a guaranteed item printer.",
+      "controls": "Use /craft to inspect and select a learned recipe. Use /inventory to review materials and equip a usable workshop tool; use /shop only for currently available supplies.",
       "steps": [
-        "Select a learned recipe and inspect the materials needed for the attempt.",
-        "Prepare the eligible materials and equipped workshop tool. Selecting the recipe commits an attempt; there is no separate confirmation.",
-        "Read the actual result and remaining inventory. Every attempt progresses crafting skill, but success and item quality are not guaranteed."
+        "Open /inventory and identify your materials, learned recipes and any workshop tool you can equip.",
+        "Open /craft and read a recipe’s material and workshop requirements before choosing it.",
+        "Select a recipe only when ready; there is no separate confirmation: the attempt consumes the stated materials, may return scrap on failure, and always advances crafting skill.",
+        "Review the result and remaining items in /inventory before starting another attempt."
       ],
-      "completion": "You can check recipe requirements and distinguish an attempt from a guaranteed craft. Next: inspect /inventory or /shop for missing supplies."
+      "completion": "You know the point of crafting and how to prepare a first attempt. Next: inspect /inventory, then open /craft when a recipe is ready."
     },
     "collection": {
       "purpose": "Browse collectible sets and what you have discovered. Collections are a prestige record, not an Ottoman payout or a way to create missing items.",
@@ -1011,6 +1012,17 @@
         "Watch the final race result and actual payout or refund. An unbacked winner refunds all wagers without erasing the race outcome."
       ],
       "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race or /race only in main chat when you want to start a real event."
+    },
+    "daily": {
+      "purpose": "Economy starts with Ottomans: your Wallet holds spendable funds and Bank stores the rest. Rewards, activities, purchases and some games build your balance over time.",
+      "controls": "Use /daily for the daily reward, then /bank to review Wallet and Bank. /shop and /inventory show what Ottomans can buy and what you own.",
+      "steps": [
+        "Open /daily to claim the available reward; it is the easiest first economy action.",
+        "Open /bank to see Wallet and Bank, then use /shop before spending so you can inspect prices and requirements.",
+        "Keep a working Wallet balance for purchases and approved games; use /inventory after buying a usable item.",
+        "Progress through regular rewards, activities and owned items instead of relying on one large payout."
+      ],
+      "completion": "You know where Ottomans live and the first economy loop. Next: claim /daily, check /bank, then browse /shop."
     }
   }
 }
