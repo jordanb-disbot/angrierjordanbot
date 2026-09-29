@@ -186,6 +186,32 @@ export const COMMANDS = [
     "tutorialId": "community.profiles"
   },
   {
+    "id": "achievements",
+    "preferred": "/achievements",
+    "registered": "/achievements",
+    "type": "slash",
+    "module": "profile",
+    "handler": "profile.achievements",
+    "featureFlag": "profile",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "any_allowed"
+    ],
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "ephemeralDefault": false,
+    "helpId": "achievements",
+    "tutorialId": "community.profiles"
+  },
+  {
     "id": "daily",
     "preferred": "/daily",
     "registered": "/daily",

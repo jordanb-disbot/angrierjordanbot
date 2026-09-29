@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DiscordProfilesCoordinator} from '../../dist/apps/bot/src/discord/profiles-coordinator.js';
-import {renderPremiumProfile,renderPremiumProfilePages,renderPremiumLeaderboard,renderPremiumRecords,renderPremiumShowcase} from '../../dist/packages/features-profiles/src/premium-render.js';
+import {renderPremiumProfile,renderPremiumProfilePages,renderPremiumLeaderboard,renderPremiumRecords,renderPremiumShowcase,renderPremiumAchievements} from '../../dist/packages/features-profiles/src/premium-render.js';
 const config={get:async()=>true};
 function interaction(commandName='leaderboard',customId,values=[]){const calls=[];return{calls,commandName,customId,values,user:{id:'member'},guildId:'g',guild:{members:{fetch:async()=>null}},client:{users:{fetch:async()=>null}},deferred:false,isChatInputCommand:()=>!customId,isButton:()=>!!customId&&!values.length,isStringSelectMenu:()=>values.length>0,options:{getUser:()=>null},deferReply:async function(p){this.deferred=true;this.private=p.ephemeral},editReply:async p=>calls.push(p),reply:async p=>calls.push(p)};}
 const imageOnly=p=>{assert.equal(p.content,undefined);assert.equal(p.embeds[0].data.title,undefined);assert.equal(p.embeds[0].data.description,undefined);assert.ok(p.files[0].attachment.length>0);};
@@ -27,6 +27,17 @@ test('words and voice use one complete three-row, two-column activity page',()=>
  const labels=[...pages[1].matchAll(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="middle"[^>]*>(Words · (?:today|this week|this month)|Voice seconds · (?:today|this week|this month))<\/text>/g)].map(m=>({x:Number(m[1]),y:Number(m[2]),label:m[3]}));
  assert.equal(labels.length,6);assert.equal(new Set(labels.map(x=>x.x)).size,2);assert.equal(new Set(labels.map(x=>x.y)).size,3);
 });
+test('achievement cabinet keeps nine earned or locked honors in a stable three-by-three grid',()=>{
+ const rows=Array.from({length:9},(_,n)=>({name:'Chair Honor '+(n+1),class:n===0?'prestige':'activity',earnedAt:n%2===0?new Date('2026-09-28'):null}));
+ const svg=renderPremiumAchievements({name:'Morgan',rows,page:0,pages:1});
+ assert.match(svg,/Achievement Cabinet/);assert.equal((svg.match(/Chair Honor/g)??[]).length,9);assert.equal((svg.match(/LOCKED · ACTIVITY/g)??[]).length,4);assert.equal((svg.match(/EARNED/g)??[]).length,6);
+});
+test('achievement command is public, paged, and only reads the requested member cabinet',async()=>{
+ const i=interaction('achievements');i.guild.members.fetch=async()=>({displayName:'Morgan',user:{id:'member',displayName:'Morgan',displayAvatarURL:()=>undefined},displayAvatarURL:()=>undefined});
+ const rows=Array.from({length:10},(_,n)=>({id:'a'+n,name:'Honor '+n,class:'activity',earnedAt:n===0?new Date('2026-09-28'):null}));
+ const repo={refreshAchievements:async()=>{},achievements:async()=>rows};
+ await new DiscordProfilesCoordinator(repo,config,async()=>true).handle(i);imageOnly(i.calls[0]);assert.equal(i.private,false);assert.equal(i.calls[0].components[0].components[1].data.custom_id,'profile:achievementpage:member:member:1');
+});
 test('leaderboard uses image-only output and preserves ranks across pages',async()=>{
  const repo={leaderboard:async()=>Array.from({length:8},(_,n)=>({userId:'m'+n,value:100-n}))},c=new DiscordProfilesCoordinator(repo,config,async()=>true);
  const first=interaction();await c.handle(first);imageOnly(first.calls[0]);assert.equal(first.private,true);assert.match(first.calls[0].files[0].description,/1\. Member: 100/);
@@ -44,6 +55,6 @@ test('foreign pagination cannot access another members controls',async()=>{
 });
 test('public profile retains privacy and Edit Showcase without duplicated external text',async()=>{
  const i=interaction('profile');i.guild.members.fetch=async()=>({displayName:'Jordan',displayAvatarURL:()=>undefined});
- const repo={refreshAchievements:async()=>{},profile:async()=>({activity:null,economy:[],games:[],state:{featuredAchievements:[],featuredItems:[]},spotlight:[],giftsSent:0,giftsReceived:0,activeMarriages:0}),showcaseOptions:async()=>({badges:[],items:[]})};
- await new DiscordProfilesCoordinator(repo,config,async()=>true).handle(i);const payload=i.calls[0];assert.equal(payload.content,null);assert.deepEqual(payload.embeds,[]);assert.equal(i.private,false);assert.match(payload.files[0].description,/Activity statistics are private/);assert.ok(payload.files.length>1);assert.ok(payload.components.slice(0,-1).every(c=>c.toJSON().type===12));assert.equal(payload.components.at(-1).components[0].data.label,'Edit Showcase');
+ const repo={refreshAchievements:async()=>{},profile:async()=>({activity:null,economy:[],games:[],achievements:[],state:{featuredAchievements:[],featuredItems:[]},spotlight:[],giftsSent:0,giftsReceived:0,activeMarriages:0}),showcaseOptions:async()=>({badges:[],items:[]})};
+ await new DiscordProfilesCoordinator(repo,config,async()=>true).handle(i);const payload=i.calls[0];assert.equal(payload.content,null);assert.deepEqual(payload.embeds,[]);assert.equal(i.private,false);assert.match(payload.files[0].description,/Activity statistics are private/);assert.equal(payload.files.length,1);assert.ok(payload.components.slice(0,-1).every(c=>c.toJSON().type===12));assert.equal(payload.components.at(-1).components[0].data.label,'Edit Showcase');
 });

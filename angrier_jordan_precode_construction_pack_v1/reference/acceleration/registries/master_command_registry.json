@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 156,
+  "command_count": 157,
   "commands": [
     {
       "id": "help",
@@ -219,6 +219,36 @@
       "status": "locked",
       "preferred_invocation": "/records",
       "registration_path": "/records"
+    },
+    {
+      "id": "achievements",
+      "command": "/achievements",
+      "type": "slash",
+      "module": "profile",
+      "description": "View a member's achievement cabinet.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "member",
+          "type": "user",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "handler": "profile.achievements",
+      "feature_flag": "profile",
+      "ephemeral_default": false,
+      "help_id": "achievements",
+      "tutorial_id": "community.profiles",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/achievements",
+      "registration_path": "/achievements"
     },
     {
       "id": "daily",

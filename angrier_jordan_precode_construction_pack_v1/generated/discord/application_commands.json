@@ -88,6 +88,19 @@
   },
   {
     "type": 1,
+    "name": "achievements",
+    "description": "View a member's achievement cabinet.",
+    "options": [
+      {
+        "type": 6,
+        "name": "member",
+        "description": "member option",
+        "required": false
+      }
+    ]
+  },
+  {
+    "type": 1,
     "name": "daily",
     "description": "Open the private daily hub for Claim Daily, Daily Spin, and Fortune.",
     "options": []

@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import {renderPremiumProfile,renderPremiumRecords,renderPremiumLeaderboard,renderPremiumShowcase} from '../../../../packages/features-profiles/src/premium-render.js';
+import {renderPremiumProfile,renderPremiumRecords,renderPremiumLeaderboard,renderPremiumShowcase,renderPremiumAchievements} from '../../../../packages/features-profiles/src/premium-render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {avatarData,memberArt} from './member-art.js';
 import {DisposableCardLifecycle} from './card-lifecycle.js';
@@ -11,7 +11,7 @@ import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,EmbedBuilde
 import {DomainError,DeliveryEngine,PermissionEngine,type ConfigService} from '../../../../packages/core/src/index.js';
 import {PrismaProfilesRepository} from '../../../../packages/features-profiles/src/prisma-repository.js';
 import {qualifyingVoice,fmkSummary,type SpotlightPostingSettings} from '../../../../packages/features-profiles/src/domain.js';
-export const PROFILE_COMMANDS=new Set(['profile','privacy','leaderboard','records']);
+export const PROFILE_COMMANDS=new Set(['profile','privacy','leaderboard','records','achievements']);
 const card=(title:string,description:string)=>new EmbedBuilder().setColor(0xC9A768).setAuthor({name:'Angrier Jordan'}).setTitle(title).setDescription(description.slice(0,4000));
 const premiumPayload=async(svg:string,name:string,description:string)=>({embeds:[new EmbedBuilder().setColor(0xC9A768).setImage('attachment://'+name)],files:[new AttachmentBuilder(await rasterizeSvg(svg),{name,description:description.slice(0,1024)})],allowedMentions:{parse:[] as never[]}});
 const categories=['wealth','collections','wins','crafting','gambling','crime','fmk_fucked','fmk_married','fmk_killed','fmk_agreement','spotlight','messages','words','voice'];
@@ -39,7 +39,7 @@ export class DiscordProfilesCoordinator {
   if(await this.config.get(i.guildId,'features.profiles')!==true)throw new DomainError('PROFILE_DISABLED','Profiles are not enabled yet.');
   if(!new PermissionEngine({'profiles.use':CAPABILITY_MATRIX.capabilities['profiles.use']}).can('member','profiles.use')||!await this.eligible(i.guildId,i.user.id))throw new DomainError('PROFILE_RESTRICTED','Profile controls are unavailable while restricted.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':');if(parts.length&&parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own profile controls.');
-  await i.deferReply({ephemeral:!(i.isChatInputCommand()&&i.commandName==='profile')});
+  await i.deferReply({ephemeral:!(i.isChatInputCommand()&&['profile','achievements'].includes(i.commandName))});
   if(i.isChatInputCommand()&&i.commandName==='privacy'){const kind=i.options.getSubcommand() as 'activity'|'roast';const state=i.options.getString('state',true);await this.repo.privacy(i.guildId,i.user.id,kind,state==='visible'||state==='allow');await i.editReply({content:`${kind==='activity'?'Activity visibility':'Roast targeting'}: ${state}.`});return;}
   if(i.isChatInputCommand()&&i.commandName==='profile'){
    const target=i.options.getUser('member')??i.user;const discordMember=await i.guild.members.fetch(target.id);await this.repo.refreshAchievements(i.guildId,target.id);const p=await this.repo.profile(i.guildId,target.id),options=await this.repo.showcaseOptions(i.guildId,target.id);
@@ -88,6 +88,12 @@ export class DiscordProfilesCoordinator {
   }
   const identity=async(userId:string|null)=>{if(!userId)return{name:'Server record',avatarData:''};const member=await i.guild!.members?.fetch(userId).catch(()=>null);const user=member?.user??await i.client?.users.fetch(userId).catch(()=>null);return{name:member?.displayName??user?.displayName??'Member',avatarData:await avatarData((member??user)?.displayAvatarURL({extension:'png',size:128}))};};
   const pageButtons=(kind:string,key:string,page:number,pages:number)=>pages>1?[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('profile:'+kind+':'+i.user.id+':'+key+':'+(page-1)).setLabel('Previous').setStyle(ButtonStyle.Secondary).setDisabled(page===0),new ButtonBuilder().setCustomId('profile:'+kind+':'+i.user.id+':'+key+':'+(page+1)).setLabel('Next').setStyle(ButtonStyle.Secondary).setDisabled(page===pages-1))]:[];
+  if((i.isChatInputCommand()&&i.commandName==='achievements')||parts[1]==='achievementpage'){
+   const targetId=i.isChatInputCommand()?(i.options.getUser('member')??i.user).id:parts[3];if(!targetId)throw new DomainError('MEMBER_REQUIRED','Choose a member.');
+   const member=await i.guild.members.fetch(targetId).catch(()=>null);const target=member?.user??await i.client.users.fetch(targetId).catch(()=>null);if(!target)throw new DomainError('MEMBER_NOT_FOUND','That member could not be found.');
+   await this.repo.refreshAchievements(i.guildId,target.id);const rows=await this.repo.achievements(i.guildId,target.id),pages=Math.max(1,Math.ceil(rows.length/9)),rawPage=parts[1]==='achievementpage'?Number(parts[4]):0,page=Math.max(0,Math.min(pages-1,Number.isFinite(rawPage)?Math.floor(rawPage):0));
+   await i.editReply({...await premiumPayload(renderPremiumAchievements({name:member?.displayName??target.displayName,avatarData:await avatarData((member??target).displayAvatarURL({extension:'png',size:512})),rows:rows.slice(page*9,page*9+9),page,pages}),'achievements.png',(member?.displayName??target.displayName)+' · Achievement cabinet · page '+(page+1)+' of '+pages),components:pageButtons('achievementpage',target.id,page,pages)});return;
+  }
   if((i.isChatInputCommand()&&i.commandName==='records')||['records','recordpage'].includes(parts[1]!)){
    const scope=(i.isStringSelectMenu()?i.values[0]:parts[1]==='recordpage'?parts[3]:'alltime')??'alltime';if(!['alltime','monthly'].includes(scope))throw new DomainError('RECORD_PERIOD','Choose a supported record period.');
    const records=await this.repo.records(i.guildId,scope as 'monthly'|'alltime'),pages=Math.max(1,Math.ceil(records.length/6)),rawPage=parts[1]==='recordpage'?Number(parts[4]):0,page=Math.max(0,Math.min(pages-1,Number.isFinite(rawPage)?Math.floor(rawPage):0));

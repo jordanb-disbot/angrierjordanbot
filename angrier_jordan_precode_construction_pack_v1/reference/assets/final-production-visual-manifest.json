@@ -6134,7 +6134,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
-      "sha256": "50a05ba055d632df3457b2b9b8462c0c8aeafb8b54142b6c633c41154a1c632d"
+        "sha256": "7efe939d5c9f4bf43dd7b8867da78e3c2c50b4dc9df5f44a7a67cb8e73d251eb"
     },
     {
       "id": "music.runtime.controller",
@@ -6485,7 +6485,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Readable member profile tables, Discord portraits, records, standings and showcase using approved brand tokens",
-      "sha256": "e9dc60a8b7cc7d04f3d03a2cd9983b5ab76620a7070f49e52d650446fcbc3c61"
+        "sha256": "ee9598d6bb7bb66bd7770b489274ba090a20232b9ea2052e431d57cbe772cf80"
     },
     {
       "id": "crime-premium-runtime",
