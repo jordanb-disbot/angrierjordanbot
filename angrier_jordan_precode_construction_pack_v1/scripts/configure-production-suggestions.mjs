@@ -9,13 +9,16 @@ export async function configureProductionSuggestions({db,config,get,write=consol
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
  const channel=await get(`/channels/${SUGGESTIONS_CHANNEL}`);
  check(channel?.id===SUGGESTIONS_CHANNEL&&channel.guild_id===GUILD&&channel.type===0,'SUGGESTIONS_CHANNEL_INVALID');
- check(await config.get(GUILD,'features.community')===true,'COMMUNITY_DISABLED');
+ const community=await config.getWithMetadata(GUILD,'features.community');
+ if(community.value!==true)await config.set({guildId:GUILD,key:'features.community',value:true,expectedVersion:community.version,source:'operator.production-suggestions',requestId:randomUUID()});
+ check(await config.get(GUILD,'features.community')===true,'COMMUNITY_ENABLE_VERIFY_FAILED');
  const current=await config.getWithMetadata(GUILD,'channels.suggestions_channel');
  check(current.value===null||current.value===SUGGESTIONS_CHANNEL,'EXISTING_SUGGESTIONS_CHANNEL_REQUIRES_REVIEW');
  if(current.value!==SUGGESTIONS_CHANNEL)await config.set({guildId:GUILD,key:'channels.suggestions_channel',value:SUGGESTIONS_CHANNEL,expectedVersion:current.version,source:'operator.production-suggestions',requestId:randomUUID()});
  check(await config.get(GUILD,'channels.suggestions_channel')===SUGGESTIONS_CHANNEL,'SUGGESTIONS_CHANNEL_VERIFY_FAILED');
+ write('PASS: features.community=true.');
  write(`PASS: channels.suggestions_channel=${SUGGESTIONS_CHANNEL}.`);
- write('PASS: Suggestions channel exists in the production guild; Community remains the only required feature.');
+ write('PASS: Suggestions channel exists in the production guild; no unrelated feature settings changed.');
 }
 
 async function connectProduction(target){const [{PrismaClient},{PrismaConfigRepository,PrismaAuditSink},{ConfigService},{AuditService},{SETTINGS}]=await Promise.all([import('@prisma/client'),import('../dist/packages/database/src/prisma-adapters.js'),import('../dist/packages/core/src/config-service.js'),import('../dist/packages/core/src/audit.js'),import('../dist/packages/contracts/src/generated/settings.js')]);const db=new PrismaClient({datasourceUrl:target.databaseUrl,log:[]});return{db,config:new ConfigService(SETTINGS,new PrismaConfigRepository(db),new AuditService(new PrismaAuditSink(db)))}};
