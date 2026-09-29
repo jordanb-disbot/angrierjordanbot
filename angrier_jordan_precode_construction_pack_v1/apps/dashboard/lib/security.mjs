@@ -46,9 +46,9 @@ export function unseal(value, purpose, config, now = Date.now()) {
     return payload;
   } catch { throw new AccessError('SIGN_IN_REQUIRED', 401); }
 }
-export function cookieNames(config) {
-  const prefix = config.secure ? '__Host-' : '';
-  return { session: `${prefix}aj-session`, state: `${prefix}aj-oauth-state` };
+/** Railway terminates TLS at the edge; host-only cookies retain the same isolation without relying on the __Host- prefix. */
+export function cookieNames(_config) {
+  return { session: 'aj-session', state: 'aj-oauth-state' };
 }
 export const cookieOptions = (config, maxAge) => ({ httpOnly: true, secure: config.secure, sameSite: 'lax', path: '/', maxAge });
 
