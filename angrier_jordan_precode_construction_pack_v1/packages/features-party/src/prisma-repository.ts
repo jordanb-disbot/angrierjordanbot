@@ -15,6 +15,7 @@ export class PrismaPartyRepository {
  async get(id:string){const row=await this.db.gameSession.findUnique({where:{id},include:{votes:true}});if(!row||!PARTY_GAMES.includes(row.type as PartyGame))throw new DomainError('PARTY_MISSING','This party round is unavailable.');return{...row,data:row.data as unknown as PartyData};}
  async active(){return this.db.gameSession.findMany({where:{type:{in:[...PARTY_GAMES]},state:{in:['DRAFT','OPEN','LOCKED']}}});}
  async linkMessage(id:string,guildId:string,messageId:string){await this.db.gameSession.updateMany({where:{id,guildId,type:{in:[...PARTY_GAMES]},messageId:null},data:{messageId}});}
+ async cancelMissingMessage(guildId:string,id:string){await this.db.gameSession.updateMany({where:{id,guildId,type:{in:[...PARTY_GAMES]},state:{in:['DRAFT','OPEN','LOCKED']}},data:{state:'CANCELLED'}});}
  delivery(id:string){return new PrismaJobDeliveryRepository(this.db,id);}
  async deliveryJob(id:string){const row=await this.db.scheduledJob.findUniqueOrThrow({where:{id}});if(row.jobType!=='party.publish')throw new DomainError('PARTY_JOB','Invalid party publication.');return row.payload as {guildId:string;channelId:string;sessionId:string};}
  private async session(tx:Prisma.TransactionClient,c:Pick<PartyContext,'guildId'|'channelId'>,id:string){const s=await new PrismaTransactionSessions(tx).get<PartyData>(id);if(!s||!PARTY_GAMES.includes(s.type as PartyGame)||s.guildId!==c.guildId||s.channelId!==c.channelId)throw new DomainError('PARTY_MISSING','Use this round’s original server and channel.');return s;}
