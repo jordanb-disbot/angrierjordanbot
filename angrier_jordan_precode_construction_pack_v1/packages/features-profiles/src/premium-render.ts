@@ -26,13 +26,16 @@ function profileLine(value:string,x:number,y:number,width:number,maxSize:number,
  const fitted=textWidth(value,size)>width?` textLength="${width}" lengthAdjust="spacingAndGlyphs"`:'';
  return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${heading?brand.typography.heading:brand.typography.body}" font-size="${size}" font-weight="${heading?700:600}" fill="${color}"${fitted}>${E(value)}</text>`;
 }
-export interface PremiumProfileInput {name:string;avatarData?:string|undefined;highlights?:{label:string;value:string}[];sections:{label:string;value:string;singlePage?:boolean|undefined}[];compactHero?:boolean;}
+export interface PremiumProfileInput {name:string;avatarData?:string|undefined;highlights?:{label:string;value:string}[];sections:{label:string;value:string;singlePage?:boolean|undefined}[];compactHero?:boolean;prestigeBadges?:('triple_threat'|'fully_furnished')[];}
+function prestigeMedallion(kind:'triple_threat'|'fully_furnished',x:number,y:number){const accent=kind==='triple_threat'?'#A469E2':brand.palette.emerald;return `<g><circle cx="${x}" cy="${y}" r="51" fill="#081A23" stroke="url(#gold)" stroke-width="4"/><circle cx="${x}" cy="${y}" r="43" fill="${accent}" fill-opacity=".26" stroke="${accent}" stroke-width="2"/>${[[-28,-22],[31,-15],[-24,27],[27,28]].map(([dx,dy])=>`<circle cx="${x+dx!}" cy="${y+dy!}" r="2.5" fill="#FFE3A0"/>`).join('')}<path d="M${x-21} ${y+20}V${y-17}Q${x-21} ${y-31} ${x} ${y-31}Q${x+21} ${y-31} ${x+21} ${y-17}V${y+20}M${x-28} ${y+5}Q${x-41} ${y-11} ${x-38} ${y+22}H${x+38}Q${x+41} ${y-11} ${x+28} ${y+5}M${x-25} ${y+20}H${x+25}V${y+35}H${x-25}Z" fill="#D6B570" stroke="#FFE3A0" stroke-width="2"/>${kind==='triple_threat'?`<path d="M${x-13} ${y-5}L${x} ${y-19}L${x+13} ${y-5}L${x} ${y+8}Z" fill="${accent}"/>`:''}</g>`;}
 /** Caller provides privacy-filtered data only. Every stat keeps its complete value. */
 export function renderPremiumProfile(data:PremiumProfileInput){
  let body=text(45,58,'ANGRIER JORDAN · MEMBER PROFILE',23,brand.palette.emerald,true,'start');
  if(data.compactHero){body+=panel(45,85,1110,112,GOLD)+portrait(data.name,data.avatarData,111,96,92,'identity')+profileLine(data.name,194,153,915,48,32,WHITE,true);}
  else{body+=panel(45,85,1110,326,GOLD)+portrait(data.name,data.avatarData,164,115,196,'identity');
-  body+=profileLine(data.name,300,183,815,62,34,WHITE,true)+text(300,229,'A seat in the Chairs',29,MUTED,false,'start');
+  const badges=(data.prestigeBadges??[]).slice(0,2),nameWidth=badges.length?540:815;
+  body+=profileLine(data.name,300,183,nameWidth,62,34,WHITE,true)+text(300,229,'A seat in the Chairs',29,MUTED,false,'start');
+  badges.forEach((badge,n)=>body+=prestigeMedallion(badge,1034-n*116,183));
   for(const [n,h]of (data.highlights??[]).slice(0,3).entries()){
    const x=300+n*274,accent=[GOLD,brand.palette.emerald,'#A469E2'][n]!;
    body+=`<rect x="${x}" y="277" width="258" height="111" rx="13" fill="${accent}" fill-opacity=".10" stroke="${accent}" stroke-opacity=".65"/>`;
