@@ -2,7 +2,6 @@ import {createHash} from 'node:crypto';
 import {renderPremiumProfile,renderPremiumRecords,renderPremiumLeaderboard,renderPremiumShowcase,renderPremiumAchievements} from '../../../../packages/features-profiles/src/premium-render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {avatarData,memberArt} from './member-art.js';
-import {DisposableCardLifecycle} from './card-lifecycle.js';
 import {wideDisplay,type DisplayFrame} from './wide-display.js';
 import {renderSpotlight,recordTitle} from '../../../../packages/features-profiles/src/render.js';
 import {weeklyCycle} from '../../../../packages/features-economy/src/service.js';
@@ -17,7 +16,6 @@ const premiumPayload=async(svg:string,name:string,description:string)=>({embeds:
 const categories=['wealth','collections','wins','crafting','gambling','crime','fmk_fucked','fmk_married','fmk_killed','fmk_agreement','spotlight','messages','words','voice'];
 const voiceLabel=(seconds:number)=>{const safe=Math.max(0,Math.floor(seconds));const hours=Math.floor(safe/3600),minutes=Math.floor(safe%3600/60),remaining=safe%60;return hours?`${hours}h ${minutes}m`:minutes?`${minutes}m ${remaining}s`:`${remaining}s`;};
 export class DiscordProfilesCoordinator {
- private readonly temporaryCards=new DisposableCardLifecycle(180_000);
  constructor(private readonly repo:PrismaProfilesRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  async message(m:Message){
   if(!m.guildId||m.author.bot||await this.config.get(m.guildId,'features.activity')!==true)return;
@@ -39,7 +37,7 @@ export class DiscordProfilesCoordinator {
   if(await this.config.get(i.guildId,'features.profiles')!==true)throw new DomainError('PROFILE_DISABLED','Profiles are not enabled yet.');
   if(!new PermissionEngine({'profiles.use':CAPABILITY_MATRIX.capabilities['profiles.use']}).can('member','profiles.use')||!await this.eligible(i.guildId,i.user.id))throw new DomainError('PROFILE_RESTRICTED','Profile controls are unavailable while restricted.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':');if(parts.length&&parts[2]!==i.user.id)throw new DomainError('OWNER_ONLY','Open your own profile controls.');
-  await i.deferReply({ephemeral:!(i.isChatInputCommand()&&['profile','achievements'].includes(i.commandName))});
+  await i.deferReply({ephemeral:true});
   if(i.isChatInputCommand()&&i.commandName==='privacy'){const kind=i.options.getSubcommand() as 'activity'|'roast';const state=i.options.getString('state',true);await this.repo.privacy(i.guildId,i.user.id,kind,state==='visible'||state==='allow');await i.editReply({content:`${kind==='activity'?'Activity visibility':'Roast targeting'}: ${state}.`});return;}
   if(i.isChatInputCommand()&&i.commandName==='profile'){
    const target=i.options.getUser('member')??i.user;const discordMember=await i.guild.members.fetch(target.id);await this.repo.refreshAchievements(i.guildId,target.id);const p=await this.repo.profile(i.guildId,target.id),options=await this.repo.showcaseOptions(i.guildId,target.id);
@@ -71,8 +69,7 @@ export class DiscordProfilesCoordinator {
     const profile=renderPremiumProfile({name:discordMember.displayName,avatarData:await avatarData(discordMember.displayAvatarURL({extension:'png',size:512})),highlights:[{label:'OTTOMANS · CURRENT',value:wealth.toLocaleString('en-US')},{label:'FMK DRAWS · ALL-TIME',value:String(fmk.fucked+fmk.married+fmk.killed)},{label:'FAMILY · ACTIVE',value:String(p.activeMarriages)}],sections:[{label:'Activity · continued',singlePage:true,value:tiles.map(([label,value])=>`${label}: ${value}`).join('\n')}],prestigeBadges});
     const frames:DisplayFrame[]=[{name:'member-profile.png',data:await rasterizeSvg(profile),width:1200,height:Number(/<svg[^>]*height="([\d.]+)"/.exec(profile)?.[1]??0),description:(discordMember.displayName+' · '+description).slice(0,1024)}];
    const controls=target.id===i.user.id?[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`profile:edit:${i.user.id}`).setLabel('Edit Showcase').setStyle(ButtonStyle.Primary))]:[];
-   const message=await i.editReply(wideDisplay(frames,controls));
-   if(target.id!==i.user.id)await this.temporaryCards.track(i.guildId+':'+i.channelId+':'+i.user.id+':profile',message);return;
+   await i.editReply(wideDisplay(frames,controls));return;
   }
   if(i.isButton()&&parts[1]==='edit'){
    const options=await this.repo.showcaseOptions(i.guildId,i.user.id),pages=Math.max(1,Math.ceil(Math.max(options.badges.length,options.items.length)/6));

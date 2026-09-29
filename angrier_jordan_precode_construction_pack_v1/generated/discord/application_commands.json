@@ -1874,7 +1874,8 @@
         "description": "Panic Mode: status.",
         "options": []
       }
-    ]
+    ],
+    "default_member_permissions": "0"
   },
   {
     "type": 1,

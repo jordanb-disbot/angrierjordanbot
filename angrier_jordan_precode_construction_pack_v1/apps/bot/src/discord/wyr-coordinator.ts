@@ -17,6 +17,10 @@ const openRow=(sessionId:string,extensionSeconds:number,extensionUsed:boolean)=>
 const resultRow=(sessionId:string)=>new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setCustomId(`wyr:play:${sessionId}`).setLabel('Play Again').setStyle(ButtonStyle.Success),
 );
+const modeRow=(userId:string,category:WyrCategoryInput)=>new ActionRowBuilder<ButtonBuilder>().addComponents(
+  new ButtonBuilder().setCustomId(`wyr:mode:${userId}:private:${category}`).setLabel('Private').setStyle(ButtonStyle.Primary),
+  new ButtonBuilder().setCustomId(`wyr:mode:${userId}:public:${category}`).setLabel('Multiplayer').setStyle(ButtonStyle.Secondary),
+);
 
 export class DiscordWyrCoordinator {
   private readonly rendered=new Map<string,string>();
@@ -28,10 +32,8 @@ export class DiscordWyrCoordinator {
     const raw=interaction.options.getString('category')??'Random';
     const category=validCategories.has(raw as WyrCategoryInput)?raw as WyrCategoryInput:'Random';
     try{
-      await interaction.deferReply();await this.guard(interaction);
-      const message=await interaction.fetchReply();
-      const session=await this.service.start({guildId:interaction.guildId!,channelId:interaction.channelId,ownerUserId:interaction.user.id,category,messageId:message.id});
-      await this.publish(interaction.client,session.id,interaction).catch(async()=>{await interaction.followUp({ephemeral:true,content:'Your round is saved. Its original card is pending recovery.'});});
+      await interaction.deferReply({ephemeral:true});await this.guard(interaction);
+      await interaction.editReply({content:'Choose how to play this WYR round.',components:[modeRow(interaction.user.id,category)],allowedMentions:{parse:[]}});
     }catch(error){await this.replyError(interaction,error);}
   }
 
@@ -39,12 +41,14 @@ export class DiscordWyrCoordinator {
     const [scope,action,arg,sessionIdMaybe]=interaction.customId.split(':');
     if(scope!=='wyr')return;
     try{
-      if(action==='vote')await interaction.deferReply({ephemeral:true});else if(action==='extend')await interaction.deferUpdate();else if(action==='play')await interaction.deferReply();
-      await this.guard(interaction);const id=action==='vote'?sessionIdMaybe:arg;if(!id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');const source=await this.service.get(id);if(source.guildId!==interaction.guildId||source.channelId!==interaction.channelId||source.messageId!==interaction.message.id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');
+      if(action==='mode'){const[, ,owner,visibility,category]=interaction.customId.split(':');if((visibility!=='private'&&visibility!=='public')||!category||owner!==interaction.user.id)throw new DomainError('WYR_MODE','Open your own WYR mode selector.');await interaction.deferUpdate();await this.guard(interaction);const session=await this.service.start({guildId:interaction.guildId!,channelId:interaction.channelId,ownerUserId:interaction.user.id,category:validCategories.has(category as WyrCategoryInput)?category as WyrCategoryInput:'Random',enforceSinglePublicRound:visibility==='public',visibility});if(visibility==='public'){await this.publish(interaction.client,session.id);await interaction.editReply({content:'The multiplayer WYR round is ready in this channel.',components:[]});return;}const card=await this.payload(session);const message=await interaction.editReply(card);await this.service.attachMessage(session.id,message.id);return;}
+      const id=action==='vote'?sessionIdMaybe:arg;if(!id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');const source=await this.service.get(id),privateRound=source.data?.visibility==='private';
+      if(action==='vote')await (privateRound?interaction.deferUpdate():interaction.deferReply({ephemeral:true}));else if(action==='extend')await interaction.deferUpdate();else if(action==='play')await (privateRound?interaction.deferUpdate():interaction.deferReply());
+      await this.guard(interaction);if(source.guildId!==interaction.guildId||source.channelId!==interaction.channelId||source.messageId!==interaction.message.id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');if(privateRound&&source.ownerUserId!==interaction.user.id)throw new DomainError('OWNER_ONLY','Open your own private WYR round.');
       if(action==='vote'&&(arg==='A'||arg==='B')&&sessionIdMaybe){
         const session=await this.service.vote(sessionIdMaybe,interaction.user.id,arg);
-        const label=arg==='A'?session.data.optionA:session.data.optionB;
-        await interaction.editReply({content:`Vote recorded — ${label}. You can change it until voting closes.`,allowedMentions:{parse:[]}});return;
+        if(privateRound){await interaction.editReply(await this.payload(session));return;}
+        const label=arg==='A'?session.data.optionA:session.data.optionB;await interaction.editReply({content:`Vote recorded — ${label}. You can change it until voting closes.`,allowedMentions:{parse:[]}});return;
       }
       if(action==='extend'&&arg){
         if(source.ownerUserId!==interaction.user.id)throw new DomainError('NOT_ALLOWED','Only the host may extend the round.');
@@ -52,7 +56,8 @@ export class DiscordWyrCoordinator {
         await this.editKnownMessage(interaction.client,session.guildId,session.channelId,session.messageId!,this.service.renderOpen(session),[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)]);return;
       }
       if(action==='play'&&arg){
-        const message=await interaction.fetchReply(),session=await this.service.replay(arg,interaction.user.id,message.id);
+        const session=await this.service.replay(arg,interaction.user.id,undefined,privateRound?'private':'public');
+        if(privateRound){const message=await interaction.editReply(await this.payload(session));await this.service.attachMessage(session.id,message.id);return;}
         await this.publish(interaction.client,session.id,interaction).catch(async()=>{await interaction.followUp({ephemeral:true,content:'Your round is saved. Its original card is pending recovery.'});});return;
       }
     }catch(error){await this.replyError(interaction,error);}
@@ -62,10 +67,10 @@ export class DiscordWyrCoordinator {
     const recovered=await this.service.recover();let closed=0;
     for(const session of recovered.expired){
       const result=await this.service.close(session.id);closed+=1;
-      if(result.session.messageId)await this.editKnownMessage(client,result.session.guildId,result.session.channelId,result.session.messageId,result.svg,[resultRow(result.session.id)]);
+      if(result.session.messageId&&result.session.data.visibility!=='private')await this.editKnownMessage(client,result.session.guildId,result.session.channelId,result.session.messageId,result.svg,[resultRow(result.session.id)]);
     }
     for(const session of recovered.active){
-      if(session.messageId)await this.editKnownMessage(client,session.guildId,session.channelId,session.messageId,this.service.renderOpen(session),[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)]);
+      if(session.messageId&&session.data.visibility!=='private')await this.editKnownMessage(client,session.guildId,session.channelId,session.messageId,this.service.renderOpen(session),[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)]);
     }
     return {active:recovered.active.length,closed};
   }
@@ -74,7 +79,7 @@ export class DiscordWyrCoordinator {
     const recovered=await this.service.recover();let count=0;
     for(const session of recovered.expired){
       const result=await this.service.close(session.id);count+=1;
-      if(result.session.messageId)await this.editKnownMessage(client,result.session.guildId,result.session.channelId,result.session.messageId,result.svg,[resultRow(result.session.id)]);
+      if(result.session.messageId&&result.session.data.visibility!=='private')await this.editKnownMessage(client,result.session.guildId,result.session.channelId,result.session.messageId,result.svg,[resultRow(result.session.id)]);
     }
     return count;
   }
@@ -82,6 +87,7 @@ export class DiscordWyrCoordinator {
   async advance(client:Client,sessionId:string){const result=await this.service.close(sessionId);if(result.session.messageId)await this.editKnownMessage(client,result.session.guildId,result.session.channelId,result.session.messageId,result.svg,[resultRow(result.session.id)]);}
 
   /** Re-editing the saved original reply is safe even after an uncertain prior edit. */
+  private async payload(session:Awaited<ReturnType<WyrService['get']>>){return{content:`Voting closes <t:${Math.floor(session.expiresAt.getTime()/1000)}:R>.`,files:[file(await png(this.service.renderOpen(session)))],attachments:[],embeds:[new EmbedBuilder().setImage('attachment://wyr.png').setColor(0x3B82F6)],components:[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)],allowedMentions:{parse:[] as never[]}};}
   async publish(client:Client,sessionId:string,interaction?:ChatInputCommandInteraction|ButtonInteraction){
     if(!this.publication)throw new DomainError('WYR_PUBLICATION','WYR publication recovery is not configured.');
     const job=await this.publication.jobForSession(sessionId),session=await this.service.get(sessionId),channel=await client.channels.fetch(session.channelId);

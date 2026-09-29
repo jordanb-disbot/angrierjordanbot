@@ -20,6 +20,7 @@ export interface WyrSessionData {
   optionB:string;
   durationSeconds:number;
   extensionSeconds:number;
+  visibility?:'private'|'public';
 }
 
 export interface WyrVote {

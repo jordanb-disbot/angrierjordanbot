@@ -17,6 +17,7 @@ export interface StartWyrInput {
   enforceSinglePublicRound?:boolean;
   excludedPromptId?:string;
   messageId?:string;
+  visibility?:'private'|'public';
 }
 
 export interface ClosedWyrRound { session:WyrRuntimeSession;results:WyrResults;svg:string; }
@@ -46,7 +47,7 @@ export class WyrService {
     const timer=TimerEngine.create(now,duration);
     const session:WyrRuntimeSession={
       id:this.ids.next('wyr'),guildId:input.guildId,channelId:input.channelId,ownerUserId:input.ownerUserId,state:'OPEN',...(input.messageId?{messageId:input.messageId}:{}),
-      data:{promptId:prompt.id,category,question:prompt.text,optionA:prompt.optionA,optionB:prompt.optionB,durationSeconds:duration,extensionSeconds:extension},
+      data:{promptId:prompt.id,category,question:prompt.text,optionA:prompt.optionA,optionB:prompt.optionB,durationSeconds:duration,extensionSeconds:extension,...(input.visibility==='private'?{visibility:'private' as const}:{})},
       openedAt:now,expiresAt:timer.expiresAt,extensionUsed:false,votes:[],version:0,
     };
     await this.sessions.create(session);
@@ -87,13 +88,13 @@ export class WyrService {
     throw new DomainError('SESSION_CONFLICT','WYR round changed concurrently. Retry the operation.');
   }
 
-  async replay(sourceSessionId:string,actorUserId:string,messageId?:string):Promise<WyrRuntimeSession>{
+  async replay(sourceSessionId:string,actorUserId:string,messageId?:string,visibility:'private'|'public'='public'):Promise<WyrRuntimeSession>{
     const source=await this.sessions.get(sourceSessionId);
     if(!source)throw new DomainError('SESSION_NOT_FOUND','WYR session not found.');
     invariant(source.state==='CLOSED','ROUND_NOT_COMPLETE','Play Again is available after results close.');
     return this.start({
       guildId:source.guildId,channelId:source.channelId,ownerUserId:actorUserId,category:source.data.category,
-      durationSeconds:source.data.durationSeconds,extensionSeconds:source.data.extensionSeconds,enforceSinglePublicRound:true,
+      durationSeconds:source.data.durationSeconds,extensionSeconds:source.data.extensionSeconds,enforceSinglePublicRound:visibility==='public',visibility,
       excludedPromptId:source.data.promptId,
       ...(messageId?{messageId}:{}),
     });
