@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import {renderPremiumProfilePages,renderPremiumRecords,renderPremiumLeaderboard,renderPremiumShowcase} from '../../../../packages/features-profiles/src/premium-render.js';
+import {renderPremiumProfile,renderPremiumRecords,renderPremiumLeaderboard,renderPremiumShowcase} from '../../../../packages/features-profiles/src/premium-render.js';
 import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {avatarData,memberArt} from './member-art.js';
 import {DisposableCardLifecycle} from './card-lifecycle.js';
@@ -15,6 +15,7 @@ export const PROFILE_COMMANDS=new Set(['profile','privacy','leaderboard','record
 const card=(title:string,description:string)=>new EmbedBuilder().setColor(0xC9A768).setAuthor({name:'Angrier Jordan'}).setTitle(title).setDescription(description.slice(0,4000));
 const premiumPayload=async(svg:string,name:string,description:string)=>({embeds:[new EmbedBuilder().setColor(0xC9A768).setImage('attachment://'+name)],files:[new AttachmentBuilder(await rasterizeSvg(svg),{name,description:description.slice(0,1024)})],allowedMentions:{parse:[] as never[]}});
 const categories=['wealth','collections','wins','crafting','gambling','crime','fmk_fucked','fmk_married','fmk_killed','fmk_agreement','spotlight','messages','words','voice'];
+const voiceLabel=(seconds:number)=>{const safe=Math.max(0,Math.floor(seconds));const hours=Math.floor(safe/3600),minutes=Math.floor(safe%3600/60),remaining=safe%60;return hours?`${hours}h ${minutes}m`:minutes?`${minutes}m ${remaining}s`:`${remaining}s`;};
 export class DiscordProfilesCoordinator {
  private readonly temporaryCards=new DisposableCardLifecycle(180_000);
  constructor(private readonly repo:PrismaProfilesRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
@@ -60,8 +61,12 @@ export class DiscordProfilesCoordinator {
    const featuredCollectibles=p.state.featuredItems.map(id=>options.items.find(x=>x.id===id)?.name).filter((name):name is string=>Boolean(name));
    for(const name of featuredAchievements.length?featuredAchievements:['None selected'])honors.push(`Featured achievement: ${name}`);
    for(const name of featuredCollectibles.length?featuredCollectibles:['None selected'])honors.push(`Featured collectible: ${name}`);
-   const profilePages=renderPremiumProfilePages({name:discordMember.displayName,avatarData:await avatarData(discordMember.displayAvatarURL({extension:'png',size:512})),highlights:[{label:'OTTOMANS · CURRENT',value:wealth.toLocaleString('en-US')},{label:'FMK DRAWS · ALL-TIME',value:String(fmk.fucked+fmk.married+fmk.killed)},{label:'FAMILY · ACTIVE',value:String(p.activeMarriages)}],sections:[...activitySections,{label:'Games and community',value:games.join('\n')},{label:'Economy and Family',value:[`Ottomans: ${wealth.toLocaleString('en-US')}`,`Bank tier: ${p.account?.bankTier??1}`,`Work jobs: ${work?.attempts??0}`,`Work earned: ${work?.ottomansEarned??0n} Ottomans`,`Gifts sent: ${p.giftsSent}`,`Gifts received: ${p.giftsReceived}`,`Chair Building: ${p.progress?.rank??'Apprentice'}`,`Active marriages: ${p.activeMarriages}`].join('\n')},{label:'Honors and showcase',value:honors.join('\n')}]});
-   const frames:DisplayFrame[]=await Promise.all(profilePages.map(async(svg,n)=>({name:`member-profile-${n+1}.png`,data:await rasterizeSvg(svg),width:1200,height:Number(/<svg[^>]*height="([\d.]+)"/.exec(svg)?.[1]??0),description:(n===0?discordMember.displayName+' · '+description:discordMember.displayName+` · Member profile, page ${n+1} of ${profilePages.length}`).slice(0,1024)})));
+    const gamesPlayed=p.games.reduce((sum,g)=>sum+g.plays,0),gamesWon=p.games.reduce((sum,g)=>sum+g.wins,0);
+    const candidates=[['Words · this month',String(p.activity?.month.words??0)],['Voice · this month',voiceLabel(p.activity?.month.vcSeconds??0)],['Words · all-time',String(p.activity?.allTime.words??0)],['Voice · all-time',voiceLabel(p.activity?.allTime.vcSeconds??0)],['Achievements',String(p.achievements.length)],['Most-used word',p.activity?.mostWord??'—'],['Games played',String(gamesPlayed)],['Games won',String(gamesWon)],['FMK · Fucked',String(fmk.fucked)],['FMK · Married',String(fmk.married)],['FMK · Killed',String(fmk.killed)],['Words · this week',String(p.activity?.week.words??0)],['Voice · this week',voiceLabel(p.activity?.week.vcSeconds??0)],['Words · today',String(p.activity?.day.words??0)],['Voice · today',voiceLabel(p.activity?.day.vcSeconds??0)]] as const;
+    const useful=candidates.filter(([,value])=>value!=='0'&&value!=='0s'&&value!=='—');
+    const tiles=[...useful,...candidates.filter(entry=>!useful.includes(entry))].slice(0,6);
+    const profile=renderPremiumProfile({name:discordMember.displayName,avatarData:await avatarData(discordMember.displayAvatarURL({extension:'png',size:512})),highlights:[{label:'OTTOMANS · CURRENT',value:wealth.toLocaleString('en-US')},{label:'FMK DRAWS · ALL-TIME',value:String(fmk.fucked+fmk.married+fmk.killed)},{label:'FAMILY · ACTIVE',value:String(p.activeMarriages)}],sections:[{label:'Activity · continued',singlePage:true,value:tiles.map(([label,value])=>`${label}: ${value}`).join('\n')}]});
+    const frames:DisplayFrame[]=[{name:'member-profile.png',data:await rasterizeSvg(profile),width:1200,height:Number(/<svg[^>]*height="([\d.]+)"/.exec(profile)?.[1]??0),description:(discordMember.displayName+' · '+description).slice(0,1024)}];
    const controls=target.id===i.user.id?[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`profile:edit:${i.user.id}`).setLabel('Edit Showcase').setStyle(ButtonStyle.Primary))]:[];
    const message=await i.editReply(wideDisplay(frames,controls));
    if(target.id!==i.user.id)await this.temporaryCards.track(i.guildId+':'+i.channelId+':'+i.user.id+':profile',message);return;
