@@ -14,6 +14,8 @@ const type='community';
 export class PrismaCommunityRepository {
  private atomic:PrismaAtomicOperations;
  constructor(private db:PrismaClient,private clock:()=>Date=()=>new Date()){this.atomic=new PrismaAtomicOperations(db);}
+ async suggestionPanel(guildId:string){return this.db.suggestionPanel.findUnique({where:{guildId}});}
+ async rememberSuggestionPanel(guildId:string,channelId:string,messageId:string){return this.db.suggestionPanel.upsert({where:{guildId},create:{guildId,channelId,messageId},update:{channelId,messageId}});}
  private admin(c:CommunityContext){if(!c.manage)throw new DomainError('COMMUNITY_ADMIN','This action requires Chaise Lounge or Throne.');}
  private async eligible(tx:Prisma.TransactionClient,guildId:string,userId:string){if(await tx.jailSentence.findFirst({where:{guildId,userId,active:true,OR:[{indefinite:true},{pausedAt:{not:null}},{endsAt:{gt:this.clock()}}]}}))throw new DomainError('COMMUNITY_RESTRICTED','Community actions are unavailable while restricted.');}
  async get(id:string){const s=await this.db.gameSession.findUnique({where:{id}});if(!s||s.type!==type)throw new DomainError('COMMUNITY_MISSING','This community post is unavailable.');return{...s,data:s.data as unknown as CommunityData};}

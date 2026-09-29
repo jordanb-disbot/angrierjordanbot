@@ -590,6 +590,13 @@ model IntroductionFormConfig {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
+model SuggestionPanel {
+  guildId String @id
+  channelId String
+  messageId String?
+  updatedAt DateTime @updatedAt
+}
+
 model LoreProgress {
   guildId String
   userId String

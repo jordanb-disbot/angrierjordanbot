@@ -157,6 +157,22 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
+    "key": "channels.suggestions_channel",
+    "section": "channels_roles",
+    "type": "discord_channel",
+    "default": null,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Optional dedicated channel for the canonical Suggestions panel.",
+    "risk": "normal",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
     "key": "channels.games_channel",
     "section": "channels_roles",
     "type": "discord_channel",

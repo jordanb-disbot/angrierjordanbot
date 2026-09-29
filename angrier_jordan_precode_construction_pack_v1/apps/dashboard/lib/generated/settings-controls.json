@@ -1,5 +1,5 @@
 {
-  "count": 260,
+  "count": 261,
   "controls": [
     {
       "key": "server.timezone",
@@ -154,6 +154,23 @@
       "section": "channels_roles",
       "label": "Bot Channel",
       "description": "Resolved Discord channel ID.",
+      "kind": "channel-select",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "channels.suggestions_channel",
+      "section": "channels_roles",
+      "label": "Suggestions Channel",
+      "description": "Optional dedicated channel for the canonical Suggestions panel.",
       "kind": "channel-select",
       "defaultValue": null,
       "risk": "normal",
