@@ -365,6 +365,22 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
+    "key": "roles.fully_furnished",
+    "section": "channels_roles",
+    "type": "discord_role",
+    "default": null,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Configured Discord role granted by the Fully Furnished launch event.",
+    "risk": "normal",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
     "key": "race.join_seconds",
     "section": "games",
     "type": "integer",
@@ -4286,6 +4302,24 @@ export const SETTINGS = [
       "giveaway.max_duration_minutes",
       "giveaway.max_winners",
       "poll.max_choices"
+    ],
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "mutable": true,
+    "dashboard_write": "draft"
+  },
+  {
+    "key": "features.fully_furnished_event",
+    "section": "features",
+    "type": "boolean",
+    "default": false,
+    "risk": "normal",
+    "description": "Enable the limited Fully Furnished launch event after its production preflight passes.",
+    "depends_on": [
+      "roles.fully_furnished"
     ],
     "editable_by": [
       "throne",

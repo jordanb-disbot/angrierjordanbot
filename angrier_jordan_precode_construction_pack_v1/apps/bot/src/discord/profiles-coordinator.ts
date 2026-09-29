@@ -67,6 +67,7 @@ export class DiscordProfilesCoordinator {
     const tiles=[...useful,...candidates.filter(entry=>!useful.includes(entry))].slice(0,6);
     const prestigeBadges:("triple_threat"|"fully_furnished")[]=[];
     if(p.state.tripleThreatAt)prestigeBadges.push('triple_threat');
+    if(p.achievements.some(achievement=>achievement.achievementId==='fully_furnished'))prestigeBadges.push('fully_furnished');
     const profile=renderPremiumProfile({name:discordMember.displayName,avatarData:await avatarData(discordMember.displayAvatarURL({extension:'png',size:512})),highlights:[{label:'OTTOMANS · CURRENT',value:wealth.toLocaleString('en-US')},{label:'FMK DRAWS · ALL-TIME',value:String(fmk.fucked+fmk.married+fmk.killed)},{label:'FAMILY · ACTIVE',value:String(p.activeMarriages)}],sections:[{label:'Activity · continued',singlePage:true,value:tiles.map(([label,value])=>`${label}: ${value}`).join('\n')}],prestigeBadges});
     const frames:DisplayFrame[]=[{name:'member-profile.png',data:await rasterizeSvg(profile),width:1200,height:Number(/<svg[^>]*height="([\d.]+)"/.exec(profile)?.[1]??0),description:(discordMember.displayName+' · '+description).slice(0,1024)}];
    const controls=target.id===i.user.id?[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`profile:edit:${i.user.id}`).setLabel('Edit Showcase').setStyle(ButtonStyle.Primary))]:[];

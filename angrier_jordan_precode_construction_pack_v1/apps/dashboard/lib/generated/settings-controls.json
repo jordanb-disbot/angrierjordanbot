@@ -1,5 +1,5 @@
 {
-  "count": 261,
+  "count": 263,
   "controls": [
     {
       "key": "server.timezone",
@@ -375,6 +375,23 @@
       "section": "channels_roles",
       "label": "Jailed",
       "description": "Resolved Discord role ID.",
+      "kind": "role-select",
+      "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "roles.fully_furnished",
+      "section": "channels_roles",
+      "label": "Fully Furnished",
+      "description": "Configured Discord role granted by the Fully Furnished launch event.",
       "kind": "role-select",
       "defaultValue": null,
       "risk": "normal",
@@ -4533,6 +4550,25 @@
         "giveaway.max_duration_minutes",
         "giveaway.max_winners",
         "poll.max_choices"
+      ]
+    },
+    {
+      "key": "features.fully_furnished_event",
+      "section": "features",
+      "label": "Fully Furnished Event",
+      "description": "Enable the limited Fully Furnished launch event after its production preflight passes.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "roles.fully_furnished"
       ]
     },
     {

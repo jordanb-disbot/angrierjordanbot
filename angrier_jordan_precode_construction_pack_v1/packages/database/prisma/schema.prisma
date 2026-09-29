@@ -79,7 +79,52 @@ model Member {
   presence MemberPresenceState?
   selfRoles SelfRoleSelection[]
   roleSnapshots MemberRoleSnapshot[]
+  fullyFurnished FullyFurnishedProgress?
   @@id([guildId,userId])
+}
+
+// A launch campaign is deliberately isolated from lifetime statistics.  It is
+// never backfilled: every receipt below belongs to the campaign that was live
+// when the qualifying action completed.
+model FullyFurnishedEvent {
+  guildId String @id
+  startsAt DateTime
+  endsAt DateTime
+  enabled Boolean @default(true)
+  roleId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  progress FullyFurnishedProgress[]
+}
+
+model FullyFurnishedProgress {
+  guildId String
+  userId String
+  loreChapters String[] @default([])
+  chairHistorianAt DateTime?
+  properlyIntroducedAt DateTime?
+  armchairArchitectAt DateTime?
+  casinoRounds Int @default(0)
+  houseRegularAt DateTime?
+  commandNames String[] @default([])
+  buttonMasherAt DateTime?
+  fullyFurnishedAt DateTime?
+  roleGrantedAt DateTime?
+  updatedAt DateTime @updatedAt
+  event FullyFurnishedEvent @relation(fields:[guildId],references:[guildId],onDelete:Cascade)
+  member Member @relation(fields:[guildId,userId],references:[guildId,userId],onDelete:Cascade)
+  @@id([guildId,userId])
+  @@index([guildId,fullyFurnishedAt])
+}
+
+model FullyFurnishedReceipt {
+  guildId String
+  userId String
+  kind String
+  reference String
+  createdAt DateTime @default(now())
+  @@id([guildId,userId,kind,reference])
+  @@index([guildId,kind,createdAt])
 }
 
 model MemberPresenceState {
