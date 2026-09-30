@@ -53,7 +53,9 @@ export function cookieNames(_config) {
 export const cookieOptions = (config, maxAge) => ({ httpOnly: true, secure: config.secure, sameSite: 'lax', path: '/', maxAge });
 
 export function validateCsrf(request, session, config, token) {
-  if (request.headers.get('origin') !== config.origin ||
+  let requestOrigin=request.headers.get('origin');
+  if(!requestOrigin)try{requestOrigin=new URL(request.headers.get('referer')??'').origin;}catch{requestOrigin=null;}
+  if (requestOrigin !== config.origin ||
       !equalSecret(token ?? request.headers.get('x-csrf-token'), session.csrf)) throw new AccessError('CSRF_REJECTED');
 }
 
