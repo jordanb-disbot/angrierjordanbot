@@ -23,7 +23,11 @@ export async function GET(request: Request) {
     response = NextResponse.redirect(`${config.origin}/admin`, { headers: privateHeaders });
     response.cookies.set(cookieNames(config).session, seal(session, 'session', config),
       { ...cookieOptions(config, Math.floor((session.expiresAt - Date.now()) / 1000)), sameSite: 'lax' });
-  } catch (error) { response = errorResponse(error); }
+  } catch (error) {
+    const code=error instanceof AccessError?error.code:'DASHBOARD_UNAVAILABLE';
+    console.warn('Dashboard auth diagnostic',JSON.stringify({stage:'oauth-callback',code}));
+    response = errorResponse(error);
+  }
   if (config) response.cookies.set(cookieNames(config).state, '', { ...cookieOptions(config, 0), sameSite: 'lax' });
   return response;
 }
