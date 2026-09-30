@@ -32,8 +32,9 @@ test('cookie encryption rejects tampering, expiry, wrong purpose, origin, server
       .map(changes => () => unseal(encoded, 'session', { ...config, ...changes }, 5000))]) assert.throws(attempt, fail('SIGN_IN_REQUIRED'));
 });
 
-test('cookies use host-only secure HttpOnly path and OAuth state expires quickly', () => {
-  assert.equal(cookieNames(config).session, '__Host-aj-session');
+test('cookies use Railway-compatible host-only secure HttpOnly path and OAuth state expires quickly', () => {
+  assert.equal(cookieNames(config).session, 'aj-session');
+  assert.equal(cookieNames(config).state, 'aj-oauth-state');
   assert.deepEqual(cookieOptions(config, 300), { httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: 300 });
   const state = nonce();
   const url = new URL(authorizationUrl(config, state));
