@@ -97,6 +97,13 @@ test('provider errors, rate limits and malformed responses deny access without l
   await assert.rejects(currentAccess('fake-token', config, async () => new Response('', { status: 401 })), fail('SIGN_IN_REQUIRED'));
 });
 
+test('a short Discord rate limit retries once before authorization fails closed',async()=>{
+  let calls=0;
+  const access=await currentAccess('fake-token',config,async()=>++calls===1?new Response('',{status:429,headers:{'retry-after':'0.001'}}):json([{id:config.guildId,owner:true,permissions:'0'}]));
+  assert.equal(access.isGuildOwner,true);assert.equal(calls,2);
+  await assert.rejects(currentAccess('fake-token',config,async()=>new Response('',{status:429,headers:{'retry-after':'5'}})),fail('DISCORD_UNAVAILABLE'));
+});
+
 test('OAuth exchanges a code with exact callback, obtains identity, discards refresh token, and caps session age', async () => {
   let calls = 0;
   const started = Date.now();

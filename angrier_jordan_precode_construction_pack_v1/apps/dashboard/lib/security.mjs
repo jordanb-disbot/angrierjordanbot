@@ -58,18 +58,25 @@ export function validateCsrf(request, session, config, token) {
 }
 
 async function discordJson(path, accessToken, fetcher) {
-  let response;
-  try {
-    response = await fetcher(`https://discord.com/api/v10${path}`, {
-      headers: { Authorization: `Bearer ${accessToken}` }, cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(8000),
-    });
-  } catch { throw new AccessError('DISCORD_UNAVAILABLE', 503); }
-  if (!response.ok) {
-    const error=new AccessError(response.status === 401 ? 'SIGN_IN_REQUIRED' : 'DISCORD_UNAVAILABLE', response.status === 401 ? 401 : 503);
-    error.diagnostic={discordStatus:response.status};
-    throw error;
+  for(let attempt=0;attempt<2;attempt++){
+    let response;
+    try {
+      response = await fetcher(`https://discord.com/api/v10${path}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }, cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(8000),
+      });
+    } catch { throw new AccessError('DISCORD_UNAVAILABLE', 503); }
+    if(response.status===429&&attempt===0){
+      const retryMs=Math.ceil(Number(response.headers.get('retry-after'))*1000);
+      if(Number.isFinite(retryMs)&&retryMs>0&&retryMs<=2000){await new Promise(resolve=>setTimeout(resolve,retryMs));continue;}
+    }
+    if (!response.ok) {
+      const error=new AccessError(response.status === 401 ? 'SIGN_IN_REQUIRED' : 'DISCORD_UNAVAILABLE', response.status === 401 ? 401 : 503);
+      error.diagnostic={discordStatus:response.status};
+      throw error;
+    }
+    try { return await response.json(); } catch { throw new AccessError('DISCORD_UNAVAILABLE', 503); }
   }
-  try { return await response.json(); } catch { throw new AccessError('DISCORD_UNAVAILABLE', 503); }
+  throw new AccessError('DISCORD_UNAVAILABLE',503);
 }
 
 /** No cached role claims: all callers obtain fresh Discord membership and permissions. */
