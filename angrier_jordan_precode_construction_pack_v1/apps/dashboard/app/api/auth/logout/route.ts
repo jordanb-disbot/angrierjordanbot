@@ -18,5 +18,10 @@ export async function POST(request: Request) {
     const response = NextResponse.redirect(`${config.origin}/`, { status: 303, headers: privateHeaders });
     response.cookies.set(cookieNames(config).session, '', { ...cookieOptions(config, 0), sameSite: 'lax' });
     return response;
-  } catch (error) { return errorResponse(error); }
+  } catch (error) {
+    const diagnostic=(error instanceof Error&&'diagnostic'in error&&error.diagnostic&&typeof error.diagnostic==='object'?error.diagnostic:{});
+    const code=error instanceof Error&&'code'in error&&typeof error.code==='string'?error.code:'DASHBOARD_UNAVAILABLE';
+    console.warn('Dashboard logout diagnostic',JSON.stringify({code,...diagnostic}));
+    return errorResponse(error);
+  }
 }

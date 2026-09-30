@@ -53,10 +53,15 @@ export function cookieNames(_config) {
 export const cookieOptions = (config, maxAge) => ({ httpOnly: true, secure: config.secure, sameSite: 'lax', path: '/', maxAge });
 
 export function validateCsrf(request, session, config, token) {
-  let requestOrigin=request.headers.get('origin');
-  if(!requestOrigin)try{requestOrigin=new URL(request.headers.get('referer')??'').origin;}catch{requestOrigin=null;}
-  if (requestOrigin !== config.origin ||
-      !equalSecret(token ?? request.headers.get('x-csrf-token'), session.csrf)) throw new AccessError('CSRF_REJECTED');
+  const origin=request.headers.get('origin'),referer=request.headers.get('referer');
+  let requestOrigin=origin;
+  if(!requestOrigin)try{requestOrigin=new URL(referer??'').origin;}catch{requestOrigin=null;}
+  const tokenMatches=equalSecret(token ?? request.headers.get('x-csrf-token'), session.csrf);
+  if(requestOrigin!==config.origin||!tokenMatches){
+    const error=new AccessError('CSRF_REJECTED');
+    error.diagnostic={origin:origin===config.origin?'match':origin?'mismatch':'missing',referer:referer?'present':'missing',token:tokenMatches?'match':'mismatch'};
+    throw error;
+  }
 }
 
 async function discordJson(path, accessToken, fetcher) {
