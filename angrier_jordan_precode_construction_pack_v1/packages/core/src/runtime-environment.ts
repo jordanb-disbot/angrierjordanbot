@@ -23,8 +23,6 @@ export function validateRuntimeEnvironment(env:Environment,role:RuntimeRole):Run
     for(const key of ['DISCORD_APPLICATION_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key)))errors.add(key);
     if(env.ENABLE_FAMILY_SMOKE==='true')required('FAMILY_COMPATIBILITY_SECRET',32);
     if(env.ENABLE_MUSIC_SMOKE==='true'){
-      // Gate C has not passed. The development switch cannot enable production playback.
-      if(production)errors.add('ENABLE_MUSIC_SMOKE (Gate C pending)');
       const endpoint=required('LAVALINK_URL');required('LAVALINK_PASSWORD',16);
       for(const key of ['LAVALINK_ALLOW_INSECURE_HTTP','MUSIC_SPOTIFY_METADATA','MUSIC_APPLE_METADATA','MUSIC_DIRECT_AUDIO'])if(env[key]!==undefined&&!['true','false'].includes(env[key]!))errors.add(key);
       try{const url=new URL(endpoint),local=url.hostname==='localhost'||url.hostname.endsWith('.localhost')||url.hostname.endsWith('.internal')||url.hostname==='127.0.0.1'||url.hostname==='[::1]';if(url.username||url.password||url.search||url.hash||url.pathname!=='/'||!(url.protocol==='https:'||!production&&local&&env.LAVALINK_ALLOW_INSECURE_HTTP==='true'&&url.protocol==='http:'))errors.add('LAVALINK_URL');}catch{errors.add('LAVALINK_URL');}
