@@ -64,7 +64,11 @@ async function discordJson(path, accessToken, fetcher) {
       headers: { Authorization: `Bearer ${accessToken}` }, cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(8000),
     });
   } catch { throw new AccessError('DISCORD_UNAVAILABLE', 503); }
-  if (!response.ok) throw new AccessError(response.status === 401 ? 'SIGN_IN_REQUIRED' : 'DISCORD_UNAVAILABLE', response.status === 401 ? 401 : 503);
+  if (!response.ok) {
+    const error=new AccessError(response.status === 401 ? 'SIGN_IN_REQUIRED' : 'DISCORD_UNAVAILABLE', response.status === 401 ? 401 : 503);
+    error.diagnostic={discordStatus:response.status};
+    throw error;
+  }
   try { return await response.json(); } catch { throw new AccessError('DISCORD_UNAVAILABLE', 503); }
 }
 

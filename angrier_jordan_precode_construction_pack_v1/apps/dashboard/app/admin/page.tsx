@@ -21,7 +21,8 @@ export default async function AdminPage() {
   try { auth = await requireAdmin(); }
   catch (error) {
     const code=error instanceof AccessError?error.code:'DASHBOARD_UNAVAILABLE';
-    console.warn('Dashboard auth diagnostic',JSON.stringify({stage:'admin-session',code}));
+    const diagnostic=(error instanceof AccessError?(error as AccessError&{diagnostic?:Record<string,unknown>}).diagnostic:undefined)??{};
+    console.warn('Dashboard auth diagnostic',JSON.stringify({stage:'admin-session',code,...diagnostic}));
     const denied = error instanceof AccessError && error.status === 403;
     return <main className="entry"><section className="window sign-in"><p className="eyebrow">Angrier Jordan</p>
       <h1>{denied ? 'Administrator access required' : 'Sign in to continue'}</h1>
