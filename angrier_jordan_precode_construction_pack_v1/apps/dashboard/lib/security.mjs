@@ -59,7 +59,7 @@ export function validateCsrf(request, session, config, token) {
   const tokenMatches=equalSecret(token ?? request.headers.get('x-csrf-token'), session.csrf);
   if(requestOrigin!==config.origin||!tokenMatches){
     const error=new AccessError('CSRF_REJECTED');
-    error.diagnostic={origin:origin===config.origin?'match':origin?'mismatch':'missing',referer:referer?'present':'missing',token:tokenMatches?'match':'mismatch'};
+    error.diagnostic={origin:origin===config.origin?'match':origin?'mismatch':'missing',referer:referer?'present':'missing',token:tokenMatches?'match':'mismatch',...(origin?{requestOrigin:origin}:{}),expectedOrigin:config.origin};
     throw error;
   }
 }
