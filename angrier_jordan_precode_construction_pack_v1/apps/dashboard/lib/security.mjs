@@ -57,7 +57,10 @@ export function validateCsrf(request, session, config, token) {
   let requestOrigin=origin;
   if(!requestOrigin)try{requestOrigin=new URL(referer??'').origin;}catch{requestOrigin=null;}
   const tokenMatches=equalSecret(token ?? request.headers.get('x-csrf-token'), session.csrf);
-  if(requestOrigin!==config.origin||!tokenMatches){
+  // Some privacy-focused browser contexts submit Origin: null for same-site form posts.
+  // A null origin is accepted only with the independently verified per-session CSRF token.
+  const originAccepted=requestOrigin===config.origin||(origin==='null'&&tokenMatches);
+  if(!originAccepted||!tokenMatches){
     const error=new AccessError('CSRF_REJECTED');
     error.diagnostic={origin:origin===config.origin?'match':origin?'mismatch':'missing',referer:referer?'present':'missing',token:tokenMatches?'match':'mismatch',...(origin?{requestOrigin:origin}:{}),expectedOrigin:config.origin};
     throw error;

@@ -49,6 +49,7 @@ test('CSRF rejects absent token, wrong token and cross-origin requests even with
   const request = headers => new Request(`${config.origin}/api/settings`, { method: 'POST', headers });
   validateCsrf(request({ origin: config.origin, 'x-csrf-token': session.csrf }), session, config);
   validateCsrf(request({ referer: `${config.origin}/admin`, 'x-csrf-token': session.csrf }), session, config);
+  validateCsrf(request({ origin: 'null', 'x-csrf-token': session.csrf }), session, config);
   for (const headers of [{ origin: config.origin }, { origin: config.origin, 'x-csrf-token': 'wrong' },
     { origin: 'https://evil.test', 'x-csrf-token': session.csrf }, { 'x-csrf-token': session.csrf }]) {
     assert.throws(() => validateCsrf(request(headers), session, config), fail('CSRF_REJECTED'));
