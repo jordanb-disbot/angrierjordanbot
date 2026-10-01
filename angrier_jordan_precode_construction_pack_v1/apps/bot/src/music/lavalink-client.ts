@@ -32,6 +32,7 @@ const text=(value:unknown,max:number):value is string=>typeof value==='string'&&
 const integer=(value:unknown,min:number,max:number):value is number=>typeof value==='number'&&Number.isSafeInteger(value)&&value>=min&&value<=max;
 const snowflake=(value:unknown):value is string=>typeof value==='string'&&/^[1-9]\d{16,19}$/.test(value);
 const privateHost=(host:string)=>{if(host==='localhost'||host==='[::1]'||host.endsWith('.localhost')||host.endsWith('.internal')||host.endsWith('.local')||/^[a-zA-Z][a-zA-Z0-9-]*$/.test(host))return true;const parts=host.split('.');if(parts.length!==4||parts.some(part=>!/^\d{1,3}$/.test(part)||Number(part)>255))return false;const [a,b]=parts.map(Number);return a===127||a===10||a===192&&b===168||a===172&&b!>=16&&b!<=31;};
+const playbackIdentifier=(provider:MusicPublicProvider,reference:string)=>provider==='youtube_music'?reference.replace('https://music.youtube.com','https://www.youtube.com'):reference;
 const same=(a:MusicTransportFence,b:MusicTransportFence)=>a.generation===b.generation&&a.revision===b.revision;
 const ack=():LavalinkAcknowledgement=>({accepted:true});
 
@@ -134,7 +135,7 @@ export class LavalinkRestClient implements MusicResolutionProvider {
  async resolve(reference:string,limit:number,signal:AbortSignal):Promise<{tracks:MusicMetadata[];truncated:boolean}>{
   const parsed=normalizeMusicReference(reference);if(!parsed||!integer(limit,1,1000))fail('LAVALINK_INPUT');
   this.#enabled(parsed!.provider);if(signal.aborted)fail('LAVALINK_ABORTED');await this.#verifyNode();
-  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(parsed!.reference),undefined,signal));
+  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(playbackIdentifier(parsed!.provider,parsed!.reference)),undefined,signal));
   if(result?.loadType==='empty')return{tracks:[],truncated:false};
   if(result?.loadType==='track'&&parsed!.kind==='track'){
    musicTrace('provider.load.result',{reference:parsed!.reference,loadType:result.loadType as string});const row=this.#metadata(result.data,parsed!.provider);if(!row||row.reference!==parsed!.reference)fail('LAVALINK_SOURCE');return{tracks:[row!],truncated:false};
@@ -165,7 +166,7 @@ export class LavalinkRestClient implements MusicResolutionProvider {
   // youtube-source searches Music URLs but its playback resolver accepts the
   // canonical watch URL. Preserve the member's selected Music identity for
   // correlation and display while handing Lavalink that canonical identifier.
-  const identifier=parsed!.provider==='youtube_music'?parsed!.reference.replace('https://music.youtube.com','https://www.youtube.com'):parsed!.reference;
+  const identifier=playbackIdentifier(parsed!.provider,parsed!.reference);
   const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(identifier),undefined,signal)),data=object(result?.data),metadata=this.#metadata(data,parsed!.provider);
   musicTrace('provider.load.result',{reference:parsed!.reference,loadType:result?.loadType as string});
   if(result?.loadType!=='track'||!metadata||metadata.reference!==parsed!.reference||!text(data?.encoded,65536))fail('LAVALINK_SOURCE');

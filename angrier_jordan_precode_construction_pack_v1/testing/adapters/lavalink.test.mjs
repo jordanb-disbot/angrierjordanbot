@@ -34,6 +34,14 @@ test('YouTube Music selections load through the canonical YouTube watch URL whil
  assert.deepEqual(handle,{});assert.match(calls[1].url,/identifier=https%3A%2F%2Fwww\.youtube\.com%2Fwatch%3Fv%3D/);
 });
 
+test('YouTube Music selections use the canonical URL during required pre-queue revalidation too',async()=>{
+ const id='dQw4w9WgXcQ',info={version:{major:4},sourceManagers:['youtube','soundcloud'],plugins:[{name:'youtube-plugin',version:'1.18.2'}]};
+ const response={loadType:'track',data:{encoded:'PRIVATE_YOUTUBE_SOURCE',info:{sourceName:'youtube',title:'Selected song',author:'Selected artist',isSeekable:true,isStream:false,length:90000,uri:`https://www.youtube.com/watch?v=${id}`}}};
+ const {client,calls}=setup({sourcePolicy:{mode:'multi-source'},infoFetch:async()=>json(info),fetch:async()=>json(response)});
+ const result=await client.resolve(`https://music.youtube.com/watch?v=${id}`,1,new AbortController().signal);
+ assert.equal(result.tracks[0].reference,`https://music.youtube.com/watch?v=${id}`);assert.match(calls[1].url,/identifier=https%3A%2F%2Fwww\.youtube\.com%2Fwatch%3Fv%3D/);
+});
+
 test('Operator endpoint rejects alternate schemes, credentials, injected paths and implicit insecure HTTP',()=>{
  for(const endpoint of ['http://node.invalid','file:///tmp/node','https://user:password@node.invalid','https://node.invalid/v4','https://node.invalid/?secret=x','https://node.invalid/#x','https://node.invalid\n'])assert.throws(()=>setup({endpoint}),{code:'LAVALINK_CONFIG'});
  assert.throws(()=>setup({sessionId:'../players'}),{code:'LAVALINK_CONFIG'});assert.throws(()=>setup({password:'token\r\nInjected:value'}),{code:'LAVALINK_CONFIG'});assert.throws(()=>setup({isCurrent:undefined}),{code:'LAVALINK_CONFIG'});
