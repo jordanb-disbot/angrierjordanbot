@@ -162,7 +162,11 @@ export class LavalinkRestClient implements MusicResolutionProvider {
  async loadPlayableTrack(track:MusicMetadata,signal?:AbortSignal):Promise<LavalinkTrackHandle>{
   const parsed=normalizeMusicReference(track?.reference);if(!parsed||parsed.kind!=='track'||!['youtube','youtube_music','soundcloud'].includes(parsed.provider)||track.provider!==parsed.provider)fail('LAVALINK_SOURCE');
   this.#enabled(parsed!.provider);if(signal?.aborted)fail('LAVALINK_ABORTED');await this.#verifyNode();
-  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(parsed!.reference),undefined,signal)),data=object(result?.data),metadata=this.#metadata(data,parsed!.provider);
+  // youtube-source searches Music URLs but its playback resolver accepts the
+  // canonical watch URL. Preserve the member's selected Music identity for
+  // correlation and display while handing Lavalink that canonical identifier.
+  const identifier=parsed!.provider==='youtube_music'?parsed!.reference.replace('https://music.youtube.com','https://www.youtube.com'):parsed!.reference;
+  const result=object(await this.#request('GET','/v4/loadtracks?identifier='+encodeURIComponent(identifier),undefined,signal)),data=object(result?.data),metadata=this.#metadata(data,parsed!.provider);
   musicTrace('provider.load.result',{reference:parsed!.reference,loadType:result?.loadType as string});
   if(result?.loadType!=='track'||!metadata||metadata.reference!==parsed!.reference||!text(data?.encoded,65536))fail('LAVALINK_SOURCE');
   if(['youtube','youtube_music'].includes(track.provider)&&!sameMusicRecording(track,metadata!))fail('LAVALINK_TRACK_CHANGED');

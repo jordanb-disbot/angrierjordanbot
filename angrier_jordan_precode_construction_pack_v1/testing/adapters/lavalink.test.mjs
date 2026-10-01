@@ -25,6 +25,15 @@ test('Lavalink authenticates fixed v4 routes and returns no private provider fie
  assert.deepEqual(await client.updateSession({resuming:true,timeout:60}),{accepted:true});assert.equal(calls[4].url,'https://node.invalid/v4/sessions/ready-session');
 });
 
+test('YouTube Music selections load through the canonical YouTube watch URL while retaining their selected identity',async()=>{
+ const id='dQw4w9WgXcQ',info={version:{major:4},sourceManagers:['youtube','soundcloud'],plugins:[{name:'youtube-plugin',version:'1.18.2'}]};
+ const response={loadType:'track',data:{encoded:'PRIVATE_YOUTUBE_SOURCE',info:{sourceName:'youtube',title:'Selected song',author:'Selected artist',isSeekable:true,isStream:false,length:90000,uri:`https://www.youtube.com/watch?v=${id}`}}};
+ const {client,calls}=setup({sourcePolicy:{mode:'multi-source'},infoFetch:async()=>json(info),fetch:async()=>json(response)});
+ const track={provider:'youtube_music',reference:`https://music.youtube.com/watch?v=${id}`,title:'Selected song',artist:'Selected artist',album:null,durationMs:90000,artworkUrl:null,seekable:true};
+ const handle=await client.loadPlayableTrack(track);
+ assert.deepEqual(handle,{});assert.match(calls[1].url,/identifier=https%3A%2F%2Fwww\.youtube\.com%2Fwatch%3Fv%3D/);
+});
+
 test('Operator endpoint rejects alternate schemes, credentials, injected paths and implicit insecure HTTP',()=>{
  for(const endpoint of ['http://node.invalid','file:///tmp/node','https://user:password@node.invalid','https://node.invalid/v4','https://node.invalid/?secret=x','https://node.invalid/#x','https://node.invalid\n'])assert.throws(()=>setup({endpoint}),{code:'LAVALINK_CONFIG'});
  assert.throws(()=>setup({sessionId:'../players'}),{code:'LAVALINK_CONFIG'});assert.throws(()=>setup({password:'token\r\nInjected:value'}),{code:'LAVALINK_CONFIG'});assert.throws(()=>setup({isCurrent:undefined}),{code:'LAVALINK_CONFIG'});
