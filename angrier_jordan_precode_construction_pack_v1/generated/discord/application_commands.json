@@ -33,6 +33,22 @@
   },
   {
     "type": 1,
+    "name": "announce",
+    "description": "Post an owner announcement in this channel.",
+    "options": [
+      {
+        "type": 3,
+        "name": "message",
+        "description": "Announcement text",
+        "required": true,
+        "min_value": 1,
+        "max_value": 2000
+      }
+    ],
+    "default_member_permissions": "0"
+  },
+  {
+    "type": 1,
     "name": "bug",
     "description": "Report a bot issue.",
     "options": [

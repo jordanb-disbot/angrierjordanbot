@@ -482,6 +482,14 @@ export async function startProductionBot():Promise<void>{
         if(interaction.commandName==='wyr'){if(!enableWyrSmoke){await interaction.reply({ephemeral:true,content:'Would You Rather is not enabled yet.'});return;}await wyr.handleSlash(interaction);await recordSuccessfulCommand(interaction);return;}
         if(interaction.commandName==='rules'&&enableOnboardingSmoke){await onboarding.handleRulesCommand(interaction);return;}
         if(interaction.commandName==='roles'&&enableOnboardingSmoke){await onboarding.handleRolesCommand(interaction);return;}
+        if(interaction.commandName==='announce'){
+          if(!interaction.guild||interaction.guild.ownerId!==interaction.user.id){await interaction.reply({ephemeral:true,content:'Only the server owner may post an announcement.'});return;}
+          const message=interaction.options.getString('message',true).trim();
+          if(!message||message.length>2000||!interaction.channel?.isSendable()){await interaction.reply({ephemeral:true,content:'Use a message up to 2,000 characters in a sendable server channel.'});return;}
+          const sent=await interaction.channel.send({content:message,allowedMentions:{parse:[]}});
+          await audit.record({guildId:interaction.guildId!,actorUserId:interaction.user.id,source:'discord',action:'core.announce',targetType:'channel',targetId:interaction.channelId,after:{messageId:sent.id,length:message.length},requestId:interaction.id,createdAt:new Date()});
+          await interaction.reply({ephemeral:true,content:'Announcement posted.'});return;
+        }
         if(interaction.commandName==='status'){
           const snapshot=await health.check();
           await interaction.reply({ephemeral:true,content:`Angrier Jordan status: ${snapshot.status.toUpperCase()}\n${snapshot.checks.map(c=>`${c.status==='ok'?'✓':'!'} ${c.name}${c.latencyMs===undefined?'':` ${c.latencyMs}ms`}`).join('\n')}`});return;

@@ -85,6 +85,34 @@ export const COMMANDS = [
     "tutorialId": null
   },
   {
+    "id": "announce",
+    "preferred": "/announce",
+    "registered": "/announce",
+    "type": "slash",
+    "module": "core",
+    "handler": "core.announce",
+    "featureFlag": "core",
+    "permissions": [
+      "throne"
+    ],
+    "channels": [
+      "any_allowed"
+    ],
+    "options": [
+      {
+        "name": "message",
+        "type": "string",
+        "required": true,
+        "description": "Announcement text",
+        "min": 1,
+        "max": 2000
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "announce",
+    "tutorialId": null
+  },
+  {
     "id": "bug",
     "preferred": "/bug",
     "registered": "/bug",

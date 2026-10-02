@@ -1,7 +1,7 @@
 {
-  "application_commands": 64,
-  "slash_commands": 63,
+  "application_commands": 65,
+  "slash_commands": 64,
   "context_commands": 1,
   "discord_limit": 100,
-  "remaining": 36
+  "remaining": 35
 }

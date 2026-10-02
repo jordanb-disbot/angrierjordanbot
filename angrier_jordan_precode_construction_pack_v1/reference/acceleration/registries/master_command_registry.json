@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 128,
+  "command_count": 129,
   "commands": [
     {
       "id": "help",
@@ -102,6 +102,25 @@
       "status": "locked",
       "preferred_invocation": "/status",
       "registration_path": "/status"
+    },
+    {
+      "id": "announce",
+      "command": "/announce",
+      "type": "slash",
+      "module": "core",
+      "description": "Post an owner announcement in this channel.",
+      "permissions": ["throne"],
+      "channels": ["any_allowed"],
+      "options": [{"name":"message","type":"string","required":true,"description":"Announcement text","min":1,"max":2000}],
+      "handler": "core.announce",
+      "feature_flag": "core",
+      "ephemeral_default": true,
+      "help_id": "announce",
+      "tutorial_id": null,
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/announce",
+      "registration_path": "/announce"
     },
     {
       "id": "bug",
