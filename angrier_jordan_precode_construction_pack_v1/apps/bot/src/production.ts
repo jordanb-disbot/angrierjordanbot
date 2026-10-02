@@ -483,7 +483,9 @@ export async function startProductionBot():Promise<void>{
         if(interaction.commandName==='rules'&&enableOnboardingSmoke){await onboarding.handleRulesCommand(interaction);return;}
         if(interaction.commandName==='roles'&&enableOnboardingSmoke){await onboarding.handleRolesCommand(interaction);return;}
         if(interaction.commandName==='announce'){
-          if(!interaction.guild||interaction.guild.ownerId!==interaction.user.id){await interaction.reply({ephemeral:true,content:'Only the server owner may post an announcement.'});return;}
+          if(!interaction.guild){await interaction.reply({ephemeral:true,content:'Use /announce in the server.'});return;}
+          const announcer=await interaction.guild.members.fetch(interaction.user.id);
+          if(!announcer.permissions.has('Administrator')){await interaction.reply({ephemeral:true,content:'Discord Administrator permission is required to post an announcement.'});return;}
           const message=interaction.options.getString('message',true).trim();
           if(interaction.channelId!==FULLY_FURNISHED_ANNOUNCEMENT_CHANNEL){await interaction.reply({ephemeral:true,content:'Use /announce in the main chat.'});return;}
           if(!message||message.length>2000||!interaction.channel?.isSendable()){await interaction.reply({ephemeral:true,content:'Use a message up to 2,000 characters in the main chat.'});return;}
