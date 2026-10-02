@@ -3,7 +3,8 @@ import {pathToFileURL} from 'node:url';
 import {GUILD,productionTarget} from './audit-production-race-line.mjs';
 
 const ROLE_NAME='Fully Furnished';
-const END_AT='2026-10-02T16:00:00.000Z';
+// Sunday, October 4, 2026 at 11:59 PM America/Denver (MDT, UTC-06:00).
+const END_AT='2026-10-05T05:59:00.000Z';
 const check=(ok,code)=>{if(!ok)throw Error(code);};
 const definitions=[
  ['event.chair_historian','Chair Historian','lore',{event:'fully_furnished',requirement:'chair_historian'}],
@@ -25,9 +26,9 @@ export async function enableProductionFullyFurnished({db,config,get,write=consol
  check(existingRole.value===null||existingRole.value===roleId,'FULLY_FURNISHED_ROLE_REQUIRES_REVIEW');
  if(existingRole.value!==roleId)await config.set({guildId:GUILD,key:'roles.fully_furnished',value:roleId,expectedVersion:existingRole.version,source:'operator.production-fully-furnished',requestId:randomUUID()});
  const event=await db.fullyFurnishedEvent.findUnique({where:{guildId:GUILD}}),startsAt=event?.startsAt??now(),endsAt=new Date(END_AT);
- check(startsAt<endsAt,'FULLY_FURNISHED_EVENT_EXPIRED');
+ check(startsAt<endsAt&&now()<endsAt,'FULLY_FURNISHED_EVENT_EXPIRED');
  await db.$transaction(async tx=>{
-  await tx.fullyFurnishedEvent.upsert({where:{guildId:GUILD},create:{guildId:GUILD,startsAt,endsAt,enabled:true,roleId},update:{enabled:true,roleId}});
+  await tx.fullyFurnishedEvent.upsert({where:{guildId:GUILD},create:{guildId:GUILD,startsAt,endsAt,enabled:true,roleId},update:{endsAt,enabled:true,roleId}});
   for(const [id,name,achievementClass,criteria] of definitions)await tx.achievement.upsert({where:{id},create:{id,name,class:achievementClass,criteria,enabled:true},update:{name,class:achievementClass,criteria,enabled:true}});
  });
  const enabled=await config.getWithMetadata(GUILD,'features.fully_furnished_event');
