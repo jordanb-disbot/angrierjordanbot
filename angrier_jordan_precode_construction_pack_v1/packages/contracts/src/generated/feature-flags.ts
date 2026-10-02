@@ -16,7 +16,6 @@ export const FEATURE_FLAGS = [
   "line",
   "lore",
   "moderation",
-  "music",
   "party_games",
   "profile",
   "pvp",

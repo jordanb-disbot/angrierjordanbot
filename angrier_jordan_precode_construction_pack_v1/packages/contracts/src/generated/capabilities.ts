@@ -97,11 +97,6 @@ export const CAPABILITY_MATRIX = {
       "chaise_lounge",
       "throne"
     ],
-    "music.dj": [
-      "recliner",
-      "chaise_lounge",
-      "throne"
-    ],
     "counting.restore": [
       "recliner",
       "chaise_lounge",

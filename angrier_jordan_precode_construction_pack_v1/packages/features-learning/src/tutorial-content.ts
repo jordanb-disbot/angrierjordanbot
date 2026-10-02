@@ -3,7 +3,7 @@ import type {CommandContract,CommandOptionContract} from '../../contracts/src/ty
 interface HelpDocument {commands:string[];title?:string;body?:string;games?:Record<string,string>;fields?:Record<string,unknown>;examples?:string[];tutorial?:{steps?:string[]};[key:string]:unknown;}
 export interface LessonCopy {purpose:string;fields:string;example:string;steps:string[];completion:string;}
 // These are the existing feature-owned, reviewed help sources. Runtime never executes examples.
-const sources=['items','profiles','casino','events','special','solo','pvp','party','channel-games','crime','family','community','chairisms','social','introductions','learning','music','onboarding'];
+const sources=['items','profiles','casino','events','special','solo','pvp','party','channel-games','crime','family','community','chairisms','social','introductions','learning','onboarding'];
 const documents:HelpDocument[]=sources.map(name=>JSON.parse(readFileSync(new URL('../../content/help/'+name+'.json',import.meta.url),'utf8')) as HelpDocument);
 interface AuthoredLesson {purpose:string;controls:string;steps:string[];completion:string;}
 const authoredLessons=(JSON.parse(readFileSync(new URL('../../content/help/tutorial-lessons.json',import.meta.url),'utf8')) as {lessons:Record<string,AuthoredLesson>}).lessons;

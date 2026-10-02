@@ -1,5 +1,5 @@
 {
-  "count": 264,
+  "count": 255,
   "controls": [
     {
       "key": "server.timezone",
@@ -1187,75 +1187,6 @@
       "dependsOn": []
     },
     {
-      "key": "music.enabled",
-      "section": "music",
-      "label": "Enabled",
-      "description": "",
-      "kind": "toggle",
-      "defaultValue": false,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": []
-    },
-    {
-      "key": "music.max_active_voice_channels",
-      "section": "music",
-      "label": "Max Active Voice Channels",
-      "description": "",
-      "kind": "number",
-      "defaultValue": 1,
-      "risk": "locked",
-      "editableBy": [],
-      "restartRequired": false,
-      "mutable": false,
-      "dashboardWrite": "blocked",
-      "dependsOn": [],
-      "min": 1,
-      "max": 1
-    },
-    {
-      "key": "music.default_volume",
-      "section": "music",
-      "label": "Default Volume",
-      "description": "",
-      "kind": "number",
-      "defaultValue": 65,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": [],
-      "min": 1,
-      "max": 100
-    },
-    {
-      "key": "music.vote_skip_majority",
-      "section": "music",
-      "label": "Vote Skip Majority",
-      "description": "",
-      "kind": "toggle",
-      "defaultValue": true,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": []
-    },
-    {
       "key": "introductions.one_active_per_member",
       "section": "introductions",
       "label": "One Active Per Member",
@@ -2162,81 +2093,6 @@
       "dependsOn": [],
       "min": 30,
       "max": 3650
-    },
-    {
-      "key": "music.queue_max_tracks",
-      "section": "music",
-      "label": "Queue Max Tracks",
-      "description": "",
-      "kind": "number",
-      "defaultValue": 250,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": [],
-      "min": 10,
-      "max": 1000
-    },
-    {
-      "key": "music.autoplay_default",
-      "section": "music",
-      "label": "Autoplay Default",
-      "description": "",
-      "kind": "toggle",
-      "defaultValue": false,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": []
-    },
-    {
-      "key": "music.loop_default",
-      "section": "music",
-      "label": "Loop Default",
-      "description": "",
-      "kind": "select",
-      "defaultValue": "off",
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": [],
-      "choices": [
-        "off",
-        "track",
-        "queue"
-      ]
-    },
-    {
-      "key": "music.controller_refresh_on_interaction",
-      "section": "music",
-      "label": "Controller Refresh On Interaction",
-      "description": "",
-      "kind": "toggle",
-      "defaultValue": true,
-      "risk": "normal",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": []
     },
     {
       "key": "moderation.heat.warning_threshold",
@@ -4979,23 +4835,6 @@
       "restartRequired": false,
       "mutable": true,
       "dashboardWrite": "blocked",
-      "dependsOn": []
-    },
-    {
-      "key": "music.dj_role",
-      "section": "music",
-      "label": "Dj Role",
-      "description": "Optional dedicated Music DJ role; shared staff tiers retain DJ authority.",
-      "kind": "role-select",
-      "defaultValue": null,
-      "risk": "security",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
       "dependsOn": []
     }
   ]

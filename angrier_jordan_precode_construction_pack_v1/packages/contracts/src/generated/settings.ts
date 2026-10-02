@@ -1117,71 +1117,6 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
-    "key": "music.enabled",
-    "section": "music",
-    "type": "boolean",
-    "default": false,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
-    "key": "music.max_active_voice_channels",
-    "section": "music",
-    "type": "integer",
-    "default": 1,
-    "editable_by": [],
-    "restart_required": false,
-    "description": "",
-    "risk": "locked",
-    "min": 1,
-    "max": 1,
-    "mutable": false,
-    "dashboard_write": "blocked",
-    "depends_on": []
-  },
-  {
-    "key": "music.default_volume",
-    "section": "music",
-    "type": "integer",
-    "default": 65,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "min": 1,
-    "max": 100,
-    "mutable": true,
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
-    "key": "music.vote_skip_majority",
-    "section": "music",
-    "type": "boolean",
-    "default": true,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
     "key": "introductions.one_active_per_member",
     "section": "introductions",
     "type": "boolean",
@@ -2036,77 +1971,6 @@ export const SETTINGS = [
     "mutable": true,
     "min": 30,
     "max": 3650,
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
-    "key": "music.queue_max_tracks",
-    "section": "music",
-    "type": "integer",
-    "default": 250,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
-    "min": 10,
-    "max": 1000,
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
-    "key": "music.autoplay_default",
-    "section": "music",
-    "type": "boolean",
-    "default": false,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
-    "key": "music.loop_default",
-    "section": "music",
-    "type": "choice",
-    "default": "off",
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
-    "choices": [
-      "off",
-      "track",
-      "queue"
-    ],
-    "dashboard_write": "draft",
-    "depends_on": []
-  },
-  {
-    "key": "music.controller_refresh_on_interaction",
-    "section": "music",
-    "type": "boolean",
-    "default": true,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "",
-    "risk": "normal",
-    "mutable": true,
     "dashboard_write": "draft",
     "depends_on": []
   },
@@ -4715,22 +4579,6 @@ export const SETTINGS = [
     "risk": "high",
     "mutable": true,
     "dashboard_write": "blocked",
-    "depends_on": []
-  },
-  {
-    "key": "music.dj_role",
-    "section": "music",
-    "type": "discord_role",
-    "default": null,
-    "editable_by": [
-      "throne",
-      "chaise_lounge"
-    ],
-    "restart_required": false,
-    "description": "Optional dedicated Music DJ role; shared staff tiers retain DJ authority.",
-    "risk": "security",
-    "mutable": true,
-    "dashboard_write": "draft",
     "depends_on": []
   }
 ] as const satisfies readonly SettingContract[];
