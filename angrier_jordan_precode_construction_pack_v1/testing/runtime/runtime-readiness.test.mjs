@@ -6,12 +6,9 @@ import {SchedulerWorker} from '../../.test-build/packages/core/src/scheduler-wor
 import {PermissionEngine} from '../../.test-build/packages/core/src/permissions.js';
 
 const base={NODE_ENV:'production',DATABASE_URL:'postgresql://fixture:secret@chairs-db.railway.internal:5432/chairs',AJ_DATABASE_PURPOSE:'production',DISCORD_TOKEN:'fake-only',DISCORD_APPLICATION_ID:'123456789012345678',DISCORD_GUILD_ID:'223456789012345678'};
-test('Music acceptance configuration is optional when disabled and requires a validated Lavalink configuration when enabled',()=>{
- assert.doesNotThrow(()=>validateRuntimeEnvironment({...base,ENABLE_MUSIC_SMOKE:'false'},'worker'));
- const music={...base,ENABLE_MUSIC_SMOKE:'true',LAVALINK_URL:'https://node.example',LAVALINK_PASSWORD:'fixture-secret-password'};
- assert.doesNotThrow(()=>validateRuntimeEnvironment(music,'worker'));
- for(const change of [{LAVALINK_PASSWORD:'short-private'},{LAVALINK_URL:'https://user:private@node.example'},{LAVALINK_URL:'http://node.example',LAVALINK_ALLOW_INSECURE_HTTP:'true'},{MUSIC_SPOTIFY_METADATA:'yes'}])assert.throws(()=>validateRuntimeEnvironment({...music,...change},'worker'),e=>!e.message.includes('private')&&!e.message.includes('fixture-secret'));
- assert.doesNotThrow(()=>validateRuntimeEnvironment({...music,NODE_ENV:'development',LAVALINK_URL:'http://localhost:2333',LAVALINK_ALLOW_INSECURE_HTTP:'true'},'worker'));
+test('Retired music variables no longer affect worker startup',()=>{
+ assert.doesNotThrow(()=>validateRuntimeEnvironment({...base,ENABLE_MUSIC_SMOKE:'true'},'worker'));
+ assert.doesNotThrow(()=>validateRuntimeEnvironment({...base,LAVALINK_URL:'not-a-url',LAVALINK_PASSWORD:'short'},'worker'));
 });
 test('production refuses test/public/unresolved database configurations without disclosing values',()=>{
   assert.equal(validateRuntimeEnvironment(base,'worker').port,8080);
