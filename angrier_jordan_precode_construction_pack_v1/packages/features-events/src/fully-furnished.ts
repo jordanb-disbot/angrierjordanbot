@@ -1,6 +1,6 @@
 import type {PrismaClient} from '@prisma/client';
 
-export const FULLY_FURNISHED_END_AT=new Date('2026-10-02T16:00:00.000Z');
+export const FULLY_FURNISHED_END_AT=new Date('2026-10-05T05:59:00.000Z');
 export const FULLY_FURNISHED_REQUIREMENTS=['chair_historian','properly_introduced','armchair_architect','house_regular','button_masher'] as const;
 type Requirement=typeof FULLY_FURNISHED_REQUIREMENTS[number];
 export interface FullyFurnishedProgressView {active:boolean;completed:string[];casinoRounds:number;commandNames:string[];unlocked:boolean;roleId:string|null;rolePending:boolean;}
@@ -51,6 +51,7 @@ export class PrismaFullyFurnishedRepository {
  async recordCasinoRound(guildId:string,userId:string,sessionId:string){return this.record(guildId,userId,'casino',sessionId,(tx,row,now)=>{const rounds=row.casinoRounds+1;return tx.fullyFurnishedProgress.update({where:{guildId_userId:{guildId,userId}},data:{casinoRounds:rounds,...(rounds>=10&&!row.houseRegularAt?{houseRegularAt:now}:{})}});});}
  async recordCommand(guildId:string,userId:string,command:string,reference:string){const name=safeName(command);if(!name||excluded.has(name))return this.progress(guildId,userId);return this.record(guildId,userId,'command',reference,(tx,row,now)=>{const names=[...new Set([...row.commandNames,name])].sort();return tx.fullyFurnishedProgress.update({where:{guildId_userId:{guildId,userId}},data:{commandNames:names,...(names.length>=5&&!row.buttonMasherAt?{buttonMasherAt:now}:{})}});});}
  async markRoleGranted(guildId:string,userId:string){await this.db.fullyFurnishedProgress.updateMany({where:{guildId,userId,fullyFurnishedAt:{not:null},roleGrantedAt:null},data:{roleGrantedAt:this.clock()}});}
+ async completers(guildId:string){return(await this.db.fullyFurnishedProgress.findMany({where:{guildId,fullyFurnishedAt:{not:null}},orderBy:{fullyFurnishedAt:'asc'},select:{userId:true}})).map(row=>row.userId);}
  async pendingRoleGrants(guildId:string):Promise<{userId:string;progress:FullyFurnishedProgressView}[]>{
   const event=await this.db.fullyFurnishedEvent.findUnique({where:{guildId}});if(!this.active(event,this.clock())||!event?.roleId)return [];
   const rows=await this.db.fullyFurnishedProgress.findMany({where:{guildId,fullyFurnishedAt:{not:null},roleGrantedAt:null},select:{userId:true,casinoRounds:true,commandNames:true,chairHistorianAt:true,properlyIntroducedAt:true,armchairArchitectAt:true,houseRegularAt:true,buttonMasherAt:true,fullyFurnishedAt:true}});

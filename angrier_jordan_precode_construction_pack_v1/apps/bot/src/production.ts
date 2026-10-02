@@ -41,6 +41,7 @@ import {PermissionEngine} from '../../../packages/core/src/permissions.js';
 import {CAPABILITY_MATRIX} from '../../../packages/contracts/src/generated/capabilities.js';
 import {PrismaEventsRepository} from '../../../packages/features-events/src/prisma-repository.js';
 import {PrismaFullyFurnishedRepository,type FullyFurnishedProgressView} from '../../../packages/features-events/src/fully-furnished.js';
+import {FULLY_FURNISHED_ANNOUNCEMENT_CHANNEL,fullyFurnishedCompletionAnnouncement} from './discord/fully-furnished-announcement.js';
 import {DiscordCasinoCoordinator,CASINO_COMMANDS} from './discord/casino-coordinator.js';
 import {DiscordCasinoAnnouncements} from './discord/casino-announcements.js';
 import {PrismaCasinoRepository} from '../../../packages/features-casino/src/prisma-repository.js';
@@ -118,6 +119,13 @@ export async function startProductionBot():Promise<void>{
   startup.mark('discord-client-construction');
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration],partials:enableActivityLoggingSmoke?[Partials.Message]:[]});
   const fullyFurnishedRepo=new PrismaFullyFurnishedRepository(db);
+  const announceFullyFurnishedCompletion=async(guildId:string,userId:string)=>{
+    const [channel,ids,guild]=await Promise.all([client.channels.fetch(FULLY_FURNISHED_ANNOUNCEMENT_CHANNEL),fullyFurnishedRepo.completers(guildId),client.guilds.fetch(guildId)]);
+    if(!channel?.isSendable())throw new Error('Fully Furnished announcement channel is unavailable.');
+    const members=await Promise.all(ids.map(async id=>(await guild.members.fetch({user:id,force:true}).catch(()=>null))?.displayName??'Former member'));
+    const winner=(await guild.members.fetch({user:userId,force:true}).catch(()=>null))?.displayName??'A member';
+    await channel.send(fullyFurnishedCompletionAnnouncement(winner,members));
+  };
   const deliverFullyFurnished=async(guildId:string,userId:string,progress:FullyFurnishedProgressView)=>{
     if(!progress.rolePending||!progress.roleId)return;
     const guild=await client.guilds.fetch(guildId),role=await guild.roles.fetch(progress.roleId).catch(()=>null);
@@ -126,9 +134,9 @@ export async function startProductionBot():Promise<void>{
     await member.roles.add(role,'Fully Furnished launch event completion');
     await fullyFurnishedRepo.markRoleGranted(guildId,userId);
   };
-  const recordFullyFurnished=async(eventGuildId:string,userId:string,action:()=>Promise<{progress:FullyFurnishedProgressView}>)=>{
+  const recordFullyFurnished=async(eventGuildId:string,userId:string,action:()=>Promise<{progress:FullyFurnishedProgressView;unlock?:unknown}>)=>{
     if(!enableFullyFurnishedSmoke)return;
-    try{const result=await action();await deliverFullyFurnished(eventGuildId,userId,result.progress);}
+    try{const result=await action();await deliverFullyFurnished(eventGuildId,userId,result.progress);if(result.unlock)await announceFullyFurnishedCompletion(eventGuildId,userId);}
     catch(error){console.error('Fully Furnished progress delivery pending.',error instanceof Error?error.message:'unknown');}
   };
   const recordSuccessfulCommand=async(interaction:{guildId:string|null;user:{id:string};id:string;commandName:string})=>{
