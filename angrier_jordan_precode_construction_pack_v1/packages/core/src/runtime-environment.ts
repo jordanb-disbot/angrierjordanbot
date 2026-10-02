@@ -20,7 +20,10 @@ export function validateRuntimeEnvironment(env:Environment,role:RuntimeRole):Run
   for(const [key,value] of Object.entries(env))if(/^ENABLE_.*_SMOKE$/.test(key)&&value!==undefined&&!['true','false'].includes(value))errors.add(key);
   if(role==='worker'){
     required('DISCORD_TOKEN');
-    for(const key of ['DISCORD_APPLICATION_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key).trim()))errors.add(key);
+    // The worker obtains its application ID from Discord after authenticating its bot token.
+    // Keeping this out of the deployment contract prevents an otherwise healthy bot from
+    // being unavailable because a duplicated public ID was not propagated by Railway.
+    if(!/^\d{17,20}$/.test(required('DISCORD_GUILD_ID').trim()))errors.add('DISCORD_GUILD_ID');
     if(env.ENABLE_FAMILY_SMOKE==='true')required('FAMILY_COMPATIBILITY_SECRET',32);
     if(production&&(env.ENABLE_MODERATION_SMOKE==='true'||env.ENABLE_SECURITY_SMOKE==='true'))required('EVIDENCE_ENCRYPTION_KEY',32);
   }
