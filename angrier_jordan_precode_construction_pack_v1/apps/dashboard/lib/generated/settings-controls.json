@@ -646,7 +646,7 @@
       "label": "Reward Guard Enabled",
       "description": "Limits future routine system-minted rewards. Existing balances, wagers, transfers, and member payments are unaffected.",
       "kind": "toggle",
-      "defaultValue": false,
+      "defaultValue": true,
       "risk": "financial",
       "editableBy": [
         "throne",
@@ -663,7 +663,7 @@
       "label": "Reward Guard Multiplier Bps",
       "description": "Percentage of a routine reward to mint while the guard is enabled. 10,000 is 100%.",
       "kind": "number",
-      "defaultValue": 10000,
+      "defaultValue": 5000,
       "risk": "financial",
       "editableBy": [
         "throne",
@@ -684,7 +684,7 @@
       "label": "Reward Guard Max Single Reward",
       "description": "Maximum Ottoman amount for one routine reward while the guard is enabled.",
       "kind": "number",
-      "defaultValue": 10000,
+      "defaultValue": 2000,
       "risk": "financial",
       "editableBy": [
         "throne",

@@ -606,7 +606,7 @@ export const SETTINGS = [
     "key": "economy.reward_guard_enabled",
     "section": "economy",
     "type": "boolean",
-    "default": false,
+    "default": true,
     "editable_by": [
       "throne",
       "chaise_lounge"
@@ -622,7 +622,7 @@ export const SETTINGS = [
     "key": "economy.reward_guard_multiplier_bps",
     "section": "economy",
     "type": "integer",
-    "default": 10000,
+    "default": 5000,
     "editable_by": [
       "throne",
       "chaise_lounge"
@@ -642,7 +642,7 @@ export const SETTINGS = [
     "key": "economy.reward_guard_max_single_reward",
     "section": "economy",
     "type": "integer",
-    "default": 10000,
+    "default": 2000,
     "editable_by": [
       "throne",
       "chaise_lounge"
