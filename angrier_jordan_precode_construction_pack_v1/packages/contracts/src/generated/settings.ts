@@ -603,6 +603,62 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
+    "key": "economy.reward_guard_enabled",
+    "section": "economy",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Limits future routine system-minted rewards. Existing balances, wagers, transfers, and member payments are unaffected.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
+    "key": "economy.reward_guard_multiplier_bps",
+    "section": "economy",
+    "type": "integer",
+    "default": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Percentage of a routine reward to mint while the guard is enabled. 10,000 is 100%.",
+    "risk": "financial",
+    "min": 0,
+    "max": 10000,
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "economy.reward_guard_enabled"
+    ]
+  },
+  {
+    "key": "economy.reward_guard_max_single_reward",
+    "section": "economy",
+    "type": "integer",
+    "default": 10000,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Maximum Ottoman amount for one routine reward while the guard is enabled.",
+    "risk": "financial",
+    "min": 0,
+    "max": 500000,
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": [
+      "economy.reward_guard_enabled"
+    ]
+  },
+  {
     "key": "lottery.max_tickets",
     "section": "economy",
     "type": "integer",

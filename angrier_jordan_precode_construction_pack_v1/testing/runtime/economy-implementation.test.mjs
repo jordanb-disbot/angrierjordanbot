@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {dailyCycle,EconomyService,InMemoryEconomyRepository} from '../../.test-build/packages/features-economy/src/index.js';
+import {dailyCycle,EconomyService,guardSystemReward,InMemoryEconomyRepository} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -12,6 +12,13 @@ const tiers=[
   {tier:5,cap:null,upgradeCost:0n},
 ];
 const make=(at='2026-09-21T18:00:00Z',random=[0])=>{const clock=new FixedClock(new Date(at));const repo=new InMemoryEconomyRepository([{id:'loot',type:'sellable',name:'Loot',rarity:'common',giftable:true,enabled:true}]);const audit=new AuditService(new InMemoryAuditSink());const service=new EconomyService(repo,audit,clock,new SequenceRandom(random),[{id:'f1',text:'The chair knows.'}]);return{clock,repo,service};};
+
+test('reward guardrail stays inert until enabled and then reduces or caps future rewards',()=>{
+  const off={enabled:false,multiplierBps:2_500,maxSingleReward:100n};
+  assert.equal(guardSystemReward(1_000n,off),1_000n);
+  assert.equal(guardSystemReward(1_000n,{...off,enabled:true}),100n);
+  assert.equal(guardSystemReward(80n,{...off,enabled:true}),20n);
+});
 
 async function funded(service,user='u',amount=1_000n){await service.bootstrap('g',user,amount,`seed-${user}`);return service.account('g',user);}
 

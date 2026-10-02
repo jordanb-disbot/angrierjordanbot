@@ -1,5 +1,5 @@
 {
-  "count": 255,
+  "count": 258,
   "controls": [
     {
       "key": "server.timezone",
@@ -639,6 +639,65 @@
       "dependsOn": [],
       "min": 5,
       "max": 5
+    },
+    {
+      "key": "economy.reward_guard_enabled",
+      "section": "economy",
+      "label": "Reward Guard Enabled",
+      "description": "Limits future routine system-minted rewards. Existing balances, wagers, transfers, and member payments are unaffected.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "economy.reward_guard_multiplier_bps",
+      "section": "economy",
+      "label": "Reward Guard Multiplier Bps",
+      "description": "Percentage of a routine reward to mint while the guard is enabled. 10,000 is 100%.",
+      "kind": "number",
+      "defaultValue": 10000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "economy.reward_guard_enabled"
+      ],
+      "min": 0,
+      "max": 10000
+    },
+    {
+      "key": "economy.reward_guard_max_single_reward",
+      "section": "economy",
+      "label": "Reward Guard Max Single Reward",
+      "description": "Maximum Ottoman amount for one routine reward while the guard is enabled.",
+      "kind": "number",
+      "defaultValue": 10000,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": [
+        "economy.reward_guard_enabled"
+      ],
+      "min": 0,
+      "max": 500000
     },
     {
       "key": "lottery.max_tickets",

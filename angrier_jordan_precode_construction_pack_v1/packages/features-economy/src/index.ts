@@ -3,3 +3,4 @@ export * from './repository.js';
 export * from './in-memory.js';
 export * from './prisma-repository.js';
 export * from './service.js';
+export * from './reward-guardrail.js';
