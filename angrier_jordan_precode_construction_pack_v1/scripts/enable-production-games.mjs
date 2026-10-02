@@ -5,6 +5,7 @@ import {productionTarget,GUILD} from './audit-production-race-line.mjs';
 
 export const GAME_CHANNELS={
  'channels.games_channel':'1537335115359715430',
+ 'channels.bot_channel':'1537333882846842930',
  'channels.one_word_story_channel':'1542477674780557365',
  'channels.last_letter_channel':'1537683580380123216',
  'channels.counting_channel':'1551003550044262470',
@@ -26,7 +27,7 @@ export async function enableProductionGames({db,config,get,write=console.log}){
   const channel=channels[index],id=Object.values(GAME_CHANNELS)[index];
   check(channel?.id===id&&channel.guild_id===GUILD&&channel.type===0,'GAME_CHANNEL_INVALID');
  }
- check(new Set(Object.values(GAME_CHANNELS)).size===4,'GAME_CHANNELS_NOT_DISTINCT');
+ check(new Set(Object.values(GAME_CHANNELS)).size===Object.keys(GAME_CHANNELS).length,'GAME_CHANNELS_NOT_DISTINCT');
  // All Discord and guild checks finish before any audited setting mutation.
  for(const [key,value] of GAME_SETTINGS){
   const current=await config.getWithMetadata(GUILD,key);
@@ -36,7 +37,8 @@ export async function enableProductionGames({db,config,get,write=console.log}){
   const saved=await config.getWithMetadata(GUILD,key);
   check(saved.version>=1&&isDeepStrictEqual(saved.value,value),'GAME_SETTING_VERIFY_FAILED');
  }
- write('PASS: production guild, private Railway database, and four Discord game channels verified.');
+ write('PASS: production guild, private Railway database, Gaming Chair, Bots Don’t Sit, and three dedicated Discord game channels verified.');
+ write(`PASS: shared command-game channels=${GAME_CHANNELS['channels.games_channel']},${GAME_CHANNELS['channels.bot_channel']}.`);
  for(const [key,value] of GAME_SETTINGS)write(`PASS: ${key}=${JSON.stringify(value)}.`);
  write('PASS: solo rewards and daily cap are zero; no game wagers or unrelated feature settings changed.');
 }

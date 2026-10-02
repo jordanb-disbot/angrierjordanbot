@@ -16,10 +16,12 @@ function fixture(){
  return {rows,writes,output,requests,db,config,get,run:()=>enableProductionGames({db,config,get,write:line=>output.push(line)})};
 }
 
-test('production Games maps all four channels, enables only safe game flags, and disables solo payout',async()=>{
+test('production Games maps both shared game channels plus dedicated channels, enables only safe game flags, and disables solo payout',async()=>{
  const f=fixture();await f.run();
  assert.deepEqual(f.requests,Object.values(GAME_CHANNELS).map(id=>`/channels/${id}`));
  assert.deepEqual(Object.fromEntries(Object.keys(GAME_CHANNELS).map(key=>[key,f.rows.get(key).value])),GAME_CHANNELS);
+ assert.equal(f.rows.get('channels.games_channel').value,'1537335115359715430');
+ assert.equal(f.rows.get('channels.bot_channel').value,'1537333882846842930');
  for(const key of ['features.solo_games','features.party_games','features.channel_games'])assert.equal(f.rows.get(key).value,true);
  assert.equal(f.rows.get('solo.reward').value,0);assert.equal(f.rows.get('solo.daily_reward_cap').value,0);
  assert.deepEqual(f.writes.map(row=>row.key),GAME_SETTINGS.map(([key])=>key));
