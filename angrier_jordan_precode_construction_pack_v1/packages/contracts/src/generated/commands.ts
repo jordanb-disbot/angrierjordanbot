@@ -93,10 +93,10 @@ export const COMMANDS = [
     "handler": "core.announce",
     "featureFlag": "core",
     "permissions": [
-      "throne"
+      "member"
     ],
     "channels": [
-      "any_allowed"
+      "main_chat"
     ],
     "options": [
       {

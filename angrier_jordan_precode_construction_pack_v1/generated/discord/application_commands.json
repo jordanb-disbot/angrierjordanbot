@@ -44,8 +44,7 @@
         "min_value": 1,
         "max_value": 2000
       }
-    ],
-    "default_member_permissions": "0"
+    ]
   },
   {
     "type": 1,
