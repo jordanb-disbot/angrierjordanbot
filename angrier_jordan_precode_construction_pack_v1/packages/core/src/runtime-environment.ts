@@ -20,14 +20,14 @@ export function validateRuntimeEnvironment(env:Environment,role:RuntimeRole):Run
   for(const [key,value] of Object.entries(env))if(/^ENABLE_.*_SMOKE$/.test(key)&&value!==undefined&&!['true','false'].includes(value))errors.add(key);
   if(role==='worker'){
     required('DISCORD_TOKEN');
-    for(const key of ['DISCORD_APPLICATION_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key)))errors.add(key);
+    for(const key of ['DISCORD_APPLICATION_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key).trim()))errors.add(key);
     if(env.ENABLE_FAMILY_SMOKE==='true')required('FAMILY_COMPATIBILITY_SECRET',32);
     if(production&&(env.ENABLE_MODERATION_SMOKE==='true'||env.ENABLE_SECURITY_SMOKE==='true'))required('EVIDENCE_ENCRYPTION_KEY',32);
   }
   let dashboardBaseUrl:string|undefined,oauthCallbackUrl:string|undefined;
   if(role==='dashboard'){
     required('DISCORD_OAUTH_CLIENT_SECRET',16);required('DASHBOARD_SESSION_SECRET',32);
-    for(const key of ['DISCORD_OAUTH_CLIENT_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key)))errors.add(key);
+    for(const key of ['DISCORD_OAUTH_CLIENT_ID','DISCORD_GUILD_ID'])if(!/^\d{17,20}$/.test(required(key).trim()))errors.add(key);
     const publicBase=required('PUBLIC_DASHBOARD_URL'),callback=required('DISCORD_OAUTH_CALLBACK_URL');
     try{
       const base=new URL(publicBase),cb=new URL(callback);

@@ -75,7 +75,7 @@ import { DiscordActivityLogger } from './discord/activity-logger.js';
 import { DiscordEconomyCoordinator } from './discord/economy-coordinator.js';
 
 class CuidLikeIds {next(prefix:string){return `${prefix}_${crypto.randomUUID()}`;}}
-const required=(name:string)=>{const value=process.env[name];if(!value)throw new Error(`Missing required environment variable ${name}`);return value;};
+const required=(name:string)=>{const value=process.env[name]?.trim();if(!value)throw new Error(`Missing required environment variable ${name}`);return value;};
 const ECONOMY_COMMANDS=new Set(['daily','weekly','work','fish','dig','scavenge','statement','inventory','bank','transfer']);
 
 export async function startProductionBot():Promise<void>{
