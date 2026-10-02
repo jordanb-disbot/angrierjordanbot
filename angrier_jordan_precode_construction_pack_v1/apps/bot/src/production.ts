@@ -5,9 +5,6 @@ import {runWithJailSendAcknowledgement} from './discord/jail-interaction-ack.js'
 import {runWithDailyAcknowledgement,replyDailyRestriction} from './discord/daily-interaction-ack.js';
 import {DiscordServerBootstrap} from './discord/server-bootstrap.js';
 import {PrismaServerBootstrapRepository} from '../../../packages/database/src/prisma-server-bootstrap.js';
-import {MusicApplication} from './music/music-application.js';
-import {musicAccess} from './music/music-access.js';
-import {MUSIC_COMMANDS} from './discord/music-coordinator.js';
 import {DiscordSocialCoordinator,SOCIAL_COMMANDS} from './discord/social-coordinator.js';
 import {PrismaSocialRepository} from '../../../packages/features-social/src/prisma-repository.js';
 import {seedSocialContent} from '../../../packages/features-social/src/content.js';
@@ -87,7 +84,6 @@ export async function startProductionBot():Promise<void>{
   const lifecycle=new RuntimeLifecycle();
   let initialized=false;
   const token=required('DISCORD_TOKEN');const applicationId=required('DISCORD_APPLICATION_ID');const guildId=required('DISCORD_GUILD_ID');
-  const enableMusicSmoke=process.env.ENABLE_MUSIC_SMOKE==='true';
   const enableLearningSmoke=process.env.ENABLE_LEARNING_SMOKE==='true';
   const enableSocialSmoke=process.env.ENABLE_SOCIAL_SMOKE==='true';
   const enableIntroductionsSmoke=process.env.ENABLE_INTRODUCTIONS_SMOKE==='true';
@@ -117,7 +113,8 @@ export async function startProductionBot():Promise<void>{
   const serverBootstrap=new DiscordServerBootstrap(new PrismaServerBootstrapRepository(db),{onFailure:error=>{if(!initialized)startup.fail(error);}});
   const audit=new AuditService(new PrismaAuditSink(db));
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
-  const jobRepo=new PrismaJobRepository(db,{notIn:['music.reconcile']});
+  // Music is owned by a separate bot.  Do not claim its historical jobs.
+  const jobRepo=new PrismaJobRepository(db,{notIn:['music.reconcile','music.controller.publish','music.controller.cleanup','music.controller.refresh']});
   startup.mark('discord-client-construction');
   const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration],partials:enableActivityLoggingSmoke?[Partials.Message]:[]});
   const fullyFurnishedRepo=new PrismaFullyFurnishedRepository(db);
@@ -137,7 +134,7 @@ export async function startProductionBot():Promise<void>{
   const recordSuccessfulCommand=async(interaction:{guildId:string|null;user:{id:string};id:string;commandName:string})=>{
     if(interaction.guildId)await recordFullyFurnished(interaction.guildId,interaction.user.id,()=>fullyFurnishedRepo.recordCommand(interaction.guildId!,interaction.user.id,interaction.commandName,interaction.id));
   };
-  const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const}),async()=>{try{return{name:'music',status:!music||await config.get(guildId,'music.enabled')!==true||music.ready?'ok' as const:'degraded' as const};}catch{return{name:'music',status:'degraded' as const};}}]);
+  const health=new HealthService([createPrismaHealthProbe(db),async()=>({name:'discord',status:client.isReady()&&!lifecycle.isStopping?'ok' as const:'down' as const})]);
   const on=<E extends keyof ClientEvents>(event:E,listener:(...args:ClientEvents[E])=>unknown|Promise<unknown>)=>{
     client.on(event,(...args)=>lifecycle.run(()=>runWithEventAcknowledgement(event,args,{events:enableEventsSmoke,special:enableSpecialSmoke},()=>runWithDailyAcknowledgement(event,args,enableEconomySmoke,()=>runWithJailSendAcknowledgement(event,args,enableJailSmoke,()=>serverBootstrap.run(event,args,()=>listener(...args)))),i=>events.handle(i)),()=>console.error('Discord event processing failed; persisted recovery remains available.')));
   };
@@ -173,9 +170,8 @@ export async function startProductionBot():Promise<void>{
   const eventsRepo=new PrismaEventsRepository(db);
   const events=new DiscordEventsCoordinator(eventsRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
   const eligibleGame=async(g:string,u:string,capability?:string)=>{if((capability!==undefined&&!new PermissionEngine(CAPABILITY_MATRIX.capabilities).can('member',capability))||await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';};
-  const music=enableMusicSmoke?new MusicApplication({client,db,config,guildId,wakeMusic:()=>musicWorker.wake(),endpoint:required('LAVALINK_URL'),password:required('LAVALINK_PASSWORD'),allowInsecureHttp:process.env.LAVALINK_ALLOW_INSECURE_HTTP==='true',metadataSources:[...(process.env.MUSIC_SPOTIFY_METADATA==='true'?['spotify' as const]:[]),...(process.env.MUSIC_APPLE_METADATA==='true'?['applemusic' as const]:[])],directAudio:process.env.MUSIC_DIRECT_AUDIO==='true',access:(g,m)=>musicAccess(g,m,config,(id,member)=>eligibleGame(id,member))}):null;
   const social=new DiscordSocialCoordinator(new PrismaSocialRepository(db),config,(g,u)=>eligibleGame(g,u,'social.use'));
-  const learning=new DiscordLearningCoordinator(learningRepo,config,(g,u)=>eligibleGame(g,u,'learning.use'),flag=>({economy:enableEconomySmoke,roles:enableOnboardingSmoke,jail:enableJailSmoke,moderation:enableModerationSmoke,security:enableSecuritySmoke,profile:enableProfilesSmoke,casino:enableCasinoSmoke,race:enableEventsSmoke,fight:enableEventsSmoke,line:enableSpecialSmoke,social:enableSocialSmoke,introductions:enableIntroductionsSmoke,core:enableLearningSmoke,tutorial:enableLearningSmoke,lore:enableLearningSmoke,special_commands:enableSpecialSmoke,items:enableItemsSmoke,tools:enableItemsSmoke,collections:enableItemsSmoke,solo_games:enableSoloSmoke,pvp:enablePvpSmoke,party_games:enablePartySmoke,channel_games:enableChannelGamesSmoke,family:enableFamilySmoke,crime:enableCrimeSmoke,community:enableCommunitySmoke,chairisms:enableChairismsSmoke,music:enableMusicSmoke}[flag]??false),(g,u,roles)=>enableSpecialSmoke?eligibleGame(g,u,'special.use').then(allowed=>allowed?special.visibleCommands(g,roles):[]):Promise.resolve([]),(g,u,chapter)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordLoreChapter(g,u,chapter)));
+  const learning=new DiscordLearningCoordinator(learningRepo,config,(g,u)=>eligibleGame(g,u,'learning.use'),flag=>({economy:enableEconomySmoke,roles:enableOnboardingSmoke,jail:enableJailSmoke,moderation:enableModerationSmoke,security:enableSecuritySmoke,profile:enableProfilesSmoke,casino:enableCasinoSmoke,race:enableEventsSmoke,fight:enableEventsSmoke,line:enableSpecialSmoke,social:enableSocialSmoke,introductions:enableIntroductionsSmoke,core:enableLearningSmoke,tutorial:enableLearningSmoke,lore:enableLearningSmoke,special_commands:enableSpecialSmoke,items:enableItemsSmoke,tools:enableItemsSmoke,collections:enableItemsSmoke,solo_games:enableSoloSmoke,pvp:enablePvpSmoke,party_games:enablePartySmoke,channel_games:enableChannelGamesSmoke,family:enableFamilySmoke,crime:enableCrimeSmoke,community:enableCommunitySmoke,chairisms:enableChairismsSmoke}[flag]??false),(g,u,roles)=>enableSpecialSmoke?eligibleGame(g,u,'special.use').then(allowed=>allowed?special.visibleCommands(g,roles):[]):Promise.resolve([]),(g,u,chapter)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordLoreChapter(g,u,chapter)));
   const introductions=new DiscordIntroductionsCoordinator(new PrismaIntroductionsRepository(db),config,(g,u)=>eligibleGame(g,u,'introductions.use'),async(g,u)=>{const server=await client.guilds.fetch(g),member=await server.members.fetch({user:u,force:true});return server.ownerId===u||member.permissions.has('Administrator');},(g,u,id)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordIntroduction(g,u,id)));
   const special=new DiscordSpecialCoordinator(new PrismaSpecialRepository(db),config,(g,u)=>eligibleGame(g,u,'special.use'));
   const soloRepo=new PrismaSoloRepository(db),solo=new DiscordSoloCoordinator(soloRepo,config,(g,u)=>eligibleGame(g,u,'solo.use'));
@@ -246,10 +242,6 @@ export async function startProductionBot():Promise<void>{
     },familyEnabled);
   };
   const scheduler=new IdempotentScheduler(jobRepo,{
-    'music.reconcile':async job=>{if(!music)throw new Error('Music runtime disabled.');await music.reconcile(job);},
-    'music.controller.publish':async job=>{if(!music)throw new Error('Music runtime disabled.');await music.publish(job);},
-    'music.controller.cleanup':async job=>{if(!music)throw new Error('Music runtime disabled.');await music.cleanup(job);},
-    'music.controller.refresh':async job=>{if(!music)throw new Error('Music runtime disabled.');await music.refresh(job);},
     'chairism.publish':async job=>{if(!enableChairismsSmoke)throw new Error('Chairisms runtime disabled; retain pending delivery.');await chairismPublication.deliver(job.id);},
     'family.publish':async job=>{if(job.guildId!==guildId||!await familyEnabled())throw new Error('Family runtime disabled; retain pending delivery.');await ensureFamilyMembership();await familyMembership.scheduled(async()=>{await(await familyFor(job.guildId)).coordinator.publish(client,job.id);},familyEnabled);},
     'family.proposal_expire':async job=>{await familyJob('proposal_expire',job);},
@@ -298,7 +290,6 @@ export async function startProductionBot():Promise<void>{
   });
   startup.mark('scheduled-job-construction');
   const worker=new SchedulerWorker(scheduler,5_000);
-  const musicWorker=new SchedulerWorker(new IdempotentScheduler(new PrismaJobRepository(db,{in:['music.reconcile']}),{'music.reconcile':async job=>{if(!music)throw new Error('Music runtime disabled.');await music.reconcile(job);}}),5_000);
   let introSweep:ReturnType<typeof setInterval>|undefined;
   let eventSweep:ReturnType<typeof setInterval>|undefined;
   let voiceSweep:ReturnType<typeof setInterval>|undefined;
@@ -319,13 +310,12 @@ export async function startProductionBot():Promise<void>{
     await startup.run('database-connection-schema-bootstrap (migrations external)',()=>serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]));
     if(activityLogger)await startup.run('activity-log-private-channel-preflight',()=>activityLogger.preflight(configuredServer));
     if(lifecycle.isStopping)return;
-    if(music&&await config.get(guildId,'music.enabled')===true){try{await music.start();}catch{console.error('Music node unavailable; durable recovery remains pending.');}}
     if(enablePartySmoke||enableWyrSmoke)await startup.run('party-content-bootstrap',()=>seedPartyContent(db));
     if(enableSocialSmoke)await startup.run('social-content-bootstrap',()=>seedSocialContent(db));
     if(enableIntroductionsSmoke)await startup.run('introductions-bootstrap',()=>introductions.sweep(ready));
     startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||c.type===1&&(c.name==='status'||(enableMusicSmoke&&Boolean(c.name&&MUSIC_COMMANDS.has(c.name)))||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&COMMUNITY_COMMANDS.has(c.name)))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||c.type===1&&(c.name==='status'||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&COMMUNITY_COMMANDS.has(c.name)))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await startup.run('command-registration',async()=>{const registered=await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});validateRegisteredCommands(enabled,registered);});
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
@@ -336,7 +326,7 @@ export async function startProductionBot():Promise<void>{
     if(enableProfilesSmoke){await startup.run('profile-voice-reset',()=>profileRepo.resetVoiceAfterRestart(guildId));await startup.run('profiles-bootstrap',()=>profiles.reconcile(guildId));await startup.run('profile-voice-sample',()=>profiles.sampleVoice(ready,guildId));if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>profiles.sampleVoice(ready,guildId),()=>console.error('Activity voice sampling failed.')),30_000);}
     if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await startup.run('lottery-schedule',()=>lotteryRepo.schedule(guildId));
     if(enableFullyFurnishedSmoke)await startup.run('fully-furnished-role-recovery',async()=>{for(const pending of await fullyFurnishedRepo.pendingRoleGrants(guildId))await deliverFullyFurnished(guildId,pending.userId,pending.progress);});
-    const recovered=await startup.run('wyr-recovery',()=>wyr.recover(ready));if(enableJailSmoke){await startup.run('jail-schedules',()=>jail.reconcileSchedules(guildId));const guild=ready.guilds.cache.get(guildId);if(guild)await startup.run('jail-permissions',()=>jail.reconcileGuild(guild));}if(enableEconomySmoke)await startup.run('economy-schedule',()=>economy.reconcileInterestSchedule(guildId));if(lifecycle.isStopping)return;await startup.run('scheduled-job-initialization',()=>Promise.all([worker.runOnce(),musicWorker.runOnce()]));if(lifecycle.isStopping)return;worker.start();musicWorker.start();
+    const recovered=await startup.run('wyr-recovery',()=>wyr.recover(ready));if(enableJailSmoke){await startup.run('jail-schedules',()=>jail.reconcileSchedules(guildId));const guild=ready.guilds.cache.get(guildId);if(guild)await startup.run('jail-permissions',()=>jail.reconcileGuild(guild));}if(enableEconomySmoke)await startup.run('economy-schedule',()=>economy.reconcileInterestSchedule(guildId));if(lifecycle.isStopping)return;await startup.run('scheduled-job-initialization',()=>worker.runOnce());if(lifecycle.isStopping)return;worker.start();
     await startup.run('events-bootstrap',()=>events.sweep(ready));if(lifecycle.isStopping)return;
     eventSweep=setInterval(()=>lifecycle.run(()=>events.sweep(ready),()=>console.error('Event recovery or rendering failed; durable jobs retained.')),1000);
     wyrSweep=setInterval(()=>lifecycle.run(()=>wyr.closeDue(ready),()=>console.error('WYR close failed; persisted recovery retained.')),5_000);
@@ -424,7 +414,7 @@ export async function startProductionBot():Promise<void>{
   }
   on(Events.GuildAuditLogEntryCreate,async(entry,guild)=>{await settleHandlers([...(enableSecuritySmoke?[security.handleAuditEntry(entry,guild)]:[]),...(activityLogger?[activityLogger.auditEntry(entry,guild)]:[])]);});
 
-  on(Events.VoiceStateUpdate,async(before,after)=>{await settleHandlers([...(music&&after.guild.id===guildId?[music.voiceChanged(after.guild.id,after.id)]:[]),...(enableProfilesSmoke?[profiles.sampleVoice(client,after.guild.id)]:[]),...(activityLogger?[activityLogger.voiceUpdate(before,after)]:[])]);});
+  on(Events.VoiceStateUpdate,async(before,after)=>{await settleHandlers([...(enableProfilesSmoke?[profiles.sampleVoice(client,after.guild.id)]:[]),...(activityLogger?[activityLogger.voiceUpdate(before,after)]:[])]);});
   on(Events.InteractionCreate,async interaction=>{
     try{
       // Coordinators acknowledge before their own complete eligibility checks. Avoid duplicate slow global reads.
@@ -432,7 +422,7 @@ export async function startProductionBot():Promise<void>{
       if(enableEventsSmoke&&(interaction.isButton()||interaction.isModalSubmit())&&(interaction.customId.startsWith('event:')||interaction.customId.startsWith('fight:'))){await events.handle(interaction);return;}
       if(enableSpecialSmoke&&interaction.isButton()&&interaction.customId.startsWith('line:')){await special.handle(interaction);return;}
       if(interaction.isChatInputCommand()&&interaction.commandName==='race'){await interaction.reply({ephemeral:true,content:'Race is not enabled yet.'});return;}
-      if(interaction.isAutocomplete()){if(music&&interaction.commandName==='play')await music.coordinator.autocomplete(interaction);else if(enableSocialSmoke&&interaction.commandName==='social')await social.autocomplete(interaction);else if(enableLearningSmoke&&interaction.commandName==='help')await learning.autocomplete(interaction);else await interaction.respond([]);return;}
+      if(interaction.isAutocomplete()){if(enableSocialSmoke&&interaction.commandName==='social')await social.autocomplete(interaction);else if(enableLearningSmoke&&interaction.commandName==='help')await learning.autocomplete(interaction);else await interaction.respond([]);return;}
       if(interaction.guildId&&interaction.isRepliable()){
         const command=interaction.isChatInputCommand()?interaction.commandName:undefined;
         const subcommand=interaction.isChatInputCommand()?interaction.options.getSubcommand(false)??undefined:undefined;
@@ -441,7 +431,6 @@ export async function startProductionBot():Promise<void>{
         if(!moderationSafe&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are currently in moderation Hotseat. Only jail-safe commands are available until release.');return;}
         if(command!=='rules'&&component!=='onboard:ack_rules'&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are in crime jail. Use /crime bail, or ask another member to pay your bail.');return;}
       }
-      if((interaction.isChatInputCommand()&&MUSIC_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('music:'))){if(!music){await interaction.reply({ephemeral:true,content:'Music is not enabled yet.'});return;}await music.coordinator.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&SOCIAL_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('social:'))){if(!enableSocialSmoke){await interaction.reply({ephemeral:true,content:'Social features are not enabled yet.'});return;}await social.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;}
       if((interaction.isChatInputCommand()&&INTRODUCTION_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('intro:'))){if(!enableIntroductionsSmoke){await interaction.reply({ephemeral:true,content:'Introductions are not enabled yet.'});return;}await introductions.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&['help','tutorial','lore','tldr'].includes(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('learn:'))){if(!enableLearningSmoke){await interaction.reply({ephemeral:true,content:'Learning features are not enabled yet.'});return;}await learning.handle(interaction);return;}
@@ -523,12 +512,12 @@ export async function startProductionBot():Promise<void>{
   const server=await startup.run('http-readiness-server-startup',()=>startRuntimeHealth(runtime.port,()=>initialized&&client.isReady()&&!lifecycle.isStopping,()=>db.$queryRaw`SELECT 1`));
   let shutdownPromise:Promise<void>|undefined;
   const shutdown=()=>shutdownPromise??(shutdownPromise=(async()=>{
-    lifecycle.stopAdmission();initialized=false;worker.stop();musicWorker.stop();music?.close();
+    lifecycle.stopAdmission();initialized=false;worker.stop();
     if(introSweep)clearInterval(introSweep);if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);
     if(familySweep)clearInterval(familySweep);if(communitySweep)clearInterval(communitySweep);if(crimeSweep)clearInterval(crimeSweep);if(partySweep)clearInterval(partySweep);if(pvpSweep)clearInterval(pvpSweep);if(specialSweep)clearInterval(specialSweep);if(soloSweep)clearInterval(soloSweep);
     const deadline=setTimeout(()=>{console.error('Shutdown deadline reached; durable work will recover on restart.');process.exit(1);},25_000);deadline.unref();
     try{
-      await Promise.allSettled([lifecycle.drain(20_000),worker.stopAndDrain(),musicWorker.stopAndDrain()]);
+      await Promise.allSettled([lifecycle.drain(20_000),worker.stopAndDrain()]);
       client.destroy();await new Promise<void>(resolve=>server.close(()=>resolve()));await disconnectPrisma();
     }finally{clearTimeout(deadline);}
   })());
