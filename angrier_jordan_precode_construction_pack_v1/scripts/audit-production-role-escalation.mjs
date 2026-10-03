@@ -6,11 +6,13 @@ export const INCIDENT_MEMBERS=Object.freeze([
  {id:'1531517965093175375',label:'Blowcain'},
 ]);
 const ROLE_UPDATE_ACTION=25;
+const ROLE_CONFIGURATION_UPDATE_ACTION=31;
 const ADMINISTRATOR=1n<<3n,MANAGE_ROLES=1n<<28n;
 const check=(ok,code)=>{if(!ok)throw Error(code);};
 const snowflake=value=>typeof value==='string'&&/^\d{17,20}$/.test(value);
 const timestamp=id=>{try{return new Date(Number((BigInt(id)>>22n)+1420070400000n)).toISOString();}catch{return 'unknown';}};
 const roleChanges=(entry,roles)=>Object.fromEntries(['$add','$remove'].map(key=>[key,(entry.changes??[]).find(change=>change.key===key)?.new_value?.map(row=>roles.get(row.id)??row.id)??[]]));
+const privilegeBits=value=>{try{const bits=BigInt(value);return {administrator:Boolean(bits&ADMINISTRATOR),manageRoles:Boolean(bits&MANAGE_ROLES)};}catch{return {administrator:false,manageRoles:false};}};
 
 export async function inspectRoleEscalation(db){
  return db.$transaction(async tx=>{
@@ -32,13 +34,19 @@ const privilegeSummary=(member,roles)=>{
 export async function inspectDiscordRoleUpdates(get){
  const roles=await get(`/guilds/${GUILD}/roles`);
  const names=new Map(roles.map(role=>[role.id,role.name]));
- const [log,...members]=await Promise.all([get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_UPDATE_ACTION}&limit=100`),...INCIDENT_MEMBERS.map(member=>get(`/guilds/${GUILD}/members/${member.id}`))]);
+ const [log,roleLog,...members]=await Promise.all([get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_UPDATE_ACTION}&limit=100`),get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_CONFIGURATION_UPDATE_ACTION}&limit=100`),...INCIDENT_MEMBERS.map(member=>get(`/guilds/${GUILD}/members/${member.id}`))]);
+ const permissionUpdates=(roleLog.audit_log_entries??[]).flatMap(entry=>{
+  const change=(entry.changes??[]).find(candidate=>candidate.key==='permissions');if(!change)return[];
+  const before=privilegeBits(change.old_value),after=privilegeBits(change.new_value);
+  return before.administrator||before.manageRoles||after.administrator||after.manageRoles?[{entryId:entry.id,occurredAt:timestamp(entry.id),executorId:entry.user_id??null,roleId:entry.target_id,roleName:names.get(entry.target_id)??null,before,after}]:[];
+ });
  return INCIDENT_MEMBERS.map((member,index)=>({
   ...member,
   ...privilegeSummary(members[index],roles),
   updates:(log.audit_log_entries??[]).filter(entry=>entry.target_id===member.id).map(entry=>({
    entryId:entry.id,occurredAt:timestamp(entry.id),executorId:entry.user_id??null,...roleChanges(entry,names),
   })),
+  permissionUpdates,
  }));
 }
 
@@ -50,7 +58,7 @@ export async function runRoleEscalationAudit({db,get,write=console.log}){
   const selections=database.selections.filter(row=>row.userId===member.id).map(row=>({roleId:row.roleId,categoryKey:row.categoryKey,active:row.active,selectedAt:row.selectedAt.toISOString(),archivedAt:row.archivedAt?.toISOString()??null}));
   const events=database.audits.filter(row=>row.actorUserId===member.id||row.targetId===member.id).map(row=>({actorUserId:row.actorUserId,source:row.source,action:row.action,targetType:row.targetType,targetId:row.targetId,createdAt:row.createdAt.toISOString()}));
   const live=discord.find(row=>row.id===member.id);
-  write(`FINDING: member=${member.label} (${member.id}); self_role_selections=${JSON.stringify(selections)}; bot_audit_events=${JSON.stringify(events)}; discord_role_updates=${JSON.stringify(live?.updates??[])}; current_roles=${JSON.stringify(live?.currentRoles??[])}; role_management_grants=${JSON.stringify(live?.roleManagementGrants??[])}`);
+  write(`FINDING: member=${member.label} (${member.id}); self_role_selections=${JSON.stringify(selections)}; bot_audit_events=${JSON.stringify(events)}; discord_role_updates=${JSON.stringify(live?.updates??[])}; current_roles=${JSON.stringify(live?.currentRoles??[])}; role_management_grants=${JSON.stringify(live?.roleManagementGrants??[])}; recent_privileged_role_permission_updates=${JSON.stringify(live?.permissionUpdates??[])}`);
  }
  write('PASS: read-only role escalation audit completed; no Discord or database writes were performed.');
 }
