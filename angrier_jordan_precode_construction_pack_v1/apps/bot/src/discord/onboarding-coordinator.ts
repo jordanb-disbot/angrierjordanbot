@@ -91,13 +91,19 @@ export class DiscordOnboardingCoordinator {
   async handleRolesCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
     await interaction.deferReply({ephemeral:true});
-    try{const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId)));}
+    try{
+      const member=await interaction.guild?.members.fetch(interaction.user.id);
+      if(!member?.permissions.has(PermissionFlagsBits.Administrator))throw new DomainError('ROLE_ADMIN_REQUIRED','Only Discord Administrators can change server roles.');
+      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId)));
+    }
     catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'The role panel could not be loaded.'});}
   }
 
   async handleRoleSelect(interaction:StringSelectMenuInteraction):Promise<void>{
     try{
       if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
+      const member=await interaction.guild.members.fetch(interaction.user.id);
+      if(!member.permissions.has(PermissionFlagsBits.Administrator))throw new DomainError('ROLE_ADMIN_REQUIRED','Only Discord Administrators can change server roles.');
       const parts=interaction.customId.split(':');
       const categoryKey=parts[2]??'';const segmentIndex=Number(parts[3]??'0');
       await interaction.deferUpdate();
@@ -106,7 +112,6 @@ export class DiscordOnboardingCoordinator {
         if(!state.panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
         await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
       }
-      const member=await interaction.guild.members.fetch(interaction.user.id);
       const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
       const category=stateBefore.panel.categories.find(c=>c.key===categoryKey);
       if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');

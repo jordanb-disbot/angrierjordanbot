@@ -4,9 +4,9 @@ import {OnboardingService,InMemoryOnboardingRepository} from '../../dist/package
 import {AuditService,FixedClock,InMemoryAuditSink} from '../../dist/packages/core/src/index.js';
 function fixture(){
  const repo=new InMemoryOnboardingRepository();repo.panel={id:'panel',guildId:'g',name:'Default Roles',enabled:true,categories:[{key:'dm_status',label:'DM Status',mode:'single',options:[{roleId:'open',label:'DMs Open',enabled:true},{roleId:'closed',label:'DMs Closed',enabled:true}]},{key:'pings',label:'Notification Pings',mode:'multi',options:[{roleId:'race',label:'Race Ping',enabled:true},{roleId:'line',label:'Line Ping',enabled:true}]}]};
- const effects=[],held=new Set(),roles=new Map(['open','closed','race','line'].map(id=>[id,{id,name:id,managed:false,editable:true,permissions:{bitfield:0n}}])),member={roles:{add:async id=>{held.add(id);effects.push('add:'+id);},remove:async id=>{held.delete(id);effects.push('remove:'+id);}}},guild={members:{fetch:async()=>member},roles:{cache:roles}},service=new OnboardingService(repo,new AuditService(new InMemoryAuditSink()),new FixedClock(new Date())),coordinator=new DiscordOnboardingCoordinator(service,{get:async()=>null}),replies=[];
+ const effects=[],held=new Set(),roles=new Map(['open','closed','race','line'].map(id=>[id,{id,name:id,managed:false,editable:true,permissions:{bitfield:0n}}])),member={permissions:{has:()=>true},roles:{add:async id=>{held.add(id);effects.push('add:'+id);},remove:async id=>{held.delete(id);effects.push('remove:'+id);}}},guild={members:{fetch:async()=>member},roles:{cache:roles}},service=new OnboardingService(repo,new AuditService(new InMemoryAuditSink()),new FixedClock(new Date())),coordinator=new DiscordOnboardingCoordinator(service,{get:async()=>null}),replies=[];
  const interaction=(customId,values)=>{const i={guildId:'g',guild,user:{id:'u'},customId,values,message:{attachments:new Map([['art',{name:'your-roles-1.png'}]])},deferred:false,replied:false,deferUpdate:async()=>{i.deferred=true;effects.push('ack');},deferReply:async()=>{i.deferred=true;effects.push('ack');},editReply:async p=>replies.push(p),followUp:async p=>replies.push(p),reply:async p=>{i.replied=true;replies.push(p);}};return i;};
- return{repo,roles,coordinator,interaction,replies,effects,held};
+ return{repo,roles,guild,coordinator,interaction,replies,effects,held};
 }
 const nodes=p=>p.components.map(c=>c.toJSON());
 test('Roles opens category-first, category selection reuses one private window without reupload',async()=>{
@@ -33,4 +33,9 @@ test('A protected zero-permission access role cannot be self-selected from a mis
  const f=fixture();f.coordinator.config={get:async(_guild,key)=>key==='roles.member_access'?'open':null};
  await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['open']));
  assert.deepEqual(f.effects,['ack']);assert.equal(f.held.size,0);assert.match(f.replies.at(-1).content,/protected server role/);
+});
+test('Only Discord Administrators can open or use the role panel',async()=>{
+ const f=fixture();f.guild.members.fetch=async()=>({permissions:{has:()=>false},roles:{add:async()=>assert.fail('must not add'),remove:async()=>assert.fail('must not remove')}});
+ await f.coordinator.handleRolesCommand(f.interaction('',[]));assert.match(f.replies.at(-1).content,/Only Discord Administrators/);
+ await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['open']));assert.equal(f.held.size,0);assert.match(f.replies.at(-1).content,/Only Discord Administrators/);
 });
