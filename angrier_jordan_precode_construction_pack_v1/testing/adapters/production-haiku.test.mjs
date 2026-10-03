@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {enableProductionHaiku} from '../../scripts/enable-production-haiku.mjs';
+const guild='1524964384642957432';
+function fixture({social=true,haiku=false}={}){let version=1,writes=0;const values=new Map([['features.social',social],['features.haiku',haiku]]);return{db:{guild:{findUnique:async()=>({id:guild})}},config:{definition:key=>['features.social','features.haiku'].includes(key)?{type:'boolean'}:undefined,get:async(_g,key)=>values.get(key),getWithMetadata:async(_g,key)=>({value:values.get(key),version}),set:async input=>{writes++;version++;values.set(input.key,input.value);}},values,writes:()=>writes};}
+test('production haiku maintenance enables only Haiku once after Social is accepted',async()=>{const f=fixture();await enableProductionHaiku({...f,write:()=>{}});assert.equal(f.values.get('features.social'),true);assert.equal(f.values.get('features.haiku'),true);assert.equal(f.writes(),1);await enableProductionHaiku({...f,write:()=>{}});assert.equal(f.writes(),1);});
+test('production haiku maintenance fails closed until Social is enabled',async()=>{const f=fixture({social:false});await assert.rejects(()=>enableProductionHaiku({...f,write:()=>{}}),/SOCIAL_FEATURE_REQUIRED/);assert.equal(f.values.get('features.haiku'),false);assert.equal(f.writes(),0);});
