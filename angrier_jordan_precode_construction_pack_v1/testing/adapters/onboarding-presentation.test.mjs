@@ -18,7 +18,7 @@ test('Rules display owner-authored policy with early acknowledgement and no auto
 });
 test('Unconfigured role panel acknowledges before reading state and fails compactly',async()=>{
  const order=[],replies=[],service={rolePanel:async()=>{order.push('read');throw new DomainError('ROLE_PANEL_UNAVAILABLE','The role panel is not currently available.');}};
- await new DiscordOnboardingCoordinator(service,config).handleRolesCommand({guildId:'g',guild:{members:{fetch:async()=>({permissions:{has:()=>true}})}},user:{id:'u'},deferReply:async()=>order.push('ack'),editReply:async p=>replies.push(p)});
+ await new DiscordOnboardingCoordinator(service,config).handleRolesCommand({guildId:'g',user:{id:'u'},deferReply:async()=>order.push('ack'),editReply:async p=>replies.push(p)});
  assert.deepEqual(order,['ack','read']);assert.match(replies[0].content,/not currently available/);assert.equal(replies[0].files,undefined);
 });
 test('First join and rejoin are distinguished from persisted presence',async()=>{
@@ -28,7 +28,7 @@ test('First join and rejoin are distinguished from persisted presence',async()=>
  assert.match(messages[0],/^Welcome to Chairs/);assert.match(messages[1],/^Welcome back to Chairs/);assert.equal((await repo.getPresence('g','u')).needsRulesAck,true);
 });
 test('Self-role selection keeps artwork and rejects permission-bearing roles before mutation',async()=>{
- const panel={categories:[{key:'pings',label:'Pings',mode:'multi',options:[{roleId:'r',label:'Games',enabled:true}]}]},service={rolePanel:async()=>({panel,selections:[]}),planRoleCategoryUpdate:async()=>({addRoleIds:['r'],removeRoleIds:[]}),updateRoleCategory:async()=>{}},effects=[],guild={members:{fetch:async()=>({permissions:{has:()=>true},roles:{add:async()=>effects.push('add')}})},roles:{cache:new Map([['r',{name:'Games',managed:false,editable:true,permissions:{bitfield:8n}}]])}},i={guildId:'g',guild,user:{id:'u'},message:{attachments:new Map([['art',{name:'your-roles-1.png'}]])},customId:'roles:select:pings:0',values:['r'],deferred:false,replied:false,deferUpdate:async()=>{i.deferred=true;effects.push('ack');},editReply:async p=>effects.push(p),followUp:async p=>effects.push(p),reply:async p=>effects.push(p)};
+ const panel={categories:[{key:'pings',label:'Pings',mode:'multi',options:[{roleId:'r',label:'Race Ping',enabled:true}]}]},service={rolePanel:async()=>({panel,selections:[]}),planRoleCategoryUpdate:async()=>({addRoleIds:['r'],removeRoleIds:[]}),updateRoleCategory:async()=>{}},effects=[],guild={members:{fetch:async()=>({roles:{add:async()=>effects.push('add')}})},roles:{cache:new Map([['r',{name:'Race Ping',managed:false,editable:true,permissions:{bitfield:8n}}]])}},i={guildId:'g',guild,user:{id:'u'},message:{attachments:new Map([['art',{name:'your-roles-1.png'}]])},customId:'roles:select:pings:0',values:['r'],deferred:false,replied:false,deferUpdate:async()=>{i.deferred=true;effects.push('ack');},editReply:async p=>effects.push(p),followUp:async p=>effects.push(p),reply:async p=>effects.push(p)};
  await new DiscordOnboardingCoordinator(service,config).handleRoleSelect(i);assert.deepEqual(effects.slice(0,1),['ack']);assert.match(effects.at(-1).content,/Discord permissions/);
  guild.roles.cache.get('r').permissions.bitfield=0n;effects.length=0;await new DiscordOnboardingCoordinator(service,config).handleRoleSelect(i);assert.equal(effects[0],'ack');assert.equal(effects[1],'add');assert.equal(effects[2].files,undefined);assert.equal(effects[2].attachments,undefined);
 });

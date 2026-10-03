@@ -19,6 +19,23 @@ const roleId=async(config:ConfigService,guildId:string,key:string):Promise<strin
 };
 const safeError=(error:unknown)=>error instanceof Error?error.message:String(error);
 const STAFF_PERMISSION_MASK=PermissionFlagsBits.Administrator|PermissionFlagsBits.ManageGuild|PermissionFlagsBits.ManageRoles|PermissionFlagsBits.ManageChannels|PermissionFlagsBits.KickMembers|PermissionFlagsBits.BanMembers|PermissionFlagsBits.ModerateMembers|PermissionFlagsBits.ManageMessages;
+// The database panel is owner-editable, but it is not the authorization boundary. This
+// fixed catalogue makes a stale or incorrectly edited panel unable to expose any other
+// Discord role, including zero-permission prestige roles.
+const SELF_ROLE_CATALOG:Readonly<Record<string,readonly string[]>>={
+ dm_status:['DMs Open','DMs Closed'],gender:['Male','Female'],age:['18-24','25-34','35+'],
+ regions:['North America','South America','Europe','Africa','Asia','Oceania'],
+ vices:['Stimulants','Disassociatives','Hallucinogens','Depressants','Cannabinoids'],
+ personalities:['Morning Perch','Night Recliner','BeanBag','Swivel Chair','Wobbly Stool','Ghost Chair'],
+ pings:['Line Ping','Race Ping','VC Ping','Chess Ping'],
+};
+const approvedRolePanel=(panel:SelfRolePanelDefinition):SelfRolePanelDefinition=>({
+ ...panel,categories:panel.categories.flatMap(category=>{
+  const labels=SELF_ROLE_CATALOG[category.key];if(!labels)return[];
+  const options=category.options.filter(option=>labels.includes(option.label));
+  return options.length?[{...category,options}]:[];
+ }),
+});
 export interface OnboardingLearningOptions {
   /** Reuses current shared capability, runtime activation and restriction checks. */
   eligible?:(guildId:string,userId:string)=>Promise<boolean>;
@@ -92,9 +109,7 @@ export class DiscordOnboardingCoordinator {
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
     await interaction.deferReply({ephemeral:true});
     try{
-      const member=await interaction.guild?.members.fetch(interaction.user.id);
-      if(!member?.permissions.has(PermissionFlagsBits.Administrator))throw new DomainError('ROLE_ADMIN_REQUIRED','Only Discord Administrators can change server roles.');
-      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId)));
+      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));
     }
     catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'The role panel could not be loaded.'});}
   }
@@ -103,23 +118,24 @@ export class DiscordOnboardingCoordinator {
     try{
       if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
       const member=await interaction.guild.members.fetch(interaction.user.id);
-      if(!member.permissions.has(PermissionFlagsBits.Administrator))throw new DomainError('ROLE_ADMIN_REQUIRED','Only Discord Administrators can change server roles.');
       const parts=interaction.customId.split(':');
       const categoryKey=parts[2]??'';const segmentIndex=Number(parts[3]??'0');
       await interaction.deferUpdate();
       if(categoryKey==='_category'){
         const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),key=interaction.values[0];
-        if(!state.panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
-        await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
+        const panel=approvedRolePanel(state.panel);
+        if(!panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
+        await interaction.editReply(await this.rolePanelMessage(panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
       }
       const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-      const category=stateBefore.panel.categories.find(c=>c.key===categoryKey);
+      const category=approvedRolePanel(stateBefore.panel).categories.find(c=>c.key===categoryKey);
       if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
       if(!Number.isInteger(segmentIndex)||segmentIndex<0||segmentIndex>=Math.ceil(category.options.filter(o=>o.enabled&&!o.archived).length/25))throw new DomainError('ROLE_PAGE_STALE','These choices are no longer available. Reopen /roles.');
       const visibleOptions=category.options.filter(o=>o.enabled&&!o.archived);
       const segmentRoleIds=new Set(visibleOptions.slice(segmentIndex*25,segmentIndex*25+25).map(o=>o.roleId));
       const current=stateBefore.selections.filter(x=>x.active&&x.categoryKey===categoryKey).map(x=>x.roleId);
       const selectedRoleIds=category.mode==='single'?[...interaction.values]:[...current.filter(id=>!segmentRoleIds.has(id)),...interaction.values];
+      if(selectedRoleIds.some(id=>!visibleOptions.some(option=>option.roleId===id)))throw new DomainError('ROLE_OPTION_NOT_AVAILABLE',`A selected role is no longer available in ${category.label}. Reopen /roles.`);
       const plan=await this.service.planRoleCategoryUpdate({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
       const touched=[...new Set([...plan.addRoleIds,...plan.removeRoleIds])];
       // A stale or misconfigured panel must never turn an access, staff, custody or DJ role
@@ -146,7 +162,7 @@ export class DiscordOnboardingCoordinator {
         throw error;
       }
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-      await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
+      await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
     }catch(error){
       const content=error instanceof DomainError?error.message:'That role choice could not be completed. No role changes were saved.';
       if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
