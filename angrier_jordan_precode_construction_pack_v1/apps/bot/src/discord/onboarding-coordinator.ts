@@ -96,49 +96,57 @@ export class DiscordOnboardingCoordinator {
   }
 
   async handleRoleSelect(interaction:StringSelectMenuInteraction):Promise<void>{
-    if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
-    const parts=interaction.customId.split(':');
-    const categoryKey=parts[2]??'';const segmentIndex=Number(parts[3]??'0');
-    await interaction.deferUpdate();
-    if(categoryKey==='_category'){
-      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),key=interaction.values[0];
-      if(!state.panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
-      await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
-    }
-    const member=await interaction.guild.members.fetch(interaction.user.id);
-    const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-    const category=stateBefore.panel.categories.find(c=>c.key===categoryKey);
-    if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
-    if(!Number.isInteger(segmentIndex)||segmentIndex<0||segmentIndex>=Math.ceil(category.options.filter(o=>o.enabled&&!o.archived).length/25))throw new DomainError('ROLE_PAGE_STALE','These choices are no longer available. Reopen /roles.');
-    const visibleOptions=category.options.filter(o=>o.enabled&&!o.archived);
-    const segmentRoleIds=new Set(visibleOptions.slice(segmentIndex*25,segmentIndex*25+25).map(o=>o.roleId));
-    const current=stateBefore.selections.filter(x=>x.active&&x.categoryKey===categoryKey).map(x=>x.roleId);
-    const selectedRoleIds=category.mode==='single'?[...interaction.values]:[...current.filter(id=>!segmentRoleIds.has(id)),...interaction.values];
-    const plan=await this.service.planRoleCategoryUpdate({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
-    const touched=[...new Set([...plan.addRoleIds,...plan.removeRoleIds])];
-    // A stale or misconfigured panel must never turn an access, staff, custody or DJ role
-    // into a self-assignable option merely because its base permission bits are zero.
-    const protectedKeys=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access','music.dj_role'];
-    const protectedIds=new Set((await Promise.all(protectedKeys.map(key=>this.config.get(interaction.guildId!,key)))).filter((id):id is string=>typeof id==='string'&&Boolean(id)));
-    if([...selectedRoleIds,...touched].some(id=>protectedIds.has(id)))throw new DomainError('ROLE_PROTECTED','A protected server role cannot be selected here. Ask staff to update this panel.');
-    for(const id of touched){
-      const role=interaction.guild.roles.cache.get(id);
-      if(!role)throw new DomainError('ROLE_MISSING','A configured role no longer exists. Ask staff to update this category.');
-      if(role.managed||!role.editable)throw new DomainError('ROLE_UNMANAGEABLE',`Angrier Jordan cannot manage ${role.name}.`);
-      if(plan.addRoleIds.includes(id)&&role.permissions.bitfield!==0n)throw new DomainError('ROLE_HAS_PERMISSIONS',`${role.name} has Discord permissions and cannot be self-selected.`);
-    }
-    const removed:string[]=[];const added:string[]=[];
     try{
-      for(const id of plan.removeRoleIds){await member.roles.remove(id,'Self-role selection changed.');removed.push(id);}
-      for(const id of plan.addRoleIds){await member.roles.add(id,'Self-role selection changed.');added.push(id);}
-      await this.service.updateRoleCategory({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
+      if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
+      const parts=interaction.customId.split(':');
+      const categoryKey=parts[2]??'';const segmentIndex=Number(parts[3]??'0');
+      await interaction.deferUpdate();
+      if(categoryKey==='_category'){
+        const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),key=interaction.values[0];
+        if(!state.panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
+        await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
+      }
+      const member=await interaction.guild.members.fetch(interaction.user.id);
+      const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
+      const category=stateBefore.panel.categories.find(c=>c.key===categoryKey);
+      if(!category)throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
+      if(!Number.isInteger(segmentIndex)||segmentIndex<0||segmentIndex>=Math.ceil(category.options.filter(o=>o.enabled&&!o.archived).length/25))throw new DomainError('ROLE_PAGE_STALE','These choices are no longer available. Reopen /roles.');
+      const visibleOptions=category.options.filter(o=>o.enabled&&!o.archived);
+      const segmentRoleIds=new Set(visibleOptions.slice(segmentIndex*25,segmentIndex*25+25).map(o=>o.roleId));
+      const current=stateBefore.selections.filter(x=>x.active&&x.categoryKey===categoryKey).map(x=>x.roleId);
+      const selectedRoleIds=category.mode==='single'?[...interaction.values]:[...current.filter(id=>!segmentRoleIds.has(id)),...interaction.values];
+      const plan=await this.service.planRoleCategoryUpdate({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
+      const touched=[...new Set([...plan.addRoleIds,...plan.removeRoleIds])];
+      // A stale or misconfigured panel must never turn an access, staff, custody or DJ role
+      // into a self-assignable option merely because its base permission bits are zero.
+      const protectedKeys=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access','music.dj_role'];
+      const protectedIds=new Set((await Promise.all(protectedKeys.map(key=>this.config.get(interaction.guildId!,key)))).filter((id):id is string=>typeof id==='string'&&Boolean(id)));
+      if([...selectedRoleIds,...touched].some(id=>protectedIds.has(id)))throw new DomainError('ROLE_PROTECTED','A protected server role cannot be selected here. Ask staff to update this panel.');
+      for(const id of touched){
+        const role=interaction.guild.roles.cache.get(id);
+        // A role deleted after a prior selection is safe to remove from bot state. It cannot
+        // be removed from Discord, so let the replacement selection clean up the stale record.
+        if(!role){if(plan.addRoleIds.includes(id))throw new DomainError('ROLE_MISSING','A configured role no longer exists. Ask staff to update this category.');continue;}
+        if(role.managed||!role.editable)throw new DomainError('ROLE_UNMANAGEABLE',`Angrier Jordan cannot manage ${role.name}. Ask staff to move the role below Angrier Jordan.`);
+        if(plan.addRoleIds.includes(id)&&role.permissions.bitfield!==0n)throw new DomainError('ROLE_HAS_PERMISSIONS',`${role.name} has Discord permissions and cannot be self-selected.`);
+      }
+      const removed:string[]=[];const added:string[]=[];
+      try{
+        for(const id of plan.removeRoleIds){if(!interaction.guild.roles.cache.has(id))continue;await member.roles.remove(id,'Self-role selection changed.');removed.push(id);}
+        for(const id of plan.addRoleIds){await member.roles.add(id,'Self-role selection changed.');added.push(id);}
+        await this.service.updateRoleCategory({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
+      }catch(error){
+        for(const id of added)await member.roles.remove(id,'Rolling back failed self-role update.').catch(()=>undefined);
+        for(const id of removed)await member.roles.add(id,'Rolling back failed self-role update.').catch(()=>undefined);
+        throw error;
+      }
+      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
+      await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
     }catch(error){
-      for(const id of added)await member.roles.remove(id,'Rolling back failed self-role update.').catch(()=>undefined);
-      for(const id of removed)await member.roles.add(id,'Rolling back failed self-role update.').catch(()=>undefined);
-      throw error;
+      const content=error instanceof DomainError?error.message:'That role choice could not be completed. No role changes were saved.';
+      if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
+      else await interaction.reply({ephemeral:true,content}).catch(()=>undefined);
     }
-    const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-    await interaction.editReply(await this.rolePanelMessage(state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
   }
 
   private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){
