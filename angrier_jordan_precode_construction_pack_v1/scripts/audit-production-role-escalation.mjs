@@ -35,7 +35,7 @@ const privilegeSummary=(member,roles)=>{
 export async function inspectDiscordRoleUpdates(get){
  const roles=await get(`/guilds/${GUILD}/roles`);
  const names=new Map(roles.map(role=>[role.id,role.name]));
- const [log,roleLog,...members]=await Promise.all([get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_UPDATE_ACTION}&limit=100`),get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_CONFIGURATION_UPDATE_ACTION}&limit=100`),...INCIDENT_MEMBERS.map(member=>get(`/guilds/${GUILD}/members/${member.id}`))]);
+ const [log,roleLog,allMembers,...members]=await Promise.all([get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_UPDATE_ACTION}&limit=100`),get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_CONFIGURATION_UPDATE_ACTION}&limit=100`),get(`/guilds/${GUILD}/members?limit=1000&after=0`),...INCIDENT_MEMBERS.map(member=>get(`/guilds/${GUILD}/members/${member.id}`))]);
  let onboardingExposures=[];
  try{
   const onboarding=await get(`/guilds/${GUILD}/onboarding`);
@@ -46,6 +46,9 @@ export async function inspectDiscordRoleUpdates(get){
   const before=privilegeBits(change.old_value),after=privilegeBits(change.new_value);
   return before.administrator||before.manageRoles||after.administrator||after.manageRoles?[{entryId:entry.id,occurredAt:timestamp(entry.id),executorId:entry.user_id??null,roleId:entry.target_id,roleName:names.get(entry.target_id)??null,before,after}]:[];
  });
+ const privilegedRoles=roles.filter(role=>{const bits=privilegeBits(role.permissions);return bits.administrator||bits.manageRoles;}).map(role=>({id:role.id,name:role.name,position:role.position,...privilegeBits(role.permissions)}));
+ const humanRoleManagementGrants=(Array.isArray(allMembers)?allMembers:[]).filter(member=>!member.user?.bot).flatMap(member=>privilegeSummary(member,roles).roleManagementGrants.map(grant=>({memberId:member.user?.id??null,memberName:member.user?.username??null,...grant})));
+ const global={privilegedRoles,humanRoleManagementGrants};
  return INCIDENT_MEMBERS.map((member,index)=>({
   ...member,
   ...privilegeSummary(members[index],roles),
@@ -54,6 +57,7 @@ export async function inspectDiscordRoleUpdates(get){
   })),
   permissionUpdates,
   onboardingExposures,
+  global,
  }));
 }
 
@@ -61,6 +65,8 @@ export async function runRoleEscalationAudit({db,get,write=console.log}){
  const database=await inspectRoleEscalation(db);
  const discord=await inspectDiscordRoleUpdates(get);
  for(const panel of database.panel)write(`PASS: panel ${JSON.stringify({name:panel.name,enabled:panel.enabled,channelId:panel.channelId,messageId:panel.messageId,updatedAt:panel.updatedAt.toISOString()})}`);
+ const global=discord[0]?.global??{privilegedRoles:[],humanRoleManagementGrants:[]};
+ write(`FINDING: current_privileged_roles=${JSON.stringify(global.privilegedRoles)}; human_role_management_grants=${JSON.stringify(global.humanRoleManagementGrants)}`);
  for(const member of INCIDENT_MEMBERS){
   const selections=database.selections.filter(row=>row.userId===member.id).map(row=>({roleId:row.roleId,categoryKey:row.categoryKey,active:row.active,selectedAt:row.selectedAt.toISOString(),archivedAt:row.archivedAt?.toISOString()??null}));
   const events=database.audits.filter(row=>row.actorUserId===member.id||row.targetId===member.id).map(row=>({actorUserId:row.actorUserId,source:row.source,action:row.action,targetType:row.targetType,targetId:row.targetId,createdAt:row.createdAt.toISOString()}));
