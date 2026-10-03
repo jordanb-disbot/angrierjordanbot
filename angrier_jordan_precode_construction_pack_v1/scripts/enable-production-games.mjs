@@ -15,6 +15,7 @@ export const GAME_SETTINGS=[
  ['solo.reward',0],
  ['solo.daily_reward_cap',0],
  ['features.solo_games',true],
+ ['features.pvp',true],
  ['features.party_games',true],
  ['features.channel_games',true],
 ];

@@ -22,10 +22,10 @@ test('production Games maps both shared game channels plus dedicated channels, e
  assert.deepEqual(Object.fromEntries(Object.keys(GAME_CHANNELS).map(key=>[key,f.rows.get(key).value])),GAME_CHANNELS);
  assert.equal(f.rows.get('channels.games_channel').value,'1537335115359715430');
  assert.equal(f.rows.get('channels.bot_channel').value,'1537333882846842930');
- for(const key of ['features.solo_games','features.party_games','features.channel_games'])assert.equal(f.rows.get(key).value,true);
+ for(const key of ['features.solo_games','features.pvp','features.party_games','features.channel_games'])assert.equal(f.rows.get(key).value,true);
  assert.equal(f.rows.get('solo.reward').value,0);assert.equal(f.rows.get('solo.daily_reward_cap').value,0);
  assert.deepEqual(f.writes.map(row=>row.key),GAME_SETTINGS.map(([key])=>key));
- assert.deepEqual([...f.rows].filter(([key])=>!GAME_SETTINGS.some(([target])=>key===target)).map(([key,row])=>[key,row.value]),[['features.pvp',false],['features.casino',false],['features.crime',false],['roles_panel.enabled',false],['unrelated.owner_value','keep']]);
+ assert.deepEqual([...f.rows].filter(([key])=>!GAME_SETTINGS.some(([target])=>key===target)).map(([key,row])=>[key,row.value]),[['features.casino',false],['features.crime',false],['roles_panel.enabled',false],['unrelated.owner_value','keep']]);
  assert.ok(f.output.every(line=>line.startsWith('PASS:')));
 });
 
