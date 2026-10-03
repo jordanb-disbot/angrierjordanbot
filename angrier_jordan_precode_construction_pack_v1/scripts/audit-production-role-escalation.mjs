@@ -8,6 +8,7 @@ export const INCIDENT_MEMBERS=Object.freeze([
 const ROLE_UPDATE_ACTION=25;
 const ROLE_CONFIGURATION_UPDATE_ACTION=31;
 const ADMINISTRATOR=1n<<3n,MANAGE_ROLES=1n<<28n;
+const PROTECTED_ROLE_NAMES=new Set(['Arm Chair','Recliner','Throne','Chaise Lounge']);
 const check=(ok,code)=>{if(!ok)throw Error(code);};
 const snowflake=value=>typeof value==='string'&&/^\d{17,20}$/.test(value);
 const timestamp=id=>{try{return new Date(Number((BigInt(id)>>22n)+1420070400000n)).toISOString();}catch{return 'unknown';}};
@@ -35,6 +36,11 @@ export async function inspectDiscordRoleUpdates(get){
  const roles=await get(`/guilds/${GUILD}/roles`);
  const names=new Map(roles.map(role=>[role.id,role.name]));
  const [log,roleLog,...members]=await Promise.all([get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_UPDATE_ACTION}&limit=100`),get(`/guilds/${GUILD}/audit-logs?action_type=${ROLE_CONFIGURATION_UPDATE_ACTION}&limit=100`),...INCIDENT_MEMBERS.map(member=>get(`/guilds/${GUILD}/members/${member.id}`))]);
+ let onboardingExposures=[];
+ try{
+  const onboarding=await get(`/guilds/${GUILD}/onboarding`);
+  onboardingExposures=(onboarding.prompts??[]).flatMap(prompt=>(prompt.options??[]).flatMap(option=>(option.role_ids??[]).map(id=>({promptId:prompt.id,promptTitle:prompt.title??null,roleId:id,roleName:names.get(id)??null})))).filter(row=>PROTECTED_ROLE_NAMES.has(row.roleName));
+ }catch{onboardingExposures=[{verification:'unavailable'}];}
  const permissionUpdates=(roleLog.audit_log_entries??[]).flatMap(entry=>{
   const change=(entry.changes??[]).find(candidate=>candidate.key==='permissions');if(!change)return[];
   const before=privilegeBits(change.old_value),after=privilegeBits(change.new_value);
@@ -47,6 +53,7 @@ export async function inspectDiscordRoleUpdates(get){
    entryId:entry.id,occurredAt:timestamp(entry.id),executorId:entry.user_id??null,...roleChanges(entry,names),
   })),
   permissionUpdates,
+  onboardingExposures,
  }));
 }
 
@@ -58,7 +65,7 @@ export async function runRoleEscalationAudit({db,get,write=console.log}){
   const selections=database.selections.filter(row=>row.userId===member.id).map(row=>({roleId:row.roleId,categoryKey:row.categoryKey,active:row.active,selectedAt:row.selectedAt.toISOString(),archivedAt:row.archivedAt?.toISOString()??null}));
   const events=database.audits.filter(row=>row.actorUserId===member.id||row.targetId===member.id).map(row=>({actorUserId:row.actorUserId,source:row.source,action:row.action,targetType:row.targetType,targetId:row.targetId,createdAt:row.createdAt.toISOString()}));
   const live=discord.find(row=>row.id===member.id);
-  write(`FINDING: member=${member.label} (${member.id}); self_role_selections=${JSON.stringify(selections)}; bot_audit_events=${JSON.stringify(events)}; discord_role_updates=${JSON.stringify(live?.updates??[])}; current_roles=${JSON.stringify(live?.currentRoles??[])}; role_management_grants=${JSON.stringify(live?.roleManagementGrants??[])}; recent_privileged_role_permission_updates=${JSON.stringify(live?.permissionUpdates??[])}`);
+  write(`FINDING: member=${member.label} (${member.id}); self_role_selections=${JSON.stringify(selections)}; bot_audit_events=${JSON.stringify(events)}; discord_role_updates=${JSON.stringify(live?.updates??[])}; current_roles=${JSON.stringify(live?.currentRoles??[])}; role_management_grants=${JSON.stringify(live?.roleManagementGrants??[])}; recent_privileged_role_permission_updates=${JSON.stringify(live?.permissionUpdates??[])}; native_onboarding_role_exposures=${JSON.stringify(live?.onboardingExposures??[])}`);
  }
  write('PASS: read-only role escalation audit completed; no Discord or database writes were performed.');
 }
