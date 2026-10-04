@@ -5,7 +5,8 @@ import { FixedClock } from '../../.test-build/packages/core/src/index.js';
 import { DomainError } from '../../.test-build/packages/core/src/index.js';
 import { InMemoryWyrPromptRepository, InMemoryWyrSessionRepository, SequentialIdGenerator, WyrController, WyrService } from '../../.test-build/packages/features-wyr/src/index.js';
 
-const prompts=[...JSON.parse(fs.readFileSync(new URL('../../packages/content/golden/wyr_sample.json',import.meta.url),'utf8')),...JSON.parse(fs.readFileSync(new URL('../../packages/features-party/content/wyr_continuation_WYR-0461_to_2000.json',import.meta.url),'utf8')).slice(0,12).map(p=>({...p,optionA:p.option_a,optionB:p.option_b}))];
+const authored=JSON.parse(fs.readFileSync(new URL('../../packages/features-party/content/wyr_2000.json',import.meta.url),'utf8')),
+  prompts=['Casual','Friends','Dating','Married','Spicy','Unhinged'].flatMap(category=>authored.filter(prompt=>prompt.category===category).slice(0,3)).map(p=>({...p,optionA:p.option_a,optionB:p.option_b}));
 const make=({random=0}={})=>{
   const clock=new FixedClock(new Date('2026-09-21T12:00:00Z'));
   const promptRepo=new InMemoryWyrPromptRepository(prompts);

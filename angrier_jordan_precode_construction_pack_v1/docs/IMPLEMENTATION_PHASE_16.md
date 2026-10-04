@@ -14,9 +14,9 @@ The existing authored banks are copied into `packages/features-party/content` wi
 | dare | Core prompt pack `dare_1200.json` | 1,200 |
 | wwyd | Core prompt pack `wwyd_1500.json` | 1,500 |
 | finishsentence | Acceleration content `finish_sentence_500.json` | 500 |
-| wyr | Core prompt pack `wyr_continuation_WYR-0461_to_2000.json` | 1,540 |
+| wyr | Canonical bank `wyr_2000.json` | 2,000 |
 
-`seedPartyContent(db)` inserts 6,240 source records in batches with `skipDuplicates`. Existing dashboard edits and disabled records are preserved. WYR's existing original sample records remain in place; this source supplies the continuation rather than claiming a complete original 2,000-entry bank. Prompt selection excludes the recent history when possible and never reuses the immediately replayed prompt. No generated substitute pool is introduced.
+`seedPartyContent(db)` inserts 6,700 source records in batches with `skipDuplicates`. Existing dashboard edits and disabled records are preserved. WYR's canonical source contains all 2,000 IDs, including newly authored replacements for the irrecoverable historical `WYR-0001`–`WYR-0460` range. Prompt selection excludes the recent history when possible and never reuses the immediately replayed prompt.
 
 ## Persistence and behavior
 
