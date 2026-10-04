@@ -126,7 +126,11 @@ export class DiscordWyrCoordinator {
 
   /** Keeps operational failures actionable without exposing internal details to members. */
   private logFailure(stage:string,interaction:ButtonInteraction,error:unknown):void{
-    const details=error instanceof DomainError?{name:error.name,code:error.code}:{name:error instanceof Error?error.name:'UnknownError',code:null};
+    const record=error!==null&&typeof error==='object'?error as Record<string,unknown>:{};
+    const errorCode=typeof record.code==='string'||typeof record.code==='number'?record.code:null;
+    const meta=record.meta!==null&&typeof record.meta==='object'?record.meta as Record<string,unknown>:{};
+    const target=typeof meta.target==='string'||Array.isArray(meta.target)?meta.target:null;
+    const details=error instanceof DomainError?{name:error.name,code:error.code}:{name:error instanceof Error?error.name:'UnknownError',code:errorCode,target};
     console.error('WYR interaction diagnostic',JSON.stringify({stage,action:interaction.customId.split(':')[1]??null,guildId:interaction.guildId,channelId:interaction.channelId,...details}));
   }
 }
