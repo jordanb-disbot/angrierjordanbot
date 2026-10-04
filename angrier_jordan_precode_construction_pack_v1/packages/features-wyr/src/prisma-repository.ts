@@ -28,6 +28,7 @@ export interface WyrPrismaLike extends PrismaTxLike {
 
 const asObject=(value:unknown):Record<string,unknown>=>value!==null&&typeof value==='object'&&!Array.isArray(value)?value as Record<string,unknown>:{};
 const asString=(value:unknown,key:string):string=>{if(typeof value!=='string'||value.trim()==='')throw new DomainError('INVALID_CONTENT',`WYR content is missing ${key}.`);return value;};
+const errorCode=(error:unknown)=>error!==null&&typeof error==='object'&&'code' in error&&typeof error.code==='string'?error.code:null;
 
 export class PrismaWyrPromptRepository implements WyrPromptRepository {
   constructor(private readonly db:WyrPrismaLike,private readonly random:()=>number=()=>Math.random()){}
@@ -53,10 +54,10 @@ export class PrismaWyrPromptRepository implements WyrPromptRepository {
 export class PrismaWyrSessionRepository implements WyrSessionRepository {
   constructor(private readonly db:WyrPrismaLike){}
   async create(session:WyrRuntimeSession):Promise<void>{
-    await this.db.$transaction(async tx=>{await tx.gameSession.create({data:{
+    try{await this.db.$transaction(async tx=>{await tx.gameSession.create({data:{
       id:session.id,guildId:session.guildId,type:'wyr',channelId:session.channelId,ownerUserId:session.ownerUserId,...(session.messageId===undefined?{}:{messageId:session.messageId}),state:session.state,
       data:{...session.data,openedAt:session.openedAt.toISOString()},expiresAt:session.expiresAt,extensionUsed:session.extensionUsed,version:session.version,
-    }});await tx.scheduledJob.create({data:{guildId:session.guildId,jobType:'wyr.close',executionKey:'wyr:close:'+session.id,dueAt:session.expiresAt,payload:{guildId:session.guildId,sessionId:session.id}}});await tx.scheduledJob.create({data:{guildId:session.guildId,jobType:'wyr.publish',executionKey:'wyr:publish:'+session.id,dueAt:session.openedAt,payload:{guildId:session.guildId,channelId:session.channelId,sessionId:session.id,deliveryState:'PENDING'}}});});
+    }});await tx.scheduledJob.create({data:{guildId:session.guildId,jobType:'wyr.close',executionKey:'wyr:close:'+session.id,dueAt:session.expiresAt,payload:{guildId:session.guildId,sessionId:session.id}}});await tx.scheduledJob.create({data:{guildId:session.guildId,jobType:'wyr.publish',executionKey:'wyr:publish:'+session.id,dueAt:session.openedAt,payload:{guildId:session.guildId,channelId:session.channelId,sessionId:session.id,deliveryState:'PENDING'}}});});}catch(error){if(errorCode(error)==='P2002')throw new DomainError('PARTY_ROUND_ACTIVE','A public party-game round is already active in this channel. Finish it before starting WYR.');throw error;}
   }
   async get(id:string):Promise<WyrRuntimeSession|null>{
     const row=await this.db.gameSession.findUnique({where:{id,type:'wyr'},include:{votes:{where:{questionKey:'main'},orderBy:{updatedAt:'asc'}}}});
