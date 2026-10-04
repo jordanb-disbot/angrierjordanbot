@@ -68,6 +68,7 @@ import { getPrismaClient, disconnectPrisma } from '../../../packages/database/sr
 import { PrismaWyrPromptRepository, PrismaWyrSessionRepository, PrismaWyrPublicationRepository, WyrService } from '../../../packages/features-wyr/src/index.js';
 import { SystemClock } from '../../../packages/core/src/time.js';
 import { DiscordWyrCoordinator } from './discord/wyr-coordinator.js';
+import { TypeShitResponder } from './discord/type-shit-responder.js';
 import { DiscordOnboardingCoordinator } from './discord/onboarding-coordinator.js';
 import { DiscordJailCoordinator } from './discord/jail-coordinator.js';
 import { DiscordModerationCoordinator } from './discord/moderation-coordinator.js';
@@ -117,7 +118,7 @@ export async function startProductionBot():Promise<void>{
   // Music is owned by a separate bot.  Do not claim its historical jobs.
   const jobRepo=new PrismaJobRepository(db,{notIn:['music.reconcile','music.controller.publish','music.controller.cleanup','music.controller.refresh']});
   startup.mark('discord-client-construction');
-  const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration],partials:enableActivityLoggingSmoke?[Partials.Message]:[]});
+  const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMessageReactions,GatewayIntentBits.MessageContent,GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildModeration],partials:[Partials.Message,Partials.Reaction]});
   const fullyFurnishedRepo=new PrismaFullyFurnishedRepository(db);
   const announceFullyFurnishedCompletion=async(guildId:string,userId:string)=>{
     const [channel,ids,guild]=await Promise.all([client.channels.fetch(FULLY_FURNISHED_ANNOUNCEMENT_CHANNEL),fullyFurnishedRepo.completers(guildId),client.guilds.fetch(guildId)]);
@@ -407,7 +408,9 @@ export async function startProductionBot():Promise<void>{
     if(activityLogger)lifecycle.run(()=>activityLogger.banAdded(ban),()=>console.error('Member ban logging failed.'));
   });
   on(Events.ChannelCreate,async channel=>{await settleHandlers([...(enableJailSmoke?[jail.reconcileNewChannel(channel)]:[]),...(activityLogger?[activityLogger.channelCreated(channel)]:[])]);});
-  on(Events.MessageCreate,async message=>{await settleHandlers([...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  const typeShitReplies=new TypeShitResponder();
+  on(Events.MessageCreate,async message=>{await settleHandlers([typeShitReplies.message(message),...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  on(Events.MessageReactionAdd,async(reaction,user)=>{await typeShitReplies.reaction(reaction,user);});
   if(activityLogger){
     on(Events.MessageUpdate,(before,after)=>activityLogger.messageUpdate(before,after));
     on(Events.MessageDelete,message=>activityLogger.messageDelete(message));
