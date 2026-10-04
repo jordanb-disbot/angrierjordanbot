@@ -40,8 +40,9 @@ export class DiscordWyrCoordinator {
   async handleButton(interaction:ButtonInteraction):Promise<void>{
     const [scope,action,arg,sessionIdMaybe]=interaction.customId.split(':');
     if(scope!=='wyr')return;
+    let stage='validate-component';
     try{
-      if(action==='mode'){const[, ,owner,visibility,category]=interaction.customId.split(':');if((visibility!=='private'&&visibility!=='public')||!category||owner!==interaction.user.id)throw new DomainError('WYR_MODE','Open your own WYR mode selector.');await interaction.deferUpdate();await this.guard(interaction);const session=await this.service.start({guildId:interaction.guildId!,channelId:interaction.channelId,ownerUserId:interaction.user.id,category:validCategories.has(category as WyrCategoryInput)?category as WyrCategoryInput:'Random',enforceSinglePublicRound:visibility==='public',visibility});if(visibility==='public'){await this.publish(interaction.client,session.id);await interaction.editReply({content:'The multiplayer WYR round is ready in this channel.',components:[]});return;}const card=await this.payload(session);const message=await interaction.editReply(card);await this.service.attachMessage(session.id,message.id);return;}
+      if(action==='mode'){const[, ,owner,visibility,category]=interaction.customId.split(':');if((visibility!=='private'&&visibility!=='public')||!category||owner!==interaction.user.id)throw new DomainError('WYR_MODE','Open your own WYR mode selector.');stage='defer-mode';await interaction.deferUpdate();stage='guard-mode';await this.guard(interaction);stage='create-session';const session=await this.service.start({guildId:interaction.guildId!,channelId:interaction.channelId,ownerUserId:interaction.user.id,category:validCategories.has(category as WyrCategoryInput)?category as WyrCategoryInput:'Random',enforceSinglePublicRound:visibility==='public',visibility});if(visibility==='public'){stage='publish-public';await this.publish(interaction.client,session.id);stage='confirm-public';await interaction.editReply({content:'The multiplayer WYR round is ready in this channel.',components:[]});return;}stage='render-private';const card=await this.payload(session);stage='write-private';const message=await interaction.editReply(card);stage='attach-private';await this.service.attachMessage(session.id,message.id);return;}
       const id=action==='vote'?sessionIdMaybe:arg;if(!id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');const source=await this.service.get(id),privateRound=source.data?.visibility==='private';
       if(action==='vote')await (privateRound?interaction.deferUpdate():interaction.deferReply({ephemeral:true}));else if(action==='extend')await interaction.deferUpdate();else if(action==='play')await (privateRound?interaction.deferUpdate():interaction.deferReply());
       await this.guard(interaction);if(source.guildId!==interaction.guildId||source.channelId!==interaction.channelId||source.messageId!==interaction.message.id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');if(privateRound&&source.ownerUserId!==interaction.user.id)throw new DomainError('OWNER_ONLY','Open your own private WYR round.');
@@ -60,7 +61,7 @@ export class DiscordWyrCoordinator {
         if(privateRound){const message=await interaction.editReply(await this.payload(session));await this.service.attachMessage(session.id,message.id);return;}
         await this.publish(interaction.client,session.id,interaction).catch(async()=>{await interaction.followUp({ephemeral:true,content:'Your round is saved. Its original card is pending recovery.'});});return;
       }
-    }catch(error){await this.replyError(interaction,error);}
+    }catch(error){this.logFailure(stage,interaction,error);await this.replyError(interaction,error);}
   }
 
   async recover(client:Client):Promise<{active:number;closed:number}>{
@@ -121,5 +122,11 @@ export class DiscordWyrCoordinator {
   private async replyError(interaction:ChatInputCommandInteraction|ButtonInteraction,error:unknown):Promise<void>{
     const content=error instanceof DomainError?error.message:'Something went wrong starting that round.';
     if(interaction.deferred&&interaction.isButton()&&interaction.customId.startsWith('wyr:extend:'))await interaction.followUp({content,ephemeral:true});else if(interaction.deferred&&!interaction.replied)await interaction.editReply({content});else if(interaction.replied||interaction.deferred)await interaction.followUp({content,ephemeral:true});else await interaction.reply({content,ephemeral:true});
+  }
+
+  /** Keeps operational failures actionable without exposing internal details to members. */
+  private logFailure(stage:string,interaction:ButtonInteraction,error:unknown):void{
+    const details=error instanceof DomainError?{name:error.name,code:error.code}:{name:error instanceof Error?error.name:'UnknownError',code:null};
+    console.error('WYR interaction diagnostic',JSON.stringify({stage,action:interaction.customId.split(':')[1]??null,guildId:interaction.guildId,channelId:interaction.channelId,...details}));
   }
 }
