@@ -66,6 +66,22 @@ export class WyrService {
     });
   }
 
+  /** A private card records its owner's choice directly; it never opens an audience vote. */
+  async choosePrivate(sessionId:string,userId:string,choice:WyrChoice):Promise<WyrRuntimeSession>{
+    invariant(choice==='A'||choice==='B','INVALID_CHOICE','Choose A or B.');
+    for(let attempt=0;attempt<4;attempt+=1){
+      const current=await this.sessions.get(sessionId);
+      if(!current)throw new DomainError('SESSION_NOT_FOUND','WYR session not found.');
+      invariant(current.state==='OPEN','ROUND_CLOSED','This WYR round is closed.');
+      invariant(current.data.visibility==='private','PRIVATE_ONLY','This selection is only available on a private WYR card.');
+      invariant(current.ownerUserId===userId,'OWNER_ONLY','Open your own private WYR round.');
+      const next=this.clone(current),now=this.clock.now(),voting=this.voting(next);voting.cast(userId,choice,now);
+      next.votes=voting.snapshotForPersistence().map(v=>({userId:v.voterUserId,choice:v.choiceKey as WyrChoice,updatedAt:v.updatedAt}));next.state='CLOSED';next.version=current.version+1;
+      if(await this.sessions.compareAndSwap(sessionId,current.version,next))return next;
+    }
+    throw new DomainError('SESSION_CONFLICT','WYR round changed concurrently. Retry the operation.');
+  }
+
   async extend(sessionId:string,actorUserId:string,isStaff=false):Promise<WyrRuntimeSession>{
     return this.updateOpen(sessionId,s=>{
       invariant(actorUserId===s.ownerUserId,'NOT_ALLOWED','Only the host may extend the round.');

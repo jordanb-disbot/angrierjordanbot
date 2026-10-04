@@ -53,7 +53,7 @@ export class DiscordPartyCoordinator {
   else if(action==='skip')await this.repo.answer(c,id,'',true);
   else if(action==='submit_modal'&&i.isModalSubmit()){const member=await this.target(i.guild,i.user.id);await this.repo.submit(c,id,member.name,i.fields.getTextInputValue('value'));}
   else if(action==='word_modal'&&i.isModalSubmit()){const member=await this.target(i.guild,i.user.id);await this.repo.addWord(c,id,member.name,i.fields.getTextInputValue('value'));}
-  else if(action==='vote'||action==='vote_pick')await this.repo.vote(c,id,i.isStringSelectMenu()?i.values[0]!:arg!);
+  else if(action==='vote'||action==='vote_pick'){const choice=i.isStringSelectMenu()?i.values[0]!:arg!;if(v.visibility==='private'&&v.game==='wwyd')await this.repo.choosePrivateWwyd(c,id,choice);else await this.repo.vote(c,id,choice);}
   else if(action==='extend')await this.repo.extend(c,id);
   else if(action==='fmk_submit'){const current=await this.candidates(i.guild),submitted=await this.repo.submitFmk(c,id,current.map(m=>m.userId));await this.publish(i.client,submitted.jobId);try{await i.deleteReply();}catch{await i.editReply({content:null,embeds:[],attachments:[],components:[new TextDisplayBuilder().setContent('Your FMK is public. Its audience vote is now open.')]});}return;}
   else throw new DomainError('PARTY_CONTROL','That control is unavailable.');

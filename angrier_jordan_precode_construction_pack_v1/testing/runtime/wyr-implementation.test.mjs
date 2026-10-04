@@ -87,6 +87,16 @@ test('WYR enforces one active public WYR round per channel',async()=>{
   await assert.rejects(()=>controller.start({guildId:'g1',channelId:'games',userId:'u2',category:'Friends'}),e=>e instanceof DomainError&&e.code==='PARTY_ROUND_ACTIVE');
 });
 
+test('private WYR saves the owner choice immediately and makes replay available without an audience vote',async()=>{
+  const {service}=make();
+  const open=await service.start({guildId:'g1',channelId:'games',ownerUserId:'host',category:'Casual',visibility:'private',enforceSinglePublicRound:false});
+  const closed=await service.choosePrivate(open.id,'host','B');
+  assert.equal(closed.state,'CLOSED');assert.equal(closed.votes.length,1);assert.equal(closed.votes[0].choice,'B');
+  await assert.rejects(()=>service.choosePrivate(open.id,'host','A'),{code:'ROUND_CLOSED'});
+  const replay=await service.replay(open.id,'host',undefined,'private');
+  assert.equal(replay.data.visibility,'private');assert.notEqual(replay.data.promptId,open.data.promptId);
+});
+
 test('WYR runtime persists Discord message linkage and recovers after restart',async()=>{
   const {clock,service}=make();
   const calls={post:[],update:[],results:[],ephemeral:[]};

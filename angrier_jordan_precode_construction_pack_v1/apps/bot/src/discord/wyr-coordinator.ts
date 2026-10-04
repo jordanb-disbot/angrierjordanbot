@@ -9,10 +9,10 @@ import {funChannelAllowed} from './fun-channels.js';
 const validCategories=new Set<WyrCategoryInput>(['Random','Casual','Friends','Dating','Married','Spicy','Unhinged']);
 const png=async(svg:string)=>rasterizeSvg(svg);
 const file=(buffer:Buffer,name='wyr.png')=>new AttachmentBuilder(buffer,{name});
-const openRow=(sessionId:string,extensionSeconds:number,extensionUsed:boolean)=>new ActionRowBuilder<ButtonBuilder>().addComponents(
+const openRow=(sessionId:string,extensionSeconds:number,extensionUsed:boolean,privateCard=false)=>new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setCustomId(`wyr:vote:A:${sessionId}`).setLabel('Choose Left').setStyle(ButtonStyle.Primary),
   new ButtonBuilder().setCustomId(`wyr:vote:B:${sessionId}`).setLabel('Choose Right').setStyle(ButtonStyle.Secondary),
-  new ButtonBuilder().setCustomId(`wyr:extend:${sessionId}`).setLabel(`+${extensionSeconds} Seconds`).setStyle(ButtonStyle.Secondary).setDisabled(extensionUsed||extensionSeconds===0),
+  ...(privateCard?[]:[new ButtonBuilder().setCustomId(`wyr:extend:${sessionId}`).setLabel(`+${extensionSeconds} Seconds`).setStyle(ButtonStyle.Secondary).setDisabled(extensionUsed||extensionSeconds===0)]),
 );
 const resultRow=(sessionId:string)=>new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setCustomId(`wyr:play:${sessionId}`).setLabel('Play Again').setStyle(ButtonStyle.Success),
@@ -47,7 +47,7 @@ export class DiscordWyrCoordinator {
       if(action==='vote')await (privateRound?interaction.deferUpdate():interaction.deferReply({ephemeral:true}));else if(action==='extend')await interaction.deferUpdate();else if(action==='play')await (privateRound?interaction.deferUpdate():interaction.deferReply());
       await this.guard(interaction);if(source.guildId!==interaction.guildId||source.channelId!==interaction.channelId||source.messageId!==interaction.message.id)throw new DomainError('WYR_CONTROL','Use the original WYR message.');if(privateRound&&source.ownerUserId!==interaction.user.id)throw new DomainError('OWNER_ONLY','Open your own private WYR round.');
       if(action==='vote'&&(arg==='A'||arg==='B')&&sessionIdMaybe){
-        const session=await this.service.vote(sessionIdMaybe,interaction.user.id,arg);
+        const session=privateRound?await this.service.choosePrivate(sessionIdMaybe,interaction.user.id,arg):await this.service.vote(sessionIdMaybe,interaction.user.id,arg);
         if(privateRound){await interaction.editReply(await this.payload(session));return;}
         const label=arg==='A'?session.data.optionA:session.data.optionB;await interaction.editReply({content:`Vote recorded — ${label}. You can change it until voting closes.`,allowedMentions:{parse:[]}});return;
       }
@@ -88,7 +88,7 @@ export class DiscordWyrCoordinator {
   async advance(client:Client,sessionId:string){const result=await this.service.close(sessionId);if(result.session.messageId)await this.editKnownMessage(client,result.session.guildId,result.session.channelId,result.session.messageId,result.svg,[resultRow(result.session.id)]);}
 
   /** Re-editing the saved original reply is safe even after an uncertain prior edit. */
-  private async payload(session:Awaited<ReturnType<WyrService['get']>>){return{content:`Voting closes <t:${Math.floor(session.expiresAt.getTime()/1000)}:R>.`,files:[file(await png(this.service.renderOpen(session)))],attachments:[],embeds:[new EmbedBuilder().setImage('attachment://wyr.png').setColor(0x3B82F6)],components:[openRow(session.id,session.data.extensionSeconds,session.extensionUsed)],allowedMentions:{parse:[] as never[]}};}
+  private async payload(session:Awaited<ReturnType<WyrService['get']>>){const closed=session.state==='CLOSED',privateCard=session.data.visibility==='private',svg=closed?(await this.service.close(session.id)).svg:this.service.renderOpen(session);return{content:closed?'':privateCard?'Choose one option to save your answer.':`Voting closes <t:${Math.floor(session.expiresAt.getTime()/1000)}:R>.`,files:[file(await png(svg))],attachments:[],embeds:[new EmbedBuilder().setImage('attachment://wyr.png').setColor(0x3B82F6)],components:[closed?resultRow(session.id):openRow(session.id,session.data.extensionSeconds,session.extensionUsed,privateCard)],allowedMentions:{parse:[] as never[]}};}
   async publish(client:Client,sessionId:string,interaction?:ChatInputCommandInteraction|ButtonInteraction){
     if(!this.publication)throw new DomainError('WYR_PUBLICATION','WYR publication recovery is not configured.');
     const job=await this.publication.jobForSession(sessionId),session=await this.service.get(sessionId),channel=await client.channels.fetch(session.channelId);
