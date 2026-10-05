@@ -56,8 +56,8 @@ export class DiscordEventsCoordinator {
   })().catch(()=>{this.prepared.delete(view.id);}).finally(()=>this.preparing.delete(view.id));
  }
  private sweeping=false;
- constructor(private readonly repo:PrismaEventsRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
- async policy(guildId:string):Promise<EventPolicy>{const [min,max]=await Promise.all(['events.min_bet','events.max_bet'].map(key=>this.config.get(guildId,key)));return{minBet:BigInt(Number(min)),maxBet:BigInt(Number(max))};}
+ constructor(private readonly repo:PrismaEventsRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly maximumWager?:(guildId:string)=>Promise<bigint|undefined>){}
+ async policy(guildId:string):Promise<EventPolicy>{const [min,max,adaptive]=await Promise.all([this.config.get(guildId,'events.min_bet'),this.config.get(guildId,'events.max_bet'),this.maximumWager?.(guildId)]);const configured=BigInt(Number(max));return{minBet:BigInt(Number(min)),maxBet:adaptive===undefined?configured:adaptive<configured?adaptive:configured};}
  private async guard(guildId:string,userId:string,channelId:string,kind='race'){
   const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):interactiveGameChannelAllowed(this.config,guildId,channelId),this.eligible(guildId,userId)]);
   if(enabled!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');

@@ -14,7 +14,7 @@ import {cardLabel,handValue,type CasinoGame,type ChairSymbol} from '../../../../
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export const CASINO_COMMANDS=new Set(['casino','lottery']);
 export class DiscordCasinoCoordinator {
- constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly onRoundClosed?:(guildId:string,userId:string,sessionId:string)=>Promise<void>){}
+ constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly onRoundClosed?:(guildId:string,userId:string,sessionId:string)=>Promise<void>,private readonly maximumWager?:(guildId:string)=>Promise<bigint|undefined>){}
  private identities=new Map<string,{expires:number;value:ReturnType<typeof memberArt>}>();
  private identity(client:Client,guildId:string,userId:string){const key=guildId+':'+userId,old=this.identities.get(key);if(old&&old.expires>Date.now())return old.value;const value=memberArt(client,guildId,userId);this.identities.set(key,{expires:Date.now()+60000,value});if(this.identities.size>64)this.identities.delete(this.identities.keys().next().value!);return value;}
  private artwork=new Map<string,Promise<DisplayFrame[]>>();
@@ -22,7 +22,7 @@ export class DiscordCasinoCoordinator {
  private async policy(guildId:string):Promise<CasinoPolicy>{
   const keys=['casino.min_bet','casino.max_bet','casino.chair_pot_contribution_percent','casino.chair_symbols','casino.slots_wagers','casino.roulette_choices','casino.dice_choices'];const v=await Promise.all(keys.map(k=>this.config.get(guildId,k)));
   if(!Array.isArray(v[3])||!Array.isArray(v[4])||!Array.isArray(v[5])||!Array.isArray(v[6]))throw new DomainError('CASINO_CONFIG','Casino configuration is unavailable.');
-  return{minBet:BigInt(Number(v[0])),maxBet:BigInt(Number(v[1])),chairPotPercent:Number(v[2]),symbols:v[3] as ChairSymbol[],slotsWagers:v[4].map(n=>BigInt(Number(n))),rouletteChoices:v[5].map(String),diceChoices:v[6].map(String)};
+  const configured=BigInt(Number(v[1])),adaptive=await this.maximumWager?.(guildId);return{minBet:BigInt(Number(v[0])),maxBet:adaptive===undefined?configured:adaptive<configured?adaptive:configured,chairPotPercent:Number(v[2]),symbols:v[3] as ChairSymbol[],slotsWagers:v[4].map(n=>BigInt(Number(n))).filter(n=>adaptive===undefined||n<=adaptive),rouletteChoices:v[5].map(String),diceChoices:v[6].map(String)};
  }
  private modal(userId:string,game:string,lottery=false){
   const amount=new TextInputBuilder().setCustomId('amount').setLabel(lottery?'Tickets (1–20 per week)':'Wager in Ottomans').setStyle(TextInputStyle.Short).setRequired(true).setMaxLength(7);
