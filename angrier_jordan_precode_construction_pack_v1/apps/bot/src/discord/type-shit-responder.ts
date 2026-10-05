@@ -8,8 +8,9 @@ export class TypeShitResponder {
   async message(message:Message):Promise<void>{
     if(!message.guild||message.author.bot)return;
     const emojiUses=(message.content.match(/<a?:type_shit:\d+>/g)??[]).length;
+    const phraseUses=(message.content.match(/\btype\s+shit\b/gi)??[]).length;
     const stickerUses=[...message.stickers.values()].filter(sticker=>sticker.name==='TS').length;
-    for(let count=0;count<emojiUses+stickerUses;count+=1)await message.reply(reply);
+    for(let count=0;count<emojiUses+phraseUses+stickerUses;count+=1)await message.reply(reply);
   }
 
   async reaction(reaction:MessageReaction|PartialMessageReaction,user:User|PartialUser):Promise<void>{

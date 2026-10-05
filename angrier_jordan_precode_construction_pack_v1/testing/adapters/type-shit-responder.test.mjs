@@ -10,6 +10,12 @@ test('type_shit message emoji and TS sticker each receive a reply without mentio
   assert.equal(m.replies.length,3);assert.deepEqual(m.replies[0],{content:'Shit',allowedMentions:{parse:[]}});
 });
 
+test('plain type shit is case-insensitive and replies for each use',async()=>{
+  const responder=new TypeShitResponder(),m=message({content:'Type shit, then type   shit again.'});
+  await responder.message(m);
+  assert.equal(m.replies.length,2);
+});
+
 test('each type_shit reaction replies to its source message once',async()=>{
   const responder=new TypeShitResponder(),m=message(),reaction={emoji:{name:'type_shit'},partial:false,message:m};
   await responder.reaction(reaction,{bot:false});
