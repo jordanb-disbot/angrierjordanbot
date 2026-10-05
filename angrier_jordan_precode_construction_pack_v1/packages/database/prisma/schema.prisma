@@ -70,6 +70,7 @@ model Member {
   dmsEnabled Boolean @default(true)
   activityVisible Boolean @default(true)
   createdAt DateTime @default(now())
+  joinedAt DateTime?
   updatedAt DateTime @updatedAt
   economy EconomyAccount?
   inventory InventoryEntry[]
