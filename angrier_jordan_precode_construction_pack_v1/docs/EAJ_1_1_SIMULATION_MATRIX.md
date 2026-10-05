@@ -13,4 +13,4 @@ These deterministic domain simulations are not a substitute for the required sev
 | 7 | Voice two-full/one-half-hour maximum | `voice earnings settle two qualifying hours at full rate, then one at half, then stop` |
 | 8 | Tier 5 locked-term, time-weighted, benchmark-capped settlement | `Tier 5 bank interest locks the benchmark-scaled cap and is idempotent per member and cycle` |
 
-Run command: `npm run test:domain`. As of the latest local run, all 330 domain tests passed. PostgreSQL and live checks remain separate acceptance gates.
+Run command: `npm run test:domain`. The simulations are verified as part of the current 336-test domain suite. PostgreSQL and live checks remain separate acceptance gates.
