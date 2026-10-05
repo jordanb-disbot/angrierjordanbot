@@ -63,10 +63,11 @@ export class InMemoryEconomyRepository implements EconomyRepository {
     const a=this.ensureAccount(input.guildId,input.userId),counterKey=`${input.guildId}:${input.userId}:${input.cycleKey}`;
     let counter=this.activityPayoutCounters.get(counterKey);if(!counter){counter={guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey,chatPaidWindows:0,chatPaidAmount:0n,voiceQualifiedSeconds:0,voicePaidSeconds:0,voicePaidAmount:0n};this.activityPayoutCounters.set(counterKey,counter);}
     if(this.transactions.has(input.idempotencyKey))return{status:'duplicate',account:cloneAccount(a),counter,reward:0n};
+    if(input.kind==='chat'&&input.chatWindowKey&&counter.chatLastWindowKey===input.chatWindowKey){const header=this.transaction(input.guildId,input.idempotencyKey,'ACTIVITY_CHAT',input.reason,input.metadata,input.now);return{status:'throttled',account:cloneAccount(a),counter:{...counter},reward:0n,transaction:{...header}};}
     const paid=input.kind==='chat'?counter.chatPaidAmount:counter.voicePaidAmount;
     const reward=input.requestedReward>input.dailyCap-paid?input.dailyCap-paid:input.requestedReward;
     const header=this.transaction(input.guildId,input.idempotencyKey,`ACTIVITY_${input.kind.toUpperCase()}`,input.reason,input.metadata,input.now);
-    if(input.kind==='chat'){counter.chatPaidWindows+=Math.max(0,Math.trunc(input.chatWindows??1));counter.chatPaidAmount+=reward;}else{counter.voiceQualifiedSeconds+=Math.max(0,Math.trunc(input.voiceQualifiedSeconds??0));counter.voicePaidSeconds+=Math.max(0,Math.trunc(input.voicePaidSeconds??0));counter.voicePaidAmount+=reward;}
+    if(input.kind==='chat'){counter.chatPaidWindows+=Math.max(0,Math.trunc(input.chatWindows??1));counter.chatPaidAmount+=reward;if(input.chatWindowKey!==undefined)counter.chatLastWindowKey=input.chatWindowKey;}else{counter.voiceQualifiedSeconds+=Math.max(0,Math.trunc(input.voiceQualifiedSeconds??0));counter.voicePaidSeconds+=Math.max(0,Math.trunc(input.voicePaidSeconds??0));counter.voicePaidAmount+=reward;}
     if(reward>0n){a.wallet+=reward;a.version++;this.ledgerEntries(header,[{userId:input.userId,bucket:'wallet',amount:reward,reason:input.reason,...(input.metadata?{metadata:input.metadata}:{})},{bucket:'system',amount:-reward,reason:input.reason,...(input.metadata?{metadata:input.metadata}:{})}],input.now);}
     return{status:reward>0n?'applied':'capped',account:cloneAccount(a),counter:{...counter},reward,transaction:{...header}};
   }

@@ -38,7 +38,8 @@ export class EconomyService {
     if(min<0n||max<min||cap<0n)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Chat payout policy is invalid.');
     const now=this.clock.now(),cycle=dailyCycle(now),counter=await this.repository.getActivityPayoutCounter(input.guildId,input.userId,cycle.key);
     const sampled=counter.chatPaidAmount>=cap?0n:randomBigInt(min,max,this.random.next());
-    return this.repository.commitActivityPayout({guildId:input.guildId,userId:input.userId,cycleKey:cycle.key,kind:'chat',idempotencyKey:input.idempotencyKey,now,requestedReward:sampled,dailyCap:cap,chatWindows:1,reason:'Qualified chat activity',metadata:{cycleKey:cycle.key,sampled:money(sampled),minimum:money(min),maximum:money(max),dailyCap:money(cap)}});
+    const windowKey=`${cycle.key}:${Math.floor(now.getTime()/300_000)}`;
+    return this.repository.commitActivityPayout({guildId:input.guildId,userId:input.userId,cycleKey:cycle.key,kind:'chat',idempotencyKey:input.idempotencyKey,now,requestedReward:sampled,dailyCap:cap,chatWindows:1,chatWindowKey:windowKey,reason:'Qualified chat activity',metadata:{cycleKey:cycle.key,windowKey,sampled:money(sampled),minimum:money(min),maximum:money(max),dailyCap:money(cap)}});
   }
   async awardQualifiedVoice(input:{guildId:string;userId:string;idempotencyKey:string;qualifiedSeconds:number;dailyCap?:bigint;fullRange?:readonly [bigint,bigint];halfRange?:readonly [bigint,bigint]}){
     const seconds=Math.max(0,Math.trunc(input.qualifiedSeconds));if(seconds===0)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Qualified voice time must be positive.');

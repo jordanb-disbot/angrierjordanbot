@@ -1314,6 +1314,7 @@ model EconomyActivityCounter {
   userId String
   cycleKey String
   chatPaidWindows Int @default(0)
+  chatLastWindowKey String?
   chatPaidAmount BigInt @default(0)
   voiceQualifiedSeconds Int @default(0)
   voicePaidSeconds Int @default(0)

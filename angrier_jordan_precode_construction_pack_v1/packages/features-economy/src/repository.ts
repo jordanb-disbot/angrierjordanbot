@@ -17,15 +17,15 @@ export interface ActivityCommitResult {status:'applied'|'duplicate'|'throttled';
 export interface BankUpgradeCommitInput {guildId:string;userId:string;idempotencyKey:string;currentRule:BankTierRule;nextRule:BankTierRule;reason:string;now:Date;}
 export interface StarterCommitResult {status:'applied'|'existing'|'duplicate';account:EconomyAccountRecord;}
 export interface BankInterestTermRecord {guildId:string;cycleKey:string;rateBps:number;capAmount:bigint;}
-export interface ActivityPayoutCounter {guildId:string;userId:string;cycleKey:string;chatPaidWindows:number;chatPaidAmount:bigint;voiceQualifiedSeconds:number;voicePaidSeconds:number;voicePaidAmount:bigint;}
+export interface ActivityPayoutCounter {guildId:string;userId:string;cycleKey:string;chatPaidWindows:number;chatLastWindowKey?:string|null;chatPaidAmount:bigint;voiceQualifiedSeconds:number;voicePaidSeconds:number;voicePaidAmount:bigint;}
 /**
  * A non-interactive activity award.  The caller samples the proposed amount,
  * but this operation persists that exact sample with the cap counter and the
  * balancing ledger lines in one transaction.  Retried events therefore never
  * get another random roll.
  */
-export interface ActivityPayoutCommitInput {guildId:string;userId:string;cycleKey:string;kind:'chat'|'voice';idempotencyKey:string;now:Date;requestedReward:bigint;dailyCap:bigint;chatWindows?:number;voiceQualifiedSeconds?:number;voicePaidSeconds?:number;reason:string;metadata?:Record<string,unknown>;}
-export interface ActivityPayoutCommitResult {status:'applied'|'duplicate'|'capped';account:EconomyAccountRecord;counter:ActivityPayoutCounter;reward:bigint;transaction?:EconomyTransactionRecord;}
+export interface ActivityPayoutCommitInput {guildId:string;userId:string;cycleKey:string;kind:'chat'|'voice';idempotencyKey:string;now:Date;requestedReward:bigint;dailyCap:bigint;chatWindows?:number;chatWindowKey?:string;voiceQualifiedSeconds?:number;voicePaidSeconds?:number;reason:string;metadata?:Record<string,unknown>;}
+export interface ActivityPayoutCommitResult {status:'applied'|'duplicate'|'capped'|'throttled';account:EconomyAccountRecord;counter:ActivityPayoutCounter;reward:bigint;transaction?:EconomyTransactionRecord;}
 
 export interface EconomyRepository extends LedgerRepository {
   ensureMember(guildId:string,userId:string):Promise<void>;
