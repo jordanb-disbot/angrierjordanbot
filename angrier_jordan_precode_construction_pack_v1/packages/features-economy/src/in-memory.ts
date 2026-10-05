@@ -24,6 +24,7 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   readonly snapshots=new Map<string,import('./repository.js').EconomySnapshotRecord>();
   readonly policyProposals:import('./repository.js').EconomyPolicyProposal[]=[];
   readonly bankInterestTerms=new Map<string,import('./repository.js').BankInterestTermRecord>();
+  readonly activityPayoutCounters=new Map<string,import('./repository.js').ActivityPayoutCounter>();
   private seq=0;
 
   constructor(items:readonly CatalogItemRecord[]=[]){for(const i of items)this.catalog.set(i.id,{...i,...(i.metadata?{metadata:structuredClone(i.metadata)}:{})});}
@@ -56,6 +57,7 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   async listAccountsAtTier(g:string,tier:number){return [...this.accounts.values()].filter(x=>x.guildId===g&&x.bankTier===tier).map(cloneAccount);}
   async listBankLedgerEntries(g:string,start:Date,end:Date){return this.entries.filter(x=>x.guildId===g&&x.bucket==='bank'&&x.createdAt>=start&&x.createdAt<end).map(x=>({...x,createdAt:new Date(x.createdAt)}));}
   async lockBankInterestTerm(input:import('./repository.js').BankInterestTermRecord){const key=`${input.guildId}:${input.cycleKey}`,existing=this.bankInterestTerms.get(key);if(existing)return{...existing};this.bankInterestTerms.set(key,{...input});return{...input};}
+  async getActivityPayoutCounter(guildId:string,userId:string,cycleKey:string){const key=`${guildId}:${userId}:${cycleKey}`,existing=this.activityPayoutCounters.get(key);if(existing)return{...existing};const fresh={guildId,userId,cycleKey,chatPaidWindows:0,chatPaidAmount:0n,voiceQualifiedSeconds:0,voicePaidSeconds:0,voicePaidAmount:0n};this.activityPayoutCounters.set(key,fresh);return{...fresh};}
   async upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(input.guildId,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`snapshot:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`policy:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}

@@ -17,6 +17,7 @@ export interface ActivityCommitResult {status:'applied'|'duplicate'|'throttled';
 export interface BankUpgradeCommitInput {guildId:string;userId:string;idempotencyKey:string;currentRule:BankTierRule;nextRule:BankTierRule;reason:string;now:Date;}
 export interface StarterCommitResult {status:'applied'|'existing'|'duplicate';account:EconomyAccountRecord;}
 export interface BankInterestTermRecord {guildId:string;cycleKey:string;rateBps:number;capAmount:bigint;}
+export interface ActivityPayoutCounter {guildId:string;userId:string;cycleKey:string;chatPaidWindows:number;chatPaidAmount:bigint;voiceQualifiedSeconds:number;voicePaidSeconds:number;voicePaidAmount:bigint;}
 
 export interface EconomyRepository extends LedgerRepository {
   ensureMember(guildId:string,userId:string):Promise<void>;
@@ -36,6 +37,7 @@ export interface EconomyRepository extends LedgerRepository {
   listAccountsAtTier(guildId:string,tier:number):Promise<EconomyAccountRecord[]>;
   listBankLedgerEntries(guildId:string,start:Date,end:Date):Promise<EconomyLedgerEntryRecord[]>;
   lockBankInterestTerm(input:BankInterestTermRecord):Promise<BankInterestTermRecord>;
+  getActivityPayoutCounter(guildId:string,userId:string,cycleKey:string):Promise<ActivityPayoutCounter>;
   upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
