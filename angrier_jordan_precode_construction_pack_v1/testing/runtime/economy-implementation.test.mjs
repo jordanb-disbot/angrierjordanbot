@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
+import {cappedActivityPayout,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,tier5Interest,voicePayoutBand} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -91,6 +91,11 @@ test('active benchmark excludes bots, new members, spending, and thin activity',
     ...[1,2,3,4].map(i=>({userId:'thin',occurredAt:new Date(now.getTime()-i*86_400_000),kind:'spending'})),
   ];
   assert.deepEqual([...qualifiedActiveMemberIds(members,observations,now)],['human']);
+});
+
+test('activity reward caps and voice bands preserve the two-full-one-half-hour policy',()=>{
+  assert.equal(cappedActivityPayout(25n,290n,300n),10n);assert.equal(cappedActivityPayout(20n,300n,300n),0n);
+  assert.equal(voicePayoutBand(0),'full');assert.equal(voicePayoutBand(7_199),'full');assert.equal(voicePayoutBand(7_200),'half');assert.equal(voicePayoutBand(10_799),'half');assert.equal(voicePayoutBand(10_800),'none');
 });
 
 test('economy reconciliation counts active member escrow and communal pots exactly once',()=>{

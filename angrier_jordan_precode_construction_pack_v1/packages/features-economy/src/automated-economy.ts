@@ -76,6 +76,10 @@ export const boundedWeeklyChange=(previous:bigint,proposed:bigint,maxBps=500n)=>
 export const benchmarkPercent=(benchmark:bigint,bps:bigint,roundTo=1n)=>floor(benchmark*bps/10_000n,roundTo);
 /** Initial currency follows the published benchmark policy; it is never a legacy fixed grant. */
 export const starterFromBenchmark=(benchmark:bigint,percentBps=250n)=>benchmark<=0n?0n:benchmarkPercent(benchmark,percentBps);
+/** Pure payout guards; callers persist the sampled amount before reporting success. */
+export const cappedActivityPayout=(sampled:bigint,alreadyPaid:bigint,dailyCap:bigint)=>sampled<=0n||alreadyPaid>=dailyCap?0n:sampled>dailyCap-alreadyPaid?dailyCap-alreadyPaid:sampled;
+/** First two qualifying voice hours pay full rate, hour three pays half, then earnings stop. */
+export const voicePayoutBand=(qualifiedSeconds:number)=>qualifiedSeconds<7_200?'full':qualifiedSeconds<10_800?'half':'none';
 export const majorPurchaseAffordability=(input:{qualifyingMembers:number;membersAbleToBuy:number;majorPurchaseCost:bigint;medianActiveWealth:bigint;typicalDailyEarnings:bigint}):MajorPurchaseAffordability=>{
   const qualifying=Math.max(0,Math.trunc(input.qualifyingMembers)),able=Math.max(0,Math.min(qualifying,Math.trunc(input.membersAbleToBuy)));
   const cost=input.majorPurchaseCost<0n?0n:input.majorPurchaseCost,wealth=input.medianActiveWealth<0n?0n:input.medianActiveWealth,earnings=input.typicalDailyEarnings;
