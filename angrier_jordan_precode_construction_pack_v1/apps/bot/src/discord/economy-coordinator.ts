@@ -39,6 +39,7 @@ export class DiscordEconomyCoordinator {
 
   async handleInterestJob(payload:unknown){if(!payload||typeof payload!=='object')return;const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')return;const bps=asNumber(await this.config.get(p.guildId,'economy.bank_tier5_interest_bps'),100);const cap=BigInt(asNumber(await this.config.get(p.guildId,'economy.bank_tier5_interest_cap'),100000));const result=await this.service.applyTier5Interest({guildId:p.guildId,cycleKey:p.cycleKey,interestBps:bps,maxPerMember:cap});await this.service.scheduleNextBankInterest(p.guildId);console.log(`Tier 5 bank interest ${p.guildId}/${p.cycleKey}: members=${result.members} credited=${result.credited} duplicates=${result.duplicates}`);}
   async reconcileInterestSchedule(guildId:string){return this.service.scheduleNextBankInterest(guildId);}
+  async reconcileEconomySnapshotSchedule(guildId:string){return this.service.scheduleNextEconomySnapshot(guildId);}
 
   private async ensureStarter(g:string,u:string,request:string){const starter=BigInt(asNumber(await this.config.get(g,'economy.starter_ottomans'),500));return this.service.bootstrap(g,u,starter,request);}
   private async resetHour(g:string){return asNumber(await this.config.get(g,'server.daily_reset_hour'),4);}
