@@ -74,6 +74,8 @@ export const boundedWeeklyChange=(previous:bigint,proposed:bigint,maxBps=500n)=>
   return proposed>previous+delta?previous+delta:proposed<previous-delta?previous-delta:proposed;
 };
 export const benchmarkPercent=(benchmark:bigint,bps:bigint,roundTo=1n)=>floor(benchmark*bps/10_000n,roundTo);
+/** Initial currency follows the published benchmark policy; it is never a legacy fixed grant. */
+export const starterFromBenchmark=(benchmark:bigint,percentBps=250n)=>benchmark<=0n?0n:benchmarkPercent(benchmark,percentBps);
 export const majorPurchaseAffordability=(input:{qualifyingMembers:number;membersAbleToBuy:number;majorPurchaseCost:bigint;medianActiveWealth:bigint;typicalDailyEarnings:bigint}):MajorPurchaseAffordability=>{
   const qualifying=Math.max(0,Math.trunc(input.qualifyingMembers)),able=Math.max(0,Math.min(qualifying,Math.trunc(input.membersAbleToBuy)));
   const cost=input.majorPurchaseCost<0n?0n:input.majorPurchaseCost,wealth=input.medianActiveWealth<0n?0n:input.medianActiveWealth,earnings=input.typicalDailyEarnings;

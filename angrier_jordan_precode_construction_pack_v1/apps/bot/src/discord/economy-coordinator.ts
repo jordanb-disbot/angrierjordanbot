@@ -30,7 +30,7 @@ export class DiscordEconomyCoordinator {
   private readonly disposable=new DisposableCardLifecycle();
   constructor(private readonly service:EconomyService,private readonly config:ConfigService){}
 
-  async handleMemberAdd(member:GuildMember){const starter=BigInt(asNumber(await this.config.get(member.guild.id,'economy.starter_ottomans'),500));await this.service.bootstrap(member.guild.id,member.id,starter,'member-add');}
+  async handleMemberAdd(member:GuildMember){await this.service.bootstrapFromBenchmark(member.guild.id,member.id,'member-add');}
 
   async handleCommand(i:ChatInputCommandInteraction){if(!i.guildId||!i.guild){await this.present(i,{ephemeral:true,content:'This command is only available in the server.'});return;}try{await i.deferReply({ephemeral:['daily','statement','bank'].includes(i.commandName)});await this.ensureStarter(i.guildId,i.user.id,i.id);switch(i.commandName){case'daily':return await this.daily(i);case'weekly':return await this.weekly(i);case'work':return await this.grind(i,'work');case'fish':return await this.grind(i,'fish');case'dig':return await this.grind(i,'dig');case'scavenge':return await this.grind(i,'scavenge');case'statement':return await this.statement(i);case'inventory':return await this.inventory(i);case'bank':return await this.bank(i);case'transfer':return await this.transfer(i);default:await this.present(i,{ephemeral:true,content:'That economy command is not implemented in this runtime yet.'});}}catch(e){await this.replyError(i,e);}}
 
@@ -43,7 +43,7 @@ export class DiscordEconomyCoordinator {
   async handleSnapshotJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy snapshot job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy snapshot payload.');await this.service.captureEconomySnapshot(p.guildId,p.cycleKey);}
   async handlePolicyJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy policy job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy policy payload.');await this.service.publishShadowEconomyPolicy(p.guildId,p.cycleKey);}
 
-  private async ensureStarter(g:string,u:string,request:string){const starter=BigInt(asNumber(await this.config.get(g,'economy.starter_ottomans'),500));return this.service.bootstrap(g,u,starter,request);}
+  private async ensureStarter(g:string,u:string,request:string){return this.service.bootstrapFromBenchmark(g,u,request);}
   private async resetHour(g:string){return asNumber(await this.config.get(g,'server.daily_reset_hour'),4);}
   private async weeklyReset(g:string){return{day:String(await this.config.get(g,'server.weekly_reset_day')??'MONDAY'),hour:asNumber(await this.config.get(g,'server.weekly_reset_hour'),4)};}
   private async bankTiers(g:string):Promise<BankTierRule[]>{const raw=await this.config.get(g,'economy.bank_tiers');if(!Array.isArray(raw))throw new DomainError('INVALID_BANK_TIERS','Bank tier configuration is invalid.');return raw.map((v:any)=>({tier:Number(v?.tier),cap:v?.cap===null?null:asBig(v?.cap),upgradeCost:asBig(v?.upgrade_cost)}));}
