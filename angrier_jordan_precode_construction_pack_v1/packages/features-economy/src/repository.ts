@@ -34,6 +34,7 @@ export interface EconomyRepository extends LedgerRepository {
   listAccountsAtTier(guildId:string,tier:number):Promise<EconomyAccountRecord[]>;
   upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
+  upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   captureEconomySnapshot(input:{guildId:string;cycleKey:string}):Promise<EconomySnapshotRecord>;
 }
 
