@@ -33,6 +33,7 @@ export interface EconomyRepository extends LedgerRepository {
   getActivityStats(guildId:string,userId:string):Promise<EconomyActivityStatRecord[]>;
   commitBankUpgrade(input:BankUpgradeCommitInput):Promise<EconomyAccountRecord>;
   listAccountsAtTier(guildId:string,tier:number):Promise<EconomyAccountRecord[]>;
+  listBankLedgerEntries(guildId:string,start:Date,end:Date):Promise<EconomyLedgerEntryRecord[]>;
   upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
