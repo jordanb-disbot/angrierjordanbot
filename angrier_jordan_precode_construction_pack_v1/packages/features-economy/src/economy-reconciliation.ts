@@ -20,3 +20,4 @@ export function reconcileEconomy(input:ReconciliationInput):ReconciliationResult
 }
 
 export const percentile=(values:readonly bigint[],p:number)=>{const sorted=[...values].sort((a,b)=>a<b?-1:a>b?1:0);if(!sorted.length)return 0n;const rank=Math.max(0,Math.min(sorted.length-1,Math.ceil(p*sorted.length)-1));return sorted[rank]!;};
+export const ledgerSource=(reason:string)=>{const r=reason.toLowerCase();if(r.includes('starter'))return'starter';if(r.includes('daily')||r.includes('weekly')||r.includes('grind')||r.includes('activity'))return'activity';if(r.includes('casino')||r.includes('lottery')||r.includes('slot'))return'gambling';if(r.includes('manual')||r.includes('grant'))return'manual';if(r.includes('shop')||r.includes('repair')||r.includes('upgrade'))return'spending';return'other';};
