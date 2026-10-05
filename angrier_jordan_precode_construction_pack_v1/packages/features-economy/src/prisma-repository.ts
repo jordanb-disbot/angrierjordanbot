@@ -4,6 +4,8 @@ import {DomainError,spendableWallet} from '../../core/src/index.js';
 import type {ActivityCommitInput,ActivityCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
 import type {CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,InventoryEntryRecord,MemberClaimStateRecord,ToolRecord} from './types.js';
 import {ledgerSource,percentile,reconcileEconomy} from './economy-reconciliation.js';
+import {qualifiedActiveMemberIds} from './automated-economy.js';
+import {zonedDateTimeToUtc} from './service.js';
 
 type AccountRow={id:string;guildId:string;userId:string;wallet:bigint;reservedWallet?:bigint;bank:bigint;bankTier:number;version:number;starterGrantedAt:Date|null};
 type TxRow={id:string;guildId:string;idempotencyKey:string;kind:string;reason:string;metadata:unknown;createdAt:Date};
@@ -83,5 +85,37 @@ export class PrismaEconomyRepository implements EconomyRepository {
   async upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.bank_interest_weekly:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.bank_interest_weekly',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.snapshot_daily:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.snapshot_daily',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
   async upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.policy_weekly:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.policy_weekly',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
-  async captureEconomySnapshot(input:{guildId:string;cycleKey:string}){const since=new Date(input.cycleKey+'T00:00:00.000Z'),[accounts,escrows,pools,entries]=await Promise.all([this.db.economyAccount.findMany({where:{guildId:input.guildId}}),this.db.escrow.findMany({where:{guildId:input.guildId,state:'RESERVED'}}),this.db.casinoPool.findMany({where:{guildId:input.guildId}}),this.db.ledgerEntry.findMany({where:{guildId:input.guildId,createdAt:{gte:since}}})]);const r=reconcileEconomy({accounts:accounts.map(account),escrow:escrows.map(x=>({ownerUserId:x.ownerUserId??undefined,amount:x.amount??(x.walletAmount+x.bankAmount),state:'ACTIVE' as const})),pots:pools.map(x=>({key:x.poolKey,amount:x.amount}))}),wealth=[...r.memberWealth.values()],median=percentile(wealth,.5),p90=percentile(wealth,.9),flows:Record<string,{minted:bigint;burned:bigint}>={};for(const entry of entries.filter(x=>x.bucket==='system')){const source=ledgerSource(entry.reason),current=flows[source]??{minted:0n,burned:0n};if(entry.amount<0n)current.minted+=-entry.amount;else current.burned+=entry.amount;flows[source]=current;}const serializedFlows=Object.fromEntries(Object.entries(flows).map(([key,value])=>[key,{minted:value.minted.toString(),burned:value.burned.toString()}]));const metrics={wallet:r.memberWallet.toString(),bank:r.memberBank.toString(),memberEscrow:r.memberEscrow.toString(),communalPots:r.communalPots.toString(),wealthP90:p90.toString(),sourceFlows:serializedFlows};await this.db.economySnapshot.upsert({where:{guildId_snapshotDate:{guildId:input.guildId,snapshotDate:since}},create:{guildId:input.guildId,snapshotDate:since,eligibleMemberCount:accounts.length,rawMedianWealth:median,totalSupply:r.totalSupply,reconciliation:metrics,metrics},update:{eligibleMemberCount:accounts.length,rawMedianWealth:median,totalSupply:r.totalSupply,reconciliation:metrics,metrics}});return{guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:r.totalSupply,eligibleMemberCount:accounts.length,metrics};}
+  async captureEconomySnapshot(input:{guildId:string;cycleKey:string}){
+    const [year,month,day]=input.cycleKey.split('-').map(Number);
+    if(!year||!month||!day)throw new DomainError('INVALID_SNAPSHOT_CYCLE','Snapshot cycle must be a Mountain calendar date.');
+    const snapshotDate=zonedDateTimeToUtc(year,month,day,4);
+    const nextDate=zonedDateTimeToUtc(new Date(Date.UTC(year,month-1,day+1)).getUTCFullYear(),new Date(Date.UTC(year,month-1,day+1)).getUTCMonth()+1,new Date(Date.UTC(year,month-1,day+1)).getUTCDate(),4);
+    const activityStart=new Date(snapshotDate.getTime()-28*86_400_000),membershipCutoff=new Date(snapshotDate.getTime()-7*86_400_000);
+    const [accounts,escrows,pools,entries,members,observations]=await Promise.all([
+      this.db.economyAccount.findMany({where:{guildId:input.guildId}}),
+      this.db.escrow.findMany({where:{guildId:input.guildId,state:'RESERVED'}}),
+      this.db.casinoPool.findMany({where:{guildId:input.guildId}}),
+      this.db.ledgerEntry.findMany({where:{guildId:input.guildId,createdAt:{gte:snapshotDate,lt:nextDate}}}),
+      this.db.member.findMany({where:{guildId:input.guildId,joinedAt:{lte:membershipCutoff}}}),
+      this.db.activityObservation.findMany({where:{guildId:input.guildId,occurredAt:{gte:activityStart,lt:snapshotDate}}}),
+    ]);
+    const reconciled=reconcileEconomy({
+      accounts:accounts.map(account),
+      escrow:escrows.map(x=>({ownerUserId:x.ownerUserId??undefined,amount:x.amount??(x.walletAmount+x.bankAmount),state:'ACTIVE' as const})),
+      pots:pools.map(x=>({key:x.poolKey,amount:x.amount})),
+    });
+    const eligibleIds=qualifiedActiveMemberIds(members,observations,snapshotDate);
+    const eligibleWealth=[...eligibleIds].map(userId=>reconciled.memberWealth.get(userId)??0n);
+    const median=percentile(eligibleWealth,.5),p90=percentile(eligibleWealth,.9);
+    const flows:Record<string,{minted:bigint;burned:bigint}>={};
+    for(const row of entries.filter(x=>x.bucket==='system')){
+      const source=ledgerSource(row.reason),current=flows[source]??{minted:0n,burned:0n};
+      if(row.amount<0n)current.minted+=-row.amount;else current.burned+=row.amount;
+      flows[source]=current;
+    }
+    const sourceFlows=Object.fromEntries(Object.entries(flows).map(([key,value])=>[key,{minted:value.minted.toString(),burned:value.burned.toString()}]));
+    const metrics={wallet:reconciled.memberWallet.toString(),bank:reconciled.memberBank.toString(),memberEscrow:reconciled.memberEscrow.toString(),communalPots:reconciled.communalPots.toString(),wealthP90:p90.toString(),qualifiedActivityThreshold:3,sourceFlows};
+    await this.db.economySnapshot.upsert({where:{guildId_snapshotDate:{guildId:input.guildId,snapshotDate}},create:{guildId:input.guildId,snapshotDate,eligibleMemberCount:eligibleIds.size,rawMedianWealth:median,totalSupply:reconciled.totalSupply,reconciliation:metrics,metrics},update:{eligibleMemberCount:eligibleIds.size,rawMedianWealth:median,totalSupply:reconciled.totalSupply,reconciliation:metrics,metrics}});
+    return{guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:reconciled.totalSupply,eligibleMemberCount:eligibleIds.size,metrics};
+  }
 }

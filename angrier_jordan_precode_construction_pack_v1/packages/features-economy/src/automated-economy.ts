@@ -43,6 +43,18 @@ export interface EconomyMeasurement {
 }
 export const smoothedBenchmark=(daily:readonly bigint[])=>daily.length<7?undefined:daily.slice(-7).reduce((sum,value)=>sum+value,0n)/7n;
 export const shadowReady=(snapshots:readonly {benchmark:bigint;reconciliationValid:boolean;abnormalActivity:boolean}[])=>snapshots.length>=7&&snapshots.slice(-7).every(row=>row.benchmark>0n&&row.reconciliationValid&&!row.abnormalActivity);
+/**
+ * A qualifying member is a human member observed in the server for seven
+ * days and with at least three meaningful, independent observations in the
+ * prior 28 days. Spending is intentionally not an activity signal.
+ */
+export const qualifiedActiveMemberIds=(members:readonly {userId:string;joinedAt?:Date|null;isBot?:boolean}[],observations:readonly {userId:string;occurredAt:Date;kind?:string}[],now:Date)=>{
+  const joinedBefore=now.getTime()-7*86_400_000,activeAfter=now.getTime()-28*86_400_000;
+  const qualifyingKinds=new Set(['chat','voice','command','event']);
+  const counts=new Map<string,number>();
+  for(const observation of observations)if(observation.occurredAt.getTime()>=activeAfter&&qualifyingKinds.has(observation.kind??'chat'))counts.set(observation.userId,(counts.get(observation.userId)??0)+1);
+  return new Set(members.filter(member=>!member.isBot&&member.joinedAt&&member.joinedAt.getTime()<=joinedBefore&&(counts.get(member.userId)??0)>=3).map(member=>member.userId));
+};
 /** The affordability signal is published with its inputs, never inferred from low spending alone. */
 export interface MajorPurchaseAffordability {
   qualifyingMembers:number; membersAbleToBuy:number; majorPurchaseCost:bigint;
