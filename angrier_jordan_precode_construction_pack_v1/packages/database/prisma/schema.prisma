@@ -1344,6 +1344,8 @@ model StreakInstallment {
   sourceTransactionId String?
   totalAmount BigInt
   paidAmount BigInt @default(0)
+  installmentCount Int @default(7)
+  installmentsPaid Int @default(0)
   nextDueAt DateTime
   state String @default("PENDING")
   createdAt DateTime @default(now())
