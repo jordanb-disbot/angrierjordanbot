@@ -119,13 +119,14 @@ export class PrismaEconomyRepository implements EconomyRepository {
     const snapshotDate=zonedDateTimeToUtc(year,month,day,4);
     const nextDate=zonedDateTimeToUtc(new Date(Date.UTC(year,month-1,day+1)).getUTCFullYear(),new Date(Date.UTC(year,month-1,day+1)).getUTCMonth()+1,new Date(Date.UTC(year,month-1,day+1)).getUTCDate(),4);
     const activityStart=new Date(snapshotDate.getTime()-28*86_400_000),membershipCutoff=new Date(snapshotDate.getTime()-7*86_400_000);
-    const [accounts,escrows,pools,entries,members,observations]=await Promise.all([
+    const [accounts,escrows,pools,entries,members,observations,catalogItems]=await Promise.all([
       this.db.economyAccount.findMany({where:{guildId:input.guildId}}),
       this.db.escrow.findMany({where:{guildId:input.guildId,state:'RESERVED'}}),
       this.db.casinoPool.findMany({where:{guildId:input.guildId}}),
       this.db.ledgerEntry.findMany({where:{guildId:input.guildId,createdAt:{gte:snapshotDate,lt:nextDate}}}),
       this.db.member.findMany({where:{guildId:input.guildId,joinedAt:{lte:membershipCutoff}}}),
       this.db.activityObservation.findMany({where:{guildId:input.guildId,occurredAt:{gte:activityStart,lt:snapshotDate}}}),
+      this.db.catalogItem.findMany({where:{enabled:true,buyPrice:{not:null}}}),
     ]);
     const reconciled=reconcileEconomy({
       accounts:accounts.map(account),
@@ -142,7 +143,10 @@ export class PrismaEconomyRepository implements EconomyRepository {
       flows[source]=current;
     }
     const sourceFlows=Object.fromEntries(Object.entries(flows).map(([key,value])=>[key,{minted:value.minted.toString(),burned:value.burned.toString()}]));
-    const metrics={wallet:reconciled.memberWallet.toString(),bank:reconciled.memberBank.toString(),memberEscrow:reconciled.memberEscrow.toString(),communalPots:reconciled.communalPots.toString(),wealthP90:p90.toString(),qualifiedActivityThreshold:3,sourceFlows};
+    const prices=catalogItems.map(row=>row.buyPrice).filter((value):value is bigint=>value!==null),majorPurchaseCost=percentile(prices,.75),membersAbleToBuy=eligibleWealth.filter(value=>value>=majorPurchaseCost).length;
+    const immediatelyAffordableBps=eligibleIds.size?BigInt(membersAbleToBuy)*10_000n/BigInt(eligibleIds.size):0n,activityFlow=flows.activity??{minted:0n,burned:0n},gamblingFlow=flows.gambling??{minted:0n,burned:0n},recurringNetIssuance=Object.values(flows).reduce((sum,flow)=>sum+flow.minted-flow.burned,0n),typicalDailyEarnings=eligibleIds.size?activityFlow.minted/BigInt(eligibleIds.size):0n,gap=majorPurchaseCost>median?majorPurchaseCost-median:0n,medianEarningDaysToMajorPurchase=gap===0n?0n:typicalDailyEarnings>0n?(gap+typicalDailyEarnings-1n)/typicalDailyEarnings:999_999n,totalEligibleWealth=eligibleWealth.reduce((sum,value)=>sum+value,0n),topFiveWealth=[...eligibleWealth].sort((a,b)=>a>b?-1:a<b?1:0).slice(0,5).reduce((sum,value)=>sum+value,0n),topFiveConcentrationBps=totalEligibleWealth?topFiveWealth*10_000n/totalEligibleWealth:0n;
+    const purchaseUsers=new Set(entries.filter(row=>row.userId&&/(shop|purchase|repair|upgrade)/i.test(row.reason)).map(row=>row.userId!)),purchaseFrequencyBps=eligibleIds.size?BigInt([...purchaseUsers].filter(userId=>eligibleIds.has(userId)).length)*10_000n/BigInt(eligibleIds.size):0n,gamblingExposureBps=reconciled.totalSupply?(gamblingFlow.minted+gamblingFlow.burned)*10_000n/reconciled.totalSupply:0n;
+    const metrics={wallet:reconciled.memberWallet.toString(),bank:reconciled.memberBank.toString(),memberEscrow:reconciled.memberEscrow.toString(),communalPots:reconciled.communalPots.toString(),wealthP90:p90.toString(),majorPurchaseCost:majorPurchaseCost.toString(),membersAbleToBuy,immediatelyAffordableBps:immediatelyAffordableBps.toString(),recurringNetIssuance:recurringNetIssuance.toString(),topFiveConcentrationBps:topFiveConcentrationBps.toString(),purchaseFrequencyBps:purchaseFrequencyBps.toString(),medianEarningDaysToMajorPurchase:medianEarningDaysToMajorPurchase.toString(),gamblingExposureBps:gamblingExposureBps.toString(),qualifiedActivityThreshold:3,sourceFlows};
     await this.db.economySnapshot.upsert({where:{guildId_snapshotDate:{guildId:input.guildId,snapshotDate}},create:{guildId:input.guildId,snapshotDate,eligibleMemberCount:eligibleIds.size,rawMedianWealth:median,totalSupply:reconciled.totalSupply,reconciliation:metrics,metrics},update:{eligibleMemberCount:eligibleIds.size,rawMedianWealth:median,totalSupply:reconciled.totalSupply,reconciliation:metrics,metrics}});
     return{guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:reconciled.totalSupply,eligibleMemberCount:eligibleIds.size,metrics};
   }
