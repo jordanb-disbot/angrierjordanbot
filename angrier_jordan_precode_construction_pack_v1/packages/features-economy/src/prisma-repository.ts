@@ -17,7 +17,7 @@ type ActivityRow={id:string;guildId:string;userId:string;activity:string;outcome
 type ThrottleRow={guildId:string;userId:string;action:string;nextAllowedAt:Date;updatedAt:Date};
 
 interface DbLike extends CatalogGrantDatabase {
-  member:{upsert(args:any):Promise<any>};
+  member:{upsert(args:any):Promise<any>;findMany(args:any):Promise<any[]>};
   economyAccount:{upsert(args:any):Promise<AccountRow>;findUnique(args:any):Promise<AccountRow|null>;findMany(args:any):Promise<AccountRow[]>;update(args:any):Promise<AccountRow>;updateMany(args:any):Promise<{count:number}>};
   economyTransaction:{findUnique(args:any):Promise<TxRow|null>;create(args:any):Promise<TxRow>};
   ledgerEntry:{createMany(args:any):Promise<any>;findMany(args:any):Promise<EntryRow[]>};
@@ -32,6 +32,7 @@ interface DbLike extends CatalogGrantDatabase {
   escrow:{findMany(args:any):Promise<any[]>};
   casinoPool:{findMany(args:any):Promise<any[]>};
   economySnapshot:{upsert(args:any):Promise<any>};
+  activityObservation:{findMany(args:any):Promise<any[]>};
   $transaction<T>(fn:(tx:Omit<DbLike,'$transaction'>)=>Promise<T>):Promise<T>;
 }
 
