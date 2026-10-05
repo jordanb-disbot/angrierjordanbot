@@ -55,6 +55,8 @@ export interface EconomyRepository extends LedgerRepository {
   listEconomySnapshots(guildId:string,limit:number):Promise<(EconomySnapshotRecord&{rawMedianWealth:bigint;reconciliationValid:boolean;abnormalActivity:boolean})[]>;
   saveEconomyPolicyProposal(input:EconomyPolicyProposal):Promise<void>;
   latestEconomyPolicy(guildId:string):Promise<PersistedEconomyPolicy|null>;
+  activateEconomyPolicy(input:{guildId:string;cycleKey:string;policy:Record<string,string>}):Promise<void>;
+  activeEconomyPolicy(guildId:string):Promise<PersistedEconomyPolicy|null>;
 }
 
 export const balancedSystemReward=(guildId:string,userId:string,amount:bigint,idempotencyKey:string,reason:string,bucket:'wallet'|'bank'='wallet',metadata?:Record<string,unknown>):LedgerTransaction=>({
