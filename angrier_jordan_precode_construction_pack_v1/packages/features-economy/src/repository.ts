@@ -32,6 +32,7 @@ export interface EconomyRepository extends LedgerRepository {
   commitBankUpgrade(input:BankUpgradeCommitInput):Promise<EconomyAccountRecord>;
   listAccountsAtTier(guildId:string,tier:number):Promise<EconomyAccountRecord[]>;
   upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
+  upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
 }
 
 export const balancedSystemReward=(guildId:string,userId:string,amount:bigint,idempotencyKey:string,reason:string,bucket:'wallet'|'bank'='wallet',metadata?:Record<string,unknown>):LedgerTransaction=>({
