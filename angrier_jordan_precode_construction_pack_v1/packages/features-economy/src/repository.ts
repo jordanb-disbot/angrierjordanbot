@@ -1,5 +1,5 @@
 import type {LedgerRepository,LedgerTransaction} from '../../core/src/index.js';
-import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,ToolRecord} from './types.js';
+import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,StreakInstallmentRecord,ToolRecord} from './types.js';
 export interface EconomySnapshotRecord {guildId:string;cycleKey:string;totalSupply:bigint;eligibleMemberCount:number;metrics:Record<string,unknown>;}
 export interface EconomyPolicyProposal {guildId:string;cycleKey:string;mode?:'SHADOW'|'ACTIVE'|'PAUSED';frozen:boolean;reason?:string;benchmark?:bigint;policy:Record<string,string>;bounds:Record<string,unknown>;adjustments:readonly {key:string;previous:string;proposed:string;applied:string;reason:string}[];}
 export interface PersistedEconomyPolicy {mode:'SHADOW'|'ACTIVE'|'PAUSED';policy:Record<string,unknown>;pausedAt?:Date|null;}
@@ -7,9 +7,9 @@ export interface PersistedEconomyPolicy {mode:'SHADOW'|'ACTIVE'|'PAUSED';policy:
 export type ClaimField='dailyLastClaimAt'|'weeklyLastClaimAt'|'dailySpinLastAt'|'fortuneLastAt';
 export interface ClaimCommitInput {
   guildId:string;userId:string;claimField:ClaimField;cycleStart:Date;now:Date;idempotencyKey:string;kind:string;reason:string;
-  walletReward:bigint;items?:readonly InventoryGrant[];dailyStreak?:number;metadata?:Record<string,unknown>;
+  walletReward:bigint;items?:readonly InventoryGrant[];dailyStreak?:number;metadata?:Record<string,unknown>;streakInstallment?:{totalAmount:bigint;installmentCount:number;firstDueAt:Date};
 }
-export interface ClaimCommitResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;state:MemberClaimStateRecord;inventory:InventoryEntryRecord[];transaction?:EconomyTransactionRecord;}
+export interface ClaimCommitResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;state:MemberClaimStateRecord;inventory:InventoryEntryRecord[];transaction?:EconomyTransactionRecord;streakInstallment?:StreakInstallmentRecord;}
 export interface ActivityCommitInput {
   guildId:string;userId:string;activity:GrindActivity;outcome:ActivityOutcome;idempotencyKey:string;reason:string;now:Date;technicalThrottleMs:number;
   requestedDelta:bigint;items?:readonly InventoryGrant[];toolInstanceId?:string;toolDamage?:number;metadata?:Record<string,unknown>;
@@ -36,6 +36,8 @@ export interface EconomyRepository extends LedgerRepository {
   listLedgerEntries(guildId:string,userId:string,limit:number):Promise<EconomyLedgerEntryRecord[]>;
   getClaimState(guildId:string,userId:string):Promise<MemberClaimStateRecord>;
   commitClaim(input:ClaimCommitInput):Promise<ClaimCommitResult>;
+  getStreakInstallment(id:string):Promise<StreakInstallmentRecord|null>;
+  advanceStreakInstallment(input:{id:string;paidAmount:bigint;now:Date}):Promise<StreakInstallmentRecord|null>;
   listInventory(guildId:string,userId:string):Promise<InventoryEntryRecord[]>;
   getCatalogItem(itemId:string):Promise<CatalogItemRecord|null>;
   listCatalogItems(enabledOnly?:boolean):Promise<CatalogItemRecord[]>;

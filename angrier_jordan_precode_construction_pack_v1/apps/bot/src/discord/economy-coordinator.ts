@@ -56,6 +56,7 @@ export class DiscordEconomyCoordinator {
   async reconcileEconomyPolicySchedule(guildId:string){return this.service.scheduleNextEconomyPolicy(guildId);}
   async handleSnapshotJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy snapshot job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy snapshot payload.');await this.service.captureEconomySnapshot(p.guildId,p.cycleKey);}
   async handlePolicyJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy policy job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy policy payload.');const result=await this.service.publishShadowEconomyPolicy(p.guildId,p.cycleKey);if(!result.frozen)await this.service.activateShadowPolicy(p.guildId,p.cycleKey,result.adjustments,await this.adaptiveApplication(p.guildId));}
+  async handleStreakInstallmentJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid streak installment job.');const id=(payload as Record<string,unknown>).installmentId;if(typeof id!=='string')throw new Error('Invalid streak installment payload.');await this.service.settleStreakInstallment(id);}
 
   private async ensureStarter(g:string,u:string,request:string){return this.service.bootstrapFromBenchmark(g,u,request);}
   private async resetHour(g:string){return asNumber(await this.config.get(g,'server.daily_reset_hour'),4);}

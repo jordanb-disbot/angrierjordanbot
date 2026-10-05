@@ -306,6 +306,7 @@ export async function startProductionBot():Promise<void>{
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
     'economy.snapshot_daily':async job=>{await economy.handleSnapshotJob(job.payload);},
     'economy.policy_weekly':async job=>{await economy.handlePolicyJob(job.payload);},
+    'economy.streak_installment':async job=>{await economy.handleStreakInstallmentJob(job.payload);},
   });
   startup.mark('scheduled-job-construction');
   const worker=new SchedulerWorker(scheduler,5_000);

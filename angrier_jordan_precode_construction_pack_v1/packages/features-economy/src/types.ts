@@ -7,6 +7,7 @@ export interface EconomyAccountRecord {guildId:string;userId:string;wallet:bigin
 export interface EconomyTransactionRecord {id:string;guildId:string;idempotencyKey:string;kind:string;reason:string;metadata?:Record<string,unknown>;createdAt:Date;}
 export interface EconomyLedgerEntryRecord {id:string;guildId:string;transactionId:string;userId?:string;bucket:EconomyBucket|'system';amount:bigint;reason:string;metadata?:Record<string,unknown>;createdAt:Date;}
 export interface MemberClaimStateRecord {guildId:string;userId:string;dailyLastClaimAt?:Date;dailyStreak:number;weeklyLastClaimAt?:Date;dailySpinLastAt?:Date;fortuneLastAt?:Date;updatedAt:Date;}
+export interface StreakInstallmentRecord {id:string;guildId:string;userId:string;sourceTransactionId?:string;totalAmount:bigint;paidAmount:bigint;installmentCount:number;installmentsPaid:number;nextDueAt:Date;state:'PENDING'|'PAID';createdAt:Date;updatedAt:Date;}
 export interface CatalogItemRecord {id:string;type:string;name:string;rarity:string;buyPrice?:bigint;sellValue?:bigint;giftable:boolean;enabled:boolean;metadata?:Record<string,unknown>;}
 export interface InventoryEntryRecord {id:string;guildId:string;userId:string;itemId:string;quantity:number;locked:boolean;metadata?:Record<string,unknown>;item?:CatalogItemRecord;}
 export interface ToolRecord {id:string;guildId:string;userId:string;catalogItemId:string;slot:string;durability:number;maxDurability:number;equipped:boolean;metadata?:Record<string,unknown>;}
@@ -21,7 +22,7 @@ export interface GrindPolicy {technicalThrottleMs:number;outcomes:readonly Grind
 export interface FortuneEntry {id:string;text:string;enabled?:boolean;}
 
 export interface DailyHubState {cycleKey:string;resetAt:Date;dailyReady:boolean;spinReady:boolean;fortuneReady:boolean;streak:number;}
-export interface ClaimResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;reward:bigint;bonus:bigint;streak:number;cycleKey:string;}
+export interface ClaimResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;reward:bigint;bonus:bigint;streak:number;cycleKey:string;installment?:{total:bigint;paid:bigint;remaining:bigint;count:number};}
 export interface SpinResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;cycleKey:string;reward?:SpinReward;inventory?:InventoryEntryRecord[];}
 export interface FortuneResult {status:'applied'|'already_used'|'duplicate';cycleKey:string;fortune?:FortuneEntry;}
 export interface WeeklyResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;reward:bigint;cycleKey:string;}
