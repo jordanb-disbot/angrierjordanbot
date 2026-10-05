@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {TypeShitResponder} from '../../dist/apps/bot/src/discord/type-shit-responder.js';
 
-const message=({content='',stickers=[]}={})=>{const replies=[],sent=[];return{guild:{id:'guild'},author:{bot:false},content,stickers:new Map(stickers.map((name,index)=>[String(index),{name}])),channel:{isSendable:()=>true,send:async payload=>{sent.push(payload);}},delete:async()=>{},reply:async payload=>{replies.push(payload);},replies,sent};};
+const message=({content='',stickers=[],attachments=[]}={})=>{const replies=[],sent=[];return{guild:{id:'guild'},author:{bot:false},content,stickers:new Map(stickers.map((name,index)=>[String(index),{name}])),attachments:new Map(attachments.map((name,index)=>[String(index),{name}])),channel:{isSendable:()=>true,send:async payload=>{sent.push(payload);}},delete:async()=>{},reply:async payload=>{replies.push(payload);},replies,sent};};
 
 test('type_shit message emoji and TS sticker each receive a reply without mentions',async()=>{
   const responder=new TypeShitResponder(),m=message({content:'<:type_shit:1> <:type_shit:2>',stickers:['TS']});
@@ -14,6 +14,12 @@ test('plain type shit is case-insensitive and replies for each use',async()=>{
   const responder=new TypeShitResponder(),m=message({content:'Type shit, then type   shit again.'});
   await responder.message(m);
   assert.equal(m.replies.length,2);
+});
+
+test('a user-posted type-shit GIF receives one reply regardless of playback loops',async()=>{
+  const responder=new TypeShitResponder(),m=message({attachments:['type-shit.gif']});
+  await responder.message(m);
+  assert.equal(m.replies.length,1);
 });
 
 test('each type_shit reaction replies to its source message once',async()=>{

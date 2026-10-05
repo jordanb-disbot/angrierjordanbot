@@ -2,6 +2,7 @@ import {readFile} from 'node:fs/promises';
 import type {Message,MessageReaction,PartialMessageReaction,User,PartialUser} from 'discord.js';
 
 const TYPE_SHIT='type_shit';
+const TYPE_SHIT_GIF='type-shit.gif';
 const reply={content:'Shit',allowedMentions:{parse:[] as never[]}};
 const typeShitAnimation=new URL('../../../../packages/features-special/assets/type-shit.gif',import.meta.url);
 
@@ -18,7 +19,8 @@ export class TypeShitResponder {
     const emojiUses=(message.content.match(/<a?:type_shit:\d+>/g)??[]).length;
     const phraseUses=(message.content.match(/\btype\s+shit\b/gi)??[]).length;
     const stickerUses=[...message.stickers.values()].filter(sticker=>sticker.name==='TS').length;
-    for(let count=0;count<emojiUses+phraseUses+stickerUses;count+=1)await message.reply(reply);
+    const gifUses=[...message.attachments.values()].filter(attachment=>attachment.name?.toLowerCase()===TYPE_SHIT_GIF).length;
+    for(let count=0;count<emojiUses+phraseUses+stickerUses+gifUses;count+=1)await message.reply(reply);
   }
 
   async reaction(reaction:MessageReaction|PartialMessageReaction,user:User|PartialUser):Promise<void>{
