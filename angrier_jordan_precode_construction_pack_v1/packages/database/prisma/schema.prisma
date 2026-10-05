@@ -1306,6 +1306,7 @@ model EconomyAdjustment {
   snapshot EconomySnapshot? @relation(fields:[snapshotId],references:[id],onDelete:SetNull)
   policyVersion EconomyPolicyVersion @relation(fields:[policyVersionId],references:[id])
   @@index([guildId,createdAt])
+  @@unique([policyVersionId,key])
 }
 
 model EconomyActivityCounter {

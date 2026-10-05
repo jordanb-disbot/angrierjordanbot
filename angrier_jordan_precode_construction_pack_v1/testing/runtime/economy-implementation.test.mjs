@@ -99,3 +99,10 @@ test('economy reconciliation counts active member escrow and communal pots exact
 });
 
 test('daily snapshot capture is idempotent and queues the next Mountain boundary',async()=>{const {service,repo}=make('2026-07-01T09:59:59Z');await service.bootstrap('g','u',100n,'seed');const first=await service.captureEconomySnapshot('g','2026-06-30'),second=await service.captureEconomySnapshot('g','2026-06-30');assert.equal(first.totalSupply,100n);assert.deepEqual(second,first);assert.equal(repo.scheduledJobs.get('snapshot:g')?.dueAt.toISOString(),'2026-07-01T10:00:00.000Z');});
+
+test('weekly policy job persists one replay-safe frozen shadow proposal until seven valid snapshots exist',async()=>{
+  const {service,repo}=make();
+  for(let day=1;day<=6;day++)repo.snapshots.set(`g:2026-09-0${day}`,{guildId:'g',cycleKey:`2026-09-0${day}`,totalSupply:10_000n,eligibleMemberCount:20,metrics:{rawMedianWealth:'500'}});
+  const first=await service.publishShadowEconomyPolicy('g','2026-09-07'),second=await service.publishShadowEconomyPolicy('g','2026-09-07');
+  assert.equal(first.frozen,true);assert.equal(second.frozen,true);assert.equal(repo.policyProposals.length,1);assert.ok(repo.policyProposals[0].reason);
+});
