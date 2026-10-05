@@ -1,6 +1,6 @@
 import type {LedgerAccount,LedgerLine,LedgerTransaction} from '../../core/src/index.js';
 import {DomainError,spendableWallet} from '../../core/src/index.js';
-import type {ActivityCommitInput,ActivityCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
+import type {ActivityCommitInput,ActivityCommitResult,ActivityPayoutCommitInput,ActivityPayoutCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
 import type {CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,InventoryEntryRecord,MemberClaimStateRecord,ToolRecord} from './types.js';
 import {reconcileEconomy} from './economy-reconciliation.js';
 
@@ -58,6 +58,18 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   async listBankLedgerEntries(g:string,start:Date,end:Date){return this.entries.filter(x=>x.guildId===g&&x.bucket==='bank'&&x.createdAt>=start&&x.createdAt<end).map(x=>({...x,createdAt:new Date(x.createdAt)}));}
   async lockBankInterestTerm(input:import('./repository.js').BankInterestTermRecord){const key=`${input.guildId}:${input.cycleKey}`,existing=this.bankInterestTerms.get(key);if(existing)return{...existing};this.bankInterestTerms.set(key,{...input});return{...input};}
   async getActivityPayoutCounter(guildId:string,userId:string,cycleKey:string){const key=`${guildId}:${userId}:${cycleKey}`,existing=this.activityPayoutCounters.get(key);if(existing)return{...existing};const fresh={guildId,userId,cycleKey,chatPaidWindows:0,chatPaidAmount:0n,voiceQualifiedSeconds:0,voicePaidSeconds:0,voicePaidAmount:0n};this.activityPayoutCounters.set(key,fresh);return{...fresh};}
+  async commitActivityPayout(input:ActivityPayoutCommitInput):Promise<ActivityPayoutCommitResult>{
+    if(input.requestedReward<0n||input.dailyCap<0n)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Activity payout values cannot be negative.');
+    const a=this.ensureAccount(input.guildId,input.userId),counterKey=`${input.guildId}:${input.userId}:${input.cycleKey}`;
+    let counter=this.activityPayoutCounters.get(counterKey);if(!counter){counter={guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey,chatPaidWindows:0,chatPaidAmount:0n,voiceQualifiedSeconds:0,voicePaidSeconds:0,voicePaidAmount:0n};this.activityPayoutCounters.set(counterKey,counter);}
+    if(this.transactions.has(input.idempotencyKey))return{status:'duplicate',account:cloneAccount(a),counter,reward:0n};
+    const paid=input.kind==='chat'?counter.chatPaidAmount:counter.voicePaidAmount;
+    const reward=input.requestedReward>input.dailyCap-paid?input.dailyCap-paid:input.requestedReward;
+    const header=this.transaction(input.guildId,input.idempotencyKey,`ACTIVITY_${input.kind.toUpperCase()}`,input.reason,input.metadata,input.now);
+    if(input.kind==='chat'){counter.chatPaidWindows+=Math.max(0,Math.trunc(input.chatWindows??1));counter.chatPaidAmount+=reward;}else{counter.voiceQualifiedSeconds+=Math.max(0,Math.trunc(input.voiceQualifiedSeconds??0));counter.voicePaidSeconds+=Math.max(0,Math.trunc(input.voicePaidSeconds??0));counter.voicePaidAmount+=reward;}
+    if(reward>0n){a.wallet+=reward;a.version++;this.ledgerEntries(header,[{userId:input.userId,bucket:'wallet',amount:reward,reason:input.reason,...(input.metadata?{metadata:input.metadata}:{})},{bucket:'system',amount:-reward,reason:input.reason,...(input.metadata?{metadata:input.metadata}:{})}],input.now);}
+    return{status:reward>0n?'applied':'capped',account:cloneAccount(a),counter:{...counter},reward,transaction:{...header}};
+  }
   async upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(input.guildId,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`snapshot:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`policy:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}

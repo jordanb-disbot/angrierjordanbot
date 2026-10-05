@@ -15,10 +15,12 @@ import {
   type ChatInputCommandInteraction,
   type GuildMember,
   type ModalSubmitInteraction,
+  type Message,
 } from 'discord.js';
 import type {ConfigService} from '../../../../packages/core/src/index.js';
 import {DomainError} from '../../../../packages/core/src/index.js';
 import {type BankTierRule,type DailyHubState,type EconomyService,type GrindActivity,type GrindOutcomeRule,type GrindPolicy,type SpinReward} from '../../../../packages/features-economy/src/index.js';
+import {qualifyMessage} from '../../../../packages/features-profiles/src/domain.js';
 
 const C={teal:0x14B8A6,gold:0xF5C542,emerald:0x22C55E,purple:0x8B5CF6,blue:0x22D3EE,red:0xEF4444,navy:0x0F1E3A};
 const fmt=(n:bigint)=>n.toLocaleString('en-US');
@@ -31,6 +33,15 @@ export class DiscordEconomyCoordinator {
   constructor(private readonly service:EconomyService,private readonly config:ConfigService){}
 
   async handleMemberAdd(member:GuildMember){await this.service.bootstrapFromBenchmark(member.guild.id,member.id,'member-add');}
+  async handleActivityMessage(message:Message){
+    if(!message.guildId||message.author.bot||await this.config.get(message.guildId,'features.activity')!==true)return;
+    const exclusions=[['channels.bot_channel','activity.exclude_bot_channel'],['channels.games_channel','activity.exclude_games_channel'],['channels.staff_log','activity.exclude_staff_channel']] as const;
+    const excluded=await Promise.all(exclusions.map(async([channel,toggle])=>await this.config.get(message.guildId!,toggle)===true?this.config.get(message.guildId!,channel):null));
+    excluded.push(await this.config.get(message.guildId,'channels.hotseat_channel'));
+    if(!qualifyMessage({content:message.content,bot:message.author.bot,command:/^\s*[!/]/.test(message.content),excludedChannel:excluded.includes(message.channelId)}))return;
+    await this.service.awardQualifiedChat({guildId:message.guildId,userId:message.author.id,idempotencyKey:`activity:chat:${message.id}`});
+  }
+  async handleQualifiedVoiceAccruals(guildId:string,at:Date,accruals:readonly {userId:string;seconds:number}[]){for(const accrual of accruals)await this.service.awardQualifiedVoice({guildId,userId:accrual.userId,idempotencyKey:`activity:voice:${accrual.userId}:${at.toISOString()}`,qualifiedSeconds:accrual.seconds});}
 
   async handleCommand(i:ChatInputCommandInteraction){if(!i.guildId||!i.guild){await this.present(i,{ephemeral:true,content:'This command is only available in the server.'});return;}try{await i.deferReply({ephemeral:['daily','statement','bank'].includes(i.commandName)});await this.ensureStarter(i.guildId,i.user.id,i.id);switch(i.commandName){case'daily':return await this.daily(i);case'weekly':return await this.weekly(i);case'work':return await this.grind(i,'work');case'fish':return await this.grind(i,'fish');case'dig':return await this.grind(i,'dig');case'scavenge':return await this.grind(i,'scavenge');case'statement':return await this.statement(i);case'inventory':return await this.inventory(i);case'bank':return await this.bank(i);case'transfer':return await this.transfer(i);default:await this.present(i,{ephemeral:true,content:'That economy command is not implemented in this runtime yet.'});}}catch(e){await this.replyError(i,e);}}
 

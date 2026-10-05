@@ -4,7 +4,7 @@ import type {EconomyRepository} from './repository.js';
 import {balancedSystemReward} from './repository.js';
 import type {ActivityResult,BankTierRule,BankView,ClaimResult,DailyHubState,FortuneEntry,FortuneResult,GrindActivity,GrindOutcomeRule,GrindPolicy,InventoryEntryRecord,RandomSource,SpinResult,SpinReward,StatementView,WeeklyResult} from './types.js';
 import {MathRandomSource} from './types.js';
-import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,evaluateEconomyPolicy,shadowReady,smoothedBenchmark,starterFromBenchmark} from './automated-economy.js';
+import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,evaluateEconomyPolicy,shadowReady,smoothedBenchmark,starterFromBenchmark,voicePayoutBand} from './automated-economy.js';
 
 const TZ='America/Denver';
 const DAY=86_400_000;
@@ -33,6 +33,22 @@ export class EconomyService {
 
   async bootstrap(guildId:string,userId:string,starterAmount:bigint,requestKey:string){if(starterAmount<0n||starterAmount>100_000n)throw new DomainError('INVALID_STARTER_AMOUNT','Starter amount must be between 0 and 100,000 Ottomans.');await this.repository.ensureMember(guildId,userId);return this.repository.grantStarter({guildId,userId,amount:starterAmount,idempotencyKey:`starter:${guildId}:${userId}:${requestKey}`,now:this.clock.now()});}
   async bootstrapFromBenchmark(guildId:string,userId:string,requestKey:string){const latest=(await this.repository.listEconomySnapshots(guildId,1))[0];if(!latest)throw new DomainError('STARTER_BENCHMARK_UNAVAILABLE','Starter onboarding waits for the first published economy benchmark.');return this.bootstrap(guildId,userId,starterFromBenchmark(latest.rawMedianWealth),requestKey);}
+  async awardQualifiedChat(input:{guildId:string;userId:string;idempotencyKey:string;dailyCap?:bigint;minReward?:bigint;maxReward?:bigint}){
+    const min=input.minReward??DEFAULT_AUTOMATED_ECONOMY_BOUNDS.chatWindowReward[0],max=input.maxReward??DEFAULT_AUTOMATED_ECONOMY_BOUNDS.chatWindowReward[1],cap=input.dailyCap??DEFAULT_AUTOMATED_ECONOMY_POLICY.chatDailyCap;
+    if(min<0n||max<min||cap<0n)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Chat payout policy is invalid.');
+    const now=this.clock.now(),cycle=dailyCycle(now),counter=await this.repository.getActivityPayoutCounter(input.guildId,input.userId,cycle.key);
+    const sampled=counter.chatPaidAmount>=cap?0n:randomBigInt(min,max,this.random.next());
+    return this.repository.commitActivityPayout({guildId:input.guildId,userId:input.userId,cycleKey:cycle.key,kind:'chat',idempotencyKey:input.idempotencyKey,now,requestedReward:sampled,dailyCap:cap,chatWindows:1,reason:'Qualified chat activity',metadata:{cycleKey:cycle.key,sampled:money(sampled),minimum:money(min),maximum:money(max),dailyCap:money(cap)}});
+  }
+  async awardQualifiedVoice(input:{guildId:string;userId:string;idempotencyKey:string;qualifiedSeconds:number;dailyCap?:bigint;fullRange?:readonly [bigint,bigint];halfRange?:readonly [bigint,bigint]}){
+    const seconds=Math.max(0,Math.trunc(input.qualifiedSeconds));if(seconds===0)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Qualified voice time must be positive.');
+    const full=input.fullRange??[DEFAULT_AUTOMATED_ECONOMY_BOUNDS.voiceEarlyReward[0],DEFAULT_AUTOMATED_ECONOMY_BOUNDS.voiceEarlyReward[1]] as const,half=input.halfRange??[DEFAULT_AUTOMATED_ECONOMY_BOUNDS.voiceThirdHourReward[0],DEFAULT_AUTOMATED_ECONOMY_BOUNDS.voiceThirdHourReward[1]] as const,cap=input.dailyCap??DEFAULT_AUTOMATED_ECONOMY_POLICY.chatDailyCap;
+    if(full[0]<0n||full[1]<full[0]||half[0]<0n||half[1]<half[0]||cap<0n)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Voice payout policy is invalid.');
+    const now=this.clock.now(),cycle=dailyCycle(now),counter=await this.repository.getActivityPayoutCounter(input.guildId,input.userId,cycle.key),end=counter.voiceQualifiedSeconds+seconds;
+    let cursor=counter.voicePaidSeconds,reward=0n;const samples:{band:'full'|'half';amount:string}[]=[];
+    while(cursor+3600<=Math.min(end,10_800)){const band=voicePayoutBand(cursor),range=band==='full'?full:half,amount=randomBigInt(range[0],range[1],this.random.next());reward+=amount;samples.push({band:band as 'full'|'half',amount:money(amount)});cursor+=3600;}
+    return this.repository.commitActivityPayout({guildId:input.guildId,userId:input.userId,cycleKey:cycle.key,kind:'voice',idempotencyKey:input.idempotencyKey,now,requestedReward:reward,dailyCap:cap,voiceQualifiedSeconds:seconds,voicePaidSeconds:cursor-counter.voicePaidSeconds,reason:'Qualified voice activity',metadata:{cycleKey:cycle.key,qualifiedSeconds:seconds,awardedSeconds:cursor-counter.voicePaidSeconds,samples,dailyCap:money(cap)}});
+  }
   async account(guildId:string,userId:string){await this.repository.ensureMember(guildId,userId);return this.repository.getEconomyAccount(guildId,userId);}
   async statement(guildId:string,userId:string,limit=12):Promise<StatementView>{const account=await this.account(guildId,userId);const entries=await this.repository.listLedgerEntries(guildId,userId,clampInt(limit,1,50));return{account,liquidNetWorth:account.wallet+account.bank,entries};}
   async inventory(guildId:string,userId:string):Promise<InventoryEntryRecord[]>{await this.repository.ensureMember(guildId,userId);return this.repository.listInventory(guildId,userId);}

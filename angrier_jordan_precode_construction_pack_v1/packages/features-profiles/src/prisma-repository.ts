@@ -23,10 +23,10 @@ export class PrismaProfilesRepository {
  async command(guildId:string,userId:string,id:string,command:string,at:Date){await this.atomic.run(guildId,'command:'+id,requestFingerprint({userId,command}),async tx=>{await ensure(tx,guildId,userId);await incrementActivity(tx,guildId,userId,dateOf(dailyCycle(at).key),{commandCounts:{[command]:1}});return{recorded:true};});}
  async voice(guildId:string,snapshot:{userId:string;channelId:string;qualified:boolean}[],at:Date){
   const fingerprint=requestFingerprint(snapshot.sort((a,b)=>a.userId.localeCompare(b.userId)));
-  await this.atomic.run(guildId,`voice:${at.toISOString()}:${fingerprint.slice(0,12)}`,fingerprint,async tx=>{
-   const previous=await tx.voicePresence.findMany({where:{guildId}}),current=new Map(snapshot.map(s=>[s.userId,s]));
-   for(const p of previous){if(p.observedAt>=at)continue;if(p.qualified){let from=new Date(Math.max(p.observedAt.getTime(),at.getTime()-60000));while(from<at){const cycle=dailyCycle(from),end=new Date(Math.min(at.getTime(),cycle.next.getTime()));const seconds=Math.floor((end.getTime()-from.getTime())/1000);if(seconds)await incrementActivity(tx,guildId,p.userId,dateOf(cycle.key),{vcSeconds:seconds});from=end;}}if(!current.has(p.userId))await tx.voicePresence.delete({where:{guildId_userId:{guildId,userId:p.userId}}});}
-   for(const p of snapshot){const old=previous.find(x=>x.userId===p.userId);if(old&&old.observedAt>=at)continue;await ensure(tx,guildId,p.userId);await tx.voicePresence.upsert({where:{guildId_userId:{guildId,userId:p.userId}},create:{guildId,...p,observedAt:at},update:{...p,observedAt:at}});}return{sampled:true};
+  return this.atomic.run(guildId,`voice:${at.toISOString()}:${fingerprint.slice(0,12)}`,fingerprint,async tx=>{
+   const previous=await tx.voicePresence.findMany({where:{guildId}}),current=new Map(snapshot.map(s=>[s.userId,s])),accruals:{userId:string;seconds:number}[]=[];
+   for(const p of previous){if(p.observedAt>=at)continue;if(p.qualified){let from=new Date(Math.max(p.observedAt.getTime(),at.getTime()-60000)),earned=0;while(from<at){const cycle=dailyCycle(from),end=new Date(Math.min(at.getTime(),cycle.next.getTime()));const seconds=Math.floor((end.getTime()-from.getTime())/1000);if(seconds){await incrementActivity(tx,guildId,p.userId,dateOf(cycle.key),{vcSeconds:seconds});earned+=seconds;}from=end;}if(earned)accruals.push({userId:p.userId,seconds:earned});}if(!current.has(p.userId))await tx.voicePresence.delete({where:{guildId_userId:{guildId,userId:p.userId}}});}
+   for(const p of snapshot){const old=previous.find(x=>x.userId===p.userId);if(old&&old.observedAt>=at)continue;await ensure(tx,guildId,p.userId);await tx.voicePresence.upsert({where:{guildId_userId:{guildId,userId:p.userId}},create:{guildId,...p,observedAt:at},update:{...p,observedAt:at}});}return{sampled:true,accruals};
   });
  }
  async resetVoiceAfterRestart(guildId:string){await this.db.voicePresence.deleteMany({where:{guildId}});}

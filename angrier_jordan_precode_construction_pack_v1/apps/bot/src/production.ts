@@ -109,6 +109,8 @@ export async function startProductionBot():Promise<void>{
   const enableProfilesSmoke=process.env.ENABLE_PROFILES_SMOKE==='true';
   const enableItemsSmoke=process.env.ENABLE_ITEMS_SMOKE==='true';
   const enableEconomySmoke=process.env.ENABLE_ECONOMY_SMOKE==='true';
+  // Application remains off during shadow measurement unless explicitly set.
+  const enableEconomyActivityPayouts=enableEconomySmoke&&process.env.ENABLE_ECONOMY_ACTIVITY_PAYOUTS==='true';
   const enableFullyFurnishedSmoke=process.env.ENABLE_FULLY_FURNISHED_SMOKE==='true';
   startup.mark('database-client-construction (connection is lazy)');
   const db=getPrismaClient();
@@ -172,6 +174,7 @@ export async function startProductionBot():Promise<void>{
   });
   const profileRepo=new PrismaProfilesRepository(db);
   const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u)&&!await crimeRepo.isJailed(g,u));
+  const sampleProfileVoice=async()=>{const sample=await profiles.sampleVoice(client,guildId);if(enableEconomyActivityPayouts&&sample.accruals.length)await economy.handleQualifiedVoiceAccruals(guildId,sample.at,sample.accruals);return sample;};
   const recordAnnouncements=new DiscordRecordAnnouncements(db,config);
   const casinoRepo=new PrismaCasinoRepository(db),lotteryRepo=new PrismaLotteryRepository(db);
   const casino=new DiscordCasinoCoordinator(casinoRepo,lotteryRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';},(g,u,id)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordCasinoRound(g,u,id)));
@@ -334,7 +337,7 @@ export async function startProductionBot():Promise<void>{
       catch{console.error('Family membership census is unavailable; Family actions remain paused for recovery.');}
     }
     if(enableFamilySmoke&&!lifecycle.isStopping)familySweep=setInterval(()=>lifecycle.run(async()=>{if(await familyEnabled()&&!familyMembership.ready)await ensureFamilyMembership();},()=>console.error('Family membership recovery remains pending.')),30_000);
-    if(enableProfilesSmoke){await startup.run('profile-voice-reset',()=>profileRepo.resetVoiceAfterRestart(guildId));await startup.run('profiles-bootstrap',()=>profiles.reconcile(guildId));await startup.run('profile-voice-sample',()=>profiles.sampleVoice(ready,guildId));if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>profiles.sampleVoice(ready,guildId),()=>console.error('Activity voice sampling failed.')),30_000);}
+    if(enableProfilesSmoke){await startup.run('profile-voice-reset',()=>profileRepo.resetVoiceAfterRestart(guildId));await startup.run('profiles-bootstrap',()=>profiles.reconcile(guildId));await startup.run('profile-voice-sample',()=>sampleProfileVoice());if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>sampleProfileVoice(),()=>console.error('Activity voice sampling failed.')),30_000);}
     if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await startup.run('lottery-schedule',()=>lotteryRepo.schedule(guildId));
     if(enableFullyFurnishedSmoke)await startup.run('fully-furnished-role-recovery',async()=>{for(const pending of await fullyFurnishedRepo.pendingRoleGrants(guildId))await deliverFullyFurnished(guildId,pending.userId,pending.progress);});
     const recovered=await startup.run('wyr-recovery',()=>wyr.recover(ready));if(enableJailSmoke){await startup.run('jail-schedules',()=>jail.reconcileSchedules(guildId));const guild=ready.guilds.cache.get(guildId);if(guild)await startup.run('jail-permissions',()=>jail.reconcileGuild(guild));}if(enableEconomySmoke)await startup.run('economy-schedule',async()=>{await economy.reconcileInterestSchedule(guildId);await economy.reconcileEconomySnapshotSchedule(guildId);});if(lifecycle.isStopping)return;await startup.run('scheduled-job-initialization',()=>worker.runOnce());if(lifecycle.isStopping)return;worker.start();
@@ -412,7 +415,7 @@ export async function startProductionBot():Promise<void>{
   });
   on(Events.ChannelCreate,async channel=>{await settleHandlers([...(enableJailSmoke?[jail.reconcileNewChannel(channel)]:[]),...(activityLogger?[activityLogger.channelCreated(channel)]:[])]);});
   const typeShitReplies=new TypeShitResponder();
-  on(Events.MessageCreate,async message=>{await settleHandlers([typeShitReplies.message(message),...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  on(Events.MessageCreate,async message=>{await settleHandlers([typeShitReplies.message(message),...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableEconomyActivityPayouts?[economy.handleActivityMessage(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
   on(Events.MessageReactionAdd,async(reaction,user)=>{await typeShitReplies.reaction(reaction,user);});
   if(activityLogger){
     on(Events.MessageUpdate,(before,after)=>activityLogger.messageUpdate(before,after));
@@ -428,7 +431,7 @@ export async function startProductionBot():Promise<void>{
   }
   on(Events.GuildAuditLogEntryCreate,async(entry,guild)=>{await settleHandlers([...(enableSecuritySmoke?[security.handleAuditEntry(entry,guild)]:[]),...(activityLogger?[activityLogger.auditEntry(entry,guild)]:[])]);});
 
-  on(Events.VoiceStateUpdate,async(before,after)=>{await settleHandlers([...(enableProfilesSmoke?[profiles.sampleVoice(client,after.guild.id)]:[]),...(activityLogger?[activityLogger.voiceUpdate(before,after)]:[])]);});
+  on(Events.VoiceStateUpdate,async(before,after)=>{const sample=async()=>{const observed=await profiles.sampleVoice(client,after.guild.id);if(enableEconomyActivityPayouts&&observed.accruals.length)await economy.handleQualifiedVoiceAccruals(after.guild.id,observed.at,observed.accruals);};await settleHandlers([...(enableProfilesSmoke?[sample()]:[]),...(activityLogger?[activityLogger.voiceUpdate(before,after)]:[])]);});
   on(Events.InteractionCreate,async interaction=>{
     try{
       // Coordinators acknowledge before their own complete eligibility checks. Avoid duplicate slow global reads.

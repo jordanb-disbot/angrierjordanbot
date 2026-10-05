@@ -1,7 +1,7 @@
 import {grantCatalogReward,type CatalogGrantDatabase} from './catalog-grants.js';
 import type {LedgerLine,LedgerTransaction} from '../../core/src/index.js';
 import {DomainError,spendableWallet} from '../../core/src/index.js';
-import type {ActivityCommitInput,ActivityCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
+import type {ActivityCommitInput,ActivityCommitResult,ActivityPayoutCommitInput,ActivityPayoutCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
 import type {CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,InventoryEntryRecord,MemberClaimStateRecord,ToolRecord} from './types.js';
 import {ledgerSource,percentile,reconcileEconomy} from './economy-reconciliation.js';
 import {qualifiedActiveMemberIds} from './automated-economy.js';
@@ -37,7 +37,7 @@ interface DbLike extends CatalogGrantDatabase {
   economyPolicyVersion:{upsert(args:any):Promise<any>};
   economyAdjustment:{createMany(args:any):Promise<any>};
   bankInterestTerm:{upsert(args:any):Promise<any>};
-  economyActivityCounter:{upsert(args:any):Promise<any>};
+  economyActivityCounter:{upsert(args:any):Promise<any>;findUnique(args:any):Promise<any>;updateMany(args:any):Promise<{count:number}>};
   activityObservation:{findMany(args:any):Promise<any[]>};
   $transaction<T>(fn:(tx:Omit<DbLike,'$transaction'>)=>Promise<T>):Promise<T>;
 }
@@ -89,6 +89,26 @@ export class PrismaEconomyRepository implements EconomyRepository {
   async listBankLedgerEntries(g:string,start:Date,end:Date){return (await this.db.ledgerEntry.findMany({where:{guildId:g,bucket:'bank',createdAt:{gte:start,lt:end}},orderBy:{createdAt:'asc'}})).map(entry);}
   async lockBankInterestTerm(input:import('./repository.js').BankInterestTermRecord){const row=await this.db.bankInterestTerm.upsert({where:{guildId_cycleKey:{guildId:input.guildId,cycleKey:input.cycleKey}},create:{guildId:input.guildId,cycleKey:input.cycleKey,rateBps:input.rateBps,capAmount:input.capAmount},update:{}});return{guildId:row.guildId,cycleKey:row.cycleKey,rateBps:row.rateBps,capAmount:row.capAmount};}
   async getActivityPayoutCounter(guildId:string,userId:string,cycleKey:string){const row=await this.db.economyActivityCounter.upsert({where:{guildId_userId_cycleKey:{guildId,userId,cycleKey}},create:{guildId,userId,cycleKey},update:{}});return{guildId,userId,cycleKey,chatPaidWindows:row.chatPaidWindows,chatPaidAmount:row.chatPaidAmount,voiceQualifiedSeconds:row.voiceQualifiedSeconds,voicePaidSeconds:row.voicePaidSeconds,voicePaidAmount:row.voicePaidAmount};}
+  async commitActivityPayout(input:ActivityPayoutCommitInput):Promise<ActivityPayoutCommitResult>{
+    if(input.requestedReward<0n||input.dailyCap<0n)throw new DomainError('INVALID_ACTIVITY_PAYOUT','Activity payout values cannot be negative.');
+    for(let attempt=0;attempt<3;attempt++)try{return await this.db.$transaction(async db=>{
+      let a=await this.ensureAccountOn(db,input.guildId,input.userId);
+      const existing=await db.economyTransaction.findUnique({where:{idempotencyKey:input.idempotencyKey}});
+      let counter=await db.economyActivityCounter.upsert({where:{guildId_userId_cycleKey:{guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey}},create:{guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey},update:{}});
+      const view=()=>({guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey,chatPaidWindows:counter.chatPaidWindows,chatPaidAmount:counter.chatPaidAmount,voiceQualifiedSeconds:counter.voiceQualifiedSeconds,voicePaidSeconds:counter.voicePaidSeconds,voicePaidAmount:counter.voicePaidAmount});
+      if(existing)return{status:'duplicate' as const,account:account(a),counter:view(),reward:0n};
+      const paid=input.kind==='chat'?counter.chatPaidAmount:counter.voicePaidAmount;
+      const reward=input.requestedReward>input.dailyCap-paid?input.dailyCap-paid:input.requestedReward;
+      const data=input.kind==='chat'?{chatPaidWindows:{increment:Math.max(0,Math.trunc(input.chatWindows??1))},chatPaidAmount:{increment:reward}}:{voiceQualifiedSeconds:{increment:Math.max(0,Math.trunc(input.voiceQualifiedSeconds??0))},voicePaidSeconds:{increment:Math.max(0,Math.trunc(input.voicePaidSeconds??0))},voicePaidAmount:{increment:reward}};
+      const where:any={guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey,...(input.kind==='chat'?{chatPaidAmount:counter.chatPaidAmount}:{voicePaidAmount:counter.voicePaidAmount})};
+      if((await db.economyActivityCounter.updateMany({where,data})).count!==1)throw new Conflict();
+      counter=(await db.economyActivityCounter.findUnique({where:{guildId_userId_cycleKey:{guildId:input.guildId,userId:input.userId,cycleKey:input.cycleKey}}}))!;
+      const header=await db.economyTransaction.create({data:{guildId:input.guildId,idempotencyKey:input.idempotencyKey,kind:`ACTIVITY_${input.kind.toUpperCase()}`,reason:input.reason,metadata:input.metadata??null,createdAt:input.now}});
+      if(reward>0n){a=await db.economyAccount.update({where:{guildId_userId:{guildId:input.guildId,userId:input.userId}},data:{wallet:{increment:reward},version:{increment:1}}});await this.addLedgerRows(db,header,[{userId:input.userId,bucket:'wallet',amount:reward,reason:input.reason,...(input.metadata?{metadata:input.metadata}:{})},{bucket:'system',amount:-reward,reason:input.reason,...(input.metadata?{metadata:input.metadata}:{})}],input.now);}
+      return{status:reward>0n?'applied' as const:'capped' as const,account:account(a),counter:view(),reward,transaction:txRec(header)};
+    });}catch(e){if(e instanceof Conflict)continue;if(isUnique(e)){const a=await this.getEconomyAccount(input.guildId,input.userId),counter=await this.getActivityPayoutCounter(input.guildId,input.userId,input.cycleKey);return{status:'duplicate',account:a,counter,reward:0n};}throw e;}
+    throw new DomainError('LEDGER_CONFLICT','Activity payout raced with another award; retry safely.');
+  }
   async upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.bank_interest_weekly:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.bank_interest_weekly',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.snapshot_daily:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.snapshot_daily',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
   async upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.policy_weekly:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.policy_weekly',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
