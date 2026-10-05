@@ -1,0 +1,87 @@
+/**
+ * Deterministic policy primitives for the EAJ 1.1 economy engine.  This module
+ * deliberately has no Discord or database dependency: persisted measurements
+ * are supplied by the repository, and every proposed change is reproducible.
+ */
+export const ECONOMY_TIME_ZONE='America/Denver';
+export const ECONOMY_RESET_HOUR=4;
+
+export interface EconomyPolicy {
+  dailyClaim:bigint; weeklyClaim:bigint; chatWindowReward:bigint; chatDailyCap:bigint;
+  voiceEarlyReward:bigint; voiceThirdHourReward:bigint; starterPercentBps:bigint;
+  tier5WeeklyRateBps:bigint; tier5WeeklyCapBps:bigint; maximumWagerBenchmarkBps:bigint;
+  lotteryTicketBenchmarkBps:bigint;
+}
+
+export interface EconomyPolicyBounds {
+  dailyClaim:[bigint,bigint]; weeklyClaim:[bigint,bigint]; chatWindowReward:[bigint,bigint];
+  voiceEarlyReward:[bigint,bigint]; voiceThirdHourReward:[bigint,bigint]; starterPercentBps:[bigint,bigint];
+  tier5WeeklyRateBps:[bigint,bigint]; maximumWagerBenchmarkBps:[bigint,bigint];
+  lotteryTicketBenchmarkBps:[bigint,bigint]; maxWeeklyRelativeChangeBps:bigint;
+}
+
+export const DEFAULT_AUTOMATED_ECONOMY_POLICY:EconomyPolicy={
+  dailyClaim:250n,weeklyClaim:1250n,chatWindowReward:20n,chatDailyCap:300n,
+  voiceEarlyReward:100n,voiceThirdHourReward:50n,starterPercentBps:250n,
+  tier5WeeklyRateBps:100n,tier5WeeklyCapBps:250n,maximumWagerBenchmarkBps:3300n,
+  lotteryTicketBenchmarkBps:25n,
+};
+
+export const DEFAULT_AUTOMATED_ECONOMY_BOUNDS:EconomyPolicyBounds={
+  dailyClaim:[200n,300n],weeklyClaim:[1000n,1500n],chatWindowReward:[15n,25n],
+  voiceEarlyReward:[80n,120n],voiceThirdHourReward:[40n,60n],starterPercentBps:[200n,300n],
+  tier5WeeklyRateBps:[50n,150n],maximumWagerBenchmarkBps:[2500n,4000n],
+  lotteryTicketBenchmarkBps:[15n,40n],maxWeeklyRelativeChangeBps:500n,
+};
+
+export interface EconomyMeasurement {
+  eligibleMembers:number; rawMedianWealth:bigint; smoothedMedianWealth?:bigint;
+  reconciliationValid:boolean; abnormalActivity:boolean; purchaseAffordabilityBps?:bigint;
+  recurringNetIssuance?:bigint;
+}
+export interface EconomyAdjustment {key:keyof EconomyPolicy; previous:bigint; proposed:bigint; applied:bigint; reason:string;}
+export interface EconomyControlResult {frozen:boolean; reason?:string; benchmark?:bigint; adjustments:EconomicAdjustment[];}
+type EconomicAdjustment=EconomyAdjustment;
+
+const floor=(value:bigint,step=1n)=>value/step*step;
+const clamp=(value:bigint,[min,max]:[bigint,bigint])=>value<min?min:value>max?max:value;
+/** Limits a normal weekly change to the policy's explicitly configured 5%. */
+export const boundedWeeklyChange=(previous:bigint,proposed:bigint,maxBps=500n)=>{
+  if(previous<=0n)return proposed;
+  const delta=previous*maxBps/10_000n;
+  return proposed>previous+delta?previous+delta:proposed<previous-delta?previous-delta:proposed;
+};
+export const benchmarkPercent=(benchmark:bigint,bps:bigint,roundTo=1n)=>floor(benchmark*bps/10_000n,roundTo);
+export const tier5Interest=(eligibleBank:bigint,rateBps:bigint,benchmark:bigint,capBps=250n)=>{
+  if(eligibleBank<=0n||benchmark<=0n)return 0n;
+  const earned=eligibleBank*rateBps/10_000n,cap=benchmark*capBps/10_000n;
+  return earned<cap?earned:cap;
+};
+
+/**
+ * Proposes only a small, evidence-backed correction.  It is intentionally
+ * conservative: missing data, small samples, anomalies and reconciliation
+ * failures freeze adjustments while leaving already-accepted settlements alone.
+ */
+export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicyBounds,m:EconomyMeasurement,shadow=true):EconomyControlResult {
+  if(!m.reconciliationValid)return{frozen:true,reason:'Ledger reconciliation failed.',adjustments:[]};
+  if(m.abnormalActivity)return{frozen:true,reason:'Abnormal activity requires administrator review.',adjustments:[]};
+  if(m.eligibleMembers<15)return{frozen:true,reason:'Fewer than 15 qualifying active members.',adjustments:[]};
+  const benchmark=m.smoothedMedianWealth??m.rawMedianWealth;
+  if(benchmark<=0n)return{frozen:true,reason:'No stable active-member benchmark.',adjustments:[]};
+  const adjustments:EconomicAdjustment[]=[];
+  const propose=(key:keyof Pick<EconomyPolicy,'dailyClaim'|'weeklyClaim'|'starterPercentBps'|'maximumWagerBenchmarkBps'|'lotteryTicketBenchmarkBps'>,target:bigint,range:[bigint,bigint],reason:string)=>{
+    const previous=current[key];const constrained=clamp(boundedWeeklyChange(previous,target,bounds.maxWeeklyRelativeChangeBps),range);
+    if(constrained!==previous)adjustments.push({key,previous,proposed:target,applied:constrained,reason});
+  };
+  // Purchase affordability below 20% is a sign to improve saving progress;
+  // low spending by itself never raises prices.
+  if((m.purchaseAffordabilityBps??2500n)<2000n){
+    propose('dailyClaim',current.dailyClaim*105n/100n,bounds.dailyClaim,'Major-purchase affordability is below policy target.');
+    propose('weeklyClaim',current.weeklyClaim*105n/100n,bounds.weeklyClaim,'Major-purchase affordability is below policy target.');
+  }
+  // A persistent high issuance observation only tightens future wager exposure,
+  // never contractual game odds or a settled reward.
+  if((m.recurringNetIssuance??0n)>benchmark/5n)propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Sustained recurring issuance exceeds the conservative exposure threshold.');
+  return{frozen:false,benchmark,adjustments:shadow?adjustments.map(x=>({...x,applied:x.previous})):adjustments};
+}

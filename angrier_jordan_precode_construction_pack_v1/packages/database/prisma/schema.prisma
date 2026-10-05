@@ -1255,3 +1255,104 @@ model WalletHold {
   @@unique([guildId,userId,referenceType,referenceId])
   @@index([guildId,userId,state])
 }
+
+model EconomySnapshot {
+  id String @id @default(cuid())
+  guildId String
+  snapshotDate DateTime @db.Date
+  eligibleMemberCount Int
+  rawMedianWealth BigInt
+  smoothedMedianWealth BigInt?
+  totalSupply BigInt
+  reconciliation Json
+  metrics Json
+  createdAt DateTime @default(now())
+  adjustments EconomyAdjustment[]
+  @@unique([guildId,snapshotDate])
+  @@index([guildId,snapshotDate])
+}
+
+model EconomyPolicyVersion {
+  id String @id @default(cuid())
+  guildId String
+  version Int
+  mode String @default("SHADOW")
+  policy Json
+  bounds Json
+  pausedAt DateTime?
+  pausedByUserId String?
+  createdAt DateTime @default(now())
+  adjustments EconomyAdjustment[]
+  @@unique([guildId,version])
+  @@index([guildId,createdAt])
+}
+
+model EconomyAdjustment {
+  id String @id @default(cuid())
+  guildId String
+  snapshotId String?
+  policyVersionId String
+  key String
+  previousValue String
+  proposedValue String
+  appliedValue String
+  reason String
+  supportingMetrics Json
+  status String @default("PROPOSED")
+  createdAt DateTime @default(now())
+  snapshot EconomySnapshot? @relation(fields:[snapshotId],references:[id],onDelete:SetNull)
+  policyVersion EconomyPolicyVersion @relation(fields:[policyVersionId],references:[id])
+  @@index([guildId,createdAt])
+}
+
+model EconomyActivityCounter {
+  guildId String
+  userId String
+  cycleKey String
+  chatPaidWindows Int @default(0)
+  chatPaidAmount BigInt @default(0)
+  voiceQualifiedSeconds Int @default(0)
+  voicePaidSeconds Int @default(0)
+  voicePaidAmount BigInt @default(0)
+  grindCashAmount BigInt @default(0)
+  dropSellAmount BigInt @default(0)
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId,cycleKey])
+  @@index([guildId,cycleKey])
+}
+
+model StarterReceipt {
+  guildId String
+  userId String
+  policyVersionId String?
+  amount BigInt
+  toolGrants Json @default("[]")
+  repairVoucherGranted Boolean @default(false)
+  grantedAt DateTime @default(now())
+  @@id([guildId,userId])
+}
+
+model StreakInstallment {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  sourceTransactionId String?
+  totalAmount BigInt
+  paidAmount BigInt @default(0)
+  nextDueAt DateTime
+  state String @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([state,nextDueAt])
+}
+
+model BankInterestTerm {
+  id String @id @default(cuid())
+  guildId String
+  cycleKey String
+  rateBps Int
+  capAmount BigInt
+  policyVersionId String?
+  lockedAt DateTime @default(now())
+  @@unique([guildId,cycleKey])
+}

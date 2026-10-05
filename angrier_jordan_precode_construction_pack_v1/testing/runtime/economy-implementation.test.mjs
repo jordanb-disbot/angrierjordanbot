@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {dailyCycle,EconomyService,guardSystemReward,InMemoryEconomyRepository} from '../../.test-build/packages/features-economy/src/index.js';
+import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -50,3 +50,23 @@ test('breaking an equipped tool auto-equips the best usable fallback',async()=>{
 
 test('/work rejects item-drop configuration even when an owner edits the grind table',async()=>{const {service}=make();await assert.rejects(()=>service.grind({guildId:'g',userId:'u',activity:'work',idempotencyKey:'bad-work',policy:{technicalThrottleMs:1000,outcomes:[{outcome:'item',weight:1,itemId:'loot',quantity:1}]}}),e=>e instanceof DomainError&&e.code==='INVALID_WORK_REWARD');});
 test('Tier 5 bank interest is idempotent per member and cycle',async()=>{const {service,repo}=make();repo.accounts.set('g:u',{guildId:'g',userId:'u',wallet:0n,bank:10_000n,bankTier:5,version:0,starterGrantedAt:new Date()});const first=await service.applyTier5Interest({guildId:'g',cycleKey:'2026-09-21',interestBps:100,maxPerMember:1_000n});const second=await service.applyTier5Interest({guildId:'g',cycleKey:'2026-09-21',interestBps:100,maxPerMember:1_000n});assert.equal(first.credited,100n);assert.equal(second.duplicates,1);assert.equal((await service.account('g','u')).bank,10_100n);});
+
+test('automated economy freezes adjustments for invalid reconciliation, anomalies, and small samples',()=>{
+  for(const measurement of [
+    {eligibleMembers:15,rawMedianWealth:40_000n,reconciliationValid:false,abnormalActivity:false},
+    {eligibleMembers:15,rawMedianWealth:40_000n,reconciliationValid:true,abnormalActivity:true},
+    {eligibleMembers:14,rawMedianWealth:40_000n,reconciliationValid:true,abnormalActivity:false},
+  ])assert.equal(evaluateEconomyPolicy(DEFAULT_AUTOMATED_ECONOMY_POLICY,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,measurement).frozen,true);
+});
+
+test('automated economy shadows bounded affordability proposals without changing active values',()=>{
+  const result=evaluateEconomyPolicy(DEFAULT_AUTOMATED_ECONOMY_POLICY,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,{eligibleMembers:15,rawMedianWealth:40_000n,reconciliationValid:true,abnormalActivity:false,purchaseAffordabilityBps:1_000n},true);
+  assert.equal(result.frozen,false);assert.equal(result.adjustments.length,2);
+  assert.ok(result.adjustments.every(change=>change.applied===change.previous));
+  assert.ok(result.adjustments.every(change=>change.proposed>=change.previous));
+});
+
+test('Tier 5 EAJ 1.1 interest is capped by the stable wealth benchmark',()=>{
+  assert.equal(tier5Interest(40_000n,100n,40_000n),400n);
+  assert.equal(tier5Interest(500_000n,100n,40_000n),1_000n);
+});
