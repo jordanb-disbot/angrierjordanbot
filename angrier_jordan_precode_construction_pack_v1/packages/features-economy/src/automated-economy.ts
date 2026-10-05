@@ -39,7 +39,7 @@ export interface EconomyMeasurement {
   reconciliationValid:boolean; abnormalActivity:boolean; purchaseAffordabilityBps?:bigint;
   recurringNetIssuance?:bigint;
   wealthP90?:bigint; topFiveConcentrationBps?:bigint; purchaseFrequencyBps?:bigint;
-  medianEarningDaysToMajorPurchase?:bigint; gamblingExposureBps?:bigint;
+  medianEarningDaysToMajorPurchase?:bigint; itemUtilityBps?:bigint; gamblingExposureBps?:bigint;
 }
 export const smoothedBenchmark=(daily:readonly bigint[])=>daily.length<7?undefined:daily.slice(-7).reduce((sum,value)=>sum+value,0n)/7n;
 export const shadowReady=(snapshots:readonly {benchmark:bigint;reconciliationValid:boolean;abnormalActivity:boolean}[])=>snapshots.length>=7&&snapshots.slice(-7).every(row=>row.benchmark>0n&&row.reconciliationValid&&!row.abnormalActivity);
@@ -108,14 +108,18 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
     const previous=current[key];const constrained=clamp(boundedWeeklyChange(previous,target,bounds.maxWeeklyRelativeChangeBps),range);
     if(constrained!==previous)adjustments.push({key,previous,proposed:target,applied:constrained,reason});
   };
-  // Purchase affordability below 20% is a sign to improve saving progress;
-  // low spending by itself never raises prices.
+  // Affordability is deliberately composite: immediate access under 20%, a
+  // median path longer than 30 earning days, weak purchasing participation,
+  // or poor usable-item coverage all indicate inaccessible progression. Low
+  // spending alone never raises prices or lowers rewards.
   if((m.purchaseAffordabilityBps??2500n)<2000n||(m.medianEarningDaysToMajorPurchase??0n)>30n){
     propose('dailyClaim',current.dailyClaim*105n/100n,bounds.dailyClaim,'Major-purchase affordability is below policy target.');
     propose('weeklyClaim',current.weeklyClaim*105n/100n,bounds.weeklyClaim,'Major-purchase affordability is below policy target.');
   }
-  // A persistent high issuance observation only tightens future wager exposure,
-  // never contractual game odds or a settled reward.
-  if((m.recurringNetIssuance??0n)>benchmark/5n||(m.gamblingExposureBps??0n)>5_000n)propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Sustained issuance or gambling exposure exceeds the conservative policy threshold.');
+  if((m.purchaseFrequencyBps??2500n)<500n&&(m.itemUtilityBps??5000n)<3000n)propose('starterPercentBps',current.starterPercentBps*105n/100n,bounds.starterPercentBps,'Low purchase participation and usable-item coverage indicate an onboarding progression gap.');
+  // High concentration, persistent issuance/removal imbalance, or gambling
+  // exposure only tighten future wager caps. They never rewrite accepted terms,
+  // alter odds, or reduce a reward already sampled.
+  if((m.recurringNetIssuance??0n)>benchmark/5n||(m.gamblingExposureBps??0n)>5_000n||((m.topFiveConcentrationBps??0n)>6_500n&&(m.wealthP90??0n)>benchmark*5n))propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Issuance, wealth concentration, or gambling exposure exceeds the conservative policy threshold.');
   return{frozen:false,benchmark,adjustments:shadow?adjustments.map(x=>({...x,applied:x.previous})):adjustments};
 }

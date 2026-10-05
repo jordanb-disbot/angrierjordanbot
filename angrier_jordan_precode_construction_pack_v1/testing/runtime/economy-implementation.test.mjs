@@ -75,6 +75,7 @@ test('automated economy shadows bounded affordability proposals without changing
   assert.ok(result.adjustments.every(change=>change.applied===change.previous));
   assert.ok(result.adjustments.every(change=>change.proposed>=change.previous));
 });
+test('composite controller uses participation, item utility, concentration, issuance, and gambling without changing shadow payouts',()=>{const result=evaluateEconomyPolicy(DEFAULT_AUTOMATED_ECONOMY_POLICY,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,{eligibleMembers:20,rawMedianWealth:40_000n,reconciliationValid:true,abnormalActivity:false,purchaseFrequencyBps:100n,itemUtilityBps:2_000n,topFiveConcentrationBps:7_000n,wealthP90:250_000n,recurringNetIssuance:9_000n,gamblingExposureBps:5_500n},true);assert.equal(result.frozen,false);assert.ok(result.adjustments.some(change=>change.key==='starterPercentBps'));assert.ok(result.adjustments.some(change=>change.key==='maximumWagerBenchmarkBps'));assert.ok(result.adjustments.every(change=>change.applied===change.previous));});
 
 test('Tier 5 EAJ 1.1 interest is capped by the stable wealth benchmark',()=>{
   assert.equal(tier5Interest(40_000n,100n,40_000n),400n);
