@@ -83,3 +83,5 @@ test('economy reconciliation counts active member escrow and communal pots exact
   const result=reconcileEconomy({accounts:[{userId:'a',wallet:100n,bank:900n},{userId:'b',wallet:50n,bank:0n}],escrow:[{ownerUserId:'a',amount:40n,state:'ACTIVE'},{ownerUserId:'b',amount:10n,state:'SETTLED'}],pots:[{key:'chair-pot',amount:25n}]});
   assert.equal(result.memberEscrow,40n);assert.equal(result.memberWealth.get('a'),1040n);assert.equal(result.totalSupply,1115n);
 });
+
+test('daily snapshot capture is idempotent and queues the next Mountain boundary',async()=>{const {service,repo}=make('2026-07-01T09:59:59Z');await service.bootstrap('g','u',100n,'seed');const first=await service.captureEconomySnapshot('g','2026-06-30'),second=await service.captureEconomySnapshot('g','2026-06-30');assert.equal(first.totalSupply,100n);assert.deepEqual(second,first);assert.equal(repo.scheduledJobs.get('snapshot:g')?.dueAt.toISOString(),'2026-07-01T10:00:00.000Z');});

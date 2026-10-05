@@ -296,6 +296,7 @@ export async function startProductionBot():Promise<void>{
     'moderation.evidence_expire':async job=>{await moderation.handleExpiryJob(client,job.jobType,job.payload);},
     'security.state_expire':async job=>{await security.handleExpiryJob(job.payload);},
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
+    'economy.snapshot_daily':async job=>{await economy.handleSnapshotJob(job.payload);},
   });
   startup.mark('scheduled-job-construction');
   const worker=new SchedulerWorker(scheduler,5_000);

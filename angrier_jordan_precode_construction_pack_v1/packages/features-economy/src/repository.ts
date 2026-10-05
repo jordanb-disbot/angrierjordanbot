@@ -1,5 +1,6 @@
 import type {LedgerRepository,LedgerTransaction} from '../../core/src/index.js';
 import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,ToolRecord} from './types.js';
+export interface EconomySnapshotRecord {guildId:string;cycleKey:string;totalSupply:bigint;eligibleMemberCount:number;metrics:Record<string,unknown>;}
 
 export type ClaimField='dailyLastClaimAt'|'weeklyLastClaimAt'|'dailySpinLastAt'|'fortuneLastAt';
 export interface ClaimCommitInput {
@@ -33,6 +34,7 @@ export interface EconomyRepository extends LedgerRepository {
   listAccountsAtTier(guildId:string,tier:number):Promise<EconomyAccountRecord[]>;
   upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
+  captureEconomySnapshot(input:{guildId:string;cycleKey:string}):Promise<EconomySnapshotRecord>;
 }
 
 export const balancedSystemReward=(guildId:string,userId:string,amount:bigint,idempotencyKey:string,reason:string,bucket:'wallet'|'bank'='wallet',metadata?:Record<string,unknown>):LedgerTransaction=>({

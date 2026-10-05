@@ -3,6 +3,7 @@ import type {LedgerLine,LedgerTransaction} from '../../core/src/index.js';
 import {DomainError,spendableWallet} from '../../core/src/index.js';
 import type {ActivityCommitInput,ActivityCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
 import type {CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,InventoryEntryRecord,MemberClaimStateRecord,ToolRecord} from './types.js';
+import {reconcileEconomy} from './economy-reconciliation.js';
 
 type AccountRow={id:string;guildId:string;userId:string;wallet:bigint;reservedWallet?:bigint;bank:bigint;bankTier:number;version:number;starterGrantedAt:Date|null};
 type TxRow={id:string;guildId:string;idempotencyKey:string;kind:string;reason:string;metadata:unknown;createdAt:Date};
@@ -28,6 +29,9 @@ interface DbLike extends CatalogGrantDatabase {
   economyActivityEvent:{findUnique(args:any):Promise<ActivityRow|null>;create(args:any):Promise<ActivityRow>};
   economyActionThrottle:{findUnique(args:any):Promise<ThrottleRow|null>;create(args:any):Promise<ThrottleRow>;updateMany(args:any):Promise<{count:number}>};
   scheduledJob:{upsert(args:any):Promise<any>};
+  escrow:{findMany(args:any):Promise<any[]>};
+  casinoPool:{findMany(args:any):Promise<any[]>};
+  economySnapshot:{upsert(args:any):Promise<any>};
   $transaction<T>(fn:(tx:Omit<DbLike,'$transaction'>)=>Promise<T>):Promise<T>;
 }
 
@@ -77,4 +81,5 @@ export class PrismaEconomyRepository implements EconomyRepository {
   async listAccountsAtTier(g:string,tier:number){return (await this.db.economyAccount.findMany({where:{guildId:g,bankTier:tier},orderBy:{userId:'asc'}})).map(account);}
   async upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.bank_interest_weekly:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.bank_interest_weekly',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){const executionKey=`economy.snapshot_daily:${input.guildId}:${input.cycleKey}`;await this.db.scheduledJob.upsert({where:{executionKey},create:{guildId:input.guildId,jobType:'economy.snapshot_daily',executionKey,dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey}},update:{dueAt:input.dueAt,status:'PENDING',payload:{guildId:input.guildId,cycleKey:input.cycleKey},lastError:null,completedAt:null}});}
+  async captureEconomySnapshot(input:{guildId:string;cycleKey:string}){const [accounts,escrows,pools]=await Promise.all([this.db.economyAccount.findMany({where:{guildId:input.guildId}}),this.db.escrow.findMany({where:{guildId:input.guildId,state:'RESERVED'}}),this.db.casinoPool.findMany({where:{guildId:input.guildId}})]);const r=reconcileEconomy({accounts:accounts.map(account),escrow:escrows.map(x=>({ownerUserId:x.ownerUserId??undefined,amount:x.amount??(x.walletAmount+x.bankAmount),state:'ACTIVE' as const})),pots:pools.map(x=>({key:x.poolKey,amount:x.amount}))});const metrics={wallet:r.memberWallet.toString(),bank:r.memberBank.toString(),memberEscrow:r.memberEscrow.toString(),communalPots:r.communalPots.toString()};await this.db.economySnapshot.upsert({where:{guildId_snapshotDate:{guildId:input.guildId,snapshotDate:new Date(input.cycleKey+'T00:00:00.000Z')}},create:{guildId:input.guildId,snapshotDate:new Date(input.cycleKey+'T00:00:00.000Z'),eligibleMemberCount:accounts.length,rawMedianWealth:0n,totalSupply:r.totalSupply,reconciliation:metrics,metrics},update:{eligibleMemberCount:accounts.length,totalSupply:r.totalSupply,reconciliation:metrics,metrics}});return{guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:r.totalSupply,eligibleMemberCount:accounts.length,metrics};}
 }

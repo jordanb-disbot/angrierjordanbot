@@ -2,6 +2,7 @@ import type {LedgerAccount,LedgerLine,LedgerTransaction} from '../../core/src/in
 import {DomainError,spendableWallet} from '../../core/src/index.js';
 import type {ActivityCommitInput,ActivityCommitResult,BankUpgradeCommitInput,ClaimCommitInput,ClaimCommitResult,EconomyRepository,StarterCommitResult} from './repository.js';
 import type {CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,InventoryEntryRecord,MemberClaimStateRecord,ToolRecord} from './types.js';
+import {reconcileEconomy} from './economy-reconciliation.js';
 
 const key=(g:string,u:string)=>`${g}:${u}`;
 const invKey=(g:string,u:string,i:string)=>`${g}:${u}:${i}`;
@@ -20,6 +21,7 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   readonly activityEvents=new Map<string,EconomyActivityEventRecord>();
   readonly throttles=new Map<string,Date>();
   readonly scheduledJobs=new Map<string,{guildId:string;dueAt:Date;cycleKey:string}>();
+  readonly snapshots=new Map<string,import('./repository.js').EconomySnapshotRecord>();
   private seq=0;
 
   constructor(items:readonly CatalogItemRecord[]=[]){for(const i of items)this.catalog.set(i.id,{...i,...(i.metadata?{metadata:structuredClone(i.metadata)}:{})});}
@@ -52,4 +54,5 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   async listAccountsAtTier(g:string,tier:number){return [...this.accounts.values()].filter(x=>x.guildId===g&&x.bankTier===tier).map(cloneAccount);}
   async upsertBankInterestJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(input.guildId,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`snapshot:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
+  async captureEconomySnapshot(input:{guildId:string;cycleKey:string}){const key=`${input.guildId}:${input.cycleKey}`,existing=this.snapshots.get(key);if(existing)return structuredClone(existing);const accounts=[...this.accounts.values()].filter(x=>x.guildId===input.guildId),reconciled=reconcileEconomy({accounts,escrow:[],pots:[]}),record={guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:reconciled.totalSupply,eligibleMemberCount:accounts.length,metrics:{wallet:reconciled.memberWallet.toString(),bank:reconciled.memberBank.toString(),memberEscrow:reconciled.memberEscrow.toString(),communalPots:reconciled.communalPots.toString()}};this.snapshots.set(key,record);return structuredClone(record);}
 }
