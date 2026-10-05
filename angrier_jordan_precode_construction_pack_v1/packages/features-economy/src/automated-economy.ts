@@ -123,3 +123,11 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
   if((m.recurringNetIssuance??0n)>benchmark/5n||(m.gamblingExposureBps??0n)>5_000n||((m.topFiveConcentrationBps??0n)>6_500n&&(m.wealthP90??0n)>benchmark*5n))propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Issuance, wealth concentration, or gambling exposure exceeds the conservative policy threshold.');
   return{frozen:false,benchmark,adjustments:shadow?adjustments.map(x=>({...x,applied:x.previous})):adjustments};
 }
+
+/** Turns a shadow proposal into the exact bounded policy that would apply.
+ * Kept pure so publication and audit cannot disagree about the live terms. */
+export const materializePolicy=(current:EconomyPolicy,bounds:EconomyPolicyBounds,adjustments:readonly EconomyAdjustment[]):EconomyPolicy=>{
+  const next={...current};
+  for(const adjustment of adjustments){const key=adjustment.key;if(key==='dailyClaim'||key==='weeklyClaim'||key==='starterPercentBps'||key==='maximumWagerBenchmarkBps'||key==='lotteryTicketBenchmarkBps')next[key]=clamp(boundedWeeklyChange(current[key],adjustment.proposed,bounds.maxWeeklyRelativeChangeBps),bounds[key]);}
+  return next;
+};

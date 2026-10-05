@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {cappedActivityPayout,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,tier5Interest,voicePayoutBand} from '../../.test-build/packages/features-economy/src/index.js';
+import {cappedActivityPayout,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,materializePolicy,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,tier5Interest,voicePayoutBand} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -76,6 +76,7 @@ test('automated economy shadows bounded affordability proposals without changing
   assert.ok(result.adjustments.every(change=>change.proposed>=change.previous));
 });
 test('composite controller uses participation, item utility, concentration, issuance, and gambling without changing shadow payouts',()=>{const result=evaluateEconomyPolicy(DEFAULT_AUTOMATED_ECONOMY_POLICY,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,{eligibleMembers:20,rawMedianWealth:40_000n,reconciliationValid:true,abnormalActivity:false,purchaseFrequencyBps:100n,itemUtilityBps:2_000n,topFiveConcentrationBps:7_000n,wealthP90:250_000n,recurringNetIssuance:9_000n,gamblingExposureBps:5_500n},true);assert.equal(result.frozen,false);assert.ok(result.adjustments.some(change=>change.key==='starterPercentBps'));assert.ok(result.adjustments.some(change=>change.key==='maximumWagerBenchmarkBps'));assert.ok(result.adjustments.every(change=>change.applied===change.previous));});
+test('materialized policy uses the same bounds as shadow proposals',()=>{const shadow=evaluateEconomyPolicy(DEFAULT_AUTOMATED_ECONOMY_POLICY,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,{eligibleMembers:20,rawMedianWealth:40_000n,reconciliationValid:true,abnormalActivity:false,purchaseAffordabilityBps:100n},true),active=materializePolicy(DEFAULT_AUTOMATED_ECONOMY_POLICY,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,shadow.adjustments);assert.equal(active.dailyClaim,262n);assert.equal(active.weeklyClaim,1312n);});
 
 test('Tier 5 EAJ 1.1 interest is capped by the stable wealth benchmark',()=>{
   assert.equal(tier5Interest(40_000n,100n,40_000n),400n);
