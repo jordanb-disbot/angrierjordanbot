@@ -15,7 +15,7 @@ export interface ActivityCommitInput {
 }
 export interface ActivityCommitResult {status:'applied'|'duplicate'|'throttled';account:EconomyAccountRecord;event?:EconomyActivityEventRecord;tool?:ToolRecord;fallbackTool?:ToolRecord;}
 export interface BankUpgradeCommitInput {guildId:string;userId:string;idempotencyKey:string;currentRule:BankTierRule;nextRule:BankTierRule;reason:string;now:Date;}
-export interface StarterCommitResult {status:'applied'|'existing'|'duplicate';account:EconomyAccountRecord;}
+export interface StarterCommitResult {status:'applied'|'existing'|'duplicate'|'deferred';account:EconomyAccountRecord;}
 export interface BankInterestTermRecord {guildId:string;cycleKey:string;rateBps:number;capAmount:bigint;}
 export interface ActivityPayoutCounter {guildId:string;userId:string;cycleKey:string;chatPaidWindows:number;chatLastWindowKey?:string|null;chatPaidAmount:bigint;voiceQualifiedSeconds:number;voicePaidSeconds:number;voicePaidAmount:bigint;}
 /**
