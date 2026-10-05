@@ -175,7 +175,7 @@ export async function startProductionBot():Promise<void>{
   const items=new DiscordItemsCoordinator(new PrismaItemRepository(db),config,async(g,u)=>{
     if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;
     const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';
-  });
+  },undefined,g=>economyService.runtimePolicy(g,enableEconomyAdaptiveApplication&&!economyAdaptivePaused).then(policy=>policy.shopPriceMultiplierBps));
   const profileRepo=new PrismaProfilesRepository(db);
   const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u)&&!await crimeRepo.isJailed(g,u));
   const sampleProfileVoice=async()=>{const sample=await profiles.sampleVoice(client,guildId);if(enableEconomyActivityPayouts&&sample.accruals.length)await economy.handleQualifiedVoiceAccruals(guildId,sample.at,sample.accruals);return sample;};

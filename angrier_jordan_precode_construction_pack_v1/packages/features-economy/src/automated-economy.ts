@@ -10,28 +10,28 @@ export interface EconomyPolicy {
   dailyClaim:bigint; weeklyClaim:bigint; chatWindowReward:bigint; chatDailyCap:bigint;
   voiceEarlyReward:bigint; voiceThirdHourReward:bigint; starterPercentBps:bigint;
   tier5WeeklyRateBps:bigint; tier5WeeklyCapBps:bigint; maximumWagerBenchmarkBps:bigint;
-  lotteryTicketBenchmarkBps:bigint;
+  lotteryTicketBenchmarkBps:bigint; shopPriceMultiplierBps:bigint;
 }
 
 export interface EconomyPolicyBounds {
   dailyClaim:[bigint,bigint]; weeklyClaim:[bigint,bigint]; chatWindowReward:[bigint,bigint];
   voiceEarlyReward:[bigint,bigint]; voiceThirdHourReward:[bigint,bigint]; starterPercentBps:[bigint,bigint];
   tier5WeeklyRateBps:[bigint,bigint]; maximumWagerBenchmarkBps:[bigint,bigint];
-  lotteryTicketBenchmarkBps:[bigint,bigint]; maxWeeklyRelativeChangeBps:bigint;
+  lotteryTicketBenchmarkBps:[bigint,bigint]; shopPriceMultiplierBps:[bigint,bigint]; maxWeeklyRelativeChangeBps:bigint;
 }
 
 export const DEFAULT_AUTOMATED_ECONOMY_POLICY:EconomyPolicy={
   dailyClaim:250n,weeklyClaim:1250n,chatWindowReward:20n,chatDailyCap:300n,
   voiceEarlyReward:100n,voiceThirdHourReward:50n,starterPercentBps:250n,
   tier5WeeklyRateBps:100n,tier5WeeklyCapBps:250n,maximumWagerBenchmarkBps:3300n,
-  lotteryTicketBenchmarkBps:25n,
+  lotteryTicketBenchmarkBps:25n,shopPriceMultiplierBps:10_000n,
 };
 
 export const DEFAULT_AUTOMATED_ECONOMY_BOUNDS:EconomyPolicyBounds={
   dailyClaim:[200n,300n],weeklyClaim:[1000n,1500n],chatWindowReward:[15n,25n],
   voiceEarlyReward:[80n,120n],voiceThirdHourReward:[40n,60n],starterPercentBps:[200n,300n],
   tier5WeeklyRateBps:[50n,150n],maximumWagerBenchmarkBps:[2500n,4000n],
-  lotteryTicketBenchmarkBps:[15n,40n],maxWeeklyRelativeChangeBps:500n,
+  lotteryTicketBenchmarkBps:[15n,40n],shopPriceMultiplierBps:[9_000n,11_000n],maxWeeklyRelativeChangeBps:500n,
 };
 
 export interface EconomyMeasurement {
@@ -104,7 +104,7 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
   const benchmark=m.smoothedMedianWealth??m.rawMedianWealth;
   if(benchmark<=0n)return{frozen:true,reason:'No stable active-member benchmark.',adjustments:[]};
   const adjustments:EconomicAdjustment[]=[];
-  const propose=(key:keyof Pick<EconomyPolicy,'dailyClaim'|'weeklyClaim'|'starterPercentBps'|'maximumWagerBenchmarkBps'|'lotteryTicketBenchmarkBps'>,target:bigint,range:[bigint,bigint],reason:string)=>{
+  const propose=(key:keyof Pick<EconomyPolicy,'dailyClaim'|'weeklyClaim'|'starterPercentBps'|'maximumWagerBenchmarkBps'|'lotteryTicketBenchmarkBps'|'shopPriceMultiplierBps'>,target:bigint,range:[bigint,bigint],reason:string)=>{
     const previous=current[key];const constrained=clamp(boundedWeeklyChange(previous,target,bounds.maxWeeklyRelativeChangeBps),range);
     if(constrained!==previous)adjustments.push({key,previous,proposed:target,applied:constrained,reason});
   };
@@ -115,12 +115,14 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
   if((m.purchaseAffordabilityBps??2500n)<2000n||(m.medianEarningDaysToMajorPurchase??0n)>30n){
     propose('dailyClaim',current.dailyClaim*105n/100n,bounds.dailyClaim,'Major-purchase affordability is below policy target.');
     propose('weeklyClaim',current.weeklyClaim*105n/100n,bounds.weeklyClaim,'Major-purchase affordability is below policy target.');
+    propose('shopPriceMultiplierBps',current.shopPriceMultiplierBps*95n/100n,bounds.shopPriceMultiplierBps,'Major-purchase affordability is below policy target.');
   }
   if((m.purchaseFrequencyBps??2500n)<500n&&(m.itemUtilityBps??5000n)<3000n)propose('starterPercentBps',current.starterPercentBps*105n/100n,bounds.starterPercentBps,'Low purchase participation and usable-item coverage indicate an onboarding progression gap.');
   // High concentration, persistent issuance/removal imbalance, or gambling
   // exposure only tighten future wager caps. They never rewrite accepted terms,
   // alter odds, or reduce a reward already sampled.
   if((m.recurringNetIssuance??0n)>benchmark/5n||(m.gamblingExposureBps??0n)>5_000n||((m.topFiveConcentrationBps??0n)>6_500n&&(m.wealthP90??0n)>benchmark*5n))propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Issuance, wealth concentration, or gambling exposure exceeds the conservative policy threshold.');
+  if((m.recurringNetIssuance??0n)>benchmark/5n&&(m.purchaseFrequencyBps??0n)>2_000n&&(m.purchaseAffordabilityBps??0n)>=5_000n)propose('shopPriceMultiplierBps',current.shopPriceMultiplierBps*105n/100n,bounds.shopPriceMultiplierBps,'High recurring issuance with sustained purchase participation permits a bounded price normalization.');
   return{frozen:false,benchmark,adjustments:shadow?adjustments.map(x=>({...x,applied:x.previous})):adjustments};
 }
 
@@ -128,6 +130,6 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
  * Kept pure so publication and audit cannot disagree about the live terms. */
 export const materializePolicy=(current:EconomyPolicy,bounds:EconomyPolicyBounds,adjustments:readonly EconomyAdjustment[]):EconomyPolicy=>{
   const next={...current};
-  for(const adjustment of adjustments){const key=adjustment.key;if(key==='dailyClaim'||key==='weeklyClaim'||key==='starterPercentBps'||key==='maximumWagerBenchmarkBps'||key==='lotteryTicketBenchmarkBps')next[key]=clamp(boundedWeeklyChange(current[key],adjustment.proposed,bounds.maxWeeklyRelativeChangeBps),bounds[key]);}
+  for(const adjustment of adjustments){const key=adjustment.key;if(key==='dailyClaim'||key==='weeklyClaim'||key==='starterPercentBps'||key==='maximumWagerBenchmarkBps'||key==='lotteryTicketBenchmarkBps'||key==='shopPriceMultiplierBps')next[key]=clamp(boundedWeeklyChange(current[key],adjustment.proposed,bounds.maxWeeklyRelativeChangeBps),bounds[key]);}
   return next;
 };

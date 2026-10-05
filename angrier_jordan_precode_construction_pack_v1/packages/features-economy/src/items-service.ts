@@ -14,6 +14,7 @@ const random=()=>randomInt(0,1_000_000)/1_000_000;
 
 export class ItemService {
  constructor(private readonly repo:ItemRepository,readonly policy:ItemPolicy,private readonly now=()=>new Date(),private readonly roll=random){}
+ private price(i:CatalogItemRecord){const base=i.buyPrice??0n,configured=this.policy.shopPriceMultiplierBps??10_000n,bps=configured<9_000n?9_000n:configured>11_000n?11_000n:configured;return base*bps/10_000n;}
  async view(g:string,u:string){return this.repo.read(g,[u]);}
  shop(state:ItemState,userId:string){
   const cycle=dailyCycle(this.now());
@@ -21,7 +22,7 @@ export class ItemService {
   const essentials=priced.filter(i=>meta(i).essential===true);
   const rotating=priced.filter(i=>meta(i).essential!==true).sort((a,b)=>hash(`${state.guildId}:${cycle.key}:${a.id}`).localeCompare(hash(`${state.guildId}:${cycle.key}:${b.id}`)));
   const shared=rotating.slice(0,6),bonus=rotating.slice(6).sort((a,b)=>hash(`${userId}:${cycle.key}:${a.id}`).localeCompare(hash(`${userId}:${cycle.key}:${b.id}`))).slice(0,Math.max(1,Math.min(2,this.policy.bonusSlots)));
-  return {items:[...essentials,...shared,...bonus],resetAt:cycle.next,cycleKey:cycle.key};
+  return {items:[...essentials,...shared,...bonus].map(i=>({...i,buyPrice:this.price(i)})),resetAt:cycle.next,cycleKey:cycle.key};
  }
  private run(c:ItemContext,action:string,args:unknown,fn:(u:ItemUnit,m:ItemMember)=>Promise<ItemOutcome>,extra:string[]=[]){return this.repo.transact(c,{action,args,userId:c.userId},[...new Set([c.userId,...extra])],u=>fn(u,member(u.state,c.userId)));}
  private grant(s:ItemState,m:ItemMember,id:string,quantity:number){
@@ -42,7 +43,7 @@ export class ItemService {
  async buy(c:ItemContext,id:string,quantity:number){integer(quantity);return this.run(c,'buy',{id,quantity},async(u,m)=>{
   const i=item(u.state,id);check(this.shop(u.state,c.userId).items.some(x=>x.id===id),'ROTATION_CHANGED','This item is no longer in the shop.');
   const gates=meta(i).requiresAchievements;check(!Array.isArray(gates)||gates.every(v=>m.achievements.includes(String(v))),'ITEM_GATED',`Requires: ${Array.isArray(gates)?gates.join(', '):'item eligibility'}.`);
-  check(i.buyPrice!==undefined&&i.buyPrice>0n,'INVALID_PRICE','Item price is unavailable.');await u.spend(c.userId,i.buyPrice*BigInt(quantity),'Shop purchase');this.grant(u.state,m,id,quantity);return{message:`Purchased ${quantity} × ${i.name}.`};
+  const price=this.price(i);check(price>0n,'INVALID_PRICE','Item price is unavailable.');await u.spend(c.userId,price*BigInt(quantity),'Shop purchase');this.grant(u.state,m,id,quantity);return{message:`Purchased ${quantity} × ${i.name}.`};
  });}
  inventory(s:ItemState,u:string,query:{search?:string;type?:string;rarity?:string;quality?:string;locked?:boolean;sort?:string}={}){
   const m=member(s,u);const rows=[...m.stacks.filter(x=>x.quantity>0).map(x=>({...x,quality:'',item:item(s,x.itemId),kind:'stack'})),...m.tools.map(x=>({id:x.id,itemId:x.catalogItemId,quantity:1,locked:x.locked,acquiredAt:new Date(0),quality:'',item:item(s,x.catalogItemId),kind:'tool'})),...m.chairs.map(x=>({id:x.id,itemId:x.chairType,quantity:1,locked:x.locked,acquiredAt:x.createdAt,quality:x.quality,item:item(s,x.chairType),kind:'chair'}))];

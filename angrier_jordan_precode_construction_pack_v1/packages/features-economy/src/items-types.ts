@@ -19,4 +19,4 @@ export interface ItemRepository {
  read(guildId:string,userIds:string[]):Promise<ItemState>;
  transact(context:ItemContext,fingerprint:unknown,userIds:string[],operation:(unit:ItemUnit)=>Promise<ItemOutcome>):Promise<ItemOutcome>;
 }
-export interface ItemPolicy {bonusSlots:number;buybackPercent:number;repairs:Record<'cheap'|'standard'|'premium',{cost:bigint;min:number;max:number}>;}
+export interface ItemPolicy {bonusSlots:number;buybackPercent:number;shopPriceMultiplierBps:bigint;repairs:Record<'cheap'|'standard'|'premium',{cost:bigint;min:number;max:number}>;}
