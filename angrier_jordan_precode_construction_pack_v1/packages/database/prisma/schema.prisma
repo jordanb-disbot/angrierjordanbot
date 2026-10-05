@@ -1277,6 +1277,7 @@ model EconomyPolicyVersion {
   id String @id @default(cuid())
   guildId String
   version Int
+  cycleKey String @default("")
   mode String @default("SHADOW")
   policy Json
   bounds Json
@@ -1285,6 +1286,7 @@ model EconomyPolicyVersion {
   createdAt DateTime @default(now())
   adjustments EconomyAdjustment[]
   @@unique([guildId,version])
+  @@unique([guildId,cycleKey])
   @@index([guildId,createdAt])
 }
 

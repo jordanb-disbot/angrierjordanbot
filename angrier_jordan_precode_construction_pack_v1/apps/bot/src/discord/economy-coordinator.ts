@@ -41,7 +41,7 @@ export class DiscordEconomyCoordinator {
   async reconcileInterestSchedule(guildId:string){return this.service.scheduleNextBankInterest(guildId);}
   async reconcileEconomySnapshotSchedule(guildId:string){return this.service.scheduleNextEconomySnapshot(guildId);}
   async handleSnapshotJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy snapshot job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy snapshot payload.');await this.service.captureEconomySnapshot(p.guildId,p.cycleKey);}
-  async handlePolicyJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy policy job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy policy payload.');await this.service.scheduleNextEconomyPolicy(p.guildId);}
+  async handlePolicyJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy policy job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy policy payload.');await this.service.publishShadowEconomyPolicy(p.guildId,p.cycleKey);}
 
   private async ensureStarter(g:string,u:string,request:string){const starter=BigInt(asNumber(await this.config.get(g,'economy.starter_ottomans'),500));return this.service.bootstrap(g,u,starter,request);}
   private async resetHour(g:string){return asNumber(await this.config.get(g,'server.daily_reset_hour'),4);}

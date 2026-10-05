@@ -33,7 +33,9 @@ interface DbLike extends CatalogGrantDatabase {
   scheduledJob:{upsert(args:any):Promise<any>};
   escrow:{findMany(args:any):Promise<any[]>};
   casinoPool:{findMany(args:any):Promise<any[]>};
-  economySnapshot:{upsert(args:any):Promise<any>};
+  economySnapshot:{upsert(args:any):Promise<any>;findMany(args:any):Promise<any[]>};
+  economyPolicyVersion:{upsert(args:any):Promise<any>};
+  economyAdjustment:{createMany(args:any):Promise<any>};
   activityObservation:{findMany(args:any):Promise<any[]>};
   $transaction<T>(fn:(tx:Omit<DbLike,'$transaction'>)=>Promise<T>):Promise<T>;
 }
@@ -118,4 +120,6 @@ export class PrismaEconomyRepository implements EconomyRepository {
     await this.db.economySnapshot.upsert({where:{guildId_snapshotDate:{guildId:input.guildId,snapshotDate}},create:{guildId:input.guildId,snapshotDate,eligibleMemberCount:eligibleIds.size,rawMedianWealth:median,totalSupply:reconciled.totalSupply,reconciliation:metrics,metrics},update:{eligibleMemberCount:eligibleIds.size,rawMedianWealth:median,totalSupply:reconciled.totalSupply,reconciliation:metrics,metrics}});
     return{guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:reconciled.totalSupply,eligibleMemberCount:eligibleIds.size,metrics};
   }
+  async listEconomySnapshots(guildId:string,limit:number){const rows=await this.db.economySnapshot.findMany({where:{guildId},orderBy:{snapshotDate:'desc'},take:limit});return rows.map(row=>({guildId,cycleKey:row.snapshotDate.toISOString().slice(0,10),totalSupply:row.totalSupply,eligibleMemberCount:row.eligibleMemberCount,metrics:(row.metrics??{}) as Record<string,unknown>,rawMedianWealth:row.rawMedianWealth,reconciliationValid:true,abnormalActivity:false}));}
+  async saveEconomyPolicyProposal(input:import('./repository.js').EconomyPolicyProposal){const version=Number(input.cycleKey.replace(/\D/g,''))||0;const row=await this.db.economyPolicyVersion.upsert({where:{guildId_cycleKey:{guildId:input.guildId,cycleKey:input.cycleKey}},create:{guildId:input.guildId,version,cycleKey:input.cycleKey,mode:'SHADOW',policy:input.policy,bounds:input.bounds},update:{policy:input.policy,bounds:input.bounds}});if(input.adjustments.length)await this.db.economyAdjustment.createMany({skipDuplicates:true,data:input.adjustments.map(adjustment=>({guildId:input.guildId,policyVersionId:row.id,key:adjustment.key,previousValue:adjustment.previous,proposedValue:adjustment.proposed,appliedValue:adjustment.applied,reason:adjustment.reason,supportingMetrics:{cycleKey:input.cycleKey,benchmark:input.benchmark?.toString()??null},status:input.frozen?'FROZEN':'PROPOSED'}))});}
 }

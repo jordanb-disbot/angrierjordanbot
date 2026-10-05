@@ -22,6 +22,7 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   readonly throttles=new Map<string,Date>();
   readonly scheduledJobs=new Map<string,{guildId:string;dueAt:Date;cycleKey:string}>();
   readonly snapshots=new Map<string,import('./repository.js').EconomySnapshotRecord>();
+  readonly policyProposals:import('./repository.js').EconomyPolicyProposal[]=[];
   private seq=0;
 
   constructor(items:readonly CatalogItemRecord[]=[]){for(const i of items)this.catalog.set(i.id,{...i,...(i.metadata?{metadata:structuredClone(i.metadata)}:{})});}
@@ -56,4 +57,6 @@ export class InMemoryEconomyRepository implements EconomyRepository {
   async upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`snapshot:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}){this.scheduledJobs.set(`policy:${input.guildId}`,{guildId:input.guildId,dueAt:new Date(input.dueAt),cycleKey:input.cycleKey});}
   async captureEconomySnapshot(input:{guildId:string;cycleKey:string}){const key=`${input.guildId}:${input.cycleKey}`,existing=this.snapshots.get(key);if(existing)return structuredClone(existing);const accounts=[...this.accounts.values()].filter(x=>x.guildId===input.guildId),reconciled=reconcileEconomy({accounts,escrow:[],pots:[]}),record={guildId:input.guildId,cycleKey:input.cycleKey,totalSupply:reconciled.totalSupply,eligibleMemberCount:accounts.length,metrics:{wallet:reconciled.memberWallet.toString(),bank:reconciled.memberBank.toString(),memberEscrow:reconciled.memberEscrow.toString(),communalPots:reconciled.communalPots.toString()}};this.snapshots.set(key,record);return structuredClone(record);}
+  async listEconomySnapshots(guildId:string,limit:number){return [...this.snapshots.values()].filter(x=>x.guildId===guildId).sort((a,b)=>b.cycleKey.localeCompare(a.cycleKey)).slice(0,limit).map(x=>({...x,rawMedianWealth:BigInt(String(x.metrics.rawMedianWealth??0)),reconciliationValid:true,abnormalActivity:false}));}
+  async saveEconomyPolicyProposal(input:import('./repository.js').EconomyPolicyProposal){if(!this.policyProposals.some(x=>x.guildId===input.guildId&&x.cycleKey===input.cycleKey))this.policyProposals.push(structuredClone(input));}
 }

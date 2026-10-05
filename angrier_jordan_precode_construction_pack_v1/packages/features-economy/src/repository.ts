@@ -1,6 +1,7 @@
 import type {LedgerRepository,LedgerTransaction} from '../../core/src/index.js';
 import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,ToolRecord} from './types.js';
 export interface EconomySnapshotRecord {guildId:string;cycleKey:string;totalSupply:bigint;eligibleMemberCount:number;metrics:Record<string,unknown>;}
+export interface EconomyPolicyProposal {guildId:string;cycleKey:string;frozen:boolean;reason?:string;benchmark?:bigint;policy:Record<string,string>;bounds:Record<string,unknown>;adjustments:readonly {key:string;previous:string;proposed:string;applied:string;reason:string}[];}
 
 export type ClaimField='dailyLastClaimAt'|'weeklyLastClaimAt'|'dailySpinLastAt'|'fortuneLastAt';
 export interface ClaimCommitInput {
@@ -36,6 +37,8 @@ export interface EconomyRepository extends LedgerRepository {
   upsertEconomySnapshotJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   upsertEconomyPolicyJob(input:{guildId:string;dueAt:Date;cycleKey:string}):Promise<void>;
   captureEconomySnapshot(input:{guildId:string;cycleKey:string}):Promise<EconomySnapshotRecord>;
+  listEconomySnapshots(guildId:string,limit:number):Promise<(EconomySnapshotRecord&{rawMedianWealth:bigint;reconciliationValid:boolean;abnormalActivity:boolean})[]>;
+  saveEconomyPolicyProposal(input:EconomyPolicyProposal):Promise<void>;
 }
 
 export const balancedSystemReward=(guildId:string,userId:string,amount:bigint,idempotencyKey:string,reason:string,bucket:'wallet'|'bank'='wallet',metadata?:Record<string,unknown>):LedgerTransaction=>({
