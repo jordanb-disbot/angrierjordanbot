@@ -23,8 +23,8 @@ test('each type_shit reaction replies to its source message once',async()=>{
   assert.equal(m.replies.length,2);
 });
 
-test('!typeshit removes the trigger and sends the packaged video',async()=>{
+test('!typeshit removes the trigger and sends the packaged animated GIF',async()=>{
   const responder=new TypeShitResponder(),m=message({content:'!typeshit'});
   await responder.message(m);
-  assert.equal(m.sent.length,1);assert.equal(m.sent[0].files[0].name,'type-shit.mp4');
+  assert.equal(m.sent.length,1);assert.equal(m.sent[0].files[0].name,'type-shit.gif');
 });
