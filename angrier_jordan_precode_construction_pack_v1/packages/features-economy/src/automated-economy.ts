@@ -116,13 +116,14 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
     propose('dailyClaim',current.dailyClaim*105n/100n,bounds.dailyClaim,'Major-purchase affordability is below policy target.');
     propose('weeklyClaim',current.weeklyClaim*105n/100n,bounds.weeklyClaim,'Major-purchase affordability is below policy target.');
     propose('shopPriceMultiplierBps',current.shopPriceMultiplierBps*95n/100n,bounds.shopPriceMultiplierBps,'Major-purchase affordability is below policy target.');
+    propose('lotteryTicketBenchmarkBps',current.lotteryTicketBenchmarkBps*95n/100n,bounds.lotteryTicketBenchmarkBps,'Major-purchase affordability is below policy target.');
   }
   if((m.purchaseFrequencyBps??2500n)<500n&&(m.itemUtilityBps??5000n)<3000n)propose('starterPercentBps',current.starterPercentBps*105n/100n,bounds.starterPercentBps,'Low purchase participation and usable-item coverage indicate an onboarding progression gap.');
   // High concentration, persistent issuance/removal imbalance, or gambling
   // exposure only tighten future wager caps. They never rewrite accepted terms,
   // alter odds, or reduce a reward already sampled.
   if((m.recurringNetIssuance??0n)>benchmark/5n||(m.gamblingExposureBps??0n)>5_000n||((m.topFiveConcentrationBps??0n)>6_500n&&(m.wealthP90??0n)>benchmark*5n))propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Issuance, wealth concentration, or gambling exposure exceeds the conservative policy threshold.');
-  if((m.recurringNetIssuance??0n)>benchmark/5n&&(m.purchaseFrequencyBps??0n)>2_000n&&(m.purchaseAffordabilityBps??0n)>=5_000n)propose('shopPriceMultiplierBps',current.shopPriceMultiplierBps*105n/100n,bounds.shopPriceMultiplierBps,'High recurring issuance with sustained purchase participation permits a bounded price normalization.');
+  if((m.recurringNetIssuance??0n)>benchmark/5n&&(m.purchaseFrequencyBps??0n)>2_000n&&(m.purchaseAffordabilityBps??0n)>=5_000n){propose('shopPriceMultiplierBps',current.shopPriceMultiplierBps*105n/100n,bounds.shopPriceMultiplierBps,'High recurring issuance with sustained purchase participation permits a bounded price normalization.');propose('lotteryTicketBenchmarkBps',current.lotteryTicketBenchmarkBps*105n/100n,bounds.lotteryTicketBenchmarkBps,'High recurring issuance with sustained purchase participation permits a bounded lottery-price normalization.');}
   return{frozen:false,benchmark,adjustments:shadow?adjustments.map(x=>({...x,applied:x.previous})):adjustments};
 }
 
