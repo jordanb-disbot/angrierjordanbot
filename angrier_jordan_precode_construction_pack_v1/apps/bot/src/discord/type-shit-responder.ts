@@ -1,12 +1,20 @@
+import {readFile} from 'node:fs/promises';
 import type {Message,MessageReaction,PartialMessageReaction,User,PartialUser} from 'discord.js';
 
 const TYPE_SHIT='type_shit';
 const reply={content:'Shit',allowedMentions:{parse:[] as never[]}};
+const typeShitVideo=new URL('../../../../packages/features-special/assets/type-shit.mp4',import.meta.url);
 
 /** Small server-wide call-and-response with no channel, role, or feature gate. */
 export class TypeShitResponder {
   async message(message:Message):Promise<void>{
     if(!message.guild||message.author.bot)return;
+    if(message.content.trim().toLowerCase()==='!typeshit'){
+      if(!message.channel.isSendable())return;
+      await message.delete().catch(()=>undefined);
+      await message.channel.send({files:[{attachment:await readFile(typeShitVideo),name:'type-shit.mp4'}],allowedMentions:{parse:[]}});
+      return;
+    }
     const emojiUses=(message.content.match(/<a?:type_shit:\d+>/g)??[]).length;
     const phraseUses=(message.content.match(/\btype\s+shit\b/gi)??[]).length;
     const stickerUses=[...message.stickers.values()].filter(sticker=>sticker.name==='TS').length;
