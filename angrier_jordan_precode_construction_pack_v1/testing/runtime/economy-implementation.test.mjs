@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {cappedActivityPayout,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,materializePolicy,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,tier5Interest,voicePayoutBand} from '../../.test-build/packages/features-economy/src/index.js';
+import {cappedActivityPayout,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,materializePolicy,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,supplyReconciles,tier5Interest,voicePayoutBand} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -112,6 +112,7 @@ test('economy reconciliation counts active member escrow and communal pots exact
   const result=reconcileEconomy({accounts:[{userId:'a',wallet:100n,reservedWallet:40n,bank:900n},{userId:'b',wallet:50n,bank:0n}],escrow:[{ownerUserId:'a',amount:40n,state:'ACTIVE'},{ownerUserId:'b',amount:10n,state:'SETTLED'}],pots:[{key:'chair-pot',amount:25n}]});
   assert.equal(result.memberEscrow,40n);assert.equal(result.memberWealth.get('a'),1000n);assert.equal(result.totalSupply,1075n);
 });
+test('snapshot supply reconciliation compares prior supply with only completed-interval system issuance',()=>{assert.equal(supplyReconciles(undefined,100n,0n),true);assert.equal(supplyReconciles(100n,125n,25n),true);assert.equal(supplyReconciles(100n,124n,25n),false);});
 
 test('daily snapshot capture is idempotent and queues the next Mountain boundary',async()=>{const {service,repo}=make('2026-07-01T09:59:59Z');await service.bootstrap('g','u',100n,'seed');const first=await service.captureEconomySnapshot('g','2026-06-30'),second=await service.captureEconomySnapshot('g','2026-06-30');assert.equal(first.totalSupply,100n);assert.deepEqual(second,first);assert.equal(repo.scheduledJobs.get('snapshot:g')?.dueAt.toISOString(),'2026-07-01T10:00:00.000Z');});
 

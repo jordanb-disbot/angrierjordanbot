@@ -19,5 +19,10 @@ export function reconcileEconomy(input:ReconciliationInput):ReconciliationResult
   return{memberWallet:wallet,memberBank:bank,memberEscrow:escrow,communalPots:pots,totalSupply:wallet+bank+escrow+pots,memberWealth:wealth};
 }
 
+/** Reconcile a completed 4 AM interval against the prior persisted supply.
+ * System-ledger debits mint currency; system-ledger credits burn it. Internal
+ * wallet/bank/escrow movements have no system leg and must not move supply. */
+export const supplyReconciles=(previousSupply:bigint|undefined,currentSupply:bigint,netSystemIssuance:bigint)=>previousSupply===undefined||currentSupply===previousSupply+netSystemIssuance;
+
 export const percentile=(values:readonly bigint[],p:number)=>{const sorted=[...values].sort((a,b)=>a<b?-1:a>b?1:0);if(!sorted.length)return 0n;const rank=Math.max(0,Math.min(sorted.length-1,Math.ceil(p*sorted.length)-1));return sorted[rank]!;};
 export const ledgerSource=(reason:string)=>{const r=reason.toLowerCase();if(r.includes('starter'))return'starter';if(r.includes('daily')||r.includes('weekly')||r.includes('grind')||r.includes('activity'))return'activity';if(r.includes('casino')||r.includes('lottery')||r.includes('slot'))return'gambling';if(r.includes('manual')||r.includes('grant'))return'manual';if(r.includes('shop')||r.includes('repair')||r.includes('upgrade'))return'spending';return'other';};
