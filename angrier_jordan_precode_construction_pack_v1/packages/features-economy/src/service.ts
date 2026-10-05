@@ -19,6 +19,8 @@ export const dailyCycle=(now:Date,resetHour=4,timeZone=TZ)=>{const p=localCalend
 const dayIndex=(name:string)=>({SUNDAY:0,MONDAY:1,TUESDAY:2,WEDNESDAY:3,THURSDAY:4,FRIDAY:5,SATURDAY:6}[name.toUpperCase()]??1);
 export const weeklyCycle=(now:Date,resetDay='MONDAY',resetHour=4,timeZone=TZ)=>{const p=localCalendarDate(now,timeZone);const currentDow=new Date(Date.UTC(p.year,p.month-1,p.day)).getUTCDay();const target=dayIndex(resetDay);let back=(currentDow-target+7)%7;if(back===0&&p.hour<resetHour)back=7;const d=addLocalDays(p.year,p.month,p.day,-back);const start=zonedDateTimeToUtc(d.year,d.month,d.day,resetHour,timeZone);const n=addLocalDays(d.year,d.month,d.day,7);return{key:dateKey(d),start,next:zonedDateTimeToUtc(n.year,n.month,n.day,resetHour,timeZone)};};
 export const nextMondayBankInterest=(now:Date,timeZone=TZ)=>{const c=weeklyCycle(now,'MONDAY',4,timeZone);return c.next;};
+/** Next durable EAJ 1.1 snapshot boundary: 4:00 AM Mountain, DST-safe. */
+export const nextEconomySnapshot=(now:Date,timeZone=TZ)=>dailyCycle(now,4,timeZone).next;
 
 const chooseWeighted=<T extends {weight:number}>(items:readonly T[],r:number):T=>{const valid=items.filter(x=>Number.isFinite(x.weight)&&x.weight>0);if(!valid.length)throw new DomainError('EMPTY_REWARD_TABLE','Reward table has no positive weights.');const total=valid.reduce((n,x)=>n+x.weight,0);let point=Math.max(0,Math.min(0.999999999,r))*total;for(const x of valid){point-=x.weight;if(point<0)return x;}return valid[valid.length-1]!;};
 const randomBigInt=(min:bigint,max:bigint,r:number)=>{if(max<min)[min,max]=[max,min];const span=max-min+1n;const scaled=BigInt(Math.floor(Math.max(0,Math.min(0.999999999,r))*1_000_000));return min+(span*scaled/1_000_000n);};

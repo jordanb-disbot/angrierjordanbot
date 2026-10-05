@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,reconcileEconomy,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
+import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,nextEconomySnapshot,reconcileEconomy,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -39,6 +39,7 @@ test('daily and weekly rewards select a persisted amount within their configured
 test('daily claim, spin, and fortune are independent one-use actions in the same cycle',async()=>{const {service}=make();const d=await service.claimDaily({guildId:'g',userId:'u',idempotencyKey:'d',baseReward:10n,milestones:{}});const s=await service.spinDaily({guildId:'g',userId:'u',idempotencyKey:'s',table:[{kind:'ottomans',weight:1,amount:20n}]});const f=await service.fortuneDaily({guildId:'g',userId:'u',idempotencyKey:'f'});assert.equal(d.status,'applied');assert.equal(s.status,'applied');assert.equal(f.status,'applied');assert.equal((await service.dailyHub('g','u')).dailyReady,false);assert.equal((await service.dailyHub('g','u')).spinReady,false);assert.equal((await service.dailyHub('g','u')).fortuneReady,false);assert.equal((await service.spinDaily({guildId:'g',userId:'u',idempotencyKey:'s2',table:[{kind:'ottomans',weight:1,amount:20n}]})).status,'already_used');});
 
 test('4 AM Mountain daily boundary follows daylight-saving offset',()=>{const before=dailyCycle(new Date('2026-07-01T09:59:59Z'));const after=dailyCycle(new Date('2026-07-01T10:00:01Z'));assert.equal(before.key,'2026-06-30');assert.equal(after.key,'2026-07-01');assert.equal(after.start.toISOString(),'2026-07-01T10:00:00.000Z');const winter=dailyCycle(new Date('2026-01-15T11:00:01Z'));assert.equal(winter.start.toISOString(),'2026-01-15T11:00:00.000Z');});
+test('economy snapshots schedule at the next 4 AM Mountain boundary through DST',()=>{assert.equal(nextEconomySnapshot(new Date('2026-07-01T09:59:59Z')).toISOString(),'2026-07-01T10:00:00.000Z');assert.equal(nextEconomySnapshot(new Date('2026-01-15T11:00:01Z')).toISOString(),'2026-01-16T11:00:00.000Z');});
 
 test('weekly reward is claimable only once per weekly cycle',async()=>{const {service}=make('2026-09-21T18:00:00Z');const one=await service.weekly({guildId:'g',userId:'u',idempotencyKey:'w1',reward:500n});const two=await service.weekly({guildId:'g',userId:'u',idempotencyKey:'w2',reward:500n});assert.equal(one.status,'applied');assert.equal(two.status,'already_used');assert.equal((await service.account('g','u')).wallet,500n);});
 
