@@ -114,6 +114,7 @@ export async function startProductionBot():Promise<void>{
   // This flag is intentionally separate from economy smoke. It has no effect
   // until a valid ACTIVE policy exists after the seven-day shadow gate.
   const enableEconomyAdaptiveApplication=enableEconomySmoke&&process.env.ENABLE_ECONOMY_ADAPTIVE_APPLICATION==='true';
+  const economyAdaptivePaused=process.env.ECONOMY_ADAPTIVE_PAUSED==='true';
   const enableFullyFurnishedSmoke=process.env.ENABLE_FULLY_FURNISHED_SMOKE==='true';
   startup.mark('database-client-construction (connection is lazy)');
   const db=getPrismaClient();
@@ -169,7 +170,7 @@ export async function startProductionBot():Promise<void>{
   const activityLogger=enableActivityLoggingSmoke?new DiscordActivityLogger(config,guildId):null;
   const fortunes=JSON.parse(fs.readFileSync(new URL('../../../packages/content/economy/fortune_300.json',import.meta.url),'utf8')) as FortuneEntry[];
   const economyService=new EconomyService(new PrismaEconomyRepository(db),audit,new SystemClock(),undefined,fortunes);
-  const economy=new DiscordEconomyCoordinator(economyService,config,enableEconomyAdaptiveApplication);
+  const economy=new DiscordEconomyCoordinator(economyService,config,enableEconomyAdaptiveApplication&&!economyAdaptivePaused);
   const crimeRepo=new PrismaCrimeRepository(db);
   const items=new DiscordItemsCoordinator(new PrismaItemRepository(db),config,async(g,u)=>{
     if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;
