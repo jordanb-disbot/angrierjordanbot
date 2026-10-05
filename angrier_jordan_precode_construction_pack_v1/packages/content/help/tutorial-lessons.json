@@ -1014,8 +1014,8 @@
       "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race or /race only in main chat when you want to start a real event."
     },
     "daily": {
-      "purpose": "Economy starts with Ottomans: your Wallet holds spendable funds and Bank stores the rest. Rewards, activities, purchases and some games build your balance over time.",
-      "controls": "Use /daily for the daily reward, then /bank to review Wallet and Bank. /shop and /inventory show what Ottomans can buy and what you own.",
+      "purpose": "Economy starts with Ottomans: your Wallet holds spendable funds and Bank stores the rest. New-member currency follows the server benchmark and is granted once. Daily rewards vary within 200–300 Ottomans, weekly rewards within 1,000–1,500, and both reset at 4 AM Mountain. Rewards, activities, purchases and some games build your balance over time.",
+      "controls": "Use /daily for the daily reward, then /bank to review Wallet and Bank. /shop and /inventory show what Ottomans can buy and what you own. Policy adjustments are measured in shadow first, remain bounded, and never rewrite a reward or wager already accepted.",
       "steps": [
         "Open /daily to claim the available reward; it is the easiest first economy action.",
         "Open /bank to see Wallet and Bank, then use /shop before spending so you can inspect prices and requirements.",
