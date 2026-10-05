@@ -386,6 +386,7 @@ export async function startProductionBot():Promise<void>{
       const current=await discordFamilyMembershipCensus(member.guild).lookup(member.id);
       if(!current.present||current.bot||current.joinedAt?.getTime()!==observedJoin.getTime())return;
     }
+    if(!member.user.bot&&observedJoin)await db.member.upsert({where:{guildId_userId:{guildId,userId:member.id}},create:{guildId,userId:member.id,joinedAt:observedJoin},update:{joinedAt:observedJoin}});
     await settleHandlers([...(enableOnboardingSmoke?[onboarding.handleMemberAdd(member)]:[]),...(enableSecuritySmoke?[security.handleMemberAdd(member)]:[]),...(activityLogger?[activityLogger.memberJoin(member)]:[])]);
     if(familyActive&&observedJoin&&await db.member.findUnique({where:{guildId_userId:{guildId,userId:member.id}}})){
       const prior=await db.memberPresenceState.findUnique({where:{guildId_userId:{guildId,userId:member.id}},select:{userId:true,joinedAt:true,leftAt:true}});
