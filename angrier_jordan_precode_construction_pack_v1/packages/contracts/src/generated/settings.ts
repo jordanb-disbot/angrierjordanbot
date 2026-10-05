@@ -2944,6 +2944,22 @@ export const SETTINGS = [
     "depends_on": []
   },
   {
+    "key": "economy.adaptive_paused",
+    "section": "economy",
+    "type": "boolean",
+    "default": false,
+    "editable_by": [
+      "throne",
+      "chaise_lounge"
+    ],
+    "restart_required": false,
+    "description": "Audited emergency pause for applying adaptive economy policy. Shadow measurement continues.",
+    "risk": "financial",
+    "mutable": true,
+    "dashboard_write": "draft",
+    "depends_on": []
+  },
+  {
     "key": "economy.daily_milestones",
     "section": "economy",
     "type": "json",

@@ -30,6 +30,7 @@ export class DiscordCasinoCoordinator {
   if(['coinflip','roulette','dice'].includes(game)){const choice=new TextInputBuilder().setCustomId('selection').setLabel(game==='coinflip'?'heads or tails':game==='dice'?'Mode: high':'red/black/odd/even/low/high/number:0–36').setStyle(TextInputStyle.Short).setRequired(true).setMaxLength(20);if(game==='dice')choice.setValue('high');modal.addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(choice));}
   return modal;
  }
+ private async ticketPrice(guildId:string){const adaptive=await this.lotteryTicketPrice?.(guildId);if(adaptive!==undefined&&adaptive>0n)return adaptive;return BigInt(Number(await this.config.get(guildId,'lottery.ticket_price')));}
  async handle(i:Interaction){let validated=false;try{
   if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SERVER_ONLY','Use casino controls in the server.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':'),isLottery=i.isChatInputCommand()?i.commandName==='lottery':(['lottery','tickets'].includes(parts[1]??'')||(parts[1]==='help'&&parts[3]==='lottery'));
@@ -56,7 +57,6 @@ export class DiscordCasinoCoordinator {
    if(i.isModalSubmit()){const raw=i.fields.getTextInputValue('amount');if(!/^\d{1,2}$/.test(raw))throw new DomainError('TICKET_QUANTITY','Enter a whole ticket quantity.');await this.lottery.buy(c,Number(raw),price);}
    const state=await this.lottery.current(i.guildId,i.user.id);await i.editReply(await this.presentation({title:'Weekly Lottery',subtitle:'Your tickets · private',visual:{kind:'lottery',tickets:state.memberTickets,price:String(price),drawAt:state.drawAt.toISOString().replace('T',' ').replace('.000Z',' UTC')},amount:String(state.round?.pot??0n),amountLabel:'Ticket-funded pot',details:[{label:'Your entry',value:state.memberTickets+' / 20 tickets · '+price+' Ottomans each'},{label:'Draw',value:state.drawAt.toISOString().replace('T',' ').replace('.000Z',' UTC')},{label:'Prize',value:'One winner receives the full pot. No rake or rollover.'}]},[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('casino:lottery:'+i.user.id).setLabel('Buy Tickets').setStyle(ButtonStyle.Primary).setDisabled(state.memberTickets>=20),new ButtonBuilder().setCustomId('casino:help:'+i.user.id+':lottery').setLabel('Rules').setStyle(ButtonStyle.Secondary))]));return;
   }
- private async ticketPrice(guildId:string){const adaptive=await this.lotteryTicketPrice?.(guildId);if(adaptive!==undefined&&adaptive>0n)return adaptive;return BigInt(Number(await this.config.get(guildId,'lottery.ticket_price')));}
   const policy=await this.policy(i.guildId);let id:string;
   if(i.isModalSubmit()){
    const raw=i.fields.getTextInputValue('amount');if(!/^\d{1,7}$/.test(raw))throw new DomainError('WAGER_INTEGER','Enter a positive whole Ottoman wager.');const game=parts[3] as CasinoGame,selection=['coinflip','roulette','dice'].includes(game)?i.fields.getTextInputValue('selection').trim().toLowerCase():'';

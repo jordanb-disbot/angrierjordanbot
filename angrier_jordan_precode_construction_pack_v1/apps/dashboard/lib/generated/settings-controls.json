@@ -1,5 +1,5 @@
 {
-  "count": 257,
+  "count": 258,
   "controls": [
     {
       "key": "server.timezone",
@@ -3121,6 +3121,23 @@
       "dependsOn": [],
       "min": 0,
       "max": 1000000
+    },
+    {
+      "key": "economy.adaptive_paused",
+      "section": "economy",
+      "label": "Adaptive Paused",
+      "description": "Audited emergency pause for applying adaptive economy policy. Shadow measurement continues.",
+      "kind": "toggle",
+      "defaultValue": false,
+      "risk": "financial",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
     },
     {
       "key": "economy.daily_milestones",
