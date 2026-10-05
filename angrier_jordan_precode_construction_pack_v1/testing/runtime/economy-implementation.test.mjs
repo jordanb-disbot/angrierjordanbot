@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,nextEconomySnapshot,reconcileEconomy,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
+import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,nextEconomySnapshot,reconcileEconomy,shadowReady,smoothedBenchmark,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -78,6 +78,7 @@ test('major-purchase affordability reports immediate access and earning time ind
   const metric=majorPurchaseAffordability({qualifyingMembers:20,membersAbleToBuy:3,majorPurchaseCost:16_000n,medianActiveWealth:10_000n,typicalDailyEarnings:1_000n});
   assert.equal(metric.immediatelyAffordableBps,1500n);assert.equal(metric.medianDaysToAfford,6n);
 });
+test('shadow controller requires seven valid observations and uses a seven-day benchmark',()=>{const rows=[10n,20n,30n,40n,50n,60n,70n];assert.equal(smoothedBenchmark(rows),40n);assert.equal(shadowReady(rows.map(benchmark=>({benchmark,reconciliationValid:true,abnormalActivity:false}))),true);assert.equal(shadowReady(rows.slice(1).map(benchmark=>({benchmark,reconciliationValid:true,abnormalActivity:false}))),false);});
 
 test('economy reconciliation counts active member escrow and communal pots exactly once',()=>{
   const result=reconcileEconomy({accounts:[{userId:'a',wallet:100n,reservedWallet:40n,bank:900n},{userId:'b',wallet:50n,bank:0n}],escrow:[{ownerUserId:'a',amount:40n,state:'ACTIVE'},{ownerUserId:'b',amount:10n,state:'SETTLED'}],pots:[{key:'chair-pot',amount:25n}]});

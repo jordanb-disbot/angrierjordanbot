@@ -41,6 +41,8 @@ export interface EconomyMeasurement {
   wealthP90?:bigint; topFiveConcentrationBps?:bigint; purchaseFrequencyBps?:bigint;
   medianEarningDaysToMajorPurchase?:bigint; gamblingExposureBps?:bigint;
 }
+export const smoothedBenchmark=(daily:readonly bigint[])=>daily.length<7?undefined:daily.slice(-7).reduce((sum,value)=>sum+value,0n)/7n;
+export const shadowReady=(snapshots:readonly {benchmark:bigint;reconciliationValid:boolean;abnormalActivity:boolean}[])=>snapshots.length>=7&&snapshots.slice(-7).every(row=>row.benchmark>0n&&row.reconciliationValid&&!row.abnormalActivity);
 /** The affordability signal is published with its inputs, never inferred from low spending alone. */
 export interface MajorPurchaseAffordability {
   qualifyingMembers:number; membersAbleToBuy:number; majorPurchaseCost:bigint;
