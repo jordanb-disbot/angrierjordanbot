@@ -32,3 +32,12 @@
 - [ ] Authorize and perform production migration/deployment separately; confirm one active worker, HTTPS dashboard, private database, graceful shutdown and readiness probes.
 
 Use deterministic fixtures from each `testing/runtime`, `testing/adapters` and `testing/postgres` suite before involving live members. A rendered fixture or mocked OAuth test is never recorded as live acceptance.
+
+## EAJ 1.1 Automated Economy Engine (pending)
+
+- [x] Run deterministic domain simulations for DST scheduling, Monday publication, reconciliation, policy freezes, composite affordability, durable chat/voice payouts, Tier 5 terms, and seven-day activation gating.
+- [x] Keep adaptive application behind `ENABLE_ECONOMY_ADAPTIVE_APPLICATION`; keep `economy.adaptive_paused` available as an audited dashboard draft setting.
+- [ ] Restore access to the ignored TEST_DATABASE_URL and run the EAJ PostgreSQL migration plus item/casino/lottery/event acceptance suites.
+- [ ] Run seven consecutive scheduled 4 AM America/Denver shadow snapshots with valid reconciliation, stable proposal bounds, and documented progression measurements.
+- [ ] Review the Monday shadow publication and verify adaptive application remains off until the preceding seven observations are valid.
+- [ ] With explicit production authorization, perform live Discord acceptance: daily/weekly, chat/voice caps and restart recovery, Tier 5 interest, shop/lottery/wager terms, Chair Pot, `!race`, `/fight`, and dashboard pause audit.
