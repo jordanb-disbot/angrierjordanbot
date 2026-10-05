@@ -4,7 +4,7 @@ import type {EconomyRepository} from './repository.js';
 import {balancedSystemReward} from './repository.js';
 import type {ActivityResult,BankTierRule,BankView,ClaimResult,DailyHubState,FortuneEntry,FortuneResult,GrindActivity,GrindOutcomeRule,GrindPolicy,InventoryEntryRecord,RandomSource,SpinResult,SpinReward,StatementView,WeeklyResult} from './types.js';
 import {MathRandomSource} from './types.js';
-import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,evaluateEconomyPolicy,shadowReady,smoothedBenchmark,starterFromBenchmark,voicePayoutBand} from './automated-economy.js';
+import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,evaluateEconomyPolicy,shadowReady,smoothedBenchmark,starterFromBenchmark,voicePayoutBand,type EconomyPolicy} from './automated-economy.js';
 
 const TZ='America/Denver';
 const DAY=86_400_000;
@@ -32,6 +32,9 @@ export class EconomyService {
   constructor(private readonly repository:EconomyRepository,private readonly audit:AuditService,private readonly clock:Clock,private readonly random:RandomSource=new MathRandomSource(),private readonly fortunes:readonly FortuneEntry[]=[]){this.ledger=new LedgerEngine(repository);}
 
   async bootstrap(guildId:string,userId:string,starterAmount:bigint,requestKey:string){if(starterAmount<0n||starterAmount>100_000n)throw new DomainError('INVALID_STARTER_AMOUNT','Starter amount must be between 0 and 100,000 Ottomans.');await this.repository.ensureMember(guildId,userId);return this.repository.grantStarter({guildId,userId,amount:starterAmount,idempotencyKey:`starter:${guildId}:${userId}:${requestKey}`,now:this.clock.now()});}
+  /** Only an explicitly enabled, persisted ACTIVE policy may replace the fixed
+   * initial terms. Missing/malformed values fail closed to the initial policy. */
+  async runtimePolicy(guildId:string,enabled=false):Promise<EconomyPolicy>{if(!enabled)return DEFAULT_AUTOMATED_ECONOMY_POLICY;const row=await this.repository.latestEconomyPolicy(guildId);if(!row||row.mode!=='ACTIVE')return DEFAULT_AUTOMATED_ECONOMY_POLICY;const out={...DEFAULT_AUTOMATED_ECONOMY_POLICY};for(const key of Object.keys(out) as (keyof EconomyPolicy)[]){const value=row.policy[key];if(typeof value==='string'&&/^\d+$/.test(value))out[key]=BigInt(value);}return out;}
   /** A new server may not have an authoritative benchmark on its first day.  Keep
    * onboarding usable and defer the one-time package until a snapshot exists. */
   async bootstrapFromBenchmark(guildId:string,userId:string,requestKey:string){const latest=(await this.repository.listEconomySnapshots(guildId,1))[0];if(!latest){await this.repository.ensureMember(guildId,userId);return{status:'deferred' as const,account:await this.repository.getEconomyAccount(guildId,userId)};}return this.bootstrap(guildId,userId,starterFromBenchmark(latest.rawMedianWealth),requestKey);}
