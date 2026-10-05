@@ -14,7 +14,7 @@ import {cardLabel,handValue,type CasinoGame,type ChairSymbol} from '../../../../
 type Interaction=ChatInputCommandInteraction|ButtonInteraction|ModalSubmitInteraction;
 export const CASINO_COMMANDS=new Set(['casino','lottery']);
 export class DiscordCasinoCoordinator {
- constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly onRoundClosed?:(guildId:string,userId:string,sessionId:string)=>Promise<void>,private readonly maximumWager?:(guildId:string)=>Promise<bigint|undefined>){}
+ constructor(private readonly casino:PrismaCasinoRepository,private readonly lottery:PrismaLotteryRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly onRoundClosed?:(guildId:string,userId:string,sessionId:string)=>Promise<void>,private readonly maximumWager?:(guildId:string)=>Promise<bigint|undefined>,private readonly lotteryTicketPrice?:(guildId:string)=>Promise<bigint|undefined>){}
  private identities=new Map<string,{expires:number;value:ReturnType<typeof memberArt>}>();
  private identity(client:Client,guildId:string,userId:string){const key=guildId+':'+userId,old=this.identities.get(key);if(old&&old.expires>Date.now())return old.value;const value=memberArt(client,guildId,userId);this.identities.set(key,{expires:Date.now()+60000,value});if(this.identities.size>64)this.identities.delete(this.identities.keys().next().value!);return value;}
  private artwork=new Map<string,Promise<DisplayFrame[]>>();
@@ -43,7 +43,7 @@ export class DiscordCasinoCoordinator {
   if(i.isButton()&&parts[1]==='help'){
    const game=parts[3] as keyof typeof casinoHelp.games;
    const policy=game==='lottery'?undefined:await this.policy(i.guildId);
-   const limits=policy?(game==='slots'?'Available wagers: '+policy.slotsWagers.join(', '):'Wager range: '+policy.minBet+'–'+policy.maxBet)+' Ottomans.':String(await this.config.get(i.guildId,'lottery.ticket_price'))+' Ottomans per ticket · up to 20 per week.';
+   const limits=policy?(game==='slots'?'Available wagers: '+policy.slotsWagers.join(', '):'Wager range: '+policy.minBet+'–'+policy.maxBet)+' Ottomans.':String(await this.ticketPrice(i.guildId))+' Ottomans per ticket · up to 20 per week.';
    const rules=game==='slots'?'Three matching symbols return the gross multiplier shown above. Marked jackpot symbols also pay Chair Pot. '+policy!.chairPotPercent+'% of each slot wager funds the pot.':casinoHelp.games[game]??'';
    await i.editReply(await this.presentation({title:'Table Rules',subtitle:'Casino · '+game,amount:'',amountLabel:'',visual:{kind:'rules',game,...(policy?{table:policy.symbols}:{})},details:[{label:'Current table limits',value:limits},{label:'How it works',value:rules},{label:'Before you play',value:casinoHelp.body}]}));return;
   }
@@ -52,10 +52,11 @@ export class DiscordCasinoCoordinator {
 
   const c:CasinoContext={guildId:i.guildId,userId:i.user.id,channelId:i.channelId,requestKey:i.id};
   if(isLottery){
-   const price=BigInt(Number(await this.config.get(i.guildId,'lottery.ticket_price')));
+   const price=await this.ticketPrice(i.guildId);
    if(i.isModalSubmit()){const raw=i.fields.getTextInputValue('amount');if(!/^\d{1,2}$/.test(raw))throw new DomainError('TICKET_QUANTITY','Enter a whole ticket quantity.');await this.lottery.buy(c,Number(raw),price);}
    const state=await this.lottery.current(i.guildId,i.user.id);await i.editReply(await this.presentation({title:'Weekly Lottery',subtitle:'Your tickets · private',visual:{kind:'lottery',tickets:state.memberTickets,price:String(price),drawAt:state.drawAt.toISOString().replace('T',' ').replace('.000Z',' UTC')},amount:String(state.round?.pot??0n),amountLabel:'Ticket-funded pot',details:[{label:'Your entry',value:state.memberTickets+' / 20 tickets · '+price+' Ottomans each'},{label:'Draw',value:state.drawAt.toISOString().replace('T',' ').replace('.000Z',' UTC')},{label:'Prize',value:'One winner receives the full pot. No rake or rollover.'}]},[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('casino:lottery:'+i.user.id).setLabel('Buy Tickets').setStyle(ButtonStyle.Primary).setDisabled(state.memberTickets>=20),new ButtonBuilder().setCustomId('casino:help:'+i.user.id+':lottery').setLabel('Rules').setStyle(ButtonStyle.Secondary))]));return;
   }
+ private async ticketPrice(guildId:string){const adaptive=await this.lotteryTicketPrice?.(guildId);if(adaptive!==undefined&&adaptive>0n)return adaptive;return BigInt(Number(await this.config.get(guildId,'lottery.ticket_price')));}
   const policy=await this.policy(i.guildId);let id:string;
   if(i.isModalSubmit()){
    const raw=i.fields.getTextInputValue('amount');if(!/^\d{1,7}$/.test(raw))throw new DomainError('WAGER_INTEGER','Enter a positive whole Ottoman wager.');const game=parts[3] as CasinoGame,selection=['coinflip','roulette','dice'].includes(game)?i.fields.getTextInputValue('selection').trim().toLowerCase():'';
