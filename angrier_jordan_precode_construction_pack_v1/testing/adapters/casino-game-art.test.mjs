@@ -24,6 +24,11 @@ test('Blackjack conceals hole card and renders split hands, exact total, stake a
  const svg=render(v);assert.equal((svg.match(/data-art="hidden-card"/g)??[]).length,1);assert.equal((svg.match(/data-art="card-face"/g)??[]).length,5);assert.match(svg,/HAND 1 · 20/);assert.match(svg,/HAND 2 · 12 · YOUR MOVE/);assert.match(svg,/200 Ottomans · STOOD/);assert.doesNotMatch(svg,/[♣♦♥♠]/);
  const closed=render({...v,closed:true});assert.doesNotMatch(closed,/hidden-card|YOUR MOVE|HOLE CARD/);assert.match(closed,/DEALER · 21/);assert.equal((closed.match(/data-art="card-face"/g)??[]).length,6);
 });
+test('Active Blackjack stays in one contiguous 1200 by 720 attachment',async()=>{
+ const svg=render({kind:'blackjack',dealer:[0,25],hands:[{cards:[12,9],stake:'100',status:'PLAYING'}],active:0,closed:false});
+ const frames=await displayFrames(svg,'blackjack-review','Blackjack');
+ assert.equal(frames.length,1);const metadata=await sharp(frames[0].data).metadata();assert.equal(metadata.width,1200);assert.equal(metadata.height,720);
+});
 for(const [v,art,copy] of [
  [{kind:'roulette',number:0,color:'green',selection:'red'},'roulette-wheel','GREEN'],
  [{kind:'dice',player:2,house:6,selection:'high'},'die-2','HOUSE ROLL'],
