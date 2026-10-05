@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
-import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
+import {DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,tier5Interest} from '../../.test-build/packages/features-economy/src/index.js';
 
 class SequenceRandom { constructor(values=[0]){this.values=[...values];this.i=0;} next(){return this.values[this.i++%this.values.length]??0;} }
 const tiers=[
@@ -71,4 +71,9 @@ test('automated economy shadows bounded affordability proposals without changing
 test('Tier 5 EAJ 1.1 interest is capped by the stable wealth benchmark',()=>{
   assert.equal(tier5Interest(40_000n,100n,40_000n),400n);
   assert.equal(tier5Interest(500_000n,100n,40_000n),1_000n);
+});
+
+test('major-purchase affordability reports immediate access and earning time independently of spending',()=>{
+  const metric=majorPurchaseAffordability({qualifyingMembers:20,membersAbleToBuy:3,majorPurchaseCost:16_000n,medianActiveWealth:10_000n,typicalDailyEarnings:1_000n});
+  assert.equal(metric.immediatelyAffordableBps,1500n);assert.equal(metric.medianDaysToAfford,6n);
 });

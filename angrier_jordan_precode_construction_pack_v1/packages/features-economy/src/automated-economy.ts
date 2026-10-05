@@ -38,6 +38,14 @@ export interface EconomyMeasurement {
   eligibleMembers:number; rawMedianWealth:bigint; smoothedMedianWealth?:bigint;
   reconciliationValid:boolean; abnormalActivity:boolean; purchaseAffordabilityBps?:bigint;
   recurringNetIssuance?:bigint;
+  wealthP90?:bigint; topFiveConcentrationBps?:bigint; purchaseFrequencyBps?:bigint;
+  medianEarningDaysToMajorPurchase?:bigint; gamblingExposureBps?:bigint;
+}
+/** The affordability signal is published with its inputs, never inferred from low spending alone. */
+export interface MajorPurchaseAffordability {
+  qualifyingMembers:number; membersAbleToBuy:number; majorPurchaseCost:bigint;
+  medianActiveWealth:bigint; typicalDailyEarnings:bigint;
+  immediatelyAffordableBps:bigint; medianDaysToAfford:bigint;
 }
 export interface EconomyAdjustment {key:keyof EconomyPolicy; previous:bigint; proposed:bigint; applied:bigint; reason:string;}
 export interface EconomyControlResult {frozen:boolean; reason?:string; benchmark?:bigint; adjustments:EconomicAdjustment[];}
@@ -52,6 +60,12 @@ export const boundedWeeklyChange=(previous:bigint,proposed:bigint,maxBps=500n)=>
   return proposed>previous+delta?previous+delta:proposed<previous-delta?previous-delta:proposed;
 };
 export const benchmarkPercent=(benchmark:bigint,bps:bigint,roundTo=1n)=>floor(benchmark*bps/10_000n,roundTo);
+export const majorPurchaseAffordability=(input:{qualifyingMembers:number;membersAbleToBuy:number;majorPurchaseCost:bigint;medianActiveWealth:bigint;typicalDailyEarnings:bigint}):MajorPurchaseAffordability=>{
+  const qualifying=Math.max(0,Math.trunc(input.qualifyingMembers)),able=Math.max(0,Math.min(qualifying,Math.trunc(input.membersAbleToBuy)));
+  const cost=input.majorPurchaseCost<0n?0n:input.majorPurchaseCost,wealth=input.medianActiveWealth<0n?0n:input.medianActiveWealth,earnings=input.typicalDailyEarnings;
+  const gap=cost>wealth?cost-wealth:0n,days=gap===0n?0n:earnings>0n?(gap+earnings-1n)/earnings:999_999n;
+  return{qualifyingMembers:qualifying,membersAbleToBuy:able,majorPurchaseCost:cost,medianActiveWealth:wealth,typicalDailyEarnings:earnings,immediatelyAffordableBps:qualifying?BigInt(able)*10_000n/BigInt(qualifying):0n,medianDaysToAfford:days};
+};
 export const tier5Interest=(eligibleBank:bigint,rateBps:bigint,benchmark:bigint,capBps=250n)=>{
   if(eligibleBank<=0n||benchmark<=0n)return 0n;
   const earned=eligibleBank*rateBps/10_000n,cap=benchmark*capBps/10_000n;
@@ -76,12 +90,12 @@ export function evaluateEconomyPolicy(current:EconomyPolicy,bounds:EconomyPolicy
   };
   // Purchase affordability below 20% is a sign to improve saving progress;
   // low spending by itself never raises prices.
-  if((m.purchaseAffordabilityBps??2500n)<2000n){
+  if((m.purchaseAffordabilityBps??2500n)<2000n||(m.medianEarningDaysToMajorPurchase??0n)>30n){
     propose('dailyClaim',current.dailyClaim*105n/100n,bounds.dailyClaim,'Major-purchase affordability is below policy target.');
     propose('weeklyClaim',current.weeklyClaim*105n/100n,bounds.weeklyClaim,'Major-purchase affordability is below policy target.');
   }
   // A persistent high issuance observation only tightens future wager exposure,
   // never contractual game odds or a settled reward.
-  if((m.recurringNetIssuance??0n)>benchmark/5n)propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Sustained recurring issuance exceeds the conservative exposure threshold.');
+  if((m.recurringNetIssuance??0n)>benchmark/5n||(m.gamblingExposureBps??0n)>5_000n)propose('maximumWagerBenchmarkBps',current.maximumWagerBenchmarkBps*95n/100n,bounds.maximumWagerBenchmarkBps,'Sustained issuance or gambling exposure exceeds the conservative policy threshold.');
   return{frozen:false,benchmark,adjustments:shadow?adjustments.map(x=>({...x,applied:x.previous})):adjustments};
 }
