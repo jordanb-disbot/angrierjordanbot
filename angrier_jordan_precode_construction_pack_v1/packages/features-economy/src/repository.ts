@@ -1,7 +1,8 @@
 import type {LedgerRepository,LedgerTransaction} from '../../core/src/index.js';
 import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,ToolRecord} from './types.js';
 export interface EconomySnapshotRecord {guildId:string;cycleKey:string;totalSupply:bigint;eligibleMemberCount:number;metrics:Record<string,unknown>;}
-export interface EconomyPolicyProposal {guildId:string;cycleKey:string;frozen:boolean;reason?:string;benchmark?:bigint;policy:Record<string,string>;bounds:Record<string,unknown>;adjustments:readonly {key:string;previous:string;proposed:string;applied:string;reason:string}[];}
+export interface EconomyPolicyProposal {guildId:string;cycleKey:string;mode?:'SHADOW'|'ACTIVE'|'PAUSED';frozen:boolean;reason?:string;benchmark?:bigint;policy:Record<string,string>;bounds:Record<string,unknown>;adjustments:readonly {key:string;previous:string;proposed:string;applied:string;reason:string}[];}
+export interface PersistedEconomyPolicy {mode:'SHADOW'|'ACTIVE'|'PAUSED';policy:Record<string,unknown>;pausedAt?:Date|null;}
 
 export type ClaimField='dailyLastClaimAt'|'weeklyLastClaimAt'|'dailySpinLastAt'|'fortuneLastAt';
 export interface ClaimCommitInput {
@@ -53,6 +54,7 @@ export interface EconomyRepository extends LedgerRepository {
   captureEconomySnapshot(input:{guildId:string;cycleKey:string}):Promise<EconomySnapshotRecord>;
   listEconomySnapshots(guildId:string,limit:number):Promise<(EconomySnapshotRecord&{rawMedianWealth:bigint;reconciliationValid:boolean;abnormalActivity:boolean})[]>;
   saveEconomyPolicyProposal(input:EconomyPolicyProposal):Promise<void>;
+  latestEconomyPolicy(guildId:string):Promise<PersistedEconomyPolicy|null>;
 }
 
 export const balancedSystemReward=(guildId:string,userId:string,amount:bigint,idempotencyKey:string,reason:string,bucket:'wallet'|'bank'='wallet',metadata?:Record<string,unknown>):LedgerTransaction=>({
