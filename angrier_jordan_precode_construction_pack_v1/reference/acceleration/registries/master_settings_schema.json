@@ -537,24 +537,6 @@
       "depends_on": []
     },
     {
-      "key": "economy.starter_ottomans",
-      "section": "economy",
-      "type": "integer",
-      "default": 500,
-      "editable_by": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restart_required": false,
-      "description": "",
-      "risk": "financial",
-      "min": 0,
-      "max": 100000,
-      "mutable": true,
-      "dashboard_write": "draft",
-      "depends_on": []
-    },
-    {
       "key": "economy.daily_base",
       "section": "economy",
       "type": "integer",

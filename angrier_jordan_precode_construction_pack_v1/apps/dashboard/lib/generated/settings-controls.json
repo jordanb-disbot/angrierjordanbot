@@ -1,5 +1,5 @@
 {
-  "count": 258,
+  "count": 257,
   "controls": [
     {
       "key": "server.timezone",
@@ -566,25 +566,6 @@
       "mutable": true,
       "dashboardWrite": "draft",
       "dependsOn": []
-    },
-    {
-      "key": "economy.starter_ottomans",
-      "section": "economy",
-      "label": "Starter Ottomans",
-      "description": "",
-      "kind": "number",
-      "defaultValue": 500,
-      "risk": "financial",
-      "editableBy": [
-        "throne",
-        "chaise_lounge"
-      ],
-      "restartRequired": false,
-      "mutable": true,
-      "dashboardWrite": "draft",
-      "dependsOn": [],
-      "min": 0,
-      "max": 100000
     },
     {
       "key": "economy.daily_base",

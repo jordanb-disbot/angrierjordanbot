@@ -31,7 +31,6 @@
   "games.one_active_public_party_round": true,
   "games.voting.hidden_totals_default": true,
   "games.voting.allow_vote_edit": true,
-  "economy.starter_ottomans": 500,
   "economy.daily_base": 250,
   "economy.weekly_base": 1500,
   "economy.bet_rake_percent": 5,
