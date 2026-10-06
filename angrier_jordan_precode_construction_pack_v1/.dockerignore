@@ -9,6 +9,8 @@
 !packages/**
 !scripts/
 !scripts/**
+!testing/
+!testing/**
 !generated/
 !generated/**
 !content/
