@@ -2,7 +2,7 @@ import {createHash} from 'node:crypto';
 import {ActionRowBuilder,AttachmentBuilder,ButtonBuilder,ButtonStyle,TextDisplayBuilder,ModalBuilder,PermissionFlagsBits,TextInputBuilder,TextInputStyle,type ButtonInteraction,type ChatInputCommandInteraction,type Client,type ModalSubmitInteraction} from 'discord.js';
 import {DeliveryEngine,DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {PrismaIntroductionsRepository,type PublishedIntroSettings,type IntroJob} from '../../../../packages/features-introductions/src/prisma-repository.js';
-import {activePrompts,introductionAnswerSheet,parseIntroductionAnswerSheet,promptPages,type IntroContext,type IntroDraft} from '../../../../packages/features-introductions/src/domain.js';
+import {activePrompts,promptPages,type IntroContext,type IntroDraft} from '../../../../packages/features-introductions/src/domain.js';
 import {renderIntroductionFields,renderIntroductionHub} from '../../../../packages/features-introductions/src/render.js';
 import {displayFrames,wideDisplay,displayNotice,createDisplay} from './wide-display.js';
 import {memberArt} from './member-art.js';
@@ -37,13 +37,13 @@ export class DiscordIntroductionsCoordinator {
   if(action==='panel'){if(!i.isButton())throw new DomainError('INTRO_CONTROL','Use the introduction panel.');const {config}=await this.repo.configuration(c.guildId);if(i.message.id!==config.panelMessageId)throw new DomainError('INTRO_PANEL','Use the current introduction panel.');const draft=await this.repo.start(c);await this.hub(i,c,draft.id);return;}
   const row=await this.repo.view(c,id);
   if(['page','create','edit'].includes(action)&&i.isButton()){
-   const input=new TextInputBuilder().setCustomId('answers').setLabel('Answer below each question; keep the headings').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(4000).setValue(introductionAnswerSheet(row.data));
-   const modal=new ModalBuilder().setCustomId(`intro:save:${id}:${row.version}:0:sheet`).setTitle('Your introduction').addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(input));
+   const prompts=promptPages(row.data.form,5)[0];if(!prompts||prompts.length>5)throw new DomainError('INTRO_PAGE','Open the current introduction form again.');
+   const fields=prompts.map(prompt=>{const label=prompt.label.length>45?prompt.label.slice(0,44)+'…':prompt.label,placeholder=prompt.placeholder??(label===prompt.label?null:prompt.label);const input=new TextInputBuilder().setCustomId(prompt.id).setLabel(label).setStyle(prompt.inputStyle==='paragraph'?TextInputStyle.Paragraph:TextInputStyle.Short).setRequired(prompt.required).setMaxLength(prompt.maxLength);if(prompt.minLength!==null)input.setMinLength(prompt.minLength);if(placeholder)input.setPlaceholder(placeholder);const saved=row.data.answers[prompt.id];if(saved)input.setValue(saved);return new ActionRowBuilder<TextInputBuilder>().addComponents(input);});
+   const modal=new ModalBuilder().setCustomId(`intro:save:${id}:${row.version}:0:fields`).setTitle('Your introduction').addComponents(...fields);
    await i.showModal(modal);return;
   }
   if(action==='save'&&i.isModalSubmit()){
-   if(layoutArg==='sheet'){await this.repo.save(c,id,Number(versionArg),0,parseIntroductionAnswerSheet(row.data.form,i.fields.getTextInputValue('answers')),100);}
-   else{const pageSize=layoutArg==='v2'?3:5,page=Number(pageArg),prompts=promptPages(row.data.form,pageSize)[page];if(!prompts)throw new DomainError('INTRO_PAGE','Open a current form page.');await this.repo.save(c,id,Number(versionArg),page,Object.fromEntries(prompts.map(p=>[p.id,i.fields.getTextInputValue(p.id)])),pageSize);}
+   const pageSize=5,page=Number(pageArg),prompts=promptPages(row.data.form,pageSize)[page];if(!prompts)throw new DomainError('INTRO_PAGE','Open a current form page.');await this.repo.save(c,id,Number(versionArg),page,Object.fromEntries(prompts.map(p=>[p.id,i.fields.getTextInputValue(p.id)])),pageSize);
    await this.hub(i,c,id);return;
   }
   if(action==='preview'&&i.isButton()){await this.repo.preview(c,id);const updated=await this.repo.view(c,id),data=updated.data;const payload=await this.cardPayload(i.client,c.guildId,c.userId,data,'intro-preview:'+id);await i.editReply({...payload,components:[...payload.components,new TextDisplayBuilder().setContent('Private preview. Nothing is published until you choose Publish.'),new ActionRowBuilder<ButtonBuilder>().addComponents(this.button('publish',id,updated.version,0,'Publish',ButtonStyle.Primary),this.button('back',id,updated.version,0,'Go Back'))]});return;}
@@ -55,7 +55,7 @@ export class DiscordIntroductionsCoordinator {
  private async hub(i:Interaction,c:IntroContext,id:string,_page?:number){
   const row=await this.repo.view(c,id),saved=await this.repo.submission(c.guildId,c.userId);
   const controls=new ActionRowBuilder<ButtonBuilder>().addComponents(this.button('create',id,row.version,0,'Create Introduction',ButtonStyle.Primary),this.button('edit',id,row.version,0,'Edit My Introduction'),this.button('preview',id,row.version,0,'Preview'));
-  const text='Private form. All questions are in one editable text area. Keep the numbered headings and answer underneath; leave optional answers blank. Answers stay private until you choose Publish.';
+  const text='Private form. Answer the five fields in your own words; leave optional answers blank. Answers stay private until you choose Publish.';
   await i.editReply(wideDisplay(await notice(saved?'Your saved introduction is ready to edit. Changes update your existing post.':'Welcome to Chairs. Tell us a little about yourself.',activePrompts(row.data.form).map(p=>p.label)),[controls],text,!i.isChatInputCommand()?i.message?.attachments?.values():undefined));
  }
  async cardPayload(client:Client,guildId:string,userId:string,draft:IntroDraft,marker:string){
