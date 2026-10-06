@@ -28,10 +28,11 @@ test('Phase 10 PostgreSQL privacy, records and Spotlight recovery',async t=>{
    await repo.message('profiles','b','msg-b',at,input);
    const members=['a','b'].map(userId=>({userId,channelId:'voice',qualified:true}));
    await repo.voice('profiles',members,at);await repo.voice('profiles',members,new Date(at.getTime()+30000));
-   await repo.freeze('profiles',new Date('2026-09-21T10:00:00Z'));
-   const restarted=new PrismaProfilesRepository(db);await restarted.freeze('profiles',new Date('2026-09-21T10:00:00Z'));
-   assert.equal(await db.weeklySpotlight.count({where:{guildId:'profiles'}}),6);assert.equal(await db.spotlightFreeze.count({where:{guildId:'profiles'}}),1);
-   for(const userId of ['a','b']){const p=await repo.profile('profiles',userId,new Date('2026-09-22T12:00:00Z'));assert.ok(p.state.tripleThreatAt);assert.equal(p.spotlight.length,3);}
+   const frozenAt=new Date('2026-09-21T10:00:00Z'),restarted=new PrismaProfilesRepository(db);
+   await Promise.all([repo,restarted,new PrismaProfilesRepository(db),new PrismaProfilesRepository(db)].map(worker=>worker.freeze('profiles',frozenAt)));
+   assert.equal(await db.weeklySpotlight.count({where:{guildId:'profiles'}}),6,'one three-category award set per co-winner');assert.equal(await db.spotlightFreeze.count({where:{guildId:'profiles'}}),1,'concurrent workers share one immutable weekly freeze');assert.equal(await db.scheduledJob.count({where:{guildId:'profiles',jobType:'spotlight.announce'}}),1,'concurrent workers schedule one announcement');assert.equal(await db.memberAchievement.count({where:{guildId:'profiles',achievementId:'spotlight.triple_threat'}}),2,'each qualifying member receives one permanent Triple Threat achievement');
+   await restarted.freeze('profiles',frozenAt);
+   for(const userId of ['a','b']){const p=await repo.profile('profiles',userId,new Date('2026-09-22T12:00:00Z'));assert.equal(p.state.tripleThreatAt?.toISOString(),frozenAt.toISOString(),'Triple Threat date is permanent across replay');assert.equal(p.spotlight.length,3);}
    assert.equal(await repo.claimAnnouncement('profiles','2026-09-14'),true);assert.equal(await restarted.claimAnnouncement('profiles','2026-09-14'),false);
    await repo.delivered('profiles','2026-09-14','discord-test-message');assert.equal((await repo.announcement('profiles','2026-09-14')).deliveryState,'SENT');
   });
