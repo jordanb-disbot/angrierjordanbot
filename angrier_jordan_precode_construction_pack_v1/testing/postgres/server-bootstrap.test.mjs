@@ -91,12 +91,10 @@ test('Server bootstrap PostgreSQL creates only a server and atomic audit across 
    const guildId=target.guildId,output=[],dependencies={guildId,db,bootstrap:repo,write:message=>output.push(message)};
    const before=await tableCounts();await runTestServer('bootstrap',dependencies);
    assert.ok(await db.guild.findUnique({where:{id:guildId}}));assert.equal(await db.configValue.count({where:{guildId}}),0);assert.equal(await db.configRevision.count({where:{guildId}}),0);
-   assert.deepEqual(await config.getWithMetadata(guildId,'music.enabled'),{value:false,source:'default',version:0});
    const bootstrapAudit=await db.auditEvent.findMany({where:{guildId}});assert.equal(bootstrapAudit.length,1);assert.equal(bootstrapAudit[0].action,'server.bootstrap.created');assert.equal(bootstrapAudit[0].source,'operator.bootstrap');
    const bootstrapped=await tableCounts();assert.deepEqual(bootstrapped,{...before,Guild:before.Guild+1,AuditEvent:before.AuditEvent+1});
    await runTestServer('bootstrap',dependencies);await runTestServer('status',dependencies);
    assert.deepEqual(await tableCounts(),bootstrapped);assert.ok(output.includes('PASS: Test server exists. EAJ Music is configured by its dedicated runtime, not a server setting.'));
-   assert.equal((await db.configValue.findUniqueOrThrow({where:{guildId_key:{guildId:ids.existing,key:'music.enabled'}}})).value,false);
   });
  }finally{
   await Promise.all([peer.$disconnect(),restarted.$disconnect()]);
