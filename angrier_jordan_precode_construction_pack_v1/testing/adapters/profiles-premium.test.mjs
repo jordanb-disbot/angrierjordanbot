@@ -51,6 +51,20 @@ test('achievement category badges are isolated square transparent assets with a 
   assert.ok(minX>=48&&minY>=48&&maxX<=463&&maxY<=463,asset.id+' keeps the complete badge inside its safe margin');
  }
 });
+test('achievement Cabinet resolves every category and prestige definition to one expected asset path',()=>{
+ const root=process.cwd(),cases=[
+  ['Chair Race','race','chair_race'],['Channel Games','channel_games','channel_games'],['Collector','collector','collector'],['Community','community','community'],['Crafting','crafting','crafting'],['Crime','crime','crime'],['Economy','economy','economy'],['Family','family','family'],['Gambling','casino','gambling'],['Music','music','music'],['Party Games','games','party_games'],['Robo Fight','fight','robo_fight'],['Social','social','social'],['Chair Historian','lore','chair_historian'],['Fully Furnished','prestige','fully_furnished'],['Legacy Honor','unknown_future_class','community']
+ ];
+ const categoryKeys=cases.slice(0,13).map(([, ,key])=>key),manifest=JSON.parse(fs.readFileSync(path.join(root,'reference/assets/final-production-visual-manifest.json'),'utf8'));
+ assert.equal(new Set(categoryKeys).size,13,'each achievement category has one distinct asset key');
+ for(const key of categoryKeys){const asset=manifest.assets.find(entry=>entry.id===`badges.achievement_category.${key}`);assert.ok(asset,`manifest key exists for ${key}`);assert.equal(fs.existsSync(path.join(root,asset.file)),true,`asset exists for ${key}`);}
+ for(const [name,achievementClass,key] of cases){
+  const expectedPath=key==='chair_historian'?'production/atomic_assets/badges/prestige/chair-historian-v1.png':key==='fully_furnished'?'production/atomic_assets/badges/prestige/fully-furnished-v1.png':`production/atomic_assets/badges/achievement_categories/${key}.png`;
+  const expected='data:image/png;base64,'+fs.readFileSync(path.join(root,expectedPath)).toString('base64');
+  const svg=renderPremiumAchievements({name:'Mapping audit',rows:[{name,class:achievementClass,earnedAt:new Date('2026-10-06')}],page:0,pages:1});
+  assert.ok(svg.includes(expected),`${name} resolves exactly to ${expectedPath}`);
+ }
+});
 test('achievement command is private, paged, and only reads the requested member cabinet',async()=>{
  const i=interaction('achievements');i.guild.members.fetch=async()=>({displayName:'Morgan',user:{id:'member',displayName:'Morgan',displayAvatarURL:()=>undefined},displayAvatarURL:()=>undefined});
  const rows=Array.from({length:10},(_,n)=>({id:'a'+n,name:'Honor '+n,class:'activity',earnedAt:n===0?new Date('2026-09-28'):null}));
