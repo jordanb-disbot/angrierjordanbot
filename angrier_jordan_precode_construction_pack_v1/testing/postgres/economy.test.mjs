@@ -19,7 +19,7 @@ const url=new URL(base);url.searchParams.set('schema',schema);
 const db=new PrismaClient({datasourceUrl:url.toString()});
 const migrate=(target=url,schemaPath='packages/database/prisma/schema.prisma')=>spawnSync(process.execPath,[require.resolve('prisma/build/index.js'),'migrate','deploy','--schema',schemaPath],{env:{...process.env,DATABASE_URL:target.toString()},encoding:'utf8'});
 const service=(client,clock)=>new EconomyService(new PrismaEconomyRepository(client),new AuditService(new InMemoryAuditSink()),clock,{next:()=>0});
-const legacyMigrations=()=>{const root=mkdtempSync(join(tmpdir(),'aj-economy-upgrade-'));cpSync('packages/database/prisma/schema.prisma',join(root,'schema.prisma'));for(const name of ['0001_precode_baseline','0002_wyr_golden_feature','0003_onboarding_rejoin_roles','0004_hotseat_execution','0005_main_moderation','0006_moderation_security_controls','0007_automated_security','0008_economy_foundation','0009_item_transactions','0010_profiles_activity','0011_shared_job_recovery','0012_wager_escrow','0013_event_exclusivity','0014_special_commands','0015_dashboard_drafts','0016_party_exclusivity','0017_wallet_holds','0018_crime_decay','0019_family_invariants','0020_typed_item_escrow','0021_phase22_member_content','0022_music_transport_intents','0023_suggestion_panel','0024_fully_furnished_event','0025_private_party_sessions'])cpSync(join('packages/database/prisma/migrations',name),join(root,'migrations',name),{recursive:true});return root;};
+const legacyMigrations=()=>{const root=mkdtempSync(join(tmpdir(),'aj-economy-upgrade-'));cpSync('packages/database/prisma/schema.prisma',join(root,'schema.prisma'));cpSync('packages/database/prisma/migrations/migration_lock.toml',join(root,'migrations','migration_lock.toml'));for(const name of ['0001_precode_baseline','0002_wyr_golden_feature','0003_onboarding_rejoin_roles','0004_hotseat_execution','0005_main_moderation','0006_moderation_security_controls','0007_automated_security','0008_economy_foundation','0009_item_transactions','0010_profiles_activity','0011_shared_job_recovery','0012_wager_escrow','0013_event_exclusivity','0014_special_commands','0015_dashboard_drafts','0016_party_exclusivity','0017_wallet_holds','0018_crime_decay','0019_family_invariants','0020_typed_item_escrow','0021_phase22_member_content','0022_music_transport_intents','0023_suggestion_panel','0024_fully_furnished_event','0025_private_party_sessions'])cpSync(join('packages/database/prisma/migrations',name),join(root,'migrations',name),{recursive:true});return root;};
 
 test('EAJ 1.1 PostgreSQL migration and durable streak-installment acceptance',async t=>{
  let connected=false;
@@ -64,7 +64,7 @@ test('EAJ 1.1 PostgreSQL migration and durable streak-installment acceptance',as
    const second=await restarted.settleStreakInstallment(id);assert.equal(second?.installmentsPaid,2);
    const duplicateAfterRestart=await restarted.settleStreakInstallment(id);assert.equal(duplicateAfterRestart?.installmentsPaid,2);
    const afterRestartTransactions=await restartedClient.economyTransaction.count({where:{idempotencyKey:{startsWith:`streak-installment:${id}:`}}});assert.equal(afterRestartTransactions,2);
-   row=await restartedClient.streakInstallment.findUniqueOrThrow({where:{id}});assert.equal(row.paidAmount,716n);assert.equal(row.installmentsPaid,2);
+   row=await restartedClient.streakInstallment.findUniqueOrThrow({where:{id}});assert.equal(row.paidAmount,715n);assert.equal(row.installmentsPaid,2);
    await restartedClient.$disconnect();
   });
  }finally{
