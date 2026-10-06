@@ -51,6 +51,13 @@ test('EAJ 1.1 PostgreSQL migration and durable streak-installment acceptance',as
    const after=await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'economy',userId:'keeper'}}});
    assert.equal(after.wallet,before.account.wallet);assert.equal(await db.ledgerEntry.count({where:{guildId:'economy'}}),before.entries);assert.equal(await db.toolInstance.count({where:{guildId:'economy',userId:'keeper'}}),before.tools);assert.equal(await db.marriage.count({where:{guildId:'economy'}}),before.marriages);
   });
+  await t.test('Daily Fortune history commits atomically and a replay does not add a second selection',async()=>{
+   const now=new Date('2026-10-06T12:00:00Z'),repo=new PrismaEconomyRepository(db),worker=new EconomyService(repo,new AuditService(new InMemoryAuditSink()),new FixedClock(now),{next:()=>0},[{id:'FORTUNE-0001',text:'The chair approves.',enabled:true},{id:'FORTUNE-0002',text:'The chair remembers.',enabled:true}]);
+   const input={guildId:'economy',userId:'fortune-owner',idempotencyKey:'fortune:receipt'};
+   const first=await worker.fortuneDaily(input);assert.equal(first.status,'applied');assert.equal(first.fortune?.id,'FORTUNE-0001');
+   const replay=await worker.fortuneDaily(input);assert.equal(replay.status,'duplicate');
+   const history=await db.fortuneClaim.findMany({where:{guildId:'economy',userId:'fortune-owner'},orderBy:{claimedAt:'desc'}});assert.deepEqual(history.map(row=>row.fortuneId),['FORTUNE-0001']);assert.deepEqual(await repo.recentFortuneIds('economy','fortune-owner',50),['FORTUNE-0001']);
+  });
   await t.test('ordinary economy audits are atomic, populated, and replay-safe',async()=>{
    const now=new Date('2026-10-06T12:00:00Z'),repo=new PrismaEconomyRepository(db),worker=service(db,new FixedClock(now));
    const claim=await repo.commitClaim({guildId:'economy',userId:'audit-owner',claimField:'dailyLastClaimAt',cycleStart:new Date('2026-10-06T10:00:00Z'),now,idempotencyKey:'audit:daily',kind:'DAILY_CLAIM',reason:'Daily claim',walletReward:100n,dailyStreak:1,metadata:{cycleKey:'2026-10-06'}});

@@ -7,7 +7,7 @@ export interface PersistedEconomyPolicy {mode:'SHADOW'|'ACTIVE'|'PAUSED';policy:
 export type ClaimField='dailyLastClaimAt'|'weeklyLastClaimAt'|'dailySpinLastAt'|'fortuneLastAt';
 export interface ClaimCommitInput {
   guildId:string;userId:string;claimField:ClaimField;cycleStart:Date;now:Date;idempotencyKey:string;kind:string;reason:string;
-  walletReward:bigint;items?:readonly InventoryGrant[];dailyStreak?:number;metadata?:Record<string,unknown>;streakInstallment?:{totalAmount:bigint;installmentCount:number;firstDueAt:Date};
+  walletReward:bigint;items?:readonly InventoryGrant[];dailyStreak?:number;fortuneId?:string;metadata?:Record<string,unknown>;streakInstallment?:{totalAmount:bigint;installmentCount:number;firstDueAt:Date};
 }
 export interface ClaimCommitResult {status:'applied'|'already_used'|'duplicate';account:EconomyAccountRecord;state:MemberClaimStateRecord;inventory:InventoryEntryRecord[];transaction?:EconomyTransactionRecord;streakInstallment?:StreakInstallmentRecord;}
 export interface ActivityCommitInput {
@@ -35,6 +35,7 @@ export interface EconomyRepository extends LedgerRepository {
   getTransactionByIdempotencyKey(key:string):Promise<EconomyTransactionRecord|null>;
   listLedgerEntries(guildId:string,userId:string,limit:number):Promise<EconomyLedgerEntryRecord[]>;
   getClaimState(guildId:string,userId:string):Promise<MemberClaimStateRecord>;
+  recentFortuneIds(guildId:string,userId:string,limit:number):Promise<readonly string[]>;
   commitClaim(input:ClaimCommitInput):Promise<ClaimCommitResult>;
   getStreakInstallment(id:string):Promise<StreakInstallmentRecord|null>;
   advanceStreakInstallment(input:{id:string;paidAmount:bigint;now:Date;expectedInstallmentsPaid?:number}):Promise<StreakInstallmentRecord|null>;

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {AuditService,DomainError,FixedClock,InMemoryAuditSink} from '../../.test-build/packages/core/src/index.js';
 import {cappedActivityPayout,DEFAULT_AUTOMATED_ECONOMY_BOUNDS,DEFAULT_AUTOMATED_ECONOMY_POLICY,dailyCycle,evaluateEconomyPolicy,EconomyService,guardSystemReward,InMemoryEconomyRepository,majorPurchaseAffordability,materializePolicy,nextEconomySnapshot,qualifiedActiveMemberIds,reconcileEconomy,shadowReady,smoothedBenchmark,supplyReconciles,tier5Interest,voicePayoutBand} from '../../.test-build/packages/features-economy/src/index.js';
 
@@ -12,6 +13,8 @@ const tiers=[
   {tier:5,cap:null,upgradeCost:0n},
 ];
 const make=(at='2026-09-21T18:00:00Z',random=[0])=>{const clock=new FixedClock(new Date(at));const repo=new InMemoryEconomyRepository([{id:'loot',type:'sellable',name:'Loot',rarity:'common',giftable:true,enabled:true}]);const audit=new AuditService(new InMemoryAuditSink());const service=new EconomyService(repo,audit,clock,new SequenceRandom(random),[{id:'f1',text:'The chair knows.'}]);return{clock,repo,service};};
+
+test('private Fortune bank contains at least 500 uniquely-addressable enabled entries',()=>{const fortunes=JSON.parse(readFileSync(new URL('../../packages/content/economy/fortune_300.json',import.meta.url),'utf8'));assert.ok(fortunes.length>=500);assert.equal(new Set(fortunes.map(fortune=>fortune.id)).size,fortunes.length);assert.ok(fortunes.every(fortune=>fortune.enabled&&fortune.text.trim()));});
 
 test('reward guardrail stays inert until enabled and then reduces or caps future rewards',()=>{
   const off={enabled:false,multiplierBps:2_500,maxSingleReward:100n};
@@ -46,6 +49,14 @@ test('qualified chat awards are throttle-, cap-, and retry-safe with the sampled
 test('voice earnings settle two qualifying hours at full rate, then one at half, then stop',async()=>{const {service}=make('2026-09-21T12:00:00Z',[0]);const first=await service.awardQualifiedVoice({guildId:'g',userId:'u',idempotencyKey:'voice-1',qualifiedSeconds:10_800,dailyCap:1_000n,fullRange:[100n,100n],halfRange:[50n,50n]});const later=await service.awardQualifiedVoice({guildId:'g',userId:'u',idempotencyKey:'voice-2',qualifiedSeconds:3_600,dailyCap:1_000n,fullRange:[100n,100n],halfRange:[50n,50n]});assert.equal(first.reward,250n);assert.equal(later.status,'capped');assert.equal((await service.account('g','u')).wallet,250n);});
 
 test('daily claim, spin, and fortune are independent one-use actions in the same cycle',async()=>{const {service}=make();const d=await service.claimDaily({guildId:'g',userId:'u',idempotencyKey:'d',baseReward:10n,milestones:{}});const s=await service.spinDaily({guildId:'g',userId:'u',idempotencyKey:'s',table:[{kind:'ottomans',weight:1,amount:20n}]});const f=await service.fortuneDaily({guildId:'g',userId:'u',idempotencyKey:'f'});assert.equal(d.status,'applied');assert.equal(s.status,'applied');assert.equal(f.status,'applied');assert.equal((await service.dailyHub('g','u')).dailyReady,false);assert.equal((await service.dailyHub('g','u')).spinReady,false);assert.equal((await service.dailyHub('g','u')).fortuneReady,false);assert.equal((await service.spinDaily({guildId:'g',userId:'u',idempotencyKey:'s2',table:[{kind:'ottomans',weight:1,amount:20n}]})).status,'already_used');});
+
+test('private fortunes persist selections, avoid fifty prior fortunes, and never reroll a replay',async()=>{
+  const clock=new FixedClock(new Date('2026-09-21T18:00:00Z')),repo=new InMemoryEconomyRepository(),fortunes=Array.from({length:51},(_,index)=>({id:`FORTUNE-${String(index+1).padStart(4,'0')}`,text:`Fortune ${index+1}`,enabled:true}));
+  const service=new EconomyService(repo,new AuditService(new InMemoryAuditSink()),clock,new SequenceRandom(),fortunes),seen=[];
+  for(let index=0;index<51;index++){const result=await service.fortuneDaily({guildId:'g',userId:'u',idempotencyKey:`fortune-${index}`});assert.equal(result.status,'applied');seen.push(result.fortune.id);clock.advanceMs(24*3600_000);}
+  assert.equal(new Set(seen).size,51);assert.deepEqual(await repo.recentFortuneIds('g','u',50),seen.slice(1).reverse());
+  const replay=await service.fortuneDaily({guildId:'g',userId:'u',idempotencyKey:'fortune-50'});assert.equal(replay.status,'duplicate');assert.equal(repo.fortuneClaims.length,51);
+});
 
 test('4 AM Mountain daily boundary follows daylight-saving offset',()=>{const before=dailyCycle(new Date('2026-07-01T09:59:59Z'));const after=dailyCycle(new Date('2026-07-01T10:00:01Z'));assert.equal(before.key,'2026-06-30');assert.equal(after.key,'2026-07-01');assert.equal(after.start.toISOString(),'2026-07-01T10:00:00.000Z');const winter=dailyCycle(new Date('2026-01-15T11:00:01Z'));assert.equal(winter.start.toISOString(),'2026-01-15T11:00:00.000Z');});
 test('economy snapshots schedule at the next 4 AM Mountain boundary through DST',()=>{assert.equal(nextEconomySnapshot(new Date('2026-07-01T09:59:59Z')).toISOString(),'2026-07-01T10:00:00.000Z');assert.equal(nextEconomySnapshot(new Date('2026-01-15T11:00:01Z')).toISOString(),'2026-01-16T11:00:00.000Z');});

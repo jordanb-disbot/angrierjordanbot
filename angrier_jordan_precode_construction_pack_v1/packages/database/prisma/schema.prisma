@@ -843,6 +843,19 @@ model MemberClaimState {
   @@id([guildId,userId])
 }
 
+/// Durable per-member Fortune history.  Daily claim state prevents a second
+/// reveal in a cycle; this table prevents a previously revealed fortune from
+/// returning until the configured history window has cleared.
+model FortuneClaim {
+  id String @id @default(cuid())
+  guildId String
+  userId String
+  fortuneId String
+  claimedAt DateTime @default(now())
+  @@index([guildId,userId,claimedAt])
+  @@index([guildId,userId,fortuneId])
+}
+
 model EconomyActivityStat {
   guildId String
   userId String
