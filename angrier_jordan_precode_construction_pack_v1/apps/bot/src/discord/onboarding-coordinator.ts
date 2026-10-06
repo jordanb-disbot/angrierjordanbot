@@ -10,9 +10,8 @@ import {renderOnboarding,renderRoleSelectionCard,rulesSections,type GuidanceSect
 import {displayFrames,wideDisplay,frameGallery,type DisplayFrame} from './wide-display.js';
 
 const rules=JSON.parse(readFileSync(new URL('../../../../packages/content/onboarding/rules.json',import.meta.url),'utf8')) as {title:string;sections:GuidanceSection[]};
-let rulesArt:Promise<DisplayFrame[]>|undefined;
 let rolesArt:Promise<DisplayFrame[]>|undefined;
-function rulesImages(){return rulesArt??=Promise.all(rules.sections.flatMap((section,sectionIndex)=>rulesSections(section.body).map((page,index,pages)=>displayFrames(renderOnboarding(rules.title,'Our shared space · read before acknowledging',[{title:section.title+(pages.length>1?` · ${index+1}/${pages.length}`:''),body:page[0]!.body}]),'chairs-rules-'+sectionIndex+'-'+index,rules.title+' · '+section.title)))).then(pages=>pages.flat()).catch(error=>{rulesArt=undefined;throw error;});}
+const rulePages=rules.sections.flatMap(section=>rulesSections(section.body).map((page,index,pages)=>({title:section.title+(pages.length>1?' · '+(index+1)+'/'+pages.length:''),body:page[0]!.body})));
 
 const roleId=async(config:ConfigService,guildId:string,key:string):Promise<string|null>=>{
   const value=await config.get(guildId,key);return typeof value==='string'&&value?value:null;
@@ -91,9 +90,24 @@ export class DiscordOnboardingCoordinator {
   async handleRulesCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
     await interaction.deferReply({ephemeral:true});
-    const images=await rulesImages();
-    const ack=new ButtonBuilder().setCustomId('onboard:ack_rules').setLabel('Acknowledge Rules').setStyle(ButtonStyle.Success);
-    await interaction.editReply(wideDisplay(images,[new ActionRowBuilder<ButtonBuilder>().addComponents(ack)]));
+    await interaction.editReply(this.rulesPage(0));
+  }
+
+  async handleRulesPage(interaction:ButtonInteraction):Promise<void>{
+    const page=Number(interaction.customId.split(':')[2]);
+    if(!Number.isInteger(page)||page<0||page>=rulePages.length){await interaction.reply({ephemeral:true,content:'That rules page is no longer available. Reopen /rules.'});return;}
+    await interaction.deferUpdate();
+    await interaction.editReply(this.rulesPage(page));
+  }
+
+  private rulesPage(page:number){
+    const current=rulePages[page]!;
+    const navigation=new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder().setCustomId('rules:page:'+(page-1)).setLabel('Previous').setStyle(ButtonStyle.Secondary).setDisabled(page===0),
+      new ButtonBuilder().setCustomId('rules:page:'+(page+1)).setLabel('Next').setStyle(ButtonStyle.Secondary).setDisabled(page===rulePages.length-1),
+      new ButtonBuilder().setCustomId('onboard:ack_rules').setLabel('Acknowledge Rules').setStyle(ButtonStyle.Success),
+    );
+    return {content:'## '+rules.title+'\n### '+current.title+'\n\n'+current.body+'\n\n*Section '+(page+1)+' of '+rulePages.length+'*',components:[navigation],allowedMentions:{parse:[] as never[]}};
   }
 
   async handleRulesAck(interaction:ButtonInteraction):Promise<void>{

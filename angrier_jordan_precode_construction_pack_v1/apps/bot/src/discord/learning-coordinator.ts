@@ -14,15 +14,15 @@ const pathModules:Record<string,string[]>={discord:['core'],start:['onboarding',
 const flagKeys:Record<string,string>={profile:'features.profiles',economy:'features.learning',roles:'roles_panel.enabled',jail:'features.learning',moderation:'features.learning',security:'features.learning',tutorial:'features.learning',lore:'features.lore',core:'features.learning'};
 const EAJ_MUSIC_COMMANDS=['/play · choose a track','/pause · /resume · /skip · /stop','/queue · /nowplaying · /volume','/loop · /shuffle · /seek · /lyrics','/playlist · save and manage playlists','/musicpanel · create a controller','/setdj · /restrictchannels · /247'];
 const EAJ_MUSIC_TUTORIAL='EAJ MUSIC\n\nJoin the voice channel where you want to listen, then use /play and choose a track. Use /queue to see what is next and /nowplaying to see the current track.\n\nCONTROL\n/pause and /resume control playback. /skip advances, /stop ends the session, and /volume changes the listening level. /loop and /shuffle adjust the queue.\n\nSETUP\nServer staff can use /musicpanel to post a controller, /setdj to choose DJ access, and /restrictchannels to limit where EAJ Music can be used.\n\nEAJ Music is a separate bot. Its controls do not change Angrier Jordan settings, achievements, or economy.';
-export interface HelpDirectoryCategory {label:string;commands:ReadonlyArray<Pick<CommandContract,'registered'>>}
+export interface HelpDirectoryCategory {label:string;commands:ReadonlyArray<{registered:string;description?:string}>}
 /** Whole categories remain together after existing authority/feature filtering. Empty topic pages disappear. */
 export function helpDirectoryPages(commands:readonly CommandContract[]):HelpDirectoryCategory[][]{
  const topics=[['core','community','chairisms','introductions','roles','lore'],['economy','items','crime','family','collections'],['casino','solo_games','party_games','pvp','fight','race','line'],['profile','records','social','special_commands','tutorial','privacy','moderation','jail','security','custom_commands','bootstrap','dashboard']];
  const labels:Record<string,string>={core:'Core',community:'Community',chairisms:'Chairisms',introductions:'Introductions',roles:'Roles',lore:'Lore',economy:'Economy',items:'Items',crime:'Crime',family:'Family',collections:'Collections',casino:'Casino',solo_games:'Solo games',party_games:'Party games',pvp:'PvP games',fight:'Fight',profile:'Profile',records:'Records',social:'Social',special_commands:'Special Commands',tutorial:'Tutorial',privacy:'Privacy',moderation:'Staff moderation',jail:'Jail & restrictions',security:'Staff safety',custom_commands:'Custom Commands',bootstrap:'Server setup',dashboard:'Server management'};
- const known=new Set(topics.flat());topics[4]!.push(...[...new Set(commands.map(c=>c.module))].filter(m=>!known.has(m)).sort());
+ const known=new Set(topics.flat()),extra=[...new Set(commands.map(c=>c.module))].filter(m=>!known.has(m)).sort();if(extra.length)topics.push(extra);
  const pages:HelpDirectoryCategory[][]=topics.map(modules=>modules.flatMap<HelpDirectoryCategory>(module=>{const rows=commands.filter(c=>c.module===module).sort((a,b)=>a.registered.localeCompare(b.registered));return rows.length?[{label:labels[module]??module.replaceAll('_',' '),commands:rows}]:[];})).filter(page=>page.length);
  const games=pages.find(page=>page.some(group=>group.label==='Casino'));
- if(games)games.push({label:'EAJ Music',commands:EAJ_MUSIC_COMMANDS.map(registered=>({registered}))});
+ if(games)games.push({label:'EAJ Music',commands:EAJ_MUSIC_COMMANDS.map(registered=>({registered,description:'EAJ Music controls are handled by the separate music bot.'}))});
  return pages.length?pages:[[]];
 }
 export class DiscordLearningCoordinator {
@@ -45,6 +45,9 @@ export class DiscordLearningCoordinator {
   let art=this.artwork.get(name);if(!art){art=displayFrames(svg,name,title+'. '+copy).catch(error=>{this.artwork.delete(name);throw error;});this.artwork.set(name,art);if(this.artwork.size>32)this.artwork.delete(this.artwork.keys().next().value!);}
   await i.editReply(wideDisplay(await art,components,undefined,!i.isChatInputCommand()?i.message?.attachments?.values():undefined));
  }
+ private async native(i:Interaction,content:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[]){
+  await i.editReply({content,components,allowedMentions:{parse:[]}});
+ }
  async handle(i:Interaction){try{
   if(!i.guildId||!i.guild)throw new DomainError('SERVER_ONLY','Use this in the server.');
   const parts=i.isChatInputCommand()?[]:i.customId.split(':'),kind=i.isChatInputCommand()?i.commandName:parts[1];if(parts.length&&parts[2]!==i.user.id)throw new DomainError('LEARNING_OWNER','Open your own private window.');
@@ -55,9 +58,9 @@ export class DiscordLearningCoordinator {
   if(kind==='lore'){
    const chapters=await this.repo.chapters(),progress=await this.repo.loreProgress(i.guildId,i.user.id);
    const selected=i.isStringSelectMenu()?i.values[0]:parts[3];
-   if(!selected||selected==='toc'){const ready=chapters.map(c=>({label:c.title,value:c.id,description:progress.some(p=>p.chapterId===c.id&&p.contentVersion===c.version&&p.completedAt)?'Read · open again':'Read or resume'}));await this.window(i,'The Story So Far',ready.length?'Choose a chapter. Your reading progress is private and saved.':'The approved chapters have not been published yet. No reading credit has been awarded.',ready.length?[new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId('learn:lore:'+i.user.id+':select').setPlaceholder('Read the lore').addOptions(ready))]:[]);return;}
+   if(!selected||selected==='toc'){const ready=chapters.map(c=>({label:c.title,value:c.id,description:progress.some(p=>p.chapterId===c.id&&p.contentVersion===c.version&&p.completedAt)?'Read · open again':'Read or resume'}));await this.native(i,'## The Story So Far\n\n'+(ready.length?'Choose a chapter. Your reading progress is private and saved.':'The approved chapters have not been published yet. No reading credit has been awarded.'),ready.length?[new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId('learn:lore:'+i.user.id+':select').setPlaceholder('Read the lore').addOptions(ready))]:[]);return;}
    const chapter=chapters.find(c=>c.id===selected);if(!chapter)throw new DomainError('LORE_MISSING','That chapter is unavailable.');const old=progress.find(p=>p.chapterId===chapter.id&&p.contentVersion===chapter.version);const page=i.isStringSelectMenu()?old?.currentPage??0:Number(parts[4]??0);const version=i.isStringSelectMenu()?chapter.version:Number(parts[5]);validateReadingPage(page,chapter,old?.currentPage??-1);if(version!==chapter.version)throw new DomainError('LORE_VERSION','This chapter changed. Reopen Lore.');
-   await this.window(i,chapter.title,chapter.pages[page]+'\n\nPage '+(page+1)+' of '+chapter.pages.length,[buttons([{id:`learn:lore:${i.user.id}:${chapter.id}:${page-1}:${chapter.version}`,label:'Previous',disabled:page===0},{id:`learn:lore:${i.user.id}:${chapter.id}:${page+1}:${chapter.version}`,label:'Next',disabled:page===chapter.pages.length-1},{id:`learn:lore:${i.user.id}:toc`,label:'Contents'},{id:`learn:lore:${i.user.id}:exit`,label:'Dismiss'}])]);const result=await this.repo.read(i.guildId,i.user.id,chapter.id,page,version,i.id);if(page===chapter.pages.length-1)await this.onLoreChapter?.(i.guildId,i.user.id,chapter.id);if(result.newlyAwarded)await i.followUp({ephemeral:true,content:'Chair Historian · earned. Your reading progress is saved.',allowedMentions:{parse:[]}});return;
+   await this.native(i,'## '+chapter.title+'\n\n'+chapter.pages[page]+'\n\n*Page '+(page+1)+' of '+chapter.pages.length+'*',[buttons([{id:`learn:lore:${i.user.id}:${chapter.id}:${page-1}:${chapter.version}`,label:'Previous',disabled:page===0},{id:`learn:lore:${i.user.id}:${chapter.id}:${page+1}:${chapter.version}`,label:'Next',disabled:page===chapter.pages.length-1},{id:`learn:lore:${i.user.id}:toc`,label:'Contents'},{id:`learn:lore:${i.user.id}:exit`,label:'Dismiss'}])]);const result=await this.repo.read(i.guildId,i.user.id,chapter.id,page,version,i.id);if(page===chapter.pages.length-1)await this.onLoreChapter?.(i.guildId,i.user.id,chapter.id);if(result.newlyAwarded)await i.followUp({ephemeral:true,content:'Chair Historian · earned. Your reading progress is saved.',allowedMentions:{parse:[]}});return;
   }
   if(kind==='tldr'){const sub=i.isChatInputCommand()?i.options.getSubcommand():'',time=i.isChatInputCommand()?i.options.getString('time',true):'',duration=tldrDuration(sub,time),channel=await this.config.get(i.guildId,sub==='chat'?'channels.main_chat':'channels.bot_channel');if(i.channelId!==channel)throw new DomainError('TLDR_CHANNEL',typeof channel==='string'?`Use this recap in <#${channel}>.`:'The recap channel is not configured.');const until=new Date(),since=new Date(until.getTime()-duration);
    if(sub==='events'){const events=await this.repo.notableEvents(i.guildId,since,until),labels:Record<string,string>={'record.announce':'record announcements','spotlight.announce':'Weekly Spotlight announcements','casino.jackpot_announce':'Chair Pot announcements','lottery.announce':'lottery announcements','family.publish':'Family announcements'},counts=new Map<string,number>();for(const e of events)counts.set(e.jobType,(counts.get(e.jobType)??0)+1);await this.window(i,'Event activity snapshot','EVENT COUNTS · '+time+'\nConfirmed server announcements in this window.\n\n'+([...counts].map(([k,n])=>n+' '+labels[k]).join('\n')||'No announcements in this window.')+(events.length===100?'\nLimited to the latest 100.':''));return;}
@@ -69,10 +72,16 @@ export class DiscordLearningCoordinator {
   if(kind==='help'){
    const id=i.isChatInputCommand()?i.options.getString('command'):parts[3],command=commands.find(c=>c.id===id||c.registered===id);
    if(command){await this.repo.tutorialStep(i.guildId,i.user.id,command.id,0,i.id);await this.lesson(i,command,0,true);return;}
-   const page=id==='directory'?Number(parts[4]):0,directory=helpDirectoryPages(commands),pages=directory.length;
-   if(!Number.isInteger(page)||page<0||page>=pages)throw new DomainError('HELP_PAGE','Reopen Help to browse available commands.');
-   const groups=new Map(directory[page]!.map(group=>[group.label.toUpperCase(),group.commands.map(c=>c.registered)]));
-   await this.window(i,'Your command directory',[...groups].map(([label,names])=>label+'\n'+names.join('  ·  ')).join('\n\n')+'\n\nSearch with /help command. Page '+(page+1)+' of '+pages,[buttons([{id:'learn:help:'+i.user.id+':directory:'+(page-1),label:'Previous',disabled:page===0},{id:'learn:help:'+i.user.id+':directory:'+(page+1),label:'Next',disabled:page===pages-1}])]);return;
+   const categories=helpDirectoryPages(commands).flat();
+   const chosen=i.isStringSelectMenu()?i.values[0]:id;
+   if(!chosen||chosen==='directory'){
+    const options=categories.slice(0,25).map((group,index)=>({label:group.label,value:String(index),description:group.commands.length+' available command'+(group.commands.length===1?'':'s')}));
+    await this.window(i,'Help at Your Seat','Choose a category below to see concise guidance for commands you can use. Your permissions still apply.',[new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId('learn:help:'+i.user.id+':category').setPlaceholder('Choose a help category').addOptions(options))]);return;
+   }
+   const group=categories[Number(chosen)];
+   if(!group)throw new DomainError('HELP_PAGE','Reopen Help to browse available commands.');
+   const card=group.commands.map(c=>c.registered+' — '+(c.description||'Open this command for its available controls.')).join('\n');
+   await this.window(i,'Help · '+group.label,card,[buttons([{id:'learn:help:'+i.user.id+':directory',label:'All categories'}])]);return;
   }
   const lessonCommands=commands.filter(hasAuthoredLesson);
   const action=parts[3];

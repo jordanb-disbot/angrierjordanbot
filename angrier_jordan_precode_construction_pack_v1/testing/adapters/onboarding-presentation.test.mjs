@@ -11,8 +11,8 @@ test('Rules display owner-authored policy with early acknowledgement and no auto
  const calls=[],i={guildId:'g',deferReply:async p=>calls.push(['ack',p]),editReply:async p=>calls.push(['edit',p])};
  await new DiscordOnboardingCoordinator({},config).handleRulesCommand(i);
  assert.equal(calls[0][0],'ack');assert.equal(calls[0][1].ephemeral,true);
- const p=calls.at(-1)[1];assert.ok(p.files.length>1&&p.files.length<=10);assert.equal(p.embeds.length,0);assert.equal(p.components.filter(c=>c.toJSON().type===12).length,p.files.length);
- assert.equal(p.components.find(c=>c.toJSON().type===1).toJSON().components[0].custom_id,'onboard:ack_rules');assert.equal(p.content,null);
+ const p=calls.at(-1)[1];assert.equal(p.files,undefined);assert.match(p.content,/## Chairs Rules/);assert.match(p.content,/Section 1 of/);
+ const controls=p.components[0].toJSON().components;assert.equal(controls.at(-1).custom_id,'onboard:ack_rules');assert.equal(controls[1].custom_id,'rules:page:1');
  for(const section of rules.sections){const pages=rulesSections(section.body);assert.ok(pages.length);for(const page of pages){const svg=renderOnboarding(rules.title,'Read before acknowledging',page);assert.match(svg,/width="1200"/);assert.match(svg,/Inter/);assert.match(svg,/Space Grotesk/);assert.doesNotMatch(svg,/intro:|onboard:/);}}
  assert.match(rules.sections[0].body,/No DOC judgement/);assert.match(rules.sections[1].body,/no needles or IV/);assert.match(rules.sections[2].body,/Server removal/);
 });

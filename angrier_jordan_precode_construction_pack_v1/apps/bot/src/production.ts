@@ -453,9 +453,9 @@ export async function startProductionBot():Promise<void>{
         const command=interaction.isChatInputCommand()?interaction.commandName:undefined;
         const subcommand=interaction.isChatInputCommand()?interaction.options.getSubcommand(false)??undefined:undefined;
         const component='customId' in interaction?interaction.customId:undefined;
-        const moderationSafe=component==='onboard:ack_rules'||command==='rules'||command==='help'||(command==='jail'&&(subcommand==='status'||subcommand==='reason'));
+        const moderationSafe=component==='onboard:ack_rules'||component?.startsWith('rules:page:')||command==='rules'||command==='help'||(command==='jail'&&(subcommand==='status'||subcommand==='reason'));
         if(!moderationSafe&&await jail.isModerationJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are currently in moderation Hotseat. Only jail-safe commands are available until release.');return;}
-        if(command!=='rules'&&component!=='onboard:ack_rules'&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are in crime jail. Use /crime bail, or ask another member to pay your bail.');return;}
+        if(command!=='rules'&&component!=='onboard:ack_rules'&&!component?.startsWith('rules:page:')&&!isCrimeBailRequest(command,subcommand,component)&&await crimeRepo.isJailed(interaction.guildId,interaction.user.id)){await replyDailyRestriction(interaction,'You are in crime jail. Use /crime bail, or ask another member to pay your bail.');return;}
       }
       if((interaction.isChatInputCommand()&&SOCIAL_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('social:'))){if(!enableSocialSmoke){await interaction.reply({ephemeral:true,content:'Social features are not enabled yet.'});return;}await social.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;}
       if((interaction.isChatInputCommand()&&INTRODUCTION_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('intro:'))){if(!enableIntroductionsSmoke){await interaction.reply({ephemeral:true,content:'Introductions are not enabled yet.'});return;}await introductions.handle(interaction);return;}
@@ -534,6 +534,7 @@ export async function startProductionBot():Promise<void>{
       if(enableModerationSmoke&&interaction.isButton()&&interaction.customId.startsWith('moderation:review:')){await moderation.handleReviewButton(interaction);return;}
       if(enableModerationSmoke&&interaction.isButton()&&interaction.customId.startsWith('moderation:appeal:')){await moderation.handleAppealButton(interaction);return;}
       if(enableModerationSmoke&&interaction.isModalSubmit()&&interaction.customId.startsWith('moderation:appeal_submit:')){await moderation.handleAppealModal(interaction);return;}
+      if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId.startsWith('rules:page:')){await onboarding.handleRulesPage(interaction);return;}
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='onboard:ack_rules'){await onboarding.handleRulesAck(interaction);if(enableJailSmoke&&interaction.guildId)await jail.reconcileMember(interaction.guildId,interaction.user.id);if(enableSecuritySmoke&&interaction.guild){const member=await interaction.guild.members.fetch(interaction.user.id);await security.enforceAfterRulesAck(member,interaction);}return;}
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='roles:panel:open'){await onboarding.handleRolePanelOpen(interaction);return;}
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId.startsWith('roles:card:edit:')){await onboarding.handleRoleCardEdit(interaction);return;}

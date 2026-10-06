@@ -6,9 +6,14 @@ function plate(label:string,value:string,x:number,y:number,width:number){const h
 /** Distinct deterministic compositions share the approved lounge, owner-requested wine, and brass trim. */
 export function learningWindow(title:string,copy:string){
  const width=1200,heading=prose(title,38,105,1124,44),top=112+heading.height;
+ const accent=title.startsWith('Help · ')?['#00B8B0','#B66AE3','#D3A94D','#6E9FE8'][[...title].reduce((n,c)=>n+c.charCodeAt(0),0)%4]! : brass;
  let body=text(38,48,'ANGRIER JORDAN · LEARN & BELONG',20,brass,'letter-spacing="2" font-weight="600"')+`<g font-family="Space Grotesk">${heading.svg}</g>`,y=top;
  const blocks=copy.split(/\n\s*\n/).filter(Boolean);
- if(title==='Your command directory'){
+ if(title==='Show Me Around'){
+  // Keep the launch card in one gallery frame. The former full-size plates crossed
+  // Discord's frame boundary and appeared as two disconnected cards.
+  for(const block of blocks){const [label,...rest]=block.split('\n'),value=rest.join('\n'),head=prose(label!,52,y+34,1096,23,brass),bodyText=prose(value,52,y+head.height+61,1096,29,cream),h=head.height+bodyText.height+78;body+=`<g data-layout="tutorial-launch-row">${panel(24,y,1152,h,brass)}${head.svg}${bodyText.svg}</g>`;y+=h+12;}
+ }else if(title==='Your command directory'){
   const footer=blocks.at(-1)?.startsWith('Search with ')?blocks.pop():undefined;
   const columns=[y,y];
   for(const block of blocks){const [label,...rows]=block.split('\n'),commands=rows.join('\n').split('  ·  ').flatMap(v=>v.split('\n')).filter(Boolean),wide=commands.length>10;
@@ -34,5 +39,5 @@ export function learningWindow(title:string,copy:string){
  body+=`<path d="M54 ${y+5}H465M735 ${y+5}H1146" stroke="${brass}" stroke-opacity=".5"/>${text(600,y+13,'SIT. PLAY. BELONG.',21,brass,'text-anchor="middle" letter-spacing="2"')}`;
  return shell(height,`<rect width="1200" height="${height}" fill="${wine}" opacity=".45"/><rect x="22" y="22" width="1156" height="${height-44}" rx="12" fill="#101622" fill-opacity=".32" stroke="${brass}" stroke-opacity=".5"/><g font-family="Inter">${body}</g>`,0,width)
  .replace(/<linearGradient id="glass"[\s\S]*?<\/linearGradient>/,'<linearGradient id="glass" x2="1" y2="1"><stop stop-color="#592A39" stop-opacity=".95"/><stop offset=".55" stop-color="#291D2D" stop-opacity=".96"/><stop offset="1" stop-color="#101622" stop-opacity=".97"/></linearGradient>')
- .replace('stroke="#00D7CF"',`stroke="${brass}"`);
+ .replace('stroke="#00D7CF"',`stroke="${accent}"`);
 }
