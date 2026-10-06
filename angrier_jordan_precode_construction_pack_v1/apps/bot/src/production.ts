@@ -533,6 +533,7 @@ export async function startProductionBot():Promise<void>{
       if(enableModerationSmoke&&interaction.isModalSubmit()&&interaction.customId.startsWith('moderation:appeal_submit:')){await moderation.handleAppealModal(interaction);return;}
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='onboard:ack_rules'){await onboarding.handleRulesAck(interaction);if(enableJailSmoke&&interaction.guildId)await jail.reconcileMember(interaction.guildId,interaction.user.id);if(enableSecuritySmoke&&interaction.guild){const member=await interaction.guild.members.fetch(interaction.user.id);await security.enforceAfterRulesAck(member,interaction);}return;}
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='roles:panel:open'){await onboarding.handleRolePanelOpen(interaction);return;}
+      if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId.startsWith('roles:card:edit:')){await onboarding.handleRoleCardEdit(interaction);return;}
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='roles:publish'){await onboarding.handleRolePublish(interaction);return;}
       if(enableOnboardingSmoke&&interaction.isStringSelectMenu()&&interaction.customId.startsWith('roles:select:')){await onboarding.handleRoleSelect(interaction);return;}
     }catch(error){

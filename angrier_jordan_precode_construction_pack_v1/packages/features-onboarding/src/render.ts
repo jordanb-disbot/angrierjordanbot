@@ -18,6 +18,25 @@ export function renderOnboarding(title:string,subtitle:string,sections:readonly 
  .replace('stroke="#00D7CF"',`stroke="${brass}"`);
 }
 
+/** A compact, member-facing record for published self-assigned roles.  It uses
+ * teal/brass seating treatment instead of the Introduction and Suggestion
+ * palettes, and deliberately keeps each group readable at Discord card size. */
+export function renderRoleSelectionCard(memberName:string,groups:readonly GuidanceSection[]){
+ const teal='#21B7AC',gold='#D9B86B',soft='#CFE8E5';
+ let y=172,body=text(58,51,'ANGRIER JORDAN · SEATING ASSIGNMENT',19,teal,'font-weight="700" letter-spacing="2"')+text(58,108,memberName,43,cream,'font-family="Space Grotesk" font-weight="700"')+text(58,148,'Selected roles · your place in Chairs',23,soft,'font-weight="500"');
+ const visible=groups.length?groups:[{title:'NO SEATS SELECTED',body:'This member has not selected any self-assigned roles.'}];
+ for(let index=0;index<visible.length;index+=2){
+  const row=visible.slice(index,index+2),wide=row.length===1,w=wide?1124:552;
+  const cards=row.map(section=>({section,lines:wrapText(section.body,w-74,25)})),h=Math.max(126,...cards.map(card=>96+card.lines.length*34));
+  cards.forEach((card,column)=>{const x=38+column*572;body+=panel(x,y,w,h,teal)+`<rect x="${x+8}" y="${y+8}" width="${w-16}" height="${h-16}" rx="8" fill="none" stroke="${gold}" stroke-opacity=".18"/><path d="M${x+22} ${y+42}V${y+22}H${x+50}" fill="none" stroke="${gold}"/>`+text(x+34,y+49,card.section.title,21,gold,'font-weight="700" letter-spacing="1.2"')+card.lines.map((line,n)=>text(x+34,y+88+n*34,line,25,cream,'font-weight="600"')).join('');});
+  y+=h+16;
+ }
+ body+=text(600,y+20,'SEATS CHOSEN · SHARED WITH CHAIRS',18,gold,'text-anchor="middle" letter-spacing="3" font-weight="600"');
+ return shell(y+48,`<rect width="1200" height="${y+48}" fill="#062A2E" opacity=".44"/><g font-family="Inter">${body}</g>`,0,1200)
+ .replace(/<linearGradient id="glass"[\s\S]*?<\/linearGradient>/,'<linearGradient id="glass" x2="1" y2="1"><stop stop-color="#123940" stop-opacity=".98"/><stop offset=".58" stop-color="#10242D" stop-opacity=".98"/><stop offset="1" stop-color="#07131E" stop-opacity=".99"/></linearGradient>')
+ .replace('stroke="#00D7CF"',`stroke="${teal}"`);
+}
+
 export function rulesSections(content:string):GuidanceSection[][]{
  const chunks: string[]=[];
  for(const paragraph of content.split(/\n\s*\n/).filter(x=>x.trim())){

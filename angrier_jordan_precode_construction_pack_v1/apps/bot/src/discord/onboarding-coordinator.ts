@@ -1,12 +1,12 @@
 import {
-  ActionRowBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
+  ActionRowBuilder,ButtonBuilder,ButtonStyle,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
   type ButtonInteraction,type ChatInputCommandInteraction,type GuildMember,type PartialGuildMember,type StringSelectMenuInteraction,
 } from 'discord.js';
 import type { ConfigService } from '../../../../packages/core/src/index.js';
 import { DomainError } from '../../../../packages/core/src/index.js';
 import type { OnboardingService, RestorePlan, RoleSnapshot, SelfRolePanelDefinition } from '../../../../packages/features-onboarding/src/index.js';
 import {readFileSync} from 'node:fs';
-import {renderOnboarding,rulesSections,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
+import {renderOnboarding,renderRoleSelectionCard,rulesSections,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
 import {displayFrames,wideDisplay,frameGallery,type DisplayFrame} from './wide-display.js';
 
 const rules=JSON.parse(readFileSync(new URL('../../../../packages/content/onboarding/rules.json',import.meta.url),'utf8')) as {title:string;sections:GuidanceSection[]};
@@ -128,13 +128,23 @@ export class DiscordOnboardingCoordinator {
     if(interaction.channelId&&interaction.channelId!==ROLE_ASSIGNMENTS_CHANNEL_ID){await interaction.reply({ephemeral:true,content:`Role selection lives in <#${ROLE_ASSIGNMENTS_CHANNEL_ID}>. Open that channel to manage and publish your roles.`,allowedMentions:{parse:[]}});return;}
     await interaction.deferReply({ephemeral:true});
     try{
-      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));
+      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));this.expirePrivateRoleReply(interaction);
     }
     catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'The role panel could not be loaded.'});}
   }
   async handleRolePanelOpen(interaction:ButtonInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
-    await interaction.deferReply({ephemeral:true});const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));
+    await interaction.deferReply({ephemeral:true});const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));this.expirePrivateRoleReply(interaction);
+  }
+  async handleRoleCardEdit(interaction:ButtonInteraction):Promise<void>{
+    const ownerId=interaction.customId.split(':').at(-1);
+    if(ownerId!==interaction.user.id){await interaction.reply({ephemeral:true,content:'Only the member who published this role card can edit these selections.'});return;}
+    await this.handleRolePanelOpen(interaction);
+  }
+
+  private expirePrivateRoleReply(interaction:any){
+    const timer=setTimeout(()=>void interaction.deleteReply?.().catch(()=>undefined),10*60*1000);
+    timer.unref?.();
   }
 
   private sharedRolePanelMessage(){
@@ -160,7 +170,7 @@ export class DiscordOnboardingCoordinator {
         const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),key=interaction.values[0];
         const panel=approvedRolePanel(state.panel);
         if(!panel.categories.some(c=>c.key===key))throw new DomainError('ROLE_CATEGORY_NOT_FOUND','This category is no longer available. Reopen /roles.');
-        await interaction.editReply(await this.rolePanelMessage(panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));return;
+        await interaction.editReply(await this.rolePanelMessage(panel,state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),key));this.expirePrivateRoleReply(interaction);return;
       }
       const stateBefore=await this.service.rolePanel(interaction.guildId,interaction.user.id);
       const category=approvedRolePanel(stateBefore.panel).categories.find(c=>c.key===categoryKey);
@@ -192,7 +202,7 @@ export class DiscordOnboardingCoordinator {
       // operation.
       await this.service.updateRoleCategory({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-      await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
+      await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));this.expirePrivateRoleReply(interaction);
     }catch(error){
       const content=error instanceof DomainError?error.message:'That role choice could not be completed. No role changes were saved.';
       if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
@@ -207,7 +217,9 @@ export class DiscordOnboardingCoordinator {
       const rollback=await this.applyPublishedRoles(member,approvedRolePanel(state.panel),selected);
       try{await this.publishRoleSelectionCard(interaction.guild,interaction.user.id,approvedRolePanel(state.panel),selected,member);}
       catch(error){await rollback();throw error;}
-      await interaction.editReply({content:`Your selected roles are now published in <#${ROLE_ASSIGNMENTS_CHANNEL_ID}>.`,allowedMentions:{parse:[]}});
+      // The public card is the durable confirmation.  Remove the private selector
+      // rather than leaving a stale confirmation alongside it.
+      await interaction.deleteReply?.().catch(()=>undefined);
     }catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'Your roles could not be published. No role card was updated.'});}
   }
 
@@ -230,17 +242,27 @@ export class DiscordOnboardingCoordinator {
   private async publishRoleSelectionCard(guild:any,userId:string,panel:SelfRolePanelDefinition,selectedRoleIds:readonly string[],member:any){
     const channel=await guild.channels.fetch(ROLE_ASSIGNMENTS_CHANNEL_ID).catch(()=>null);if(!channel?.isTextBased?.()||!channel.isSendable?.())throw new DomainError('ROLE_ASSIGNMENTS_UNAVAILABLE','The role assignments channel is unavailable. No role changes were saved.');
     const selected=new Set(selectedRoleIds),groups=panel.categories.map(category=>({name:category.label,roles:category.options.filter(option=>selected.has(option.roleId)).map(option=>option.label)})).filter(group=>group.roles.length);
-    const payload={content:null,embeds:[new EmbedBuilder().setColor(0x7C3AED).setAuthor({name:member.displayName+' · Selected Roles',iconURL:member.displayAvatarURL?.({extension:'png',size:128})}).setDescription(groups.length?'Published self-assigned roles.':'No self-assigned roles selected.').addFields(groups.slice(0,10).map(group=>({name:group.name,value:group.roles.map(role=>'`'+role+'`').join(' · '),inline:group.roles.length<=3}))).setFooter({text:'CHAIRS ROLE CARD · Publish again after changing selections'})],allowedMentions:{users:[],roles:[],parse:[] as never[]}};
-    const saved=await this.service.roleSelectionCard(guild.id,userId);let message:any=null;
-    if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID)message=await channel.messages.fetch(saved.messageId).catch(()=>null);
-    if(message)await message.edit(payload);else message=await channel.send(payload);
-    await this.service.saveRoleSelectionCard({guildId:guild.id,userId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:message.id});
-    await this.placeRolePanel(channel,guild.id);
+    const images=await displayFrames(renderRoleSelectionCard(member.displayName,groups.map(group=>({title:group.name.toUpperCase(),body:group.roles.join(' · ')}))),'seating-assignment-'+userId,'Seating Assignment · '+member.displayName);
+    const payload=wideDisplay(images,[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`roles:card:edit:${userId}`).setLabel('Edit My Roles').setStyle(ButtonStyle.Secondary))]);
+    const saved=await this.service.roleSelectionCard(guild.id,userId);let old:any=null;
+    if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID)old=await channel.messages.fetch(saved.messageId).catch(()=>null);
+    // Post and persist the replacement before removing the old card, so an
+    // attachment or Discord failure cannot leave the member without a card.
+    const message=await channel.send(payload);
+    try{
+      await this.service.saveRoleSelectionCard({guildId:guild.id,userId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:message.id});
+      if(old)await old.delete();
+    }catch(error){
+      await message.delete().catch(()=>undefined);
+      if(saved)await this.service.saveRoleSelectionCard({guildId:guild.id,userId,channelId:saved.channelId,messageId:saved.messageId}).catch(()=>undefined);
+      throw error;
+    }
+    await this.placeRolePanel(channel,guild.id,guild.client?.user?.id);
   }
 
-  private async placeRolePanel(channel:any,guildId:string):Promise<void>{
+  private async placeRolePanel(channel:any,guildId:string,botId?:string):Promise<void>{
     const saved=await this.service.roleSelectionPanel(guildId);if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID){const previous=await channel.messages.fetch(saved.messageId).catch(()=>null);if(previous)await previous.delete().catch(()=>undefined);}
-    const recent=await channel.messages.fetch({limit:100}).catch(()=>new Map());for(const duplicate of recent.values()){if(this.isSharedRolePanel(duplicate,duplicate.author?.id))await duplicate.delete().catch(()=>undefined);}
+    const recent=await channel.messages.fetch({limit:100}).catch(()=>new Map());for(const duplicate of recent.values()){if(this.isSharedRolePanel(duplicate,botId))await duplicate.delete().catch(()=>undefined);}
     const panel=await channel.send(this.sharedRolePanelMessage());await this.service.saveRoleSelectionPanel({guildId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:panel.id});
   }
 

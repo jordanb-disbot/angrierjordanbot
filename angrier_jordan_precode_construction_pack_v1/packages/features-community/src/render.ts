@@ -30,12 +30,20 @@ function renderSuggestion(v:CommunityView,avatars:CommunityPortraits={}){
  const declined=v.status==='DECLINED',review=v.status==='REVIEWING',accepted=v.status==='ACCEPTED',accent=featureAccent.suggest;
  const state=declined?'DECLINED':accepted?'ACCEPTED':review?'IN STAFF REVIEW':'OPEN FOR FEEDBACK';
  const stateColor=declined||review?ink.warm:accepted?ink.emerald:accent;
- const idea=copy(v.title,600,224,1012,34,bright,5),ideaHeight=Math.max(164,idea.height+74);
+ // Suggestions are stored as the three modal fields separated by blank lines.
+ // Keep legacy one-field suggestions readable while giving new submissions a
+ // dedicated labelled section for each authored answer.
+ const authored=v.title.split(/\n\s*\n/).map(part=>part.trim()).filter(Boolean);
+ const [title='Untitled suggestion',change='No change details were supplied.',...whyParts]=authored;
+ const why=whyParts.join('\n\n')||'No additional context was supplied.';
  const identity=v.anonymous?'Anonymous member':v.submitterName??'Community member';
  const support=String(v.results?.up??0),concerns=String(v.results?.down??0);
- let body=heading('Suggestion Desk',declined?'Archived for the record':'A better seat starts with a good idea');
- body+=plate(38,176,1124,ideaHeight,accent)+text(600,208,'THE IDEA',20,accent,'text-anchor="middle" font-weight="700" letter-spacing="2"')+idea.svg;
- let y=176+ideaHeight+16;
+ let body=heading('Suggestion Desk',declined?'Archived for the record':'A better seat starts with a good idea'),y=176;
+ const authoredSections=[['SUGGESTION',title],['THE CHANGE',change],['WHY IT MATTERS',why]] as const;
+ for(const [label,value] of authoredSections){
+  const section=copy(value,82,y+78,1014,28,bright,4),height=Math.max(128,section.height+96);
+  body+=plate(38,y,1124,height,accent)+text(82,y+45,label,20,accent,'font-weight="700" letter-spacing="2"')+section.svg;y+=height+14;
+ }
  body+=plate(38,y,1124,106,accent);
  if(!v.anonymous&&v.ownerId)body+=portrait('suggestion-author',identity,avatars[v.ownerId],94,y+13,78)+text(170,y+43,identity,26,bright,'font-weight="700"');
  else body+=text(600,y+43,identity,27,bright,'text-anchor="middle" font-weight="700"');
