@@ -25,7 +25,7 @@
   "fight.join_seconds": 60,
   "party.vote_seconds": 60,
   "party.extension_seconds": 30,
-  "fmk.vote_seconds": 180,
+  "fmk.vote_seconds": 3600,
   "line.ready_seconds": 60,
   "line.abandon_minutes": 15,
   "games.one_active_public_party_round": true,

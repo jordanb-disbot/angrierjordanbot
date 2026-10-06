@@ -472,17 +472,17 @@
       "key": "fmk.vote_seconds",
       "section": "games",
       "label": "Vote Seconds",
-      "description": "",
+      "description": "Canonical fixed one-hour anonymous FMK audience voting window.",
       "kind": "number",
-      "defaultValue": 180,
+      "defaultValue": 3600,
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
       "mutable": false,
       "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 30,
-      "max": 600
+      "min": 3600,
+      "max": 3600
     },
     {
       "key": "line.ready_seconds",
