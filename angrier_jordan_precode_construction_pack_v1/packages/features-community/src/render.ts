@@ -23,7 +23,35 @@ function footer(y:number,label:string,note:string){return plate(38,y,1124,85)+te
 /** Simple private states use a compact layout, never a wall-sized empty panel. */
 export function renderCommunityNotice(title:string,message:string){const body=copy(message,600,210,1040,29,bright,9),h=250+body.height;return frame(h,heading(title,'Your place in the conversation')+plate(38,172,1124,body.height+48)+body.svg);}
 export type CommunityPortraits=Record<string,string>;
+/** Suggestions have their own compact desk treatment rather than inheriting the
+ * generic poll layout.  It keeps the idea, its review state and the two public
+ * signals visible at Discord feed size without exposing an anonymous author. */
+function renderSuggestion(v:CommunityView,avatars:CommunityPortraits={}){
+ const declined=v.status==='DECLINED',review=v.status==='REVIEWING',accepted=v.status==='ACCEPTED',accent=featureAccent.suggest;
+ const state=declined?'DECLINED':accepted?'ACCEPTED':review?'IN STAFF REVIEW':'OPEN FOR FEEDBACK';
+ const stateColor=declined||review?ink.warm:accepted?ink.emerald:accent;
+ const idea=copy(v.title,600,224,1012,34,bright,5),ideaHeight=Math.max(164,idea.height+74);
+ const identity=v.anonymous?'Anonymous member':v.submitterName??'Community member';
+ const support=String(v.results?.up??0),concerns=String(v.results?.down??0);
+ let body=heading('Suggestion Desk',declined?'Archived for the record':'A better seat starts with a good idea');
+ body+=plate(38,176,1124,ideaHeight,accent)+text(600,208,'THE IDEA',20,accent,'text-anchor="middle" font-weight="700" letter-spacing="2"')+idea.svg;
+ let y=176+ideaHeight+16;
+ body+=plate(38,y,1124,106,accent);
+ if(!v.anonymous&&v.ownerId)body+=portrait('suggestion-author',identity,avatars[v.ownerId],94,y+13,78)+text(170,y+43,identity,26,bright,'font-weight="700"');
+ else body+=text(600,y+43,identity,27,bright,'text-anchor="middle" font-weight="700"');
+ body+=text(v.anonymous?600:170,y+76,v.anonymous?'SUBMITTED TO THE LOUNGE':'MEMBER SUBMISSION',18,muted,v.anonymous?'text-anchor="middle" letter-spacing="1.5"':'letter-spacing="1.5"');
+ y+=122;
+ const voteWidth=548;
+ body+=plate(38,y,voteWidth,122,ink.emerald)+text(312,y+36,'SUPPORT',20,ink.emerald,'text-anchor="middle" font-weight="700" letter-spacing="1.5"')+text(312,y+88,support,42,bright,'text-anchor="middle" font-family="Space Grotesk" font-weight="700"');
+ body+=plate(614,y,voteWidth,122,amber)+text(888,y+36,'CONCERNS',20,amber,'text-anchor="middle" font-weight="700" letter-spacing="1.5"')+text(888,y+88,concerns,42,bright,'text-anchor="middle" font-family="Space Grotesk" font-weight="700"');
+ y+=138;
+ body+=plate(38,y,1124,86,stateColor)+text(600,y+33,'STAFF STATUS',19,stateColor,'text-anchor="middle" font-weight="700" letter-spacing="1.5"')+text(600,y+63,state,24,bright,'text-anchor="middle" font-weight="700"');
+ y+=100;
+ body+=footer(y,'ONE MEMBER · ONE VOICE',declined?'This suggestion remains available in the archive.':'Support or oppose it with the controls below.');
+ return frame(y+111,body).replaceAll(amber,accent);
+}
 export function renderCommunity(v:CommunityView,avatars:CommunityPortraits={}){
+ if(v.kind==='suggest')return renderSuggestion(v,avatars);
  const closed=v.state==='CLOSED',award=v.kind==='superlatives',single=award&&v.phase==='closed'&&v.categories.length===1&&Boolean(v.categories[0]?.winner);
  const subtitle=award?`Season ${v.season} · ${v.phase==='closed'?single?'The winner':v.categories.some(c=>c.winner)?'The winners':'No winners':v.phase}`:closed?'The result is in':v.kind==='poll'&&v.ranked?'Rank your choices · best first':'A voice in the lounge';
  let body=heading(COMMUNITY_TITLES[v.kind],subtitle),y=176,clipped=false;
@@ -41,7 +69,7 @@ export function renderCommunity(v:CommunityView,avatars:CommunityPortraits={}){
  }else{
   const declined=v.kind==='ama'&&v.status==='DECLINED',prompt=block(declined?'This question was declined.':v.kind==='giveaway'?v.prize?.label??v.title:v.title,y+48,1040,34,4),ph=Math.max(116,prompt.height+42);
   body+=plate(38,y,1124,ph)+prompt.svg;y+=ph+14;
-  if((v.kind==='suggest'||v.kind==='ama')&&!declined){
+  if(v.kind==='ama'&&!declined){
    const identity=v.anonymous?'Anonymous member':v.submitterName??'Community member';body+=plate(38,y,1124,110);
    if(!v.anonymous&&v.ownerId)body+=portrait('community-author',identity,avatars[v.ownerId],110,y+14,80);
    body+=block(identity,y+44,650,27,1,600).svg;body+=text(600,y+80,'MEMBER CONTRIBUTION',18,amber,'text-anchor="middle" letter-spacing="1.5"');y+=124;
