@@ -36,18 +36,18 @@ export class PrismaItemRepository implements ItemRepository {
  transact(c:ItemContext,fingerprint:unknown,userIds:string[],operation:(unit:ItemUnit)=>Promise<ItemOutcome>){
   return this.atomic.run(c.guildId,`items:${c.requestKey}`,requestFingerprint(fingerprint),async(tx,ledger)=>{
    for(const userId of [...userIds].sort())await tx.member.upsert({where:{guildId_userId:{guildId:c.guildId,userId}},create:{guildId:c.guildId,userId},update:{}});
-   const state=await load(tx,c.guildId,userIds);let ordinal=0;const gifts:{senderId:string;recipientId:string;itemId:string;quantity:number}[]=[];
+   const state=await load(tx,c.guildId,userIds);let ordinal=0;const gifts:{senderId:string;recipientId:string;itemId:string;quantity:number}[]=[];const movements:{userId:string;amount:string;reason:string}[]=[];
    const move=async(userId:string,amount:bigint,reason:string)=>{
     const m=state.members.find(m=>m.userId===userId)!;
     if(amount<0n&&spendableWallet(m)+m.bank < -amount)throw new DomainError('INSUFFICIENT_FUNDS','You do not have enough Ottomans.');
     const wallet=amount>=0n?amount:spendableWallet(m)>=-amount?amount:-spendableWallet(m),bank=amount-wallet;
-    await ledger.apply({guildId:c.guildId,idempotencyKey:`items:${c.guildId}:${c.requestKey}:${ordinal++}`,lines:[{userId,bucket:'wallet',amount:wallet,reason},...(bank?[{userId,bucket:'bank' as const,amount:bank,reason}]:[]),{bucket:'system',amount:-amount,reason}]});m.wallet+=wallet;m.bank+=bank;
+    await ledger.apply({guildId:c.guildId,idempotencyKey:`items:${c.guildId}:${c.requestKey}:${ordinal++}`,lines:[{userId,bucket:'wallet',amount:wallet,reason},...(bank?[{userId,bucket:'bank' as const,amount:bank,reason}]:[]),{bucket:'system',amount:-amount,reason}]});movements.push({userId,amount:amount.toString(),reason});m.wallet+=wallet;m.bank+=bank;
    };
    const result=await operation({state,spend:(u,n,r)=>move(u,-n,r),reward:move,gift:(senderId,recipientId,itemId,quantity)=>gifts.push({senderId,recipientId,itemId,quantity})});
    for(const m of state.members)await save(tx,c.guildId,m);
    for(const [index,gift] of gifts.entries())await tx.giftRecord.create({data:{id:`${c.guildId}:${c.requestKey}:${index}`,guildId:c.guildId,...gift}});
    const details=object(fingerprint),args=object(details.args),itemId=typeof args.id==='string'?args.id:typeof args.recipeId==='string'?args.recipeId:undefined;
-   await tx.auditEvent.create({data:{guildId:c.guildId,actorUserId:c.userId,source:'economy',action:`economy.item.${String(details.action??'mutation')}`,targetType:itemId?'catalog_item':'inventory',targetId:itemId??c.userId,reason:`Inventory ${String(details.action??'mutation')}`,requestId:`items:${c.requestKey}`,createdAt:new Date(),after:json({affectedUserIds:userIds,itemId:itemId??null,args,result,accounts:state.members.map(member=>({userId:member.userId,wallet:member.wallet.toString(),bank:member.bank.toString()})),gifts})}});
+   await tx.auditEvent.create({data:{guildId:c.guildId,actorUserId:c.userId,source:'economy',action:`economy.item.${String(details.action??'mutation')}`,targetType:itemId?'catalog_item':'inventory',targetId:itemId??c.userId,reason:`Inventory ${String(details.action??'mutation')}`,requestId:`items:${c.requestKey}`,createdAt:new Date(),after:json({affectedUserIds:userIds,itemId:itemId??null,args,result,movements,accounts:state.members.map(member=>({userId:member.userId,wallet:member.wallet.toString(),bank:member.bank.toString()})),gifts})}});
    return result;
   });
  }
