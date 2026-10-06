@@ -1268,6 +1268,14 @@ model SpotlightFreeze {
   @@id([guildId,weekKey])
 }
 
+model SpotlightEligibilityExclusion {
+  guildId String
+  userId String
+  reason String
+  createdAt DateTime @default(now())
+  @@id([guildId,userId])
+}
+
 // Merge into schema.prisma; one shared draft across all sections of the configured server.
 model DashboardDraft {
   guildId String @id

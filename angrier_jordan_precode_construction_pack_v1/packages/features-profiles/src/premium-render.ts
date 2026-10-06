@@ -9,7 +9,7 @@ let seatArt:string|undefined;
 const achievementArt=new Map<string,string>();
 function achievementBadge(key:string){
  const existing=achievementArt.get(key);if(existing)return existing;
- const file=key==='chair_historian'?'../../../production/atomic_assets/badges/prestige/chair-historian-v1.png':key==='fully_furnished'?'../../../production/atomic_assets/badges/prestige/fully-furnished-v1.png':`../../../production/atomic_assets/badges/achievement_categories/${key}.png`;
+ const file=key==='chair_historian'?'../../../production/atomic_assets/badges/prestige/chair-historian-v1.png':key==='fully_furnished'?'../../../production/atomic_assets/badges/prestige/fully-furnished-v1.png':key==='triple_threat'?'../../../production/atomic_assets/badges/weekly/triple_threat_320.png':`../../../production/atomic_assets/badges/achievement_categories/${key}.png`;
  const encoded='data:image/png;base64,'+readFileSync(new URL(file,import.meta.url)).toString('base64');achievementArt.set(key,encoded);return encoded;
 }
 const seat=(x:number,y:number,size:number)=>`<image href="${seatArt??=('data:image/png;base64,'+readFileSync(new URL('../../../production/event_art/v3/race_chair_1.png',import.meta.url)).toString('base64'))}" x="${x-size/2}" y="${y}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
@@ -32,14 +32,14 @@ function profileLine(value:string,x:number,y:number,width:number,maxSize:number,
  const fitted=textWidth(value,size)>width?` textLength="${width}" lengthAdjust="spacingAndGlyphs"`:'';
  return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${heading?brand.typography.heading:brand.typography.body}" font-size="${size}" font-weight="${heading?700:600}" fill="${color}"${fitted}>${E(value)}</text>`;
 }
-export interface PremiumProfileInput {name:string;avatarData?:string|undefined;highlights?:{label:string;value:string}[];sections:{label:string;value:string;singlePage?:boolean|undefined}[];compactHero?:boolean;prestigeBadges?:('chair_historian'|'fully_furnished')[];}
-function prestigeMedallion(kind:'chair_historian'|'fully_furnished',x:number,y:number){return `<image href="${achievementBadge(kind)}" x="${x-52}" y="${y-52}" width="104" height="104" preserveAspectRatio="xMidYMid meet"/>`;}
+export interface PremiumProfileInput {name:string;avatarData?:string|undefined;highlights?:{label:string;value:string}[];sections:{label:string;value:string;singlePage?:boolean|undefined}[];compactHero?:boolean;prestigeBadges?:('chair_historian'|'fully_furnished'|'triple_threat')[];}
+function prestigeMedallion(kind:'chair_historian'|'fully_furnished'|'triple_threat',x:number,y:number){return `<image href="${achievementBadge(kind)}" x="${x-52}" y="${y-52}" width="104" height="104" preserveAspectRatio="xMidYMid meet"/>`;}
 /** Caller provides privacy-filtered data only. Every stat keeps its complete value. */
 export function renderPremiumProfile(data:PremiumProfileInput){
  let body=text(45,58,'ANGRIER JORDAN · MEMBER PROFILE',23,brand.palette.emerald,true,'start');
  if(data.compactHero){body+=panel(45,85,1110,112,GOLD)+portrait(data.name,data.avatarData,111,96,92,'identity')+profileLine(data.name,194,153,915,48,32,WHITE,true);}
  else{body+=panel(45,85,1110,326,GOLD)+portrait(data.name,data.avatarData,164,115,196,'identity');
-  const badges=(data.prestigeBadges??[]).slice(0,2),nameWidth=badges.length?540:815;
+  const badges=(data.prestigeBadges??[]).slice(0,3),nameWidth=badges.length===3?420:badges.length?540:815;
   body+=profileLine(data.name,300,183,nameWidth,62,34,WHITE,true)+text(300,229,'A seat in the Chairs',29,MUTED,false,'start');
   badges.forEach((badge,n)=>body+=prestigeMedallion(badge,1034-n*116,183));
   for(const [n,h]of (data.highlights??[]).slice(0,3).entries()){

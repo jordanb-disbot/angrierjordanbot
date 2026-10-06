@@ -1,5 +1,5 @@
 import {
-  ActionRowBuilder,ButtonBuilder,ButtonStyle,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
+  ActionRowBuilder,ButtonBuilder,ButtonStyle,EmbedBuilder,MessageFlags,PermissionFlagsBits,StringSelectMenuBuilder,TextDisplayBuilder,
   type ButtonInteraction,type ChatInputCommandInteraction,type GuildMember,type PartialGuildMember,type StringSelectMenuInteraction,
 } from 'discord.js';
 import type { ConfigService } from '../../../../packages/core/src/index.js';
@@ -186,16 +186,11 @@ export class DiscordOnboardingCoordinator {
         if(role.managed||!role.editable)throw new DomainError('ROLE_UNMANAGEABLE',`Angrier Jordan cannot manage ${role.name}. Ask staff to move the role below Angrier Jordan.`);
         if(plan.addRoleIds.includes(id)&&role.permissions.bitfield!==0n)throw new DomainError('ROLE_HAS_PERMISSIONS',`${role.name} has Discord permissions and cannot be self-selected.`);
       }
-      const removed:string[]=[];const added:string[]=[];
-      try{
-        for(const id of plan.removeRoleIds){if(!interaction.guild.roles.cache.has(id))continue;await member.roles.remove(id,'Self-role selection changed.');removed.push(id);}
-        for(const id of plan.addRoleIds){await member.roles.add(id,'Self-role selection changed.');added.push(id);}
-        await this.service.updateRoleCategory({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
-      }catch(error){
-        for(const id of added)await member.roles.remove(id,'Rolling back failed self-role update.').catch(()=>undefined);
-        for(const id of removed)await member.roles.add(id,'Rolling back failed self-role update.').catch(()=>undefined);
-        throw error;
-      }
+      // Selection is intentionally private and durable, but it does not mutate
+      // Discord membership.  The explicit publish action validates the current
+      // hierarchy again and applies the complete selected set as one rollbackable
+      // operation.
+      await this.service.updateRoleCategory({guildId:interaction.guildId,userId:interaction.user.id,categoryKey,selectedRoleIds});
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
       await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
     }catch(error){
@@ -206,17 +201,47 @@ export class DiscordOnboardingCoordinator {
   }
   async handleRolePublish(interaction:ButtonInteraction):Promise<void>{
     if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
-    await interaction.deferReply({ephemeral:true});const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await this.publishRoleSelectionCard(interaction.guild,interaction.user.id,state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId));await interaction.editReply({content:`Your selected roles are now published in <#${ROLE_ASSIGNMENTS_CHANNEL_ID}>.`,allowedMentions:{parse:[]}});
+    await interaction.deferReply({ephemeral:true});
+    try{
+      const state=await this.service.rolePanel(interaction.guildId,interaction.user.id),selected=state.selections.filter(x=>x.active).map(x=>x.roleId),member=await interaction.guild.members.fetch(interaction.user.id);
+      const rollback=await this.applyPublishedRoles(member,approvedRolePanel(state.panel),selected);
+      try{await this.publishRoleSelectionCard(interaction.guild,interaction.user.id,approvedRolePanel(state.panel),selected,member);}
+      catch(error){await rollback();throw error;}
+      await interaction.editReply({content:`Your selected roles are now published in <#${ROLE_ASSIGNMENTS_CHANNEL_ID}>.`,allowedMentions:{parse:[]}});
+    }catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'Your roles could not be published. No role card was updated.'});}
   }
 
-  private async publishRoleSelectionCard(guild:any,userId:string,panel:SelfRolePanelDefinition,selectedRoleIds:readonly string[]){
+  private async applyPublishedRoles(member:any,panel:SelfRolePanelDefinition,selectedRoleIds:readonly string[]):Promise<()=>Promise<void>>{
+    const managed=new Set(panel.categories.flatMap(category=>category.options.filter(option=>option.enabled&&!option.archived).map(option=>option.roleId))),selected=[...new Set(selectedRoleIds)].filter(id=>managed.has(id)),current=[...managed].filter(id=>member.roles.cache.has(id)),add=selected.filter(id=>!current.includes(id)),remove=current.filter(id=>!selected.includes(id));
+    const protectedKeys=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access'];
+    const protectedIds=new Set((await Promise.all(protectedKeys.map(key=>this.config.get(member.guild.id,key)))).filter((id):id is string=>typeof id==='string'&&Boolean(id)));
+    if([...add,...remove].some(id=>protectedIds.has(id)))throw new DomainError('ROLE_PROTECTED','A protected server role cannot be changed here. Ask staff to update this panel.');
+    for(const id of [...add,...remove]){
+      const role=member.guild.roles.cache.get(id);if(!role){if(add.includes(id))throw new DomainError('ROLE_MISSING','A configured role no longer exists. Ask staff to update this category.');continue;}
+      if(role.managed||!role.editable)throw new DomainError('ROLE_UNMANAGEABLE',`Angrier Jordan cannot manage ${role.name}. Ask staff to move the role below Angrier Jordan.`);
+      if(add.includes(id)&&role.permissions.bitfield!==0n)throw new DomainError('ROLE_HAS_PERMISSIONS',`${role.name} has Discord permissions and cannot be self-selected.`);
+    }
+    const removed:string[]=[],added:string[]=[];
+    try{for(const id of remove){if(member.guild.roles.cache.has(id)){await member.roles.remove(id,'Published self-role selection changed.');removed.push(id);}}for(const id of add){await member.roles.add(id,'Published self-role selection changed.');added.push(id);}}
+    catch(error){for(const id of added)await member.roles.remove(id,'Rolling back failed role publication.').catch(()=>undefined);for(const id of removed)await member.roles.add(id,'Rolling back failed role publication.').catch(()=>undefined);throw error;}
+    return async()=>{for(const id of added)await member.roles.remove(id,'Rolling back failed role-card publication.').catch(()=>undefined);for(const id of removed)await member.roles.add(id,'Rolling back failed role-card publication.').catch(()=>undefined);};
+  }
+
+  private async publishRoleSelectionCard(guild:any,userId:string,panel:SelfRolePanelDefinition,selectedRoleIds:readonly string[],member:any){
     const channel=await guild.channels.fetch(ROLE_ASSIGNMENTS_CHANNEL_ID).catch(()=>null);if(!channel?.isTextBased?.()||!channel.isSendable?.())throw new DomainError('ROLE_ASSIGNMENTS_UNAVAILABLE','The role assignments channel is unavailable. No role changes were saved.');
-    const labels=new Map(panel.categories.flatMap(category=>category.options.map(option=>[option.roleId,option.label] as const))),selected=selectedRoleIds.map(id=>labels.get(id)).filter((label):label is string=>Boolean(label));
-    const payload={content:`**<@${userId}> · Selected Roles**\n${selected.length?selected.map(label=>`• ${label}`).join('\n'):'No self-selected roles.'}`,allowedMentions:{users:[userId],roles:[],parse:[] as never[]}};
+    const selected=new Set(selectedRoleIds),groups=panel.categories.map(category=>({name:category.label,roles:category.options.filter(option=>selected.has(option.roleId)).map(option=>option.label)})).filter(group=>group.roles.length);
+    const payload={content:null,embeds:[new EmbedBuilder().setColor(0x7C3AED).setAuthor({name:member.displayName+' · Selected Roles',iconURL:member.displayAvatarURL?.({extension:'png',size:128})}).setDescription(groups.length?'Published self-assigned roles.':'No self-assigned roles selected.').addFields(groups.slice(0,10).map(group=>({name:group.name,value:group.roles.map(role=>'`'+role+'`').join(' · '),inline:group.roles.length<=3}))).setFooter({text:'CHAIRS ROLE CARD · Publish again after changing selections'})],allowedMentions:{users:[],roles:[],parse:[] as never[]}};
     const saved=await this.service.roleSelectionCard(guild.id,userId);let message:any=null;
     if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID)message=await channel.messages.fetch(saved.messageId).catch(()=>null);
     if(message)await message.edit(payload);else message=await channel.send(payload);
     await this.service.saveRoleSelectionCard({guildId:guild.id,userId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:message.id});
+    await this.placeRolePanel(channel,guild.id);
+  }
+
+  private async placeRolePanel(channel:any,guildId:string):Promise<void>{
+    const saved=await this.service.roleSelectionPanel(guildId);if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID){const previous=await channel.messages.fetch(saved.messageId).catch(()=>null);if(previous)await previous.delete().catch(()=>undefined);}
+    const recent=await channel.messages.fetch({limit:100}).catch(()=>new Map());for(const duplicate of recent.values()){if(this.isSharedRolePanel(duplicate,duplicate.author?.id))await duplicate.delete().catch(()=>undefined);}
+    const panel=await channel.send(this.sharedRolePanelMessage());await this.service.saveRoleSelectionPanel({guildId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:panel.id});
   }
 
   private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){
