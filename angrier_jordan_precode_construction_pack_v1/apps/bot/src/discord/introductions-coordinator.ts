@@ -54,9 +54,12 @@ export class DiscordIntroductionsCoordinator {
  private button(action:string,id:string,version:number,page:number,label:string,style=ButtonStyle.Secondary){return new ButtonBuilder().setCustomId(`intro:${action}:${id}:${version}:${page}`).setLabel(label).setStyle(style);}
  private async hub(i:Interaction,c:IntroContext,id:string,_page?:number){
   const row=await this.repo.view(c,id),saved=await this.repo.submission(c.guildId,c.userId);
-  const controls=new ActionRowBuilder<ButtonBuilder>().addComponents(this.button('create',id,row.version,0,'Create Introduction',ButtonStyle.Primary),this.button('edit',id,row.version,0,'Edit My Introduction'),this.button('preview',id,row.version,0,'Preview'));
-  const text='Private form. Answer the five fields in your own words; leave optional answers blank. Answers stay private until you choose Publish.';
-  await i.editReply(wideDisplay(await notice(saved?'Your saved introduction is ready to edit. Changes update your existing post.':'Welcome to Chairs. Tell us a little about yourself.',activePrompts(row.data.form).map(p=>p.label)),[controls],text,!i.isChatInputCommand()?i.message?.attachments?.values():undefined));
+  const prompts=activePrompts(row.data.form),hasAnswers=prompts.some(prompt=>(row.data.answers[prompt.id]??'').trim().length>0),editing=Boolean(saved)||hasAnswers;
+  // The full workflow belongs in the rendered hub.  Native Discord content is
+  // reserved for the two actions directly below that single visual frame.
+  const controls=new ActionRowBuilder<ButtonBuilder>().addComponents(this.button(editing?'edit':'create',id,row.version,0,editing?'Edit My Introduction':'Create Introduction',ButtonStyle.Primary),this.button('preview',id,row.version,0,'Preview'));
+  const message=saved?'Your saved introduction is ready to edit. Changes update your existing post.':editing?'Your private introduction is ready to edit, preview, and publish.':'Welcome to Chairs. Tell us a little about yourself.';
+  await i.editReply(wideDisplay(await notice(message,prompts.map(p=>p.label)),[controls],undefined,!i.isChatInputCommand()?i.message?.attachments?.values():undefined));
  }
  async cardPayload(client:Client,guildId:string,userId:string,draft:IntroDraft,marker:string){
   const guild=await client.guilds.fetch(guildId),member=await guild.members.fetch({user:userId,force:true}),name=member.displayName,art=draft.config.showAvatar?await memberArt(client,guildId,userId):undefined;
