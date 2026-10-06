@@ -7,10 +7,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PrismaClient} from '@prisma/client';
 import {PrismaServerBootstrapRepository} from '../../.test-build/packages/database/src/prisma-server-bootstrap.js';
-import {PrismaConfigRepository,PrismaAuditSink} from '../../.test-build/packages/database/src/prisma-adapters.js';
-import {ConfigService} from '../../.test-build/packages/core/src/config-service.js';
-import {AuditService} from '../../.test-build/packages/core/src/audit.js';
-import {SETTINGS} from '../../.test-build/packages/contracts/src/generated/settings.js';
 import {testServerTarget,runTestServer} from '../../scripts/test-server.mjs';
 
 const require=createRequire(import.meta.url),schema='aj_bootstrap_test_'+randomUUID().replaceAll('-','');
@@ -88,31 +84,18 @@ test('Server bootstrap PostgreSQL creates only a server and atomic audit across 
    const after=await tableCounts();assert.deepEqual(after,{...before,Guild:before.Guild+1,AuditEvent:before.AuditEvent+1});
   });
 
-  await t.test('supported test-server CLI bootstraps the selected fixture server and explicitly enables Music once through the real registry and ConfigService',async()=>{
+  await t.test('supported test-server CLI bootstraps the selected fixture server without mutating retired Music settings',async()=>{
    // Only the parser sees this fake URL. All persistence remains injected into this UUID test schema.
    // No owner .env.music.local file is read and no connection is made using fixture credentials.
    const target=testServerTarget('NODE_ENV=development\nDISCORD_GUILD_ID=777777777777777777','TEST_DATABASE_URL=postgresql://fixture:fixture@ballast.proxy.rlwy.net:14970/railway');
-   const guildId=target.guildId,output=[],config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),new AuditService(new PrismaAuditSink(db)));
-   const dependencies={guildId,db,bootstrap:repo,config,write:message=>output.push(message)};
+   const guildId=target.guildId,output=[],dependencies={guildId,db,bootstrap:repo,write:message=>output.push(message)};
    const before=await tableCounts();await runTestServer('bootstrap',dependencies);
    assert.ok(await db.guild.findUnique({where:{id:guildId}}));assert.equal(await db.configValue.count({where:{guildId}}),0);assert.equal(await db.configRevision.count({where:{guildId}}),0);
    assert.deepEqual(await config.getWithMetadata(guildId,'music.enabled'),{value:false,source:'default',version:0});
    const bootstrapAudit=await db.auditEvent.findMany({where:{guildId}});assert.equal(bootstrapAudit.length,1);assert.equal(bootstrapAudit[0].action,'server.bootstrap.created');assert.equal(bootstrapAudit[0].source,'operator.bootstrap');
    const bootstrapped=await tableCounts();assert.deepEqual(bootstrapped,{...before,Guild:before.Guild+1,AuditEvent:before.AuditEvent+1});
-   await runTestServer('bootstrap',dependencies);await runTestServer('status',dependencies);await runTestServer('music-status',dependencies);
-   assert.deepEqual(await tableCounts(),bootstrapped);assert.ok(output.includes('PASS: music.enabled=false; version=0.'));
-
-   await runTestServer('enable-music',dependencies);
-   const settings=await db.configValue.findMany({where:{guildId}}),revisions=await db.configRevision.findMany({where:{guildId}}),audits=await db.auditEvent.findMany({where:{guildId},orderBy:{id:'asc'}});
-   assert.equal(settings.length,1);assert.equal(settings[0].key,'music.enabled');assert.equal(settings[0].value,true);assert.equal(settings[0].version,1);assert.equal(settings[0].source,'operator.test-music');
-   assert.equal(revisions.length,1);assert.equal(revisions[0].key,'music.enabled');assert.equal(revisions[0].value,true);assert.equal(revisions[0].version,1);
-   const configAudits=audits.filter(event=>event.action==='config.set');assert.equal(configAudits.length,1);assert.equal(configAudits[0].targetId,'music.enabled');assert.equal(configAudits[0].source,'operator.test-music');
-   assert.deepEqual(configAudits[0].before,{value:false,source:'default',version:0});assert.deepEqual(configAudits[0].after,{value:true,source:'operator.test-music',version:1});
-   const enabled=await tableCounts();assert.deepEqual(enabled,{...bootstrapped,ConfigValue:bootstrapped.ConfigValue+1,ConfigRevision:bootstrapped.ConfigRevision+1,AuditEvent:bootstrapped.AuditEvent+1});
-
-   await runTestServer('enable-music',dependencies);await runTestServer('status',dependencies);await runTestServer('music-status',dependencies);
-   assert.deepEqual(await tableCounts(),enabled);assert.deepEqual(await db.configValue.findMany({where:{guildId}}),settings);assert.deepEqual(await db.configRevision.findMany({where:{guildId}}),revisions);assert.deepEqual(await db.auditEvent.findMany({where:{guildId},orderBy:{id:'asc'}}),audits);
-   assert.ok(output.includes('PASS: music.enabled=true; version=1.'));
+   await runTestServer('bootstrap',dependencies);await runTestServer('status',dependencies);
+   assert.deepEqual(await tableCounts(),bootstrapped);assert.ok(output.includes('PASS: Test server exists. EAJ Music is configured by its dedicated runtime, not a server setting.'));
    assert.equal((await db.configValue.findUniqueOrThrow({where:{guildId_key:{guildId:ids.existing,key:'music.enabled'}}})).value,false);
   });
  }finally{

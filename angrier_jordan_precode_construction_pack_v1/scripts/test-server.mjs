@@ -1,9 +1,8 @@
 import {readFileSync} from 'node:fs';
 import {parseEnv} from 'node:util';
 import {pathToFileURL} from 'node:url';
-import {randomUUID} from 'node:crypto';
 
-const modes=new Set(['bootstrap','status','enable-music','music-status']);
+const modes=new Set(['bootstrap','status']);
 export function testServerTarget(musicText,testText){
   const music=parseEnv(musicText),test=parseEnv(testText);
   if(music.NODE_ENV!=='development')throw new Error('DEVELOPMENT_REQUIRED');
@@ -16,7 +15,7 @@ export function testServerTarget(musicText,testText){
 }
 
 // Injected boundaries keep command semantics testable without touching an owner database.
-export async function runTestServer(mode,{guildId,db,bootstrap,config,write=console.log}){
+export async function runTestServer(mode,{guildId,db,bootstrap,write=console.log}){
   if(!modes.has(mode))throw new Error('UNKNOWN_COMMAND');
   if(mode==='bootstrap'){
     const result=await bootstrap.ensure({guildId,source:'operator.bootstrap'});
@@ -25,13 +24,7 @@ export async function runTestServer(mode,{guildId,db,bootstrap,config,write=cons
   }
   if(!await db.guild.findUnique({where:{id:guildId},select:{id:true}}))throw new Error('SERVER_NOT_INITIALIZED');
   write('PASS: Test server exists.');
-  let state=await config.getWithMetadata(guildId,'music.enabled');
-  if(mode==='enable-music'&&state.value!==true){
-    await config.set({guildId,key:'music.enabled',value:true,source:'operator.test-music',requestId:randomUUID(),expectedVersion:state.version});
-    state=await config.getWithMetadata(guildId,'music.enabled');
-  }
-  if(typeof state.value!=='boolean'||!Number.isSafeInteger(state.version))throw new Error('INVALID_SETTING_STATE');
-  write(`PASS: music.enabled=${state.value}; version=${state.version}.`);
+  write('PASS: Test server exists. EAJ Music is configured by its dedicated runtime, not a server setting.');
 }
 
 async function main(){
@@ -40,10 +33,10 @@ async function main(){
     const mode=process.argv[2];
     if(!modes.has(mode)||process.argv.length!==3)throw new Error('UNKNOWN_COMMAND');
     const target=testServerTarget(readFileSync(new URL('../.env.music.local',import.meta.url),'utf8'),readFileSync(new URL('../.env.test.local',import.meta.url),'utf8'));
-    const [{PrismaClient},{PrismaServerBootstrapRepository},{PrismaConfigRepository,PrismaAuditSink},{ConfigService},{AuditService},{SETTINGS}]=await Promise.all([
-      import('@prisma/client'),import('../dist/packages/database/src/prisma-server-bootstrap.js'),import('../dist/packages/database/src/prisma-adapters.js'),import('../dist/packages/core/src/config-service.js'),import('../dist/packages/core/src/audit.js'),import('../dist/packages/contracts/src/generated/settings.js')]);
+    const [{PrismaClient},{PrismaServerBootstrapRepository}]=await Promise.all([
+      import('@prisma/client'),import('../dist/packages/database/src/prisma-server-bootstrap.js')]);
     db=new PrismaClient({datasourceUrl:target.databaseUrl,log:[]});
-    await runTestServer(mode,{guildId:target.guildId,db,bootstrap:new PrismaServerBootstrapRepository(db),config:new ConfigService(SETTINGS,new PrismaConfigRepository(db),new AuditService(new PrismaAuditSink(db)))});
+    await runTestServer(mode,{guildId:target.guildId,db,bootstrap:new PrismaServerBootstrapRepository(db)});
   }catch(error){
     const known=new Set(['DEVELOPMENT_REQUIRED','SERVER_ID_REQUIRED','TEST_DATABASE_REQUIRED','INVALID_TEST_DATABASE','DISPOSABLE_TARGET_REQUIRED','UNKNOWN_COMMAND','SERVER_NOT_INITIALIZED','INVALID_SETTING_STATE']);
     const code=known.has(error?.message)?error.message:/^P\d{4}$/.test(error?.code??'')?error.code:'LOCAL_SETUP_OR_DATABASE_ERROR';
