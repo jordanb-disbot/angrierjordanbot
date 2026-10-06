@@ -37,7 +37,7 @@ export interface EconomyRepository extends LedgerRepository {
   getClaimState(guildId:string,userId:string):Promise<MemberClaimStateRecord>;
   commitClaim(input:ClaimCommitInput):Promise<ClaimCommitResult>;
   getStreakInstallment(id:string):Promise<StreakInstallmentRecord|null>;
-  advanceStreakInstallment(input:{id:string;paidAmount:bigint;now:Date}):Promise<StreakInstallmentRecord|null>;
+  advanceStreakInstallment(input:{id:string;paidAmount:bigint;now:Date;expectedInstallmentsPaid?:number}):Promise<StreakInstallmentRecord|null>;
   listInventory(guildId:string,userId:string):Promise<InventoryEntryRecord[]>;
   getCatalogItem(itemId:string):Promise<CatalogItemRecord|null>;
   listCatalogItems(enabledOnly?:boolean):Promise<CatalogItemRecord[]>;
