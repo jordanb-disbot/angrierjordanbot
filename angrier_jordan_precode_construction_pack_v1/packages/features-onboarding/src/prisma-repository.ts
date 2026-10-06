@@ -14,6 +14,7 @@ interface TxLike {
   jailSentence:{findMany(args:unknown):Promise<RowJail[]>;update(args:unknown):Promise<RowJail>};
   selfRolePanel:{findFirst(args:unknown):Promise<RowPanel|null>};
   selfRoleSelection:{findMany(args:unknown):Promise<RowSelection[]>;deleteMany(args:unknown):Promise<unknown>;upsert(args:unknown):Promise<RowSelection>};
+  roleSelectionCard:{findUnique(args:unknown):Promise<{channelId:string;messageId:string}|null>;upsert(args:unknown):Promise<unknown>};
 }
 export interface OnboardingPrismaLike extends TxLike {$transaction<T>(fn:(tx:TxLike)=>Promise<T>):Promise<T>;}
 
@@ -56,4 +57,6 @@ export class PrismaOnboardingRepository implements OnboardingRepository {
   async getSelfRolePanel(guildId:string){const row=await this.db.selfRolePanel.findFirst({where:{guildId,enabled:true},orderBy:{createdAt:'asc'}});return row?parsePanel(row):null;}
   async listSelfRoleSelections(guildId:string,userId:string){const rows=await this.db.selfRoleSelection.findMany({where:{guildId,userId},orderBy:{selectedAt:'asc'}});return rows.map(selection);}
   async replaceSelfRoleCategorySelections(input:{guildId:string;userId:string;categoryKey:string;roleIds:readonly string[];now:Date}){return this.db.$transaction(async tx=>{await tx.selfRoleSelection.deleteMany({where:{guildId:input.guildId,userId:input.userId,categoryKey:input.categoryKey,active:true}});const out:SelfRoleSelection[]=[];for(const roleId of input.roleIds){const row=await tx.selfRoleSelection.upsert({where:{guildId_userId_roleId:{guildId:input.guildId,userId:input.userId,roleId}},create:{guildId:input.guildId,userId:input.userId,roleId,categoryKey:input.categoryKey,active:true,selectedAt:input.now,archivedAt:null},update:{categoryKey:input.categoryKey,active:true,selectedAt:input.now,archivedAt:null}});out.push(selection(row));}return out;});}
+  async getRoleSelectionCard(guildId:string,userId:string){return this.db.roleSelectionCard.findUnique({where:{guildId_userId:{guildId,userId}}});}
+  async saveRoleSelectionCard(input:{guildId:string;userId:string;channelId:string;messageId:string}){await this.db.roleSelectionCard.upsert({where:{guildId_userId:{guildId:input.guildId,userId:input.userId}},create:input,update:{channelId:input.channelId,messageId:input.messageId}});}
 }

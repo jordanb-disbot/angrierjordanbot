@@ -10,6 +10,7 @@ export class InMemoryOnboardingRepository implements OnboardingRepository {
   readonly snapshots=new Map<string,RoleSnapshot[]>();
   readonly punishments=new Map<string,PunishmentState[]>();
   readonly selections=new Map<string,SelfRoleSelection[]>();
+  readonly roleCards=new Map<string,{channelId:string;messageId:string}>();
   panel:SelfRolePanelDefinition|null=null;
   async ensureMember(g:string,u:string){this.members.add(key(g,u));if(!this.presences.has(key(g,u)))this.presences.set(key(g,u),{guildId:g,userId:u,needsRulesAck:true,pendingRoleRestore:false});}
   async getPresence(g:string,u:string){const x=this.presences.get(key(g,u));return x?clonePresence(x):null;}
@@ -25,4 +26,6 @@ export class InMemoryOnboardingRepository implements OnboardingRepository {
   async getSelfRolePanel(g:string){return this.panel?.guildId===g?structuredClone(this.panel):null;}
   async listSelfRoleSelections(g:string,u:string){return (this.selections.get(key(g,u))??[]).map(x=>({...x}));}
   async replaceSelfRoleCategorySelections(input:{guildId:string;userId:string;categoryKey:string;roleIds:readonly string[];now:Date}){const k=key(input.guildId,input.userId);const existing=this.selections.get(k)??[];const keep=existing.filter(x=>x.categoryKey!==input.categoryKey);const next=input.roleIds.map(roleId=>({guildId:input.guildId,userId:input.userId,roleId,categoryKey:input.categoryKey,active:true,selectedAt:input.now}));this.selections.set(k,[...keep,...next]);return next.map(x=>({...x}));}
+  async getRoleSelectionCard(g:string,u:string){const row=this.roleCards.get(key(g,u));return row?{...row}:null;}
+  async saveRoleSelectionCard(input:{guildId:string;userId:string;channelId:string;messageId:string}){this.roleCards.set(key(input.guildId,input.userId),{channelId:input.channelId,messageId:input.messageId});}
 }

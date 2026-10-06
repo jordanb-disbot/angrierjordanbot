@@ -156,6 +156,15 @@ model SelfRoleSelection {
   @@index([guildId,userId,categoryKey,active])
 }
 
+model RoleSelectionCard {
+  guildId String
+  userId String
+  channelId String
+  messageId String
+  updatedAt DateTime @updatedAt
+  @@id([guildId,userId])
+}
+
 model MemberRoleSnapshot {
   guildId String
   userId String

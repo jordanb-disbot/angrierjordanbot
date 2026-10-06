@@ -15,4 +15,6 @@ export interface OnboardingRepository {
   getSelfRolePanel(guildId:string):Promise<SelfRolePanelDefinition|null>;
   listSelfRoleSelections(guildId:string,userId:string):Promise<SelfRoleSelection[]>;
   replaceSelfRoleCategorySelections(input:{guildId:string;userId:string;categoryKey:string;roleIds:readonly string[];now:Date}):Promise<SelfRoleSelection[]>;
+  getRoleSelectionCard(guildId:string,userId:string):Promise<{channelId:string;messageId:string}|null>;
+  saveRoleSelectionCard(input:{guildId:string;userId:string;channelId:string;messageId:string}):Promise<void>;
 }

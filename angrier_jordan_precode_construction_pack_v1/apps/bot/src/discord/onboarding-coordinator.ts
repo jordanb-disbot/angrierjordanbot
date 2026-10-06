@@ -29,6 +29,7 @@ const SELF_ROLE_CATALOG:Readonly<Record<string,readonly string[]>>={
  personalities:['Morning Perch','Night Recliner','BeanBag','Swivel Chair','Wobbly Stool','Ghost Chair'],
  pings:['Line Ping','Race Ping','VC Ping','Chess Ping'],
 };
+const ROLE_ASSIGNMENTS_CHANNEL_ID='1537333197438980116';
 const approvedRolePanel=(panel:SelfRolePanelDefinition):SelfRolePanelDefinition=>({
  ...panel,categories:panel.categories.flatMap(category=>{
   const labels=SELF_ROLE_CATALOG[category.key];if(!labels)return[];
@@ -162,12 +163,23 @@ export class DiscordOnboardingCoordinator {
         throw error;
       }
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
+      await this.publishRoleSelectionCard(interaction.guild,interaction.user.id,state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId));
       await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
     }catch(error){
       const content=error instanceof DomainError?error.message:'That role choice could not be completed. No role changes were saved.';
       if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
       else await interaction.reply({ephemeral:true,content}).catch(()=>undefined);
     }
+  }
+
+  private async publishRoleSelectionCard(guild:any,userId:string,panel:SelfRolePanelDefinition,selectedRoleIds:readonly string[]){
+    const channel=await guild.channels.fetch(ROLE_ASSIGNMENTS_CHANNEL_ID).catch(()=>null);if(!channel?.isTextBased?.()||!channel.isSendable?.())throw new DomainError('ROLE_ASSIGNMENTS_UNAVAILABLE','The role assignments channel is unavailable. No role changes were saved.');
+    const labels=new Map(panel.categories.flatMap(category=>category.options.map(option=>[option.roleId,option.label] as const))),selected=selectedRoleIds.map(id=>labels.get(id)).filter((label):label is string=>Boolean(label));
+    const payload={content:`**<@${userId}> · Selected Roles**\n${selected.length?selected.map(label=>`• ${label}`).join('\n'):'No self-selected roles.'}`,allowedMentions:{users:[userId],roles:[],parse:[] as never[]}};
+    const saved=await this.service.roleSelectionCard(guild.id,userId);let message:any=null;
+    if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID)message=await channel.messages.fetch(saved.messageId).catch(()=>null);
+    if(message)await message.edit(payload);else message=await channel.send(payload);
+    await this.service.saveRoleSelectionCard({guildId:guild.id,userId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:message.id});
   }
 
   private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){
