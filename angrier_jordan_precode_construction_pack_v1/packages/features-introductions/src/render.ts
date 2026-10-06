@@ -54,7 +54,9 @@ export function renderIntroductionHub(message:string,fields:string[]=[]){
    items+=number.svg+body.svg;
    listY+=Math.max(number.height,body.height)+13;
   }
-  svg+=plate(60,y,1080,listY-y+16)+heading.svg+items;
+  // The question list deliberately stays on the parent frame surface.  A
+  // divider gives it hierarchy without creating a detached second panel.
+  svg+=`<path d="M60 ${y+14}H1140" stroke="${brass}" stroke-opacity=".46"/><path d="M60 ${listY+2}H1140" stroke="${brass}" stroke-opacity=".25"/>`+heading.svg+items;
   y=listY+34;
  }
  svg+=`<path d="M60 ${y}H1140" stroke="${brass}" stroke-opacity=".5"/>`+text(60,y+44,'Save privately → Preview → Publish when ready',25,muted);

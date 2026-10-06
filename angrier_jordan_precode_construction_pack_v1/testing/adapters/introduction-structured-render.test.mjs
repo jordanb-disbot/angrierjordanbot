@@ -47,9 +47,9 @@ test('Long answers expand their row without clipping and retain all final words'
  assert.ok(svg.includes('Community introductions'));
  assert.ok(svg.includes('Joined 2026-09-27'));
 });
-test('Private form summary is one unified panel with all five numbered prompts',()=>{
+test('Private form summary keeps all five prompts on the same continuous frame surface',()=>{
  const svg=renderIntroductionHub('Your answers stay private until you publish.',questions);
- assert.equal((svg.match(/fill="#301C29"/g)||[]).length,1);
+ assert.equal((svg.match(/fill="#301C29"/g)||[]).length,0,'the question list must not create a detached second surface');
  assert.ok(svg.includes('YOUR INTRODUCTION · ONE FORM'));
  for(const [index,question] of questions.entries()){
   assert.ok(svg.includes(question));

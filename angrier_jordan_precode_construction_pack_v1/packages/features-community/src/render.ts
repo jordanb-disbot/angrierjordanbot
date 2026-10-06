@@ -11,6 +11,11 @@ function copy(value:string,cx:number,y:number,width:number,size=30,color=bright,
  if(lines.length>max)visible[max-1]=(visible[max-1]??'').replace(/.$/,'')+'…';
  return {svg:visible.map((s,i)=>text(cx,y+i*Math.ceil(size*1.38),s,size,color,'text-anchor="middle" font-weight="600"')).join(''),height:visible.length*Math.ceil(size*1.38),clipped:lines.length>max};
 }
+function leftCopy(value:string,x:number,y:number,width:number,size=30,color=bright,max=5){
+ const lines=wrapText(value,width,size),visible=lines.slice(0,max);
+ if(lines.length>max)visible[max-1]=(visible[max-1]??'').replace(/.$/,'')+'…';
+ return {svg:visible.map((s,i)=>text(x,y+i*Math.ceil(size*1.38),s,size,color,'font-weight="600"')).join(''),height:visible.length*Math.ceil(size*1.38),clipped:lines.length>max};
+}
 function plate(x:number,y:number,w:number,h:number,accent=amber){return panel(x,y,w,h,accent)+`<rect x="${x+7}" y="${y+7}" width="${w-14}" height="${h-14}" rx="8" fill="none" stroke="${accent}" stroke-opacity=".12"/><path d="M${x+16} ${y+34}V${y+16}H${x+42}M${x+w-42} ${y+h-16}H${x+w-16}V${y+h-34}" fill="none" stroke="${accent}" stroke-opacity=".65"/><path d="M${x+32} ${y+h-8}H${x+w-32}" stroke="#FFF3D9" stroke-opacity=".1"/>`;}
 function frame(height:number,body:string){
  const detail=`<ellipse cx="600" cy="140" rx="520" ry="250" fill="url(#lamp)" opacity=".25"/><rect x="12" y="12" width="1176" height="${height-24}" rx="14" fill="none" stroke="url(#gold)"/><rect x="20" y="20" width="1160" height="${height-40}" rx="10" fill="none" stroke="${amber}" stroke-opacity=".25"/>`;
@@ -41,7 +46,7 @@ function renderSuggestion(v:CommunityView,avatars:CommunityPortraits={}){
  let body=heading('Suggestion Desk',declined?'Archived for the record':'A better seat starts with a good idea'),y=176;
  const authoredSections=[['SUGGESTION',title],['THE CHANGE',change],['WHY IT MATTERS',why]] as const;
  for(const [label,value] of authoredSections){
-  const section=copy(value,82,y+78,1014,28,bright,4),height=Math.max(128,section.height+96);
+  const section=leftCopy(value,82,y+78,1014,28,bright,4),height=Math.max(128,section.height+96);
   body+=plate(38,y,1124,height,accent)+text(82,y+45,label,20,accent,'font-weight="700" letter-spacing="2"')+section.svg;y+=height+14;
  }
  body+=plate(38,y,1124,106,accent);
