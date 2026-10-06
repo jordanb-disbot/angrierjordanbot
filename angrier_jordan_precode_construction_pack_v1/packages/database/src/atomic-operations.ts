@@ -2,6 +2,19 @@ import {Prisma,type PrismaClient} from '@prisma/client';
 import {createHash} from 'node:crypto';
 import {DomainError,LedgerEngine,spendableWallet,type LedgerRepository,type LedgerTransaction} from '../../core/src/index.js';
 
+const auditValue=(value:unknown):Prisma.InputJsonValue=>JSON.parse(JSON.stringify(value,(_key,current)=>typeof current==='bigint'?current.toString():current));
+const auditAction=(reason:string)=>{
+ const normalized=reason.toLowerCase();
+ if(normalized.includes('shop purchase'))return'economy.shop_purchase';
+ if(normalized.includes('inventory sale'))return'economy.shop_sale';
+ if(normalized.includes('tool repair'))return'economy.repair';
+ if(normalized.includes('bank deposit'))return'economy.bank_deposit';
+ if(normalized.includes('bank withdrawal'))return'economy.bank_withdrawal';
+ if(normalized.includes('transfer'))return'economy.transfer';
+ if(/casino|lottery|race|fight|wager|payout|jackpot|chair pot/.test(normalized))return'economy.game_settlement';
+ return'economy.ledger_settlement';
+};
+
 /** Ledger adapter bound to the caller's transaction: item/session changes and money commit together. */
 export class TransactionLedgerRepository implements LedgerRepository {
   constructor(private readonly tx:Prisma.TransactionClient){}
@@ -23,6 +36,13 @@ export class TransactionLedgerRepository implements LedgerRepository {
       if(result.count!==1)throw new DomainError('LEDGER_CONFLICT','Balance changed; retry the operation.');
     }
     await this.tx.ledgerEntry.createMany({data:input.lines.map(l=>({guildId:input.guildId,transactionId:header.id,userId:l.userId??null,bucket:l.bucket,amount:l.amount,reason:l.reason,metadata:l.metadata?JSON.parse(JSON.stringify(l.metadata)):Prisma.JsonNull}))});
+    // Item operations write one richer audit row after their inventory save.  All other
+    // ledger-backed mutations are audited here, in the same serializable transaction.
+    if(!input.idempotencyKey.startsWith('items:')){
+      const affectedUserIds=[...new Set(input.lines.flatMap(line=>line.userId?[line.userId]:[]))];
+      const actorUserId=input.lines.find(line=>line.userId&&line.amount<0n)?.userId??affectedUserIds[0]??null;
+      await this.tx.auditEvent.create({data:{guildId:input.guildId,actorUserId,source:'economy',action:auditAction(input.lines[0]?.reason??'Ledger transaction'),targetType:'economy_transaction',targetId:header.id,reason:input.lines[0]?.reason??'Ledger transaction',requestId:input.idempotencyKey,createdAt:new Date(),after:auditValue({transactionId:header.id,affectedUserIds,lines:input.lines.map(line=>({userId:line.userId??null,bucket:line.bucket,amount:line.amount.toString(),reason:line.reason,metadata:line.metadata??null}))})}});
+    }
     return true;
   }
 }

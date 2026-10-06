@@ -3,6 +3,7 @@ import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atom
 import {DomainError,spendableWallet} from '../../core/src/index.js';
 import type {ItemContext,ItemMember,ItemOutcome,ItemRepository,ItemState,ItemUnit} from './items-types.js';
 const object=(value:unknown)=>value&&typeof value==='object'&&!Array.isArray(value)?value as Record<string,unknown>:{};
+const json=(value:unknown):Prisma.InputJsonValue=>JSON.parse(JSON.stringify(value,(_key,current)=>typeof current==='bigint'?current.toString():current));
 
 async function load(db:Prisma.TransactionClient,guildId:string,userIds:string[]):Promise<ItemState>{
  const where={guildId,userId:{in:userIds}};
@@ -45,6 +46,8 @@ export class PrismaItemRepository implements ItemRepository {
    const result=await operation({state,spend:(u,n,r)=>move(u,-n,r),reward:move,gift:(senderId,recipientId,itemId,quantity)=>gifts.push({senderId,recipientId,itemId,quantity})});
    for(const m of state.members)await save(tx,c.guildId,m);
    for(const [index,gift] of gifts.entries())await tx.giftRecord.create({data:{id:`${c.guildId}:${c.requestKey}:${index}`,guildId:c.guildId,...gift}});
+   const details=object(fingerprint),args=object(details.args),itemId=typeof args.id==='string'?args.id:typeof args.recipeId==='string'?args.recipeId:undefined;
+   await tx.auditEvent.create({data:{guildId:c.guildId,actorUserId:c.userId,source:'economy',action:`economy.item.${String(details.action??'mutation')}`,targetType:itemId?'catalog_item':'inventory',targetId:itemId??c.userId,reason:`Inventory ${String(details.action??'mutation')}`,requestId:`items:${c.requestKey}`,createdAt:new Date(),after:json({affectedUserIds:userIds,itemId:itemId??null,args,result,accounts:state.members.map(member=>({userId:member.userId,wallet:member.wallet.toString(),bank:member.bank.toString()})),gifts})}});
    return result;
   });
  }

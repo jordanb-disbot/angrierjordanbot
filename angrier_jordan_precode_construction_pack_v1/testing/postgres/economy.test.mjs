@@ -51,6 +51,16 @@ test('EAJ 1.1 PostgreSQL migration and durable streak-installment acceptance',as
    const after=await db.economyAccount.findUniqueOrThrow({where:{guildId_userId:{guildId:'economy',userId:'keeper'}}});
    assert.equal(after.wallet,before.account.wallet);assert.equal(await db.ledgerEntry.count({where:{guildId:'economy'}}),before.entries);assert.equal(await db.toolInstance.count({where:{guildId:'economy',userId:'keeper'}}),before.tools);assert.equal(await db.marriage.count({where:{guildId:'economy'}}),before.marriages);
   });
+  await t.test('ordinary economy audits are atomic, populated, and replay-safe',async()=>{
+   const now=new Date('2026-10-06T12:00:00Z'),repo=new PrismaEconomyRepository(db),worker=service(db,new FixedClock(now));
+   const claim=await repo.commitClaim({guildId:'economy',userId:'audit-owner',claimField:'dailyLastClaimAt',cycleStart:new Date('2026-10-06T10:00:00Z'),now,idempotencyKey:'audit:daily',kind:'DAILY_CLAIM',reason:'Daily claim',walletReward:100n,dailyStreak:1,metadata:{cycleKey:'2026-10-06'}});
+   assert.equal(claim.status,'applied');
+   const daily=await db.auditEvent.findMany({where:{guildId:'economy',requestId:'audit:daily'}});assert.equal(daily.length,1);assert.equal(daily[0].actorUserId,'audit-owner');assert.equal(daily[0].action,'economy.daily_claim');assert.equal(daily[0].targetType,'economy_transaction');assert.ok(daily[0].createdAt instanceof Date);
+   const replay=await repo.commitClaim({guildId:'economy',userId:'audit-owner',claimField:'dailyLastClaimAt',cycleStart:new Date('2026-10-06T10:00:00Z'),now,idempotencyKey:'audit:daily',kind:'DAILY_CLAIM',reason:'Daily claim',walletReward:100n,dailyStreak:1,metadata:{cycleKey:'2026-10-06'}});assert.equal(replay.status,'duplicate');assert.equal(await db.auditEvent.count({where:{guildId:'economy',requestId:'audit:daily'}}),1);
+   await worker.transfer({guildId:'economy',fromUserId:'audit-owner',toUserId:'audit-recipient',amount:25n,idempotencyKey:'audit:transfer'});await worker.transfer({guildId:'economy',fromUserId:'audit-owner',toUserId:'audit-recipient',amount:25n,idempotencyKey:'audit:transfer'});
+   const transfer=await db.auditEvent.findMany({where:{guildId:'economy',requestId:'audit:transfer'}});assert.equal(transfer.length,1);assert.equal(transfer[0].action,'economy.transfer');assert.equal(transfer[0].actorUserId,'audit-owner');assert.deepEqual((transfer[0].after).affectedUserIds.sort(),['audit-owner','audit-recipient']);
+   const beforeFailedAudits=await db.auditEvent.count({where:{guildId:'economy'}});await assert.rejects(()=>worker.withdraw({guildId:'economy',userId:'audit-recipient',amount:1n,idempotencyKey:'audit:failed'}));assert.equal(await db.auditEvent.count({where:{guildId:'economy'}}),beforeFailedAudits);
+  });
   await t.test('atomic settlement, concurrent workers, retry, and restart recovery pay each installment once',async()=>{
    const clock=new FixedClock(new Date('2026-10-06T12:00:00Z')),repo=new PrismaEconomyRepository(db);
    const claim=await repo.commitClaim({guildId:'economy',userId:'streaker',claimField:'dailyLastClaimAt',cycleStart:new Date('2026-10-06T10:00:00Z'),now:clock.now(),idempotencyKey:'streak:claim',kind:'DAILY_CLAIM',reason:'Daily claim',walletReward:200n,dailyStreak:30,streakInstallment:{totalAmount:2500n,installmentCount:7,firstDueAt:clock.now()},metadata:{streak:30}});
