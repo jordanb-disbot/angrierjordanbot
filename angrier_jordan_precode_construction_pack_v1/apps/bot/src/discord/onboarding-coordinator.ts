@@ -53,6 +53,23 @@ export class DiscordOnboardingCoordinator {
     if(access&&member.roles.cache.has(access))await member.roles.remove(access,'Rules acknowledgment required on join/rejoin.').catch(()=>undefined);
     await member.send({content:(returning?'Welcome back to Chairs.':'Welcome to Chairs. Your seat is waiting.')+' Please review `/rules` and acknowledge them to complete your arrival.'}).catch(()=>undefined);
   }
+  async sweepRolePanel(client:any,guildId:string):Promise<void>{
+    const channel=await client.channels.fetch(ROLE_ASSIGNMENTS_CHANNEL_ID).catch(()=>null);
+    if(!channel?.isTextBased?.()||!channel.isSendable?.()||!('messages'in channel))return;
+    const payload=this.sharedRolePanelMessage();
+    const saved=await this.service.roleSelectionPanel(guildId);
+    let panel:any=null;
+    if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID)panel=await channel.messages.fetch(saved.messageId).catch(()=>null);
+    const recent=await channel.messages.fetch({limit:100}).catch(()=>new Map());
+    const managed=[...recent.values()].filter((message:any)=>this.isSharedRolePanel(message,client.user?.id));
+    if(!this.isSharedRolePanel(panel,client.user?.id))panel=managed.shift()??null;
+    for(const duplicate of managed){
+      if(duplicate.id!==panel?.id)await duplicate.delete().catch(()=>undefined);
+    }
+    if(panel)await panel.edit(payload);
+    else panel=await channel.send(payload);
+    await this.service.saveRoleSelectionPanel({guildId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:panel.id});
+  }
 
   async handleMemberRemove(member:GuildMember|PartialGuildMember):Promise<void>{
     const guildId=member.guild.id;
@@ -114,6 +131,22 @@ export class DiscordOnboardingCoordinator {
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));
     }
     catch(error){await interaction.editReply({content:error instanceof DomainError?error.message:'The role panel could not be loaded.'});}
+  }
+  async handleRolePanelOpen(interaction:ButtonInteraction):Promise<void>{
+    if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
+    await interaction.deferReply({ephemeral:true});const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));
+  }
+
+  private sharedRolePanelMessage(){
+    return {
+      content:'**Choose Your Seats**\nOpen your private role selector. Your choices stay private until you use **Publish My Selections**.',
+      components:[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('roles:panel:open').setLabel('Choose My Roles').setStyle(ButtonStyle.Primary))],
+      allowedMentions:{parse:[] as never[]},
+    };
+  }
+
+  private isSharedRolePanel(message:any,botId?:string):boolean{
+    return Boolean(message&&message.author?.id===botId&&message.components?.some((row:any)=>row.components?.some((component:any)=>component.customId==='roles:panel:open')));
   }
 
   async handleRoleSelect(interaction:StringSelectMenuInteraction):Promise<void>{

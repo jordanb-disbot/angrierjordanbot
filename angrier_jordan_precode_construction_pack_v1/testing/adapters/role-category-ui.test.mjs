@@ -4,9 +4,11 @@ import {OnboardingService,InMemoryOnboardingRepository} from '../../dist/package
 import {AuditService,FixedClock,InMemoryAuditSink} from '../../dist/packages/core/src/index.js';
 function fixture(){
  const repo=new InMemoryOnboardingRepository();repo.panel={id:'panel',guildId:'g',name:'Default Roles',enabled:true,categories:[{key:'dm_status',label:'DM Status',mode:'single',options:[{roleId:'open',label:'DMs Open',enabled:true},{roleId:'closed',label:'DMs Closed',enabled:true}]},{key:'pings',label:'Notification Pings',mode:'multi',options:[{roleId:'race',label:'Race Ping',enabled:true},{roleId:'line',label:'Line Ping',enabled:true}]}]};
- const labels={open:'DMs Open',closed:'DMs Closed',race:'Race Ping',line:'Line Ping'},effects=[],held=new Set(),roles=new Map(['open','closed','race','line'].map(id=>[id,{id,name:labels[id],managed:false,editable:true,permissions:{bitfield:0n}}])),member={roles:{add:async id=>{held.add(id);effects.push('add:'+id);},remove:async id=>{held.delete(id);effects.push('remove:'+id);}}},guild={members:{fetch:async()=>member},roles:{cache:roles}},service=new OnboardingService(repo,new AuditService(new InMemoryAuditSink()),new FixedClock(new Date())),coordinator=new DiscordOnboardingCoordinator(service,{get:async()=>null}),replies=[];
+ const labels={open:'DMs Open',closed:'DMs Closed',race:'Race Ping',line:'Line Ping'},effects=[],held=new Set(),roles=new Map(['open','closed','race','line'].map(id=>[id,{id,name:labels[id],managed:false,editable:true,permissions:{bitfield:0n}}])),member={roles:{add:async id=>{held.add(id);effects.push('add:'+id);},remove:async id=>{held.delete(id);effects.push('remove:'+id);}}},stored=new Map(),sent=[];
+ const channel={isTextBased:()=>true,isSendable:()=>true,messages:{fetch:async arg=>typeof arg==='string'?(stored.get(arg)??Promise.reject(new Error('missing'))):new Map(stored)},send:async payload=>{const message={id:`m${stored.size+1}`,author:{id:'bot'},components:payload.components?.map(row=>({components:row.toJSON().components.map(component=>({customId:component.custom_id}))}))??[],payload,edits:[],edit:async next=>{message.payload=next;message.edits.push(next);}};stored.set(message.id,message);sent.push(message);return message;}};
+ const guild={id:'g',members:{fetch:async()=>member},roles:{cache:roles},channels:{fetch:async id=>id==='1537333197438980116'?channel:null}},service=new OnboardingService(repo,new AuditService(new InMemoryAuditSink()),new FixedClock(new Date())),coordinator=new DiscordOnboardingCoordinator(service,{get:async()=>null}),replies=[];
  const interaction=(customId,values)=>{const i={guildId:'g',guild,user:{id:'u'},customId,values,message:{attachments:new Map([['art',{name:'your-roles-1.png'}]])},deferred:false,replied:false,deferUpdate:async()=>{i.deferred=true;effects.push('ack');},deferReply:async()=>{i.deferred=true;effects.push('ack');},editReply:async p=>replies.push(p),followUp:async p=>replies.push(p),reply:async p=>{i.replied=true;replies.push(p);}};return i;};
- return{repo,roles,guild,coordinator,interaction,replies,effects,held};
+ return{repo,roles,guild,channel,stored,sent,service,coordinator,interaction,replies,effects,held};
 }
 const nodes=p=>p.components.map(c=>c.toJSON());
 test('Roles opens category-first, category selection reuses one private window without reupload',async()=>{
@@ -38,4 +40,21 @@ test('A panel misconfiguration cannot display or assign staff-style roles',async
  const f=fixture();f.repo.panel.categories[0].options.push({roleId:'staff',label:'Arm Chair',enabled:true});f.roles.set('staff',{id:'staff',name:'Arm Chair',managed:false,editable:true,permissions:{bitfield:0n}});
  await f.coordinator.handleRolesCommand(f.interaction('',[]));assert.doesNotMatch(JSON.stringify(nodes(f.replies.at(-1))),/Arm Chair/);
  await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['staff']));assert.equal(f.held.size,0);assert.match(f.replies.at(-1).content,/no longer available/);
+});
+test('Dedicated role panel opens a private selector and remains shared and non-mutating',async()=>{
+ const f=fixture();const client={user:{id:'bot'},channels:{fetch:async()=>f.channel}};
+ await f.coordinator.sweepRolePanel(client,'g');await f.coordinator.sweepRolePanel(client,'g');
+ assert.equal(f.sent.length,1);assert.deepEqual(await f.service.roleSelectionPanel('g'),{channelId:'1537333197438980116',messageId:'m1'});
+ const open=f.interaction('roles:panel:open',[]);await f.coordinator.handleRolePanelOpen(open);
+ assert.equal(f.held.size,0);assert.ok(nodes(f.replies.at(-1)).some(row=>row.type===1&&row.components[0].custom_id==='roles:select:_category'));
+});
+test('Publish My Selections creates and then upserts one public card only after explicit publication',async()=>{
+ const f=fixture();await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['open']));
+ await f.coordinator.handleRolePublish(f.interaction('roles:publish',[]));assert.equal(f.sent.length,1);assert.match(f.sent[0].payload.content,/DMs Open/);
+ await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',['closed']));assert.equal(f.sent.length,1);
+ await f.coordinator.handleRolePublish(f.interaction('roles:publish',[]));assert.equal(f.sent.length,1);assert.equal(f.sent[0].edits.length,1);assert.match(f.sent[0].edits[0].content,/DMs Closed/);
+});
+test('Roles outside the dedicated channel receive only the private redirect',async()=>{
+ const f=fixture();const outside=f.interaction('',[]);outside.channelId='elsewhere';await f.coordinator.handleRolesCommand(outside);
+ assert.equal(f.replies.length,1);assert.match(f.replies[0].content,/<#1537333197438980116>/);assert.equal(f.replies[0].ephemeral,true);
 });

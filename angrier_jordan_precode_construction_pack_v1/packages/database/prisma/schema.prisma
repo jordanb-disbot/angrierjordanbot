@@ -165,6 +165,16 @@ model RoleSelectionCard {
   @@id([guildId,userId])
 }
 
+// The shared "Choose Your Seats" message is a managed channel surface, separate
+// from each member's published selection card.  Keeping its identity durable lets
+// startup recovery edit/reuse one panel instead of creating a new one per restart.
+model RoleSelectionPanel {
+  guildId String @id
+  channelId String
+  messageId String
+  updatedAt DateTime @updatedAt
+}
+
 model MemberRoleSnapshot {
   guildId String
   userId String

@@ -99,4 +99,6 @@ export class OnboardingService {
   async currentRoleSnapshots(guildId:string,userId:string):Promise<RoleSnapshot[]>{return this.repository.listRoleSnapshots(guildId,userId);}
   async roleSelectionCard(guildId:string,userId:string){return this.repository.getRoleSelectionCard(guildId,userId);}
   async saveRoleSelectionCard(input:{guildId:string;userId:string;channelId:string;messageId:string}){await this.repository.saveRoleSelectionCard(input);}
+  async roleSelectionPanel(guildId:string){return this.repository.getRoleSelectionPanel(guildId);}
+  async saveRoleSelectionPanel(input:{guildId:string;channelId:string;messageId:string}){await this.repository.saveRoleSelectionPanel(input);}
 }

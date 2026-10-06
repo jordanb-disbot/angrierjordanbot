@@ -15,6 +15,7 @@ interface TxLike {
   selfRolePanel:{findFirst(args:unknown):Promise<RowPanel|null>};
   selfRoleSelection:{findMany(args:unknown):Promise<RowSelection[]>;deleteMany(args:unknown):Promise<unknown>;upsert(args:unknown):Promise<RowSelection>};
   roleSelectionCard:{findUnique(args:unknown):Promise<{channelId:string;messageId:string}|null>;upsert(args:unknown):Promise<unknown>};
+  roleSelectionPanel:{findUnique(args:unknown):Promise<{channelId:string;messageId:string}|null>;upsert(args:unknown):Promise<unknown>};
 }
 export interface OnboardingPrismaLike extends TxLike {$transaction<T>(fn:(tx:TxLike)=>Promise<T>):Promise<T>;}
 
@@ -59,4 +60,6 @@ export class PrismaOnboardingRepository implements OnboardingRepository {
   async replaceSelfRoleCategorySelections(input:{guildId:string;userId:string;categoryKey:string;roleIds:readonly string[];now:Date}){return this.db.$transaction(async tx=>{await tx.selfRoleSelection.deleteMany({where:{guildId:input.guildId,userId:input.userId,categoryKey:input.categoryKey,active:true}});const out:SelfRoleSelection[]=[];for(const roleId of input.roleIds){const row=await tx.selfRoleSelection.upsert({where:{guildId_userId_roleId:{guildId:input.guildId,userId:input.userId,roleId}},create:{guildId:input.guildId,userId:input.userId,roleId,categoryKey:input.categoryKey,active:true,selectedAt:input.now,archivedAt:null},update:{categoryKey:input.categoryKey,active:true,selectedAt:input.now,archivedAt:null}});out.push(selection(row));}return out;});}
   async getRoleSelectionCard(guildId:string,userId:string){return this.db.roleSelectionCard.findUnique({where:{guildId_userId:{guildId,userId}}});}
   async saveRoleSelectionCard(input:{guildId:string;userId:string;channelId:string;messageId:string}){await this.db.roleSelectionCard.upsert({where:{guildId_userId:{guildId:input.guildId,userId:input.userId}},create:input,update:{channelId:input.channelId,messageId:input.messageId}});}
+  async getRoleSelectionPanel(guildId:string){return this.db.roleSelectionPanel.findUnique({where:{guildId}});}
+  async saveRoleSelectionPanel(input:{guildId:string;channelId:string;messageId:string}){await this.db.roleSelectionPanel.upsert({where:{guildId:input.guildId},create:input,update:{channelId:input.channelId,messageId:input.messageId}});}
 }
