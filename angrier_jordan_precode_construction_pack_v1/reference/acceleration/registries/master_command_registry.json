@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 129,
+  "command_count": 130,
   "commands": [
     {
       "id": "help",
@@ -268,6 +268,42 @@
       "status": "locked",
       "preferred_invocation": "/achievements",
       "registration_path": "/achievements"
+    },
+    {
+      "id": "steal",
+      "command": "/steal",
+      "type": "slash",
+      "module": "community",
+      "description": "Copy a custom Discord emoji into Chairs.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [
+        {
+          "name": "emoji",
+          "type": "string",
+          "required": true,
+          "description": "A custom Discord emoji to copy."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Optional name for the copied emoji."
+        }
+      ],
+      "handler": "community.steal",
+      "feature_flag": "community",
+      "ephemeral_default": true,
+      "help_id": "steal",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/steal emoji:<emoji> name:<optional>",
+      "registration_path": "/steal"
     },
     {
       "id": "daily",

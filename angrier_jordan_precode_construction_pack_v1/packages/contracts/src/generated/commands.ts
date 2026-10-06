@@ -240,6 +240,38 @@ export const COMMANDS = [
     "tutorialId": "community.profiles"
   },
   {
+    "id": "steal",
+    "preferred": "/steal emoji:<emoji> name:<optional>",
+    "registered": "/steal",
+    "type": "slash",
+    "module": "community",
+    "handler": "community.steal",
+    "featureFlag": "community",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "any_allowed"
+    ],
+    "options": [
+      {
+        "name": "emoji",
+        "type": "string",
+        "required": true,
+        "description": "A custom Discord emoji to copy."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "Optional name for the copied emoji."
+      }
+    ],
+    "ephemeralDefault": true,
+    "helpId": "steal",
+    "tutorialId": "community"
+  },
+  {
     "id": "daily",
     "preferred": "/daily",
     "registered": "/daily",

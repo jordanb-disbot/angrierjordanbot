@@ -75,6 +75,7 @@ import { DiscordModerationCoordinator } from './discord/moderation-coordinator.j
 import { DiscordSecurityCoordinator } from './discord/security-coordinator.js';
 import { DiscordActivityLogger } from './discord/activity-logger.js';
 import { DiscordEconomyCoordinator } from './discord/economy-coordinator.js';
+import {DiscordEmojiStealCoordinator,EMOJI_STEAL_COMMANDS} from './discord/emoji-steal-coordinator.js';
 
 class CuidLikeIds {next(prefix:string){return `${prefix}_${crypto.randomUUID()}`;}}
 const required=(name:string)=>{const value=process.env[name]?.trim();if(!value)throw new Error(`Missing required environment variable ${name}`);return value;};
@@ -172,6 +173,7 @@ export async function startProductionBot():Promise<void>{
   const economyService=new EconomyService(new PrismaEconomyRepository(db),audit,new SystemClock(),undefined,fortunes);
   const adaptiveApplicationFor=async(guildId:string)=>enableEconomyAdaptiveApplication&&!economyAdaptivePaused&&await config.get(guildId,'economy.adaptive_paused')!==true;
   const economy=new DiscordEconomyCoordinator(economyService,config,adaptiveApplicationFor);
+  const emojiSteal=new DiscordEmojiStealCoordinator(audit);
   const crimeRepo=new PrismaCrimeRepository(db);
   const items=new DiscordItemsCoordinator(new PrismaItemRepository(db),config,async(g,u)=>{
     if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;
@@ -497,6 +499,7 @@ export async function startProductionBot():Promise<void>{
         if(enableSecuritySmoke&&interaction.guildId&&interaction.commandName==='wyr'){const s=await securityService.state(interaction.guildId);if(s.panicActive||s.mode==='LOCKDOWN'){await interaction.reply({ephemeral:true,content:'Interactive games are temporarily disabled while the server is in Lockdown.'});return;}}
         if(interaction.commandName==='wyr'){if(!enableWyrSmoke){await interaction.reply({ephemeral:true,content:'Would You Rather is not enabled yet.'});return;}await wyr.handleSlash(interaction);await recordSuccessfulCommand(interaction);return;}
         if(interaction.commandName==='rules'&&enableOnboardingSmoke){await onboarding.handleRulesCommand(interaction);return;}
+        if(EMOJI_STEAL_COMMANDS.has(interaction.commandName)){await emojiSteal.handle(interaction);return;}
         if(interaction.commandName==='roles'&&enableOnboardingSmoke){await onboarding.handleRolesCommand(interaction);return;}
         if(interaction.commandName==='announce'){
           if(!interaction.guild){await interaction.reply({ephemeral:true,content:'Use /announce in the server.'});return;}
