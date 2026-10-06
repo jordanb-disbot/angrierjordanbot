@@ -42,7 +42,10 @@ export interface EconomyMeasurement {
   medianEarningDaysToMajorPurchase?:bigint; itemUtilityBps?:bigint; gamblingExposureBps?:bigint;
 }
 export const smoothedBenchmark=(daily:readonly bigint[])=>daily.length<7?undefined:daily.slice(-7).reduce((sum,value)=>sum+value,0n)/7n;
-export const shadowReady=(snapshots:readonly {benchmark:bigint;reconciliationValid:boolean;abnormalActivity:boolean}[])=>snapshots.length>=7&&snapshots.slice(-7).every(row=>row.benchmark>0n&&row.reconciliationValid&&!row.abnormalActivity);
+/** Adaptive application needs seven valid daily observations *and* seven complete
+ * elapsed days. The eighth boundary retains the first observation while the
+ * newest seven are the policy window; backfilled snapshots cannot bypass time. */
+export const shadowReady=(snapshots:readonly {benchmark:bigint;reconciliationValid:boolean;abnormalActivity:boolean;observedAt?:Date}[],now?:Date)=>{const valid=snapshots.length>=7&&snapshots.slice(-7).every(row=>row.benchmark>0n&&row.reconciliationValid&&!row.abnormalActivity);if(!valid||!now)return valid;const first=snapshots.map(row=>row.observedAt).filter((value):value is Date=>value instanceof Date).sort((a,b)=>a.getTime()-b.getTime())[0];return Boolean(first&&now.getTime()-first.getTime()>=7*86_400_000);};
 /**
  * A qualifying member is a human member observed in the server for seven
  * days and with at least three meaningful, independent observations in the

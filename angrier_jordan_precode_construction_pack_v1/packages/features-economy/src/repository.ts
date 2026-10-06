@@ -1,6 +1,6 @@
 import type {LedgerRepository,LedgerTransaction} from '../../core/src/index.js';
 import type {ActivityOutcome,BankTierRule,CatalogItemRecord,EconomyAccountRecord,EconomyActivityEventRecord,EconomyActivityStatRecord,EconomyLedgerEntryRecord,EconomyTransactionRecord,GrindActivity,InventoryEntryRecord,InventoryGrant,MemberClaimStateRecord,StreakInstallmentRecord,ToolRecord} from './types.js';
-export interface EconomySnapshotRecord {guildId:string;cycleKey:string;totalSupply:bigint;eligibleMemberCount:number;metrics:Record<string,unknown>;}
+export interface EconomySnapshotRecord {guildId:string;cycleKey:string;observedAt:Date;totalSupply:bigint;eligibleMemberCount:number;metrics:Record<string,unknown>;}
 export interface EconomyPolicyProposal {guildId:string;cycleKey:string;mode?:'SHADOW'|'ACTIVE'|'PAUSED';frozen:boolean;reason?:string;benchmark?:bigint;policy:Record<string,string>;bounds:Record<string,unknown>;adjustments:readonly {key:string;previous:string;proposed:string;applied:string;reason:string}[];}
 export interface PersistedEconomyPolicy {mode:'SHADOW'|'ACTIVE'|'PAUSED';policy:Record<string,unknown>;pausedAt?:Date|null;}
 

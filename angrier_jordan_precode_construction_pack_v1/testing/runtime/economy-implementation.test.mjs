@@ -91,6 +91,7 @@ test('major-purchase affordability reports immediate access and earning time ind
   assert.equal(metric.immediatelyAffordableBps,1500n);assert.equal(metric.medianDaysToAfford,6n);
 });
 test('shadow controller requires seven valid observations and uses a seven-day benchmark',()=>{const rows=[10n,20n,30n,40n,50n,60n,70n];assert.equal(smoothedBenchmark(rows),40n);assert.equal(shadowReady(rows.map(benchmark=>({benchmark,reconciliationValid:true,abnormalActivity:false}))),true);assert.equal(shadowReady(rows.slice(1).map(benchmark=>({benchmark,reconciliationValid:true,abnormalActivity:false}))),false);});
+test('adaptive activation requires seven complete elapsed days, not merely seven backfilled snapshots',()=>{const start=new Date('2026-10-05T10:00:00Z'),rows=Array.from({length:7},(_,i)=>({benchmark:100n,reconciliationValid:true,abnormalActivity:false,observedAt:new Date(start.getTime()+i*86_400_000)}));assert.equal(shadowReady(rows,new Date(start.getTime()+6*86_400_000)),false);assert.equal(shadowReady([...rows,{...rows[6],observedAt:new Date(start.getTime()+7*86_400_000)}],new Date(start.getTime()+7*86_400_000)),true);});
 
 test('active benchmark excludes bots, new members, spending, and thin activity',()=>{
   const now=new Date('2026-10-05T10:00:00Z'),old=new Date('2026-09-20T10:00:00Z');
