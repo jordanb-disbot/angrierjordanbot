@@ -1,5 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import sharp from 'sharp';
 import {DiscordProfilesCoordinator} from '../../dist/apps/bot/src/discord/profiles-coordinator.js';
 import {renderPremiumProfile,renderPremiumProfilePages,renderPremiumLeaderboard,renderPremiumRecords,renderPremiumShowcase,renderPremiumAchievements} from '../../dist/packages/features-profiles/src/premium-render.js';
 const config={get:async()=>true};
@@ -31,6 +35,21 @@ test('achievement cabinet keeps nine earned or locked honors in a stable three-b
  const rows=Array.from({length:9},(_,n)=>({name:'Chair Honor '+(n+1),class:n===0?'prestige':'activity',earnedAt:n%2===0?new Date('2026-09-28'):null}));
  const svg=renderPremiumAchievements({name:'Morgan',rows,page:0,pages:1});
  assert.match(svg,/Achievement Cabinet/);assert.equal((svg.match(/Chair Honor/g)??[]).length,9);assert.equal((svg.match(/LOCKED · ACTIVITY/g)??[]).length,4);assert.equal((svg.match(/EARNED/g)??[]).length,6);
+});
+test('achievement category badges are isolated square transparent assets with a safe visible margin',async()=>{
+ const root=process.cwd(),manifest=JSON.parse(fs.readFileSync(path.join(root,'reference/assets/final-production-visual-manifest.json'),'utf8'));
+ const categoryAssets=manifest.assets.filter(asset=>asset.id.startsWith('badges.achievement_category.'));
+ assert.equal(categoryAssets.length,13);
+ for(const asset of categoryAssets){
+  const file=path.join(root,asset.file),bytes=fs.readFileSync(file),image=sharp(bytes),metadata=await image.metadata();
+  assert.deepEqual([metadata.width,metadata.height],[512,512],asset.id+' is a normalized square');
+  assert.equal(metadata.hasAlpha,true,asset.id+' retains transparent surroundings');
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),asset.sha256,asset.id+' remains manifest-pinned');
+  const {data,info}=await image.ensureAlpha().raw().toBuffer({resolveWithObject:true});
+  let minX=info.width,minY=info.height,maxX=-1,maxY=-1;
+  for(let y=0;y<info.height;y++)for(let x=0;x<info.width;x++)if(data[(y*info.width+x)*4+3]>8){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}
+  assert.ok(minX>=48&&minY>=48&&maxX<=463&&maxY<=463,asset.id+' keeps the complete badge inside its safe margin');
+ }
 });
 test('achievement command is private, paged, and only reads the requested member cabinet',async()=>{
  const i=interaction('achievements');i.guild.members.fetch=async()=>({displayName:'Morgan',user:{id:'member',displayName:'Morgan',displayAvatarURL:()=>undefined},displayAvatarURL:()=>undefined});

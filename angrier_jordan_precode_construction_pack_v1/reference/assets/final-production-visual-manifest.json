@@ -4241,15 +4241,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Gambling",
       "canonical": true,
-      "sha256": "6dfea600cc6a4001d7ff8c6eb77a80c5b4400b63e3ab086f11bf552402ce5d04",
+      "sha256": "2e46bbc2eefb5d6f5393f9a9e1f189a0ff2b371aa39f337af257eea7a0a6a7d8",
       "dimensions": [
-        107,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4258,15 +4258,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Crafting",
       "canonical": true,
-      "sha256": "bde331637bb651507bbe972ec5dcb8ea48787ec308bf54a4d6cd0f60b3cb22d4",
+      "sha256": "01773bd7ad8d083c0b3717e240c7f3ec0a0401728f4cd7eb697f5dddbc74fd9d",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4275,15 +4275,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Collector",
       "canonical": true,
-      "sha256": "b08f0bbc12cd4556a1880644b4663d67cb52d8eefac7e85390e77d9dfc4bcb00",
+      "sha256": "ca1563f6bf9441f1d52727d801e1f9ac9a64d504df0a9bb1b00725df08f39adc",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4292,15 +4292,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Crime",
       "canonical": true,
-      "sha256": "8879aa3a408917efeed4378d30664f5c6be543e9a0857db428f073a30239ad41",
+      "sha256": "348a66b01cfa2374b98329050b7d0197f5d8011f1c5f3400a4aa8fa5e036e20d",
       "dimensions": [
-        107,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4309,15 +4309,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Family",
       "canonical": true,
-      "sha256": "a1be6d174dc0f575df62bb5e08b182c62859a88a5ab3834559d7b9d345cb3d35",
+      "sha256": "ebce12b61177988bd69ae62a1a6eb5895422bdb5ac8de5baddbfb931cf21c1b3",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4326,15 +4326,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Social",
       "canonical": true,
-      "sha256": "62dc608a31e48bbc33ba73c0202fa0496e96af3e87798bb768cea5095f73d6a3",
+      "sha256": "dc4e5d198b9e762d37353927aa6f022c1d754699be629f4bf400e06d15bc9569",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4343,15 +4343,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Music",
       "canonical": true,
-      "sha256": "49e2657989da758f0b82c293c2c1310d5fd57b9bdf636398520869d08b0a6097",
+      "sha256": "abf16ee51150909197f2fb24d4402cd3909f9df0c6ed7debe0d54e611183fb66",
       "dimensions": [
-        107,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4360,15 +4360,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Chair Race",
       "canonical": true,
-      "sha256": "3fa1cf4d258c163250239af1e076e0e1f6713e07a55ee9639b3c214b9f1155d6",
+      "sha256": "38806f233952d33933a83ff434a22c228d1270eab6bbd8b1eb40cb8b8825723a",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4377,15 +4377,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Robo Fight",
       "canonical": true,
-      "sha256": "604dd126dd7320906abce5968e7bef5bcf2f4775a2bc145c7c20f9f23af745f1",
+      "sha256": "bba2b429e5ac152d9c85ec484dcdc263a6b314489395c6ac4eb9e36dc81f8b09",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4394,15 +4394,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Party Games",
       "canonical": true,
-      "sha256": "8baf1337dea6e3bb6059a4568c964cb52f8f43f60b5670a300d7d5f53ba31189",
+      "sha256": "9309ba7b0dd49098a0f97ea41ae5ce26468a5b040ad87b455d2c694409f007c1",
       "dimensions": [
-        107,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4411,15 +4411,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Channel Games",
       "canonical": true,
-      "sha256": "9bfae85f5ad8c871ee031c2e366949577899a1d8b8dd21630afd40159efbdaee",
+      "sha256": "ba952f9939abc1e7ed36e3a06678802a86cdf4d8adf531d03c078c98424026b1",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4428,15 +4428,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Economy",
       "canonical": true,
-      "sha256": "93794f093b5bfd2202b90b79a7e097843fa30883f6c800093c4cba6160e02a59",
+      "sha256": "9ee7c3cffe53c0d08e66c8906e117a3b25616081990c91002d88a1b3c2d65779",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -4445,15 +4445,15 @@
       "category": "badges.achievement_categories",
       "usage": "Base achievement category icon: Community",
       "canonical": true,
-      "sha256": "453a4fdd47d94e92c0d0696c78395fae22a863ee2766f4312b3431c084dde4d2",
+      "sha256": "b13f85f2759cd2ab7bc7de6ba3494ccbb5fb873394ae6c43b6db6de794ddae38",
       "dimensions": [
-        108,
-        155
+        512,
+        512
       ],
-      "transparent": false,
+      "transparent": true,
       "source": "emerald_crown_achievement_asset_sheet.png",
       "visual_system": "AJ Visual System v2 — approved second style guide",
-      "notes": "Refreshed for v2 palette/style while preserving semantic identity.",
+      "notes": "Reconstructed as a complete isolated square badge; preserves category identity and approved EAJ visual system.",
       "origin": "Visual Refresh Phase 3 / final integrated patch"
     },
     {
@@ -6134,7 +6134,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Phase 22 deterministic renderer inheriting the owner-approved Gate B visual system; live acceptance pending.",
-        "sha256": "7efe939d5c9f4bf43dd7b8867da78e3c2c50b4dc9df5f44a7a67cb8e73d251eb"
+      "sha256": "7efe939d5c9f4bf43dd7b8867da78e3c2c50b4dc9df5f44a7a67cb8e73d251eb"
     },
     {
       "id": "music.runtime.controller",
