@@ -57,7 +57,6 @@ export class PrismaProfilesRepository {
    const rows=await tx.activityDaily.findMany({where:{guildId,date:{gte:dateOf(prior.key),lt:dateOf(current.key)}}}),map=new Map<string,ActivityTotal>();for(const r of rows){const t=map.get(r.userId)??{userId:r.userId,messages:0,words:0,vcSeconds:0};t.messages+=r.messages;t.words+=r.words;t.vcSeconds+=r.vcSeconds;map.set(r.userId,t);}const result=spotlightWinners([...map.values()]);
    const recent=await tx.activityObservation.findMany({where:{guildId,kind:'message',occurredAt:{gte:new Date(current.start.getTime()-28*86400000),lt:current.start}}});const hours:Record<number,number>={};for(const o of recent){const weekday=new Intl.DateTimeFormat('en-US',{timeZone:'America/Denver',weekday:'short'}).format(o.occurredAt);if(weekday==='Mon')hours[o.hourMt]=(hours[o.hourMt]??0)+1;}const previous=await tx.spotlightFreeze.findFirst({where:{guildId},orderBy:{frozenAt:'desc'}});const postHour=learnedSpotlightHour(hours,previous?hour(previous.announceAt):undefined,posting);const [y,m,d]=current.key.split('-').map(Number);const announceAt=zonedDateTimeToUtc(y!,m!,d!,postHour);
    for(const w of result.winners)for(const userId of w.userIds){const history=await tx.weeklySpotlight.findMany({where:{guildId,category:w.category},orderBy:{weekStart:'desc'}});const precedingWeek=weeklyCycle(new Date(prior.start.getTime()-1)).start;const retained=history.some(h=>h.weekStart.getTime()===precedingWeek.getTime()&&h.userId===userId);const lifetimeWins=history.filter(h=>h.userId===userId).length+1;await tx.weeklySpotlight.create({data:{guildId,weekStart:prior.start,category:w.category,userId,winningValue:BigInt(w.value),lifetimeWins,statusLabel:retained?'RETAINED':lifetimeWins===1?'NEW WINNER':'TOOK THE TITLE'}});}
-   for(const userId of result.tripleThreat){await ensure(tx,guildId,userId);await tx.profileState.updateMany({where:{guildId,userId,tripleThreatAt:null},data:{tripleThreatAt:current.start}});await tx.memberAchievement.upsert({where:{guildId_userId_achievementId:{guildId,userId,achievementId:'spotlight.triple_threat'}},create:{guildId,userId,achievementId:'spotlight.triple_threat'},update:{}});}
    await tx.spotlightFreeze.create({data:{guildId,weekKey:prior.key,frozenAt:current.start,snapshot:result,announceAt}});
    await tx.scheduledJob.upsert({where:{executionKey:`spotlight:announce:${guildId}:${prior.key}`},create:{guildId,jobType:'spotlight.announce',executionKey:`spotlight:announce:${guildId}:${prior.key}`,dueAt:announceAt,status:'PENDING',payload:{guildId,weekKey:prior.key}},update:{}});
    return{weekKey:prior.key,announceAt:announceAt.toISOString()};
@@ -100,7 +99,26 @@ export class PrismaProfilesRepository {
  async awardDetails(guildId:string,weekKey:string){return this.db.weeklySpotlight.findMany({where:{guildId,weekStart:weeklyCycle(new Date(dateOf(weekKey).getTime()+12*3600000)).start},orderBy:[{category:'asc'},{userId:'asc'}]});}
  async announcement(guildId:string,weekKey:string){return this.db.spotlightFreeze.findUnique({where:{guildId_weekKey:{guildId,weekKey}}});}
  async claimAnnouncement(guildId:string,weekKey:string){return(await this.db.spotlightFreeze.updateMany({where:{guildId,weekKey,deliveryState:'PENDING'},data:{deliveryState:'SENDING'}})).count===1;}
- async delivered(guildId:string,weekKey:string,messageId:string){await this.db.$transaction(async tx=>{await tx.spotlightFreeze.update({where:{guildId_weekKey:{guildId,weekKey}},data:{deliveryState:'SENT',messageId}});await tx.weeklySpotlight.updateMany({where:{guildId,weekStart:weeklyCycle(new Date(dateOf(weekKey).getTime()+12*3600000)).start},data:{postedMessageId:messageId}});});}
+ /**
+  * Publication is the achievement boundary: Triple Threat is not awarded merely
+  * because a week was frozen.  This transaction finalizes the exact Spotlight
+  * delivery, links its winners to the public message, and grants the permanent
+  * honor from that immutable weekly snapshot.  DeliveryEngine retries call this
+  * same method after finding an already-sent message, so neither the award nor
+  * its publication linkage can be duplicated after a restart.
+  */
+ async delivered(guildId:string,weekKey:string,messageId:string){await this.db.$transaction(async tx=>{
+   const freeze=await tx.spotlightFreeze.findUniqueOrThrow({where:{guildId_weekKey:{guildId,weekKey}}});
+   const result=freeze.snapshot as unknown as {tripleThreat?:unknown};
+   const tripleThreat=Array.isArray(result.tripleThreat)?result.tripleThreat.filter((userId):userId is string=>typeof userId==='string'):[];
+   for(const userId of new Set(tripleThreat)){
+    await ensure(tx,guildId,userId);
+    await tx.profileState.updateMany({where:{guildId,userId,tripleThreatAt:null},data:{tripleThreatAt:freeze.frozenAt}});
+    await tx.memberAchievement.upsert({where:{guildId_userId_achievementId:{guildId,userId,achievementId:'spotlight.triple_threat'}},create:{guildId,userId,achievementId:'spotlight.triple_threat'},update:{}});
+   }
+   await tx.spotlightFreeze.update({where:{guildId_weekKey:{guildId,weekKey}},data:{deliveryState:'SENT',messageId}});
+   await tx.weeklySpotlight.updateMany({where:{guildId,weekStart:weeklyCycle(new Date(dateOf(weekKey).getTime()+12*3600000)).start},data:{postedMessageId:messageId}});
+  });}
  async reconcile(guildId:string,at=new Date(),posting?:Readonly<SpotlightPostingSettings>){
   const latest=await this.db.spotlightFreeze.findFirst({where:{guildId},orderBy:{frozenAt:'desc'}});
   const earliest=await this.db.activityDaily.findFirst({where:{guildId},orderBy:{date:'asc'}});
