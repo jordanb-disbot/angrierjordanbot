@@ -108,6 +108,7 @@ export class DiscordOnboardingCoordinator {
 
   async handleRolesCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
+    if(interaction.channelId&&interaction.channelId!==ROLE_ASSIGNMENTS_CHANNEL_ID){await interaction.reply({ephemeral:true,content:`Role selection lives in <#${ROLE_ASSIGNMENTS_CHANNEL_ID}>. Open that channel to manage and publish your roles.`,allowedMentions:{parse:[]}});return;}
     await interaction.deferReply({ephemeral:true});
     try{
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId)));
@@ -141,7 +142,7 @@ export class DiscordOnboardingCoordinator {
       const touched=[...new Set([...plan.addRoleIds,...plan.removeRoleIds])];
       // A stale or misconfigured panel must never turn an access, staff, custody or DJ role
       // into a self-assignable option merely because its base permission bits are zero.
-      const protectedKeys=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access','music.dj_role'];
+      const protectedKeys=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access'];
       const protectedIds=new Set((await Promise.all(protectedKeys.map(key=>this.config.get(interaction.guildId!,key)))).filter((id):id is string=>typeof id==='string'&&Boolean(id)));
       if([...selectedRoleIds,...touched].some(id=>protectedIds.has(id)))throw new DomainError('ROLE_PROTECTED','A protected server role cannot be selected here. Ask staff to update this panel.');
       for(const id of touched){
@@ -163,13 +164,16 @@ export class DiscordOnboardingCoordinator {
         throw error;
       }
       const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);
-      await this.publishRoleSelectionCard(interaction.guild,interaction.user.id,state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId));
       await interaction.editReply(await this.rolePanelMessage(approvedRolePanel(state.panel),state.selections.filter(x=>x.active).map(x=>x.roleId),![...interaction.message?.attachments?.values()??[]].some(a=>a.name==='your-roles-1.png'),categoryKey));
     }catch(error){
       const content=error instanceof DomainError?error.message:'That role choice could not be completed. No role changes were saved.';
       if(interaction.deferred||interaction.replied)await interaction.followUp({ephemeral:true,content}).catch(()=>undefined);
       else await interaction.reply({ephemeral:true,content}).catch(()=>undefined);
     }
+  }
+  async handleRolePublish(interaction:ButtonInteraction):Promise<void>{
+    if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This action is only available in the server.'});return;}
+    await interaction.deferReply({ephemeral:true});const state=await this.service.rolePanel(interaction.guildId,interaction.user.id);await this.publishRoleSelectionCard(interaction.guild,interaction.user.id,state.panel,state.selections.filter(x=>x.active).map(x=>x.roleId));await interaction.editReply({content:`Your selected roles are now published in <#${ROLE_ASSIGNMENTS_CHANNEL_ID}>.`,allowedMentions:{parse:[]}});
   }
 
   private async publishRoleSelectionCard(guild:any,userId:string,panel:SelfRolePanelDefinition,selectedRoleIds:readonly string[]){
@@ -184,7 +188,7 @@ export class DiscordOnboardingCoordinator {
 
   private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){
     const selected=new Set(selectedRoleIds);
-    const components:Array<TextDisplayBuilder|ActionRowBuilder<StringSelectMenuBuilder>>=[];
+    const components:Array<TextDisplayBuilder|ActionRowBuilder<StringSelectMenuBuilder>|ActionRowBuilder<ButtonBuilder>>=[];
     if(panel.categories.length)components.push(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(new StringSelectMenuBuilder().setCustomId('roles:select:_category').setPlaceholder('Choose a role category').addOptions(panel.categories.slice(0,25).map(c=>({label:c.label,value:c.key,default:c.key===categoryKey,description:c.mode==='single'?'Choose one, or clear your selection':'Choose several, or clear your selections'})))));
     else components.push(new TextDisplayBuilder().setContent('Role categories have not been configured yet. Please check back after staff completes setup.'));
     for(const category of panel.categories.filter(c=>c.key===categoryKey)){
@@ -200,6 +204,7 @@ export class DiscordOnboardingCoordinator {
         components.push(new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(menu));
       }
     }
+    components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('roles:publish').setLabel('Publish My Selections').setStyle(ButtonStyle.Primary)));
     const art=await(rolesArt??=displayFrames(renderOnboarding('Your Place in Chairs','Choose the details that feel like you',[{title:'YOUR ROLES · YOUR CHOICE',body:'Select from the categories below. Clear a selection to remove it. Changes are saved immediately; reopen /roles to see your choices.'},{title:'APPROVED SELF-ASSIGNABLE ROLES',body:'Only configured member roles are available. Staff and protected roles cannot be self-assigned.'}]),'your-roles','Choose your roles. Saved selections appear in the menus.').catch(error=>{rolesArt=undefined;throw error;}));
     if(includeArtwork)return wideDisplay(art,components);
     // Existing gallery attachments remain while native selections update.

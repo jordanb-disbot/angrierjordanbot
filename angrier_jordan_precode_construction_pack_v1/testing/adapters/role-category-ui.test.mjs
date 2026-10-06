@@ -10,16 +10,16 @@ function fixture(){
 }
 const nodes=p=>p.components.map(c=>c.toJSON());
 test('Roles opens category-first, category selection reuses one private window without reupload',async()=>{
- const f=fixture();await f.coordinator.handleRolesCommand(f.interaction('',[]));let n=nodes(f.replies.at(-1));assert.equal(n.filter(c=>c.type===1).length,1);assert.equal(n.find(c=>c.type===1).components[0].custom_id,'roles:select:_category');
- await f.coordinator.handleRoleSelect(f.interaction('roles:select:_category',['dm_status']));const p=f.replies.at(-1);n=nodes(p);assert.equal(n.filter(c=>c.type===1).length,2);assert.equal(p.files,undefined);assert.equal(p.attachments,undefined);assert.match(JSON.stringify(n),/Choose one/);assert.equal(f.held.size,0);
+ const f=fixture();await f.coordinator.handleRolesCommand(f.interaction('',[]));let n=nodes(f.replies.at(-1));assert.equal(n.filter(c=>c.type===1&&c.components[0].custom_id==='roles:select:_category').length,1);assert.equal(n.find(c=>c.type===1&&c.components[0].custom_id==='roles:select:_category').components[0].custom_id,'roles:select:_category');assert.ok(n.some(c=>c.type===1&&c.components[0].custom_id==='roles:publish'));
+ await f.coordinator.handleRoleSelect(f.interaction('roles:select:_category',['dm_status']));const p=f.replies.at(-1);n=nodes(p);assert.equal(n.filter(c=>c.type===1).length,3);assert.equal(p.files,undefined);assert.equal(p.attachments,undefined);assert.match(JSON.stringify(n),/Choose one/);assert.equal(f.held.size,0);
 });
 test('Single select replaces prior role; deselection and reopening retain persisted state',async()=>{
  const f=fixture();for(const id of ['open','closed'])await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',[id]));assert.deepEqual([...f.held],['closed']);
- await f.coordinator.handleRoleSelect(f.interaction('roles:select:_category',['dm_status']));const menu=nodes(f.replies.at(-1)).filter(c=>c.type===1).at(-1).components[0];assert.equal(menu.max_values,1);assert.equal(menu.options.find(o=>o.value==='closed').default,true);
+ await f.coordinator.handleRoleSelect(f.interaction('roles:select:_category',['dm_status']));const menu=nodes(f.replies.at(-1)).flatMap(c=>c.type===1?c.components:[]).find(c=>c.custom_id==='roles:select:dm_status:0');assert.equal(menu.max_values,1);assert.equal(menu.options.find(o=>o.value==='closed').default,true);
  await f.coordinator.handleRoleSelect(f.interaction('roles:select:dm_status:0',[]));assert.equal(f.held.size,0);assert.equal((await f.repo.listSelfRoleSelections('g','u')).filter(r=>r.active).length,0);
 });
 test('Multi-select adds independent roles and clears them without a success follow-up',async()=>{
- const f=fixture();await f.coordinator.handleRoleSelect(f.interaction('roles:select:pings:0',['race','line']));assert.equal(f.held.size,2);assert.equal(f.replies.length,1);assert.equal(nodes(f.replies[0]).filter(c=>c.type===1).at(-1).components[0].max_values,2);
+ const f=fixture();await f.coordinator.handleRoleSelect(f.interaction('roles:select:pings:0',['race','line']));assert.equal(f.held.size,2);assert.equal(f.replies.length,1);assert.equal(nodes(f.replies[0]).flatMap(c=>c.type===1?c.components:[]).find(c=>c.custom_id==='roles:select:pings:0').max_values,2);
  await f.coordinator.handleRoleSelect(f.interaction('roles:select:pings:0',[]));assert.equal(f.held.size,0);
 });
 test('Stale categories, invalid page/role IDs and unmanageable roles fail safely with an actionable private reply',async()=>{
