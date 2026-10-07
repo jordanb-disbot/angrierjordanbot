@@ -42,6 +42,8 @@ export interface OnboardingLearningOptions {
   eligible?:(guildId:string,userId:string)=>Promise<boolean>;
   /** True only when all authored lore chapters are published and readable. */
   loreAvailable?:(guildId:string)=>Promise<boolean>;
+  /** Member-controlled consent for bot direct messages. */
+  canSendDirectMessage?:(guildId:string,userId:string)=>Promise<boolean>;
 }
 
 export class DiscordOnboardingCoordinator {
@@ -51,7 +53,7 @@ export class DiscordOnboardingCoordinator {
     const {returning}=await this.service.memberJoined(member.guild.id,member.id);
     const access=await roleId(this.config,member.guild.id,'roles.member_access');
     if(access&&member.roles.cache.has(access))await member.roles.remove(access,'Rules acknowledgment required on join/rejoin.').catch(()=>undefined);
-    await member.send({content:(returning?'Welcome back to Chairs.':'Welcome to Chairs. Your seat is waiting.')+' Please review `/rules` and acknowledge them to complete your arrival.'}).catch(()=>undefined);
+    if(await this.learning.canSendDirectMessage?.(member.guild.id,member.id)!==false)await member.send({content:(returning?'Welcome back to Chairs.':'Welcome to Chairs. Your seat is waiting.')+' Please review `/rules` and acknowledge them to complete your arrival.'}).catch(()=>undefined);
   }
   async sweepRolePanel(client:any,guildId:string):Promise<void>{
     const channel=await client.channels.fetch(ROLE_ASSIGNMENTS_CHANNEL_ID).catch(()=>null);

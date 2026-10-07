@@ -179,13 +179,14 @@ export async function startProductionBot():Promise<void>{
   const sessionRepo=new PrismaWyrSessionRepository(db);
   const wyrService=new WyrService(promptRepo,sessionRepo,new SystemClock(),new CuidLikeIds());
   const wyr=new DiscordWyrCoordinator(wyrService,config,(g,u)=>eligibleGame(g,u,'events.use'),new PrismaWyrPublicationRepository(db));
+  const canSendDirectMessage=async(g:string,u:string)=>(await db.member.findUnique({where:{guildId_userId:{guildId:g,userId:u}},select:{dmsEnabled:true}}))?.dmsEnabled??true;
   const onboardingService=new OnboardingService(new PrismaOnboardingRepository(db),audit,new SystemClock());
   const learningRepo=new PrismaLearningRepository(db);
-  const onboarding=new DiscordOnboardingCoordinator(onboardingService,config,{eligible:(g,u)=>enableLearningSmoke?eligibleGame(g,u,'learning.use'):Promise.resolve(false),loreAvailable:async()=> (await learningRepo.chapters()).length===3});
+  const onboarding=new DiscordOnboardingCoordinator(onboardingService,config,{eligible:(g,u)=>enableLearningSmoke?eligibleGame(g,u,'learning.use'):Promise.resolve(false),loreAvailable:async()=> (await learningRepo.chapters()).length===3,canSendDirectMessage});
   const jailService=new JailService(new PrismaJailRepository(db),audit,new SystemClock());
   const jail=new DiscordJailCoordinator(jailService,config,onboarding);
   const moderationService=new ModerationService(new PrismaModerationRepository(db),audit,new SystemClock());
-  const moderation=new DiscordModerationCoordinator(moderationService,config);
+  const moderation=new DiscordModerationCoordinator(moderationService,config,canSendDirectMessage);
   const securityService=new SecurityService(new PrismaSecurityRepository(db),audit,new SystemClock());
   const security=new DiscordSecurityCoordinator(securityService,moderationService,config);
   const activityLogger=enableActivityLoggingSmoke?new DiscordActivityLogger(config,guildId):null;

@@ -27,7 +27,7 @@ const roleId=async(config:ConfigService,serverId:string,key:string)=>{const v=aw
 const discordTime=(date:Date)=>`<t:${Math.floor(date.getTime()/1000)}:F> (<t:${Math.floor(date.getTime()/1000)}:R>)`;
 
 export class DiscordModerationCoordinator {
-  constructor(private readonly service:ModerationService,private readonly config:ConfigService){}
+  constructor(private readonly service:ModerationService,private readonly config:ConfigService,private readonly canSendDirectMessage:(guildId:string,userId:string)=>Promise<boolean>=async()=>true){}
 
   async handleCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId||!interaction.guild){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
@@ -203,7 +203,7 @@ export class DiscordModerationCoordinator {
   private async postStaffLog(guild:Guild,content:string,components?:ActionRowBuilder<ButtonBuilder>){const id=await roleId(this.config,guild.id,'channels.staff_log');if(!id)return;const ch:any=await guild.channels.fetch(id).catch(()=>null);if(ch?.isTextBased())await ch.send({content,...(components?{components:[components]}:{})});}
   private encryptEvidencePayload(payload:unknown,secret:string){if(secret.length<16)throw new DomainError('EVIDENCE_KEY_REQUIRED','Set EVIDENCE_ENCRYPTION_KEY before using message quarantine.');const key=createHash('sha256').update(secret).digest();const iv=randomBytes(12);const cipher=createCipheriv('aes-256-gcm',key,iv);const body=Buffer.from(JSON.stringify(payload),'utf8');const encrypted=Buffer.concat([cipher.update(body),cipher.final()]);return `v1.${iv.toString('base64url')}.${cipher.getAuthTag().toString('base64url')}.${encrypted.toString('base64url')}`;}
 
-  private async notifyMember(member:GuildMember,c:ModerationCaseRecord,label:string,detail:string){const row=new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`moderation:review:${c.id}`).setLabel('Request Review').setStyle(ButtonStyle.Secondary));await member.send({content:`**Angrier Jordan — ${label}**\n${detail}\nCase #${c.id}`,components:[row]});}
+  private async notifyMember(member:GuildMember,c:ModerationCaseRecord,label:string,detail:string){if(!await this.canSendDirectMessage(member.guild.id,member.id))return;const row=new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`moderation:review:${c.id}`).setLabel('Request Review').setStyle(ButtonStyle.Secondary));await member.send({content:`**Angrier Jordan — ${label}**\n${detail}\nCase #${c.id}`,components:[row]});}
 
   private async actor(i:ChatInputCommandInteraction,minimum:StaffLevel){const actor=await i.guild!.members.fetch(i.user.id);const level=await this.staffLevel(actor);if(rank[level]<rank[minimum])throw new DomainError('STAFF_PERMISSION_REQUIRED','You do not have permission to use this moderation control.');return actor;}
   private async target(i:ChatInputCommandInteraction){const u=i.options.getUser('member',true);return i.guild!.members.fetch(u.id);}
