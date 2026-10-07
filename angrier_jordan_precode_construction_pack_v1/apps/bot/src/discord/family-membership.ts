@@ -151,8 +151,28 @@ export function discordFamilyMembershipCensus(guild:Guild):FamilyMembershipCensu
     guildId:guild.id,
     async fetch(){
       if(!guild.available)throw new Error('Family census server unavailable.');
-      const members=await guild.members.fetch({withPresences:false});
-      return{available:guild.available,expectedCount:guild.memberCount,members:new Map([...members].map(([id,member])=>[id,{bot:member.user.bot,joinedAt:member.joinedAt}]))};
+      // Guild#memberCount is gateway state and can lag a complete REST member
+      // listing.  A stale count must not indefinitely pause Family recovery, but
+      // neither may a moving/incomplete listing drive estate mutations.  Require
+      // two consecutive complete REST listings with the same membership before
+      // accepting the snapshot; a continuously changing guild fails closed.
+      const stable=(left:Map<string,{bot:boolean;joinedAt:Date|null}>,right:Map<string,{bot:boolean;joinedAt:Date|null}>)=>left.size===right.size&&[...left].every(([id,member])=>{
+        const other=right.get(id);
+        if(!other)return false;
+        return other.bot===member.bot&&other.joinedAt?.getTime()===member.joinedAt?.getTime();
+      });
+      for(let attempt=0;attempt<3;attempt++){
+        const read=async()=>{
+          const members=await guild.members.fetch({withPresences:false});
+          return new Map([...members].map(([id,member])=>[id,{bot:member.user.bot,joinedAt:member.joinedAt}]));
+        };
+        const first=await read();
+        if(!guild.available)throw new Error('Family census server unavailable.');
+        const second=await read();
+        if(!guild.available)throw new Error('Family census server unavailable.');
+        if(stable(first,second))return{available:true,expectedCount:second.size,members:second};
+      }
+      throw new Error('Family census changed during REST reconciliation.');
     },
     async lookup(userId){
       if(!guild.available)throw new Error('Family census server unavailable.');
