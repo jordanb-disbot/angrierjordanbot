@@ -22,7 +22,7 @@ export class HttpLichessAdapter implements LichessAdapter {
   return {challengeId,gameId:challengeId,gameUrl:text(challenge?.url)??text(data.url)??`https://lichess.org/${encodeURIComponent(challengeId)}`,whiteUrl,blackUrl};
  }
  async game(id:string):Promise<LichessOutcome>{
-  const response=await this.fetcher(`https://lichess.org/api/game/export/${encodeURIComponent(id)}`,{headers:{Authorization:`Bearer ${this.token}`,Accept:'application/json'}});
+  const response=await this.fetcher(`https://lichess.org/api/game/${encodeURIComponent(id)}`,{headers:{Authorization:`Bearer ${this.token}`,Accept:'application/json'}});
   if(response.status===404)return {finished:false};if(!response.ok)throw Object.assign(new Error(`Lichess game lookup failed (${response.status}).`),{retryable:response.status===429||response.status>=500});
   const data=await response.json() as {status?:string;winner?:string};const finished=['mate','resign','stalemate','timeout','outoftime','draw','aborted','cheat','nostart','unknownfinish'].includes(data.status??'');
   return {finished,status:data.status,winnerColor:data.winner==='white'||data.winner==='black'?data.winner:undefined,result:data.status};
