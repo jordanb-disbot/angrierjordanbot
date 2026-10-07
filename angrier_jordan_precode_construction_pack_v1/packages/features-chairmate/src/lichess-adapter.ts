@@ -6,7 +6,10 @@ export class HttpLichessAdapter implements LichessAdapter {
   const body=new URLSearchParams({variant:'standard',rated:'false','clock.limit':String(input.limit),'clock.increment':String(input.increment),'color':'random'});
   const response=await this.fetcher('https://lichess.org/api/challenge/open',{method:'POST',headers:{Authorization:`Bearer ${this.token}`,Accept:'application/json','Content-Type':'application/x-www-form-urlencoded','Idempotency-Key':input.idempotencyKey},body});
   if(!response.ok){const retry=response.status===429;const retrySafe=response.status>=400&&response.status<500;throw Object.assign(new Error(`Lichess challenge creation failed (${response.status}).`),{retryable:retry,retrySafe,status:response.status});}
-  const data=await response.json() as {challenge?:{id?:string;url?:string;urlWhite?:string;urlBlack?:string};urlWhite?:string;urlBlack?:string};const whiteUrl=data.urlWhite??data.challenge?.urlWhite,blackUrl=data.urlBlack??data.challenge?.urlBlack;
+  // Lichess currently names these `whiteUrl`/`blackUrl`. Older deployments
+  // returned `urlWhite`/`urlBlack`, so accept both without ever recording or
+  // logging their bearer values outside the durable private-seat fields.
+  const data=await response.json() as {challenge?:{id?:string;url?:string;urlWhite?:string;urlBlack?:string;whiteUrl?:string;blackUrl?:string};urlWhite?:string;urlBlack?:string;whiteUrl?:string;blackUrl?:string};const whiteUrl=data.whiteUrl??data.urlWhite??data.challenge?.whiteUrl??data.challenge?.urlWhite,blackUrl=data.blackUrl??data.urlBlack??data.challenge?.blackUrl??data.challenge?.urlBlack;
   if(!data.challenge?.id||!whiteUrl||!blackUrl)throw Object.assign(new Error('Lichess returned an incomplete guest-game response.'),{retryable:false,retrySafe:false,status:502});
   // urlWhite/urlBlack are the guest-board capabilities. Lichess may omit the
   // convenience public challenge URL, which must not turn a created game into
