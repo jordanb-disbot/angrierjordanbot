@@ -6,12 +6,12 @@ import type { ConfigService } from '../../../../packages/core/src/index.js';
 import { DomainError } from '../../../../packages/core/src/index.js';
 import type { OnboardingService, RestorePlan, RoleSnapshot, SelfRolePanelDefinition } from '../../../../packages/features-onboarding/src/index.js';
 import {readFileSync} from 'node:fs';
-import {renderOnboarding,renderRoleSelectionCard,rulesSections,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
+import {renderOnboarding,renderRoleSelectionCard,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
 import {displayFrames,wideDisplay,frameGallery,type DisplayFrame} from './wide-display.js';
 
 const rules=JSON.parse(readFileSync(new URL('../../../../packages/content/onboarding/rules.json',import.meta.url),'utf8')) as {title:string;sections:GuidanceSection[]};
 let rolesArt:Promise<DisplayFrame[]>|undefined;
-const rulePages=rules.sections.flatMap(section=>rulesSections(section.body).map((page,index,pages)=>({title:section.title+(pages.length>1?' · '+(index+1)+'/'+pages.length:''),body:page[0]!.body})));
+const completeRules=rules.sections.map(section=>'### '+section.title+'\n'+section.body).join('\n\n');
 
 const roleId=async(config:ConfigService,guildId:string,key:string):Promise<string|null>=>{
   const value=await config.get(guildId,key);return typeof value==='string'&&value?value:null;
@@ -90,24 +90,12 @@ export class DiscordOnboardingCoordinator {
   async handleRulesCommand(interaction:ChatInputCommandInteraction):Promise<void>{
     if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'This command is only available in the server.'});return;}
     await interaction.deferReply({ephemeral:true});
-    await interaction.editReply(this.rulesPage(0));
+    await interaction.editReply(this.rulesMessage());
   }
 
-  async handleRulesPage(interaction:ButtonInteraction):Promise<void>{
-    const page=Number(interaction.customId.split(':')[2]);
-    if(!Number.isInteger(page)||page<0||page>=rulePages.length){await interaction.reply({ephemeral:true,content:'That rules page is no longer available. Reopen /rules.'});return;}
-    await interaction.deferUpdate();
-    await interaction.editReply(this.rulesPage(page));
-  }
-
-  private rulesPage(page:number){
-    const current=rulePages[page]!;
-    const navigation=new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder().setCustomId('rules:page:'+(page-1)).setLabel('Previous').setStyle(ButtonStyle.Secondary).setDisabled(page===0),
-      new ButtonBuilder().setCustomId('rules:page:'+(page+1)).setLabel('Next').setStyle(ButtonStyle.Secondary).setDisabled(page===rulePages.length-1),
-      new ButtonBuilder().setCustomId('onboard:ack_rules').setLabel('Acknowledge Rules').setStyle(ButtonStyle.Success),
-    );
-    return {content:'## '+rules.title+'\n### '+current.title+'\n\n'+current.body+'\n\n*Section '+(page+1)+' of '+rulePages.length+'*',components:[navigation],allowedMentions:{parse:[] as never[]}};
+  private rulesMessage(){
+    const ack=new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('onboard:ack_rules').setLabel('Acknowledge Rules').setStyle(ButtonStyle.Success));
+    return {content:'## '+rules.title+'\n\n'+completeRules,components:[ack],allowedMentions:{parse:[] as never[]}};
   }
 
   async handleRulesAck(interaction:ButtonInteraction):Promise<void>{
