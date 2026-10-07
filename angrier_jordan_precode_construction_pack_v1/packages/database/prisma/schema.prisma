@@ -382,6 +382,44 @@ model GameParticipant {
   @@id([sessionId,userId])
 }
 
+/// A two-member Chairmate game.  The color URLs are bearer credentials and
+/// deliberately live only in this server-side table, never in a Discord card.
+model ChairmateChallenge {
+  id String @id @default(cuid())
+  guildId String
+  channelId String
+  messageId String?
+  challengerUserId String
+  opponentUserId String
+  challengerName String
+  opponentName String
+  timeControl String
+  clockLimit Int
+  clockIncrement Int
+  status String @default("PENDING")
+  expiresAt DateTime
+  challengerColor String?
+  opponentColor String?
+  whiteUrl String?
+  blackUrl String?
+  lichessChallengeId String?
+  lichessGameId String?
+  lichessGameUrl String?
+  result String?
+  winnerColor String?
+  resultPostedAt DateTime?
+  createKey String @unique
+  acceptKey String?
+  lastProviderError String?
+  providerRetryAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([guildId,status,expiresAt])
+  @@index([status,providerRetryAt])
+  @@index([challengerUserId,status])
+  @@index([opponentUserId,status])
+}
+
 model Vote {
   id String @id @default(cuid())
   sessionId String

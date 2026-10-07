@@ -1,0 +1,9 @@
+{
+  "id":"chairmate",
+  "classification":"guided",
+  "commands":["chess_challenge"],
+  "title":"Chairmate Chess",
+  "body":"Use /chess challenge only in ♟️-chairmate. Choose a member and supported time control. The named member has five minutes to accept or decline. Lichess guest links stay private: each player uses Open My Game on the card.",
+  "fields":{"member":"Only the nominated member may accept or decline.","time":"Choose a listed bullet, blitz, or rapid control.","private_link":"Never share the private game link; it grants access to that color."},
+  "tutorial":{"lesson_id":"chairmate","steps":["Run /chess challenge in ♟️-chairmate.","Pick your opponent and time control.","The opponent accepts the public card.","Each player selects Open My Game for their private Lichess board.","Return to the card for the posted result and replay."]}
+}

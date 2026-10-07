@@ -32,6 +32,7 @@
     "packages/features-social/src/**/*.ts",
     "packages/features-introductions/src/**/*.ts",
     "packages/features-learning/src/**/*.ts",
+    "packages/features-chairmate/src/**/*.ts",
     "packages/features-music/src/**/*.ts"
   ],
   "exclude": [

@@ -32,6 +32,8 @@ import {DiscordChannelGamesCoordinator} from './discord/channel-games-coordinato
 import {PrismaChannelGamesRepository} from '../../../packages/features-channel-games/src/prisma-repository.js';
 import {DiscordPvpCoordinator} from './discord/pvp-coordinator.js';
 import {PrismaPvpRepository} from '../../../packages/features-pvp/src/prisma-repository.js';
+import {DiscordChairmateCoordinator} from './discord/chairmate-coordinator.js';
+import {ChairmateRepository,HttpLichessAdapter} from '../../../packages/features-chairmate/src/index.js';
 import {DiscordEventsCoordinator} from './discord/events-coordinator.js';
 import {DiscordSpecialCoordinator} from './discord/special-coordinator.js';
 import {PrismaSpecialRepository} from '../../../packages/features-special/src/prisma-repository.js';
@@ -216,6 +218,7 @@ export async function startProductionBot():Promise<void>{
   const special=new DiscordSpecialCoordinator(new PrismaSpecialRepository(db),config,(g,u)=>eligibleGame(g,u,'special.use'));
   const soloRepo=new PrismaSoloRepository(db),solo=new DiscordSoloCoordinator(soloRepo,config,(g,u)=>eligibleGame(g,u,'solo.use'));
   const pvp=new DiscordPvpCoordinator(new PrismaPvpRepository(db),config,(g,u)=>eligibleGame(g,u,'pvp.play'));
+  const chairmate=new DiscordChairmateCoordinator(new ChairmateRepository(db),new HttpLichessAdapter(required('LICHESS_API_TOKEN')),(g,u)=>eligibleGame(g,u,'pvp.play'));
   const party=new DiscordPartyCoordinator(new PrismaPartyRepository(db),config,(g,u)=>eligibleGame(g,u,'events.use'));
   const channelGames=new DiscordChannelGamesCoordinator(new PrismaChannelGamesRepository(db),config,(g,u)=>eligibleGame(g,u,'channel_games.play'));
   const crime=new DiscordCrimeCoordinator(crimeRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
@@ -361,6 +364,7 @@ export async function startProductionBot():Promise<void>{
   let crimeSweep:ReturnType<typeof setInterval>|undefined;
   let partySweep:ReturnType<typeof setInterval>|undefined;
   let pvpSweep:ReturnType<typeof setInterval>|undefined;
+  let chairmateSweep:ReturnType<typeof setInterval>|undefined;
   let soloSweep:ReturnType<typeof setInterval>|undefined;
   let familySweep:ReturnType<typeof setInterval>|undefined;
 
@@ -380,7 +384,7 @@ export async function startProductionBot():Promise<void>{
     if(enableOnboardingSmoke)await startup.run('roles-panel-bootstrap',()=>onboarding.sweepRolePanel(ready,guildId));
     startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(c.name==='chess'||alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await startup.run('command-registration',async()=>{const applicationId=ready.user.id;if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');const registered=await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});validateRegisteredCommands(enabled,registered);});
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
@@ -395,10 +399,11 @@ export async function startProductionBot():Promise<void>{
     await startup.run('events-bootstrap',()=>events.sweep(ready));if(lifecycle.isStopping)return;
     eventSweep=setInterval(()=>lifecycle.run(()=>events.sweep(ready),()=>console.error('Event recovery or rendering failed; durable jobs retained.')),1000);
     wyrSweep=setInterval(()=>lifecycle.run(()=>wyr.closeDue(ready),()=>console.error('WYR close failed; persisted recovery retained.')),5_000);
-    await startup.run('special-bootstrap',()=>special.sweep(ready));await startup.run('solo-bootstrap',()=>solo.recover(ready));await startup.run('pvp-bootstrap',()=>pvp.sweep(ready));await startup.run('party-bootstrap',()=>party.sweep(ready));await startup.run('crime-bootstrap',()=>crime.sweep(ready));if(enableCommunitySmoke)await startup.run('community-bootstrap',()=>community.sweep(ready));if(lifecycle.isStopping)return;
+    await startup.run('special-bootstrap',()=>special.sweep(ready));await startup.run('solo-bootstrap',()=>solo.recover(ready));await startup.run('pvp-bootstrap',()=>pvp.sweep(ready));await startup.run('chairmate-bootstrap',()=>chairmate.sweep(ready));await startup.run('party-bootstrap',()=>party.sweep(ready));await startup.run('crime-bootstrap',()=>crime.sweep(ready));if(enableCommunitySmoke)await startup.run('community-bootstrap',()=>community.sweep(ready));if(lifecycle.isStopping)return;
     specialSweep=setInterval(()=>lifecycle.run(()=>special.sweep(ready),()=>console.error('Line recovery pending.')),1000);
     soloSweep=setInterval(()=>lifecycle.run(()=>solo.recover(ready),()=>console.error('Solo recovery pending.')),10_000);
     pvpSweep=setInterval(()=>lifecycle.run(()=>pvp.sweep(ready),()=>console.error('Skill-game recovery pending.')),10_000);
+    chairmateSweep=setInterval(()=>lifecycle.run(()=>chairmate.sweep(ready),()=>console.error('Chairmate Lichess recovery pending.')),15_000);
     partySweep=setInterval(()=>lifecycle.run(()=>party.sweep(ready),()=>console.error('Party recovery pending.')),5000);
     crimeSweep=setInterval(()=>lifecycle.run(()=>crime.sweep(ready),()=>console.error('Crime recovery pending.')),5000);
     if(enableIntroductionsSmoke)introSweep=setInterval(()=>lifecycle.run(()=>introductions.sweep(ready),()=>console.error('Introduction recovery pending.')),10000);
@@ -492,6 +497,7 @@ export async function startProductionBot():Promise<void>{
       if(enableEventsSmoke&&interaction.isChatInputCommand()&&interaction.commandName==='race'){if(enableProfilesSmoke)lifecycle.run(()=>profiles.recordCommand(interaction),()=>console.error('Command activity recording failed.'));await events.startRace(interaction);return;}
       if(enableEventsSmoke&&(interaction.isButton()||interaction.isModalSubmit())&&(interaction.customId.startsWith('event:')||interaction.customId.startsWith('fight:'))){await events.handle(interaction);return;}
       if(enableSpecialSmoke&&interaction.isButton()&&interaction.customId.startsWith('line:')){await special.handle(interaction);return;}
+      if((interaction.isChatInputCommand()&&interaction.commandName==='chess')||(interaction.isButton()&&interaction.customId.startsWith('chess:'))){await chairmate.handle(interaction);return;}
       if(interaction.isChatInputCommand()&&interaction.commandName==='race'){await interaction.reply({ephemeral:true,content:'Race is not enabled yet.'});return;}
       if(interaction.isAutocomplete()){if(enableSocialSmoke&&interaction.commandName==='social')await social.autocomplete(interaction);else if(enableLearningSmoke&&interaction.commandName==='help')await learning.autocomplete(interaction);else await interaction.respond([]);return;}
       if(interaction.guildId&&interaction.isRepliable()){
@@ -602,7 +608,7 @@ export async function startProductionBot():Promise<void>{
   const shutdown=()=>shutdownPromise??(shutdownPromise=(async()=>{
     lifecycle.stopAdmission();initialized=false;worker.stop();
     if(introSweep)clearInterval(introSweep);if(eventSweep)clearInterval(eventSweep);if(voiceSweep)clearInterval(voiceSweep);if(wyrSweep)clearInterval(wyrSweep);
-    if(familySweep)clearInterval(familySweep);if(communitySweep)clearInterval(communitySweep);if(crimeSweep)clearInterval(crimeSweep);if(partySweep)clearInterval(partySweep);if(pvpSweep)clearInterval(pvpSweep);if(specialSweep)clearInterval(specialSweep);if(soloSweep)clearInterval(soloSweep);
+    if(familySweep)clearInterval(familySweep);if(communitySweep)clearInterval(communitySweep);if(crimeSweep)clearInterval(crimeSweep);if(partySweep)clearInterval(partySweep);if(pvpSweep)clearInterval(pvpSweep);if(chairmateSweep)clearInterval(chairmateSweep);if(specialSweep)clearInterval(specialSweep);if(soloSweep)clearInterval(soloSweep);
     const deadline=setTimeout(()=>{console.error('Shutdown deadline reached; durable work will recover on restart.');process.exit(1);},25_000);deadline.unref();
     try{
       await Promise.allSettled([lifecycle.drain(20_000),worker.stopAndDrain()]);

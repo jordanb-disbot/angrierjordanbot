@@ -2,6 +2,7 @@ export const FEATURE_FLAGS = [
   "bootstrap",
   "casino",
   "chairisms",
+  "chairmate",
   "collections",
   "community",
   "core",

@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 132,
+  "command_count": 133,
   "commands": [
     {
       "id": "help",
@@ -4805,6 +4805,28 @@
       "registration_path": "/tldr events"
     },
     {
+      "id": "chess_challenge",
+      "command": "/chess challenge",
+      "type": "slash",
+      "module": "chairmate",
+      "description": "Challenge a member to a private casual Lichess guest game.",
+      "permissions": ["member"],
+      "channels": ["chairmate"],
+      "options": [
+        {"name":"member","type":"user","required":true,"description":"The member you want to challenge."},
+        {"name":"time","type":"choice","required":true,"description":"Supported clock.","choices":["bullet_1_0","bullet_2_1","blitz_3_0","blitz_5_0","rapid_10_0","rapid_15_10"]}
+      ],
+      "handler": "chairmate.challenge",
+      "feature_flag": "chairmate",
+      "ephemeral_default": false,
+      "help_id": "chairmate",
+      "tutorial_id": "chairmate",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/chess challenge",
+      "registration_path": "/chess challenge"
+    },
+    {
       "id": "special_vc",
       "command": "!vc",
       "type": "special_text",
@@ -5136,8 +5158,8 @@
     }
   ],
   "registration_strategy": {
-    "chat_input_records": 178,
-    "unique_top_level_chat_input_commands": 57,
+    "chat_input_records": 179,
+    "unique_top_level_chat_input_commands": 58,
     "target_top_level_budget": 95,
     "note": "Preferred invocations document UX intent; registration_path is the build-safe Discord registration path. Grouped commands preserve room for future additions."
   }

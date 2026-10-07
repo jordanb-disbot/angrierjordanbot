@@ -3921,6 +3921,46 @@ export const COMMANDS = [
     "tutorialId": "community"
   },
   {
+    "id": "chess_challenge",
+    "preferred": "/chess challenge",
+    "registered": "/chess challenge",
+    "type": "slash",
+    "module": "chairmate",
+    "handler": "chairmate.challenge",
+    "featureFlag": "chairmate",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "chairmate"
+    ],
+    "options": [
+      {
+        "name": "member",
+        "type": "user",
+        "required": true,
+        "description": "The member you want to challenge."
+      },
+      {
+        "name": "time",
+        "type": "choice",
+        "required": true,
+        "description": "Supported clock.",
+        "choices": [
+          "bullet_1_0",
+          "bullet_2_1",
+          "blitz_3_0",
+          "blitz_5_0",
+          "rapid_10_0",
+          "rapid_15_10"
+        ]
+      }
+    ],
+    "ephemeralDefault": false,
+    "helpId": "chairmate",
+    "tutorialId": "chairmate"
+  },
+  {
     "id": "special_vc",
     "preferred": "!vc",
     "registered": "!vc",
