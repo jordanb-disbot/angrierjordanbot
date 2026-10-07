@@ -408,6 +408,8 @@ model ChairmateChallenge {
   result String?
   winnerColor String?
   resultPostedAt DateTime?
+  resultPostClaimedAt DateTime?
+  resultMessageId String?
   createKey String @unique
   acceptKey String?
   lastProviderError String?
@@ -416,6 +418,7 @@ model ChairmateChallenge {
   updatedAt DateTime @updatedAt
   @@index([guildId,status,expiresAt])
   @@index([status,providerRetryAt])
+  @@index([status,resultPostedAt,resultPostClaimedAt])
   @@index([challengerUserId,status])
   @@index([opponentUserId,status])
 }

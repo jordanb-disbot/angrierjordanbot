@@ -218,7 +218,7 @@ export async function startProductionBot():Promise<void>{
   const special=new DiscordSpecialCoordinator(new PrismaSpecialRepository(db),config,(g,u)=>eligibleGame(g,u,'special.use'));
   const soloRepo=new PrismaSoloRepository(db),solo=new DiscordSoloCoordinator(soloRepo,config,(g,u)=>eligibleGame(g,u,'solo.use'));
   const pvp=new DiscordPvpCoordinator(new PrismaPvpRepository(db),config,(g,u)=>eligibleGame(g,u,'pvp.play'));
-  const chairmate=new DiscordChairmateCoordinator(new ChairmateRepository(db),new HttpLichessAdapter(required('LICHESS_API_TOKEN')),(g,u)=>eligibleGame(g,u,'pvp.play'));
+  const chairmate=new DiscordChairmateCoordinator(new ChairmateRepository(db),new HttpLichessAdapter(required('LICHESS_API_TOKEN')),(g,u)=>eligibleGame(g,u,'pvp.play'),config);
   const party=new DiscordPartyCoordinator(new PrismaPartyRepository(db),config,(g,u)=>eligibleGame(g,u,'events.use'));
   const channelGames=new DiscordChannelGamesCoordinator(new PrismaChannelGamesRepository(db),config,(g,u)=>eligibleGame(g,u,'channel_games.play'));
   const crime=new DiscordCrimeCoordinator(crimeRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
