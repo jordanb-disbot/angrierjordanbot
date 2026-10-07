@@ -75,7 +75,7 @@ export class DiscordEventsCoordinator {
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
   const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
   const roles=access?.['!race'];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
-  try{await this.guard(message.guildId,message.author.id,message.channelId,'race',true);}catch{return;}
+  try{await this.guard(message.guildId,message.author.id,message.channelId,'race',true);}catch(error){console.warn('Legacy race command rejected.',{guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!message.channel.isSendable())return;
   await this.queueRace(message,member);
  }

@@ -50,7 +50,7 @@ export class DiscordSpecialCoordinator {
   // Known unauthorized triggers are always removed, including wrong-channel triggers.
   await message.delete();if(!definition.enabled)return;
   const member=await message.guild.members.fetch({user:message.author.id,force:true});if(!mayInvokeSpecial(definition.allowedRoleIds,new Set(member.roles.cache.keys())))return;
-  try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line');}catch{return;}
+  try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line');}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!definition.responsePool.length)throw new DomainError('SPECIAL_CONTENT','Configure an authored response pool before enabling this Special Command.');
   if(!message.channel.isSendable())return;
   const context={guildId:message.guildId,channelId:message.channelId,userId:message.author.id,requestKey:message.id};
