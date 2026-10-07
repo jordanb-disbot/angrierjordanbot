@@ -14,6 +14,7 @@ import ContentBrowser from './content-browser';
 import type { ConfigDraft } from '../../../../packages/core/src/config-draft';
 import DashboardShell from './dashboard-shell';
 import HomePage from './home-page';
+import WorkspacePage from './workspace-page';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -32,10 +33,11 @@ export default async function AdminPage({searchParams}:{searchParams:Promise<{pa
       <a className="button" href="/api/auth/discord/login">Continue with Discord</a></section></main>;
   }
   const route=await searchParams;
-  if(route.page!=='workspace'){
+  if(!route.page||route.page==='home'){
     try{return <HomePage guildId={auth.config.guildId} csrf={auth.session.csrf} access={auth.access} actor={{...auth.access,userId:auth.session.userId}}/>;}
     catch{return <main className="entry"><section className="window sign-in"><h1>Dashboard unavailable</h1><p>The Home summary could not be loaded. Please try again shortly.</p><a href="/admin">Try again</a></section></main>;}
   }
+  if(route.page!=='workspace')return <WorkspacePage page={route.page} guildId={auth.config.guildId} csrf={auth.session.csrf} userId={auth.session.userId} access={auth.access}/>;
   let settings: Awaited<ReturnType<typeof readSettings>>;
   let draft:ConfigDraft;let activity:Awaited<ReturnType<typeof readRecentAudit>>;let moderation:Awaited<ReturnType<typeof readModerationOverview>>;let economy:Awaited<ReturnType<typeof readEconomyOverview>>;let contentGroups:Awaited<ReturnType<typeof readContentGroups>>;
   try { [settings,draft,activity,moderation,economy,contentGroups] = await Promise.all([readSettings(auth.config.guildId),draftService().view(auth.config.guildId,{...auth.access,userId:auth.session.userId}),readRecentAudit(auth.config.guildId),readModerationOverview(auth.config.guildId),readEconomyOverview(auth.config.guildId),readContentGroups()]); }
