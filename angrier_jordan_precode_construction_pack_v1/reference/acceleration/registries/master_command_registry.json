@@ -306,6 +306,29 @@
       "registration_path": "/steal"
     },
     {
+      "id": "steal_context",
+      "command": "Steal Emoji",
+      "type": "context_message",
+      "module": "community",
+      "description": "Copy a custom emoji from the selected message.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "any_allowed"
+      ],
+      "options": [],
+      "handler": "community.stealContext",
+      "feature_flag": "community",
+      "ephemeral_default": true,
+      "help_id": "steal",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "Message → Apps → Steal Emoji",
+      "registration_path": "Steal Emoji"
+    },
+    {
       "id": "daily",
       "command": "/daily",
       "type": "slash",

@@ -1812,6 +1812,10 @@
   },
   {
     "type": 3,
+    "name": "Steal Emoji"
+  },
+  {
+    "type": 3,
     "name": "Create Chairism"
   }
 ]

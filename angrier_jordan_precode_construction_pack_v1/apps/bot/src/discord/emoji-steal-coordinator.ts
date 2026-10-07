@@ -1,7 +1,8 @@
 import {DomainError,type AuditService} from '../../../../packages/core/src/index.js';
-import type {ChatInputCommandInteraction} from 'discord.js';
+import type {ChatInputCommandInteraction,MessageContextMenuCommandInteraction} from 'discord.js';
 
 export const EMOJI_STEAL_COMMANDS=new Set(['steal']);
+export const EMOJI_STEAL_CONTEXT_COMMANDS=new Set(['Steal Emoji']);
 const MAX_EMOJI_BYTES=256*1024;
 const sourcePattern=/^<(a?):[A-Za-z0-9_]{2,32}:(\d{17,20})>$/;
 type FetchLike=(input:string,init?:RequestInit)=>Promise<{ok:boolean;status:number;headers:{get(name:string):string|null};arrayBuffer():Promise<ArrayBuffer>}>;
@@ -10,11 +11,11 @@ function emojiName(raw:string){const value=raw.trim().toLowerCase().replace(/[^a
 
 export class DiscordEmojiStealCoordinator {
  constructor(private readonly audit:AuditService,private readonly request:FetchLike=fetch){}
- async handle(interaction:ChatInputCommandInteraction):Promise<void>{
+ async handle(interaction:ChatInputCommandInteraction|MessageContextMenuCommandInteraction):Promise<void>{
   if(!interaction.guild){await interaction.reply({ephemeral:true,content:'Use this command in Chairs.'});return;}
-  const raw=interaction.options.getString('emoji',true).trim(),match=sourcePattern.exec(raw);
-  if(!match){await interaction.reply({ephemeral:true,content:'Use a custom Discord emoji such as <:chair:123…> or <a:chair:123…>.'});return;}
-  const animated=match[1]==='a',sourceId=match[2]!,sourceName=/^<a?:([^:]+):/.exec(raw)?.[1]??'emoji',name=emojiName(interaction.options.getString('name')??sourceName);
+  const context=typeof (interaction as any).isMessageContextMenuCommand==='function'&&(interaction as any).isMessageContextMenuCommand(),raw=(context?(interaction as MessageContextMenuCommandInteraction).targetMessage.content.match(/<a?:[A-Za-z0-9_]{2,32}:\d{17,20}>/)?.[0]:(interaction as ChatInputCommandInteraction).options.getString('emoji',true))?.trim(),match=raw?sourcePattern.exec(raw):null;
+  if(!match){await interaction.reply({ephemeral:true,content:context?'That message does not contain a custom Discord emoji.':'Use a custom Discord emoji such as <:chair:123…> or <a:chair:123…>.'});return;}
+  const source=raw!,animated=match[1]==='a',sourceId=match[2]!,sourceName=/^<a?:([^:]+):/.exec(source)?.[1]??'emoji',name=emojiName(context?sourceName:(interaction as ChatInputCommandInteraction).options.getString('name')??sourceName);
   await interaction.deferReply({ephemeral:true});
   try{
    const emojis=await interaction.guild.emojis.fetch();

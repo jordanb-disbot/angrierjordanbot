@@ -272,6 +272,25 @@ export const COMMANDS = [
     "tutorialId": "community"
   },
   {
+    "id": "steal_context",
+    "preferred": "Message → Apps → Steal Emoji",
+    "registered": "Steal Emoji",
+    "type": "context_message",
+    "module": "community",
+    "handler": "community.stealContext",
+    "featureFlag": "community",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "any_allowed"
+    ],
+    "options": [],
+    "ephemeralDefault": true,
+    "helpId": "steal",
+    "tutorialId": "community"
+  },
+  {
     "id": "daily",
     "preferred": "/daily",
     "registered": "/daily",
