@@ -1,9 +1,10 @@
 import {ActionRowBuilder,ButtonBuilder,ButtonStyle,type AutocompleteInteraction,type ButtonInteraction,type ChatInputCommandInteraction,type Client,type Guild,type Message} from 'discord.js';
 import {createHash,randomInt} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {join} from 'node:path';
 import {DeliveryEngine,DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {COMMANDS} from '../../../../packages/contracts/src/generated/commands.js';
 import {PrismaSocialRepository} from '../../../../packages/features-social/src/prisma-repository.js';
-import {renderReclinerCheck} from '../../../../packages/features-social/src/pp-render.js';
 import {SOCIAL_ACTIONS,detectHaiku,sampleHaiku,validateSocialPolicy} from '../../../../packages/features-social/src/domain.js';
 import type {SocialContext,SocialJob,SocialPolicy} from '../../../../packages/features-social/src/interfaces.js';
 import {renderSocialResponse} from '../../../../packages/features-social/src/render.js';
@@ -43,7 +44,10 @@ export class DiscordSocialCoordinator {
    const c:SocialContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
    if(pp){
     const member=await this.member(i.guild,i.user.id),size=randomInt(1,13),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
-    await this.repo.pp(c);const svg=renderReclinerCheck(member.displayName,size),filename='recliner-check.png';await i.editReply({content:`_${lines[randomInt(lines.length)]}_`,embeds:[{color:0x19a7a4,image:{url:`attachment://${filename}`}}],files:[{attachment:await rasterizeSvg(svg),name:filename,description:`${member.displayName}'s playful recliner check`}],allowedMentions:{parse:[]}});return;
+    await this.repo.pp(c);
+    const asset=size===1?'pp-recliner-closed.png':size>=10?'pp-recliner-max.png':'pp-recliner-extended.png',filename='recliner-check.png';
+    const image=await readFile(join(process.cwd(),'packages/features-social/assets',asset));
+    await i.editReply({content:`_${lines[randomInt(lines.length)]}_\n**Footrest extension: ${size}/12**`,embeds:[{color:0x19a7a4,image:{url:`attachment://${filename}`}}],files:[{attachment:image,name:filename,description:`${member.displayName}'s recliner check · ${size}/12 extension`}],allowedMentions:{parse:[]}});return;
    }
    if(haiku||notmad){
     // Newest owner instruction: notmad is actual server-owner only, independent of role names.
