@@ -12,11 +12,13 @@ import { readEconomyOverview } from '../../lib/economy';
 import { readContentGroups } from '../../lib/content';
 import ContentBrowser from './content-browser';
 import type { ConfigDraft } from '../../../../packages/core/src/config-draft';
+import DashboardShell from './dashboard-shell';
+import HomePage from './home-page';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export default async function AdminPage() {
+export default async function AdminPage({searchParams}:{searchParams:Promise<{page?:string}>}) {
   let auth: Awaited<ReturnType<typeof requireAdmin>>;
   try { auth = await requireAdmin(); }
   catch (error) {
@@ -29,6 +31,11 @@ export default async function AdminPage() {
       <p>{denied ? 'Your current Discord permissions do not grant access to this server’s dashboard.' : 'We could not validate your session. Sign in again, or try again when Discord is available.'}</p>
       <a className="button" href="/api/auth/discord/login">Continue with Discord</a></section></main>;
   }
+  const route=await searchParams;
+  if(route.page!=='workspace'){
+    try{return <HomePage guildId={auth.config.guildId} csrf={auth.session.csrf} access={auth.access} actor={{...auth.access,userId:auth.session.userId}}/>;}
+    catch{return <main className="entry"><section className="window sign-in"><h1>Dashboard unavailable</h1><p>The Home summary could not be loaded. Please try again shortly.</p><a href="/admin">Try again</a></section></main>;}
+  }
   let settings: Awaited<ReturnType<typeof readSettings>>;
   let draft:ConfigDraft;let activity:Awaited<ReturnType<typeof readRecentAudit>>;let moderation:Awaited<ReturnType<typeof readModerationOverview>>;let economy:Awaited<ReturnType<typeof readEconomyOverview>>;let contentGroups:Awaited<ReturnType<typeof readContentGroups>>;
   try { [settings,draft,activity,moderation,economy,contentGroups] = await Promise.all([readSettings(auth.config.guildId),draftService().view(auth.config.guildId,{...auth.access,userId:auth.session.userId}),readRecentAudit(auth.config.guildId),readModerationOverview(auth.config.guildId),readEconomyOverview(auth.config.guildId),readContentGroups()]); }
@@ -38,10 +45,7 @@ export default async function AdminPage() {
   const enabledFeatures=enabledFeatureControls.length;
   const restartRequired=settings.filter(control=>control.restartRequired).length;
   const reviewedOnly=settings.filter(control=>control.risk!=='normal'||control.dashboardWrite!=='live').length;
-  return <div className="dashboard"><header className="topbar"><a className="brand" href="/admin">Angrier Jordan <span>Control Center</span></a>
-    <form action="/api/auth/logout" method="post"><input type="hidden" name="csrf" value={auth.session.csrf} /><button className="quiet" type="submit">Sign out</button></form></header>
-    <aside className="sidebar"><p className="eyebrow">Chairs · Control Center</p><nav aria-label="Dashboard sections"><a href="#overview">Overview</a><a href="#members">Members</a><a href="#economy">Economy</a><a href="#content">Content</a><a href="#moderation">Moderation</a><a href="#features">Feature status</a><a href="#activity">Recent activity</a><a href="#draft">Shared draft</a><a href="#settings-browser">Settings browser</a>{sections.map(section => <a key={section} href={`#${section}`}>{section.replaceAll('_', ' ')}</a>)}</nav></aside>
-    <main className="content"><section className="window intro"><p className="eyebrow">{auth.access.isGuildOwner ? 'Server owner' : 'Administrator'} · Verified with Discord</p>
+  return <DashboardShell csrf={auth.session.csrf}><main className="content"><section className="window intro"><p className="eyebrow">{auth.access.isGuildOwner ? 'Server owner' : 'Administrator'} · Verified with Discord</p>
       <h1>Your server, at a glance.</h1><p>Review the settings that shape Chairs.</p>
       <div className="notice" role="status">{settingsWritesEnabled()?'Low-risk settings may save live. Broader changes require a reviewed shared draft.':'Read-only preview. Changes remain disabled until dashboard acceptance.'}</div><nav className="quick-links" aria-label="Dashboard shortcuts"><a href="#members"><span>Find</span><strong>Member lookup</strong></a><a href="#economy"><span>Review</span><strong>Economy status</strong></a><a href="#content"><span>Browse</span><strong>Content library</strong></a><a href="#settings-browser"><span>Configure</span><strong>Settings browser</strong></a></nav></section>
       <section id="overview" className="overview-grid" aria-label="Dashboard overview"><DatabaseHealth/><article className="window overview-card"><span>Access</span><strong>{auth.access.isGuildOwner?'Server owner':'Administrator'}</strong><p>Verified through your current Discord permissions.</p></article><article className="window overview-card"><span>Shared draft</span><strong>{Object.keys(draft.changes).length} staged</strong><p>{draft.editorId?'An Administrator currently holds the edit lock.':'No active editor lock.'}</p></article><article className="window overview-card"><span>Feature switches</span><strong>{enabledFeatures} enabled</strong><p>Live feature settings currently enabled for this server.</p></article><article className="window overview-card"><span>Safeguards</span><strong>{reviewedOnly} reviewed</strong><p>{restartRequired} settings also require a worker restart after publishing.</p></article></section>
@@ -52,5 +56,5 @@ export default async function AdminPage() {
       <section id="features" className="window feature-section"><div className="section-title"><div><h2>Feature status</h2><p className="description">A read-only view of enabled feature switches. Settings remain governed by the controls below.</p></div><span className="badge">{enabledFeatures} active</span></div>{enabledFeatureControls.length?<ul className="feature-list">{enabledFeatureControls.map(control=><li key={control.key}><div><strong>{control.label}</strong><code>{control.key}</code></div><span className="feature-on">Enabled</span></li>)}</ul>:<p className="description">No feature switches are currently enabled.</p>}</section>
       <section id="activity" className="window activity-section"><div className="section-title"><div><h2>Recent activity</h2><p className="description">The latest audited server actions. Search stays within this safe, on-page list.</p></div><span className="badge">Last {activity.length}</span></div>{activity.length?<ActivityList activity={activity.map(({createdAt,...entry})=>({...entry,createdAt:createdAt.toISOString()}))}/>:<p className="description">No audited activity has been recorded yet.</p>}</section>
       <SettingsControls settings={settings.map(({updatedAt,...control})=>control)} draft={draft} csrf={auth.session.csrf} memberId={auth.session.userId} isOwner={auth.access.isGuildOwner} writesEnabled={settingsWritesEnabled()}/>
-    </main></div>;
+    </main></DashboardShell>;
 }
