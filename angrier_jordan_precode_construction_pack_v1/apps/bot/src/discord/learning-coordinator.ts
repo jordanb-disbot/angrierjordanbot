@@ -46,7 +46,7 @@ export class DiscordLearningCoordinator {
   await i.editReply(wideDisplay(await art,components,undefined,!i.isChatInputCommand()?i.message?.attachments?.values():undefined));
  }
  private async native(i:Interaction,content:string,components:(ActionRowBuilder<ButtonBuilder>|ActionRowBuilder<StringSelectMenuBuilder>)[]=[]){
-  await i.editReply({content,components,allowedMentions:{parse:[]}});
+  await i.editReply({content,embeds:[],components,allowedMentions:{parse:[]}});
  }
  async handle(i:Interaction){try{
   if(!i.guildId||!i.guild)throw new DomainError('SERVER_ONLY','Use this in the server.');
@@ -80,8 +80,10 @@ export class DiscordLearningCoordinator {
    }
    const group=categories[Number(chosen)];
    if(!group)throw new DomainError('HELP_PAGE','Reopen Help to browse available commands.');
-   const card=group.commands.map(c=>c.registered+' — '+(c.description||'Open this command for its available controls.')).join('\n');
-   await this.window(i,'Help · '+group.label,card,[buttons([{id:'learn:help:'+i.user.id+':directory',label:'All categories'}])]);return;
+   // Command lists vary substantially. Native Discord markdown keeps each
+   // description readable instead of squeezing it into a decorative fixed frame.
+   const card='## Help · '+group.label+'\n\n'+group.commands.map(c=>'**'+c.registered+'** — '+(c.description||'Open this command for its available controls.')).join('\n\n');
+   await this.native(i,card,[buttons([{id:'learn:help:'+i.user.id+':directory',label:'All categories'}])]);return;
   }
   const lessonCommands=commands.filter(hasAuthoredLesson);
   const action=parts[3];

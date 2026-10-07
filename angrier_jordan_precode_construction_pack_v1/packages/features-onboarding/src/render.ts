@@ -37,6 +37,23 @@ export function renderRoleSelectionCard(memberName:string,groups:readonly Guidan
  .replace('stroke="#00D7CF"',`stroke="${teal}"`);
 }
 
+/** The shared seating-channel launcher is artwork too: its only native surface is
+ * the action button directly below it.  It intentionally stays short enough for a
+ * single Discord attachment. */
+export function renderRoleSelectionPanel(){
+ const teal='#21B7AC',gold='#D9B86B',soft='#CFE8E5';
+ const body=text(58,52,'ANGRIER JORDAN · SEATING ASSIGNMENT',18,teal,'font-weight="700" letter-spacing="2"')+
+  text(58,110,'Choose Your Seats',42,cream,'font-family="Space Grotesk" font-weight="700"')+
+  text(58,148,'Open your private role selector. Your choices stay private until you publish them.',22,soft,'font-weight="500"')+
+  panel(38,186,1124,132,teal)+`<rect x="49" y="197" width="1102" height="110" rx="7" fill="none" stroke="${gold}" stroke-opacity=".20"/><path d="M64 232V211H86" fill="none" stroke="${gold}"/>`+
+  text(82,235,'PRIVATE SELECTIONS · EXPLICIT PUBLICATION',20,gold,'font-weight="700" letter-spacing="1.1"')+
+  text(82,276,'Choose categories, adjust selections, then use Publish My Selections when your card is ready.',22,cream,'font-weight="500"')+
+  text(600,350,'SIT. PLAY. BELONG.',17,gold,'text-anchor="middle" letter-spacing="3" font-weight="600"');
+ return shell(378,`<rect width="1200" height="378" fill="#062A2E" opacity=".44"/><g font-family="Inter">${body}</g>`,0,1200)
+ .replace(/<linearGradient id="glass"[\s\S]*?<\/linearGradient>/,'<linearGradient id="glass" x2="1" y2="1"><stop stop-color="#123940" stop-opacity=".98"/><stop offset=".58" stop-color="#10242D" stop-opacity=".98"/><stop offset="1" stop-color="#07131E" stop-opacity=".99"/></linearGradient>')
+ .replace('stroke="#00D7CF"',`stroke="${teal}"`);
+}
+
 export function rulesSections(content:string):GuidanceSection[][]{
  const chunks: string[]=[];
  for(const paragraph of content.split(/\n\s*\n/).filter(x=>x.trim())){

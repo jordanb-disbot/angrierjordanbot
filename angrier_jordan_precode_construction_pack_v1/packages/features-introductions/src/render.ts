@@ -46,19 +46,21 @@ export function renderIntroductionHub(message:string,fields:string[]=[]){
  let svg=text(60,80,'ANGRIER JORDAN · CHAIRS',20,brass,'letter-spacing="2"')+text(60,140,'Pull Up a Chair',46,warm,'font-family="Space Grotesk" font-weight="700"');
  const intro=copy(message,60,192,1080,28,muted);svg+=intro.svg;let y=218+intro.height;
  if(fields.length){
-  const heading=copy('YOUR INTRODUCTION · ONE FORM',86,y+38,1028,20,brass,600);
+  const heading=copy('YOUR INTRODUCTION · ONE FORM',86,y+34,1028,19,brass,600);
   let listY=y+38+heading.height+18,items='';
   for(const [index,field] of fields.entries()){
-   const number=copy(String(index+1).padStart(2,'0'),86,listY,54,23,brass,700);
-   const body=copy(field,150,listY,962,25,warm,500);
+   // Keep the complete private workflow below Discord's landscape-height
+   // threshold. That makes this one attachment rather than two gallery slices.
+   const number=copy(String(index+1).padStart(2,'0'),86,listY,54,21,brass,700);
+   const body=copy(field,150,listY,962,22,warm,500);
    items+=number.svg+body.svg;
-   listY+=Math.max(number.height,body.height)+13;
+   listY+=Math.max(number.height,body.height)+10;
   }
   // The question list deliberately stays on the parent frame surface.  A
   // divider gives it hierarchy without creating a detached second panel.
   svg+=`<path d="M60 ${y+14}H1140" stroke="${brass}" stroke-opacity=".46"/><path d="M60 ${listY+2}H1140" stroke="${brass}" stroke-opacity=".25"/>`+heading.svg+items;
   y=listY+34;
  }
- svg+=`<path d="M60 ${y}H1140" stroke="${brass}" stroke-opacity=".5"/>`+text(60,y+44,'Save privately → Preview → Publish when ready',25,muted);
- return frame(y+108,svg);
+ svg+=`<path d="M60 ${y}H1140" stroke="${brass}" stroke-opacity=".5"/>`+text(60,y+40,'Save privately → Preview → Publish when ready',23,muted);
+ return frame(y+96,svg);
 }

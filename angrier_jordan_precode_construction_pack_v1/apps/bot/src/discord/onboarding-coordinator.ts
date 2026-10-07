@@ -6,11 +6,12 @@ import type { ConfigService } from '../../../../packages/core/src/index.js';
 import { DomainError } from '../../../../packages/core/src/index.js';
 import type { OnboardingService, RestorePlan, RoleSnapshot, SelfRolePanelDefinition } from '../../../../packages/features-onboarding/src/index.js';
 import {readFileSync} from 'node:fs';
-import {renderOnboarding,renderRoleSelectionCard,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
+import {renderOnboarding,renderRoleSelectionCard,renderRoleSelectionPanel,type GuidanceSection} from '../../../../packages/features-onboarding/src/render.js';
 import {displayFrames,wideDisplay,frameGallery,type DisplayFrame} from './wide-display.js';
 
 const rules=JSON.parse(readFileSync(new URL('../../../../packages/content/onboarding/rules.json',import.meta.url),'utf8')) as {title:string;sections:GuidanceSection[]};
 let rolesArt:Promise<DisplayFrame[]>|undefined;
+let rolesPanelArt:Promise<DisplayFrame[]>|undefined;
 const completeRules=rules.sections.map(section=>'### '+section.title+'\n'+section.body).join('\n\n');
 
 const roleId=async(config:ConfigService,guildId:string,key:string):Promise<string|null>=>{
@@ -55,7 +56,7 @@ export class DiscordOnboardingCoordinator {
   async sweepRolePanel(client:any,guildId:string):Promise<void>{
     const channel=await client.channels.fetch(ROLE_ASSIGNMENTS_CHANNEL_ID).catch(()=>null);
     if(!channel?.isTextBased?.()||!channel.isSendable?.()||!('messages'in channel))return;
-    const payload=this.sharedRolePanelMessage();
+    const payload=await this.sharedRolePanelMessage();
     const saved=await this.service.roleSelectionPanel(guildId);
     let panel:any=null;
     if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID)panel=await channel.messages.fetch(saved.messageId).catch(()=>null);
@@ -149,12 +150,9 @@ export class DiscordOnboardingCoordinator {
     timer.unref?.();
   }
 
-  private sharedRolePanelMessage(){
-    return {
-      content:'**Choose Your Seats**\nOpen your private role selector. Your choices stay private until you use **Publish My Selections**.',
-      components:[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('roles:panel:open').setLabel('Choose My Roles').setStyle(ButtonStyle.Primary))],
-      allowedMentions:{parse:[] as never[]},
-    };
+  private async sharedRolePanelMessage(){
+    const art=await(rolesPanelArt??=displayFrames(renderRoleSelectionPanel(),'seating-assignment-panel','Choose Your Seats · private role selection.').catch(error=>{rolesPanelArt=undefined;throw error;}));
+    return wideDisplay(art,[new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId('roles:panel:open').setLabel('Choose My Roles').setStyle(ButtonStyle.Primary))]);
   }
 
   private isSharedRolePanel(message:any,botId?:string):boolean{
@@ -265,7 +263,7 @@ export class DiscordOnboardingCoordinator {
   private async placeRolePanel(channel:any,guildId:string,botId?:string):Promise<void>{
     const saved=await this.service.roleSelectionPanel(guildId);if(saved?.channelId===ROLE_ASSIGNMENTS_CHANNEL_ID){const previous=await channel.messages.fetch(saved.messageId).catch(()=>null);if(previous)await previous.delete().catch(()=>undefined);}
     const recent=await channel.messages.fetch({limit:100}).catch(()=>new Map());for(const duplicate of recent.values()){if(this.isSharedRolePanel(duplicate,botId))await duplicate.delete().catch(()=>undefined);}
-    const panel=await channel.send(this.sharedRolePanelMessage());await this.service.saveRoleSelectionPanel({guildId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:panel.id});
+    const panel=await channel.send(await this.sharedRolePanelMessage());await this.service.saveRoleSelectionPanel({guildId,channelId:ROLE_ASSIGNMENTS_CHANNEL_ID,messageId:panel.id});
   }
 
   private async rolePanelMessage(panel:SelfRolePanelDefinition,selectedRoleIds:string[],includeArtwork=true,categoryKey?:string){

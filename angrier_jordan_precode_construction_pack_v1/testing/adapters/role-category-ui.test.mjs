@@ -45,6 +45,8 @@ test('Dedicated role panel opens a private selector and remains shared and non-m
  const f=fixture();const client={user:{id:'bot'},channels:{fetch:async()=>f.channel}};
  await f.coordinator.sweepRolePanel(client,'g');await f.coordinator.sweepRolePanel(client,'g');
  assert.equal(f.sent.length,1);assert.deepEqual(await f.service.roleSelectionPanel('g'),{channelId:'1537333197438980116',messageId:'m1'});
+ assert.equal(f.sent[0].payload.content,null);assert.equal(f.sent[0].payload.files.length,1);assert.match(f.sent[0].payload.files[0].description,/Choose Your Seats/);
+ assert.ok(f.sent[0].payload.components.some(row=>row.toJSON().components?.some(component=>component.custom_id==='roles:panel:open')));
  const open=f.interaction('roles:panel:open',[]);await f.coordinator.handleRolePanelOpen(open);
  assert.equal(f.held.size,0);assert.ok(nodes(f.replies.at(-1)).some(row=>row.type===1&&row.components[0].custom_id==='roles:select:_category'));
 });

@@ -56,4 +56,5 @@ test('Private form summary keeps all five prompts on the same continuous frame s
   assert.match(svg,new RegExp(`>${String(index+1).padStart(2,'0')}<\\/text>`));
  }
  assert.ok(svg.includes('Save privately → Preview → Publish when ready'));
+ assert.ok(Number(/<svg[^>]+height="(\d+)"/.exec(svg)[1])<=720,'the complete workflow must remain one Discord gallery attachment');
 });
