@@ -56,7 +56,7 @@ import { Client, DiscordAPIError, Events, GatewayIntentBits, Partials, REST, Rou
 import {validateRuntimeEnvironment} from '../../../packages/core/src/runtime-environment.js';
 import {RuntimeLifecycle} from '../../../packages/core/src/runtime-lifecycle.js';
 import {startRuntimeHealth} from './runtime-health.js';
-import { AuditService, ConfigService, HealthService, IdempotentScheduler, SchedulerWorker } from '../../../packages/core/src/index.js';
+import { AuditService, ConfigService, DomainError, HealthService, IdempotentScheduler, SchedulerWorker } from '../../../packages/core/src/index.js';
 import { SETTINGS } from '../../../packages/contracts/src/generated/settings.js';
 import { PrismaAuditSink, PrismaConfigRepository, PrismaJobRepository, createPrismaHealthProbe } from '../../../packages/database/src/prisma-adapters.js';
 import { PrismaOnboardingRepository, OnboardingService } from '../../../packages/features-onboarding/src/index.js';
@@ -286,6 +286,16 @@ export async function startProductionBot():Promise<void>{
     await family.coordinator.advance(client,kind,job.guildId,p.sessionId);
     },familyEnabled);
   };
+  const snapshotLatenessAlerts=new Set<string>();
+  const alertSnapshotLateness=async(job:{guildId:string;executionKey:string;dueAt:Date},error:unknown)=>{
+    if(!(error instanceof DomainError)||error.code!=='ECONOMY_SNAPSHOT_LATE'||snapshotLatenessAlerts.has(job.executionKey))return;
+    snapshotLatenessAlerts.add(job.executionKey);
+    console.error('Economy snapshot lateness alert',JSON.stringify({guildId:job.guildId,executionKey:job.executionKey,dueAt:job.dueAt.toISOString(),code:error.code}));
+    const channelId=await config.get(job.guildId,'channels.staff_log');
+    if(typeof channelId!=='string'||!channelId)return;
+    const channel:any=await client.channels.fetch(channelId).catch(()=>null);
+    if(channel?.isTextBased())await channel.send({content:`⚠️ Economy snapshot missed its 10-minute capture window. No late snapshot was written; the job remains failed for operator review. Scheduled boundary: <t:${Math.floor(job.dueAt.getTime()/1000)}:F>.`,allowedMentions:{parse:[]}}).catch(()=>undefined);
+  };
   const scheduler=new IdempotentScheduler(jobRepo,{
     'chairism.publish':async job=>{if(!enableChairismsSmoke)throw new Error('Chairisms runtime disabled; retain pending delivery.');await chairismPublication.deliver(job.id);},
     'family.publish':async job=>{if(job.guildId!==guildId||!await familyEnabled())throw new Error('Family runtime disabled; retain pending delivery.');await ensureFamilyMembership();await familyMembership.scheduled(async()=>{await(await familyFor(job.guildId)).coordinator.publish(client,job.id);},familyEnabled);},
@@ -332,7 +342,7 @@ export async function startProductionBot():Promise<void>{
     'moderation.evidence_expire':async job=>{await moderation.handleExpiryJob(client,job.jobType,job.payload);},
     'security.state_expire':async job=>{await security.handleExpiryJob(job.payload);},
     'economy.bank_interest_weekly':async job=>{await economy.handleInterestJob(job.payload);},
-    'economy.snapshot_daily':async job=>{await economy.handleSnapshotJob(job.payload);},
+    'economy.snapshot_daily':async job=>{try{await economy.handleSnapshotJob(job.payload,job.dueAt);}catch(error){await alertSnapshotLateness(job,error);throw error;}},
     'economy.policy_weekly':async job=>{await economy.handlePolicyJob(job.payload);},
     'economy.streak_installment':async job=>{await economy.handleStreakInstallmentJob(job.payload);},
     'member_directory.reconcile':async job=>{if(job.guildId!==guildId)throw new Error('Member directory server mismatch.');const guild=await client.guilds.fetch(job.guildId);await reconcileMemberDirectory(guild);await scheduleMemberDirectoryReconciliation(job.guildId);},

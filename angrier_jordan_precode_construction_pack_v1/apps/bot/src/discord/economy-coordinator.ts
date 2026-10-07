@@ -29,10 +29,14 @@ const asNumber=(v:unknown,fallback:number)=>typeof v==='number'&&Number.isFinite
 const asBig=(v:unknown,fallback=0n)=>typeof v==='number'&&Number.isSafeInteger(v)?BigInt(v):typeof v==='string'&&/^\d+$/.test(v)?BigInt(v):fallback;
 const range=(center:bigint,spread:bigint,min:bigint,max:bigint):[bigint,bigint]=>[center-spread<min?min:center-spread,center+spread>max?max:center+spread];
 
+/** A snapshot represents a fixed 4 AM Mountain boundary, never late live state. */
+export const ECONOMY_SNAPSHOT_MAX_LATENESS_MS=10*60*1000;
+export const economySnapshotIsLate=(dueAt:Date,now:Date)=>now.getTime()-dueAt.getTime()>ECONOMY_SNAPSHOT_MAX_LATENESS_MS;
+
 export class DiscordEconomyCoordinator {
   private readonly disposable=new DisposableCardLifecycle();
   private readonly adaptiveApplication:(guildId:string)=>Promise<boolean>;
-  constructor(private readonly service:EconomyService,private readonly config:ConfigService,adaptiveApplication:boolean|((guildId:string)=>Promise<boolean>)=false){this.adaptiveApplication=typeof adaptiveApplication==='function'?adaptiveApplication:async()=>adaptiveApplication;}
+  constructor(private readonly service:EconomyService,private readonly config:ConfigService,adaptiveApplication:boolean|((guildId:string)=>Promise<boolean>)=false,private readonly now:()=>Date=()=>new Date()){this.adaptiveApplication=typeof adaptiveApplication==='function'?adaptiveApplication:async()=>adaptiveApplication;}
 
   async handleMemberAdd(member:GuildMember){await this.service.bootstrapFromBenchmark(member.guild.id,member.id,'member-add');}
   async handleActivityMessage(message:Message){
@@ -54,7 +58,7 @@ export class DiscordEconomyCoordinator {
   async reconcileInterestSchedule(guildId:string){return this.service.scheduleNextBankInterest(guildId);}
   async reconcileEconomySnapshotSchedule(guildId:string){return this.service.scheduleNextEconomySnapshot(guildId);}
   async reconcileEconomyPolicySchedule(guildId:string){return this.service.scheduleNextEconomyPolicy(guildId);}
-  async handleSnapshotJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy snapshot job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy snapshot payload.');await this.service.captureEconomySnapshot(p.guildId,p.cycleKey);}
+  async handleSnapshotJob(payload:unknown,dueAt?:Date){if(!payload||typeof payload!=='object')throw new Error('Invalid economy snapshot job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy snapshot payload.');if(!(dueAt instanceof Date)||!Number.isFinite(dueAt.getTime()))throw new Error('Invalid economy snapshot due time.');const observedAt=this.now();if(economySnapshotIsLate(dueAt,observedAt))throw new DomainError('ECONOMY_SNAPSHOT_LATE',`Economy snapshot missed its 10-minute capture window (${Math.floor((observedAt.getTime()-dueAt.getTime())/1000)} seconds late).`);await this.service.captureEconomySnapshot(p.guildId,p.cycleKey);}
   async handlePolicyJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid economy policy job.');const p=payload as Record<string,unknown>;if(typeof p.guildId!=='string'||typeof p.cycleKey!=='string')throw new Error('Invalid economy policy payload.');const result=await this.service.publishShadowEconomyPolicy(p.guildId,p.cycleKey);if(!result.frozen)await this.service.activateShadowPolicy(p.guildId,p.cycleKey,result.adjustments,await this.adaptiveApplication(p.guildId));}
   async handleStreakInstallmentJob(payload:unknown){if(!payload||typeof payload!=='object')throw new Error('Invalid streak installment job.');const id=(payload as Record<string,unknown>).installmentId;if(typeof id!=='string')throw new Error('Invalid streak installment payload.');await this.service.settleStreakInstallment(id);}
 
