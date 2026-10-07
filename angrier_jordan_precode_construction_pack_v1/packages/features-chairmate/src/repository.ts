@@ -1,7 +1,7 @@
 import {randomUUID} from 'node:crypto';
 import type {PrismaClient} from '@prisma/client';
 import {TIME_CONTROLS,timeControl,type LichessAdapter} from './domain.js';
-export type ChessStatus='PENDING'|'DECLINED'|'EXPIRED'|'CREATING'|'ACTIVE'|'CANCELLED'|'FINISHED';
+export type ChessStatus='PENDING'|'DECLINED'|'EXPIRED'|'CREATING'|'ACTIVE'|'ERROR'|'FINISHED';
 export class ChairmateRepository {
  constructor(private readonly db:PrismaClient,private readonly clock:()=>Date=()=>new Date(),private readonly random:()=>number=Math.random){}
  async create(input:{guildId:string;channelId:string;challengerUserId:string;opponentUserId:string;challengerName:string;opponentName:string;control:string;key:string}){
@@ -15,7 +15,7 @@ export class ChairmateRepository {
   if(!accept||!claimed.providerClaim)return claimed.row;const claim=claimed.row;
   try{const game=await provider.createGuestGame({limit:claim.clockLimit,increment:claim.clockIncrement,idempotencyKey:`chairmate:${id}`});const challengerWhite=this.random()<.5;
    return await this.db.chairmateChallenge.update({where:{id},data:{status:'ACTIVE',lichessChallengeId:game.challengeId,lichessGameId:game.gameId??game.challengeId,lichessGameUrl:game.gameUrl,whiteUrl:game.whiteUrl,blackUrl:game.blackUrl,challengerColor:challengerWhite?'white':'black',opponentColor:challengerWhite?'black':'white',lastProviderError:null,providerRetryAt:null}});
-  }catch(error){const retryable=Boolean((error as {retryable?:boolean}).retryable);return this.db.chairmateChallenge.update({where:{id},data:{status:retryable?'CREATING':'CANCELLED',lastProviderError:error instanceof Error?error.message:'Lichess unavailable',providerRetryAt:retryable?new Date(this.clock().getTime()+30_000):null}});}
+  }catch(error){const retryable=Boolean((error as {retryable?:boolean}).retryable);return this.db.chairmateChallenge.update({where:{id},data:{status:retryable?'CREATING':'ERROR',lastProviderError:error instanceof Error?error.message:'Lichess unavailable',providerRetryAt:retryable?new Date(this.clock().getTime()+30_000):null}});}
  }
  async expire(id:string){return this.db.chairmateChallenge.updateMany({where:{id,status:'PENDING',expiresAt:{lte:this.clock()}},data:{status:'EXPIRED'}});}
  async recover(provider:LichessAdapter){const rows=await this.db.chairmateChallenge.findMany({where:{OR:[{status:'PENDING',expiresAt:{lte:this.clock()}},{status:'CREATING',OR:[{providerRetryAt:null},{providerRetryAt:{lte:this.clock()}}]},{status:'ACTIVE'}]},take:100});for(const row of rows){if(row.status==='PENDING'){await this.expire(row.id);continue;}if(row.status==='CREATING'){await this.decide(row.id,row.opponentUserId,true,provider,row.acceptKey??`recover:${row.id}`,true);continue;}if(!row.lichessGameId)continue;try{const state=await provider.game(row.lichessGameId);if(state.finished){const outcome=state.winnerColor?`${state.winnerColor==='white'?(row.challengerColor==='white'?row.challengerName:row.opponentName):(row.challengerColor==='black'?row.challengerName:row.opponentName)} wins by ${state.result??'completion'}`:`Draw${state.result?` by ${state.result}`:''}`;await this.db.chairmateChallenge.update({where:{id:row.id},data:{status:'FINISHED',result:outcome,winnerColor:state.winnerColor??null}});}}catch(error){await this.db.chairmateChallenge.update({where:{id:row.id},data:{lastProviderError:error instanceof Error?error.message:'Lichess poll failed',providerRetryAt:new Date(this.clock().getTime()+30_000)}});}}
