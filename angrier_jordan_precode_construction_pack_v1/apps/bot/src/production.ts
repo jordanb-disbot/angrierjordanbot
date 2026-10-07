@@ -1,5 +1,5 @@
 import {runWithEventAcknowledgement} from './discord/event-interaction-ack.js';
-import {chairismRegistrationEnabled,validateRegisteredCommands} from './command-registration.js';
+import {alwaysRegisteredCommand,chairismRegistrationEnabled,validateRegisteredCommands} from './command-registration.js';
 import {startupDiagnostics as startup} from './startup-diagnostics.js';
 import {runWithJailSendAcknowledgement} from './discord/jail-interaction-ack.js';
 import {runWithDailyAcknowledgement,replyDailyRestriction} from './discord/daily-interaction-ack.js';
@@ -77,6 +77,7 @@ import { DiscordSecurityCoordinator } from './discord/security-coordinator.js';
 import { DiscordActivityLogger } from './discord/activity-logger.js';
 import { DiscordEconomyCoordinator } from './discord/economy-coordinator.js';
 import {DiscordEmojiStealCoordinator,EMOJI_STEAL_COMMANDS,EMOJI_STEAL_CONTEXT_COMMANDS} from './discord/emoji-steal-coordinator.js';
+import {DiscordDmsCoordinator} from './discord/dms-coordinator.js';
 
 class CuidLikeIds {next(prefix:string){return `${prefix}_${crypto.randomUUID()}`;}}
 const required=(name:string)=>{const value=process.env[name]?.trim();if(!value)throw new Error(`Missing required environment variable ${name}`);return value;};
@@ -139,6 +140,7 @@ export async function startProductionBot():Promise<void>{
   };
   const serverBootstrap=new DiscordServerBootstrap(new PrismaServerBootstrapRepository(db),{onFailure:error=>{if(!initialized)startup.fail(error);}});
   const audit=new AuditService(new PrismaAuditSink(db));
+  const dms=new DiscordDmsCoordinator(db,audit);
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
   // Music is owned by a separate bot.  Do not claim its historical jobs.
   const jobRepo=new PrismaJobRepository(db,{notIn:['music.reconcile','music.controller.publish','music.controller.cleanup','music.controller.refresh']});
@@ -244,7 +246,7 @@ export async function startProductionBot():Promise<void>{
     if(auctionMinHours>auctionMaxHours||cooldownBaseSeconds>cooldownMaxSeconds)throw new Error('Invalid family setting ranges.');
     const policy:FamilyPolicy={proposalHours,divorceMinDays,remarryDays,graceHours,auctionMinHours,auctionMaxHours,childSlotDays:[...childSlotDays] as number[],marriageVoteHours,cooldownBaseSeconds,cooldownMaxSeconds,cooldownQuietHours},fingerprint=JSON.stringify(policy),prior=familyCache.get(g);
     if(prior?.fingerprint===fingerprint)return prior;
-    const repository=new PrismaFamilyRepository(db,process.env.FAMILY_COMPATIBILITY_SECRET??'',familyHuman,policy,undefined,undefined,familyCanAct,()=>familyMembership.transactionGeneration()),entry={fingerprint,repository,coordinator:new DiscordFamilyCoordinator(repository,config,familyCanAct)};
+    const repository=new PrismaFamilyRepository(db,process.env.FAMILY_COMPATIBILITY_SECRET??'',familyHuman,policy,undefined,undefined,familyCanAct,()=>familyMembership.transactionGeneration()),entry={fingerprint,repository,coordinator:new DiscordFamilyCoordinator(repository,config,familyCanAct,async(directoryGuildId,userId)=>{const row=await db.memberDirectory.findUnique({where:{guildId_userId:{guildId:directoryGuildId,userId}},select:{displayName:true}});return row?.displayName;})};
     familyCache.set(g,entry);return entry;
   };
   let familyRecovery:Promise<void>|undefined;
@@ -377,7 +379,7 @@ export async function startProductionBot():Promise<void>{
     if(enableOnboardingSmoke)await startup.run('roles-panel-bootstrap',()=>onboarding.sweepRolePanel(ready,guildId));
     startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&((c.name==='status'||c.name==='announce')||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await startup.run('command-registration',async()=>{const applicationId=ready.user.id;if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');const registered=await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});validateRegisteredCommands(enabled,registered);});
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
@@ -407,7 +409,7 @@ export async function startProductionBot():Promise<void>{
   },()=>{console.error('Bot initialization failed; readiness remains unavailable.');process.exitCode=1;void shutdown();}));
 
   const settleHandlers=async(tasks:Promise<unknown>[])=>{const results=await Promise.allSettled(tasks);if(results.some(result=>result.status==='rejected'))console.error('A Discord feature handler failed; durable recovery remains available.');};
-  const familyDeparture=async(g:string,u:string,reason:'leave'|'ban')=>{
+  const familyDeparture=async(g:string,u:string,reason:'leave'|'ban',departedName?:string)=>{
     if(g!==guildId||!await familyEnabled())return;
     if(!await db.member.findUnique({where:{guildId_userId:{guildId:g,userId:u}}}))return;
     if(await familyHuman(g,u))return; // A queued remove/ban must not act against a returned member.
@@ -415,7 +417,7 @@ export async function startProductionBot():Promise<void>{
     const existing=await db.gameSession.findFirst({where:{guildId:g,ownerUserId:u,type:'family_estate',...(presence.joinedAt?{OR:[{state:{in:['OPEN','LOCKED','SETTLING']}},{createdAt:{gte:presence.joinedAt}}]}:{})}});
     if(existing)return;
     const channelId=await config.get(g,'channels.bot_channel');if(typeof channelId!=='string'||!/^\d{17,20}$/.test(channelId))throw new Error('Family bot channel is not configured.');
-    await(await familyFor(g)).repository.depart({guildId:g,channelId,userId:u,requestKey:'membership-absence:'+u+':'+presence.leftAt!.toISOString()},reason);
+    await(await familyFor(g)).repository.depart({guildId:g,channelId,userId:u,requestKey:'membership-absence:'+u+':'+presence.leftAt!.toISOString()},reason,departedName);
   };
   client.on(Events.GuildMemberAdd,member=>{
     if(lifecycle.isStopping)return;
@@ -451,7 +453,7 @@ export async function startProductionBot():Promise<void>{
   client.on(Events.GuildMemberRemove,member=>{
     if(lifecycle.isStopping)return;
     const observation=member.guild.id===guildId&&!member.user.bot?familyMembership.observe():undefined;
-    const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildMemberRemove,[member]);if(member.guild.id===guildId&&!member.user.bot)await memberDirectory.memberLeft(guildId,member.id);if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave');},observation);
+    const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildMemberRemove,[member]);if(member.guild.id===guildId&&!member.user.bot)await memberDirectory.memberLeft(guildId,member.id);if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave',member.displayName);},observation);
     lifecycle.run(()=>pending,()=>console.error('Member departure processing failed; recovery remains pending.'));
     if(activityLogger)lifecycle.run(()=>activityLogger.memberLeave(member),()=>console.error('Member departure logging failed.'));
   });
@@ -527,6 +529,7 @@ export async function startProductionBot():Promise<void>{
         await items.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;
       }
       if(interaction.isChatInputCommand()){
+        if(interaction.commandName==='dms'){await dms.handle(interaction);return;}
         if(enableJailSmoke&&interaction.guildId){
           const active=await jail.isModerationJailed(interaction.guildId,interaction.user.id);
           if(active){

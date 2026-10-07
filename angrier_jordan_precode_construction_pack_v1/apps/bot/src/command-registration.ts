@@ -1,6 +1,8 @@
 import {DomainError} from '../../../packages/core/src/index.js';
 type Command={name?:string;type?:number};
 export function chairismRegistrationEnabled(command:Command,enabled:boolean){return enabled&&((command.type===3&&command.name==='Create Chairism')||(command.type===1&&(command.name==='quote'||command.name==='chairisms')));}
+/** Commands that must remain discoverable independent of optional feature flags. */
+export function alwaysRegisteredCommand(command:Command){return command.type===1&&['status','announce','dms'].includes(command.name??'');}
 export function validateRegisteredCommands(expected:readonly Command[],response:unknown){
  if(!Array.isArray(response))throw new DomainError('COMMAND_REGISTRATION_MISMATCH','Discord command registration response is invalid.');
  const keys=(items:readonly Command[])=>items.map(c=>`${c.type??1}:${c.name}`).sort();

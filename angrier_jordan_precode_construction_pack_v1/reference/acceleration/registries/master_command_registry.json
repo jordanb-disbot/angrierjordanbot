@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 130,
+  "command_count": 131,
   "commands": [
     {
       "id": "help",
@@ -157,7 +157,7 @@
       "command": "/dms",
       "type": "slash",
       "module": "core",
-      "description": "Enable or disable bot DMs.",
+      "description": "Set whether Angrier Jordan can DM you; separate from the DM Status role in /roles.",
       "permissions": [
         "member"
       ],

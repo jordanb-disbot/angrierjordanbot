@@ -62,7 +62,7 @@
   {
     "type": 1,
     "name": "dms",
-    "description": "Enable or disable bot DMs.",
+    "description": "Set whether Angrier Jordan can DM you; separate from the DM Status role in /roles.",
     "options": [
       {
         "type": 3,

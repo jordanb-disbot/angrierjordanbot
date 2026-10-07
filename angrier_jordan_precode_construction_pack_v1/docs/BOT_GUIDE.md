@@ -80,7 +80,7 @@ The table below is generated from the live master command registry. `Private` me
 | /status | Bot health and uptime. | member | any_allowed | Yes | — |
 | /announce | Post an owner announcement in this channel. | member | main_chat | Yes | message* string |
 | /bug | Report a bot issue. | member | any_allowed | Yes | description* string |
-| /dms | Enable or disable bot DMs. | member | any_allowed | Yes | state* choice |
+| /dms | Choose whether Angrier Jordan may send you direct messages. This is separate from the visible DM Status role in `/roles`. | member | any_allowed | Yes | state* choice |
 
 ### Help and tutorial
 

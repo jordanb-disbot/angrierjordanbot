@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DiscordDmsCoordinator} from '../../dist/apps/bot/src/discord/dms-coordinator.js';
+import {AuditService,InMemoryAuditSink} from '../../dist/packages/core/src/index.js';
+const interaction=state=>({guildId:'g',user:{id:'u'},id:'interaction',options:{getString:()=>state},calls:[],async deferReply(payload){this.calls.push(['defer',payload]);},async editReply(payload){this.calls.push(['edit',payload]);},async reply(payload){this.calls.push(['reply',payload]);}});
+test('dms saves the private bot-delivery preference and audits the member mutation',async()=>{const writes=[],sink=new InMemoryAuditSink(),coordinator=new DiscordDmsCoordinator({member:{upsert:async input=>writes.push(input)}},new AuditService(sink)),i=interaction('off');await coordinator.handle(i);assert.deepEqual(i.calls[0],['defer',{ephemeral:true}]);assert.equal(writes[0].update.dmsEnabled,false);assert.match(i.calls.at(-1)[1].content,/will not send/i);assert.equal(sink.events.length,1);assert.equal(sink.events[0].action,'member.dms_preference_changed');});
+test('dms rejects invalid state privately without writing a preference',async()=>{let writes=0;const i=interaction('maybe');await new DiscordDmsCoordinator({member:{upsert:async()=>{writes++;}}},new AuditService(new InMemoryAuditSink())).handle(i);assert.equal(writes,0);assert.deepEqual(i.calls,[['reply',{ephemeral:true,content:'Choose either on or off for bot direct messages.'}]]);});
