@@ -52,7 +52,7 @@ import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/
 import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
 import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
-import { Client, DiscordAPIError, Events, GatewayIntentBits, Partials, REST, Routes, type ClientEvents } from 'discord.js';
+import { Client, DiscordAPIError, Events, GatewayIntentBits, Partials, REST, Routes, type ClientEvents, type Guild } from 'discord.js';
 import {validateRuntimeEnvironment} from '../../../packages/core/src/runtime-environment.js';
 import {RuntimeLifecycle} from '../../../packages/core/src/runtime-lifecycle.js';
 import {startRuntimeHealth} from './runtime-health.js';
@@ -65,6 +65,7 @@ import { PrismaModerationRepository, ModerationService } from '../../../packages
 import { PrismaSecurityRepository, SecurityService } from '../../../packages/features-security/src/index.js';
 import { PrismaEconomyRepository, EconomyService, type FortuneEntry } from '../../../packages/features-economy/src/index.js';
 import { getPrismaClient, disconnectPrisma } from '../../../packages/database/src/client.js';
+import {MemberDirectoryService,directoryRecord,nextDirectoryReconciliation,type DirectoryMemberInput} from '../../../packages/database/src/member-directory.js';
 import { PrismaWyrPromptRepository, PrismaWyrSessionRepository, PrismaWyrPublicationRepository, WyrService } from '../../../packages/features-wyr/src/index.js';
 import { SystemClock } from '../../../packages/core/src/time.js';
 import { DiscordWyrCoordinator } from './discord/wyr-coordinator.js';
@@ -119,6 +120,22 @@ export async function startProductionBot():Promise<void>{
   const enableFullyFurnishedSmoke=process.env.ENABLE_FULLY_FURNISHED_SMOKE==='true';
   startup.mark('database-client-construction (connection is lazy)');
   const db=getPrismaClient();
+  const directoryStore={
+    upsert:async(input:ReturnType<typeof directoryRecord>)=>{await db.memberDirectory.upsert({where:{guildId_userId:{guildId:input.guildId,userId:input.userId}},create:input,update:{nickname:input.nickname,displayName:input.displayName,username:input.username,normalizedAliases:input.normalizedAliases,searchText:input.searchText,lastSyncedAt:input.lastSyncedAt,archivedAt:null}});},
+    archive:async(guild:string,userId:string,at:Date)=>{await db.memberDirectory.updateMany({where:{guildId:guild,userId,archivedAt:null},data:{archivedAt:at}});},
+    active:async(guild:string)=>db.memberDirectory.findMany({where:{guildId:guild,archivedAt:null}}),
+  };
+  const memberDirectory=new MemberDirectoryService(directoryStore);
+  const directoryInput=(member:{guild:{id:string};id:string;nickname?:string|null;displayName?:string|null;user:{username:string;bot?:boolean}}):DirectoryMemberInput=>({guildId:member.guild.id,userId:member.id,nickname:member.nickname??null,displayName:member.displayName??null,username:member.user.username});
+  const reconcileMemberDirectory=async(guild:Guild)=>{
+    const members=await guild.members.fetch();
+    await memberDirectory.reconcile(guild.id,[...members.values()].filter(member=>!member.user.bot).map(directoryInput));
+  };
+  const scheduleMemberDirectoryReconciliation=async(guild:string)=>{
+    const dueAt=nextDirectoryReconciliation(new Date());
+    const executionKey=`member_directory.reconcile:${guild}:${dueAt.toISOString()}`;
+    await db.scheduledJob.upsert({where:{executionKey},create:{guildId:guild,jobType:'member_directory.reconcile',executionKey,dueAt,status:'PENDING',payload:{guildId:guild}},update:{dueAt,status:'PENDING',payload:{guildId:guild},lastError:null,completedAt:null}});
+  };
   const serverBootstrap=new DiscordServerBootstrap(new PrismaServerBootstrapRepository(db),{onFailure:error=>{if(!initialized)startup.fail(error);}});
   const audit=new AuditService(new PrismaAuditSink(db));
   const config=new ConfigService(SETTINGS,new PrismaConfigRepository(db),audit);
@@ -309,6 +326,7 @@ export async function startProductionBot():Promise<void>{
     'economy.snapshot_daily':async job=>{await economy.handleSnapshotJob(job.payload);},
     'economy.policy_weekly':async job=>{await economy.handlePolicyJob(job.payload);},
     'economy.streak_installment':async job=>{await economy.handleStreakInstallmentJob(job.payload);},
+    'member_directory.reconcile':async job=>{if(job.guildId!==guildId)throw new Error('Member directory server mismatch.');const guild=await client.guilds.fetch(job.guildId);await reconcileMemberDirectory(guild);await scheduleMemberDirectoryReconciliation(job.guildId);},
   });
   startup.mark('scheduled-job-construction');
   const worker=new SchedulerWorker(scheduler,5_000);
@@ -330,6 +348,8 @@ export async function startProductionBot():Promise<void>{
     startup.mark('discord-ready-guild-fetch');
     const configuredServer=ready.guilds.cache.get(guildId)??await ready.guilds.fetch({guild:guildId,force:true});
     await startup.run('database-connection-schema-bootstrap (migrations external)',()=>serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]));
+    await startup.run('member-directory-reconciliation',()=>reconcileMemberDirectory(configuredServer));
+    await startup.run('member-directory-schedule',()=>scheduleMemberDirectoryReconciliation(guildId));
     if(activityLogger)await startup.run('activity-log-private-channel-preflight',()=>activityLogger.preflight(configuredServer));
     if(lifecycle.isStopping)return;
     if(enablePartySmoke||enableWyrSmoke)await startup.run('party-content-bootstrap',()=>seedPartyContent(db));
@@ -385,6 +405,7 @@ export async function startProductionBot():Promise<void>{
     // Enqueue synchronously: lifecycle.run tracks this promise without delaying the transition's place in the queue.
     const pending=familyMembership.live(async()=>{
     await serverBootstrap.beforeEvent(Events.GuildMemberAdd,[member]);
+    if(member.guild.id===guildId&&!member.user.bot)await memberDirectory.memberObserved(directoryInput(member));
     const familyActive=tracked&&await familyEnabled();
     if(familyActive){
       if(!observedJoin)throw new Error('Family member has no authoritative join timestamp.');
@@ -411,7 +432,7 @@ export async function startProductionBot():Promise<void>{
   client.on(Events.GuildMemberRemove,member=>{
     if(lifecycle.isStopping)return;
     const observation=member.guild.id===guildId&&!member.user.bot?familyMembership.observe():undefined;
-    const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildMemberRemove,[member]);if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave');},observation);
+    const pending=familyMembership.live(async()=>{await serverBootstrap.beforeEvent(Events.GuildMemberRemove,[member]);if(member.guild.id===guildId&&!member.user.bot)await memberDirectory.memberLeft(guildId,member.id);if(member.guild.id===guildId&&!member.user.bot&&await familyEnabled()&&await familyHuman(guildId,member.id))return;await settleHandlers([events.memberLeft(client,member.guild.id,member.id),...(enableOnboardingSmoke?[onboarding.handleMemberRemove(member)]:[])]);if(!member.user.bot)await familyDeparture(member.guild.id,member.id,'leave');},observation);
     lifecycle.run(()=>pending,()=>console.error('Member departure processing failed; recovery remains pending.'));
     if(activityLogger)lifecycle.run(()=>activityLogger.memberLeave(member),()=>console.error('Member departure logging failed.'));
   });
@@ -426,6 +447,8 @@ export async function startProductionBot():Promise<void>{
   const typeShitReplies=new TypeShitResponder();
   on(Events.MessageCreate,async message=>{await settleHandlers([typeShitReplies.message(message),...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableEconomyActivityPayouts?[economy.handleActivityMessage(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
   on(Events.MessageReactionAdd,async(reaction,user)=>{await typeShitReplies.reaction(reaction,user);});
+  on(Events.GuildMemberUpdate,async(_before,after)=>{if(after.guild.id===guildId&&!after.user.bot)await memberDirectory.memberObserved(directoryInput(after));});
+  on(Events.UserUpdate,async(_before,after)=>{const guild=client.guilds.cache.get(guildId);if(!guild||after.bot)return;const member=await guild.members.fetch({user:after.id,force:true}).catch(()=>null);if(member)await memberDirectory.memberObserved(directoryInput(member));});
   if(activityLogger){
     on(Events.MessageUpdate,(before,after)=>activityLogger.messageUpdate(before,after));
     on(Events.MessageDelete,message=>activityLogger.messageDelete(message));

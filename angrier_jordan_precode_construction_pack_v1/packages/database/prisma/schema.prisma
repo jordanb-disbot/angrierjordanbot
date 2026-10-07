@@ -45,6 +45,7 @@ model Guild {
   createdAt DateTime @default(now())
   configs ConfigValue[]
   audits AuditEvent[]
+  memberDirectory MemberDirectory[]
   sessions GameSession[]
   cases ModerationCase[]
 }
@@ -82,6 +83,25 @@ model Member {
   roleSnapshots MemberRoleSnapshot[]
   fullyFurnished FullyFurnishedProgress?
   @@id([guildId,userId])
+}
+
+// Current Discord guild-member directory.  This is intentionally separate from
+// Member because many members never create a bot-owned record, while historical
+// Member/economy rows must survive a Discord leave event.
+model MemberDirectory {
+  guildId String
+  userId String
+  nickname String?
+  displayName String
+  username String
+  normalizedAliases String[] @default([])
+  searchText String
+  lastSyncedAt DateTime
+  archivedAt DateTime?
+  guild Guild @relation(fields:[guildId], references:[id], onDelete:Cascade)
+  @@id([guildId,userId])
+  @@index([guildId,archivedAt,lastSyncedAt])
+  @@index([guildId,searchText])
 }
 
 // A launch campaign is deliberately isolated from lifetime statistics.  It is
