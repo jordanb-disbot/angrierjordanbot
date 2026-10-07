@@ -58,8 +58,8 @@ export class DiscordEventsCoordinator {
  private sweeping=false;
  constructor(private readonly repo:PrismaEventsRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>,private readonly maximumWager?:(guildId:string)=>Promise<bigint|undefined>){}
  async policy(guildId:string):Promise<EventPolicy>{const [min,max,adaptive]=await Promise.all([this.config.get(guildId,'events.min_bet'),this.config.get(guildId,'events.max_bet'),this.maximumWager?.(guildId)]);const configured=BigInt(Number(max));return{minBet:BigInt(Number(min)),maxBet:adaptive===undefined?configured:adaptive<configured?adaptive:configured};}
- private async guard(guildId:string,userId:string,channelId:string,kind='race'){
-  const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):interactiveGameChannelAllowed(this.config,guildId,channelId),this.eligible(guildId,userId)]);
+ private async guard(guildId:string,userId:string,channelId:string,kind='race',legacyPrefix=false){
+  const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):interactiveGameChannelAllowed(this.config,guildId,channelId,legacyPrefix),this.eligible(guildId,userId)]);
   if(enabled!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');
   if(!channelAllowed)throw new DomainError('EVENT_CHANNEL',kind==='fight'?'Use Fight in an approved channel.':'Use events in Gaming Chair or Bots Don’t Sit.');
   if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('EVENT_RESTRICTED','Event controls are unavailable while restricted.');
@@ -67,13 +67,15 @@ export class DiscordEventsCoordinator {
  async message(message:Message){
   if(message.content.trim()!=='!race'||message.author.bot||!message.guildId||!message.guild)return;
   if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
-  if(!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true))return;
+  const channelName='name' in message.channel?message.channel.name:undefined;
+  const namedMainChat=typeof channelName==='string'&&/^main[-_ ]?chat$/i.test(channelName);
+  if(!namedMainChat&&!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true))return;
   // Removal precedes permission evaluation, including the silent unauthorized path.
   try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
   const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
   const roles=access?.['!race'];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
-  try{await this.guard(message.guildId,message.author.id,message.channelId);}catch{return;}
+  try{await this.guard(message.guildId,message.author.id,message.channelId,'race',true);}catch{return;}
   if(!message.channel.isSendable())return;
   await this.queueRace(message,member);
  }
