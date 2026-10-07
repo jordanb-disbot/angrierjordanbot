@@ -6,12 +6,12 @@ export class HttpLichessAdapter implements LichessAdapter {
   const body=new URLSearchParams({variant:'standard',rated:'false','clock.limit':String(input.limit),'clock.increment':String(input.increment),'color':'random'});
   const response=await this.fetcher('https://lichess.org/api/challenge/open',{method:'POST',headers:{Authorization:`Bearer ${this.token}`,Accept:'application/json','Content-Type':'application/x-www-form-urlencoded','Idempotency-Key':input.idempotencyKey},body});
   if(!response.ok){const retry=response.status===429;const retrySafe=response.status>=400&&response.status<500;throw Object.assign(new Error(`Lichess challenge creation failed (${response.status}).`),{retryable:retry,retrySafe,status:response.status});}
-  const data=await response.json() as {challenge?:{id?:string;url?:string};urlWhite?:string;urlBlack?:string};
-  if(!data.challenge?.id||!data.urlWhite||!data.urlBlack)throw Object.assign(new Error('Lichess returned an incomplete guest-game response.'),{retryable:false,retrySafe:false,status:502});
+  const data=await response.json() as {challenge?:{id?:string;url?:string;urlWhite?:string;urlBlack?:string};urlWhite?:string;urlBlack?:string};const whiteUrl=data.urlWhite??data.challenge?.urlWhite,blackUrl=data.urlBlack??data.challenge?.urlBlack;
+  if(!data.challenge?.id||!whiteUrl||!blackUrl)throw Object.assign(new Error('Lichess returned an incomplete guest-game response.'),{retryable:false,retrySafe:false,status:502});
   // urlWhite/urlBlack are the guest-board capabilities. Lichess may omit the
   // convenience public challenge URL, which must not turn a created game into
   // a second create attempt. The stable challenge ID is sufficient for replay.
-  return {challengeId:data.challenge.id,gameId:data.challenge.id,gameUrl:data.challenge.url??`https://lichess.org/${encodeURIComponent(data.challenge.id)}`,whiteUrl:data.urlWhite,blackUrl:data.urlBlack};
+  return {challengeId:data.challenge.id,gameId:data.challenge.id,gameUrl:data.challenge.url??`https://lichess.org/${encodeURIComponent(data.challenge.id)}`,whiteUrl,blackUrl};
  }
  async game(id:string):Promise<LichessOutcome>{
   const response=await this.fetcher(`https://lichess.org/api/game/export/${encodeURIComponent(id)}`,{headers:{Authorization:`Bearer ${this.token}`,Accept:'application/json'}});
