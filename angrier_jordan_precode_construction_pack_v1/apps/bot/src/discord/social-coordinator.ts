@@ -43,11 +43,12 @@ export class DiscordSocialCoordinator {
    await this.guard(i.guildId,i.user.id,i.channelId,haiku);await this.member(i.guild,i.user.id);
    const c:SocialContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
    if(pp){
-    const member=await this.member(i.guild,i.user.id),size=randomInt(1,13),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
+    const member=await this.member(i.guild,i.user.id),size=randomInt(1,8),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
     await this.repo.pp(c);
-    const asset=size===1?'pp-recliner-closed.png':size>=10?'pp-recliner-max.png':'pp-recliner-extended.png',filename='recliner-check.png';
+    const assets=['pp-recliner-closed.png','pp-recliner-25.png','pp-recliner-extended.png','pp-recliner-50.png','pp-recliner-mid.png','pp-recliner-75.png','pp-recliner-max.png'] as const;
+    const asset=assets[size-1]!,filename='recliner-check.png';
     const image=await readFile(join(process.cwd(),'packages/features-social/assets',asset));
-    await i.editReply({content:`_${lines[randomInt(lines.length)]}_\n**Footrest extension: ${size}/12**`,embeds:[{color:0x19a7a4,image:{url:`attachment://${filename}`}}],files:[{attachment:image,name:filename,description:`${member.displayName}'s recliner check · ${size}/12 extension`}],allowedMentions:{parse:[]}});return;
+    await i.editReply({content:`_${lines[randomInt(lines.length)]}_\n**Footrest extension: ${size}/7**`,embeds:[{color:0x19a7a4,image:{url:`attachment://${filename}`}}],files:[{attachment:image,name:filename,description:`${member.displayName}'s recliner check · ${size}/7 extension`}],allowedMentions:{parse:[]}});return;
    }
    if(haiku||notmad){
     // Newest owner instruction: notmad is actual server-owner only, independent of role names.
