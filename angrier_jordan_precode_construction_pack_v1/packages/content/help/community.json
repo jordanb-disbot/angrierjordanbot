@@ -6,10 +6,11 @@
     "superlatives",
     "suggest",
     "ama",
-    "giveaway"
+    "giveaway",
+    "steal"
   ],
   "title": "Community",
-  "body": "Polls support manual or timed closure, hidden/live totals, anonymous/named ballots and ranked preferences. One saved ballot per member may be revised before close. Ranked ballots list choice numbers best first; omitted choices can exhaust. Superlatives are admin-started numbered seasons: anonymous nominations for 48 hours, top five finalists per category, then anonymous voting for 48 hours. One nomination per member/category, no self-nomination, and deterministic tie resolution. Winners earn permanent season badges without Ottomans. Suggestions support anonymous submissions, Support/Oppose voting, audited staff statuses and searchable archives. AMA has upvotes only; admins answer/decline, and the submitter can inspect a declined question’s private status. Admin-created giveaways run for one hour to seven days with one to five winners. Paid entries require exact-fee confirmation, are charged once, and their fees leave circulation. Custom reward delivery remains visibly pending until staff acknowledges fulfillment.",
+  "body": "Polls support manual or timed closure, hidden/live totals, anonymous/named ballots and ranked preferences. One saved ballot per member may be revised before close. Ranked ballots list choice numbers best first; omitted choices can exhaust. Superlatives are admin-started numbered seasons: anonymous nominations for 48 hours, top five finalists per category, then anonymous voting for 48 hours. One nomination per member/category, no self-nomination, and deterministic tie resolution. Winners earn permanent season badges without Ottomans. Suggestions support anonymous submissions, Support/Oppose voting, audited staff statuses and searchable archives. AMA has upvotes only; admins answer/decline, and the submitter can inspect a declined question’s private status. Admin-created giveaways run for one hour to seven days with one to five winners. Paid entries require exact-fee confirmation, are charged once, and their fees leave circulation. Custom reward delivery remains visibly pending until staff acknowledges fulfillment. /steal privately copies one valid custom emoji into Chairs when Discord capacity and permissions allow it.",
   "fields": {
     "question": "Poll question or AMA question.",
     "choices": "Pipe-separated choices within the configured maximum; default 20, up to 25.",
@@ -25,7 +26,9 @@
     "prize": "ottomans:amount, item:id, collectible:id, tool:id, recipe:id or custom:description; prize is per winner.",
     "winners": "One to five distinct giveaway winners.",
     "hours": "One to 168 hours, within configured giveaway limits.",
-    "fee": "Ottomans per entry, bounded by the configured maximum; omit for free entry."
+    "fee": "Ottomans per entry, bounded by the configured maximum; omit for free entry.",
+    "emoji": "A custom Discord emoji written exactly as <:name:id> or <a:name:id>.",
+    "name": "Optional 2–32 character emoji name; omit to reuse the source name."
   },
   "tutorial": {
     "lesson_id": "community.intro",

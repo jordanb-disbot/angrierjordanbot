@@ -6,7 +6,7 @@
   ],
   "body": "Your private onboarding controls help you settle into Chairs at your own pace.",
   "rules": "Read the server rules before choosing Acknowledge Rules. Acknowledgement records your acceptance and restores only access permitted by the server settings and any active restrictions.",
-  "roles": "Choose optional member and cosmetic roles without asking staff to assign each one. Categories and choices come from the server’s approved self-role panel; an unavailable panel means setup is incomplete, not that a lesson failed. Run /roles and choose DM Status, Gender, Age, Region, Interests / Substances, Notification Pings or Personalities. Then use that category’s role menu. Single-select replaces its previous choice; multi-select permits several. Clear choices to remove roles. Reopening shows current selections.",
+  "roles": "Open /roles in Seat Assignments to use the shared chooser. Your selections stay private until Publish My Selections. Publishing atomically applies selected managed roles, removes deselected managed roles, and updates your one public role card. Use Edit My Roles to reopen your saved choices.",
   "examples": [
     "/rules",
     "/roles"
@@ -15,12 +15,12 @@
     "steps": [
       "Choose a category before choosing roles. DM Status, Gender, Age and Region keep at most one selection; Interests / Substances, Notification Pings and Personalities permit several.",
       "Choose your new roles or deselect ones you no longer want. Notification Pings offers Line Ping (!line), Race Ping (!race), VC Ping (!VC), and Chess Ping (!Chess). Personalities are optional member roles, not earned or staff badges.",
-      "Check the updated selections, then reopen /roles later to verify them. AJ rejects missing or unmanageable choices safely.",
+      "Use Publish My Selections only when ready. AJ applies the managed-role changes together, then updates your public card; failed role checks leave both unchanged.",
       "Only approved self-assignable roles appear: below AJ, unmanaged and without Discord permission bits. Protected, staff, system and earned roles are excluded; Practice changes none of them."
     ]
   },
   "fields": {
     "category": "Choose a configured category first, then use its single-select or multi-select role menu.",
-    "selection": "Choose or clear approved optional roles; reopening /roles displays current selections."
+    "selection": "Choose or clear approved optional roles privately, then use Publish My Selections to apply and publish them."
   }
 }

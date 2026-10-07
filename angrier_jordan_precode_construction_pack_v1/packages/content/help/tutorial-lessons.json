@@ -1013,11 +1013,22 @@
       ],
       "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race or /race only in main chat when you want to start a real event."
     },
+    "steal": {
+      "purpose": "Copy one custom Discord emoji into Chairs for the server to use. The result is private; the emoji itself becomes available only after Discord accepts the upload.",
+      "controls": "Use /steal with a custom emoji written exactly as <:name:id> or <a:name:id>. Optionally provide a 2–32 character name. AJ validates animation, file size, duplicates, available emoji slots, and Discord permissions before creating anything.",
+      "steps": [
+        "Copy the full custom-emoji markup from Discord, including its angle brackets and numeric ID.",
+        "Use /steal emoji:<emoji>; add name:<optional> only when you want a different valid name.",
+        "Read the private confirmation. A duplicate name, unavailable slot, invalid image, or missing Discord permission creates nothing.",
+        "Use the new emoji normally after confirmation; the creation is audit logged."
+      ],
+      "completion": "You know how to copy one valid custom emoji safely. Next: use /steal only for an emoji you intend Chairs to keep."
+    },
     "daily": {
       "purpose": "Economy starts with Ottomans: your Wallet holds spendable funds and Bank stores the rest. New-member currency follows the server benchmark and is granted once. Daily rewards vary within 200–300 Ottomans, weekly rewards within 1,000–1,500, and both reset at 4 AM Mountain. Rewards, activities, purchases and some games build your balance over time.",
-      "controls": "Use /daily for the daily reward, then /bank to review Wallet and Bank. /shop and /inventory show what Ottomans can buy and what you own. Policy adjustments are measured in shadow first, remain bounded, and never rewrite a reward or wager already accepted.",
+      "controls": "Use /daily for Claim Daily, Daily Spin, and a private Fortune; each can be used once per reset. Then use /bank to review Wallet and Bank. /shop and /inventory show what Ottomans can buy and what you own. Policy adjustments are measured in shadow first, remain bounded, and never rewrite a reward or wager already accepted.",
       "steps": [
-        "Open /daily to claim the available reward; it is the easiest first economy action.",
+        "Open /daily to claim the available reward, spin once, and reveal your private Fortune when each is ready.",
         "Open /bank to see Wallet and Bank, then use /shop before spending so you can inspect prices and requirements.",
         "Keep a working Wallet balance for purchases and approved games; use /inventory after buying a usable item.",
         "Progress through regular rewards, activities and owned items instead of relying on one large payout."
