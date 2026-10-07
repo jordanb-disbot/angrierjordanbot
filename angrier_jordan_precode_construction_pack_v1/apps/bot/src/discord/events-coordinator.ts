@@ -67,7 +67,7 @@ export class DiscordEventsCoordinator {
  async message(message:Message){
   if(message.content.trim()!=='!race'||message.author.bot||!message.guildId||!message.guild)return;
   if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
-  if(!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId))return;
+  if(!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true))return;
   // Removal precedes permission evaluation, including the silent unauthorized path.
   try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
