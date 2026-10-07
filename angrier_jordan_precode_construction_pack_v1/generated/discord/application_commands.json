@@ -121,8 +121,8 @@
     "options": [
       {
         "type": 3,
-        "name": "emoji",
-        "description": "A custom Discord emoji to copy.",
+        "name": "source",
+        "description": "A custom emoji, emoji ID, or Discord CDN link.",
         "required": true
       },
       {

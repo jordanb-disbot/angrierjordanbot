@@ -241,7 +241,7 @@ export const COMMANDS = [
   },
   {
     "id": "steal",
-    "preferred": "/steal emoji:<emoji> name:<optional>",
+    "preferred": "/steal source:<emoji|ID|CDN link> name:<optional>",
     "registered": "/steal",
     "type": "slash",
     "module": "community",
@@ -255,10 +255,10 @@ export const COMMANDS = [
     ],
     "options": [
       {
-        "name": "emoji",
+        "name": "source",
         "type": "string",
         "required": true,
-        "description": "A custom Discord emoji to copy."
+        "description": "A custom emoji, emoji ID, or Discord CDN link."
       },
       {
         "name": "name",

@@ -283,10 +283,10 @@
       ],
       "options": [
         {
-          "name": "emoji",
+          "name": "source",
           "type": "string",
           "required": true,
-          "description": "A custom Discord emoji to copy."
+          "description": "A custom emoji, emoji ID, or Discord CDN link."
         },
         {
           "name": "name",
@@ -302,7 +302,7 @@
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
-      "preferred_invocation": "/steal emoji:<emoji> name:<optional>",
+      "preferred_invocation": "/steal source:<emoji|ID|CDN link> name:<optional>",
       "registration_path": "/steal"
     },
     {
