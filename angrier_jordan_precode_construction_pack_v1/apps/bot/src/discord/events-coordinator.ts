@@ -70,14 +70,13 @@ export class DiscordEventsCoordinator {
   const channelName='name' in message.channel?message.channel.name:undefined;
   const namedMainChat=typeof channelName==='string'&&/^main[-_ ]?chat$/i.test(channelName);
   if(!namedMainChat&&!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true))return;
-  // Removal precedes permission evaluation, including the silent unauthorized path.
-  try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
   const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
   const roles=access?.['!race'];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
   try{await this.guard(message.guildId,message.author.id,message.channelId,'race',true);}catch(error){console.warn('Legacy race command rejected.',{guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!message.channel.isSendable())return;
-  await this.queueRace(message,member);
+  const sessionMessageId=await this.queueRace(message,member);
+  if(sessionMessageId)try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
  }
  async startRace(i:ChatInputCommandInteraction){try{
   if(!i.deferred)await i.deferReply({ephemeral:true});

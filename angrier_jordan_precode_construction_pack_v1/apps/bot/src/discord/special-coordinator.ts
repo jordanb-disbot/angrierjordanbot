@@ -47,8 +47,7 @@ export class DiscordSpecialCoordinator {
   const trigger=normalizeNotificationTrigger(message.content);if(!/^![a-z][a-z0-9_-]{0,31}$/.test(trigger)||trigger==='!race'||message.author.bot||!message.guildId||!message.guild)return;
   if(trigger==='!line'&&message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
   const definition=(await this.definitions(message.guildId)).find(d=>d.trigger===trigger);if(!definition)return;
-  // Known unauthorized triggers are always removed, including wrong-channel triggers.
-  await message.delete();if(!definition.enabled)return;
+  if(!definition.enabled)return;
   const member=await message.guild.members.fetch({user:message.author.id,force:true});if(!mayInvokeSpecial(definition.allowedRoleIds,new Set(member.roles.cache.keys())))return;
   try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line');}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!definition.responsePool.length)throw new DomainError('SPECIAL_CONTENT','Configure an authored response pool before enabling this Special Command.');
@@ -56,7 +55,8 @@ export class DiscordSpecialCoordinator {
   const context={guildId:message.guildId,channelId:message.channelId,userId:message.author.id,requestKey:message.id};
   const notification=await notificationRole(message.guild,message.channelId,definition.notificationRoleId,this.config)??null;
   const content=definition.responsePool[randomInt(definition.responsePool.length)]!;
-  if(trigger==='!line'){try{const started=await this.repo.start(context,member.displayName,{content,notificationRoleId:notification});if(started.jobId)await this.deliver(message.client,started.jobId);return;}catch(error){if(error instanceof DomainError&&error.code==='LINE_ACTIVE')return;throw error;}}
+  if(trigger==='!line'){try{const started=await this.repo.start(context,member.displayName,{content,notificationRoleId:notification});if(started.jobId){await this.deliver(message.client,started.jobId);await message.delete();}return;}catch(error){if(error instanceof DomainError&&error.code==='LINE_ACTIVE')return;throw error;}}
+  await message.delete();
   const {jobId}=await this.repo.queueCallout(context,content,notification);await this.deliver(message.client,jobId);
  }
  async deliver(client:Client,jobId:string){const{payload:p}=await this.repo.callout(jobId),channel=await client.channels.fetch(p.channelId);if(!channel?.isSendable()||!('messages' in channel))throw new Error('Special Command destination unavailable.');
