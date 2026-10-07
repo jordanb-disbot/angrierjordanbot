@@ -130,6 +130,7 @@ export async function startProductionBot():Promise<void>{
   const reconcileMemberDirectory=async(guild:Guild)=>{
     const members=await guild.members.fetch();
     await memberDirectory.reconcile(guild.id,[...members.values()].filter(member=>!member.user.bot).map(directoryInput));
+    return new Map([...members].map(([id,member])=>[id,{bot:member.user.bot,joinedAt:member.joinedAt}]));
   };
   const scheduleMemberDirectoryReconciliation=async(guild:string)=>{
     const dueAt=nextDirectoryReconciliation(new Date());
@@ -247,6 +248,7 @@ export async function startProductionBot():Promise<void>{
     familyCache.set(g,entry);return entry;
   };
   let familyRecovery:Promise<void>|undefined;
+  let startupFamilyCensus:Map<string,{bot:boolean;joinedAt:Date|null}>|undefined;
   const familyRecoveryFailure=(error:unknown)=>{
     // This path intentionally reports only an operational message: recovery
     // failures must be actionable without exposing environment configuration.
@@ -258,8 +260,9 @@ export async function startProductionBot():Promise<void>{
     if(!familyRecovery)familyRecovery=(async()=>{
       const channelId=await config.get(guildId,'channels.bot_channel');
       if(typeof channelId!=='string'||!/^\d{17,20}$/.test(channelId))throw new Error('Family bot channel is not configured.');
-      const guild=await client.guilds.fetch(guildId),family=await familyFor(guildId);
-      await familyMembership.initialize(assertCurrent=>reconcileFamilyMembership({guildId,channelId,store:familyMembershipStore,census:discordFamilyMembershipCensus(guild),repository:family.repository,assertCurrent}));
+      const guild=await client.guilds.fetch(guildId),family=await familyFor(guildId),seed=startupFamilyCensus;
+      startupFamilyCensus=undefined;
+      await familyMembership.initialize(assertCurrent=>reconcileFamilyMembership({guildId,channelId,store:familyMembershipStore,census:discordFamilyMembershipCensus(guild,seed),repository:family.repository,assertCurrent}));
     })().finally(()=>{familyRecovery=undefined;});
     await familyRecovery;
   };
@@ -354,7 +357,7 @@ export async function startProductionBot():Promise<void>{
     startup.mark('discord-ready-guild-fetch');
     const configuredServer=ready.guilds.cache.get(guildId)??await ready.guilds.fetch({guild:guildId,force:true});
     await startup.run('database-connection-schema-bootstrap (migrations external)',()=>serverBootstrap.census([...ready.guilds.cache.values(),configuredServer]));
-    await startup.run('member-directory-reconciliation',()=>reconcileMemberDirectory(configuredServer));
+    startupFamilyCensus=await startup.run('member-directory-reconciliation',()=>reconcileMemberDirectory(configuredServer));
     await startup.run('member-directory-schedule',()=>scheduleMemberDirectoryReconciliation(guildId));
     if(activityLogger)await startup.run('activity-log-private-channel-preflight',()=>activityLogger.preflight(configuredServer));
     if(lifecycle.isStopping)return;

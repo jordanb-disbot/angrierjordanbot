@@ -146,33 +146,22 @@ export function prismaFamilyMembershipStore(db:PrismaClient):FamilyMembershipSto
   };
 }
 
-export function discordFamilyMembershipCensus(guild:Guild):FamilyMembershipCensus{
+type CensusMember={bot:boolean;joinedAt:Date|null};
+export function discordFamilyMembershipCensus(guild:Guild,seededMembers?:Map<string,CensusMember>):FamilyMembershipCensus{
+  let seed=seededMembers;
   return{
     guildId:guild.id,
     async fetch(){
       if(!guild.available)throw new Error('Family census server unavailable.');
-      // Guild#memberCount is gateway state and can lag a complete REST member
-      // listing.  A stale count must not indefinitely pause Family recovery, but
-      // neither may a moving/incomplete listing drive estate mutations.  Require
-      // two consecutive complete REST listings with the same membership before
-      // accepting the snapshot; a continuously changing guild fails closed.
-      const stable=(left:Map<string,{bot:boolean;joinedAt:Date|null}>,right:Map<string,{bot:boolean;joinedAt:Date|null}>)=>left.size===right.size&&[...left].every(([id,member])=>{
-        const other=right.get(id);
-        if(!other)return false;
-        return other.bot===member.bot&&other.joinedAt?.getTime()===member.joinedAt?.getTime();
-      });
-      for(let attempt=0;attempt<3;attempt++){
-        const read=async()=>{
-          const members=await guild.members.fetch({withPresences:false});
-          return new Map([...members].map(([id,member])=>[id,{bot:member.user.bot,joinedAt:member.joinedAt}]));
-        };
-        const first=await read();
-        if(!guild.available)throw new Error('Family census server unavailable.');
-        const second=await read();
-        if(!guild.available)throw new Error('Family census server unavailable.');
-        if(stable(first,second))return{available:true,expectedCount:second.size,members:second};
-      }
-      throw new Error('Family census changed during REST reconciliation.');
+      // A complete GuildMembers fetch resolves after its gateway chunks arrive.
+      // Reuse the just-completed directory snapshot at startup: a second
+      // immediate opcode-8 request is rate-limited by Discord.  Gateway member
+      // events fence this snapshot before any Family mutation, and later
+      // recoveries fetch a fresh complete snapshot.
+      const members=seed??new Map([...await guild.members.fetch({withPresences:false})].map(([id,member])=>[id,{bot:member.user.bot,joinedAt:member.joinedAt}]));
+      seed=undefined;
+      if(!guild.available)throw new Error('Family census server unavailable.');
+      return{available:true,expectedCount:members.size,members};
     },
     async lookup(userId){
       if(!guild.available)throw new Error('Family census server unavailable.');
