@@ -3,6 +3,7 @@ import {createHash,randomInt} from 'node:crypto';
 import {DeliveryEngine,DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {COMMANDS} from '../../../../packages/contracts/src/generated/commands.js';
 import {PrismaSocialRepository} from '../../../../packages/features-social/src/prisma-repository.js';
+import {renderReclinerCheck} from '../../../../packages/features-social/src/pp-render.js';
 import {SOCIAL_ACTIONS,detectHaiku,sampleHaiku,validateSocialPolicy} from '../../../../packages/features-social/src/domain.js';
 import type {SocialContext,SocialJob,SocialPolicy} from '../../../../packages/features-social/src/interfaces.js';
 import {renderSocialResponse} from '../../../../packages/features-social/src/render.js';
@@ -41,8 +42,8 @@ export class DiscordSocialCoordinator {
    await this.guard(i.guildId,i.user.id,i.channelId,haiku);await this.member(i.guild,i.user.id);
    const c:SocialContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
    if(pp){
-    const member=await this.member(i.guild,i.user.id),size=randomInt(1,13),bar='8'+ '='.repeat(size)+'D',lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
-    await this.repo.pp(c);await i.editReply({content:`**${member.displayName}'s Chair Check**\n${bar}\n_${lines[randomInt(lines.length)]}_`,allowedMentions:{parse:[]}});return;
+    const member=await this.member(i.guild,i.user.id),size=randomInt(1,13),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
+    await this.repo.pp(c);const svg=renderReclinerCheck(member.displayName,size),filename='recliner-check.png';await i.editReply({content:`_${lines[randomInt(lines.length)]}_`,embeds:[{color:0x19a7a4,image:{url:`attachment://${filename}`}}],files:[{attachment:await rasterizeSvg(svg),name:filename,description:`${member.displayName}'s playful recliner check`}],allowedMentions:{parse:[]}});return;
    }
    if(haiku||notmad){
     // Newest owner instruction: notmad is actual server-owner only, independent of role names.
