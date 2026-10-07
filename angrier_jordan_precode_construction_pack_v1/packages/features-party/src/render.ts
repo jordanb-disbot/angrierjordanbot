@@ -25,13 +25,15 @@ function fmkCards(trio:{userId:string;name:string}[],assignments:Record<string,s
 /** Landscape FMK keeps the three faces together at Discord display width. */
 function fmkStage(trio:{userId:string;name:string}[],assignments:Record<string,string>,art:Record<string,PartyArt>,chooser:string,counters:PartyView['subjectCounters'],result:PartyView['result'],privateView=false){
  const accents=['#EF4444','#D568E8','#38BDF8'],roles=['FUCK','MARRY','KILL'],bottom=privateView?'Assign Fuck, then Marry. The remaining member is Kill.':result?`Agree: ${result.totals.agree??0} votes · ${result.percentages.agree??0}%     |     Disagree: ${result.totals.disagree??0} votes · ${result.percentages.disagree??0}%`:'Agree or Disagree · Anonymous votes · The chooser cannot vote';
+ const ordered=roles.map(role=>trio.find(member=>assignments[role.toLowerCase()]===member.userId)).filter((member):member is {userId:string;name:string}=>Boolean(member));
+ const displayTrio=ordered.length===3?ordered:trio;
  let body='<defs><linearGradient id="fmkFade" x2="0" y2="1"><stop stop-color="#0B1220" stop-opacity="0"/><stop offset="1" stop-color="#0B1220" stop-opacity=".98"/></linearGradient></defs><rect width="1200" height="790" fill="#07111D" opacity=".62"/>';
  body+=text(32,43,'ANGRIER JORDAN · THE GAMES LOUNGE',20,ink.gold,'font-family="Space Grotesk" font-weight="700" letter-spacing="2"');
  body+=text(32,101,'FUCK · MARRY · KILL',56,ink.white,'font-family="Space Grotesk" font-weight="700"');
  body+=text(32,136,privateView?'PRIVATE CHOICES':result?'THE VERDICT · '+result.label:'AUDIENCE VOTE OPEN',24,'#E5C278','font-family="Space Grotesk" font-weight="700"');
  body+=text(1160,51,'CHOSEN BY',18,ink.muted,'text-anchor="end" letter-spacing="2"')+text(1160,86,chooser,28,ink.white,'text-anchor="end" font-family="Space Grotesk" font-weight="700"');
  body+='<path d="M30 151H1170" stroke="url(#gold)" stroke-width="2"/>';
- for(const[n,m]of trio.entries()){
+ for(const[n,m]of displayTrio.entries()){
   const x=30+n*384,cx=x+180,accent=accents[n]!,a=art[m.userId],name=a?.name??m.name,role=Object.entries(assignments).find(([,id])=>id===m.userId)?.[0].toUpperCase()??'PENDING',stats=counters?.[m.userId]??{fucked:0,married:0,killed:0},values=[stats.fucked,stats.married,stats.killed],draws=values.reduce((sum,count)=>sum+count,0),high=Math.max(1,...values),safeAvatar=a?.avatarData&&/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(a.avatarData)&&a.avatarData.length<=1_400_000;
   body+=`<defs><clipPath id="fmkCrop${n}"><rect x="${x+10}" y="174" width="340" height="244" rx="13"/></clipPath></defs><rect x="${x}" y="164" width="360" height="510" rx="18" fill="#0B1220" stroke="${accent}" stroke-width="3"/><rect x="${x+9}" y="173" width="342" height="492" rx="12" fill="#081722" stroke="${accent}" stroke-opacity=".35"/>`;
   body+=safeAvatar?`<image href="${a!.avatarData}" x="${x+10}" y="174" width="340" height="244" preserveAspectRatio="xMidYMid slice" clip-path="url(#fmkCrop${n})"/>`:portrait('fmk-stage-'+n,name,a?.avatarData,cx,188,214);
