@@ -472,7 +472,10 @@ export async function startProductionBot():Promise<void>{
   });
   on(Events.ChannelCreate,async channel=>{await settleHandlers([...(enableJailSmoke?[jail.reconcileNewChannel(channel)]:[]),...(activityLogger?[activityLogger.channelCreated(channel)]:[])]);});
   const typeShitReplies=new TypeShitResponder();
-  on(Events.MessageCreate,async message=>{await settleHandlers([typeShitReplies.message(message),...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),...(enableSpecialSmoke?[special.message(message)]:[]),...(enableEventsSmoke?[events.message(message)]:[]),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableEconomyActivityPayouts?[economy.handleActivityMessage(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
+  // Legacy !line/!race are prefix commands. Their coordinators perform the
+  // feature/channel/role checks themselves, so the message listener must not
+  // be disabled by the optional smoke flags used for newer modules.
+  on(Events.MessageCreate,async message=>{await settleHandlers([typeShitReplies.message(message),...(activityLogger?[activityLogger.messageCreate(message)]:[]),...(enableSocialSmoke?[social.message(message)]:[]),...(enableChannelGamesSmoke?[channelGames.message(message)]:[]),special.message(message),events.message(message),...(enableProfilesSmoke?[profiles.message(message)]:[]),...(enableEconomyActivityPayouts?[economy.handleActivityMessage(message)]:[]),...(enableSecuritySmoke?[security.handleMessage(message)]:[])]);});
   on(Events.MessageReactionAdd,async(reaction,user)=>{await typeShitReplies.reaction(reaction,user);});
   on(Events.GuildMemberUpdate,async(_before,after)=>{if(after.guild.id===guildId&&!after.user.bot)await memberDirectory.memberObserved(directoryInput(after));});
   on(Events.UserUpdate,async(_before,after)=>{const guild=client.guilds.cache.get(guildId);if(!guild||after.bot)return;const member=await guild.members.fetch({user:after.id,force:true}).catch(()=>null);if(member)await memberDirectory.memberObserved(directoryInput(member));});
