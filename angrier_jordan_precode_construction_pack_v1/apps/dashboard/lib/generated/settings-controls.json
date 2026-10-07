@@ -4828,7 +4828,7 @@
       "key": "haiku.response_probability",
       "section": "haiku",
       "label": "Response Probability",
-      "description": "Probability of a complaint for a valid haiku; bounded 0–0.8. Specialized editor required.",
+      "description": "Probability of a complaint for a valid haiku; enter a JSON number from 0 through 0.8, then stage it for review.",
       "kind": "json-editor",
       "defaultValue": 0.2,
       "risk": "high",
@@ -4838,7 +4838,7 @@
       ],
       "restartRequired": false,
       "mutable": true,
-      "dashboardWrite": "blocked",
+      "dashboardWrite": "draft",
       "dependsOn": []
     },
     {

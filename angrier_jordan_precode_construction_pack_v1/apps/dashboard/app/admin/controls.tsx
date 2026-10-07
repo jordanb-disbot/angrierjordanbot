@@ -6,10 +6,12 @@ import type { ConfigDraft, DraftCommand } from '../../../../packages/core/src/co
 type Control=DashboardControl&{value:unknown;version:number;source:string};
 type Revision={version:number;value:unknown;createdAt:string;rollbackSafe:boolean};
 const display=(value:unknown)=>value===null?'Not configured':typeof value==='string'?value:JSON.stringify(value,null,2);
+const jsonDisplay=(value:unknown)=>JSON.stringify(value,null,2)??'null';
 
 export default function SettingsControls({settings,draft,csrf,memberId,isOwner,writesEnabled,section,showDraft=true,showBrowser=true,showSections=true}:{settings:Control[];draft:ConfigDraft;csrf:string;memberId:string;isOwner:boolean;writesEnabled:boolean;section?:string;showDraft?:boolean;showBrowser?:boolean;showSections?:boolean}){
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[retry,setRetry]=useState(false),[history,setHistory]=useState<Record<string,Revision[]>>({});
   const [selectedSection,setSelectedSection]=useState(section??'all'),[query,setQuery]=useState('');
+  const [jsonValues,setJsonValues]=useState<Record<string,string>>(()=>Object.fromEntries(settings.filter(control=>control.kind==='json-editor').map(control=>[control.key,jsonDisplay(control.value)])));
   const lastRequest=useRef<{requestId:string;command:DraftCommand}|null>(null);
   const [values,setValues]=useState<Record<string,unknown>>(()=>Object.fromEntries(settings.map(control=>[control.key,control.value])));
   const sections=section?[section]:[...new Set(settings.map(control=>control.section))];
@@ -35,9 +37,16 @@ export default function SettingsControls({settings,draft,csrf,memberId,isOwner,w
   }
   function value(control:Control){
     const current=values[control.key];
+    if(control.kind==='json-editor')return JSON.parse(jsonValues[control.key]??jsonDisplay(current));
     if(control.kind==='number')return current===''?null:Number(current);
     if(['channel-select','role-select'].includes(control.kind))return current===''?null:current;
     return current;
+  }
+  function submitSetting(control:Control,action:'save'|'stage'){
+    let next:unknown;
+    try{next=value(control);}catch{setMessage(`Enter valid JSON for ${control.label} before saving.`);return;}
+    if(action==='save')void submit({action:'save',key:control.key,value:next,baseVersion:control.version});
+    else void submit({action:'stage',key:control.key,value:next,baseVersion:control.version,expectedVersion:draft.version});
   }
   async function loadHistory(key:string){
     setBusy(true);setMessage('');
@@ -73,12 +82,12 @@ export default function SettingsControls({settings,draft,csrf,memberId,isOwner,w
     </section>}
     {showSections&&(visibleSections.length?visibleSections.map(section=><section id={section} className="window settings-section" key={section}><h2>{section.replaceAll('_',' ')}</h2>
       {matchingSettings.filter(control=>control.section===section).map(control=>{
-        const id=`setting-${control.key}`,blocked=control.risk==='locked'||control.dashboardWrite==='blocked'||control.kind==='json-editor'||control.editableBy.length===0;
+        const id=`setting-${control.key}`,blocked=control.risk==='locked'||control.dashboardWrite==='blocked'||control.editableBy.length===0;
         const live=control.dashboardWrite==='live'&&control.risk==='normal'&&!control.dependsOn?.length;
         return <div className="setting" key={control.key}><div><label htmlFor={id}>{control.label}</label><p className="description" id={`${id}-help`}>{control.description||control.key}</p>
-          <span className="meta">{control.source==='default'?'Default value':`Saved · Revision ${control.version}`} · {blocked?(control.kind==='json-editor'?'Specialized editor pending':'Fixed rule'):live?'Low-risk live save':'Draft review required'}{control.restartRequired?' · Restart required':''}</span></div>
-          <div className="field">{control.kind==='toggle'?<input id={id} aria-describedby={`${id}-help`} type="checkbox" checked={values[control.key]===true} disabled={disabled||blocked} onChange={event=>setValues(previous=>({...previous,[control.key]:event.target.checked}))}/>:control.kind==='select'?<select id={id} aria-describedby={`${id}-help`} value={String(values[control.key]??'')} disabled={disabled||blocked} onChange={event=>setValues(previous=>({...previous,[control.key]:event.target.value}))}>{control.choices?.map(choice=><option key={choice} value={choice}>{choice}</option>)}</select>:control.kind==='json-editor'?<textarea id={id} value={display(control.value)} readOnly rows={4}/>:<input id={id} aria-describedby={`${id}-help`} type={control.kind==='number'?'number':'text'} value={String(values[control.key]??'')} min={control.min} max={control.max} readOnly={disabled||blocked} onChange={event=>setValues(previous=>({...previous,[control.key]:event.target.value}))}/>}
-            {!blocked&&<div className="actions field-actions">{live&&<button disabled={disabled} onClick={()=>submit({action:'save',key:control.key,value:value(control),baseVersion:control.version})}>Save live</button>}<button disabled={disabled||!ownsLock} onClick={()=>submit({action:'stage',key:control.key,value:value(control),baseVersion:control.version,expectedVersion:draft.version})}>Stage change</button><button className="quiet" disabled={busy} onClick={()=>loadHistory(control.key)}>History</button></div>}
+          <span className="meta">{control.source==='default'?'Default value':`Saved · Revision ${control.version}`} · {blocked?'Fixed rule':control.kind==='json-editor'?'Validated JSON · Draft review required':live?'Low-risk live save':'Draft review required'}{control.restartRequired?' · Restart required':''}</span></div>
+          <div className="field">{control.kind==='toggle'?<input id={id} aria-describedby={`${id}-help`} type="checkbox" checked={values[control.key]===true} disabled={disabled||blocked} onChange={event=>setValues(previous=>({...previous,[control.key]:event.target.checked}))}/>:control.kind==='select'?<select id={id} aria-describedby={`${id}-help`} value={String(values[control.key]??'')} disabled={disabled||blocked} onChange={event=>setValues(previous=>({...previous,[control.key]:event.target.value}))}>{control.choices?.map(choice=><option key={choice} value={choice}>{choice}</option>)}</select>:control.kind==='json-editor'?<textarea id={id} aria-describedby={`${id}-help`} value={jsonValues[control.key]??jsonDisplay(control.value)} disabled={disabled||blocked} rows={4} onChange={event=>setJsonValues(previous=>({...previous,[control.key]:event.target.value}))}/>:<input id={id} aria-describedby={`${id}-help`} type={control.kind==='number'?'number':'text'} value={String(values[control.key]??'')} min={control.min} max={control.max} readOnly={disabled||blocked} onChange={event=>setValues(previous=>({...previous,[control.key]:event.target.value}))}/>}
+            {!blocked&&<div className="actions field-actions">{live&&<button disabled={disabled} onClick={()=>submitSetting(control,'save')}>Save live</button>}<button disabled={disabled||!ownsLock} onClick={()=>submitSetting(control,'stage')}>Stage change</button><button className="quiet" disabled={busy} onClick={()=>loadHistory(control.key)}>History</button></div>}
             {history[control.key]&&<div className="history"><p className="description">Retained configuration history</p>{history[control.key]!.length===0?<p className="meta">No saved revisions.</p>:history[control.key]!.map(revision=><div key={revision.version}><span className="meta">Revision {revision.version} · {revision.createdAt}</span><code>{display(revision.value)}</code><button disabled={disabled||!ownsLock||!revision.rollbackSafe} onClick={()=>submit({action:'rollback',key:control.key,toVersion:revision.version,baseVersion:control.version,expectedVersion:draft.version})}>Stage rollback</button></div>)}</div>}
           </div></div>;
       })}</section>):<section className="window settings-section empty-settings"><h2>No settings match</h2><p>Try a shorter search or clear the current filters.</p><button type="button" onClick={()=>{setQuery('');setSelectedSection('all')}}>Show all settings</button></section>)}

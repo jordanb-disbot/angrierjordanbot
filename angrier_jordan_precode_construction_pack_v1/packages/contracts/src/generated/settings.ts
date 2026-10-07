@@ -4579,10 +4579,10 @@ export const SETTINGS = [
       "chaise_lounge"
     ],
     "restart_required": false,
-    "description": "Probability of a complaint for a valid haiku; bounded 0–0.8. Specialized editor required.",
+    "description": "Probability of a complaint for a valid haiku; enter a JSON number from 0 through 0.8, then stage it for review.",
     "risk": "high",
     "mutable": true,
-    "dashboard_write": "blocked",
+    "dashboard_write": "draft",
     "depends_on": []
   },
   {
