@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 131,
+  "command_count": 132,
   "commands": [
     {
       "id": "help",
@@ -5087,6 +5087,29 @@
       "status": "locked",
       "preferred_invocation": "/minesweeper",
       "registration_path": "/minesweeper"
+    },
+    {
+      "id": "pp",
+      "command": "/pp",
+      "type": "slash",
+      "module": "social",
+      "description": "Share your own randomized Chairs size check.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "social.pp",
+      "feature_flag": "social",
+      "ephemeral_default": false,
+      "help_id": "pp",
+      "tutorial_id": "community",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/pp",
+      "registration_path": "/pp"
     },
     {
       "id": "haiku",

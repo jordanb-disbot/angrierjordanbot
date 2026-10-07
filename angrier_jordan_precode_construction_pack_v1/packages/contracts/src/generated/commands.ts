@@ -4161,6 +4161,25 @@ export const COMMANDS = [
     "tutorialId": "games"
   },
   {
+    "id": "pp",
+    "preferred": "/pp",
+    "registered": "/pp",
+    "type": "slash",
+    "module": "social",
+    "handler": "social.pp",
+    "featureFlag": "social",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "main_chat"
+    ],
+    "options": [],
+    "ephemeralDefault": false,
+    "helpId": "pp",
+    "tutorialId": "community"
+  },
+  {
     "id": "haiku",
     "preferred": "/haiku",
     "registered": "/haiku",

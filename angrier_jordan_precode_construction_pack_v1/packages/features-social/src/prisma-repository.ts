@@ -23,6 +23,11 @@ export class PrismaSocialRepository {
   if(!Number.isInteger(throttleSeconds)||throttleSeconds<1||throttleSeconds>30)throw new DomainError('SOCIAL_CONFIG','Social rate limit is unavailable.');
   return this.atomic.run(c.guildId,'social:exact:'+c.requestKey,requestFingerprint({channelId:c.channelId,userId:c.userId,kind}),async tx=>{await this.throttle(tx,c,'social',throttleSeconds);return{content:kind==='haiku'?HAIKU_RESPONSE:NOTMAD_RESPONSE};});
  }
+ /** A persisted cooldown only; no result or sexual-profile data is retained. */
+ async pp(c:SocialContext,cooldownSeconds=300){
+  if(!Number.isInteger(cooldownSeconds)||cooldownSeconds<60||cooldownSeconds>3600)throw new DomainError('SOCIAL_CONFIG','The /pp cooldown is unavailable.');
+  return this.atomic.run(c.guildId,'social:pp:'+c.requestKey,requestFingerprint({channelId:c.channelId,userId:c.userId}),async tx=>{await this.throttle(tx,c,'pp',cooldownSeconds);return{ok:true};});
+ }
  async queue(c:SocialContext,action:string,targetId:string|null,policy:SocialPolicy,back?:{sessionId:string;messageId:string}){
   validateSocialPolicy(policy);assertSocialAction(action);if(action==='roast'&&!targetId)throw new DomainError('ROAST_TARGET','Choose a member to roast.');
   return this.atomic.run(c.guildId,'social:request:'+c.requestKey,requestFingerprint({channelId:c.channelId,userId:c.userId,action,targetId,back:back??null}),async tx=>{

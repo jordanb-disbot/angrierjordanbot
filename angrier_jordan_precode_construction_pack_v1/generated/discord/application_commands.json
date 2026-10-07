@@ -1806,6 +1806,12 @@
   },
   {
     "type": 1,
+    "name": "pp",
+    "description": "Share your own randomized Chairs size check.",
+    "options": []
+  },
+  {
+    "type": 1,
     "name": "haiku",
     "description": "Return the server haiku profiling joke.",
     "options": []

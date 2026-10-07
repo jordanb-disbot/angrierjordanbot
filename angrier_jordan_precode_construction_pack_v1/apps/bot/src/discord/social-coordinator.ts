@@ -1,5 +1,5 @@
 import {ActionRowBuilder,ButtonBuilder,ButtonStyle,type AutocompleteInteraction,type ButtonInteraction,type ChatInputCommandInteraction,type Client,type Guild,type Message} from 'discord.js';
-import {createHash} from 'node:crypto';
+import {createHash,randomInt} from 'node:crypto';
 import {DeliveryEngine,DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {COMMANDS} from '../../../../packages/contracts/src/generated/commands.js';
 import {PrismaSocialRepository} from '../../../../packages/features-social/src/prisma-repository.js';
@@ -10,7 +10,7 @@ import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {avatarData} from './member-art.js';
 import {DisposableCardLifecycle} from './card-lifecycle.js';
 import {createDisplay,wideDisplay} from './wide-display.js';
-export const SOCIAL_COMMANDS=new Set(['social','haiku']);
+export const SOCIAL_COMMANDS=new Set(['social','haiku','pp']);
 type SocialInteraction=ChatInputCommandInteraction|ButtonInteraction;
 interface ActionContract {id:string;name?:string;description?:string;aliases?:readonly string[];command?:string;permissions?:readonly string[];channels?:readonly string[];options?:readonly {name:string;required?:boolean}[];}
 /** Action records remain in the generated command contract after the Discord registration consolidation. */
@@ -36,10 +36,14 @@ export class DiscordSocialCoordinator {
   let publicReply=false;
   try{
    if(!i.guildId||!i.guild||!i.channelId)throw new DomainError('SOCIAL_SERVER','Use social commands in the server.');
-   const haiku=i.isChatInputCommand()&&i.commandName==='haiku',notmad=i.isChatInputCommand()&&i.commandName==='social'&&i.options.getSubcommand(false)==='notmad';
-   publicReply=haiku||notmad;await i.deferReply({ephemeral:!publicReply});
+   const haiku=i.isChatInputCommand()&&i.commandName==='haiku',pp=i.isChatInputCommand()&&i.commandName==='pp',notmad=i.isChatInputCommand()&&i.commandName==='social'&&i.options.getSubcommand(false)==='notmad';
+   publicReply=haiku||notmad||pp;await i.deferReply({ephemeral:!publicReply});
    await this.guard(i.guildId,i.user.id,i.channelId,haiku);await this.member(i.guild,i.user.id);
    const c:SocialContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
+   if(pp){
+    const member=await this.member(i.guild,i.user.id),size=randomInt(1,13),bar='8'+ '='.repeat(size)+'D',lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
+    await this.repo.pp(c);await i.editReply({content:`**${member.displayName}'s Chair Check**\n${bar}\n_${lines[randomInt(lines.length)]}_`,allowedMentions:{parse:[]}});return;
+   }
    if(haiku||notmad){
     // Newest owner instruction: notmad is actual server-owner only, independent of role names.
     if(notmad&&(await i.guild.fetch()).ownerId!==i.user.id)throw new DomainError('SOCIAL_OWNER','Only the server owner may use notmad.');
