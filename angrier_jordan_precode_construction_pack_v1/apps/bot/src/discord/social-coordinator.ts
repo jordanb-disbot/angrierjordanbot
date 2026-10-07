@@ -45,7 +45,8 @@ export class DiscordSocialCoordinator {
    if(pp){
     const member=await this.member(i.guild,i.user.id),size=randomInt(1,8),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
     await this.repo.pp(c);
-    const assets=['pp-recliner-closed.png','pp-recliner-25.png','pp-recliner-extended.png','pp-recliner-50.png','pp-recliner-mid.png','pp-recliner-75.png','pp-recliner-max.png'] as const;
+    // Assets are ordered by the measured visible footrest extension.
+    const assets=['pp-recliner-closed.png','pp-recliner-extended.png','pp-recliner-25.png','pp-recliner-50.png','pp-recliner-mid.png','pp-recliner-75.png','pp-recliner-max.png'] as const;
     const asset=assets[size-1]!,filename='recliner-check.png';
     const image=await readFile(join(process.cwd(),'packages/features-social/assets',asset));
     await i.editReply({content:`_${lines[randomInt(lines.length)]}_\n**Footrest extension: ${size}/7**`,embeds:[{color:0x19a7a4,image:{url:`attachment://${filename}`}}],files:[{attachment:image,name:filename,description:`${member.displayName}'s recliner check · ${size}/7 extension`}],allowedMentions:{parse:[]}});return;
