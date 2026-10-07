@@ -247,6 +247,12 @@ export async function startProductionBot():Promise<void>{
     familyCache.set(g,entry);return entry;
   };
   let familyRecovery:Promise<void>|undefined;
+  const familyRecoveryFailure=(error:unknown)=>{
+    // This path intentionally reports only an operational message: recovery
+    // failures must be actionable without exposing environment configuration.
+    const detail=error instanceof Error?error.message:'Unknown recovery failure.';
+    console.error(`Family membership recovery is pending: ${detail}`);
+  };
   const ensureFamilyMembership=async()=>{
     if(familyMembership.ready)return;
     if(!familyRecovery)familyRecovery=(async()=>{
@@ -363,9 +369,9 @@ export async function startProductionBot():Promise<void>{
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
       try{await ensureFamilyMembership();}
-      catch{console.error('Family membership census is unavailable; Family actions remain paused for recovery.');}
+      catch(error){familyRecoveryFailure(error);}
     }
-    if(enableFamilySmoke&&!lifecycle.isStopping)familySweep=setInterval(()=>lifecycle.run(async()=>{if(await familyEnabled()&&!familyMembership.ready)await ensureFamilyMembership();},()=>console.error('Family membership recovery remains pending.')),30_000);
+    if(enableFamilySmoke&&!lifecycle.isStopping)familySweep=setInterval(()=>lifecycle.run(async()=>{if(await familyEnabled()&&!familyMembership.ready)try{await ensureFamilyMembership();}catch(error){familyRecoveryFailure(error);}}),30_000);
     if(enableProfilesSmoke){await startup.run('profile-voice-reset',()=>profileRepo.resetVoiceAfterRestart(guildId));await startup.run('profiles-bootstrap',()=>profiles.reconcile(guildId));await startup.run('profile-voice-sample',()=>sampleProfileVoice());if(!lifecycle.isStopping)voiceSweep=setInterval(()=>lifecycle.run(()=>sampleProfileVoice(),()=>console.error('Activity voice sampling failed.')),30_000);}
     if(enableCasinoSmoke&&await config.get(guildId,'features.lottery')===true)await startup.run('lottery-schedule',()=>lotteryRepo.schedule(guildId));
     if(enableFullyFurnishedSmoke)await startup.run('fully-furnished-role-recovery',async()=>{for(const pending of await fullyFurnishedRepo.pendingRoleGrants(guildId))await deliverFullyFurnished(guildId,pending.userId,pending.progress);});
@@ -485,7 +491,7 @@ export async function startProductionBot():Promise<void>{
       if((interaction.isMessageContextMenuCommand()&&EMOJI_STEAL_CONTEXT_COMMANDS.has(interaction.commandName))||((interaction.isStringSelectMenu()||interaction.isModalSubmit())&&interaction.customId.startsWith('emoji-steal:'))){if(!enableCommunitySmoke){await interaction.reply({ephemeral:true,content:'Community tools are not enabled yet.'});return;}await emojiSteal.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&['help','tutorial','lore','tldr'].includes(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('learn:'))){if(!enableLearningSmoke){await interaction.reply({ephemeral:true,content:'Learning features are not enabled yet.'});return;}await learning.handle(interaction);return;}
       if(((interaction.isChatInputCommand()||interaction.isMessageContextMenuCommand())&&CHAIRISM_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('chairism:'))){if(!enableChairismsSmoke){await interaction.reply({ephemeral:true,content:'Chairisms are not enabled yet.'});return;}await chairisms.handle(interaction);return;}
-      if((interaction.isChatInputCommand()&&interaction.commandName==='family')||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('family:'))){if(!enableFamilySmoke){await interaction.reply({ephemeral:true,content:'Family features are not enabled yet.'});return;}if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'Use family features in the server.'});return;}if(await config.get(interaction.guildId,'features.family')===true&&!familyMembership.ready){await interaction.reply({ephemeral:true,content:'Family membership recovery is in progress. Please try again shortly.'});lifecycle.run(ensureFamilyMembership,()=>console.error('Family membership recovery remains pending.'));return;}await(await familyFor(interaction.guildId)).coordinator.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;}
+      if((interaction.isChatInputCommand()&&interaction.commandName==='family')||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('family:'))){if(!enableFamilySmoke){await interaction.reply({ephemeral:true,content:'Family features are not enabled yet.'});return;}if(!interaction.guildId){await interaction.reply({ephemeral:true,content:'Use family features in the server.'});return;}if(await config.get(interaction.guildId,'features.family')===true&&!familyMembership.ready){await interaction.reply({ephemeral:true,content:'Family membership recovery is in progress. Please try again shortly.'});lifecycle.run(async()=>{try{await ensureFamilyMembership();}catch(error){familyRecoveryFailure(error);}});return;}await(await familyFor(interaction.guildId)).coordinator.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;}
       if((interaction.isChatInputCommand()&&COMMUNITY_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit()||interaction.isStringSelectMenu()||interaction.isUserSelectMenu())&&interaction.customId.startsWith('community:'))){if(!enableCommunitySmoke){await interaction.reply({ephemeral:true,content:'Community tools are not enabled yet.'});return;}await community.handle(interaction);return;}
       if((interaction.isChatInputCommand()&&interaction.commandName==='crime')||((interaction.isButton()||interaction.isStringSelectMenu()||interaction.isUserSelectMenu())&&interaction.customId.startsWith('crime:'))){if(!enableCrimeSmoke){await interaction.reply({ephemeral:true,content:'Crime controls are not enabled yet.'});return;}await crime.handle(interaction);return;}
 
