@@ -61,7 +61,7 @@ export class DiscordEventsCoordinator {
  private async guard(guildId:string,userId:string,channelId:string,kind='race',legacyPrefix=false){
   const [enabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.'+kind),kind==='fight'?funChannelAllowed(this.config,guildId,channelId,'fight'):interactiveGameChannelAllowed(this.config,guildId,channelId,legacyPrefix),this.eligible(guildId,userId)]);
   if(enabled!==true)throw new DomainError('EVENT_DISABLED','This event is not enabled yet.');
-  if(!channelAllowed)throw new DomainError('EVENT_CHANNEL',kind==='fight'?'Use Fight in an approved channel.':'Use events in Gaming Chair or Bots Don’t Sit.');
+  if(!channelAllowed)throw new DomainError('EVENT_CHANNEL',kind==='fight'?'Use Fight in an approved channel.':'Use events in the main chat, Gaming Chair, or Bots Don’t Sit.');
   if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('EVENT_RESTRICTED','Event controls are unavailable while restricted.');
  }
  async message(message:Message){
@@ -90,7 +90,9 @@ export class DiscordEventsCoordinator {
   const roles=(accessValue as Record<string,unknown>)?.['!race'];
   if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new DomainError('EVENT_CONFIG','Race access roles need configuration.');
   if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))throw new DomainError('EVENT_RESTRICTED','You do not have access to start Race.');
-  await this.guard(i.guildId,i.user.id,i.channelId);
+  // Legacy Race sessions can be joined from the configured main chat as
+  // well as the dedicated games/bot channels.
+  await this.guard(i.guildId,i.user.id,i.channelId,'race',true);
   const sent=await this.queueRace({id:i.id,guild:i.guild,guildId:i.guildId,channelId:i.channelId,channel:i.channel},member);
   if(!sent)throw new DomainError('EVENT_ACTIVE','A Race or Fight is already active here.');
   await i.deleteReply();
@@ -151,7 +153,7 @@ export class DiscordEventsCoordinator {
   if(i.isModalSubmit()&&action==='wager'&&!i.deferred)await i.deferReply({ephemeral:true});
   if(i.isButton()&&action==='rules'&&!i.deferred)await i.deferReply({ephemeral:true});
   if(i.isButton()&&(action==='join'||action==='extend'||action==='start_now')){silent=true;if(!i.deferred)await eventTiming('event.ack',()=>i.deferUpdate());}
-  await this.guard(i.guildId,i.user.id,i.channelId,i.customId.startsWith('fight:')?'fight':'race');
+  await this.guard(i.guildId,i.user.id,i.channelId,i.customId.startsWith('fight:')?'fight':'race',!i.customId.startsWith('fight:'));
   const c:EventContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
   const view=await this.repo.publicView(id);if(view.type&&view.type!==(parts[0]==='fight'?'fight':'race'))throw new DomainError('EVENT_CONTROL','Use the original event controls.');if(view.guildId!==i.guildId||view.channelId!==i.channelId)throw new DomainError('EVENT_CHANNEL','Use this event’s original message.');
   if(i.isButton()&&action==='rules'){const title=view.type==='fight'?'Fight rules':'Race rules',copy=(view.type==='fight'?eventHelp.fight:eventHelp.race)+'\n\n'+eventHelp.body;const {content:_content,...payload}=eventWindow({title,description:'',filename:'event-rules.png',image:await rasterizeSvg(renderEventNotice(title,copy)),rows:[]});await i.editReply(payload);return;}

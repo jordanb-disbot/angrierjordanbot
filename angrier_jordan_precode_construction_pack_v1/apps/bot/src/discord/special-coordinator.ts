@@ -52,7 +52,7 @@ export class DiscordSpecialCoordinator {
   const definition=(await this.definitions(message.guildId)).find(d=>d.trigger===trigger);if(!definition)return;
   if(!definition.enabled)return;
   const member=await message.guild.members.fetch({user:message.author.id,force:true});if(!mayInvokeSpecial(definition.allowedRoleIds,new Set(member.roles.cache.keys())))return;
-  try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line','name' in message.channel?(message.channel.name??undefined):undefined);}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
+  try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line',message.channel&&'name' in message.channel?(message.channel.name??undefined):undefined);}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!definition.responsePool.length)throw new DomainError('SPECIAL_CONTENT','Configure an authored response pool before enabling this Special Command.');
   if(!message.channel.isSendable())return;
   const context={guildId:message.guildId,channelId:message.channelId,userId:message.author.id,requestKey:message.id};
@@ -78,7 +78,10 @@ export class DiscordSpecialCoordinator {
   const[prefix,action,id,pageRaw]=i.customId.split(':');if(prefix!=='line'||!id)throw new DomainError('LINE_CONTROL','This Line control is unavailable.');
   if(action==='roster'&&!i.deferred)await i.deferReply({ephemeral:true});
   else if(!i.deferred)await eventTiming('line.ack',()=>i.deferUpdate());
-  await this.guard(i.guildId,i.user.id,i.channelId);
+  // Line controls remain usable from the same legacy channels as !line,
+  // including the configured main chat. Other special commands do not use
+  // this interactive handler.
+  await this.guard(i.guildId,i.user.id,i.channelId,true);
   const view=await this.repo.publicView(id);if(view.guildId!==i.guildId||view.channelId!==i.channelId||(action!=='roster'&&view.messageId!==i.message.id))throw new DomainError('LINE_CONTROL','Use this Line’s original message.');
   if(action==='roster'){const page=Math.max(0,Math.min(Math.floor((view.members.length-1)/20),Number(pageRaw)||0)),slice=view.members.slice(page*20,page*20+20);const buttons=new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`line:roster:${id}:${Math.max(0,page-1)}`).setLabel('Previous').setStyle(ButtonStyle.Secondary).setDisabled(page===0),new ButtonBuilder().setCustomId(`line:roster:${id}:${page+1}`).setLabel('Next').setStyle(ButtonStyle.Secondary).setDisabled((page+1)*20>=view.members.length));await i.editReply({content:slice.map(m=>`${m.status==='ready'?'✓':'…'} <@${m.userId}>${m.userId===view.ownerId?' · Host':''}`).join('\n'),components:[buttons],allowedMentions:{parse:[]}});return;}
   if(!i.deferred)await i.deferUpdate();const c={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
