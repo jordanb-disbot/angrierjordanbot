@@ -2,6 +2,7 @@ import {Prisma,type PrismaClient} from '@prisma/client';
 import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atomic-operations.js';
 import {DomainError,spendableWallet} from '../../core/src/index.js';
 import type {ItemContext,ItemMember,ItemOutcome,ItemRepository,ItemState,ItemUnit} from './items-types.js';
+import type {ActiveEffectTransaction} from '../../core/src/active-effects.js';
 const object=(value:unknown)=>value&&typeof value==='object'&&!Array.isArray(value)?value as Record<string,unknown>:{};
 const json=(value:unknown):Prisma.InputJsonValue=>JSON.parse(JSON.stringify(value,(_key,current)=>typeof current==='bigint'?current.toString():current));
 
@@ -51,4 +52,20 @@ export class PrismaItemRepository implements ItemRepository {
    return result;
   });
  }
+}
+
+/** Adapter used by event/social resolvers inside their existing Prisma tx. */
+export function activeEffectTransaction(tx:Prisma.TransactionClient):ActiveEffectTransaction{
+ return{
+  async findActiveEffect({guildId,userId,effect}){
+   const rows=await tx.inventoryEntry.findMany({where:{guildId,userId,quantity:{gt:0}}});
+   for(const row of rows){const value=object(row.metadata);if(value.activeEffect===effect)return{id:row.id,remaining:row.quantity,claimKey:typeof value.claimKey==='string'?value.claimKey:null};}
+   return null;
+  },
+  async claimActiveEffect({id,claimKey}){
+   const row=await tx.inventoryEntry.findUnique({where:{id}});if(!row||row.quantity<1)return false;
+   const value=object(row.metadata);if(typeof value.activeEffect!=='string'||value.claimKey===claimKey)return false;
+   const next={...value,claimKey};const changed=await tx.inventoryEntry.updateMany({where:{id,quantity:{gt:0},metadata:{equals:row.metadata as Prisma.InputJsonValue}},data:{quantity:{decrement:1},metadata:json(next)}});return changed.count===1;
+  }
+ };
 }
