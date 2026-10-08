@@ -67,7 +67,7 @@ export class DiscordItemsCoordinator {
     if(parts[1]==='buy'){const modal=new ModalBuilder().setCustomId(id('buyamount',chosen)).setTitle('Buy Item').addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder().setCustomId('quantity').setLabel('Quantity (1–100)').setValue('1').setStyle(TextInputStyle.Short)));await i.showModal(modal);return;}
     if(parts[1]==='craft')return await send('Chair Building',(await svc.craft(c,chosen)).message);
     if(parts[1]==='repair')return await send('Choose Repair Tier','Restoration is immediate and randomized. Maximum durability never decreases.',[row(...(['cheap','standard','premium'] as const).map(t=>button(id('repairdo',`${chosen}:${t}`),`${t} · ${String(svc.policy.repairs[t].cost)} Ottomans`)))]);
-    if(parts[1]==='inspect'){const s=await view(),x=svc.inventory(s,c.userId).find(x=>x.id===chosen);if(!x)throw new DomainError('ITEM_MISSING','Item no longer owned.');return await send(x.item.name,`${x.item.rarity} · ${x.item.type}\n${inventoryCard(s,c.userId,x).detail}\nID: ${x.id}`,[row(button(id('lock',`${x.id}:${x.locked?'off':'on'}`),x.locked?'Unlock':'Lock'),...(x.kind==='tool'?[button(id('equip',x.id),'Equip')]:[button(id('sale',`item:${x.id}`),'Sell Item')]),...(['mystery_box','gift_box'].includes(x.item.type)?[button(id('open',x.id),'Open Box')]:[]))],{mode:'inventory',cards:[inventoryCard(s,c.userId,x)],summary:'Owned item · Inspect and manage'});}
+    if(parts[1]==='inspect'){const s=await view(),x=svc.inventory(s,c.userId).find(x=>x.id===chosen);if(!x)throw new DomainError('ITEM_MISSING','Item no longer owned.');const effect=typeof x.item.metadata?.effect==='string';return await send(x.item.name,`${x.item.rarity} · ${x.item.type}\n${inventoryCard(s,c.userId,x).detail}\nID: ${x.id}`,[row(button(id('lock',`${x.id}:${x.locked?'off':'on'}`),x.locked?'Unlock':'Lock'),...(x.kind==='tool'?[button(id('equip',x.id),'Equip')]:effect?[button(id('activate',x.itemId),'Activate')]:[button(id('sale',`item:${x.id}`),'Sell Item')]),...(['mystery_box','gift_box'].includes(x.item.type)?[button(id('open',x.id),'Open Box')]:[]))],{mode:'inventory',cards:[inventoryCard(s,c.userId,x)],summary:'Owned item · Inspect and manage'});}
    }
    if(i.isButton()){
     if(parts[1]==='inventorypage')return await showInventory({},Number(parts[3]));
@@ -81,6 +81,7 @@ export class DiscordItemsCoordinator {
     if(parts[1]==='cancel'){await i.message.edit({components:[]});return await send('Sale Cancelled','No items sold.');}
     if(parts[1]==='lock')return await send('Inventory',(await svc.lock(c,parts[3]!,parts[4]==='on')).message);
     if(parts[1]==='equip')return await send('Tools',(await svc.equip(c,parts[3]!)).message);
+    if(parts[1]==='activate')return await send('Active Effect',(await svc.activate(c,parts[3]!)).message);
     if(parts[1]==='open')return await send('Box Result',(await svc.open(c,parts[3]!)).message);
     if(parts[1]==='repairdo')return await send('Repair Result',(await svc.repair(c,parts[3]!,parts[4] as 'cheap'|'standard'|'premium')).message);
    }
