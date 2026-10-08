@@ -1,6 +1,7 @@
 import {randomInt,randomUUID} from 'node:crypto';
 import {Prisma,type PrismaClient} from '@prisma/client';
-import {DomainError,SessionEngine} from '../../core/src/index.js';
+import {DomainError,SessionEngine,claimActiveEffect} from '../../core/src/index.js';
+import {activeEffectTransaction} from '../../features-economy/src/items-prisma.js';
 import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atomic-operations.js';
 import {PrismaTransactionSessions} from '../../database/src/transaction-sessions.js';
 import {PrismaJobDeliveryRepository} from '../../database/src/job-delivery.js';
@@ -26,7 +27,7 @@ export class PrismaSocialRepository {
  /** A persisted cooldown only; no result or sexual-profile data is retained. */
  async pp(c:SocialContext,cooldownSeconds=300){
   if(!Number.isInteger(cooldownSeconds)||cooldownSeconds<60||cooldownSeconds>3600)throw new DomainError('SOCIAL_CONFIG','The /pp cooldown is unavailable.');
-  return this.atomic.run(c.guildId,'social:pp:'+c.requestKey,requestFingerprint({channelId:c.channelId,userId:c.userId}),async tx=>{await this.throttle(tx,c,'pp',cooldownSeconds);return{ok:true};});
+  return this.atomic.run(c.guildId,'social:pp:'+c.requestKey,requestFingerprint({channelId:c.channelId,userId:c.userId}),async tx=>{await this.throttle(tx,c,'pp',cooldownSeconds);const effect=await claimActiveEffect(activeEffectTransaction(tx),{guildId:c.guildId,userId:c.userId,effect:'boner_pills',requestKey:c.requestKey});return{ok:true,effectApplied:effect.applied};});
  }
  async queue(c:SocialContext,action:string,targetId:string|null,policy:SocialPolicy,back?:{sessionId:string;messageId:string}){
   validateSocialPolicy(policy);assertSocialAction(action);if(action==='roast'&&!targetId)throw new DomainError('ROAST_TARGET','Choose a member to roast.');
