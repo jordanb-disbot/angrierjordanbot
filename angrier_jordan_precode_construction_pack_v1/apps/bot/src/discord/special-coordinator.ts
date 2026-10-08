@@ -31,16 +31,16 @@ export class DiscordSpecialCoordinator {
  private readyFinale(view:LineView){const entry=this.finales.get(view.id);return entry?.key===this.finaleKey(view)?entry.payload:undefined;}
  private sweeping=false;
  constructor(private readonly repo:PrismaSpecialRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
- private async guard(guildId:string,userId:string,channelId:string,line=true){
-  const [special,enabled,lineEnabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.special_commands'),this.config.get(guildId,'special_commands.enabled'),line?this.config.get(guildId,'features.line'):true,interactiveGameChannelAllowed(this.config,guildId,channelId,line),this.eligible(guildId,userId)]);
+ private async guard(guildId:string,userId:string,channelId:string,line=true,channelName?:string){
+  const [special,enabled,lineEnabled,channelAllowed,eligible]=await Promise.all([this.config.get(guildId,'features.special_commands'),this.config.get(guildId,'special_commands.enabled'),line?this.config.get(guildId,'features.line'):true,interactiveGameChannelAllowed(this.config,guildId,channelId,line,channelName),this.eligible(guildId,userId)]);
   if(special!==true||enabled!==true||lineEnabled!==true)throw new DomainError('SPECIAL_DISABLED','Special Commands are not enabled yet.');
   if(!channelAllowed)throw new DomainError('SPECIAL_CHANNEL','Use Special Commands in Gaming Chair or Bots Don’t Sit.');
   if(!new PermissionEngine({'events.use':CAPABILITY_MATRIX.capabilities['events.use']}).can('member','events.use')||!eligible)throw new DomainError('SPECIAL_RESTRICTED','Special Command controls are unavailable while restricted.');
  }
  async definitions(guildId:string):Promise<SpecialCommand[]>{
   const [customValue,roleValue,accessValue,poolValue]=await Promise.all(['special_commands.custom_commands','special_commands.builtin_role_map','special_commands.access_roles','special_commands.builtin_response_pools'].map(key=>this.config.get(guildId,key)));
-  const custom=validateCustomSpecialCommands(customValue),roles=validateBuiltinRoleMap(roleValue),access=accessValue as Record<string,unknown>,pools=poolValue as Record<string,unknown>;
-  return [...(['!line','!vc','!chess'] as const).map(trigger=>{const allowed=access?.[trigger],pool=pools?.[trigger];if(!Array.isArray(allowed)||allowed.some(r=>typeof r!=='string')||!Array.isArray(pool)||pool.some(s=>typeof s!=='string'||!s.trim()||s.length>1500))throw new DomainError('SPECIAL_CONFIG','Invalid built-in Special Command configuration.');return{trigger,notificationRoleId:typeof roles?.[trigger]==='string'?roles[trigger] as string:null,responsePool:pool.length?pool as string[]:builtinCallouts[trigger],enabled:true,allowedRoleIds:allowed as string[]};}),...custom];
+  const custom=validateCustomSpecialCommands(customValue),roles=validateBuiltinRoleMap(roleValue),access=(accessValue&&typeof accessValue==='object'?accessValue:{}) as Record<string,unknown>,pools=(poolValue&&typeof poolValue==='object'?poolValue:{}) as Record<string,unknown>;
+  return [...(['!line','!vc','!chess'] as const).map(trigger=>{const allowed=access?.[trigger]??[],pool=pools?.[trigger]??[];if(!Array.isArray(allowed)||allowed.some(r=>typeof r!=='string')||!Array.isArray(pool)||pool.some(s=>typeof s!=='string'||!s.trim()||s.length>1500))throw new DomainError('SPECIAL_CONFIG','Invalid built-in Special Command configuration.');return{trigger,notificationRoleId:typeof roles?.[trigger]==='string'?roles[trigger] as string:null,responsePool:pool.length?pool as string[]:builtinCallouts[trigger],enabled:true,allowedRoleIds:allowed as string[]};}),...custom];
  }
  async visibleCommands(guildId:string,roleIds:ReadonlySet<string>){if(await this.config.get(guildId,'features.special_commands')!==true||await this.config.get(guildId,'special_commands.enabled')!==true)return[];const lineEnabled=await this.config.get(guildId,'features.line')===true;return(await this.definitions(guildId)).filter(d=>d.enabled&&d.responsePool.length&&mayInvokeSpecial(d.allowedRoleIds,roleIds)&&(d.trigger!=='!line'||lineEnabled));}
  async message(message:Message){
@@ -49,7 +49,7 @@ export class DiscordSpecialCoordinator {
   const definition=(await this.definitions(message.guildId)).find(d=>d.trigger===trigger);if(!definition)return;
   if(!definition.enabled)return;
   const member=await message.guild.members.fetch({user:message.author.id,force:true});if(!mayInvokeSpecial(definition.allowedRoleIds,new Set(member.roles.cache.keys())))return;
-  try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line');}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
+  try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line','name' in message.channel?(message.channel.name??undefined):undefined);}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!definition.responsePool.length)throw new DomainError('SPECIAL_CONTENT','Configure an authored response pool before enabling this Special Command.');
   if(!message.channel.isSendable())return;
   const context={guildId:message.guildId,channelId:message.channelId,userId:message.author.id,requestKey:message.id};

@@ -68,11 +68,11 @@ export class DiscordEventsCoordinator {
   if(message.content.trim()!=='!race'||message.author.bot||!message.guildId||!message.guild)return;
   if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
   const channelName='name' in message.channel?message.channel.name:undefined;
-  const namedMainChat=typeof channelName==='string'&&/^main[-_ ]?chat$/i.test(channelName);
-  if(!namedMainChat&&!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true))return;
+  const namedMainChat=typeof channelName==='string'&&/^((main[-_ ]?chat)|(sit[-_ ]and[-_ ]chat))$/i.test(channelName.replace(/^.*?([a-z].*)$/i,'$1'));
+  if(!namedMainChat&&!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true,channelName??undefined))return;
   if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
   const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
-  const roles=access?.['!race'];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
+  const roles=access?.['!race']??[];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
   try{await this.guard(message.guildId,message.author.id,message.channelId,'race',true);}catch(error){console.warn('Legacy race command rejected.',{guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!message.channel.isSendable())return;
   const sessionMessageId=await this.queueRace(message,member);
