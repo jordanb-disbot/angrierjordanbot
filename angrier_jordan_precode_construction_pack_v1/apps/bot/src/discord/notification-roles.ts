@@ -2,7 +2,7 @@ import {PermissionFlagsBits,type Guild} from 'discord.js';
 import {DomainError,type ConfigService} from '../../../../packages/core/src/index.js';
 import {specialNotificationRole} from '../../../../packages/features-special/src/domain.js';
 
-const protectedMappings=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access','music.dj_role'] as const;
+const protectedMappings=['roles.throne','roles.chaise_lounge','roles.recliner','roles.jailed','roles.member_access'] as const;
 /** Only VC/Chess have built-in case aliases. Custom command matching stays exact. */
 export function normalizeNotificationTrigger(value:string){const trigger=value.trim();return /^!(?:vc|chess)$/i.test(trigger)?trigger.toLowerCase():trigger;}
 /** Fresh Discord state is authoritative. Never broaden role mention permissions automatically. */
