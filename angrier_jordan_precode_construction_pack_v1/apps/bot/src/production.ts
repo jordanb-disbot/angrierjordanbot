@@ -45,9 +45,11 @@ import {PrismaEventsRepository} from '../../../packages/features-events/src/pris
 import {PrismaFullyFurnishedRepository,type FullyFurnishedProgressView} from '../../../packages/features-events/src/fully-furnished.js';
 import {FULLY_FURNISHED_ANNOUNCEMENT_CHANNEL,fullyFurnishedCompletionAnnouncement} from './discord/fully-furnished-announcement.js';
 import {DiscordCasinoCoordinator,CASINO_COMMANDS} from './discord/casino-coordinator.js';
+import {DiscordPokerCoordinator} from './discord/poker-coordinator.js';
 import {DiscordCasinoAnnouncements} from './discord/casino-announcements.js';
 import {PrismaCasinoRepository} from '../../../packages/features-casino/src/prisma-repository.js';
 import {PrismaLotteryRepository} from '../../../packages/features-casino/src/lottery-repository.js';
+import {PrismaPokerRepository} from '../../../packages/features-casino/src/poker-repository.js';
 import {DiscordRecordAnnouncements} from './discord/record-announcements.js';
 import {DiscordProfilesCoordinator,PROFILE_COMMANDS} from './discord/profiles-coordinator.js';
 import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/prisma-repository.js';
@@ -84,6 +86,7 @@ import {DiscordDmsCoordinator} from './discord/dms-coordinator.js';
 class CuidLikeIds {next(prefix:string){return `${prefix}_${crypto.randomUUID()}`;}}
 const required=(name:string)=>{const value=process.env[name]?.trim();if(!value)throw new Error(`Missing required environment variable ${name}`);return value;};
 const ECONOMY_COMMANDS=new Set(['daily','weekly','work','fish','dig','scavenge','statement','inventory','bank','transfer']);
+const POKER_COMMANDS=new Set(['holdem','omaha']);
 
 export async function startProductionBot():Promise<void>{
   startup.mark('runtime-config-validation');
@@ -206,8 +209,9 @@ export async function startProductionBot():Promise<void>{
   const profiles=new DiscordProfilesCoordinator(profileRepo,config,async(g,u)=>!await jail.isModerationJailed(g,u)&&!await security.isRestricted(g,u)&&!await crimeRepo.isJailed(g,u));
   const sampleProfileVoice=async()=>{const sample=await profiles.sampleVoice(client,guildId);if(enableEconomyActivityPayouts&&sample.accruals.length)await economy.handleQualifiedVoiceAccruals(guildId,sample.at,sample.accruals);return sample;};
   const recordAnnouncements=new DiscordRecordAnnouncements(db,config);
-  const casinoRepo=new PrismaCasinoRepository(db),lotteryRepo=new PrismaLotteryRepository(db);
+  const casinoRepo=new PrismaCasinoRepository(db),lotteryRepo=new PrismaLotteryRepository(db),pokerRepo=new PrismaPokerRepository(db);
   const casino=new DiscordCasinoCoordinator(casinoRepo,lotteryRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';},(g,u,id)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordCasinoRound(g,u,id)),async g=>economyService.maximumWager(g,await adaptiveApplicationFor(g)),async g=>economyService.lotteryTicketPrice(g,await adaptiveApplicationFor(g)));
+  const poker=new DiscordPokerCoordinator(pokerRepo,async g=>{const configured=await config.get(g,'channels.poker_channel');return typeof configured==='string'&&/^\d{17,20}$/.test(configured)?configured:undefined;});
   const casinoAnnouncements=new DiscordCasinoAnnouncements(db,config);
   const eventsRepo=new PrismaEventsRepository(db);
   const events=new DiscordEventsCoordinator(eventsRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u)||await crimeRepo.isJailed(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';},async g=>economyService.maximumWager(g,await adaptiveApplicationFor(g)));
@@ -384,7 +388,7 @@ export async function startProductionBot():Promise<void>{
     if(enableOnboardingSmoke)await startup.run('roles-panel-bootstrap',()=>onboarding.sweepRolePanel(ready,guildId));
     startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
-    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(c.name==='chess'||alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(c.name==='chess'||alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableCasinoSmoke&&Boolean(c.name&&POKER_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     await startup.run('command-registration',async()=>{const applicationId=ready.user.id;if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');const registered=await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled});validateRegisteredCommands(enabled,registered);});
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
@@ -530,6 +534,7 @@ export async function startProductionBot():Promise<void>{
       if((interaction.isButton()||interaction.isModalSubmit())&&(interaction.customId.startsWith('event:')||interaction.customId.startsWith('fight:'))){if(!enableEventsSmoke){await interaction.reply({ephemeral:true,content:'Event controls are not enabled yet.'});return;}await events.handle(interaction);return;}
       if(interaction.isChatInputCommand()&&interaction.commandName==='fight'){if(!enableEventsSmoke){await interaction.reply({ephemeral:true,content:'Fight is not enabled yet.'});return;}await events.startFight(interaction);await recordSuccessfulCommand(interaction);return;}
       if((interaction.isChatInputCommand()&&CASINO_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isModalSubmit())&&interaction.customId.startsWith('casino:'))){if(!enableCasinoSmoke){await interaction.reply({ephemeral:true,content:'Casino controls are not enabled yet.'});return;}await casino.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;}
+      if((interaction.isChatInputCommand()&&POKER_COMMANDS.has(interaction.commandName))||(interaction.isButton()&&interaction.customId.startsWith('poker:'))){if(!enableCasinoSmoke){await interaction.reply({ephemeral:true,content:'Poker Room is not enabled yet.'});return;}await poker.handle(interaction);if(interaction.isChatInputCommand())await recordSuccessfulCommand(interaction);return;}
       if((interaction.isChatInputCommand()&&PROFILE_COMMANDS.has(interaction.commandName))||((interaction.isButton()||interaction.isStringSelectMenu())&&interaction.customId.startsWith('profile:'))){
         if(!enableProfilesSmoke){await interaction.reply({ephemeral:true,content:'Profile controls are not enabled yet.'});return;}
         await profiles.handle(interaction);return;
