@@ -160,6 +160,19 @@
       "depends_on": []
     },
     {
+      "key": "channels.poker_channel",
+      "section": "channels_roles",
+      "type": "discord_channel",
+      "default": "1557660895813963908",
+      "editable_by": ["throne", "chaise_lounge"],
+      "restart_required": false,
+      "description": "Dedicated Poker Room channel for Hold’em and Omaha tables.",
+      "risk": "normal",
+      "mutable": true,
+      "dashboard_write": "draft",
+      "depends_on": []
+    },
+    {
       "key": "channels.suggestions_channel",
       "section": "channels_roles",
       "type": "discord_channel",

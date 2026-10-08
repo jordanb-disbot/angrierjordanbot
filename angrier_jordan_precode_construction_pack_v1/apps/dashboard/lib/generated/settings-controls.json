@@ -1,5 +1,5 @@
 {
-  "count": 258,
+  "count": 259,
   "controls": [
     {
       "key": "server.timezone",
@@ -156,6 +156,23 @@
       "description": "Resolved Discord channel ID.",
       "kind": "channel-select",
       "defaultValue": null,
+      "risk": "normal",
+      "editableBy": [
+        "throne",
+        "chaise_lounge"
+      ],
+      "restartRequired": false,
+      "mutable": true,
+      "dashboardWrite": "draft",
+      "dependsOn": []
+    },
+    {
+      "key": "channels.poker_channel",
+      "section": "channels_roles",
+      "label": "Poker Channel",
+      "description": "Dedicated Poker Room channel for Hold’em and Omaha tables.",
+      "kind": "channel-select",
+      "defaultValue": "1557660895813963908",
       "risk": "normal",
       "editableBy": [
         "throne",

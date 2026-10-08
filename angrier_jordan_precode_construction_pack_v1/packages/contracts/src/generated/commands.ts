@@ -622,6 +622,56 @@ export const COMMANDS = [
     "tutorialId": "casino"
   },
   {
+    "id": "holdem",
+    "preferred": "/holdem",
+    "registered": "/holdem",
+    "type": "slash",
+    "module": "casino",
+    "handler": "casino.holdem",
+    "featureFlag": "casino",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "poker_channel"
+    ],
+    "options": [
+      {
+        "name": "buy_in",
+        "type": "integer",
+        "required": true
+      }
+    ],
+    "ephemeralDefault": false,
+    "helpId": "holdem",
+    "tutorialId": "casino"
+  },
+  {
+    "id": "omaha",
+    "preferred": "/omaha",
+    "registered": "/omaha",
+    "type": "slash",
+    "module": "casino",
+    "handler": "casino.omaha",
+    "featureFlag": "casino",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "poker_channel"
+    ],
+    "options": [
+      {
+        "name": "buy_in",
+        "type": "integer",
+        "required": true
+      }
+    ],
+    "ephemeralDefault": false,
+    "helpId": "omaha",
+    "tutorialId": "casino"
+  },
+  {
     "id": "roulette",
     "preferred": "/casino roulette",
     "registered": "/casino roulette",

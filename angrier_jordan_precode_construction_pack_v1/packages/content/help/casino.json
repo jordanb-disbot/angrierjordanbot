@@ -7,6 +7,8 @@
     "slots",
     "dice",
     "coinflip",
+    "holdem",
+    "omaha",
     "lottery"
   ],
   "title": "Casino and Lottery",
@@ -17,6 +19,8 @@
     "slots": "Choose a configured wager size. Three matching chair symbols pay the configured gross multiplier. A matching Throne trio wins Chair Pot. A configured portion of qualifying wagers funds the persistent pot.",
     "dice": "High mode rolls one six-sided die for you and one for the house. Higher wins return 2×; ties return the wager.",
     "coinflip": "Choose heads or tails. A matching result returns 2× the wager.",
+    "holdem": "Texas Hold’em Poker is available only in <#1557660895813963908> (🃏-poker-chair). Buy-ins are 500, 1,000 or 5,000 Ottomans, mapped to 5,000, 10,000 or 50,000 chips. One table may run at a time. Shared cards and pot state are public; each player’s hole cards and actions are private.",
+    "omaha": "Omaha Poker is available only in <#1557660895813963908> (🃏-poker-chair). Buy-ins are 500, 1,000 or 5,000 Ottomans, mapped to 5,000, 10,000 or 50,000 chips. One table may run at a time. Shared cards and pot state are public; each player’s hole cards and actions are private.",
     "lottery": "Friday at 8 PM Mountain. Buy up to 20 tickets per week. One winner receives the full ticket-funded pot with no rake. Empty drawings skip; no system-funded rollover and no Play Again."
   },
   "fields": {
@@ -28,6 +32,7 @@
     "/casino roulette → number:17",
     "/casino coinflip → heads",
     "/lottery → Buy Tickets"
+    ,"/holdem or /omaha → choose buy-in → join privately → play in 🃏-poker-chair"
   ],
   "tutorial": {
     "lesson_id": "economy.casino",

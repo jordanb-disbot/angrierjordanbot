@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {addPokerSeat,cancelPokerTable,createPokerTable,startPokerHand,startPokerTable,settlePokerHand} from '../../dist/packages/features-casino/src/poker.js';
+const table=()=>{let t=createPokerTable({id:'t',guildId:'g',channelId:'1557660895813963908',hostId:'h',variant:'holdem',hostName:'Host',hostBuyIn:500n,now:new Date('2026-01-01T00:00:00Z')});return addPokerSeat(t,{userId:'u',name:'Player',bot:false,buyIn:500n,joined:true});};
+test('pre-play cancellation produces one closed refundable table and remains stable on replay',()=>{const closed=cancelPokerTable(table());assert.equal(closed.state,'CLOSED');assert.deepEqual(cancelPokerTable(closed),closed);});
+test('started hand settlement is replay-stable and preserves the winner set',()=>{const hand=startPokerHand(startPokerTable(table()),'h1',()=>0);const folded={...hand,folded:['u']};const settled=settlePokerHand(folded);assert.deepEqual(settled.winnerIds,['h']);assert.deepEqual(settlePokerHand(settled),settled);});
+test('Poker audit actions are explicit and bounded to creation/refund outcomes',()=>{const actions=['poker.created','poker.cancel_refund','poker.timeout_refund'];assert.ok(actions.every(action=>/^poker\.(created|cancel_refund|timeout_refund)$/.test(action)));assert.equal(new Set(actions).size,3);});

@@ -383,6 +383,16 @@
       ],
       "completion": "You know the blackjack controls and that a replay is a new wager. Next: read the current table limits before starting a real round."
     },
+    "poker": {
+      "purpose": "Use /holdem for Texas Hold’em or /omaha for Omaha in 🃏-poker-chair only (channel ID 1557660895813963908). Buy-ins are 500, 1,000 or 5,000 Ottomans for 5,000, 10,000 or 50,000 chips. One table may run at a time.",
+      "controls": "Join, start, and table actions use buttons. Shared board cards, pot, blinds and player status appear publicly; hole cards and action prompts are private to each player, including after reconnect or restart.",
+      "steps": [
+        "Open /holdem or /omaha in channel 1557660895813963908 and choose a buy-in.",
+        "Join explicitly before your Ottoman buy-in is reserved; the host may start once two to five seats are present.",
+        "Use private action controls while reading only the shared board and pot in the public table card."
+      ],
+      "completion": "You can identify the Poker Room, approved buy-ins, one-table limit, and the public/private card boundary."
+    },
     "roulette": {
       "purpose": "Single-zero wheel. Red, black, odd, even, low (1–18), or high (19–36) return 2× on a win. number:0 through number:36 return 36× on a win. Zero loses all even-money bets. Availability follows the current table configuration. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
       "controls": "Enter the whole-Ottoman wager and red, black, odd, even, low, high or number:0–36 in the modal. Submit only when both the selection and amount are correct; the wheel then resolves that wager.",
