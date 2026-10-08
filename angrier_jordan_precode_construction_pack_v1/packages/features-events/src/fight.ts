@@ -24,19 +24,19 @@ export function planFight(fighters:readonly Racer[],recentMoveIds:readonly strin
  const winner=favored>=0&&bonusPercent>0&&rng(100)<Math.min(100,Math.max(0,bonusPercent))?favored:rng(2),recent=new Set(recentMoveIds);
  for(let attempt=0;attempt<2048;attempt++){
   const hp:[number,number]=[100,100],used=new Set<string>(),beats:FightBeat[]=[];let elapsed=0;
-  for(let turn=0;turn<22;turn++){
-   elapsed+=rollRange(1350,1650,rng);if(elapsed>28000)break;
+  for(let turn=0;turn<30;turn++){
+   elapsed+=rollRange(450,500,rng);if(elapsed>16000)break;
    const actor=turn%2,target=1-actor,attacker=fighters[actor]!.name,defender=fighters[target]!.name;
-   const healing=hp[actor]!<100&&elapsed<26000&&rng(100)<(elapsed>=22000?5:10);
+   const healing=hp[actor]!<100&&elapsed<15000&&rng(100)<(elapsed>=12000?5:10);
    let moveId:string,moveName:string,outcome:FightBeat['outcome'],amount:number,rolledAmount:number,text:string;
    if(healing){const move=choose(fightPool.heals,used,recent,rng);moveId=move.id;moveName=move.name;outcome='heal';rolledAmount=rollRange(move.heal_min,move.heal_max,rng);amount=Math.min(100-hp[actor]!,rolledAmount);hp[actor]=hp[actor]!+amount;text=template('heal',{fighter:attacker,move:moveName,heal:amount});}
    else{
-    const move=choose(fightPool.attacks,used,recent,rng);moveId=move.id;moveName=move.name;outcome=attackOutcome(rng(100));if(elapsed>=26000&&outcome==='miss')outcome='normal';
+    const move=choose(fightPool.attacks,used,recent,rng);moveId=move.id;moveName=move.name;outcome=attackOutcome(rng(100));if(elapsed>=15000&&outcome==='miss')outcome='normal';
     const base=rollRange(move.base_damage_min,move.base_damage_max,rng);rolledAmount=outcome==='miss'?0:outcome==='blocked'?Math.max(1,Math.round(base*rollRange(25,45,rng)/100)):outcome==='critical'?Math.round(base*rollRange(165,190,rng)/100):base;
-    amount=Math.min(hp[target]!,rolledAmount);if(elapsed<20000&&amount>=hp[target]!)amount=Math.max(0,hp[target]!-1);hp[target]=hp[target]!-amount;text=template(outcome,{attacker,defender,move:moveName,damage:amount});
+    amount=Math.min(hp[target]!,rolledAmount);if(elapsed<12000&&amount>=hp[target]!)amount=Math.max(0,hp[target]!-1);hp[target]=hp[target]!-amount;text=template(outcome,{attacker,defender,move:moveName,damage:amount});
    }
    const ko=hp[0]===0||hp[1]===0;beats.push({atMs:elapsed,actor,target:outcome==='heal'?actor:target,moveId,moveName,outcome,amount,rolledAmount,hp:[...hp],text,ko});
-   if(ko){if(hp[winner]!>0&&elapsed>=22000)return{winnerId:fighters[winner]!.userId,durationMs:elapsed,beats,usedMoveIds:[...used],poolHash:FIGHT_POOL_SHA256};break;}
+   if(ko){if(hp[winner]!>0&&elapsed>=12000)return{winnerId:fighters[winner]!.userId,durationMs:elapsed,beats,usedMoveIds:[...used],poolHash:FIGHT_POOL_SHA256};break;}
   }
  }
  throw new DomainError('FIGHT_PLAN_RETRY','Combat preparation needs a retry. No wagers have been settled.');
