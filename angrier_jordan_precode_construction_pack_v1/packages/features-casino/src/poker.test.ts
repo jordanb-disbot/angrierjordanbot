@@ -1,0 +1,8 @@
+import {strict as assert} from 'node:assert';
+import {test} from 'node:test';
+import {addPokerSeat,advanceBlinds,cancelPokerTable,createPokerTable,startPokerTable,validateBuyIn} from './poker.js';
+const base=()=>createPokerTable({id:'t',guildId:'g',channelId:'p',hostId:'h',variant:'holdem',hostName:'Host',hostBuyIn:500n,now:new Date('2026-01-01T00:00:00Z')});
+test('poker buy-ins map only to approved chip stacks',()=>{assert.equal(validateBuyIn(500n),'5000');assert.equal(validateBuyIn(5000n),'50000');assert.throws(()=>validateBuyIn(600n),/buy-in/i);});
+test('human invitees must explicitly join while bots may fill selected seats',()=>{const t=base();assert.throws(()=>addPokerSeat(t,{userId:'u',name:'Invitee',bot:false,buyIn:1000n}),/explicitly join/i);const joined=addPokerSeat(t,{userId:'u',name:'Invitee',bot:false,buyIn:1000n,joined:true});const withBot=addPokerSeat(joined,{userId:'b',name:'Dealer Bot',bot:true,buyIn:500n});assert.equal(withBot.seats.length,3);});
+test('table starts once with two to five seats and blind levels rise',()=>{let t=addPokerSeat(base(),{userId:'u',name:'Player',bot:false,buyIn:500n,joined:true});t=startPokerTable(t);assert.equal(t.state,'PLAYING');assert.equal(t.hand,1);t=advanceBlinds(t);assert.equal(t.bigBlind,'100');assert.throws(()=>startPokerTable(t),/again|start/i);});
+test('pre-play cancellation is refundable and post-start cancellation is rejected',()=>{assert.equal(cancelPokerTable(base()).state,'CLOSED');let t=addPokerSeat(base(),{userId:'u',name:'Player',bot:false,buyIn:500n,joined:true});t=startPokerTable(t);assert.throws(()=>cancelPokerTable(t),/started/i);});
