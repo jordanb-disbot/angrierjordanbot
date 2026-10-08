@@ -51,3 +51,11 @@ export function pokerAction(hand:PokerHand,userId:string,action:PokerAction,amou
 export function settlePokerHand(hand:PokerHand):PokerHand{
  if(hand.settled) return hand;const active=Object.keys(hand.hole).filter(id=>!hand.folded.includes(id));if(active.length!==1&&hand.street!=='showdown')throw new DomainError('POKER_SHOWDOWN','The hand must reach showdown or have one remaining player.');const winnerIds=active.length===1?active:[...active].sort();return{...hand,street:'showdown',settled:true,winnerIds};
 }
+export function advancePokerStreet(hand:PokerHand):PokerHand{
+ if(hand.settled)throw new DomainError('POKER_SETTLED','This hand is already settled.');
+ const active=Object.keys(hand.hole).filter(id=>!hand.folded.includes(id));if(active.length<2) return settlePokerHand(hand);
+ const next=hand.street==='preflop'?'flop':hand.street==='flop'?'turn':hand.street==='turn'?'river':'showdown';if(next==='showdown')return settlePokerHand({...hand,street:'showdown'});
+ const count=next==='flop'?3:1,deck=[...hand.deck],board=[...hand.board];for(let i=0;i<count;i++)board.push(draw(deck));return{...hand,street:next,deck,board,toAct:active[0]!};
+}
+export function evaluatePokerHand(hand:PokerHand,userId:string):number[]{const cards=[...(hand.hole[userId]??[]),...hand.board];if(!cards.length)throw new DomainError('POKER_CARDS','No cards are available.');const ranks=cards.map(c=>c%13===0?14:c%13+1).sort((a,b)=>b-a),counts=new Map<number,number>();for(const r of ranks)counts.set(r,(counts.get(r)??0)+1);return[...counts.entries()].sort((a,b)=>b[1]-a[1]||b[0]-a[0]).flatMap(([r,n])=>Array(n).fill(r));}
+export function timeoutPokerAction(hand:PokerHand):PokerHand{if(hand.settled)return hand;return pokerAction(hand,hand.toAct,'check');}
