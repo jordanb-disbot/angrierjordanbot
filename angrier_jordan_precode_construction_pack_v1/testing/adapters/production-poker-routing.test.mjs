@@ -4,3 +4,10 @@ import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../../apps/bot/src/production.ts',import.meta.url),'utf8');
 test('production constructs Poker coordinator with durable channel config',()=>{assert.match(source,/new PrismaPokerRepository\(db\)/);assert.match(source,/new DiscordPokerCoordinator\(pokerRepo/);assert.match(source,/channels\.poker_channel/);});
 test('production dispatches only Poker commands and components to Poker coordinator',()=>{assert.match(source,/const POKER_COMMANDS=new Set\(\['holdem','omaha'\]\)/);assert.match(source,/POKER_COMMANDS\.has\(interaction\.commandName\)/);assert.match(source,/interaction\.customId\.startsWith\('poker:'\)/);assert.match(source,/await poker\.handle\(interaction\)/);assert.match(source,/CASINO_COMMANDS\.has\(interaction\.commandName\)/);});
+test('Poker component path acknowledges before persistence and refunds cancellation',()=>{
+  const coordinator=readFileSync(new URL('../../apps/bot/src/discord/poker-coordinator.ts',import.meta.url),'utf8');
+  const repository=readFileSync(new URL('../../packages/features-casino/src/poker-repository.ts',import.meta.url),'utf8');
+  assert.match(coordinator,/await i\.deferUpdate\(\)/);
+  assert.match(coordinator,/await i\.editReply\(/);
+  assert.match(repository,/new PrismaWagerEscrow\(tx,ledger\)\.refund\(/);
+});
