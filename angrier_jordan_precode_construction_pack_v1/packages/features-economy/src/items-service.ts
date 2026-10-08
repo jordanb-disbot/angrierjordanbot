@@ -45,6 +45,13 @@ export class ItemService {
   const gates=meta(i).requiresAchievements;check(!Array.isArray(gates)||gates.every(v=>m.achievements.includes(String(v))),'ITEM_GATED',`Requires: ${Array.isArray(gates)?gates.join(', '):'item eligibility'}.`);
   const price=this.price(i);check(price>0n,'INVALID_PRICE','Item price is unavailable.');await u.spend(c.userId,price*BigInt(quantity),'Shop purchase');this.grant(u.state,m,id,quantity);return{message:`Purchased ${quantity} × ${i.name}.`};
  });}
+ async activate(c:ItemContext,id:string){return this.run(c,'activate',{id},async(u,m)=>{
+  const stack=m.stacks.find(x=>x.itemId===id&&x.quantity>0&&!x.locked),i=item(u.state,id),effect=String(meta(i).effect??'');
+  check(stack&&effect,'ITEM_NOT_ACTIVATABLE','Choose an unlocked consumable effect.');
+  if(m.stacks.some(x=>x.quantity>0&&x.metadata?.activeEffect===effect))throw new DomainError('ITEM_ALREADY_ACTIVE','That effect is already active.');
+  stack.metadata={...(stack.metadata??{}),activeEffect:effect};return{message:`${i.name} is ready for your next ${String(meta(i).action??'matching action')}.`};
+ });}
+ consumeActive(m:ItemMember,effect:string){const stack=m.stacks.find(x=>x.quantity>0&&x.metadata?.activeEffect===effect);if(!stack)return false;stack.quantity-=1;delete stack.metadata.activeEffect;return true;}
  inventory(s:ItemState,u:string,query:{search?:string;type?:string;rarity?:string;quality?:string;locked?:boolean;sort?:string}={}){
   const m=member(s,u);const rows=[...m.stacks.filter(x=>x.quantity>0).map(x=>({...x,quality:'',item:item(s,x.itemId),kind:'stack'})),...m.tools.map(x=>({id:x.id,itemId:x.catalogItemId,quantity:1,locked:x.locked,acquiredAt:new Date(0),quality:'',item:item(s,x.catalogItemId),kind:'tool'})),...m.chairs.map(x=>({id:x.id,itemId:x.chairType,quantity:1,locked:x.locked,acquiredAt:x.createdAt,quality:x.quality,item:item(s,x.chairType),kind:'chair'}))];
   const filtered=rows.map(x=>({...x,locked:locked(m,x.item,x.locked)})).filter(x=>(!query.search||x.item.name.toLowerCase().includes(query.search.toLowerCase()))&&(!query.type||x.item.type===query.type)&&(!query.rarity||x.item.rarity===query.rarity)&&(!query.quality||x.quality===query.quality)&&(query.locked===undefined||x.locked===query.locked));

@@ -16,7 +16,7 @@ async function load(db:Prisma.TransactionClient,guildId:string,userIds:string[])
 }
 async function save(tx:Prisma.TransactionClient,guildId:string,m:ItemMember){
  const userId=m.userId,where={guildId,userId};
- for(const s of m.stacks)await tx.inventoryEntry.upsert({where:{guildId_userId_itemId:{...where,itemId:s.itemId}},create:{id:s.id,...where,itemId:s.itemId,quantity:s.quantity,locked:s.locked,acquiredAt:s.acquiredAt},update:{quantity:s.quantity,locked:s.locked}});
+ for(const s of m.stacks)await tx.inventoryEntry.upsert({where:{guildId_userId_itemId:{...where,itemId:s.itemId}},create:{id:s.id,...where,itemId:s.itemId,quantity:s.quantity,locked:s.locked,acquiredAt:s.acquiredAt,metadata:s.metadata??null},update:{quantity:s.quantity,locked:s.locked,metadata:s.metadata??null}});
  await tx.toolInstance.updateMany({where,data:{equipped:false}});
  for(const t of m.tools)await tx.toolInstance.upsert({where:{id:t.id},create:{id:t.id,...where,catalogItemId:t.catalogItemId,slot:t.slot,durability:t.durability,maxDurability:t.maxDurability,equipped:t.equipped,locked:t.locked},update:{durability:t.durability,equipped:t.equipped,locked:t.locked}});
  await tx.craftedChair.deleteMany({where:{...where,id:{notIn:m.chairs.map(c=>c.id)}}});

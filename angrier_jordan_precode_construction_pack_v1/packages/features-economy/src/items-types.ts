@@ -2,7 +2,7 @@ import type {CatalogItemRecord,ToolRecord} from './types.js';
 export const QUALITIES=['Standard','Fine','Exceptional','Masterwork','Perfect'] as const;
 export const RANKS=['Apprentice','Craftsman','Chairwright','Master Chairwright','Grand Chairwright'] as const;
 export const RARITIES=['Common','Uncommon','Rare','Epic','Legendary','Mythic'] as const;
-export interface ItemStack {id:string;userId:string;itemId:string;quantity:number;locked:boolean;acquiredAt:Date;}
+export interface ItemStack {id:string;userId:string;itemId:string;quantity:number;locked:boolean;acquiredAt:Date;metadata?:any;}
 export interface ItemTool extends ToolRecord {locked:boolean;}
 export interface ItemChair {id:string;userId:string;chairType:string;quality:string;locked:boolean;createdAt:Date;}
 export interface ItemRecipe {id:string;name:string;outputItemId:string;inputs:Record<string,number>;chairInput?:string;success:number;enabled:boolean;}
