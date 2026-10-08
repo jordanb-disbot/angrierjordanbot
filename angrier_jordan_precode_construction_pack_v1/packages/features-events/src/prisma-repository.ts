@@ -1,7 +1,8 @@
 import {planFight,fightSnapshot,type FightPlan} from './fight.js';
 import {randomUUID} from 'node:crypto';
 import {Prisma,type PrismaClient} from '@prisma/client';
-import {DomainError,SessionEngine,TimerEngine,type LedgerEngine,type Session} from '../../core/src/index.js';
+import {DomainError,SessionEngine,TimerEngine,claimActiveEffect,type LedgerEngine,type Session} from '../../core/src/index.js';
+import {activeEffectTransaction} from '../../features-economy/src/items-prisma.js';
 import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atomic-operations.js';
 import {PrismaWagerEscrow} from '../../database/src/wager-escrow.js';
 import {PrismaTransactionSessions} from '../../database/src/transaction-sessions.js';
@@ -79,7 +80,7 @@ export class PrismaEventsRepository {
   const previous=await db.gameSession.findMany({where:{guildId,type:'fight',id:{not:id},state:{in:['CLOSED','CANCELLED']}},orderBy:{createdAt:'desc'},take:3});
   return previous.flatMap(row=>(row.data as unknown as RaceData).fightPlan?.usedMoveIds??[]);
  }
- private preparePlan(type:string,racers:Racer[],recent:string[]):Pick<RaceData,'plan'|'fightPlan'>{return type==='fight'?{fightPlan:planFight(racers,recent,this.rng)}:{plan:planRace(racers,this.rng)};}
+ private preparePlan(type:string,racers:Racer[],recent:string[],favored?:string):Pick<RaceData,'plan'|'fightPlan'>{return type==='fight'?{fightPlan:planFight(racers,recent,this.rng,favored,30)}:{plan:planRace(racers,this.rng,favored,30)};}
  async prepareClose(guildId:string,id:string):Promise<PreparedEventClose|undefined>{
   const s=await this.db.gameSession.findUnique({where:{id}});
   if(!s||s.guildId!==guildId||!['race','fight'].includes(s.type))throw new DomainError('EVENT_MISSING','Event unavailable.');
@@ -91,8 +92,12 @@ export class PrismaEventsRepository {
   const recent=s.type==='fight'?await this.recentMoves(tx,guildId,id):[];
   // Validate prepared outcome inputs inside the serializable transaction. Joining
   // and betting share the session version with this transition.
-  const reusable=prepared?.sessionId===id&&prepared.guildId===guildId&&prepared.type===s.type&&prepared.participantFingerprint===requestFingerprint(s.data.racers)&&prepared.recentMoveFingerprint===requestFingerprint(recent)&&Boolean(s.type==='fight'?prepared.data.fightPlan:prepared.data.plan);
-  const nextPlan=reusable?prepared!.data:this.preparePlan(s.type,s.data.racers,recent),durationMs=(nextPlan.fightPlan??nextPlan.plan)!.durationMs;
+  // Rebuild inside this transaction so active effects are claimed before the
+  // outcome plan is persisted; never reuse a pre-transaction preview.
+  const reusable=false;
+  let favored:string|undefined;
+  if(!reusable){const effect=s.type==='fight'?'fighting_lessons':'wheelchair_tuneup';for(const racer of s.data.racers){const claim=await claimActiveEffect(activeEffectTransaction(tx),{guildId:s.guildId,userId:racer.userId,effect,requestKey:`${id}:${racer.userId}`});if(claim.applied){favored=racer.userId;break;}}}
+  const nextPlan=reusable?prepared!.data:this.preparePlan(s.type,s.data.racers,recent,favored),durationMs=(nextPlan.fightPlan??nextPlan.plan)!.durationMs;
   const now=this.clock(),expiresAt=new Date(now.getTime()+durationMs),data={...s.data,...nextPlan,startedAt:now.toISOString()};
   await new SessionEngine(new PrismaTransactionSessions(tx)).transition<RaceData>(id,['OPEN'],'LOCKED',s=>({...s,data,expiresAt}));
   await tx.scheduledJob.create({data:{guildId,jobType:'events.settle',executionKey:'events:settle:'+id,dueAt:expiresAt,payload:{guildId,sessionId:id}}});return{sessionId:id};
