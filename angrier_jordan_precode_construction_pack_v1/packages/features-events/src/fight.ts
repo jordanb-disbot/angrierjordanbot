@@ -18,9 +18,10 @@ const template=(key:string,values:Record<string,string|number>)=>fightPool.comba
 const rollRange=(min:number,max:number,rng:EventRandom)=>min+rng(max-min+1);
 function choose<T extends {id:string;enabled:boolean}>(pool:T[],used:Set<string>,recent:Set<string>,rng:EventRandom){const unused=pool.filter(m=>m.enabled&&!used.has(m.id)),fresh=unused.filter(m=>!recent.has(m.id)),available=fresh.length?fresh:unused;if(!available.length)throw new DomainError('FIGHT_POOL_EXHAUSTED','Combat content is unavailable.');const move=available[rng(available.length)]!;used.add(move.id);return move;}
 /** Sample complete valid sequences for a winner selected exactly once, before narration. */
-export function planFight(fighters:readonly Racer[],recentMoveIds:readonly string[]=[],rng:EventRandom=eventRandom):FightPlan{
+export function planFight(fighters:readonly Racer[],recentMoveIds:readonly string[]=[],rng:EventRandom=eventRandom,favoredUserId?:string,bonusPercent=0):FightPlan{
  if(fighters.length!==2||fighters[0]!.userId===fighters[1]!.userId)throw new DomainError('FIGHTERS','Fight requires two distinct members.');
- const winner=rng(2),recent=new Set(recentMoveIds);
+ const favored=favoredUserId?fighters.findIndex(f=>f.userId===favoredUserId):-1;
+ const winner=favored>=0&&bonusPercent>0&&rng(100)<Math.min(100,Math.max(0,bonusPercent))?favored:rng(2),recent=new Set(recentMoveIds);
  for(let attempt=0;attempt<2048;attempt++){
   const hp:[number,number]=[100,100],used=new Set<string>(),beats:FightBeat[]=[];let elapsed=0;
   for(let turn=0;turn<22;turn++){
