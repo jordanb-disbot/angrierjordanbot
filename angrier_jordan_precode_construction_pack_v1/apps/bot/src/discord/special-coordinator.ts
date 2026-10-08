@@ -45,6 +45,9 @@ export class DiscordSpecialCoordinator {
  async visibleCommands(guildId:string,roleIds:ReadonlySet<string>){if(await this.config.get(guildId,'features.special_commands')!==true||await this.config.get(guildId,'special_commands.enabled')!==true)return[];const lineEnabled=await this.config.get(guildId,'features.line')===true;return(await this.definitions(guildId)).filter(d=>d.enabled&&d.responsePool.length&&mayInvokeSpecial(d.allowedRoleIds,roleIds)&&(d.trigger!=='!line'||lineEnabled));}
  async message(message:Message){
   const trigger=normalizeNotificationTrigger(message.content);if(!/^![a-z][a-z0-9_-]{0,31}$/.test(trigger)||trigger==='!race'||message.author.bot||!message.guildId||!message.guild)return;
+  const correlationId=`${trigger.slice(1)}:${message.id}`;
+  const fail=(stage:string,error:unknown)=>console.warn('Legacy special trigger failed.',{correlationId,trigger,stage,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:error instanceof Error?error.name:'UNKNOWN'});
+  try{
   if(trigger==='!line'&&message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
   const definition=(await this.definitions(message.guildId)).find(d=>d.trigger===trigger);if(!definition)return;
   if(!definition.enabled)return;
@@ -58,6 +61,7 @@ export class DiscordSpecialCoordinator {
   if(trigger==='!line'){try{const started=await this.repo.start(context,member.displayName,{content,notificationRoleId:notification});if(started.jobId){await this.deliver(message.client,started.jobId);await message.delete();}return;}catch(error){if(error instanceof DomainError&&error.code==='LINE_ACTIVE')return;throw error;}}
   await message.delete();
   const {jobId}=await this.repo.queueCallout(context,content,notification);await this.deliver(message.client,jobId);
+  }catch(error){fail('message-to-publication',error);}
  }
  async deliver(client:Client,jobId:string){const{payload:p}=await this.repo.callout(jobId),channel=await client.channels.fetch(p.channelId);if(!channel?.isSendable()||!('messages' in channel))throw new Error('Special Command destination unavailable.');
   const delivery=this.repo.delivery(jobId),state=await delivery.read();

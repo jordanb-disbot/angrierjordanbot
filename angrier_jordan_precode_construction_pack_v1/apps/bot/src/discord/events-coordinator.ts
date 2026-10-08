@@ -66,6 +66,9 @@ export class DiscordEventsCoordinator {
  }
  async message(message:Message){
   if(message.content.trim()!=='!race'||message.author.bot||!message.guildId||!message.guild)return;
+  const correlationId=`race:${message.id}`;
+  const fail=(stage:string,error:unknown)=>console.warn('Legacy race trigger failed.',{correlationId,stage,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:error instanceof Error?error.name:'UNKNOWN'});
+  try{
   if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
   const channelName='name' in message.channel?message.channel.name:undefined;
   const namedMainChat=typeof channelName==='string'&&/^((main[-_ ]?chat)|(sit[-_ ]and[-_ ]chat))$/i.test(channelName.replace(/^.*?([a-z].*)$/i,'$1'));
@@ -77,6 +80,7 @@ export class DiscordEventsCoordinator {
   if(!message.channel.isSendable())return;
   const sessionMessageId=await this.queueRace(message,member);
   if(sessionMessageId)try{await message.delete();}catch{throw new Error('Race trigger could not be removed.');}
+  }catch(error){fail('message-to-session-publication',error);}
  }
  async startRace(i:ChatInputCommandInteraction){try{
   if(!i.deferred)await i.deferReply({ephemeral:true});
