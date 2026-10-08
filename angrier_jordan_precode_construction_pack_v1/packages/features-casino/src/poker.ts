@@ -29,6 +29,10 @@ export function advanceBlinds(table:PokerTable):PokerTable{if(table.state!=='PLA
 
 export type PokerAction='fold'|'check'|'call'|'raise';
 export interface PokerHand {variant:PokerVariant;handId:string;dealerId:string;buttonIndex:number;street:'preflop'|'flop'|'turn'|'river'|'showdown';deck:number[];board:number[];hole:Record<string,number[]>;folded:string[];committed:Record<string,string>;toAct:string;currentBet:string;minRaise:string;pot:string;settled:boolean;winnerIds?:string[];}
+export interface PokerPublicView {handId:string;variant:PokerVariant;street:PokerHand['street'];board:number[];pot:string;currentBet:string;toAct:string;players:{userId:string;folded:boolean;committed:string}[];settled:boolean;winnerIds?:string[];}
+export interface PokerPrivateView extends PokerPublicView {viewerId:string;holeCards:number[];canAct:boolean;availableActions:PokerAction[];}
+export function publicPokerView(hand:PokerHand):PokerPublicView{return{handId:hand.handId,variant:hand.variant,street:hand.street,board:[...hand.board],pot:hand.pot,currentBet:hand.currentBet,toAct:hand.toAct,players:Object.keys(hand.hole).map(userId=>({userId,folded:hand.folded.includes(userId),committed:hand.committed[userId]??'0'})),settled:hand.settled,...(hand.winnerIds?{winnerIds:[...hand.winnerIds]}:{})};}
+export function privatePokerView(hand:PokerHand,viewerId:string):PokerPrivateView{const hole=hand.hole[viewerId];if(!hole)throw new DomainError('POKER_PLAYER','You are not seated at this table.');const pub=publicPokerView(hand),canAct=!hand.settled&&hand.toAct===viewerId&&!hand.folded.includes(viewerId);return{...pub,viewerId,holeCards:[...hole],canAct,availableActions:canAct?['fold','check','call','raise']:[]};}
 const makeDeck=()=>Array.from({length:52},(_,i)=>i);
 const draw=(deck:number[])=>{const card=deck.shift();if(card===undefined)throw new DomainError('POKER_DECK','The table deck is exhausted.');return card;};
 export function startPokerHand(table:PokerTable,handId:string,rng:(max:number)=>number=(max)=>Math.floor(Math.random()*max)):PokerHand{
