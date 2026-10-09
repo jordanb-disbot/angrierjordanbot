@@ -10,9 +10,11 @@ export async function enablePreproductionWyr({db,config,get,write=console.log}){
   check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'GUILD_MISSING');
   const channel=await get(`/channels/${GAMES_CHANNEL}`);
   check(channel?.id===GAMES_CHANNEL&&channel.guild_id===GUILD&&channel.type===0,'GAMES_CHANNEL_INVALID');
-  check(await config.get(GUILD,'channels.games_channel')===GAMES_CHANNEL,'GAMES_CHANNEL_MAPPING_INVALID');
+  const channelSetting=await config.getWithMetadata(GUILD,'channels.games_channel');
+  if(!isDeepStrictEqual(channelSetting.value,GAMES_CHANNEL))await config.set({guildId:GUILD,key:'channels.games_channel',value:GAMES_CHANNEL,expectedVersion:channelSetting.version,source:'operator.preproduction-wyr-enablement',requestId:randomUUID()});
   const current=await config.getWithMetadata(GUILD,'features.party_games');
   if(!isDeepStrictEqual(current.value,true))await config.set({guildId:GUILD,key:'features.party_games',value:true,expectedVersion:current.version,source:'operator.preproduction-wyr-enablement',requestId:randomUUID()});
+  check(await config.get(GUILD,'channels.games_channel')===GAMES_CHANNEL,'GAMES_CHANNEL_MAPPING_VERIFY_FAILED');
   check(await config.get(GUILD,'features.party_games')===true,'WYR_ENABLEMENT_VERIFY_FAILED');
   write('PASS: pre-production WYR is enabled for the configured games channel.');
 }
