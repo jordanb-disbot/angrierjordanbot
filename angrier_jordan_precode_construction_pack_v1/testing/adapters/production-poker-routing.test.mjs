@@ -11,3 +11,15 @@ test('Poker component path acknowledges before persistence and refunds cancellat
   assert.match(coordinator,/await i\.editReply\(/);
   assert.match(repository,/new PrismaWagerEscrow\(tx,ledger\)\.refund\(/);
 });
+
+test('Poker has durable start, recovery, private views, action timeouts, and human-only settlement guards',()=>{
+  const repository=readFileSync(new URL('../../packages/features-casino/src/poker-repository.ts',import.meta.url),'utf8');
+  const coordinator=readFileSync(new URL('../../apps/bot/src/discord/poker-coordinator.ts',import.meta.url),'utf8');
+  assert.match(repository,/startPokerHand\(started,randomUUID\(\),undefined,dueAt\)/);
+  assert.match(repository,/async recover\(guildId:string\)/);
+  assert.match(repository,/poker\.action_timeout/);
+  assert.match(repository,/filter\(seat=>!seat\.bot\)/);
+  assert.match(coordinator,/ephemeral:true/);
+  assert.match(coordinator,/View Private Hand/);
+  assert.doesNotMatch(coordinator,/JSON\.stringify\(.*activeHand/);
+});
