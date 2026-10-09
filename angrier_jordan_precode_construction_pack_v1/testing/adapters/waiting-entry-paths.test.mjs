@@ -21,7 +21,7 @@ test('!race publishes the live waiting presenter on its first card',async()=>{
  const message={id:'request',content:'!race',author:{id:'host',bot:false},guildId:'guild',guild,channelId:'main',channel,delete:async()=>{}};
  await coordinator.message(message);
  assert.equal(sent.length,1);assert.equal(linked,1);
- assert.match(cd(sent[0]),/RACE WAITING ROOM · 0[01]:[0-5]\d remaining/);
+ assert.match(cd(sent[0]),/RACE WAITING ROOM · closes <t:\d+:R>/);
  assert.match(cd(sent[0]),/Joined \(1\/6\):\*\* Host/);
  assert.equal(sent[0].files,undefined,'the retained-art test path should not rasterize');
 });

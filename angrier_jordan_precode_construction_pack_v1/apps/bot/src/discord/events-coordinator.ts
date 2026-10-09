@@ -12,15 +12,15 @@ import {renderRace} from '../../../../packages/features-events/src/render.js';
 import {renderEventNotice} from '../../../../packages/features-events/src/wide-render.js';
 import {rasterizeSvg,rasterizeTimeline} from '../../../../packages/renderer/src/raster.js';
 import {AnimationAssets} from '../../../../packages/renderer/src/animation-assets.js';
-import {eventWindow,waitingCountdown} from './event-window.js';
+import {eventWindow} from './event-window.js';
 import {funChannelAllowed} from './fun-channels.js';
 import {interactiveGameChannelAllowed} from './interactive-game-channels.js';
 import eventHelp from '../../../../packages/content/help/events.json' with {type:'json'};
 const callouts=['Chairs to the starting line. Who has the fastest seat?','The lounge has a finish line. Pick your chair.','Six seats. One sprint. Chairs, assemble.'];
-function raceWaitingText(view:RaceView,now:number){
+function raceWaitingText(view:RaceView){
  const names=view.racers.map(r=>r.name.replace(/\s+/g,' ').replace(/[\\*_~`|<>]/g,'').slice(0,22)).join(' · ');
- const open=6-view.racers.length;
- return `**RACE WAITING ROOM · ${waitingCountdown(view.expiresAt,now)} remaining**\n**Joined (${view.racers.length}/6):** ${names}\n**${open} open ${open===1?'seat':'seats'}** · **Wager pool:** ${view.pool} Ottomans`;
+ const open=6-view.racers.length,deadline=Math.floor((view.expiresAt?.getTime()??Date.now())/1000);
+ return `**RACE WAITING ROOM · closes <t:${deadline}:R>**\n**Joined (${view.racers.length}/6):** ${names}\n**${open} open ${open===1?'seat':'seats'}** · **Wager pool:** ${view.pool} Ottomans`;
 }
 function fightWaitingText(view:RaceView){
  const [challenger,target]=view.racers;
@@ -117,7 +117,7 @@ export class DiscordEventsCoordinator {
    const {content:_clearContent,...payload}=await this.payload(initial,{callout});
    // Discord additionally deduplicates overlapping network sends for this trigger.
    const sent=await message.channel.send({...payload,allowedMentions,nonce:message.id,enforceNonce:true});
-   await this.repo.linkMessage(id,message.guildId,sent.id);this.publishedVersions.set(id,this.publicationKey(initial));this.countdownVersions.set(id,waitingCountdown(initial.expiresAt));this.prepare(initial);return sent.id;
+   await this.repo.linkMessage(id,message.guildId,sent.id);this.publishedVersions.set(id,this.publicationKey(initial));this.prepare(initial);return sent.id;
   }catch(error){if(id)await this.repo.cancel(message.guildId,id,'Race could not be published; wagers refunded.');if(error instanceof DomainError&&error.code==='EVENT_ACTIVE')return;throw error;}
  }
 
@@ -200,9 +200,9 @@ export class DiscordEventsCoordinator {
     if(fight)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...secondary));
    }
   }
-  return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view):raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
+  return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view):raceWaitingText(view)}:{}),...(options.callout?{callout:options.callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.type==='race'&&view.state==='OPEN'?waitingCountdown(view.expiresAt):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view);const sameState=this.publishedVersions.get(id)===key;if(sameState)return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
   const filename=`${view.type==='fight'?'fight-locked.gif':'race-locked.gif'}`,existing=view.state==='LOCKED'?message.attachments?.find?.(attachment=>attachment.name===filename):undefined;
   const openImage=view.type==='race'&&view.state==='OPEN'?message.attachments?.find(attachment=>attachment.name==='race-open.png')?.url:undefined;
   const retainImageUrl=view.state==='LOCKED'?(existing?.url??this.liveImages.get(id)):sameState?openImage:undefined;
@@ -215,7 +215,7 @@ export class DiscordEventsCoordinator {
   if(view.state==='LOCKED'||view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=version(view);const latestSaved=view.state==='LOCKED'&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;payload=await this.payload(view,latestSaved?.state==='LOCKED'?{timeline:latestSaved.data}:{});}}
   await eventTiming('event.edit-upload',()=>message.edit(payload));
   if(view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
-  this.publishedVersions.set(id,key);if(tick)this.countdownVersions.set(id,tick);else this.countdownVersions.delete(id);this.prepare(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
+  this.publishedVersions.set(id,key);this.prepare(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
  async sweep(client:Client){if(this.sweeping)return;this.sweeping=true;try{for(const event of await this.repo.active()){
   if(event.expiresAt&&event.expiresAt<=new Date()){await this.advance(client,event.guildId,event.id,event.state==='LOCKED');continue;}
   await this.refresh(client,event.id);
