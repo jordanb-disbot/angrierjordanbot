@@ -391,7 +391,37 @@ export async function startProductionBot():Promise<void>{
     startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
     const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(c.name==='chess'||alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableCasinoSmoke&&Boolean(c.name&&POKER_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
-    const registerCommands=async()=>{const applicationId=ready.user.id;if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),30_000);timeout.unref();try{const registered=await new REST({version:'10'}).setToken(token).put(Routes.applicationGuildCommands(applicationId,guildId),{body:enabled,signal:controller.signal});validateRegisteredCommands(enabled,registered);}finally{clearTimeout(timeout);}};
+    const registerCommands=async()=>{
+      const applicationId=ready.user.id;
+      if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');
+      const rest=new REST({version:'10'}).setToken(token);
+      const route=Routes.applicationGuildCommands(applicationId,guildId);
+      const request=async<T>(work:(signal:AbortSignal)=>Promise<T>,timeoutMs=30_000)=>{
+        const controller=new AbortController();
+        const timeout=setTimeout(()=>controller.abort(),timeoutMs);
+        timeout.unref();
+        try{return await work(controller.signal);}
+        finally{clearTimeout(timeout);}
+      };
+      const commandKey=(command:{name?:unknown;type?:unknown})=>typeof command.name==='string'&&Number.isInteger(command.type)?`${command.type}:${command.name}`:null;
+      try{
+        const registered=await request(signal=>rest.put(route,{body:enabled,signal}));
+        validateRegisteredCommands(enabled,registered);
+      }catch(error){
+        if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
+        console.warn('Bulk command registration timed out; registering missing commands incrementally.',JSON.stringify({commands:enabled.length}));
+        const current=await request(signal=>rest.get(route,{signal}));
+        if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
+        const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
+        for(const command of enabled){
+          const key=commandKey(command);
+          if(!key)throw new Error('Command registration payload is invalid.');
+          if(existing.has(key))continue;
+          await request(signal=>rest.post(route,{body:command,signal}),15_000);
+          existing.add(key);
+        }
+      }
+    };
     const retryCommandRegistration=()=>lifecycle.run(async()=>{try{await registerCommands();console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));}catch{console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds:60}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,60_000);retry.unref();}}});
     startup.mark('command-registration');retryCommandRegistration();console.info('Bot startup diagnostic',JSON.stringify({stage:'command-registration',event:'deferred'}));
     startup.mark('family-bootstrap');
