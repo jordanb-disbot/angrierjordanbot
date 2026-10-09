@@ -406,7 +406,6 @@ export async function startProductionBot():Promise<void>{
         try{return await work(controller.signal);}
         finally{clearTimeout(timeout);}
       };
-      const commandKey=(command:{name?:unknown;type?:unknown})=>typeof command.name==='string'&&Number.isInteger(command.type)?`${command.type}:${command.name}`:null;
       if(!useIncrementalRegistration){
         try{
           const registered=await request(signal=>rest.put(route,{body:enabled,signal}));
@@ -416,12 +415,12 @@ export async function startProductionBot():Promise<void>{
           if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
           useIncrementalRegistration=true;
         }
-        console.warn('Bulk command registration timed out; registering missing commands incrementally.',JSON.stringify({commands:enabled.length}));
+        console.warn('Bulk command registration timed out; retrying the full command set directly.',JSON.stringify({commands:enabled.length}));
       }
-      // Use direct requests for recovery.  discord.js REST keeps route work
+      // Use a direct request for recovery. discord.js REST keeps route work
       // queued after an aborted bulk PUT, which otherwise prevents progress.
       const endpoint=`https://discord.com/api/v10/applications/${applicationId}/guilds/${guildId}/commands`;
-      const discordRequest=async<T>(method:'GET'|'POST',body?:unknown)=>request(async signal=>{
+      const discordRequest=async<T>(method:'PUT',body:unknown,timeoutMs=300_000)=>request(async signal=>{
         const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
         if(body!==undefined)init.body=JSON.stringify(body);
         const response=await fetch(endpoint,init);
@@ -431,19 +430,10 @@ export async function startProductionBot():Promise<void>{
           throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status,retryAfterSeconds});
         }
         return await response.json() as T;
-      });
-      commandRegistrationStage='inventory';
-      const current=await discordRequest<unknown>('GET');
-      if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
-      const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
-      for(const command of enabled){
-        const key=commandKey(command);
-        if(!key)throw new Error('Command registration payload is invalid.');
-        if(existing.has(key))continue;
-        commandRegistrationStage=`create:${key}`;
-        await discordRequest('POST',command);
-        existing.add(key);
-      }
+      },timeoutMs);
+      commandRegistrationStage='bulk-recovery';
+      const registered=await discordRequest<unknown>('PUT',enabled);
+      validateRegisteredCommands(enabled,registered);
     };
     const retryCommandRegistration=()=>lifecycle.run(async()=>{try{await registerCommands();console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown;retryAfterSeconds?:unknown};const retrySeconds=Math.max(60,typeof failure.retryAfterSeconds==='number'&&Number.isFinite(failure.retryAfterSeconds)?Math.ceil(failure.retryAfterSeconds):60);console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,retrySeconds*1_000);retry.unref();}}});
     startup.mark('command-registration');retryCommandRegistration();console.info('Bot startup diagnostic',JSON.stringify({stage:'command-registration',event:'deferred'}));
