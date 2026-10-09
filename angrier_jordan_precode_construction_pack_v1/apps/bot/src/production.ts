@@ -412,11 +412,18 @@ export async function startProductionBot():Promise<void>{
       }catch(error){
         if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
         console.warn('Bulk command registration timed out; registering missing commands incrementally.',JSON.stringify({commands:enabled.length}));
-        // A timed-out REST queue can retain the bulk request.  Use a separate
-        // client for the recovery path so it can make forward progress.
-        const incrementalRest=new REST({version:'10'}).setToken(token);
+        // Use direct requests for recovery.  discord.js REST keeps route work
+        // queued after an aborted bulk PUT, which otherwise prevents progress.
+        const endpoint=`https://discord.com/api/v10/applications/${applicationId}/guilds/${guildId}/commands`;
+        const discordRequest=async<T>(method:'GET'|'POST',body?:unknown)=>request(async signal=>{
+          const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
+          if(body!==undefined)init.body=JSON.stringify(body);
+          const response=await fetch(endpoint,init);
+          if(!response.ok)throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status});
+          return await response.json() as T;
+        });
         commandRegistrationStage='inventory';
-        const current=await request(signal=>incrementalRest.get(route,{signal}));
+        const current=await discordRequest<unknown>('GET');
         if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
         const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
         for(const command of enabled){
@@ -424,7 +431,7 @@ export async function startProductionBot():Promise<void>{
           if(!key)throw new Error('Command registration payload is invalid.');
           if(existing.has(key))continue;
           commandRegistrationStage=`create:${key}`;
-          await request(signal=>incrementalRest.post(route,{body:command,signal}),15_000);
+          await discordRequest('POST',command);
           existing.add(key);
         }
       }
