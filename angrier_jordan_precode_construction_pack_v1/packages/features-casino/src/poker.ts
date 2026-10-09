@@ -6,12 +6,15 @@ export const POKER_MAX_PLAYERS=4;
 export const POKER_DEALER_ID='dealer';
 export const POKER_BUY_INS:readonly bigint[]=[500n,1000n,5000n];
 export const POKER_CHIPS:Readonly<Record<string,string>>={'500':'5000','1000':'10000','5000':'50000'};
+const CARD_RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'] as const;
+const CARD_SUITS=['♣','♦','♥','♠'] as const;
+export const pokerCardLabel=(card:number)=>{if(!Number.isInteger(card)||card<0||card>=52)throw new DomainError('POKER_CARD','The table contains an invalid card.');return CARD_RANKS[card%13]!+CARD_SUITS[Math.floor(card/13)]!;};
 export interface PokerSeat {userId:string;name:string;bot:boolean;buyIn:string;chips:string;joined:boolean;}
 export type PokerAction='fold'|'check'|'call'|'raise';
 export interface PokerHand {variant:PokerVariant;handId:string;dealerId:string;buttonIndex:number;street:'preflop'|'flop'|'turn'|'river'|'showdown';deck:number[];board:number[];hole:Record<string,number[]>;folded:string[];committed:Record<string,string>;toAct:string;currentBet:string;minRaise:string;pot:string;settled:boolean;winnerIds?:string[];actionDeadline?:string;}
 export interface PokerTable {id:string;guildId:string;channelId:string;hostId:string;variant:PokerVariant;state:'OPEN'|'PLAYING'|'CLOSED';blindLevel:number;smallBlind:string;bigBlind:string;seats:PokerSeat[];pot:string;hand:number;startedAt?:string;activeHand?:PokerHand;settledHandIds?:string[];}
 export interface PokerPublicView {handId:string;variant:PokerVariant;street:PokerHand['street'];board:number[];pot:string;currentBet:string;toAct:string;players:{userId:string;folded:boolean;committed:string}[];settled:boolean;winnerIds?:string[];}
-export interface PokerPrivateView extends PokerPublicView {viewerId:string;holeCards:number[];canAct:boolean;availableActions:PokerAction[];}
+export interface PokerPrivateView extends PokerPublicView {viewerId:string;holeCards:number[];holeCardLabels:string[];canAct:boolean;availableActions:PokerAction[];}
 
 export function validateBuyIn(amount:bigint){if(!POKER_BUY_INS.includes(amount))throw new DomainError('POKER_BUYIN','Choose a 500, 1,000 or 5,000 Ottoman buy-in.');return POKER_CHIPS[amount.toString()]!;}
 export function createPokerTable(input:{id:string;guildId:string;channelId:string;hostId:string;variant:PokerVariant;hostName:string;hostBuyIn:bigint;now:Date}):PokerTable{
@@ -37,7 +40,7 @@ export function cancelPokerTable(table:PokerTable):PokerTable{if(table.state==='
 export function advanceBlinds(table:PokerTable):PokerTable{if(table.state!=='PLAYING')throw new DomainError('POKER_NOT_PLAYING','The table is not in play.');const level=table.blindLevel+1;return{...table,blindLevel:level,smallBlind:String(25*2**(level-1)),bigBlind:String(50*2**(level-1)),hand:table.hand+1};}
 
 export function publicPokerView(hand:PokerHand):PokerPublicView{return{handId:hand.handId,variant:hand.variant,street:hand.street,board:[...hand.board],pot:hand.pot,currentBet:hand.currentBet,toAct:hand.toAct,players:Object.keys(hand.hole).map(userId=>({userId,folded:hand.folded.includes(userId),committed:hand.committed[userId]??'0'})),settled:hand.settled,...(hand.winnerIds?{winnerIds:[...hand.winnerIds]}:{})};}
-export function privatePokerView(hand:PokerHand,viewerId:string):PokerPrivateView{const hole=hand.hole[viewerId];if(!hole)throw new DomainError('POKER_PLAYER','You are not seated at this table.');const pub=publicPokerView(hand),canAct=!hand.settled&&hand.toAct===viewerId&&!hand.folded.includes(viewerId);return{...pub,viewerId,holeCards:[...hole],canAct,availableActions:canAct?['fold','check','call','raise']:[]};}
+export function privatePokerView(hand:PokerHand,viewerId:string):PokerPrivateView{const hole=hand.hole[viewerId];if(!hole)throw new DomainError('POKER_PLAYER','You are not seated at this table.');const pub=publicPokerView(hand),canAct=!hand.settled&&hand.toAct===viewerId&&!hand.folded.includes(viewerId);return{...pub,viewerId,holeCards:[...hole],holeCardLabels:hole.map(pokerCardLabel),canAct,availableActions:canAct?['fold','check','call','raise']:[]};}
 const makeDeck=()=>Array.from({length:52},(_,i)=>i);
 const draw=(deck:number[])=>{const card=deck.shift();if(card===undefined)throw new DomainError('POKER_DECK','The table deck is exhausted.');return card;};
 export function startPokerHand(table:PokerTable,handId:string,rng:(max:number)=>number=(max)=>Math.floor(Math.random()*max),deadline?:Date):PokerHand{
