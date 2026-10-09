@@ -48,7 +48,9 @@ export function renderLine(view:LineView,elapsedMs=view.elapsedMs,layout:'compac
  return frame(body+footer());
 }
 /** Resume only the remaining authoritative frames after restart; never loop/replay 5. */
-export function lineSequence(view:LineView,layout:'compact'|'wide'='compact',packArtwork=false){const artwork=packArtwork?new AnimationAssets():undefined,pack=(svg:string)=>artwork?.pack(svg)??svg;const frames:string[]=[],delays:number[]=[],duration=view.durationMs??LINE_DURATION_MS;let cursor=Math.max(0,Math.floor(view.elapsedMs/1000)*1000);while(cursor<duration){const step=cursor<5000?1000:100,end=Math.min(duration,cursor+step);frames.push(pack(renderLine(view,cursor,layout)));delays.push(end-cursor);cursor=end;}frames.push(pack(renderLine({...view,state:'CLOSED'},duration,layout)));delays.push(1000);return{frames,delays,assets:artwork?.assets};}
+/** A single rendered countdown starts exactly at its persisted elapsed time and
+ * advances at 20fps, keeping the wooden 5→1 cards smooth after restarts. */
+export function lineSequence(view:LineView,layout:'compact'|'wide'='compact',packArtwork=false){const artwork=packArtwork?new AnimationAssets():undefined,pack=(svg:string)=>artwork?.pack(svg)??svg;const frames:string[]=[],delays:number[]=[],duration=view.durationMs??LINE_DURATION_MS,step=50;let cursor=Math.max(0,Math.min(duration,view.elapsedMs));while(cursor<duration){const end=Math.min(duration,Math.ceil((cursor+1)/step)*step);frames.push(pack(renderLine(view,cursor,layout)));delays.push(end-cursor);cursor=end;}frames.push(pack(renderLine({...view,state:'CLOSED'},duration,layout)));delays.push(1000);return{frames,delays,assets:artwork?.assets};}
 
 /** Landscape runtime edition uses the approved lounge, materials and countdown particles. */
 function renderWideLine(view:LineView,elapsedMs:number,callout=''){
