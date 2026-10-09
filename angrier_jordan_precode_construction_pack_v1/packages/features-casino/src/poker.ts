@@ -1,6 +1,9 @@
 import {DomainError} from '../../core/src/errors.js';
 
 export type PokerVariant='holdem'|'omaha';
+/** Tournament tables have four playing seats; the dealer is non-playing. */
+export const POKER_MAX_PLAYERS=4;
+export const POKER_DEALER_ID='dealer';
 export const POKER_BUY_INS:readonly bigint[]=[500n,1000n,5000n];
 export const POKER_CHIPS:Readonly<Record<string,string>>={'500':'5000','1000':'10000','5000':'50000'};
 export interface PokerSeat {userId:string;name:string;bot:boolean;buyIn:string;chips:string;joined:boolean;}
@@ -19,7 +22,7 @@ export function createPokerTable(input:{id:string;guildId:string;channelId:strin
 export function addPokerSeat(table:PokerTable,input:{userId:string;name:string;bot:boolean;buyIn:bigint;joined?:boolean}):PokerTable{
  if(table.state!=='OPEN')throw new DomainError('POKER_CLOSED','This table is no longer accepting seats.');
  if(table.seats.some(s=>s.userId===input.userId))throw new DomainError('POKER_SEAT','That member already has a seat.');
- if(table.seats.length>=5)throw new DomainError('POKER_FULL','This table has reached five seats.');
+ if(table.seats.length>=POKER_MAX_PLAYERS)throw new DomainError('POKER_FULL','This table has reached four playing seats.');
  if(!input.bot&&!input.joined)throw new DomainError('POKER_CONFIRM','An invited member must explicitly join before their buy-in is charged.');
  const chips=validateBuyIn(input.buyIn);
  return{...table,seats:[...table.seats,{userId:input.userId,name:input.name,bot:input.bot,buyIn:input.buyIn.toString(),chips,joined:input.joined??true}]};
@@ -56,3 +59,29 @@ export function settlePokerHand(hand:PokerHand):PokerHand{if(hand.settled)return
 export function advancePokerStreet(hand:PokerHand,deadline?:Date):PokerHand{if(hand.settled)throw new DomainError('POKER_SETTLED','This hand is already settled.');const active=Object.keys(hand.hole).filter(id=>!hand.folded.includes(id));if(active.length<2)return settlePokerHand(hand);const next=hand.street==='preflop'?'flop':hand.street==='flop'?'turn':hand.street==='turn'?'river':'showdown';if(next==='showdown')return settlePokerHand({...hand,street:'showdown'});const count=next==='flop'?3:1,deck=[...hand.deck],board=[...hand.board];for(let i=0;i<count;i++)board.push(draw(deck));return{...hand,street:next,deck,board,toAct:active[0]!,...(deadline?{actionDeadline:deadline.toISOString()}:{})};}
 export function evaluatePokerHand(hand:PokerHand,userId:string):number[]{const cards=[...(hand.hole[userId]??[]),...hand.board];if(!cards.length)throw new DomainError('POKER_CARDS','No cards are available.');const ranks=cards.map(c=>c%13===0?14:c%13+1).sort((a,b)=>b-a),counts=new Map<number,number>();for(const r of ranks)counts.set(r,(counts.get(r)??0)+1);return[...counts.entries()].sort((a,b)=>b[1]-a[1]||b[0]-a[0]).flatMap(([r,n])=>Array(n).fill(r));}
 export function timeoutPokerAction(hand:PokerHand,deadline?:Date):PokerHand{if(hand.settled)return hand;const committed=BigInt(hand.committed[hand.toAct]??'0'),bet=BigInt(hand.currentBet);return pokerAction(hand,hand.toAct,committed<bet?'fold':'check',undefined,deadline);}
+
+/**
+ * Carries a completed hand into the tournament stack model.  This is kept
+ * pure so the repository can apply it inside its existing serializable
+ * session transaction.  A hand's committed chips are removed from each
+ * seat, then the pot is split deterministically among the eligible winners.
+ */
+export function carryTournamentStacks(table:PokerTable,hand:PokerHand):PokerTable{
+ if(!hand.settled)throw new DomainError('POKER_HAND','Only a settled hand can advance the tournament.');
+ if(table.activeHand?.handId!==hand.handId)throw new DomainError('POKER_HAND','The completed hand is not the table hand.');
+ if((table.settledHandIds??[]).includes(hand.handId))return table;
+ const seats=table.seats.map(seat=>({...seat,chips:seat.chips}));
+ const byId=new Map(seats.map(seat=>[seat.userId,seat]));
+ for(const [userId,amount] of Object.entries(hand.committed)){
+  const seat=byId.get(userId);if(!seat)continue;
+  const next=BigInt(seat.chips)-BigInt(amount);if(next<0n)throw new DomainError('POKER_STACK','A player committed more chips than their stack.');seat.chips=next.toString();
+ }
+ const winners=(hand.winnerIds??[]).filter(id=>byId.has(id));
+ if(!winners.length)throw new DomainError('POKER_WINNER','A settled hand has no eligible winner.');
+ const pot=BigInt(hand.pot),share=pot/BigInt(winners.length),remainder=pot%BigInt(winners.length);
+ winners.forEach((id,index)=>{const seat=byId.get(id)!;seat.chips=(BigInt(seat.chips)+share+(index===0?remainder:0n)).toString();});
+ const live=seats.filter(seat=>BigInt(seat.chips)>0n);
+ const sessionOver=live.length<=1;
+ const {activeHand:_activeHand,...withoutHand}=table;
+ return{...withoutHand,seats,state:sessionOver?'CLOSED':'PLAYING',pot:'0',hand:sessionOver?table.hand:table.hand+1,settledHandIds:[...(table.settledHandIds??[]),hand.handId]};
+}
