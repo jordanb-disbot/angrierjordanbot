@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 133,
+  "command_count": 135,
   "commands": [
     {
       "id": "help",
