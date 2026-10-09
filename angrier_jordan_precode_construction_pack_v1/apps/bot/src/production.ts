@@ -392,6 +392,7 @@ export async function startProductionBot():Promise<void>{
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
     const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(c.name==='chess'||alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableCasinoSmoke&&Boolean(c.name&&POKER_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
     let commandRegistrationStage='bulk';
+    let useIncrementalRegistration=false;
     const registerCommands=async()=>{
       commandRegistrationStage='bulk';
       const applicationId=ready.user.id;
@@ -406,34 +407,38 @@ export async function startProductionBot():Promise<void>{
         finally{clearTimeout(timeout);}
       };
       const commandKey=(command:{name?:unknown;type?:unknown})=>typeof command.name==='string'&&Number.isInteger(command.type)?`${command.type}:${command.name}`:null;
-      try{
-        const registered=await request(signal=>rest.put(route,{body:enabled,signal}));
-        validateRegisteredCommands(enabled,registered);
-      }catch(error){
-        if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
-        console.warn('Bulk command registration timed out; registering missing commands incrementally.',JSON.stringify({commands:enabled.length}));
-        // Use direct requests for recovery.  discord.js REST keeps route work
-        // queued after an aborted bulk PUT, which otherwise prevents progress.
-        const endpoint=`https://discord.com/api/v10/applications/${applicationId}/guilds/${guildId}/commands`;
-        const discordRequest=async<T>(method:'GET'|'POST',body?:unknown)=>request(async signal=>{
-          const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
-          if(body!==undefined)init.body=JSON.stringify(body);
-          const response=await fetch(endpoint,init);
-          if(!response.ok)throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status});
-          return await response.json() as T;
-        });
-        commandRegistrationStage='inventory';
-        const current=await discordRequest<unknown>('GET');
-        if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
-        const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
-        for(const command of enabled){
-          const key=commandKey(command);
-          if(!key)throw new Error('Command registration payload is invalid.');
-          if(existing.has(key))continue;
-          commandRegistrationStage=`create:${key}`;
-          await discordRequest('POST',command);
-          existing.add(key);
+      if(!useIncrementalRegistration){
+        try{
+          const registered=await request(signal=>rest.put(route,{body:enabled,signal}));
+          validateRegisteredCommands(enabled,registered);
+          return;
+        }catch(error){
+          if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
+          useIncrementalRegistration=true;
         }
+        console.warn('Bulk command registration timed out; registering missing commands incrementally.',JSON.stringify({commands:enabled.length}));
+      }
+      // Use direct requests for recovery.  discord.js REST keeps route work
+      // queued after an aborted bulk PUT, which otherwise prevents progress.
+      const endpoint=`https://discord.com/api/v10/applications/${applicationId}/guilds/${guildId}/commands`;
+      const discordRequest=async<T>(method:'GET'|'POST',body?:unknown)=>request(async signal=>{
+        const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
+        if(body!==undefined)init.body=JSON.stringify(body);
+        const response=await fetch(endpoint,init);
+        if(!response.ok)throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status});
+        return await response.json() as T;
+      });
+      commandRegistrationStage='inventory';
+      const current=await discordRequest<unknown>('GET');
+      if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
+      const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
+      for(const command of enabled){
+        const key=commandKey(command);
+        if(!key)throw new Error('Command registration payload is invalid.');
+        if(existing.has(key))continue;
+        commandRegistrationStage=`create:${key}`;
+        await discordRequest('POST',command);
+        existing.add(key);
       }
     };
     const retryCommandRegistration=()=>lifecycle.run(async()=>{try{await registerCommands();console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown};console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds:60,stage:commandRegistrationStage,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,60_000);retry.unref();}}});
