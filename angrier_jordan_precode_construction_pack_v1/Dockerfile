@@ -22,4 +22,7 @@ COPY --from=build --chown=node:node /app /app
 USER node
 EXPOSE 8080
 STOPSIGNAL SIGTERM
-CMD ["node", "dist/apps/bot/src/index.js"]
+# Railway's pre-deploy logs are not retained for this service. Run the guarded,
+# idempotent migration before the worker so failures remain visible in container
+# logs and the worker never reaches schema bootstrap before migrations complete.
+CMD ["sh", "-c", "AJ_PRODUCTION_MIGRATIONS_APPROVED=true AJ_MIGRATION_RELEASE=\"$(cat RELEASE_SHA)\" npm run db:migrate:production && exec node dist/apps/bot/src/index.js"]
