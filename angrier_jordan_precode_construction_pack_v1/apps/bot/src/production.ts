@@ -425,7 +425,11 @@ export async function startProductionBot():Promise<void>{
         const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
         if(body!==undefined)init.body=JSON.stringify(body);
         const response=await fetch(endpoint,init);
-        if(!response.ok)throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status});
+        if(!response.ok){
+          const detail=response.status===429?await response.json().catch(()=>null):null;
+          const retryAfterSeconds=detail&&typeof detail==='object'&&'retry_after' in detail&&typeof detail.retry_after==='number'?detail.retry_after:null;
+          throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status,retryAfterSeconds});
+        }
         return await response.json() as T;
       });
       commandRegistrationStage='inventory';
@@ -441,7 +445,7 @@ export async function startProductionBot():Promise<void>{
         existing.add(key);
       }
     };
-    const retryCommandRegistration=()=>lifecycle.run(async()=>{try{await registerCommands();console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown};console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds:60,stage:commandRegistrationStage,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,60_000);retry.unref();}}});
+    const retryCommandRegistration=()=>lifecycle.run(async()=>{try{await registerCommands();console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown;retryAfterSeconds?:unknown};const retrySeconds=Math.max(60,typeof failure.retryAfterSeconds==='number'&&Number.isFinite(failure.retryAfterSeconds)?Math.ceil(failure.retryAfterSeconds):60);console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,retrySeconds*1_000);retry.unref();}}});
     startup.mark('command-registration');retryCommandRegistration();console.info('Bot startup diagnostic',JSON.stringify({stage:'command-registration',event:'deferred'}));
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
