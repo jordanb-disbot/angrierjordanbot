@@ -412,8 +412,11 @@ export async function startProductionBot():Promise<void>{
       }catch(error){
         if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
         console.warn('Bulk command registration timed out; registering missing commands incrementally.',JSON.stringify({commands:enabled.length}));
+        // A timed-out REST queue can retain the bulk request.  Use a separate
+        // client for the recovery path so it can make forward progress.
+        const incrementalRest=new REST({version:'10'}).setToken(token);
         commandRegistrationStage='inventory';
-        const current=await request(signal=>rest.get(route,{signal}));
+        const current=await request(signal=>incrementalRest.get(route,{signal}));
         if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
         const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
         for(const command of enabled){
@@ -421,7 +424,7 @@ export async function startProductionBot():Promise<void>{
           if(!key)throw new Error('Command registration payload is invalid.');
           if(existing.has(key))continue;
           commandRegistrationStage=`create:${key}`;
-          await request(signal=>rest.post(route,{body:command,signal}),15_000);
+          await request(signal=>incrementalRest.post(route,{body:command,signal}),15_000);
           existing.add(key);
         }
       }
