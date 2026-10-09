@@ -37,6 +37,14 @@ test('Race and Fight render fixed wide frames, hide IDs, and skip unchanged uplo
   view={...view,pool:'200'};await c.refresh(client,view.id);assert.equal(edits,2);
  }
 });
+test('a deleted public Race or Fight card is cancelled during recovery without blocking startup',async()=>{
+ const view={id:'orphan',type:'race',guildId:'g',channelId:'c',messageId:'missing',state:'OPEN',expiresAt:new Date(),racers:[],pool:'0',bets:[],extensionUsed:false},cancelled=[];
+ const repo={publicView:async()=>view,cancel:async(...args)=>{cancelled.push(args);}};
+ const client={channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>{const error=Error('Unknown Message');error.code=10008;throw error;}}})}};
+ await new DiscordEventsCoordinator(repo,config(true),async()=>true).refresh(client,'orphan');
+ assert.deepEqual(cancelled,[['g','orphan','The event card was deleted; all wagers refunded.']]);
+});
+
 test('Race/Fight successful controls are silent; errors after acknowledgement stay private',async()=>{
  for(const type of ['race','fight'])for(const fail of [false,true]){
   const i=interaction();i.customId=(type==='fight'?'fight':'event')+':extend:round';
