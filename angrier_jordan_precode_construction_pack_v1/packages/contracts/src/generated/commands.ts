@@ -837,25 +837,6 @@ export const COMMANDS = [
     "tutorialId": "games"
   },
   {
-    "id": "race_slash",
-    "preferred": "/race",
-    "registered": "/race",
-    "type": "slash",
-    "module": "race",
-    "handler": "race.specialRace",
-    "featureFlag": "race",
-    "permissions": [
-      "member"
-    ],
-    "channels": [
-      "main_chat"
-    ],
-    "options": [],
-    "ephemeralDefault": false,
-    "helpId": "race",
-    "tutorialId": "games"
-  },
-  {
     "id": "fight",
     "preferred": "/fight @member",
     "registered": "/fight",

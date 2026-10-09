@@ -365,12 +365,6 @@
   },
   {
     "type": 1,
-    "name": "race",
-    "description": "Start the same Chair Race as !race in main chat.",
-    "options": []
-  },
-  {
-    "type": 1,
     "name": "fight",
     "description": "Immediately start a 1v1 Robo Chair Fight against the named member with a 30-second betting window.",
     "options": [

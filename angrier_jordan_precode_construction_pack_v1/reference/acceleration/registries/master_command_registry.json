@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 135,
+  "command_count": 134,
   "commands": [
     {
       "id": "help",
@@ -109,9 +109,22 @@
       "type": "slash",
       "module": "core",
       "description": "Post an owner announcement in this channel.",
-      "permissions": ["member"],
-      "channels": ["main_chat"],
-      "options": [{"name":"message","type":"string","required":true,"description":"Announcement text","min":1,"max":2000}],
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "description": "Announcement text",
+          "min": 1,
+          "max": 2000
+        }
+      ],
       "handler": "core.announce",
       "feature_flag": "core",
       "ephemeral_default": true,
@@ -325,7 +338,7 @@
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
-      "preferred_invocation": "Message → Apps → Steal Emoji",
+      "preferred_invocation": "Message \u2192 Apps \u2192 Steal Emoji",
       "registration_path": "Steal Emoji"
     },
     {
@@ -728,10 +741,20 @@
       "command": "/holdem",
       "type": "slash",
       "module": "casino",
-      "description": "Open a Texas Hold’em Poker table.",
-      "permissions": ["member"],
-      "channels": ["poker_channel"],
-      "options": [{"name":"buy_in","type":"integer","required":true}],
+      "description": "Open a Texas Hold\u2019em Poker table.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "poker_channel"
+      ],
+      "options": [
+        {
+          "name": "buy_in",
+          "type": "integer",
+          "required": true
+        }
+      ],
       "handler": "casino.holdem",
       "feature_flag": "casino",
       "ephemeral_default": false,
@@ -748,9 +771,19 @@
       "type": "slash",
       "module": "casino",
       "description": "Open an Omaha Poker table.",
-      "permissions": ["member"],
-      "channels": ["poker_channel"],
-      "options": [{"name":"buy_in","type":"integer","required":true}],
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "poker_channel"
+      ],
+      "options": [
+        {
+          "name": "buy_in",
+          "type": "integer",
+          "required": true
+        }
+      ],
       "handler": "casino.omaha",
       "feature_flag": "casino",
       "ephemeral_default": false,
@@ -953,29 +986,6 @@
       "status": "locked",
       "preferred_invocation": "!race",
       "registration_path": "!race"
-    },
-    {
-      "id": "race_slash",
-      "command": "/race",
-      "type": "slash",
-      "module": "race",
-      "description": "Start the same Chair Race as !race in main chat.",
-      "permissions": [
-        "member"
-      ],
-      "channels": [
-        "main_chat"
-      ],
-      "options": [],
-      "handler": "race.specialRace",
-      "feature_flag": "race",
-      "ephemeral_default": false,
-      "help_id": "race",
-      "tutorial_id": "games",
-      "aliases": [],
-      "status": "locked",
-      "preferred_invocation": "/race",
-      "registration_path": "/race"
     },
     {
       "id": "fight",
@@ -3019,7 +3029,7 @@
       "tutorial_id": "introductions_roles",
       "aliases": [],
       "status": "locked",
-      "preferred_invocation": "/introduce → Edit",
+      "preferred_invocation": "/introduce \u2192 Edit",
       "registration_path": "introduce:edit"
     },
     {
@@ -3042,7 +3052,7 @@
       "tutorial_id": "introductions_roles",
       "aliases": [],
       "status": "locked",
-      "preferred_invocation": "/introduce → Preview",
+      "preferred_invocation": "/introduce \u2192 Preview",
       "registration_path": "introduce:preview"
     },
     {
@@ -4129,7 +4139,7 @@
           "name": "duration",
           "type": "string",
           "required": true,
-          "description": "5m–30d or indefinite."
+          "description": "5m\u201330d or indefinite."
         },
         {
           "name": "reason",
@@ -4848,11 +4858,33 @@
       "type": "slash",
       "module": "chairmate",
       "description": "Challenge a member to a private casual Lichess guest game.",
-      "permissions": ["member"],
-      "channels": ["chairmate"],
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "chairmate"
+      ],
       "options": [
-        {"name":"member","type":"user","required":true,"description":"The member you want to challenge."},
-        {"name":"time","type":"choice","required":true,"description":"Supported clock.","choices":["bullet_1_0","bullet_2_1","blitz_3_0","blitz_5_0","rapid_10_0","rapid_15_10"]}
+        {
+          "name": "member",
+          "type": "user",
+          "required": true,
+          "description": "The member you want to challenge."
+        },
+        {
+          "name": "time",
+          "type": "choice",
+          "required": true,
+          "description": "Supported clock.",
+          "choices": [
+            "bullet_1_0",
+            "bullet_2_1",
+            "blitz_3_0",
+            "blitz_5_0",
+            "rapid_10_0",
+            "rapid_15_10"
+          ]
+        }
       ],
       "handler": "chairmate.challenge",
       "feature_flag": "chairmate",
@@ -5133,7 +5165,7 @@
           "name": "size",
           "type": "integer",
           "required": false,
-          "description": "Board width: 4 for a 4×4 board, or 5 for a 5×5 board.",
+          "description": "Board width: 4 for a 4\u00d74 board, or 5 for a 5\u00d75 board.",
           "min": 4,
           "max": 5
         }

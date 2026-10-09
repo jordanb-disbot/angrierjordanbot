@@ -9,7 +9,7 @@ const lineView=()=>({id:'line-id',guildId:'guild',channelId:'main',messageId:nul
 const member={id:'host',displayName:'Host',roles:{cache:{has:()=>false,keys:()=>[]}},displayAvatarURL:()=>''};
 const raceConfig={get:async(_guild,key)=>({'channels.main_chat':'main','features.race':true,'special_commands.enabled':true,'special_commands.access_roles':{'!race':[]},'special_commands.builtin_role_map':{}})[key]};
 
-for(const trigger of ['!race','/race'])test(`${trigger} publishes the same live waiting presenter on its first card`,async()=>{
+test('!race publishes the live waiting presenter on its first card',async()=>{
  const sent=[];let linked=0;
  const channel={isSendable:()=>true,sendTyping:async()=>{},send:async payload=>{sent.push(payload);return{id:'card'};}};
  const guild={id:'guild',members:{fetch:async()=>member}};
@@ -18,16 +18,8 @@ for(const trigger of ['!race','/race'])test(`${trigger} publishes the same live 
  const realPayload=coordinator.payload.bind(coordinator);
  coordinator.payload=(view,options={})=>realPayload(view,{...options,retainImageUrl:'https://cdn.discordapp.com/race-open.png'});
  coordinator.prepare=()=>{};
- if(trigger==='!race'){
-  const message={id:'request',content:'!race',author:{id:'host',bot:false},guildId:'guild',guild,channelId:'main',channel,delete:async()=>{}};
-  await coordinator.message(message);
- }else{
-  let acknowledged=false,deleted=false;
-  const interaction={id:'request',guildId:'guild',guild,channelId:'main',channel,user:{id:'host'},deferred:false,
-   deferReply:async function(){acknowledged=true;this.deferred=true;},deleteReply:async()=>{deleted=true;},editReply:async payload=>{throw Error(JSON.stringify(payload));}};
-  await coordinator.startRace(interaction);
-  assert.equal(acknowledged,true);assert.equal(deleted,true);
- }
+ const message={id:'request',content:'!race',author:{id:'host',bot:false},guildId:'guild',guild,channelId:'main',channel,delete:async()=>{}};
+ await coordinator.message(message);
  assert.equal(sent.length,1);assert.equal(linked,1);
  assert.match(cd(sent[0]),/RACE WAITING ROOM · 0[01]:[0-5]\d remaining/);
  assert.match(cd(sent[0]),/Joined \(1\/6\):\*\* Host/);

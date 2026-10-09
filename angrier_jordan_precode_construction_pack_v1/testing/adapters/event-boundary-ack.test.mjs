@@ -8,7 +8,7 @@ function fixture(kind,customId=''){
   editReply:async p=>calls.push(['edit',p.content]),followUp:async p=>calls.push(['follow',p.ephemeral])};
 }
 for(const [kind,id,expected] of [['slash','','private'],['button','event:join:x','update'],['button','fight:extend:x','update'],['button','line:ready:x','update'],['button','line:roster:x','private'],['button','event:rules:x','private'],['modal','event:wager:u:x:r','private']]){
- test(`${kind} ${id||'/race'} acknowledges before blocked bootstrap without bypassing it`,async()=>{
+ test(`${kind} ${id||'!race'} acknowledges before blocked bootstrap without bypassing it`,async()=>{
   const i=fixture(kind,id);let release;const blocked=new Promise(r=>release=r);
   const pending=runWithEventAcknowledgement('interactionCreate',[i],{events:true,special:true},async()=>{assert.equal(i.calls[0][0],expected);await blocked;return'checked';},async()=>assert.fail('not a bet'));
   await new Promise(r=>setImmediate(r));assert.equal(i.calls.length,1);release();assert.equal(await pending,'checked');

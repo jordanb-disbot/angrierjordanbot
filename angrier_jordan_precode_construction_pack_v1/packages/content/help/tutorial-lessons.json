@@ -2,8 +2,8 @@
   "version": 1,
   "lessons": {
     "roles": {
-      "purpose": "Choose optional member and cosmetic roles without asking staff to assign each one. Categories and choices come from the server’s approved self-role panel; an unavailable panel means setup is incomplete, not that a lesson failed.",
-      "controls": "Run /roles and choose DM Status, Gender, Age, Region, Interests / Substances, Notification Pings or Personalities. Then use that category’s role menu. Single-select replaces its previous choice; multi-select permits several. Clear choices to remove roles. Reopening shows current selections.",
+      "purpose": "Choose optional member and cosmetic roles without asking staff to assign each one. Categories and choices come from the server\u2019s approved self-role panel; an unavailable panel means setup is incomplete, not that a lesson failed.",
+      "controls": "Run /roles and choose DM Status, Gender, Age, Region, Interests / Substances, Notification Pings or Personalities. Then use that category\u2019s role menu. Single-select replaces its previous choice; multi-select permits several. Clear choices to remove roles. Reopening shows current selections.",
       "steps": [
         "Choose a category before choosing roles. DM Status, Gender, Age and Region keep at most one selection; Interests / Substances, Notification Pings and Personalities permit several.",
         "Choose your new roles or deselect ones you no longer want. Notification Pings offers Line Ping (!line), Race Ping (!race), VC Ping (!VC), and Chess Ping (!Chess). Personalities are optional member roles, not earned or staff badges.",
@@ -83,7 +83,7 @@
       "completion": "You can save privately, omit optional answers and approve a preview before publishing. Next: open /introduce in its channel when you are ready to share."
     },
     "profile": {
-      "purpose": "View a member’s public profile and statistics. Your own profile offers a private showcase editor for earned badges and owned collectibles; editing does not grant unearned items or achievements.",
+      "purpose": "View a member\u2019s public profile and statistics. Your own profile offers a private showcase editor for earned badges and owned collectibles; editing does not grant unearned items or achievements.",
       "controls": "Omit member for your own card, or choose another current member. On your own card, Edit Showcase opens badge and collectible choices; Previous and Next browse longer lists. Activity privacy is set separately with /privacy activity.",
       "steps": [
         "Open your profile and review its public information before selecting showcase items.",
@@ -103,7 +103,7 @@
       "completion": "You know what activity privacy hides and what stays public. Next: inspect /profile; use /privacy roast separately if you want to block roast targeting."
     },
     "privacy_roast": {
-      "purpose": "Allow or block being targeted by the bot’s roast feature. This preference is independent of profile activity visibility, and roast eligibility is checked again when a response is used.",
+      "purpose": "Allow or block being targeted by the bot\u2019s roast feature. This preference is independent of profile activity visibility, and roast eligibility is checked again when a response is used.",
       "controls": "Choose state:allow or state:block. Blocking covers roast targeting, including the available Roast Back action; it does not change ordinary server permissions or your activity display.",
       "steps": [
         "Choose the preference you want before using a real roast interaction.",
@@ -114,11 +114,11 @@
     },
     "records": {
       "purpose": "Browse server records by period. Monthly and all-time records are separate views; monthly records reset on the first at 4 AM Mountain.",
-      "controls": "Use the offered period and category controls, then Previous and Next where a list spans pages. A monthly result describes that period, not a member’s lifetime total.",
+      "controls": "Use the offered period and category controls, then Previous and Next where a list spans pages. A monthly result describes that period, not a member\u2019s lifetime total.",
       "steps": [
         "Open /records and choose the period you want to compare.",
         "Select a category and read the displayed holder and value together.",
-        "Switch to all-time before interpreting a monthly record as the server’s lifetime record."
+        "Switch to all-time before interpreting a monthly record as the server\u2019s lifetime record."
       ],
       "completion": "You can compare current-period and all-time records accurately. Next: open /records, or use /leaderboard to compare ranked members."
     },
@@ -128,13 +128,13 @@
       "steps": [
         "Open /leaderboard and choose the statistic you actually want to compare.",
         "Read rank, member and value together; page through the remaining results where offered.",
-        "Use /profile for an individual member’s wider context, rather than treating one ranking as their whole profile."
+        "Use /profile for an individual member\u2019s wider context, rather than treating one ranking as their whole profile."
       ],
-      "completion": "You can choose and interpret a ranking category. Next: inspect /leaderboard or visit a member’s /profile for context."
+      "completion": "You can choose and interpret a ranking category. Next: inspect /leaderboard or visit a member\u2019s /profile for context."
     },
     "shop": {
       "purpose": "Browse item prices and requirements before buying with Ottomans. Purchases spend Wallet first, then Bank; Essentials stay available and bonus slots rotate daily at 4 AM Mountain.",
-      "controls": "Choose an item from the shop menu, then enter a quantity from 1–100 in Buy Item. Submitting that form makes the purchase. Gated items show their requirements; bought tools still need to be equipped through /inventory.",
+      "controls": "Choose an item from the shop menu, then enter a quantity from 1\u2013100 in Buy Item. Submitting that form makes the purchase. Gated items show their requirements; bought tools still need to be equipped through /inventory.",
       "steps": [
         "Choose an item and inspect its price, category and any purchase requirements.",
         "Check the price and quantity before submitting Buy Item; that submission spends Ottomans and makes the purchase.",
@@ -144,7 +144,7 @@
     },
     "inventory": {
       "purpose": "Inspect and manage your owned items. Locks protect items from selling; selling uses a confirmation, and Sell Duplicates keeps one normal copy or the highest-quality crafted chair.",
-      "controls": "Search, Sort and Filter narrow the inventory. Item controls offer supported actions such as equip or lock. Review a sale’s exact contents and value before Confirm Sale; Cancel leaves them in your inventory.",
+      "controls": "Search, Sort and Filter narrow the inventory. Item controls offer supported actions such as equip or lock. Review a sale\u2019s exact contents and value before Confirm Sale; Cancel leaves them in your inventory.",
       "steps": [
         "Find the item using its name or a filter, then inspect its available actions.",
         "Equip a tool manually or lock an item you want to protect; a locked item is excluded from eligible sales.",
@@ -164,7 +164,7 @@
     },
     "unlock_all": {
       "purpose": "Remove all inventory item and category locks immediately. Unlocking makes affected items eligible for later sales; it does not itself sell or gift anything.",
-      "controls": "Running /unlock all applies the unlock immediately; there is no extra confirmation screen. Use an individual item’s Unlock button or Category Lock in /inventory when you only want a narrower change.",
+      "controls": "Running /unlock all applies the unlock immediately; there is no extra confirmation screen. Use an individual item\u2019s Unlock button or Category Lock in /inventory when you only want a narrower change.",
       "steps": [
         "Review your locked items and categories in /inventory before choosing a bulk unlock.",
         "Run /unlock all only when you intend to remove every inventory protection lock.",
@@ -176,7 +176,7 @@
       "purpose": "Repair an owned tool using a paid tier. Restoration is immediate and randomized; maximum durability does not decrease, but repair does not promise a completely restored tool.",
       "controls": "Choose a tool from /repair, then inspect cheap, standard and premium tier prices. Selecting a tier immediately pays and repairs; there is no additional confirmation.",
       "steps": [
-        "Check the tool’s current and maximum durability in the selector.",
+        "Check the tool\u2019s current and maximum durability in the selector.",
         "Compare the displayed tier prices and choose only the repair you intend to pay for.",
         "Read the actual restored durability, then inspect or equip the tool in /inventory."
       ],
@@ -187,7 +187,7 @@
       "controls": "Use /craft to inspect and select a learned recipe. Use /inventory to review materials and equip a usable workshop tool; use /shop only for currently available supplies.",
       "steps": [
         "Open /inventory and identify your materials, learned recipes and any workshop tool you can equip.",
-        "Open /craft and read a recipe’s material and workshop requirements before choosing it.",
+        "Open /craft and read a recipe\u2019s material and workshop requirements before choosing it.",
         "Select a recipe only when ready; there is no separate confirmation: the attempt consumes the stated materials, may return scrap on failure, and always advances crafting skill.",
         "Review the result and remaining items in /inventory before starting another attempt."
       ],
@@ -215,7 +215,7 @@
     },
     "crime_911": {
       "purpose": "Report an open robbery as a witness. A witness may report once per incident; the robber and victim cannot report their own incident through this witness route.",
-      "controls": "Open /crime 911 or use an incident’s 911 button. Choose the witnessed incident from the private selector; More incidents appears when needed. Only eligible incidents within the three-minute window can be selected.",
+      "controls": "Open /crime 911 or use an incident\u2019s 911 button. Choose the witnessed incident from the private selector; More incidents appears when needed. Only eligible incidents within the three-minute window can be selected.",
       "steps": [
         "Identify the incident you actually witnessed before choosing it.",
         "Open the selector promptly; if there are no eligible incidents, the window may have closed or you may be a participant.",
@@ -245,16 +245,16 @@
     },
     "family_marry": {
       "purpose": "Create a marriage proposal with a Ring, or use a Wedding Sack for its guaranteed marriage behavior. A second marriage requires its own Blessing; spouses retain separate finances.",
-      "controls": "Run /family marry in the bot channel with the member and ring or sack. A Ring target has Accept and Decline for 24 hours. A marriage card’s votes exclude both spouses; more than 80% approval from at least five voters unlocks the first child slot.",
+      "controls": "Run /family marry in the bot channel with the member and ring or sack. A Ring target has Accept and Decline for 24 hours. A marriage card\u2019s votes exclude both spouses; more than 80% approval from at least five voters unlocks the first child slot.",
       "steps": [
         "Obtain and unlock the required Ring or Wedding Sack and any second-marriage Blessing.",
         "Choose the member and item deliberately; the real command starts the proposal or marriage behavior.",
-        "For a Ring, wait for the target’s decision. Use View Family on the event card to inspect the resulting relationship."
+        "For a Ring, wait for the target\u2019s decision. Use View Family on the event card to inspect the resulting relationship."
       ],
       "completion": "You can distinguish a consent-based Ring proposal from a Wedding Sack and identify the item requirements. Next: inspect /family familytree before another family change."
     },
     "family_divorce": {
-      "purpose": "End a marriage after its three-day minimum age. Divorce transfers half of one randomly chosen spouse’s liquid Ottomans; the same pair must wait seven days to remarry.",
+      "purpose": "End a marriage after its three-day minimum age. Divorce transfers half of one randomly chosen spouse\u2019s liquid Ottomans; the same pair must wait seven days to remarry.",
       "controls": "Select your current spouse in /family divorce in the bot channel. This command performs the eligible divorce; do not use it merely to inspect a relationship or assume there is another consent screen.",
       "steps": [
         "Inspect /family familytree to confirm the current spouse.",
@@ -264,11 +264,11 @@
       "completion": "You know the financial consequence and timing of divorce. Next: use /family familytree for a read-only check before making an irreversible relationship change."
     },
     "family_adopt": {
-      "purpose": "Invite a member into an eligible married pair’s open child slot. Adoption requires the proposed child’s acceptance; a marriage alone does not guarantee an unlocked slot.",
+      "purpose": "Invite a member into an eligible married pair\u2019s open child slot. Adoption requires the proposed child\u2019s acceptance; a marriage alone does not guarantee an unlocked slot.",
       "controls": "Select the proposed child with /family adopt. The child receives Accept and Decline on the public proposal. Use View Family afterward to inspect active links.",
       "steps": [
         "Check that the married pair has an open child slot and choose an eligible current member.",
-        "Submit the proposal and wait for that member’s explicit decision.",
+        "Submit the proposal and wait for that member\u2019s explicit decision.",
         "Check the accepted family link using View Family or /family familytree."
       ],
       "completion": "You can start an eligible adoption and distinguish a proposal from an accepted child link. Next: inspect the family tree before inviting another member."
@@ -284,18 +284,18 @@
       "completion": "You understand the age restriction and effect of disowning. Next: inspect /family familytree before any further relationship changes."
     },
     "family_emancipate": {
-      "purpose": "End your current adoption link after its three-day minimum age. Emancipation changes your own child relationship rather than someone else’s marriage.",
+      "purpose": "End your current adoption link after its three-day minimum age. Emancipation changes your own child relationship rather than someone else\u2019s marriage.",
       "controls": "Run /family emancipate in the bot channel when you intend to end the eligible link. There is no member field; /family familytree is the read-only alternative for inspecting your relationships.",
       "steps": [
         "Inspect your current parents in /family familytree.",
-        "Check the link’s minimum age and decide whether you intend to end it before running the command.",
+        "Check the link\u2019s minimum age and decide whether you intend to end it before running the command.",
         "Read the result, then revisit the tree to confirm the active relationships."
       ],
       "completion": "You can distinguish inspecting your family from ending your adoption link. Next: use the tree to verify the result or plan another family action."
     },
     "family_familytree": {
       "purpose": "Inspect active spouses, parents and children without changing relationships. Ended links do not appear as active family.",
-      "controls": "Omit member to open your own tree, or choose another member. Use the offered branch/page controls or a family event’s View Family button to inspect the tree.",
+      "controls": "Omit member to open your own tree, or choose another member. Use the offered branch/page controls or a family event\u2019s View Family button to inspect the tree.",
       "steps": [
         "Choose whose current family you want to inspect.",
         "Read each branch and move through additional pages where shown.",
@@ -314,7 +314,7 @@
       "completion": "You understand what a saved will does now and after departure. Next: verify the beneficiary before relying on the estate behavior."
     },
     "family_familyauction": {
-      "purpose": "Auction yourself for spouse or child roleplay. Auctions last 1–72 hours, and the winning sealed bid pays the person auctioned; this is not an auction of another member.",
+      "purpose": "Auction yourself for spouse or child roleplay. Auctions last 1\u201372 hours, and the winning sealed bid pays the person auctioned; this is not an auction of another member.",
       "controls": "Choose type, optional hours and reserve. Participants use Place / Increase Sealed Bid to submit a new total. Bids reserve Ottomans, can only increase and cannot be withdrawn. Losing bids are refunded at settlement.",
       "steps": [
         "Choose the roleplay type, duration and optional minimum bid before starting your auction.",
@@ -339,7 +339,7 @@
       "steps": [
         "Open the active season and choose an offered category during nominations.",
         "Nominate an eligible other member once, then return for the separate finalist voting phase.",
-        "Read the final winners after voting; ties use the feature’s fixed tie resolution."
+        "Read the final winners after voting; ties use the feature\u2019s fixed tie resolution."
       ],
       "completion": "You know the difference between nominations, finalist voting and admin season creation. Next: open /superlatives to find an active season."
     },
@@ -354,12 +354,12 @@
       "completion": "You can search, submit and follow a suggestion without confusing votes with staff decisions. Next: browse /suggest before posting a new idea."
     },
     "ama": {
-      "purpose": "Ask a question, upvote one, or inspect its status. AMA uses upvotes only. Authorized community admins answer or decline questions, and a submitter can privately inspect a declined question’s status.",
+      "purpose": "Ask a question, upvote one, or inspect its status. AMA uses upvotes only. Authorized community admins answer or decline questions, and a submitter can privately inspect a declined question\u2019s status.",
       "controls": "Supply question to submit or omit it to browse. Choose anonymous intentionally. Sorting by upvotes, answering and declining require mapped Chaise Lounge or Throne authority; members can browse newest and their private statuses.",
       "steps": [
         "Browse current questions to avoid repeating one already asked.",
         "Submit your question and choose whether the public author is anonymous.",
-        "Follow its status and any published answer; a declined question’s private status is available to its submitter."
+        "Follow its status and any published answer; a declined question\u2019s private status is available to its submitter."
       ],
       "completion": "You can ask and track a question while recognizing member versus admin controls. Next: open /ama to browse or submit a question."
     },
@@ -374,7 +374,7 @@
       "completion": "You can describe giveaway terms and recognize pending custom fulfillment. Next: create a giveaway only with authorized AJ community access and a deliverable prize."
     },
     "blackjack": {
-      "purpose": "Dealer stands on soft 17. A natural blackjack returns 2.5× the wager, rounded down to whole Ottomans. Hit or Stand; Double on two cards; Split matching ranks up to four hands. Split aces receive one card each and do not pay a natural-blackjack bonus. Total committed stake must remain within the configured maximum. A five-minute timeout stands all remaining hands. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
+      "purpose": "Dealer stands on soft 17. A natural blackjack returns 2.5\u00d7 the wager, rounded down to whole Ottomans. Hit or Stand; Double on two cards; Split matching ranks up to four hands. Split aces receive one card each and do not pay a natural-blackjack bonus. Total committed stake must remain within the configured maximum. A five-minute timeout stands all remaining hands. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
       "controls": "The wager modal starts your hand. Hit draws, Stand ends the hand, Double adds the matching stake on two cards, and Split separates matching ranks up to four hands. Extra committed stakes still count toward the configured maximum.",
       "steps": [
         "Read the table rules and wager limits before submitting the amount.",
@@ -384,7 +384,7 @@
       "completion": "You know the blackjack controls and that a replay is a new wager. Next: read the current table limits before starting a real round."
     },
     "poker": {
-      "purpose": "Use /holdem for Texas Hold’em or /omaha for Omaha in 🃏-poker-chair only (channel ID 1557660895813963908). Buy-ins are 500, 1,000 or 5,000 Ottomans for 5,000, 10,000 or 50,000 chips. One table may run at a time.",
+      "purpose": "Use /holdem for Texas Hold\u2019em or /omaha for Omaha in \ud83c\udccf-poker-chair only (channel ID 1557660895813963908). Buy-ins are 500, 1,000 or 5,000 Ottomans for 5,000, 10,000 or 50,000 chips. One table may run at a time.",
       "controls": "Join, start, and table actions use buttons. Shared board cards, pot, blinds and player status appear publicly; hole cards and action prompts are private to each player, including after reconnect or restart.",
       "steps": [
         "Open /holdem or /omaha in channel 1557660895813963908 and choose a buy-in.",
@@ -394,8 +394,8 @@
       "completion": "You can identify the Poker Room, approved buy-ins, one-table limit, and the public/private card boundary."
     },
     "roulette": {
-      "purpose": "Single-zero wheel. Red, black, odd, even, low (1–18), or high (19–36) return 2× on a win. number:0 through number:36 return 36× on a win. Zero loses all even-money bets. Availability follows the current table configuration. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
-      "controls": "Enter the whole-Ottoman wager and red, black, odd, even, low, high or number:0–36 in the modal. Submit only when both the selection and amount are correct; the wheel then resolves that wager.",
+      "purpose": "Single-zero wheel. Red, black, odd, even, low (1\u201318), or high (19\u201336) return 2\u00d7 on a win. number:0 through number:36 return 36\u00d7 on a win. Zero loses all even-money bets. Availability follows the current table configuration. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
+      "controls": "Enter the whole-Ottoman wager and red, black, odd, even, low, high or number:0\u201336 in the modal. Submit only when both the selection and amount are correct; the wheel then resolves that wager.",
       "steps": [
         "Read the table rules and wager limits before submitting the amount and selection.",
         "Submit the modal only for a wager you intend to pay; then read the saved outcome and returned Ottomans.",
@@ -414,7 +414,7 @@
       "completion": "You know the slots controls and that a replay is a new wager. Next: read the current table limits before starting a real round."
     },
     "dice": {
-      "purpose": "High mode rolls one six-sided die for you and one for the house. Higher wins return 2×; ties return the wager. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
+      "purpose": "High mode rolls one six-sided die for you and one for the house. Higher wins return 2\u00d7; ties return the wager. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
       "controls": "Enter the whole-Ottoman wager and supported mode high. The saved round rolls one die for you and one for the house; compare the actual totals before reading the payout.",
       "steps": [
         "Read the table rules and wager limits before submitting the amount and selection.",
@@ -424,8 +424,8 @@
       "completion": "You know the dice controls and that a replay is a new wager. Next: read the current table limits before starting a real round."
     },
     "coinflip": {
-      "purpose": "Choose heads or tails. A matching result returns 2× the wager. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
-      "controls": "Enter the whole-Ottoman wager and heads or tails. Submitting commits that selection; a match returns 2× the wager and Play Again starts a fresh bet.",
+      "purpose": "Choose heads or tails. A matching result returns 2\u00d7 the wager. Wagers spend Wallet first, then Bank. Current balance, restrictions and configured limits are checked for every round. Play Again commits a fresh round; it does not rewrite the previous result.",
+      "controls": "Enter the whole-Ottoman wager and heads or tails. Submitting commits that selection; a match returns 2\u00d7 the wager and Play Again starts a fresh bet.",
       "steps": [
         "Read the table rules and wager limits before submitting the amount and selection.",
         "Submit the modal only for a wager you intend to pay; then read the saved outcome and returned Ottomans.",
@@ -441,7 +441,7 @@
         "Choose Buy Tickets and submit only the number you intend to pay for.",
         "Return for the Friday 8 PM Mountain draw. One winner receives the ticket-funded pot; there is no replay or guaranteed prize."
       ],
-      "completion": "You can check ticket price, quantity and draw timing before buying. Next: open /lottery to inspect this week’s pot and your current tickets."
+      "completion": "You can check ticket price, quantity and draw timing before buying. Next: open /lottery to inspect this week\u2019s pot and your current tickets."
     },
     "hangman": {
       "purpose": "Guess letters; six incorrect letters ends the round. Repeated guesses do not consume a turn. Only the starter controls this free puzzle. Wins earn a configured small Ottoman reward within the shared rolling 24-hour cap; expiry ends the round.",
@@ -464,17 +464,17 @@
       "completion": "You can use the wordscramble inputs and recognize the attempt limit and expiry. Next: start a fresh puzzle only when you have time to finish it."
     },
     "mastermind": {
-      "purpose": "Find four digits from 1–6 in ten guesses. Repeated digits are allowed. Exact and misplaced feedback never reveals the hidden code. Only the starter controls this free puzzle. Wins earn a configured small Ottoman reward within the shared rolling 24-hour cap; expiry ends the round.",
-      "controls": "Use Guess for exactly four digits from 1–6. Repeats are allowed. Use the exact/misplaced counts to narrow your next guess; you have ten guesses.",
+      "purpose": "Find four digits from 1\u20136 in ten guesses. Repeated digits are allowed. Exact and misplaced feedback never reveals the hidden code. Only the starter controls this free puzzle. Wins earn a configured small Ottoman reward within the shared rolling 24-hour cap; expiry ends the round.",
+      "controls": "Use Guess for exactly four digits from 1\u20136. Repeats are allowed. Use the exact/misplaced counts to narrow your next guess; you have ten guesses.",
       "steps": [
         "Start the puzzle in the configured games channel and read its Rules and expiry.",
-        "Use Guess for exactly four digits from 1–6. Repeats are allowed. Use the exact/misplaced counts to narrow your next guess; you have ten guesses.",
+        "Use Guess for exactly four digits from 1\u20136. Repeats are allowed. Use the exact/misplaced counts to narrow your next guess; you have ten guesses.",
         "Read the saved win, loss or expiry. Play Again creates a fresh puzzle; it does not reset or increase the previous reward."
       ],
       "completion": "You can use the mastermind inputs and recognize the attempt limit and expiry. Next: start a fresh puzzle only when you have time to finish it."
     },
     "minesweeper": {
-      "purpose": "Reveal every safe cell. Choose size 4 for 4×4 with three mines, or size 5 for 5×5 with five mines. First reveal is safe. Toggle flags before revealing protected cells. Only the starter controls this free puzzle. Wins earn a configured small Ottoman reward within the shared rolling 24-hour cap; expiry ends the round.",
+      "purpose": "Reveal every safe cell. Choose size 4 for 4\u00d74 with three mines, or size 5 for 5\u00d75 with five mines. First reveal is safe. Toggle flags before revealing protected cells. Only the starter controls this free puzzle. Wins earn a configured small Ottoman reward within the shared rolling 24-hour cap; expiry ends the round.",
       "controls": "Choose optional size 4 or 5 when starting. Reveal Cell opens a numbered-cell input; Toggle Flag protects a suspected mine. The first reveal is safe, and all safe cells must be revealed to win.",
       "steps": [
         "Start the puzzle in the configured games channel and read its Rules and expiry.",
@@ -504,7 +504,7 @@
       "completion": "You understand the connectfour board, consent and wager settlement. Next: challenge another member only when both can take timely turns."
     },
     "battleship": {
-      "purpose": "Place ships of length 5, 4, 3, 3 and 2 on a 10×10 board. Fleets remain private. Use Your Board to place ships or fire. Turns alternate after every shot. Sink the opposing fleet to win. Challenges are free unless you supply a matching wager. The opponent has two minutes to accept; both stakes are reserved only on acceptance. A five-minute turn timeout forfeits.",
+      "purpose": "Place ships of length 5, 4, 3, 3 and 2 on a 10\u00d710 board. Fleets remain private. Use Your Board to place ships or fire. Turns alternate after every shot. Sink the opposing fleet to win. Challenges are free unless you supply a matching wager. The opponent has two minutes to accept; both stakes are reserved only on acceptance. A five-minute turn timeout forfeits.",
       "controls": "Use Your Board for private ship placement and firing. Place all five ships before battle; your fleet is never shown publicly. Forfeit Match requires confirmation. Play Again sends a new challenge requiring consent.",
       "steps": [
         "Choose the intended opponent and optional wager in the games channel; one active skill-game challenge or match per member is allowed.",
@@ -514,7 +514,7 @@
       "completion": "You understand the battleship board, consent and wager settlement. Next: challenge another member only when both can take timely turns."
     },
     "race": {
-      "purpose": "Use !race; /race is retired. Starter is Racer 1; 2–6 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15–20 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
+      "purpose": "Use !race; /race is retired. Starter is Racer 1; 2\u20136 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15\u201320 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
       "controls": "Type !race in main chat. Join the race while entrant slots remain, or select a racer for a private wager. Only the host can use the one +30 Seconds extension; filled racer slots do not close betting.",
       "steps": [
         "Use !race, then wait for at least two racers within the entry window.",
@@ -524,7 +524,7 @@
       "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race only in main chat when you want to start a real event."
     },
     "fight": {
-      "purpose": "Use /fight @member. Two eligible fighters start immediately without acceptance. Betting lasts 30 seconds with one host +30 extension. Fair 50/50 outcome; 100 HP and synchronized approved combat actions. Fighter departure before settlement cancels with refunds. No join or rematch control. Both fighters begin at 100 HP. Combat targets 22–28 seconds, never beyond 30 seconds. The latest three exchanges, numeric HP and bars show the same saved combat state. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
+      "purpose": "Use /fight @member. Two eligible fighters start immediately without acceptance. Betting lasts 30 seconds with one host +30 extension. Fair 50/50 outcome; 100 HP and synchronized approved combat actions. Fighter departure before settlement cancels with refunds. No join or rematch control. Both fighters begin at 100 HP. Combat targets 22\u201328 seconds, never beyond 30 seconds. The latest three exchanges, numeric HP and bars show the same saved combat state. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
       "controls": "Use /fight with the member option in main chat. This starts immediately without an acceptance step; choose the opponent deliberately. Select a fighter for a private wager, and only the host may add 30 seconds once.",
       "steps": [
         "Choose an eligible other member; there is no self-fight or consent button in this event.",
@@ -534,8 +534,8 @@
       "completion": "You know Fight starts immediately and betting locks your chosen fighter. Next: use /fight only when you intend the real event, or revisit Race for entrant-based play."
     },
     "line": {
-      "purpose": "Use !line. The host is automatically in. Members choose I’m In or I Need a Second during 60 seconds of readiness. The host can add 30 seconds once, or start early. When readiness ends, entries lock and the five-second countdown begins automatically. The host may start early or cancel before the countdown. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, four-second powder finale, complete. No zero, rematch or Play Again.",
-      "controls": "Type !line in main chat. I’m In marks you ready and I Need a Second marks you waiting. The host may add 30 seconds once, start early or cancel before countdown; a waiting member does not veto the host’s start.",
+      "purpose": "Use !line. The host is automatically in. Members choose I\u2019m In or I Need a Second during 60 seconds of readiness. The host can add 30 seconds once, or start early. When readiness ends, entries lock and the five-second countdown begins automatically. The host may start early or cancel before the countdown. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, four-second powder finale, complete. No zero, rematch or Play Again.",
+      "controls": "Type !line in main chat. I\u2019m In marks you ready and I Need a Second marks you waiting. The host may add 30 seconds once, start early or cancel before countdown; a waiting member does not veto the host\u2019s start.",
       "steps": [
         "Use the prefix !line and check your readiness state on the live card.",
         "Change readiness while entry is open; the host is included automatically.",
@@ -564,7 +564,7 @@
       "completion": "You know !Chess is an opt-in notification rather than a game or forced voice action. Next: exit before sending the real invitation."
     },
     "truthordare": {
-      "purpose": "Start Truth or Dare in the games channel for yourself or an optional target member. The target’s answer is entered privately before publication; reading a prompt alone does not submit an answer.",
+      "purpose": "Start Truth or Dare in the games channel for yourself or an optional target member. The target\u2019s answer is entered privately before publication; reading a prompt alone does not submit an answer.",
       "controls": "The target chooses Truth, Dare or Skip. Answer opens the private answer form; Skip leaves that prompt unanswered. Read the shown deadline, and use Play Again after the result only for a fresh round.",
       "steps": [
         "Select the optional target deliberately, or omit member to play yourself.",
@@ -575,7 +575,7 @@
     },
     "wyr": {
       "purpose": "Run a Would You Rather vote in the games channel. Members choose between the displayed options; totals stay hidden until the round closes.",
-      "controls": "Choose an authored category or Random. Use the option buttons to cast your ballot during the displayed window; the host’s available extension affects that round, not your right to change protected state.",
+      "controls": "Choose an authored category or Random. Use the option buttons to cast your ballot during the displayed window; the host\u2019s available extension affects that round, not your right to change protected state.",
       "steps": [
         "Start /wyr with a suitable category and read both options.",
         "Vote while the round is open and use the current controls if revising your choice.",
@@ -598,16 +598,16 @@
       "controls": "Choose Random Prompt or Write My Own for the sentence starter. Members use Submit / Revise privately; Vote opens the eligible contributions after submissions close.",
       "steps": [
         "Read or choose the prompt, then submit a contribution before the submission deadline.",
-        "During voting, choose another member’s contribution using the current ballot controls; self-voting is not a substitute for participation.",
+        "During voting, choose another member\u2019s contribution using the current ballot controls; self-voting is not a substitute for participation.",
         "If a runoff appears, vote among its tied options. Read the saved result before choosing Play Again for a new round."
       ],
       "completion": "You can distinguish submitting, voting and a tied runoff in Finish the Sentence. Next: start a new round only when you can follow its phases."
     },
     "onewordstory": {
       "purpose": "Build a shared story one word at a time in the dedicated story channel. Contributors alternate, and the story closes when it reaches the chosen length.",
-      "controls": "Set optional length from 10–200 words, then use Add One Word. Submit a single word and wait for another member’s accepted contribution before adding again. Details shows the story context.",
+      "controls": "Set optional length from 10\u2013200 words, then use Add One Word. Submit a single word and wait for another member\u2019s accepted contribution before adding again. Details shows the story context.",
       "steps": [
-        "Choose a story length that fits the participants’ time.",
+        "Choose a story length that fits the participants\u2019 time.",
         "Read the current story and use Add One Word for one suitable contribution.",
         "Wait for another contributor, then continue until the selected length closes the story."
       ],
@@ -629,7 +629,7 @@
       "steps": [
         "Join voice, open its embedded chat and enter a song, artist or supported link in query.",
         "Select the exact recording. If asked to confirm duplicates or a collection, inspect that decision before adding it.",
-        "Read the shared Jukebox’s pending or confirmed playback status; use Queue to inspect upcoming tracks."
+        "Read the shared Jukebox\u2019s pending or confirmed playback status; use Queue to inspect upcoming tracks."
       ],
       "completion": "You can choose a recording deliberately and tell a pending request from playback. Next: try /play query or inspect /music queue."
     },
@@ -664,7 +664,7 @@
       "completion": "You understand skip and its playback or authority limits. Next: Watch for the next confirmed track or the updated vote count."
     },
     "music_previous": {
-      "purpose": "Return to the previous recorded track. This requires the current track’s requester or a DJ; if no current track exists, requester checks apply to the previous track.",
+      "purpose": "Return to the previous recorded track. This requires the current track\u2019s requester or a DJ; if no current track exists, requester checks apply to the previous track.",
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music previous or Previous. A previous track must exist and the queue must have room to retain the displaced current recording.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
@@ -674,7 +674,7 @@
       "completion": "You understand previous and its playback or authority limits. Next: Review the new confirmed current track and remaining queue."
     },
     "music_replay": {
-      "purpose": "Restart the current recording from its beginning. Only that recording’s requester or a DJ can replay it; replay does not add a duplicate request to the queue.",
+      "purpose": "Restart the current recording from its beginning. Only that recording\u2019s requester or a DJ can replay it; replay does not add a duplicate request to the queue.",
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music replay while a current track exists. This changes playback position immediately when applied; it is not a new search or a listener vote.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
@@ -695,7 +695,7 @@
     },
     "music_queue": {
       "purpose": "Inspect the upcoming recordings and their current positions. The queue is a read-only list until you intentionally use a separate edit command.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Open /music queue or Queue on the Jukebox. Previous page and Next page browse ten entries per page. Positions can change when playback or other members’ edits occur.",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Open /music queue or Queue on the Jukebox. Previous page and Next page browse ten entries per page. Positions can change when playback or other members\u2019 edits occur.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Read the current title, artist and position rather than relying on an old screenshot.",
@@ -704,17 +704,17 @@
       "completion": "You understand queue and its playback or authority limits. Next: Refresh the queue before using remove, move or jump with a position."
     },
     "music_remove": {
-      "purpose": "Remove an upcoming queue entry. Members may remove their own requested entries; a DJ may remove other members’ entries.",
+      "purpose": "Remove an upcoming queue entry. Members may remove their own requested entries; a DJ may remove other members\u2019 entries.",
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music queue to find the current position, then /music remove position. This changes the upcoming queue; the current playing recording is not a queue position.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
-        "Verify the entry’s current position and that you own it or hold DJ authority.",
+        "Verify the entry\u2019s current position and that you own it or hold DJ authority.",
         "Reopen Queue to verify the removal and renumbered entries."
       ],
       "completion": "You understand remove and its playback or authority limits. Next: Reopen Queue to verify the removal and renumbered entries."
     },
     "music_move": {
-      "purpose": "Reorder one upcoming entry to a new queue position. Members may move their own entries; a DJ may move others’ entries.",
+      "purpose": "Reorder one upcoming entry to a new queue position. Members may move their own entries; a DJ may move others\u2019 entries.",
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Supply the current position and destination to. Both refer to the current upcoming queue; stale positions may identify a different entry, so inspect Queue first.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
@@ -725,7 +725,7 @@
     },
     "music_clear": {
       "purpose": "Remove every upcoming recording while leaving the current track intact. Clearing the queue requires DJ authority and is an immediate change.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Run /music clear only when you intend to discard the upcoming queue. DJ authority comes from the server’s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. Use remove for a narrower change when you own one entry.",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Run /music clear only when you intend to discard the upcoming queue. DJ authority comes from the server\u2019s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. Use remove for a narrower change when you own one entry.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Review Queue before clearing all upcoming requests.",
@@ -738,7 +738,7 @@
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music shuffle or Shuffle. The action rearranges all upcoming entries without creating new ones or selecting a search result.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
-        "Inspect the queue and your authority before changing everyone’s order.",
+        "Inspect the queue and your authority before changing everyone\u2019s order.",
         "Read the new Queue order after the action."
       ],
       "completion": "You understand shuffle and its playback or authority limits. Next: Read the new Queue order after the action."
@@ -755,17 +755,17 @@
     },
     "music_loop": {
       "purpose": "Set how completed playback repeats: off, track or queue. Loop changes require DJ authority; loop is separate from adding autoplay recommendations.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Choose mode:off, mode:track or mode:queue. The Loop button cycles modes on the current player. DJ authority comes from the server’s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. ",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Choose mode:off, mode:track or mode:queue. The Loop button cycles modes on the current player. DJ authority comes from the server\u2019s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. ",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Decide whether listeners want no repeat, the current track or the queue repeated.",
-        "Check the Jukebox’s displayed loop mode after changing it."
+        "Check the Jukebox\u2019s displayed loop mode after changing it."
       ],
-      "completion": "You understand loop and its playback or authority limits. Next: Check the Jukebox’s displayed loop mode after changing it."
+      "completion": "You understand loop and its playback or authority limits. Next: Check the Jukebox\u2019s displayed loop mode after changing it."
     },
     "music_autoplay": {
       "purpose": "Choose whether AJ attempts another available recording by the same artist after the queue empties. Recommendations are not guaranteed; an unavailable match can leave the player idle.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Choose enabled:true or enabled:false, or use Autoplay on the player. This is a DJ control. DJ authority comes from the server’s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. ",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Choose enabled:true or enabled:false, or use Autoplay on the player. This is a DJ control. DJ authority comes from the server\u2019s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. ",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Read the current autoplay setting and the planned queue before changing it.",
@@ -774,8 +774,8 @@
       "completion": "You understand autoplay and its playback or authority limits. Next: Check the updated setting; do not mistake enabled autoplay for already-confirmed next playback."
     },
     "music_volume": {
-      "purpose": "Set the shared Jukebox volume from 1–100 percent. This affects the player for the channel and requires DJ authority.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music volume percent, or Volume on the Jukebox for offered levels. DJ authority comes from the server’s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. This is separate from your personal Discord volume setting.",
+      "purpose": "Set the shared Jukebox volume from 1\u2013100 percent. This affects the player for the channel and requires DJ authority.",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music volume percent, or Volume on the Jukebox for offered levels. DJ authority comes from the server\u2019s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. This is separate from your personal Discord volume setting.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Choose an appropriate shared level for current listeners.",
@@ -804,7 +804,7 @@
       "completion": "You understand history and its playback or authority limits. Next: Use Older or Newer to find the recording you meant, then Latest to return."
     },
     "music_join": {
-      "purpose": "Connect or reconnect AJ to the saved player’s voice channel. A DJ can explicitly relocate the player; ordinary listeners cannot silently take another channel’s player.",
+      "purpose": "Connect or reconnect AJ to the saved player\u2019s voice channel. A DJ can explicitly relocate the player; ordinary listeners cannot silently take another channel\u2019s player.",
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Join the intended voice channel and use /music join in its embedded chat. After an unexpected departure, reconnection can recover the saved queue; check whether playback needs Resume.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
@@ -815,7 +815,7 @@
     },
     "music_stop": {
       "purpose": "Stop playback, clear the upcoming queue and disconnect the player. This requires DJ authority; Stop is broader than Pause.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music stop or Stop only when you intend to end the shared session. DJ authority comes from the server’s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. A paused session is the better choice when you want to keep the queue.",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music stop or Stop only when you intend to end the shared session. DJ authority comes from the server\u2019s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. A paused session is the better choice when you want to keep the queue.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Review the current track and queued requests before stopping.",
@@ -824,8 +824,8 @@
       "completion": "You understand stop and its playback or authority limits. Next: Confirm the stopped/disconnected status; a future listening session needs a deliberate new request."
     },
     "music_leave": {
-      "purpose": "Disconnect AJ and clear the current music session’s queue. Leaving is a DJ action and has the same queue-clearing consequence as Stop.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music leave from an eligible voice context. DJ authority comes from the server’s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. Do not use Leave merely to hide the private queue window.",
+      "purpose": "Disconnect AJ and clear the current music session\u2019s queue. Leaving is a DJ action and has the same queue-clearing consequence as Stop.",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music leave from an eligible voice context. DJ authority comes from the server\u2019s mapped AJ staff capabilities or dedicated DJ role; Discord Administrator alone is not enough. Do not use Leave merely to hide the private queue window.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Tell the session apart from your own private UI before choosing to disconnect it.",
@@ -834,8 +834,8 @@
       "completion": "You understand leave and its playback or authority limits. Next: Check the disconnected player result; reopening a private view alone will not restore cleared tracks."
     },
     "music_help": {
-      "purpose": "Read the Jukebox’s current operating instructions while in its voice chat. Learn the distinction between playback ownership, queue ownership and DJ-only shared settings.",
-      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music help in the voice channel’s embedded chat. /help command can also locate specific music input details; tutorial Practice never sends a playback or queue change.",
+      "purpose": "Read the Jukebox\u2019s current operating instructions while in its voice chat. Learn the distinction between playback ownership, queue ownership and DJ-only shared settings.",
+      "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Use /music help in the voice channel\u2019s embedded chat. /help command can also locate specific music input details; tutorial Practice never sends a playback or queue change.",
       "steps": [
         "Join the relevant voice channel and open its embedded chat before using this music control.",
         "Review how to search with /play and how the shared player reports confirmed playback.",
@@ -904,11 +904,11 @@
       "completion": "You can delete a personal playlist without confusing it with the live queue. Next: Choose Delete playlist only when intended, or Cancel to keep the saved list."
     },
     "playlist_view": {
-      "purpose": "Browse your own playlists or the saved recordings in one named list. This is separate from the Jukebox’s live upcoming queue.",
+      "purpose": "Browse your own playlists or the saved recordings in one named list. This is separate from the Jukebox\u2019s live upcoming queue.",
       "controls": "Join the active voice channel and use its embedded text chat. AJ rechecks current membership and access. Omit name to list your playlists, or supply name for its tracks. Previous page and Next page browse longer lists; reading the list does not play it.",
       "steps": [
         "Join voice and open its embedded chat; use your own saved playlist for this operation.",
-        "Choose whether you want your list of playlists or one playlist’s contents.",
+        "Choose whether you want your list of playlists or one playlist\u2019s contents.",
         "Use /playlist play only when you intend to enqueue the saved recordings."
       ],
       "completion": "You can view a personal playlist without confusing it with the live queue. Next: Use /playlist play only when you intend to enqueue the saved recordings."
@@ -964,11 +964,11 @@
       "completion": "You can browse confirmed Chairism outputs privately. Next: use recent, member or random according to the quote you are looking for."
     },
     "chairism_context": {
-      "purpose": "Use Discord’s message action to preserve an accessible public message as a Chairism. It follows the same source and privacy checks as /quote message.",
-      "controls": "On the intended message, open Apps → Create Chairism. Choose This Message, Reply, Image or Both if offered; unavailable or protected sources are rejected before publication.",
+      "purpose": "Use Discord\u2019s message action to preserve an accessible public message as a Chairism. It follows the same source and privacy checks as /quote message.",
+      "controls": "On the intended message, open Apps \u2192 Create Chairism. Choose This Message, Reply, Image or Both if offered; unavailable or protected sources are rejected before publication.",
       "steps": [
         "Open the context menu on a real public message in this server.",
-        "Choose Apps → Create Chairism, then inspect which context you intend to preserve.",
+        "Choose Apps \u2192 Create Chairism, then inspect which context you intend to preserve.",
         "Wait for the confirmed public output link before starting another quote."
       ],
       "completion": "You can quote a permitted message through its context menu. Next: use /chairisms recent to inspect the published result."
@@ -1004,7 +1004,7 @@
       "completion": "You know Notmad is an owner-only fixed joke. Next: use ordinary /social react for member-available reactions."
     },
     "haiku": {
-      "purpose": "Request the bot’s exact Haiku joke response. It is not a member-profiling tool or a general-purpose poetry generator.",
+      "purpose": "Request the bot\u2019s exact Haiku joke response. It is not a member-profiling tool or a general-purpose poetry generator.",
       "controls": "Run /haiku when enabled and eligible. The command posts its fixed response and is subject to the social throttle. Passive haiku recognition in main chat is a separate configured behavior.",
       "steps": [
         "Use the command only if you intend the public joke response.",
@@ -1013,19 +1013,9 @@
       ],
       "completion": "You can distinguish the fixed Haiku command from passive recognition. Next: return to Social reactions for searchable member actions."
     },
-    "race_slash": {
-      "purpose": "Use !race; /race is retired. Starter is Racer 1; 2–6 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15–20 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
-      "controls": "Type !race in main chat. Join the race while entrant slots remain, or select a racer for a private wager. Only the host can use the one +30 Seconds extension; filled racer slots do not close betting.",
-      "steps": [
-        "Use !race, then wait for at least two racers within the entry window.",
-        "Select one contestant and confirm a wager only if intended. Later additions stay on that contestant and within the total wager limit.",
-        "Watch the final race result and actual payout or refund. An unbacked winner refunds all wagers without erasing the race outcome."
-      ],
-      "completion": "You can join or wager during the race window and recognize refund cases. Next: type !race only in main chat when you want to start a real event."
-    },
     "steal": {
       "purpose": "Copy one custom Discord emoji into Chairs for the server to use. The result is private; the emoji itself becomes available only after Discord accepts the upload.",
-      "controls": "Use /steal with a custom emoji written exactly as <:name:id> or <a:name:id>. Optionally provide a 2–32 character name. AJ validates animation, file size, duplicates, available emoji slots, and Discord permissions before creating anything.",
+      "controls": "Use /steal with a custom emoji written exactly as <:name:id> or <a:name:id>. Optionally provide a 2\u201332 character name. AJ validates animation, file size, duplicates, available emoji slots, and Discord permissions before creating anything.",
       "steps": [
         "Copy the full custom-emoji markup from Discord, including its angle brackets and numeric ID.",
         "Use /steal emoji:<emoji>; add name:<optional> only when you want a different valid name.",
@@ -1035,7 +1025,7 @@
       "completion": "You know how to copy one valid custom emoji safely. Next: use /steal only for an emoji you intend Chairs to keep."
     },
     "daily": {
-      "purpose": "Economy starts with Ottomans: your Wallet holds spendable funds and Bank stores the rest. New-member currency follows the server benchmark and is granted once. Daily rewards vary within 200–300 Ottomans, weekly rewards within 1,000–1,500, and both reset at 4 AM Mountain. Rewards, activities, purchases and some games build your balance over time.",
+      "purpose": "Economy starts with Ottomans: your Wallet holds spendable funds and Bank stores the rest. New-member currency follows the server benchmark and is granted once. Daily rewards vary within 200\u2013300 Ottomans, weekly rewards within 1,000\u20131,500, and both reset at 4 AM Mountain. Rewards, activities, purchases and some games build your balance over time.",
       "controls": "Use /daily for Claim Daily, Daily Spin, and a private Fortune; each can be used once per reset. Then use /bank to review Wallet and Bank. /shop and /inventory show what Ottomans can buy and what you own. Policy adjustments are measured in shadow first, remain bounded, and never rewrite a reward or wager already accepted.",
       "steps": [
         "Open /daily to claim the available reward, spin once, and reveal your private Fortune when each is ready.",
