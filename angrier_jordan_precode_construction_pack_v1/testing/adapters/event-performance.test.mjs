@@ -10,14 +10,14 @@ import {renderFight} from '../../dist/packages/features-events/src/fight-render.
 import {reviewMembers,reviewPlans} from '../../scripts/event-review-fixtures.mjs';
 const view={id:'fixture',type:'fight',guildId:'g',channelId:'c',messageId:'m',state:'OPEN',expiresAt:new Date(Date.now()+60000),racers:reviewMembers.slice(0,2),pool:'0',bets:[],extensionUsed:false};
 
-test('Fight updates its persistent card on each recorded strike without GIF playback',async()=>{
+test('Fight uses one prepared GIF instead of repeatedly uploading a card during combat',async()=>{
  let current={...view,state:'LOCKED',combat:{action:{atMs:1400},hp:[91,100],finished:false}},renders=[];const edits=[];
  const c=new DiscordEventsCoordinator({publicView:async()=>current},{},async()=>true);
- c.payload=async v=>{renders.push(v.combat.action.atMs);return{files:[{name:'fight-locked.png'}],marker:renders.length};};
+ c.payload=async v=>{renders.push(v.combat.action.atMs);return{files:[{name:'fight-locked.gif'}],marker:renders.length};};
  const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},attachments:new Map(),edit:async p=>edits.push(p)})}})}};
  await c.refresh(client,'fixture');await c.refresh(client,'fixture');
  current={...current,combat:{action:{atMs:2800},hp:[91,86],finished:false}};await c.refresh(client,'fixture');
- assert.deepEqual(renders,[1400,2800]);assert.equal(edits.length,2);
+ assert.deepEqual(renders,[1400]);assert.equal(edits.length,1);
 });
 
 test('scene layer reuse preserves the approved Fight pixels',async()=>{
@@ -32,7 +32,7 @@ test('scene layer reuse preserves the approved Fight pixels',async()=>{
 test('Line readiness card is one static attachment with saved deadline, not per-second message edits',async()=>{
  const c=new DiscordSpecialCoordinator({}, {},async()=>true),p=await c.payload({id:'fixture',state:'OPEN',ownerId:'fixture-0',members:reviewMembers.map(m=>({...m,status:'ready'})),remainingMs:3000,elapsedMs:0,expiresAt:new Date(Date.now()+3000)});
  assert.equal(p.files[0].name,'line.png');const buffer=p.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
- assert.equal(meta.width,1200);assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);
+ assert.equal(meta.width,1100);assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);
  assert.equal(buffer.indexOf('NETSCAPE'),-1);
 });
 

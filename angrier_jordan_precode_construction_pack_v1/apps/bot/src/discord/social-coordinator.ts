@@ -43,8 +43,10 @@ export class DiscordSocialCoordinator {
    await this.guard(i.guildId,i.user.id,i.channelId,haiku);await this.member(i.guild,i.user.id);
    const c:SocialContext={guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id};
    if(pp){
-    const member=await this.member(i.guild,i.user.id),size=randomInt(1,8),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
-    await this.repo.pp(c);
+    const member=await this.member(i.guild,i.user.id),lines=['A respectable amount of lounge commitment.','The recliner approves this measurement.','Enough chair energy for one confident entrance.','Measured in inches of pure upholstery confidence.'];
+    const result=await this.repo.pp(c);
+    // Boner Pills consume on this check and guarantee the maximum extension.
+    const size=result.effectApplied?7:randomInt(1,8);
     // Assets are ordered by the measured visible footrest extension.
     const assets=['pp-recliner-closed.png','pp-recliner-extended.png','pp-recliner-25.png','pp-recliner-50.png','pp-recliner-mid.png','pp-recliner-90.png','pp-recliner-max.png'] as const;
     const asset=assets[size-1]!,filename='recliner-check.png';

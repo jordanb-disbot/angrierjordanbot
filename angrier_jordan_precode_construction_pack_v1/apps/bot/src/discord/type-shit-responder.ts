@@ -1,38 +1,36 @@
-import {readFile} from 'node:fs/promises';
 import type {Message,MessageReaction,PartialMessageReaction,User,PartialUser} from 'discord.js';
 
 const TYPE_SHIT_GIF='type-shit.gif';
-const reply={content:'Shit',allowedMentions:{parse:[] as never[]}};
-const typeShitAnimation=new URL('../../../../packages/features-special/assets/type-shit.gif',import.meta.url);
 const plainReply={content:'Shit',allowedMentions:{parse:[] as never[]}};
 export function isTypeShitEmojiName(name:string|null|undefined){
-  return /^(?:type[_-]?sh+i+t|typeshit)$/i.test(name??'');
+  return /^(?:type_shit|typeshit)$/i.test(name??'');
 }
 
-/** Small server-wide call-and-response with no channel, role, or feature gate. */
+/** A single plain reply for each qualifying message or reaction event. */
 export class TypeShitResponder {
-  async message(message:Message):Promise<void>{
-    if(!message.guild||message.author.bot)return;
-    if(message.content.trim().toLowerCase()==='!typeshit'){
-      if(!message.channel.isSendable())return;
-      await message.delete().catch(()=>undefined);
-      await message.channel.send({files:[{attachment:await readFile(typeShitAnimation),name:'type-shit.gif'}],allowedMentions:{parse:[]}});
-      return;
-    }
-    const emojiUses=[...message.content.matchAll(/<a?:(\w+):\d+>/g)].filter(match=>isTypeShitEmojiName(match[1])).length;
-    const phraseUses=(message.content.match(/\btype\s+shit\b/gi)??[]).length;
-    const stickerUses=[...message.stickers.values()].filter(sticker=>sticker.name==='TS').length;
-    const gifUses=[...message.attachments.values()].filter(attachment=>attachment.name?.toLowerCase()===TYPE_SHIT_GIF).length;
-    for(let count=0;count<emojiUses+phraseUses+stickerUses;count+=1)await message.reply(plainReply);
-    for(let count=0;count<gifUses;count+=1)await message.reply(plainReply);
-  }
-
-  async reaction(reaction:MessageReaction|PartialMessageReaction,user:User|PartialUser):Promise<void>{
-    if(user.bot||!isTypeShitEmojiName(reaction.emoji.name))return;
-    if(reaction.partial)await reaction.fetch();
-    const message=reaction.message;
-    if(message.partial)await message.fetch();
-    if(!message.guild||!message.author||message.author.bot)return;
-    await message.reply(plainReply);
-  }
+ private readonly handled=new Set<string>();
+ private claim(id:string){
+  if(this.handled.has(id))return false;
+  this.handled.add(id);
+  if(this.handled.size>5_000)this.handled.delete(this.handled.values().next().value!);
+  return true;
+ }
+ private matches(message:Pick<Message,'content'|'stickers'|'attachments'>){
+  return [...message.content.matchAll(/<a?:(\w+):\d+>/g)].some(match=>isTypeShitEmojiName(match[1]))
+   || /\btype\s+shit\b/i.test(message.content)
+   || [...message.stickers.values()].some(sticker=>sticker.name==='TS')
+   || [...message.attachments.values()].some(attachment=>attachment.name?.toLowerCase()===TYPE_SHIT_GIF);
+ }
+ async message(message:Message):Promise<void>{
+  if(!message.guild||message.author.bot||message.webhookId||!this.matches(message)||!this.claim(message.id))return;
+  await message.reply(plainReply);
+ }
+ async reaction(reaction:MessageReaction|PartialMessageReaction,user:User|PartialUser):Promise<void>{
+  if(user.bot||!isTypeShitEmojiName(reaction.emoji.name))return;
+  if(reaction.partial)await reaction.fetch();
+  const message=reaction.message;
+  if(message.partial)await message.fetch();
+  if(!message.guild||!message.author||message.author.bot||message.webhookId||!this.claim(message.id))return;
+  await message.reply(plainReply);
+ }
 }
