@@ -25,4 +25,4 @@ STOPSIGNAL SIGTERM
 # Railway's pre-deploy logs are not retained for this service. Run the guarded,
 # idempotent migration before the worker so failures remain visible in container
 # logs and the worker never reaches schema bootstrap before migrations complete.
-CMD ["sh", "-c", "AJ_PRODUCTION_MIGRATIONS_APPROVED=true AJ_MIGRATION_RELEASE=\"$(cat RELEASE_SHA)\" npm run db:migrate:production && exec node dist/apps/bot/src/index.js"]
+CMD ["sh", "-c", "AJ_PRODUCTION_MIGRATIONS_APPROVED=true AJ_MIGRATION_RELEASE=\"$(cat RELEASE_SHA)\" npm run db:migrate:production && if [ \"${ENABLE_WYR_SMOKE:-false}\" = \"true\" ]; then node scripts/enable-preproduction-wyr.mjs; fi && exec node dist/apps/bot/src/index.js"]
