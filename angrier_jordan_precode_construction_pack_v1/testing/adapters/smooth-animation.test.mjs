@@ -12,8 +12,8 @@ test('animation artwork is losslessly shared across frames',()=>{
 test('Line runs at 50ms steps with exact countdown boundaries and restart remainder',()=>{
  const view={state:'SETTLING',elapsedMs:0,durationMs:9000,ownerId:'host',members:[],remainingMs:0},sequence=lineSequence(view,'wide',true);
  assert.equal(sequence.frames.length,181);assert.ok(sequence.delays.slice(0,-1).every(d=>d===50));assert.equal(sequence.delays.reduce((a,b)=>a+b,0),10000);
- for(let n=0;n<100;n++)assert.match(sequence.frames[n],new RegExp(`data-countdown-number="${5-Math.floor(n/20)}"`));
- assert.ok(sequence.frames.slice(100).every(svg=>!svg.includes('data-countdown-number=')));
+ for(let n=0;n<120;n++)assert.match(sequence.frames[n],new RegExp(`data-countdown-number="${5-Math.floor(n/20)}"`));
+ assert.ok(sequence.frames.slice(120).every(svg=>!svg.includes('data-countdown-number=')));
  const resumed=lineSequence({...view,elapsedMs:2430},'wide',true);assert.equal(resumed.delays[0],20);assert.equal(resumed.delays.reduce((a,b)=>a+b,0),7570);
 });
 test('dense one-shot encoding preserves 20fps timing and final hold without replay',async()=>{

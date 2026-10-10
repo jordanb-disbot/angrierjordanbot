@@ -23,7 +23,10 @@ export class PrismaEventsRepository {
   if(racer.userId!==c.userId)throw new DomainError('HOST_ID','The starter must occupy Racer 1.');
   const id=randomUUID();return this.atomic.run(c.guildId,'event:start:'+c.requestKey,requestFingerprint({channel:c.channelId,userId:c.userId,type:'race'}),async tx=>{
    if(await tx.gameSession.findFirst({where:{guildId:c.guildId,channelId:c.channelId,type:{in:['race','fight']},state:{in:['OPEN','LOCKED','SETTLING']}}}))throw new DomainError('EVENT_ACTIVE','A Race or Fight is already active here.');
-   const now=this.clock(),timer=TimerEngine.create(now,60),data:RaceData={racers:[{...racer,chair:1}]};
+   // The Race waiting room begins its saved 30-second deadline at publication.
+   // Joining and betting never recreate it; only the host's one extension can
+   // move the deadline, while Start Now and Cancel end the open state.
+   const now=this.clock(),timer=TimerEngine.create(now,30),data:RaceData={racers:[{...racer,chair:1}]};
    await new PrismaTransactionSessions(tx).create({id,guildId:c.guildId,channelId:c.channelId,ownerUserId:c.userId,type:'race',state:'OPEN',data:json(data),expiresAt:timer.expiresAt,extensionUsed:false,version:0,createdAt:now,updatedAt:now});
    await tx.gameParticipant.create({data:{sessionId:id,userId:c.userId,role:'racer',data:{chair:1}}});
    await tx.scheduledJob.create({data:{guildId:c.guildId,jobType:'events.close_betting',executionKey:'events:close:'+id,dueAt:timer.expiresAt,payload:{guildId:c.guildId,sessionId:id}}});

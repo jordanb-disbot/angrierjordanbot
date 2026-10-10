@@ -524,7 +524,7 @@
       "completion": "You know Fight starts immediately and betting locks your chosen fighter. Next: use /fight only when you intend the real event, or revisit Race for entrant-based play."
     },
     "line": {
-      "purpose": "Use !line. The host is automatically in. Members choose I’m In or I Need a Second during 60 seconds of readiness. The host can add 30 seconds once, or start early. When readiness ends, entries lock and the five-second countdown begins automatically. The host may start early or cancel before the countdown. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, four-second powder finale, complete. No zero, rematch or Play Again.",
+      "purpose": "Use !line. The host is automatically in. Members choose I’m In or I Need a Second during 30 seconds of readiness. The host can add 30 seconds once, or start early. When readiness ends, entries lock and the five-second countdown begins automatically. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, four-second powder finale, complete. No zero, rematch or Play Again.",
       "controls": "Type !line in main chat. I’m In marks you ready and I Need a Second marks you waiting. The host may add 30 seconds once, start early or cancel before countdown; a waiting member does not veto the host’s start.",
       "steps": [
         "Use the prefix !line and check your readiness state on the live card.",

@@ -307,7 +307,7 @@
     },
     {
       "id": "steal_context",
-      "command": "Steal Emoji",
+      "command": "Steal",
       "type": "context_message",
       "module": "community",
       "description": "Copy a custom emoji from the selected message.",
@@ -325,8 +325,8 @@
       "tutorial_id": "community",
       "aliases": [],
       "status": "locked",
-      "preferred_invocation": "Message → Apps → Steal Emoji",
-      "registration_path": "Steal Emoji"
+      "preferred_invocation": "Message → Apps → Steal",
+      "registration_path": "Steal"
     },
     {
       "id": "daily",

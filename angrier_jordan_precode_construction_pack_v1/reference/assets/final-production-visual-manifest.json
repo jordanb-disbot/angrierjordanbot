@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "611fe3d8aeee2d0d719ef4289a8ca1c94c9c1d594d318b0e633a89bdd60194b8"
+      "sha256": "9aa26851f7f1e7ab9d776198baf9cada86dd0679454b7c5a0c270026a03a0f19"
     },
     {
       "id": "line.approved.lounge",
@@ -6476,7 +6476,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Shared deterministic Economy and Items lounge frames.",
-      "sha256": "3cbf0b52c07a9d8e21ea4bf8ee3eff7855d02861f080ed906c5128a3721ccf60"
+      "sha256": "437330eeb6a097a9024f08cb9585b6bc0f49f409434f53aae74c072151d02e83"
     },
     {
       "id": "profiles.premium-presentation",
@@ -6690,7 +6690,7 @@
       "category": "runtime.renderer",
       "canonical": true,
       "usage": "Shared deterministic event presentation with wheelchair race skins",
-      "sha256": "f9dc69199b7fdb8b9ad7fdab3226a8522539c4ff0a0ee163f8f955db576b7753",
+      "sha256": "c91196697815f2278f352ee6cfb19d1e517451fee2cb25189d479428819fac4a",
       "status": "OWNER_REVIEW_PENDING"
     },
     {

@@ -2,7 +2,7 @@ import {DomainError,type AuditService} from '../../../../packages/core/src/index
 import {ActionRowBuilder,ModalBuilder,StringSelectMenuBuilder,TextInputBuilder,TextInputStyle,type ChatInputCommandInteraction,type MessageContextMenuCommandInteraction,type ModalSubmitInteraction,type StringSelectMenuInteraction} from 'discord.js';
 
 export const EMOJI_STEAL_COMMANDS=new Set(['steal']);
-export const EMOJI_STEAL_CONTEXT_COMMANDS=new Set(['Steal Emoji']);
+export const EMOJI_STEAL_CONTEXT_COMMANDS=new Set(['Steal']);
 export const EMOJI_STEAL_COMPONENT_PREFIX='emoji-steal:';
 const MAX_EMOJI_BYTES=256*1024;
 const markupPattern=/^<(a?):([A-Za-z0-9_]{2,32}):(\d{17,20})>$/;

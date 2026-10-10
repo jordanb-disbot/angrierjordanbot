@@ -49,8 +49,22 @@ export interface OnboardingLearningOptions {
 export class DiscordOnboardingCoordinator {
   constructor(private readonly service:OnboardingService,private readonly config:ConfigService,private readonly learning:OnboardingLearningOptions={}){}
 
+  /**
+   * This setting intentionally gates only the custom arrival flow.  It never
+   * weakens an active moderation or crime punishment: the normal restore plan
+   * still reapplies those restrictions before member access is granted.
+   */
+  private async rulesAcknowledgmentRequired(guildId:string){return await this.config.get(guildId,'onboarding.rules_ack_required')!==false;}
+
   async handleMemberAdd(member:GuildMember):Promise<void>{
     const {returning}=await this.service.memberJoined(member.guild.id,member.id);
+    if(!await this.rulesAcknowledgmentRequired(member.guild.id)){
+      // Suspending onboarding must release a member from the custom gate, not
+      // merely stop sending its prompt.  Reuse the durable restore path so a
+      // returning moderation sentence is still restored instead of bypassed.
+      await this.applyRestorePlan(member,await this.service.acknowledgeRules(member.guild.id,member.id));
+      return;
+    }
     const access=await roleId(this.config,member.guild.id,'roles.member_access');
     if(access&&member.roles.cache.has(access))await member.roles.remove(access,'Rules acknowledgment required on join/rejoin.').catch(()=>undefined);
     if(await this.learning.canSendDirectMessage?.(member.guild.id,member.id)!==false)await member.send({content:(returning?'Welcome back to Chairs.':'Welcome to Chairs. Your seat is waiting.')+' Please review `/rules` and acknowledge them to complete your arrival.'}).catch(()=>undefined);

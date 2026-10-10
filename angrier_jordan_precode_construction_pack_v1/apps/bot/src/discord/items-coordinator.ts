@@ -40,7 +40,7 @@ export class DiscordItemsCoordinator {
    };
    const showShop=async(page=0)=>{
     const s=await view(),shop=svc.shop(s,c.userId),v=itemPage(shop.items,page,4),owned=svc.inventory(s,c.userId);
-    const cards=v.items.map(x=>({name:x.name,badge:x.rarity+' · '+x.type,motif:x.name+' '+x.type,price:(x.buyPrice??0).toLocaleString('en-US')+' Ottomans',detail:Array.isArray(x.metadata?.requiresAchievements)?'Requires '+x.metadata.requiresAchievements.join(', '):'Available to purchase',quantity:'OWNED ×'+owned.filter(row=>row.itemId===x.id).reduce((sum,row)=>sum+row.quantity,0)}));
+    const cards=v.items.map(x=>({name:x.name,badge:x.rarity+' · '+x.type,motif:x.name+' '+x.type,price:(x.buyPrice??0).toLocaleString('en-US')+' Ottomans',detail:typeof x.metadata?.description==='string'?x.metadata.description:Array.isArray(x.metadata?.requiresAchievements)?'Requires '+x.metadata.requiresAchievements.join(', '):'Available to purchase',quantity:'OWNED ×'+owned.filter(row=>row.itemId===x.id).reduce((sum,row)=>sum+row.quantity,0)}));
     return await send('Daily Shop','Refresh <t:'+Math.floor(shop.resetAt.getTime()/1000)+':R>\n'+cards.map(x=>x.name+' · '+x.price).join('\n'),[...(v.items.length?[menu('buy',v.items.map((x,n)=>({label:((n+1)+'. '+x.name).slice(0,100),value:x.id,description:(x.buyPrice+' Ottomans · '+x.rarity).slice(0,100)})))]:[]),...pages('shoppage',v.page,v.pages),row(button(id('help'),'How This Works'))],{mode:'shop',cards,summary:shop.items.length+' products · Page '+(v.page+1)+'/'+v.pages+' · Daily rotation',imagePrimary:true,expiresAfterMs:60_000});
    };
    const showCollection=async(page=0)=>{

@@ -273,8 +273,8 @@ export const COMMANDS = [
   },
   {
     "id": "steal_context",
-    "preferred": "Message → Apps → Steal Emoji",
-    "registered": "Steal Emoji",
+    "preferred": "Message → Apps → Steal",
+    "registered": "Steal",
     "type": "context_message",
     "module": "community",
     "handler": "community.stealContext",

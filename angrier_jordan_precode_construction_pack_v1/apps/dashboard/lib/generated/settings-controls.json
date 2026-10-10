@@ -427,7 +427,7 @@
       "label": "Join Seconds",
       "description": "Race join + betting window before optional extension.",
       "kind": "number",
-      "defaultValue": 60,
+      "defaultValue": 30,
       "risk": "locked",
       "editableBy": [],
       "restartRequired": false,
@@ -505,7 +505,7 @@
       "key": "line.ready_seconds",
       "section": "games",
       "label": "Ready Seconds",
-      "description": "Canonical fixed 60-second readiness window.",
+      "description": "Canonical fixed 30-second readiness window; the host may use one explicit +30-second extension.",
       "kind": "number",
       "defaultValue": 60,
       "risk": "locked",
@@ -514,8 +514,8 @@
       "mutable": false,
       "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 60,
-      "max": 60
+      "min": 30,
+      "max": 30
     },
     {
       "key": "line.abandon_minutes",

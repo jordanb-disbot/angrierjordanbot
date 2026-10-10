@@ -56,13 +56,14 @@ import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/
 import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
 import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
-import { Client, DiscordAPIError, Events, GatewayIntentBits, Partials, REST, Routes, type ClientEvents, type Guild } from 'discord.js';
+import { Client, DiscordAPIError, EmbedBuilder, Events, GatewayIntentBits, Partials, REST, Routes, type ClientEvents, type Guild } from 'discord.js';
 import {validateRuntimeEnvironment} from '../../../packages/core/src/runtime-environment.js';
 import {RuntimeLifecycle} from '../../../packages/core/src/runtime-lifecycle.js';
 import {startRuntimeHealth} from './runtime-health.js';
-import { AuditService, ConfigService, DomainError, HealthService, IdempotentScheduler, SchedulerWorker } from '../../../packages/core/src/index.js';
+import { AuditService, ConfigService, DeliveryEngine, DomainError, HealthService, IdempotentScheduler, SchedulerWorker } from '../../../packages/core/src/index.js';
 import { SETTINGS } from '../../../packages/contracts/src/generated/settings.js';
 import { PrismaAuditSink, PrismaConfigRepository, PrismaJobRepository, createPrismaHealthProbe } from '../../../packages/database/src/prisma-adapters.js';
+import {PrismaJobDeliveryRepository} from '../../../packages/database/src/job-delivery.js';
 import { PrismaOnboardingRepository, OnboardingService } from '../../../packages/features-onboarding/src/index.js';
 import { PrismaJailRepository, JailService } from '../../../packages/features-jail/src/index.js';
 import { PrismaModerationRepository, ModerationService } from '../../../packages/features-moderation/src/index.js';
@@ -226,7 +227,29 @@ export async function startProductionBot():Promise<void>{
   const party=new DiscordPartyCoordinator(new PrismaPartyRepository(db),config,(g,u)=>eligibleGame(g,u,'events.use'));
   const channelGames=new DiscordChannelGamesCoordinator(new PrismaChannelGamesRepository(db),config,(g,u)=>eligibleGame(g,u,'channel_games.play'));
   const crime=new DiscordCrimeCoordinator(crimeRepo,config,async(g,u)=>{if(await jail.isModerationJailed(g,u)||await security.isRestricted(g,u))return false;const state=await securityService.state(g);return !state.panicActive&&state.mode!=='LOCKDOWN';});
-  const community=new DiscordCommunityCoordinator(new PrismaCommunityRepository(db),config,(g,u)=>eligibleGame(g,u,'community.use'),(g,u,id)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordSuggestion(g,u,id)),async(client,view)=>{const winners=view.winners??[];const channel=await client.channels.fetch(view.channelId).catch(()=>null);if(channel?.isTextBased()&&'send' in channel&&winners.length)await channel.send({content:`Giveaway complete: ${winners.map(w=>`<@${w.id}>`).join(', ')} won **${view.prize?.label??'the prize'}**.`,allowedMentions:{users:winners.map(w=>w.id)}});if(view.ownerId){const owner=await client.users.fetch(view.ownerId).catch(()=>null);try{await owner?.send(`Giveaway result for ${view.title}: ${winners.length?winners.map(w=>w.name).join(', '):'No winner'}.`);}catch{}}});
+  const communityRepo=new PrismaCommunityRepository(db);
+  const community=new DiscordCommunityCoordinator(communityRepo,config,(g,u)=>eligibleGame(g,u,'community.use'),(g,u,id)=>recordFullyFurnished(g,u,()=>fullyFurnishedRepo.recordSuggestion(g,u,id)),async(client,view)=>{const winners=view.winners??[];const channel=await client.channels.fetch(view.channelId).catch(()=>null);if(channel?.isTextBased()&&'send' in channel&&winners.length)await channel.send({content:`Giveaway complete: ${winners.map(w=>`<@${w.id}>`).join(', ')} won **${view.prize?.label??'the prize'}**.`,allowedMentions:{users:winners.map(w=>w.id)}});});
+  const notifyGiveawayOwner=async(job:{id:string;guildId:string;executionKey:string;payload?:unknown})=>{
+    const payload=job.payload as {guildId?:unknown;sessionId?:unknown};
+    if(payload?.guildId!==job.guildId||typeof payload.sessionId!=='string')throw new Error('Invalid giveaway owner-notice job.');
+    const view=await communityRepo.publicView(payload.sessionId);
+    if(view.kind!=='giveaway'||view.guildId!==job.guildId||view.state!=='CLOSED')return;
+    const guild=await client.guilds.fetch(job.guildId),owner=await client.users.fetch(guild.ownerId),marker=`giveaway-owner-notice:${view.id}`;
+    const winnerText=(view.winners??[]).length?(view.winners??[]).map(w=>`<@${w.id}> (${w.name})`).join(', '):'No eligible entries';
+    const original=view.messageId?`https://discord.com/channels/${view.guildId}/${view.channelId}/${view.messageId}`:`<#${view.channelId}>`;
+    try{
+      await new DeliveryEngine(new PrismaJobDeliveryRepository(db,job.id)).deliver(marker,{
+        find:async()=>{const dm=await owner.createDM(),messages=await dm.messages.fetch({limit:100});return messages.find(message=>message.author.id===client.user?.id&&message.embeds.some(embed=>embed.footer?.text===marker))?.id??null;},
+        send:async()=>{const message=await owner.send({embeds:[new EmbedBuilder().setColor(0x10B981).setTitle('Giveaway completed').setDescription(`**${view.prize?.label??view.title}**\nWinner(s): ${winnerText}\nOriginal: ${original}\nCompleted: <t:${Math.floor(Date.now()/1000)}:F>`).setFooter({text:marker})],allowedMentions:{users:(view.winners??[]).map(w=>w.id)}});return message.id;},
+      });
+    }catch(error){
+      // A privacy-blocked DM is operationally visible without affecting the
+      // completed settlement.  An uncertain send is left for scheduler
+      // recovery, which reconciles the marker before attempting another DM.
+      if(error instanceof DomainError&&error.code==='DELIVERY_UNCERTAIN')throw error;
+      await db.auditEvent.create({data:{guildId:job.guildId,source:'discord',action:'community.giveaway_owner_notification_failed',targetType:'community',targetId:view.id,after:{jobId:job.id,ownerUserId:guild.ownerId},requestId:job.executionKey}});
+    }
+  };
   const chairismCanUse=(g:string,u:string)=>eligibleGame(g,u,'chairisms.use');
   const chairismSecurity=new DiscordChairismSecurity(client,config,chairismCanUse);
   const chairismPublication=new DiscordChairismPublication(client,new PrismaChairismRepository(db),chairismSecurity,config);
@@ -319,6 +342,7 @@ export async function startProductionBot():Promise<void>{
     'special.line_complete':async job=>{const p=job.payload as {guildId:string;sessionId:string};await special.advance(client,p.guildId,p.sessionId,true);},
     'community.publish':async job=>{if(!enableCommunitySmoke)throw new Error('Community runtime disabled; retain pending delivery.');await community.publish(client,job.id);},
     'community.advance':async job=>{if(!enableCommunitySmoke)throw new Error('Community runtime disabled; retain pending work.');const p=job.payload as {guildId:string;sessionId:string;round:number};await community.advance(client,p.guildId,p.sessionId,p.round);},
+    'community.giveaway_owner_notice':async job=>{if(!enableCommunitySmoke)throw new Error('Community runtime disabled; retain pending owner notification.');await notifyGiveawayOwner(job);},
     'crime.refresh':async job=>{const p=job.payload as {sessionId:string};await crime.refresh(client,p.sessionId);},
     'crime.publish':async job=>{if(!enableCrimeSmoke||await config.get(job.guildId,'features.crime')!==true)throw new Error('Crime publication disabled; retain pending delivery.');await crime.deliver(client,job.id);},
     'crime.close':async job=>{const p=job.payload as {guildId:string;sessionId:string};await crime.advance(client,p.guildId,p.sessionId);},

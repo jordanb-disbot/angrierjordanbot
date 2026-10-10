@@ -5,8 +5,8 @@ export interface LineMember {userId:string;name:string;status:CheckIn;}
 export interface LineData {members:LineMember[];startedAt?:string;shame?:{id:string;text:string};cancelReason?:string;}
 export function lineFrame(elapsedMs:number,durationMs=LINE_DURATION_MS):{phase:'countdown'|'burst'|'complete';number?:number;progress:number}{
  const elapsed=Math.max(0,elapsedMs);
- if(elapsed<5000)return{phase:'countdown',number:5-Math.floor(elapsed/1000),progress:(elapsed%1000)/1000};
- if(elapsed<durationMs)return{phase:'burst',progress:(elapsed-5000)/(durationMs-5000)};
+ if(elapsed<6000)return{phase:'countdown',number:5-Math.floor(elapsed/1000),progress:(elapsed%1000)/1000};
+ if(elapsed<durationMs)return{phase:'burst',progress:(elapsed-6000)/(durationMs-6000)};
  return{phase:'complete',progress:1};
 }
 export interface SpecialCommand {trigger:string;notificationRoleId:string|null;responsePool:string[];enabled:boolean;allowedRoleIds:string[];}

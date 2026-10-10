@@ -31,7 +31,7 @@ export function renderWideRace(view:RaceView,motion:EventMotion={}){
    body+='<image data-race-progress="'+progress+'" data-race-nose="'+(x+size*.88)+'" href="'+raceWheelchair(r.chair)+'" x="'+x+'" y="'+(y+2)+'" width="'+size+'" height="'+size+'"/>';
   }
  }else{
-  if(!cancelled)body+=waitingClock(motion.waitingMs??0,view.extensionUsed?90000:60000,32,132,1136,view.pool);
+  if(!cancelled)body+=waitingClock(motion.waitingMs??0,view.extensionUsed?60000:30000,32,132,1136,view.pool);
   const n=Math.max(1,view.racers.length),cols=n<=2?n:3,rows=Math.ceil(n/cols),w=1136/cols,top=cancelled?146:203,h=((cancelled?535:617)-top)/rows;
   for(const[i,r]of view.racers.entries()){const x=32+i%cols*w,y=top+Math.floor(i/cols)*h,cx=x+w/2;
    body+=panel(x+3,y,w-6,h-8,i%2?ink.gold:ink.teal)+title(cx,y+31,short(r.name,22),28)+'<ellipse cx="'+cx+'" cy="'+(y+h-25)+'" rx="'+(w*.4)+'" ry="22" fill="url(#aura)"/><image href="'+raceWheelchair(r.chair)+'" x="'+(x+12)+'" y="'+(y+35)+'" width="'+(w-24)+'" height="'+(h-49)+'"/>';
