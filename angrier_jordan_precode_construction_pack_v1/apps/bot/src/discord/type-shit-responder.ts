@@ -1,4 +1,5 @@
 import type {Message,MessageReaction,PartialMessageReaction,User,PartialUser} from 'discord.js';
+import {isTypeShitPrefixCommand} from './type-shit-command.js';
 
 const TYPE_SHIT_GIF='type-shit.gif';
 const plainReply={content:'Shit',allowedMentions:{parse:[] as never[]}};
@@ -22,7 +23,7 @@ export class TypeShitResponder {
    || [...message.attachments.values()].some(attachment=>attachment.name?.toLowerCase()===TYPE_SHIT_GIF);
  }
  async message(message:Message):Promise<void>{
-  if(!message.guild||message.author.bot||message.webhookId||!this.matches(message)||!this.claim(message.id))return;
+  if(!message.guild||message.author.bot||message.webhookId||isTypeShitPrefixCommand(message.content)||!this.matches(message)||!this.claim(message.id))return;
   await message.reply(plainReply);
  }
  async reaction(reaction:MessageReaction|PartialMessageReaction,user:User|PartialUser):Promise<void>{
