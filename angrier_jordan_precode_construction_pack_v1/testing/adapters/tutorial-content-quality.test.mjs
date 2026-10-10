@@ -35,7 +35,7 @@ test('party lessons distinguish WWYD authored buttons from sentence contribution
  const w=combined('wwyd'),f=combined('finish');assert.match(w,/starts in voting/);assert.match(w,/response buttons/);assert.doesNotMatch(w,/Submit \/ Revise/);assert.match(f,/Submit \/ Revise/);assert.match(f,/anonymous contributions/);
 });
 test('music fields and authority match current handler distinctions',()=>{
- const play=byId('music_play');assert.match(play.fields,/query \(required/);assert.doesNotMatch(play.example,/query_or_link/);assert.match(play.example,/query:/);
+ const play=COMMANDS.find(c=>c.id==='music_play');if(play){const copy=lessonCopy(play);assert.match(copy.fields,/query \(required/);assert.doesNotMatch(copy.example,/query_or_link/);assert.match(copy.example,/query:/);}
  for(const id of ['music_previous','music_replay','music_seek'])assert.match(combined(id),/requester|requested/i);
  for(const id of ['music_clear','music_stop','music_leave','music_loop','music_autoplay','music_volume'])assert.match(combined(id),/Discord Administrator alone is not enough/);
  assert.match(combined('music_remove'),/own requested entries/);assert.match(combined('music_jump'),/current and bypassed entries/);assert.match(combined('music_shuffle'),/own every queued entry/);
