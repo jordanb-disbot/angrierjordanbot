@@ -28,7 +28,8 @@ export function addPokerSeat(table:PokerTable,input:{userId:string;name:string;b
  if(table.seats.length>=POKER_MAX_PLAYERS)throw new DomainError('POKER_FULL','This table has reached four playing seats.');
  if(!input.bot&&!input.joined)throw new DomainError('POKER_CONFIRM','An invited member must explicitly join before their buy-in is charged.');
  const chips=validateBuyIn(input.buyIn);
- return{...table,seats:[...table.seats,{userId:input.userId,name:input.name,bot:input.bot,buyIn:input.buyIn.toString(),chips,joined:input.joined??true}]};
+ const seatName=input.bot?`Bot ${table.seats.filter(seat=>seat.bot).length+1}`:input.name;
+ return{...table,seats:[...table.seats,{userId:input.userId,name:seatName,bot:input.bot,buyIn:input.buyIn.toString(),chips,joined:input.joined??true}]};
 }
 export function startPokerTable(table:PokerTable):PokerTable{
  if(table.state==='PLAYING'&&table.activeHand)return table;
