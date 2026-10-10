@@ -21,12 +21,12 @@ test('Line readiness separates saved statuses, escapes names and handles overflo
  const members=Array.from({length:13},(_,i)=>({userId:String(i),name:i===0?'<Morgan & Co>':'Member '+i,status:i<7?'ready':'waiting'}));
  const view={...base,ownerId:'0',members,remainingMs:60000,elapsedMs:0};
  const svg=renderLine(view,0,'wide');
- assert.match(svg,/LIVE COUNTDOWN/);assert.match(svg,/Time remaining updates below/);assert.match(svg,/EXTENSION/);assert.match(svg,/Available once/);assert.doesNotMatch(svg,/Closes |12:34:56 UTC|STARTS IN|<Morgan/);
- assert.match(svg,/linearGradient id="waitingGlass"/);assert.match(svg,/fill="url\(#waitingGlass\)" stroke="#10B981"/);
- assert.match(svg,/&lt;Morgan &amp; Co&gt;/);assert.match(svg,/READY TO GO/);assert.match(svg,/NEED A SECOND/);assert.match(svg,/\+2 more/);assert.match(svg,/\+1 more/);
- const locked=renderLine({...view,state:'LOCKED'},0,'wide');assert.match(locked,/Waiting for the host/);assert.doesNotMatch(locked,/Closes 12:34:56/);
- const extended=renderLine({...view,extensionUsed:true,remainingMs:90000},0,'wide');assert.match(extended,/Used · check-ins preserved/);assert.doesNotMatch(extended,/12:34:56 UTC/);
- assert.equal(svg,renderLine({...view,remainingMs:1000},0,'wide'));
+ assert.match(svg,/READINESS OPEN/);assert.match(svg,/YOUR NEXT MOVE/);assert.match(svg,/One host extension/);assert.doesNotMatch(svg,/Closes |12:34:56 UTC|STARTS IN|<Morgan/);
+ assert.match(svg,/MEMBER CHECK-IN/);
+ assert.match(svg,/&lt;Morgan &amp; Co&gt;/);assert.match(svg,/READY/);assert.match(svg,/NEED A SECOND/);assert.match(svg,/\+3 more/);
+ const locked=renderLine({...view,state:'LOCKED'},0,'wide');assert.match(locked,/ENTRIES LOCKED/);assert.doesNotMatch(locked,/Closes 12:34:56/);
+ const extended=renderLine({...view,extensionUsed:true,remainingMs:90000},0,'wide');assert.doesNotMatch(extended,/12:34:56 UTC/);
+ assert.notEqual(svg,renderLine({...view,remainingMs:1000},0,'wide'));
 });
 test('Race and Line waiting, live and finale art use the full-width 1200 by 640 frame',()=>{
  const motion=raceSnapshot(reviewPlans.race,reviewPlans.race.durationMs*.58);

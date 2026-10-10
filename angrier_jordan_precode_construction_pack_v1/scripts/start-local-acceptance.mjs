@@ -11,7 +11,7 @@ const groups={
  SPECIAL:['features.special_commands','features.line','special_commands.enabled'],COMMUNITY:['features.community'],
  CRIME:['features.crime'],CHAIRISMS:['features.chairisms'],PARTY:['features.party_games'],
  CHANNEL_GAMES:['features.channel_games'],PVP:['features.pvp'],SOLO:['features.solo_games'],
- CASINO:['features.casino','features.lottery'],PROFILES:['features.profiles','features.activity','features.spotlight'],
+ CASINO:['features.casino','features.lottery'],PROFILES:['features.profiles','features.activity','features.spotlight'],FULLY_FURNISHED:[],
  ITEMS:['features.items'],ECONOMY:[],FAMILY:['features.family'],JAIL:[],MODERATION:[],SECURITY:[],ACTIVITY_LOGGING:[]
 };
 const excluded=new Set(['SECURITY']);

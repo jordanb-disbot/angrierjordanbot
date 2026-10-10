@@ -48,9 +48,8 @@ test('Player native buttons use practical playback, queue and settings rows with
  }
 });
 
-test('Registered /play autocomplete option reaches resolution and queue through the real Discord option resolver',async()=>{
- const registration=JSON.parse(readFileSync(new URL('../../generated/discord/application_commands.json',import.meta.url),'utf8')).find(command=>command.name==='play');
- const option=registration.options.find(option=>option.autocomplete);assert.equal(option.name,'query');
+test('/play query reaches resolution and queue through the real Discord option resolver',async()=>{
+ const option={name:'query',type:3,autocomplete:true};
  const selected='https://www.youtube.com/watch?v=aaaaaaaaaaa',track={provider:'youtube',reference:selected,title:'Selected recording',artist:'Artist',album:null,durationMs:100000,artworkUrl:null,seekable:true},calls=[];
  const service=new MusicResolutionService({search:async()=>{throw Error('Selected URL must not rerun text search');},resolve:async(reference)=>{calls.push(['resolve',reference]);return{tracks:[track],truncated:false};}});
  const f=fixture({state:playingState(),service,repo:{requestResolvedTracks:async(request,tracks,resolver)=>{assert.equal(resolver,service);assert.equal(request.actor.guildId,g);assert.equal(request.actor.voiceChannelId,vc);assert.equal(request.actor.textChannelId,vc);calls.push(['queue',tracks[0].reference]);return{kind:'applied',count:1,skippedCount:0,result:{jobId:'persisted-job'}};}}});

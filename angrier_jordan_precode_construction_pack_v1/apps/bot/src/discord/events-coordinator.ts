@@ -179,7 +179,9 @@ export class DiscordEventsCoordinator {
     // Only locked wagers and rendered snapshots leave this process; the private plan is never serialized in the payload.
     const end=Math.ceil(plan.durationMs/10)*10,times=[0];
     if(fight&&saved.fightPlan){for(const beat of saved.fightPlan.beats){const at=Math.ceil(beat.atMs/10)*10,previous=times.at(-1)!;if(at-previous>=20)times.push(Math.floor((previous+at)/20)*10);if(at>times.at(-1)!)times.push(at);}}
-    else for(let at=50;at<end;at+=50)times.push(at);
+    // Keep the serialized one-shot timeline within the renderer's 512-frame
+    // safety cap while preserving the authoritative saved race progression.
+    else for(let at=100;at<end;at+=100)times.push(at);
     if(times.at(-1)!<end)times.push(end);
     const artwork=new AnimationAssets();
     const frames:string[]=[];

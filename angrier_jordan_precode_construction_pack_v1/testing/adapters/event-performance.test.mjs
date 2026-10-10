@@ -32,7 +32,7 @@ test('scene layer reuse preserves the approved Fight pixels',async()=>{
 test('Line readiness card is one static attachment with saved deadline, not per-second message edits',async()=>{
  const c=new DiscordSpecialCoordinator({}, {},async()=>true),p=await c.payload({id:'fixture',state:'OPEN',ownerId:'fixture-0',members:reviewMembers.map(m=>({...m,status:'ready'})),remainingMs:3000,elapsedMs:0,expiresAt:new Date(Date.now()+3000)});
  assert.equal(p.files[0].name,'line.png');const buffer=p.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
- assert.equal(meta.width,1200);assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);
+ assert.equal(meta.width,1100);assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);
  assert.equal(buffer.indexOf('NETSCAPE'),-1);
 });
 

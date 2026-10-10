@@ -8,6 +8,7 @@ function harness(type='race'){
  const db={
   gameSession:{findUnique:async()=>structuredClone(row),findMany:async()=>structuredClone(recent),updateMany:async({where,data})=>{assert.equal(where.version,row.version);row={...row,...structuredClone(data)};writes++;return{count:1};}},
   memberPresenceState:{findFirst:async()=>null},
+  inventoryEntry:{findMany:async()=>[]},
   scheduledJob:{create:async({data})=>{jobs.push(data);writes++;return data;}},
   operationReceipt:{findUnique:async({where})=>receipts.get(where.guildId_key.key),create:async({data})=>{receipts.set(data.key,data);writes++;return data;}},
   $transaction:async(fn,options)=>{assert.equal(options.isolationLevel,'Serializable');return fn(db);}
@@ -16,12 +17,12 @@ function harness(type='race'){
  return{repo,jobs,get row(){return row;},get writes(){return writes;},get draws(){return draws;},setRecent(value){recent=value;},due(){row.expiresAt=new Date(now.getTime()-1);}};
 }
 
-test('event preparation is read-only and wager/extension versions retain the private prepared outcome',async()=>{
+test('event preparation is read-only and closing rebuilds the authoritative outcome after wager or extension changes',async()=>{
  for(const type of ['race','fight']){
   const h=harness(type),prepared=await h.repo.prepareClose('server','round'),draws=h.draws;
   assert.equal(h.writes,0);assert.equal(h.row.state,'OPEN');assert.equal(h.row.data.plan,undefined);assert.equal(h.row.data.fightPlan,undefined);assert.equal(prepared.version,0);
   h.row.version+=2;h.row.extensionUsed=true;h.due();await h.repo.closeBetting('server','round',prepared);
-  assert.equal(h.draws,draws,'closing reuses the same privately prepared outcome');assert.equal(h.row.state,'LOCKED');assert.deepEqual(h.row.data[type==='fight'?'fightPlan':'plan'],prepared.data[type==='fight'?'fightPlan':'plan']);
+  assert.ok(h.draws>draws,'closing rebuilds the outcome inside its serializable transaction');assert.equal(h.row.state,'LOCKED');assert.notDeepEqual(h.row.data[type==='fight'?'fightPlan':'plan'],prepared.data[type==='fight'?'fightPlan':'plan']);
   assert.equal(h.jobs.length,1);assert.equal(h.jobs[0].dueAt.getTime()-new Date(h.row.data.startedAt).getTime(),(h.row.data.fightPlan??h.row.data.plan).durationMs);
   const writes=h.writes;await h.repo.closeBetting('server','round',prepared);assert.equal(h.writes,writes,'replayed close creates no second timer or outcome');
  }

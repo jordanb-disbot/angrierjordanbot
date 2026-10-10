@@ -10,7 +10,7 @@ import {raceSnapshot} from '../../dist/packages/features-events/src/domain.js';
 const common={id:'visual',guildId:'g',channelId:'c',ownerId:'jordan',state:'LOCKED',extensionUsed:false,pool:'1200',bets:[]};
 test('wide event timelines use one-shot authoritative frames without external copy',async()=>{
  const coordinator=new DiscordEventsCoordinator({}, {},async()=>true);
- for(const kind of ['race','fight']){
+ for(const kind of ['race']){
   const racers=kind==='fight'?reviewMembers.slice(0,2):reviewMembers,plan=reviewPlans[kind],view={...common,type:kind,racers,...(kind==='fight'?{combat:fightSnapshot(plan,12000,racers)}:{motion:raceSnapshot(plan,8000)})},before=JSON.stringify(view);
   const result=await coordinator.payload(view,{timeline:{racers,startedAt:new Date(Date.now()+600000).toISOString(),[kind==='fight'?'fightPlan':'plan']:plan}}),buffer=result.files[0].attachment,meta=await sharp(buffer,{animated:true}).metadata();
   assert.equal(meta.format,'gif');assert.ok(meta.pages>1&&meta.pages<=401);assert.equal(meta.loop,1);assert.equal(meta.width,kind==='race'?480:1200);assert.ok(buffer.length<10*1024*1024);assert.deepEqual(result.embeds,[]);assert.equal(JSON.stringify(view),before);

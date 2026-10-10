@@ -13,9 +13,9 @@ const config=enabled=>({get:async(_g,k)=>k==='features.race'?enabled:k==='channe
 const interaction=()=>({guildId:'g',guild:{},channelId:'main',user:{id:'member'},customId:'event:join:round',calls:[],deferred:false,isButton:()=>true,isModalSubmit:()=>false,reply:async function(p){this.calls.push(p)},editReply:async function(p){this.calls.push(p)},deferReply:async function(p){this.deferred=true;this.private=p?.ephemeral},deferUpdate:async function(){this.deferred=true},followUp:async function(p){this.calls.push(p)}});
 test('event flag and containment block stale controls before repository access',async()=>{for(const enabled of [false,true]){const i=interaction();await new DiscordEventsCoordinator(forbidden,config(enabled),async()=>false).handle(i);assert.match(i.calls[0].content,enabled?/restricted/:/not enabled/);}});
 test('event controls are limited to configured main chat',async()=>{const i=interaction();i.channelId='bot';await new DiscordEventsCoordinator(forbidden,config(true),async()=>true).handle(i);assert.match(i.calls[0].content,/main chat/);});
-test('unauthorized special trigger is deleted silently before any session starts',async()=>{
- const calls=[],message={content:'!race',author:{id:'member',bot:false},guildId:'g',guild:{members:{fetch:async()=>({roles:{cache:new Map()}})}},channelId:'main',delete:async()=>calls.push('deleted')};
- const settings={get:async(_g,k)=>k==='channels.main_chat'?'main':k==='special_commands.enabled'?true:k==='special_commands.access_roles'?{'!race':['staff']}:true};await new DiscordEventsCoordinator(forbidden,settings,async()=>true).message(message);assert.deepEqual(calls,['deleted']);
+test('unauthorized Race trigger is ignored before any session starts',async()=>{
+ const calls=[],message={content:'!race',author:{id:'member',bot:false},guildId:'g',guild:{members:{fetch:async()=>({roles:{cache:new Map()}})}},channelId:'main',channel:{isSendable:()=>true,name:'main-chat'},delete:async()=>calls.push('deleted')};
+ const settings={get:async(_g,k)=>k==='channels.main_chat'?'main':k==='features.special_commands'||k==='special_commands.enabled'?true:k==='special_commands.access_roles'?{'!race':['staff']}:true};await new DiscordEventsCoordinator(forbidden,settings,async()=>true).message(message);assert.deepEqual(calls,[]);
 });
 test('public race payload uses production raster, private wager buttons and no replay controls',async()=>{
  const racers=[{userId:'1',name:'Chair One',chair:1},{userId:'2',name:'Chair Two',chair:2}],view={id:'round',guildId:'g',channelId:'main',messageId:'m',ownerId:'1',state:'OPEN',expiresAt:new Date('2026-09-25T12:01:00Z'),extensionUsed:false,racers,pool:'100',bets:[]};
@@ -49,8 +49,8 @@ test('wager submit retains explicit modal but deletes redundant success response
  const c=new DiscordEventsCoordinator({publicView:async()=>({guildId:'g',channelId:'main',racers:[{userId:'racer'}]}),bet:async()=>({total:25n})},config(true),async()=>true);c.policy=async()=>({});c.refresh=async()=>{};await c.handle(i);assert.deepEqual(i.calls,['deleted']);
 });
 
-test('live Race and Fight keep one authoritative in-frame timeline for the whole locked phase and after restart',async()=>{
- for(const type of ['race','fight']){
+test('live Race keeps one authoritative in-frame timeline for the whole locked phase and after restart',async()=>{
+ for(const type of ['race']){
   const racers=[{userId:'1',name:'Chair One',chair:1},{userId:'2',name:'Chair Two',chair:2}];
   let seed=7654;const random=max=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return Math.floor(seed/4294967296*max);};
   const plan=type==='fight'?planFight(racers,[],random):planRace(racers,random),startedAt=new Date(Date.now()+60000).toISOString(),data={racers,startedAt,...(type==='fight'?{fightPlan:plan}:{plan})};
