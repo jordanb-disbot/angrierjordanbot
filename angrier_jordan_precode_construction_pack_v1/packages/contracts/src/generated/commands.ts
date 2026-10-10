@@ -622,6 +622,25 @@ export const COMMANDS = [
     "tutorialId": "casino"
   },
   {
+    "id": "join_game",
+    "preferred": "/join_game",
+    "registered": "/join_game",
+    "type": "slash",
+    "module": "casino",
+    "handler": "casino.join_game",
+    "featureFlag": "casino",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "poker_channel"
+    ],
+    "options": [],
+    "ephemeralDefault": true,
+    "helpId": "holdem",
+    "tutorialId": "casino"
+  },
+  {
     "id": "holdem",
     "preferred": "/holdem",
     "registered": "/holdem",
@@ -639,7 +658,44 @@ export const COMMANDS = [
       {
         "name": "buy_in",
         "type": "integer",
-        "required": true
+        "required": true,
+        "choices": [
+          {
+            "name": "500",
+            "value": 500
+          },
+          {
+            "name": "1,000",
+            "value": 1000
+          },
+          {
+            "name": "5,000",
+            "value": 5000
+          }
+        ]
+      },
+      {
+        "name": "bots",
+        "type": "integer",
+        "required": false,
+        "choices": [
+          {
+            "name": "No bots",
+            "value": 0
+          },
+          {
+            "name": "1 bot",
+            "value": 1
+          },
+          {
+            "name": "2 bots",
+            "value": 2
+          },
+          {
+            "name": "3 bots",
+            "value": 3
+          }
+        ]
       }
     ],
     "ephemeralDefault": false,
@@ -664,7 +720,44 @@ export const COMMANDS = [
       {
         "name": "buy_in",
         "type": "integer",
-        "required": true
+        "required": true,
+        "choices": [
+          {
+            "name": "500",
+            "value": 500
+          },
+          {
+            "name": "1,000",
+            "value": 1000
+          },
+          {
+            "name": "5,000",
+            "value": 5000
+          }
+        ]
+      },
+      {
+        "name": "bots",
+        "type": "integer",
+        "required": false,
+        "choices": [
+          {
+            "name": "No bots",
+            "value": 0
+          },
+          {
+            "name": "1 bot",
+            "value": 1
+          },
+          {
+            "name": "2 bots",
+            "value": 2
+          },
+          {
+            "name": "3 bots",
+            "value": 3
+          }
+        ]
       }
     ],
     "ephemeralDefault": false,
