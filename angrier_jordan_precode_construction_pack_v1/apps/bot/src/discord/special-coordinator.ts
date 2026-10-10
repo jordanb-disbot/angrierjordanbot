@@ -16,15 +16,15 @@ export const specialDeliveryUrl=(marker:string)=>'https://discord.com/#'+createH
 export class DiscordSpecialCoordinator {
  private readonly refreshes=new Map<string,Promise<void>>();
  private readonly publishedVersions=new Map<string,string>();
- private readonly finales=new Map<string,{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>}>();
+ private readonly finales=new Map<string,{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>;ready?:Promise<void>}>();
  private readonly preparing=new Set<string>();
  private finaleKey(view:LineView){return JSON.stringify([view.ownerId,view.members,view.extensionUsed]);}
- private prepareFinale(view:LineView){
-  if(view.state!=='OPEN'){if(!['LOCKED','SETTLING'].includes(view.state))this.finales.delete(view.id);return;}
-  const key=this.finaleKey(view);if(this.preparing.has(view.id)||this.finales.get(view.id)?.key===key)return;
+ private prepareFinale(view:LineView):Promise<void>{
+  if(view.state!=='OPEN'){if(!['LOCKED','SETTLING'].includes(view.state))this.finales.delete(view.id);return Promise.resolve();}
+  const key=this.finaleKey(view),existing=this.finales.get(view.id);if(this.preparing.has(view.id)||existing?.key===key)return existing?.ready??Promise.resolve();
   this.preparing.add(view.id);if(this.finales.size>=8)this.finales.delete(this.finales.keys().next().value!);
-  const entry:{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>}={key};this.finales.set(view.id,entry);
-  void eventTiming('line.prepare',()=>this.payload({...view,state:'SETTLING',elapsedMs:0,durationMs:LINE_DURATION_MS})).then(payload=>{if(this.finales.get(view.id)===entry)entry.payload=payload;}).catch(()=>this.finales.delete(view.id)).finally(()=>this.preparing.delete(view.id));
+  const entry:{key:string;payload?:Awaited<ReturnType<DiscordSpecialCoordinator['payload']>>;ready?:Promise<void>}={key};this.finales.set(view.id,entry);
+  const ready=eventTiming('line.prepare',()=>this.payload({...view,state:'SETTLING',elapsedMs:0,durationMs:LINE_DURATION_MS})).then(payload=>{if(this.finales.get(view.id)===entry)entry.payload=payload;}).catch(()=>{this.finales.delete(view.id);}).finally(()=>this.preparing.delete(view.id));entry.ready=ready;return ready;
  }
  private readyFinale(view:LineView){const entry=this.finales.get(view.id);return entry?.key===this.finaleKey(view)?entry.payload:undefined;}
  private sweeping=false;
@@ -59,7 +59,7 @@ export class DiscordSpecialCoordinator {
   const context={guildId:message.guildId,channelId:message.channelId,userId:message.author.id,requestKey:message.id};
   const notification=await notificationRole(message.guild,message.channelId,definition.notificationRoleId,this.config)??null;
   const content=definition.responsePool[randomInt(definition.responsePool.length)]!;
-  if(trigger==='!line'){try{const started=await this.repo.start(context,member.displayName,{content,notificationRoleId:notification});if(started.jobId){const view=await this.repo.publicView(started.sessionId);this.prepareFinale(view);await this.deliver(message.client,started.jobId);await message.delete();}return;}catch(error){if(error instanceof DomainError&&error.code==='LINE_ACTIVE')return;throw error;}}
+  if(trigger==='!line'){try{const started=await this.repo.start(context,member.displayName,{content,notificationRoleId:notification});if(started.jobId){const view=await this.repo.publicView(started.sessionId);await this.prepareFinale(view);await this.deliver(message.client,started.jobId);await message.delete();}return;}catch(error){if(error instanceof DomainError&&error.code==='LINE_ACTIVE')return;throw error;}}
   await message.delete();
   const {jobId}=await this.repo.queueCallout(context,content,notification);await this.deliver(message.client,jobId);
   }catch(error){fail('message-to-publication',error);}
