@@ -639,7 +639,40 @@ export const COMMANDS = [
       {
         "name": "buy_in",
         "type": "integer",
-        "required": true
+        "required": true,
+        "choices": [
+          {
+            "name": "500",
+            "value": 500
+          },
+          {
+            "name": "1,000",
+            "value": 1000
+          },
+          {
+            "name": "5,000",
+            "value": 5000
+          }
+        ]
+      },
+      {
+        "name": "bots",
+        "type": "integer",
+        "required": false,
+        "choices": [
+          {
+            "name": "1 bot",
+            "value": 1
+          },
+          {
+            "name": "2 bots",
+            "value": 2
+          },
+          {
+            "name": "3 bots",
+            "value": 3
+          }
+        ]
       },
       {
         "name": "player_2",
@@ -679,7 +712,40 @@ export const COMMANDS = [
       {
         "name": "buy_in",
         "type": "integer",
-        "required": true
+        "required": true,
+        "choices": [
+          {
+            "name": "500",
+            "value": 500
+          },
+          {
+            "name": "1,000",
+            "value": 1000
+          },
+          {
+            "name": "5,000",
+            "value": 5000
+          }
+        ]
+      },
+      {
+        "name": "bots",
+        "type": "integer",
+        "required": false,
+        "choices": [
+          {
+            "name": "1 bot",
+            "value": 1
+          },
+          {
+            "name": "2 bots",
+            "value": 2
+          },
+          {
+            "name": "3 bots",
+            "value": 3
+          }
+        ]
       },
       {
         "name": "player_2",
