@@ -514,7 +514,7 @@
       "completion": "You understand the battleship board, consent and wager settlement. Next: challenge another member only when both can take timely turns."
     },
     "race": {
-      "purpose": "Use !race; /race is retired. Starter is Racer 1; 2\u20136 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15\u201320 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
+      "purpose": "Use !race; /race is retired. Starter is Racer 1; 2\u20136 entrants. Entry and betting last 30 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15\u201320 seconds. No rematch control. Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
       "controls": "Type !race in main chat. Join the race while entrant slots remain, or select a racer for a private wager. Only the host can use the one +30 Seconds extension; filled racer slots do not close betting.",
       "steps": [
         "Use !race, then wait for at least two racers within the entry window.",
@@ -534,7 +534,7 @@
       "completion": "You know Fight starts immediately and betting locks your chosen fighter. Next: use /fight only when you intend the real event, or revisit Race for entrant-based play."
     },
     "line": {
-      "purpose": "Use !line. The host is automatically in. Members choose I\u2019m In or I Need a Second during 60 seconds of readiness. The host can add 30 seconds once, or start early. When readiness ends, entries lock and the five-second countdown begins automatically. The host may start early or cancel before the countdown. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, four-second powder finale, complete. No zero, rematch or Play Again.",
+      "purpose": "Use !line. The host is automatically in. Members choose I\u2019m In or I Need a Second during 30 seconds of readiness. The host can add 30 seconds once, or start early. When readiness ends, entries lock and the five-second countdown begins automatically. The host may start early or cancel before the countdown. The host may start despite waiting members. Countdown: 5, 4, 3, 2, 1, four-second powder finale, complete. No zero, rematch or Play Again.",
       "controls": "Type !line in main chat. I\u2019m In marks you ready and I Need a Second marks you waiting. The host may add 30 seconds once, start early or cancel before countdown; a waiting member does not veto the host\u2019s start.",
       "steps": [
         "Use the prefix !line and check your readiness state on the live card.",

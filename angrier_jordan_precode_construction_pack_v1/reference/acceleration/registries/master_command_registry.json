@@ -1020,7 +1020,7 @@
       "command": "!race",
       "type": "special_text",
       "module": "special_commands",
-      "description": "Start Chair Race, ping the configured Race role, and open the 60-second join/betting window.",
+      "description": "Start Chair Race, ping the configured Race role, and open the 30-second join/betting window.",
       "permissions": [
         "member"
       ],

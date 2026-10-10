@@ -434,8 +434,8 @@
       "mutable": false,
       "dashboardWrite": "blocked",
       "dependsOn": [],
-      "min": 60,
-      "max": 60
+      "min": 30,
+      "max": 30
     },
     {
       "key": "race.extension_seconds",

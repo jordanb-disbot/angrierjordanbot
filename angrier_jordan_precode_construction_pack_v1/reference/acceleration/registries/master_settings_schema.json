@@ -405,8 +405,8 @@
       "restart_required": false,
       "description": "Race join + betting window before optional extension.",
       "risk": "locked",
-      "min": 60,
-      "max": 60,
+      "min": 30,
+      "max": 30,
       "mutable": false,
       "dashboard_write": "blocked",
       "depends_on": []

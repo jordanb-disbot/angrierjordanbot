@@ -7,7 +7,7 @@
   ],
   "title": "Race and Fight",
   "body": "Main chat events use private wager modals. One selection per member is locked after commitment; you may add to that wager within the cumulative limit. Wallet funds are used before bank funds. Winning bettors share 95% of the pool proportionally in whole Ottomans. If nobody backed the winner, all wagers return to their original bettors and funding buckets, with no rake; the event result still counts.",
-  "race": "Use !race. The retired /race slash command is unavailable. Starter is Racer 1; 2\u20136 entrants. Entry and betting last 60 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15\u201320 seconds. No rematch control.",
+  "race": "Use !race. The retired /race slash command is unavailable. Starter is Racer 1; 2\u20136 entrants. Entry and betting last 30 seconds; the host can extend both by 30 seconds once. Full racer slots leave betting open. Fewer than two racers cancels with full refunds. The fair sprint lasts 15\u201320 seconds. No rematch control.",
   "fight": "Use /fight @member in an approved Fight channel. Two eligible fighters start immediately without acceptance. Betting lasts 30 seconds with one host +30 extension. Fair 50/50 outcome; 100 HP and synchronized approved combat actions. Fighter departure before settlement cancels with refunds. No join or rematch control. Both fighters begin at 100 HP. Combat targets 22\u201328 seconds, never beyond 30 seconds. The latest three exchanges, numeric HP and bars show the same saved combat state.",
   "fields": {
     "member": "Required Fight opponent; no self-fight.",
