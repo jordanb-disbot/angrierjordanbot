@@ -29,6 +29,7 @@ test('webhooks and bots are excluded, while each user reaction receives one inde
 test('recognizes the supported Type Shit emoji aliases only',()=>{
  assert.equal(isTypeShitEmojiName('typeshit'),true);
  assert.equal(isTypeShitEmojiName('type_shit'),true);
- assert.equal(isTypeShitEmojiName('TypeShiiit'),false);
+ assert.equal(isTypeShitEmojiName('TypeShiiit'),true);
+ assert.equal(isTypeShitEmojiName('typeshiiit'),true);
  assert.equal(isTypeShitEmojiName('other_emoji'),false);
 });

@@ -6,7 +6,7 @@ const TYPE_SHIT_GIF='type-shit.gif';
 const plainReply={content:'Shit',allowedMentions:{parse:[] as never[]}};
 const replyNonce=(kind:string,id:string)=>createHash('sha256').update(`type-shit:${kind}:${id}`).digest('hex').slice(0,24);
 export function isTypeShitEmojiName(name:string|null|undefined){
-  return /^(?:type_shit|typeshit)$/i.test(name??'');
+  return /^(?:type_shit|typeshit|typeshiiit)$/i.test(name??'');
 }
 
 /** A single plain reply for each qualifying message or reaction event. */
