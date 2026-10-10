@@ -5981,7 +5981,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Permanent approved visual system; deterministic live-state rendering",
-      "sha256": "3696cd26f5eae32673519c3d373548b6f79186b74a4359b376204fce86b48da8"
+      "sha256": "611fe3d8aeee2d0d719ef4289a8ca1c94c9c1d594d318b0e633a89bdd60194b8"
     },
     {
       "id": "line.approved.lounge",
@@ -6017,7 +6017,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic state in frozen Angrier Jordan visual system",
-      "sha256": "7b7d1acd81b2d75c6f4f398cf8b2bfcfe6c9ba6ad3fae7f68cdba7a444f00bd1"
+      "sha256": "63b5ad41010dde1e96d15f39bdae2f3429a378b6b755633fd51c5dca27da33dd"
     },
     {
       "id": "crime.runtime.renderer",
@@ -6044,7 +6044,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Community result surfaces inherit the frozen visual family",
-      "sha256": "c105bb37312f15c867e3c1ca459cfa8904ff5687578e7bb966108e861c5ecdcd"
+      "sha256": "9ea82b916f570a83479bd5f84630f9b647c9d37e07e0542b671c2d6f63d6bff3"
     },
     {
       "id": "family.runtime.renderer",
@@ -6062,7 +6062,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "cba2c90eff7a45f4be9e127cfe6833d1b7d97e3479e790c0638576af3cfbe16c"
+      "sha256": "e2705e109c79dd8221d251b555c639019a211ade953b9634c5e8063c5176425b"
     },
     {
       "id": "chairisms.runtime.renderer",
@@ -6080,7 +6080,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "2e410912879956f011fece292c74fadbe583b224f0dd09d5740499cd3a49c4c1"
+      "sha256": "7a3e9c9b6324ab92ac1c211ee56fdbdd9e764c73cd996e9bc59abbd2ca70096e"
     },
     {
       "id": "casino.runtime.renderer",
@@ -6125,7 +6125,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic centered five-question Chairs introduction card and unified private form panel.",
-      "sha256": "eaff065c0a2ea55b289d18fa0ff5fbbcbed95cbeab8738ada88e174560d247cf"
+      "sha256": "20d3039a8165c90ee6b6bb6e9a6b4d0f031903f596fb08fe6492fa98976ce2fa"
     },
     {
       "id": "social.runtime",
@@ -6260,7 +6260,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "17459b358e1eef3343c5e9d6c146a6d3f6505c2ac75a08adaabc93ef15f49180"
+      "sha256": "b7533e89093d214d695ace0de64bc89f58fc54482650e1fe577136c7b4e34e4a"
     },
     {
       "id": "event.v5.line-number-1-runtime",
@@ -6269,7 +6269,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "bbef724c7452647b6d8f6b86084f6abd1453da96e49b4c5eb6bab74591a698f1"
+      "sha256": "aa7e69ef502b3caed2f9f380b6256df12079c3e7090adbc3f10e84d0b22a7d44"
     },
     {
       "id": "event.v5.line-number-2",
@@ -6278,7 +6278,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "bbe9a944b0268be3fb0c4fc0cfd5bf1b76caa44461c5a4c25b67972f78ace5a3"
+      "sha256": "a462de805ff1786af22841139025539eb92f8d335bb83d938edf902c87d1c83c"
     },
     {
       "id": "event.v5.line-number-2-runtime",
@@ -6287,7 +6287,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "8538872121bca53b25a2884c21fbf00eb98ce195accc8cec297742ac16345791"
+      "sha256": "4005d9fb0a0a367b569add0cbce51f167d63848c5cc251d7c7f19486b1f493d1"
     },
     {
       "id": "event.v5.line-number-3",
@@ -6296,7 +6296,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "32bbf25da84724623c44e76a0e417eadc33baaa5ea21371dd6ea8896f26ff2f8"
+      "sha256": "1d70b4a75435dd1d1b68da709bec38d028ea918ba5ae222070cbe01c81dc1b10"
     },
     {
       "id": "event.v5.line-number-3-runtime",
@@ -6305,7 +6305,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "30f951a402e0975e6c8cbfaad3de0d88e635a07f47be5c27259201987a683585"
+      "sha256": "67f72319029f3cfc17d08362b5cf7613e164102c078c1fe72f19243b27d477e3"
     },
     {
       "id": "event.v5.line-number-4",
@@ -6314,7 +6314,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "d0e906eefed3f959952cfb58757efc81e5d4982234eb624f5ee9fc2785e3fa22"
+      "sha256": "2683d410c6f34c2dd1f3e93ed67ca7738b49028fcf3a4bd4d2c67ce89f4e2eba"
     },
     {
       "id": "event.v5.line-number-4-runtime",
@@ -6323,7 +6323,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "a4ca51926ee6c752137f2c9cce3a06bbfb68692ae0df0cb90e3b147a82d6c982"
+      "sha256": "49d9997d2f79829e90e22388094eb3a5017ceef5fb9101e380bbb14c0f680a80"
     },
     {
       "id": "event.v5.line-number-5",
@@ -6332,7 +6332,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "acc5b6975886ccd370fc14b246b241bd4bb454bec11b385d9a9a4efc39a80690"
+      "sha256": "794643f2635057b16ef1f251beedeb29a571e176d7180c8a89ac9607a4d4573f"
     },
     {
       "id": "event.v5.line-number-5-runtime",
@@ -6341,7 +6341,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Packaged event artwork; deterministic runtime composition.",
-      "sha256": "3cfed0e92ca98cb90f46c041acd8abe5c6e7b40c6706efbd425bc808b3997998"
+      "sha256": "7b04ac21616b060366a09eb4323f3b45c50de8146d54ba85e740e8f5adf5d822"
     },
     {
       "id": "event.v5.cars",
@@ -6485,7 +6485,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Readable member profile tables, Discord portraits, records, standings and showcase using approved brand tokens",
-      "sha256": "5b8cc09833fde227299ba50458a0e8e8f730ac804e160796c5a76b64c1af79e2"
+      "sha256": "a47a1376ae53139634d0dad5daad3d4b7678cd4781b685a71b28224b9d53bc30"
     },
     {
       "id": "crime-premium-runtime",
@@ -6512,7 +6512,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Wide avatar-led Family trees, weddings, voting, auctions, estates and private windows.",
-      "sha256": "266085ab0b3a8eeb0935f38f31fb6e6e59940fdea42a8bd76323c078167c361c"
+      "sha256": "deb2773827cc2a8983b374fda947a885392f9485c81e1a7aba52826daf6be3f9"
     },
     {
       "id": "wyr.premium.renderer",
@@ -6521,7 +6521,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Owner-requested wide cobalt Games presentation.",
-      "sha256": "ca1cf44be2b66fe6bfbf58d2ad138d5d9dafe3b7473e9b289094d511d4961008"
+      "sha256": "358b53d79ac0cead3a2b126be4a6949380e652b71f468ba0783b2b80bb1d1a73"
     },
     {
       "id": "solo.premium.renderer",
@@ -6557,7 +6557,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
-      "sha256": "a0955c2ebe36526a402b30b5e666de2406875b8633567c0ba21b06814fac0430"
+      "sha256": "04e8353e86ad9518bb8d02bd7963b7d8d08c1e846620d5c1fbe21b50b419563c"
     },
     {
       "id": "onboarding.runtime",
@@ -6566,7 +6566,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic burgundy/brass local acceptance presentation; production defaults unchanged.",
-      "sha256": "f7ba47fc0738e2fb6399fe17259c463bcabfdff11e59e7ffd843dded6ce052ff"
+      "sha256": "f2ceaa7e56891e6a059b81cab4d74292af2836a1924c5c20675f61431937a48d"
     },
     {
       "id": "casino.runtime.game_art",
@@ -6574,7 +6574,7 @@
       "category": "runtime.renderer",
       "usage": "Deterministic casino reels, card suits, wheel, dice, coins and tickets",
       "canonical": true,
-      "sha256": "5a4174ce41b216e40683226cbeb8f9a447926481e4aab47b8734a49b193c4747"
+      "sha256": "6597e1a80cc8a4f8bea6fbbd2de8caae8e9dcf4a040f4281664f0abb0677c217"
     },
     {
       "id": "race.wheelchair.1.source",

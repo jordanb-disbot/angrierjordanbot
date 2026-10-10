@@ -296,6 +296,32 @@
   },
   {
     "type": 1,
+    "name": "holdem",
+    "description": "Open a Texas Hold’em Poker table.",
+    "options": [
+      {
+        "type": 4,
+        "name": "buy_in",
+        "description": "buy_in option",
+        "required": true
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "omaha",
+    "description": "Open an Omaha Poker table.",
+    "options": [
+      {
+        "type": 4,
+        "name": "buy_in",
+        "description": "buy_in option",
+        "required": true
+      }
+    ]
+  },
+  {
+    "type": 1,
     "name": "lottery",
     "description": "View/buy weekly lottery tickets.",
     "options": []

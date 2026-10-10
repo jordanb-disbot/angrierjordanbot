@@ -1,9 +1,6 @@
-import {readFile} from 'node:fs/promises';
 import type {Message,MessageReaction,PartialMessageReaction,User,PartialUser} from 'discord.js';
 
 const TYPE_SHIT_GIF='type-shit.gif';
-const reply={content:'Shit',allowedMentions:{parse:[] as never[]}};
-const typeShitAnimation=new URL('../../../../packages/features-special/assets/type-shit.gif',import.meta.url);
 const plainReply={content:'Shit',allowedMentions:{parse:[] as never[]}};
 export function isTypeShitEmojiName(name:string|null|undefined){
   return /^(?:type[_-]?sh+i+t|typeshit)$/i.test(name??'');
@@ -11,20 +8,17 @@ export function isTypeShitEmojiName(name:string|null|undefined){
 
 /** Small server-wide call-and-response with no channel, role, or feature gate. */
 export class TypeShitResponder {
+  private readonly replied=new Set<string>();
   async message(message:Message):Promise<void>{
-    if(!message.guild||message.author.bot)return;
-    if(message.content.trim().toLowerCase()==='!typeshit'){
-      if(!message.channel.isSendable())return;
-      await message.delete().catch(()=>undefined);
-      await message.channel.send({files:[{attachment:await readFile(typeShitAnimation),name:'type-shit.gif'}],allowedMentions:{parse:[]}});
-      return;
-    }
+    if(!message.guild||message.author.bot||message.webhookId||this.replied.has(message.id))return;
     const emojiUses=[...message.content.matchAll(/<a?:(\w+):\d+>/g)].filter(match=>isTypeShitEmojiName(match[1])).length;
-    const phraseUses=(message.content.match(/\btype\s+shit\b/gi)??[]).length;
-    const stickerUses=[...message.stickers.values()].filter(sticker=>sticker.name==='TS').length;
+    const phraseUses=/\btype\s+shit\b/i.test(message.content)?1:0;
+    const stickerUses=[...message.stickers.values()].some(sticker=>/^TS$/i.test(sticker.name??''))?1:0;
     const gifUses=[...message.attachments.values()].filter(attachment=>attachment.name?.toLowerCase()===TYPE_SHIT_GIF).length;
-    for(let count=0;count<emojiUses+phraseUses+stickerUses;count+=1)await message.reply(plainReply);
-    for(let count=0;count<gifUses;count+=1)await message.reply(plainReply);
+    if(emojiUses+phraseUses+stickerUses+gifUses===0)return;
+    this.replied.add(message.id);
+    if(this.replied.size>5000)this.replied.delete(this.replied.values().next().value!);
+    await message.reply(plainReply);
   }
 
   async reaction(reaction:MessageReaction|PartialMessageReaction,user:User|PartialUser):Promise<void>{
