@@ -12,7 +12,7 @@ const groups={
  CRIME:['features.crime'],CHAIRISMS:['features.chairisms'],PARTY:['features.party_games'],
  CHANNEL_GAMES:['features.channel_games'],PVP:['features.pvp'],SOLO:['features.solo_games'],
  CASINO:['features.casino','features.lottery'],PROFILES:['features.profiles','features.activity','features.spotlight'],
- ITEMS:['features.items'],ECONOMY:[],FAMILY:['features.family'],JAIL:[],MODERATION:[],SECURITY:[],ACTIVITY_LOGGING:[]
+ ITEMS:['features.items'],ECONOMY:[],FAMILY:['features.family'],JAIL:[],MODERATION:[],SECURITY:[],ACTIVITY_LOGGING:[],FULLY_FURNISHED:[]
 };
 const excluded=new Set(['SECURITY']);
 const channelInputs={ACCEPTANCE_MAIN_CHAT_CHANNEL_ID:'channels.main_chat',ACCEPTANCE_BOT_CHANNEL_ID:'channels.bot_channel',ACCEPTANCE_GAMES_CHANNEL_ID:'channels.games_channel',ACCEPTANCE_INTRODUCTION_CHANNEL_ID:'channels.introduction_channel'};

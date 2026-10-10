@@ -5,7 +5,7 @@ import {enableProductionEconomyItems,main,GRANT_KEY,NOT_JORDAN,RING,FAMILY_IDS} 
 import {GUILD} from '../../scripts/audit-production-race-line.mjs';
 
 const tiers=[{tier:1,cap:5000,upgrade_cost:1000},{tier:2,cap:25000,upgrade_cost:5000},{tier:3,cap:100000,upgrade_cost:20000},{tier:4,cap:500000,upgrade_cost:75000},{tier:5,cap:null,upgrade_cost:0}];
-const familyCatalogItems=JSON.parse(readFileSync(new URL('../../packages/content/economy/family_catalog.json',import.meta.url),'utf8')).items;
+const familyCatalogItems=JSON.parse(readFileSync(new URL('../../packages/content/economy/family_catalog.json',import.meta.url),'utf8')).items.filter(item=>FAMILY_IDS.includes(item.id));
 function fixture(){
  const rows=new Map(Object.entries({'features.items':false,'economy.bank_tiers':tiers,'economy.bank_tier5_interest_bps':100,'economy.bank_tier5_interest_cap':100000,'features.family':true,'unrelated.setting':'keep'}).map(([key,value])=>[key,{value,version:1}]));
  const state={wallet:1200n,bank:300n,ring:0,locked:false},writes=[],receipts=new Map(),output=[],catalog=new Map(),ensuredIds=[];

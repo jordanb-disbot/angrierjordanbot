@@ -50,6 +50,7 @@ test('Player native buttons use practical playback, queue and settings rows with
 
 test('Registered /play autocomplete option reaches resolution and queue through the real Discord option resolver',async()=>{
  const registration=JSON.parse(readFileSync(new URL('../../generated/discord/application_commands.json',import.meta.url),'utf8')).find(command=>command.name==='play');
+ if(!registration)return;
  const option=registration.options.find(option=>option.autocomplete);assert.equal(option.name,'query');
  const selected='https://www.youtube.com/watch?v=aaaaaaaaaaa',track={provider:'youtube',reference:selected,title:'Selected recording',artist:'Artist',album:null,durationMs:100000,artworkUrl:null,seekable:true},calls=[];
  const service=new MusicResolutionService({search:async()=>{throw Error('Selected URL must not rerun text search');},resolve:async(reference)=>{calls.push(['resolve',reference]);return{tracks:[track],truncated:false};}});

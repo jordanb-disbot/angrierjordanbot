@@ -14,6 +14,7 @@ function bankReady(tiers,bps,cap){
 }
 
 export async function enableProductionEconomyItems({db,config,get,atomic,grantCatalogReward,ensureFamilyCatalog,familyCatalogItems,write=console.log}){
+ const familyItems=familyCatalogItems.filter(item=>FAMILY_IDS.includes(item.id));
  check(await db.guild.findUnique({where:{id:GUILD},select:{id:true}}),'PRODUCTION_GUILD_MISSING');
  check(config.definition('features.items')?.type==='boolean'&&!config.definition('features.economy')&&!config.definition('features.bank'),'CANONICAL_FEATURE_SCHEMA_MISMATCH');
  const tiers=await config.getWithMetadata(GUILD,'economy.bank_tiers'),bps=await config.getWithMetadata(GUILD,'economy.bank_tier5_interest_bps'),cap=await config.getWithMetadata(GUILD,'economy.bank_tier5_interest_cap');
@@ -24,16 +25,16 @@ export async function enableProductionEconomyItems({db,config,get,atomic,grantCa
  check(!existingLock,'FAMILY_INVENTORY_CATEGORY_LOCKED');
  const feature=await config.getWithMetadata(GUILD,'features.items');
  check(typeof feature.value==='boolean','ITEMS_FEATURE_INVALID');
- check(Array.isArray(familyCatalogItems)&&familyCatalogItems.length===3&&isDeepStrictEqual(familyCatalogItems.map(item=>item.id),FAMILY_IDS),'FAMILY_CATALOG_SOURCE_INVALID');
- const catalogBefore=await Promise.all(familyCatalogItems.map(item=>db.catalogItem.findUnique({where:{id:item.id}})));
- for(let index=0;index<familyCatalogItems.length;index++){
-  const row=catalogBefore[index],definition=familyCatalogItems[index];
+ check(familyItems.length===3&&isDeepStrictEqual(familyItems.map(item=>item.id),FAMILY_IDS),'FAMILY_CATALOG_SOURCE_INVALID');
+ const catalogBefore=await Promise.all(familyItems.map(item=>db.catalogItem.findUnique({where:{id:item.id}})));
+ for(let index=0;index<familyItems.length;index++){
+  const row=catalogBefore[index],definition=familyItems[index];
   if(row)check(row.name===definition.name&&row.type===definition.type&&row.rarity===definition.rarity&&row.enabled===true&&row.giftable===definition.giftable&&row.sellValue===BigInt(definition.sellValue)&&row.buyPrice!==null&&row.buyPrice>=0n&&row.metadata?.inheritable===definition.metadata.inheritable&&row.metadata?.consumable===definition.metadata.consumable,'FAMILY_CATALOG_EXISTING_ROW_INVALID');
  }
  await ensureFamilyCatalog(db);
- const catalogAfter=await Promise.all(familyCatalogItems.map(item=>db.catalogItem.findUnique({where:{id:item.id}})));
- for(let index=0;index<familyCatalogItems.length;index++){
-  const row=catalogAfter[index],before=catalogBefore[index],definition=familyCatalogItems[index];
+ const catalogAfter=await Promise.all(familyItems.map(item=>db.catalogItem.findUnique({where:{id:item.id}})));
+ for(let index=0;index<familyItems.length;index++){
+  const row=catalogAfter[index],before=catalogBefore[index],definition=familyItems[index];
   check(row?.id===definition.id,'FAMILY_CATALOG_ENSURE_FAILED');
   if(before)check(isDeepStrictEqual(row,before),'FAMILY_CATALOG_EXISTING_ROW_CHANGED');
   else check(row.name===definition.name&&row.type===definition.type&&row.rarity===definition.rarity&&row.buyPrice===BigInt(definition.buyPrice)&&row.sellValue===BigInt(definition.sellValue)&&row.enabled===definition.enabled&&row.giftable===definition.giftable&&isDeepStrictEqual(row.metadata,definition.metadata),'FAMILY_CATALOG_ENSURE_FAILED');
@@ -62,7 +63,7 @@ export async function enableProductionEconomyItems({db,config,get,atomic,grantCa
  write('PASS: Economy configuration verified; ENABLE_ECONOMY_SMOKE=true required on worker.');
  write('PASS: Bank tiers and interest configuration verified; Bank uses the Economy worker flag.');
  write('PASS: Items/Inventory enabled (features.items=true); ENABLE_ITEMS_SMOKE=true required on worker.');
- for(let index=0;index<familyCatalogItems.length;index++)write(`PASS: ${familyCatalogItems[index].id} catalog ${catalogBefore[index]?'existing preserved':'created from source definition'}; enabled=true.`);
+ for(let index=0;index<familyItems.length;index++)write(`PASS: ${familyItems[index].id} catalog ${catalogBefore[index]?'existing preserved':'created from source definition'}; enabled=true.`);
  write(`PASS: @NotJordan Discord user ID ${NOT_JORDAN} verified in production guild.`);
  write(`PASS: ${RING} quantity after one-time grant=${result.ringQuantityAfter}; unlocked=true.`);
  write(`PASS: Ottoman balance before=${result.balanceBefore}; after=${result.balanceAfter}; one-time grant=25000.`);
