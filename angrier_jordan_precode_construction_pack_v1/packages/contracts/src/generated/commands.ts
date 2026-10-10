@@ -622,6 +622,25 @@ export const COMMANDS = [
     "tutorialId": "casino"
   },
   {
+    "id": "join_game",
+    "preferred": "/join_game",
+    "registered": "/join_game",
+    "type": "slash",
+    "module": "casino",
+    "handler": "casino.join_game",
+    "featureFlag": "casino",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "poker_channel"
+    ],
+    "options": [],
+    "ephemeralDefault": true,
+    "helpId": "holdem",
+    "tutorialId": "casino"
+  },
+  {
     "id": "holdem",
     "preferred": "/holdem",
     "registered": "/holdem",
@@ -661,6 +680,10 @@ export const COMMANDS = [
         "required": false,
         "choices": [
           {
+            "name": "No bots",
+            "value": 0
+          },
+          {
             "name": "1 bot",
             "value": 1
           },
@@ -673,21 +696,6 @@ export const COMMANDS = [
             "value": 3
           }
         ]
-      },
-      {
-        "name": "player_2",
-        "type": "user",
-        "required": false
-      },
-      {
-        "name": "player_3",
-        "type": "user",
-        "required": false
-      },
-      {
-        "name": "player_4",
-        "type": "user",
-        "required": false
       }
     ],
     "ephemeralDefault": false,
@@ -734,6 +742,10 @@ export const COMMANDS = [
         "required": false,
         "choices": [
           {
+            "name": "No bots",
+            "value": 0
+          },
+          {
             "name": "1 bot",
             "value": 1
           },
@@ -746,21 +758,6 @@ export const COMMANDS = [
             "value": 3
           }
         ]
-      },
-      {
-        "name": "player_2",
-        "type": "user",
-        "required": false
-      },
-      {
-        "name": "player_3",
-        "type": "user",
-        "required": false
-      },
-      {
-        "name": "player_4",
-        "type": "user",
-        "required": false
       }
     ],
     "ephemeralDefault": false,

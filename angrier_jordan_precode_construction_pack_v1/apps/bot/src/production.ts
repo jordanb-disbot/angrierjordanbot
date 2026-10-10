@@ -86,7 +86,7 @@ import {DiscordDmsCoordinator} from './discord/dms-coordinator.js';
 class CuidLikeIds {next(prefix:string){return `${prefix}_${crypto.randomUUID()}`;}}
 const required=(name:string)=>{const value=process.env[name]?.trim();if(!value)throw new Error(`Missing required environment variable ${name}`);return value;};
 const ECONOMY_COMMANDS=new Set(['daily','weekly','work','fish','dig','scavenge','statement','inventory','bank','transfer']);
-const POKER_COMMANDS=new Set(['holdem','omaha']);
+const POKER_COMMANDS=new Set(['holdem','omaha','join_game']);
 
 export async function startProductionBot():Promise<void>{
   startup.mark('runtime-config-validation');

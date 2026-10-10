@@ -8,7 +8,7 @@ export interface CommandOptionContract {
   type: string;
   required?: boolean;
   description?: string;
-  choices?: string[];
+  choices?: Array<string|number|{name:string;value:string|number}>;
   min?: number;
   max?: number;
   autocomplete?: boolean;

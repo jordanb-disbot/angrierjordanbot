@@ -737,6 +737,25 @@
       "registration_path": "/casino blackjack"
     },
     {
+      "id": "join_game",
+      "command": "/join_game",
+      "type": "slash",
+      "module": "casino",
+      "description": "Join the open Poker lobby in the Poker channel.",
+      "permissions": ["member"],
+      "channels": ["poker_channel"],
+      "options": [],
+      "handler": "casino.join_game",
+      "feature_flag": "casino",
+      "ephemeral_default": true,
+      "help_id": "holdem",
+      "tutorial_id": "casino",
+      "aliases": [],
+      "status": "locked",
+      "preferred_invocation": "/join_game",
+      "registration_path": "/join_game"
+    },
+    {
       "id": "holdem",
       "command": "/holdem",
       "type": "slash",
@@ -764,25 +783,11 @@
           "type": "integer",
           "required": false,
           "choices": [
+            {"name": "No bots", "value": 0},
             {"name": "1 bot", "value": 1},
             {"name": "2 bots", "value": 2},
             {"name": "3 bots", "value": 3}
           ]
-        },
-        {
-          "name": "player_2",
-          "type": "user",
-          "required": false
-        },
-        {
-          "name": "player_3",
-          "type": "user",
-          "required": false
-        },
-        {
-          "name": "player_4",
-          "type": "user",
-          "required": false
         }
       ],
       "handler": "casino.holdem",
@@ -823,25 +828,11 @@
           "type": "integer",
           "required": false,
           "choices": [
+            {"name": "No bots", "value": 0},
             {"name": "1 bot", "value": 1},
             {"name": "2 bots", "value": 2},
             {"name": "3 bots", "value": 3}
           ]
-        },
-        {
-          "name": "player_2",
-          "type": "user",
-          "required": false
-        },
-        {
-          "name": "player_3",
-          "type": "user",
-          "required": false
-        },
-        {
-          "name": "player_4",
-          "type": "user",
-          "required": false
         }
       ],
       "handler": "casino.omaha",
