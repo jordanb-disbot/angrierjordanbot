@@ -56,7 +56,7 @@ import {PrismaProfilesRepository} from '../../../packages/features-profiles/src/
 import {DiscordItemsCoordinator,ITEM_COMMANDS} from './discord/items-coordinator.js';
 import {PrismaItemRepository} from '../../../packages/features-economy/src/items-prisma.js';
 import fs from 'node:fs';
-import { Client, DiscordAPIError, EmbedBuilder, Events, GatewayIntentBits, Partials, REST, Routes, type ClientEvents, type Guild } from 'discord.js';
+import { Client, DiscordAPIError, EmbedBuilder, Events, GatewayIntentBits, Partials, type ClientEvents, type Guild } from 'discord.js';
 import {validateRuntimeEnvironment} from '../../../packages/core/src/runtime-environment.js';
 import {RuntimeLifecycle} from '../../../packages/core/src/runtime-lifecycle.js';
 import {startRuntimeHealth} from './runtime-health.js';
@@ -421,8 +421,6 @@ export async function startProductionBot():Promise<void>{
       commandRegistrationStage='bulk';
       const applicationId=ready.user.id;
       if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');
-      const rest=new REST({version:'10'}).setToken(token);
-      const route=Routes.applicationGuildCommands(applicationId,guildId);
       const request=async<T>(work:(signal:AbortSignal)=>Promise<T>,timeoutMs=30_000)=>{
         const controller=new AbortController();
         const timeout=setTimeout(()=>controller.abort(),timeoutMs);
@@ -430,13 +428,28 @@ export async function startProductionBot():Promise<void>{
         try{return await work(controller.signal);}
         finally{clearTimeout(timeout);}
       };
+      // Keep command registration off discord.js's REST queue. A timed-out
+      // bulk replacement otherwise leaves that queue occupied and turns a
+      // single guild sync into rate-limited individual creates.
+      const endpoint=`https://discord.com/api/v10/applications/${applicationId}/guilds/${guildId}/commands`;
+      const discordRequest=async<T>(method:'GET'|'POST'|'PUT',body?:unknown,timeoutMs=30_000)=>request(async signal=>{
+        const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
+        if(body!==undefined)init.body=JSON.stringify(body);
+        const response=await fetch(endpoint,init);
+        if(!response.ok){
+          const detail=await response.json().catch(()=>null);
+          const retryAfterSeconds=detail&&typeof detail==='object'&&'retry_after' in detail&&typeof detail.retry_after==='number'?detail.retry_after:null;
+          throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status,retryAfterSeconds,rawError:detail});
+        }
+        return await response.json() as T;
+      },timeoutMs);
       if(!useIncrementalRegistration){
         try{
           // Guild-wide replacement is one atomic request.  It can legitimately
           // take longer than an ordinary REST call when Discord reconciles a
           // large command set, so do not turn a healthy request into dozens of
           // rate-limited individual creates after 30 seconds.
-          const registered=await request(signal=>rest.put(route,{body:enabled,signal}),180_000);
+          const registered=await discordRequest<unknown>('PUT',enabled,180_000);
           validateRegisteredCommands(enabled,registered);
           return 'complete';
         }catch(error){
@@ -445,20 +458,6 @@ export async function startProductionBot():Promise<void>{
         }
         console.warn('Bulk command registration timed out; registering missing commands gradually.',JSON.stringify({commands:enabled.length}));
       }
-      // Use a direct request for recovery. discord.js REST keeps route work
-      // queued after an aborted bulk PUT, which otherwise prevents progress.
-      const endpoint=`https://discord.com/api/v10/applications/${applicationId}/guilds/${guildId}/commands`;
-      const discordRequest=async<T>(method:'GET'|'POST',body?:unknown,timeoutMs=30_000)=>request(async signal=>{
-        const init:RequestInit={method,headers:{Authorization:`Bot ${token}`,...(body===undefined?{}:{'Content-Type':'application/json'})},signal};
-        if(body!==undefined)init.body=JSON.stringify(body);
-        const response=await fetch(endpoint,init);
-        if(!response.ok){
-          const detail=response.status===429?await response.json().catch(()=>null):null;
-          const retryAfterSeconds=detail&&typeof detail==='object'&&'retry_after' in detail&&typeof detail.retry_after==='number'?detail.retry_after:null;
-          throw Object.assign(new Error('Discord command registration request was rejected.'),{status:response.status,retryAfterSeconds});
-        }
-        return await response.json() as T;
-      },timeoutMs);
       const commandKey=(command:{name?:unknown;type?:unknown})=>typeof command.name==='string'&&Number.isInteger(command.type)?`${command.type}:${command.name}`:null;
       commandRegistrationStage='inventory';
       const current=await discordRequest<unknown>('GET');
