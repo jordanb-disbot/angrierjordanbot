@@ -1,0 +1,17 @@
+# Railway CLI packages this context before Docker applies .dockerignore.
+# Keep generated local outputs and visual review artifacts out of that upload.
+node_modules/
+dist/
+.test-build/
+.tooling/
+apps/dashboard/.next/
+apps/dashboard/tsconfig.tsbuildinfo
+**/*.tsbuildinfo
+review-*/
+docs/
+coverage/
+.git/
+.env
+.env.*
+*.local
+*.log
