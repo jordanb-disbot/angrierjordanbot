@@ -24,6 +24,9 @@ export class PrismaSpecialRepository {
  private open(s:Session<LineData>){if(s.state!=='OPEN'||!s.expiresAt||s.expiresAt<=this.clock())throw new DomainError('LINE_LOCKED','Check-ins are locked. The countdown is starting.');}
  async start(c:LineContext,name:string,callout?:{content:string;notificationRoleId:string|null}){const id=randomUUID();return this.atomic.run(c.guildId,'line:start:'+c.requestKey,requestFingerprint({channelId:c.channelId,userId:c.userId}),async tx=>{
   if(await tx.gameSession.findFirst({where:{guildId:c.guildId,channelId:c.channelId,type:'line',state:{in:['OPEN','LOCKED','SETTLING']}}}))throw new DomainError('LINE_ACTIVE','A Line is already active here.');
+  // The readiness window is deliberately short: the card is a live entry
+  // surface, not a lobby.  The host may explicitly add its one 30-second
+  // extension, for a maximum of 60 seconds.
   const now=this.clock(),timer=TimerEngine.create(now,30),data:LineData={members:[{userId:c.userId,name:safeMemberName(name),status:'ready'}]};
   await new PrismaTransactionSessions(tx).create({id,guildId:c.guildId,channelId:c.channelId,ownerUserId:c.userId,type:'line',state:'OPEN',data:json(data),expiresAt:timer.expiresAt,extensionUsed:false,version:0,createdAt:now,updatedAt:now});
   await tx.gameParticipant.create({data:{sessionId:id,userId:c.userId,role:'ready',data:{name:safeMemberName(name)}}});

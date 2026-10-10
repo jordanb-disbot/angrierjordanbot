@@ -27,8 +27,14 @@ test('First join and rejoin are distinguished from persisted presence',async()=>
  await coordinator.handleMemberAdd(member);await coordinator.handleMemberAdd(member);
  assert.match(messages[0],/^Welcome to Chairs/);assert.match(messages[1],/^Welcome back to Chairs/);assert.equal((await repo.getPresence('g','u')).needsRulesAck,true);
 });
+test('explicitly suspended onboarding restores normal access without a custom acknowledgement prompt',async()=>{
+ const repo=new InMemoryOnboardingRepository(),service=new OnboardingService(repo,new AuditService(new InMemoryAuditSink()),new FixedClock(new Date('2026-09-26T12:00:00Z'))),effects=[],member={id:'u',guild:{id:'g',roles:{cache:new Map([['access',{id:'access',managed:false,editable:true,permissions:{bitfield:0n}}]])}},roles:{cache:new Map(),add:async role=>effects.push(['add',typeof role==='string'?role:role.id]),remove:async role=>effects.push(['remove',typeof role==='string'?role:role.id])},send:async()=>effects.push(['dm']),setNickname:async()=>{}};
+ const coordinator=new DiscordOnboardingCoordinator(service,{get:async(_g,key)=>key==='onboarding.rules_ack_required'?false:key==='roles.member_access'?'access':null});
+ await coordinator.handleMemberAdd(member);
+ assert.deepEqual(effects,[['add','access']]);assert.equal((await repo.getPresence('g','u')).needsRulesAck,false);
+});
 test('Self-role selection keeps artwork and rejects permission-bearing roles before mutation',async()=>{
  const panel={categories:[{key:'pings',label:'Pings',mode:'multi',options:[{roleId:'r',label:'Race Ping',enabled:true}]}]},service={rolePanel:async()=>({panel,selections:[]}),planRoleCategoryUpdate:async()=>({addRoleIds:['r'],removeRoleIds:[]}),updateRoleCategory:async()=>{}},effects=[],guild={members:{fetch:async()=>({roles:{add:async()=>effects.push('add')}})},roles:{cache:new Map([['r',{name:'Race Ping',managed:false,editable:true,permissions:{bitfield:8n}}]])}},i={guildId:'g',guild,user:{id:'u'},message:{attachments:new Map([['art',{name:'your-roles-1.png'}]])},customId:'roles:select:pings:0',values:['r'],deferred:false,replied:false,deferUpdate:async()=>{i.deferred=true;effects.push('ack');},editReply:async p=>effects.push(p),followUp:async p=>effects.push(p),reply:async p=>effects.push(p)};
  await new DiscordOnboardingCoordinator(service,config).handleRoleSelect(i);assert.deepEqual(effects.slice(0,1),['ack']);assert.match(effects.at(-1).content,/Discord permissions/);
- guild.roles.cache.get('r').permissions.bitfield=0n;effects.length=0;await new DiscordOnboardingCoordinator(service,config).handleRoleSelect(i);assert.equal(effects[0],'ack');assert.equal(effects[1],'add');assert.equal(effects[2].files,undefined);assert.equal(effects[2].attachments,undefined);
+ guild.roles.cache.get('r').permissions.bitfield=0n;effects.length=0;await new DiscordOnboardingCoordinator(service,config).handleRoleSelect(i);assert.equal(effects[0],'ack');assert.equal(effects.length,2);assert.equal(effects[1].files,undefined);assert.equal(effects[1].attachments,undefined);
 });

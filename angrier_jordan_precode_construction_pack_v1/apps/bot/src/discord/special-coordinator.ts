@@ -48,8 +48,11 @@ export class DiscordSpecialCoordinator {
   try{
   if(trigger==='!line'&&message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
   const definition=(await this.definitions(message.guildId)).find(d=>d.trigger===trigger);if(!definition)return;
-  if(!definition.enabled)return;
-  const member=await message.guild.members.fetch({user:message.author.id,force:true});if(!mayInvokeSpecial(definition.allowedRoleIds,new Set(member.roles.cache.keys())))return;
+  // Built-in and configured special triggers are commands, not ordinary chat.
+  // Consume disabled or unauthorized invocations consistently so they cannot
+  // become visible no-op spam or leak which restricted commands are enabled.
+  if(!definition.enabled){await message.delete();return;}
+  const member=await message.guild.members.fetch({user:message.author.id,force:true});if(!mayInvokeSpecial(definition.allowedRoleIds,new Set(member.roles.cache.keys()))){await message.delete();return;}
   try{await this.guard(message.guildId,message.author.id,message.channelId,trigger==='!line',message.channel&&'name' in message.channel?(message.channel.name??undefined):undefined);}catch(error){console.warn('Legacy special command rejected.',{trigger,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!definition.responsePool.length)throw new DomainError('SPECIAL_CONTENT','Configure an authored response pool before enabling this Special Command.');
   if(!message.channel.isSendable())return;
