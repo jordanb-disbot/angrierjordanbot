@@ -6071,7 +6071,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Deterministic current-state presentation in the permanent approved visual family; acceptance pending.",
-      "sha256": "78e3005e2384b87f3a3e94db19896a152b1be2c2dbb9a7cb90d4290c16a22b0a"
+      "sha256": "94a8ba726a9eb54f87f2b036fd63cc6402d33381c1f7068a0e8a71402b08ed9f"
     },
     {
       "id": "chairisms.browser",
@@ -6125,7 +6125,7 @@
       "canonical": true,
       "status": "IMPLEMENTED_FLAGGED_OFF",
       "usage": "Deterministic centered five-question Chairs introduction card and unified private form panel.",
-      "sha256": "20d3039a8165c90ee6b6bb6e9a6b4d0f031903f596fb08fe6492fa98976ce2fa"
+      "sha256": "ed3de76e85c8c03d52a60af0c961c82fc6afcfd5b083b1418e84ac5f61e5209e"
     },
     {
       "id": "social.runtime",
@@ -6476,7 +6476,7 @@
       "canonical": true,
       "status": "OWNER_REVIEW_PENDING",
       "usage": "Shared deterministic Economy and Items lounge frames.",
-      "sha256": "cc467554905e346185b29201ec8b6a1dafb9a0fa029e3083c66faaefe0e9484d"
+      "sha256": "437330eeb6a097a9024f08cb9585b6bc0f49f409434f53aae74c072151d02e83"
     },
     {
       "id": "profiles.premium-presentation",
@@ -6538,7 +6538,7 @@
       "category": "renderer",
       "usage": "Wide amber Chairisms browser and quote materials",
       "canonical": true,
-      "sha256": "4075db35863b9aa39afa3455a1d98464a26b265f521111479365c8786e415ae8",
+      "sha256": "d00ac8427b0967d7c4a8a8f186596e7bc833dc6b3f7a809d2d34470baf4c813b",
       "status": "OWNER_REVIEW_PENDING"
     },
     {
@@ -6574,7 +6574,7 @@
       "category": "runtime.renderer",
       "usage": "Deterministic casino reels, card suits, wheel, dice, coins and tickets",
       "canonical": true,
-      "sha256": "6597e1a80cc8a4f8bea6fbbd2de8caae8e9dcf4a040f4281664f0abb0677c217"
+      "sha256": "b747e09ad2abbb895ed0812a48df0fd21fe0754fea798f34123b6a871885d9b1"
     },
     {
       "id": "race.wheelchair.1.source",
