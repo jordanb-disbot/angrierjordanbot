@@ -41,3 +41,13 @@ test('Race second tick edits components against existing art without rasterizing
  await coordinator.refresh(client,state.id);
  assert.equal(edits.length,1,'a locked race must stop waiting-room ticker edits');
 });
+
+test('Fight welcome countdown ticks against existing art without resetting its saved deadline',async()=>{
+ const expiresAt=new Date(Date.now()+28_000),state={...view(expiresAt),id:'fight-id',type:'fight',racers:[racer,{userId:'guest',name:'Guest',chair:2}]},edits=[];
+ const message={author:{id:'bot'},attachments:[{name:'fight-open.png',url:'https://cdn.discordapp.com/fight-open.png'}],edit:async payload=>{edits.push(payload);}};
+ const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>message}})}};
+ const coordinator=new DiscordEventsCoordinator({publicView:async()=>state}, {},async()=>true);
+ coordinator.publishedVersions.set(state.id,coordinator.publicationKey(state));coordinator.countdownVersions.set(state.id,'00:30');
+ await coordinator.refresh(client,state.id);
+ assert.equal(edits.length,1);assert.equal(edits[0].files,undefined);assert.match(text(edits[0]),/FIGHT BETTING WINDOW · 00:2[0-9] remaining/);assert.match(JSON.stringify(edits[0].components[0].toJSON()),/https:\/\/cdn\.discordapp\.com\/fight-open\.png/);
+});

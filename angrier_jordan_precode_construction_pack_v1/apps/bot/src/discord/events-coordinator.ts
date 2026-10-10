@@ -22,10 +22,9 @@ function raceWaitingText(view:RaceView,now:number){
  const open=6-view.racers.length;
  return `**RACE WAITING ROOM · ${waitingCountdown(view.expiresAt,now)} remaining**\n**Joined (${view.racers.length}/6):** ${names}\n**${open} open ${open===1?'seat':'seats'}** · **Wager pool:** ${view.pool} Ottomans`;
 }
-function fightWaitingText(view:RaceView){
+function fightWaitingText(view:RaceView,now:number){
  const [challenger,target]=view.racers;
- const deadline=Math.floor((view.expiresAt?.getTime()??Date.now())/1000);
- return `**FIGHT BETTING WINDOW · starts <t:${deadline}:R>**\n**${challenger?.name??'Challenger'}** vs **${target?.name??'Opponent'}** · **Wager pool:** ${view.pool} Ottomans`;
+ return `**FIGHT BETTING WINDOW · ${waitingCountdown(view.expiresAt,now)} remaining**\n**${challenger?.name??'Challenger'}** vs **${target?.name??'Opponent'}** · **Wager pool:** ${view.pool} Ottomans`;
 }
 function fightProgress(view:RaceView){
  const combat=view.combat;
@@ -167,7 +166,10 @@ export class DiscordEventsCoordinator {
    const result=await this.repo.bet(c,id,parts[4]!,BigInt(raw),await this.policy(i.guildId));content=`Wager confirmed: ${result.total} Ottomans total. Your selection is locked.`;
   }else throw new DomainError('EVENT_CONTROL','This event control is unavailable.');
   if(!silent)await i.deleteReply();
-  try{await this.refresh(i.client,id);}catch{await i.followUp({ephemeral:true,content:'Your action is saved. The public card refresh is pending.'});}
+  // The durable operation has completed. Do not make an acknowledged button
+  // wait on Discord fetch/edit work; the serialized refresher updates the
+  // shared card in the background and the next sweep retries a failed edit.
+  void this.refresh(i.client,id).catch(()=>console.warn('Event public refresh pending.',{id,guildId:i.guildId,action}));
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied||silent&&i.deferred)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
  async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData;nowMs?:number}={}){
   const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10);
@@ -202,12 +204,14 @@ export class DiscordEventsCoordinator {
     if(fight)components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(...secondary));
    }
   }
-  return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view):raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
+  return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view,now):raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.type==='race'&&view.state==='OPEN'?waitingCountdown(view.expiresAt):view.type==='fight'&&view.state==='LOCKED'?fightProgress(view):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.state==='OPEN'?waitingCountdown(view.expiresAt):view.type==='fight'&&view.state==='LOCKED'?fightProgress(view):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
   const filename=`${view.type==='fight'?'fight-locked.png':'race-locked.gif'}`,existing=view.state==='LOCKED'&&view.type==='race'?message.attachments?.find(attachment=>attachment.name===filename):undefined;
-  const openImage=view.type==='race'&&view.state==='OPEN'?message.attachments?.find(attachment=>attachment.name==='race-open.png')?.url:undefined;
-  const retainImageUrl=view.state==='LOCKED'&&view.type==='race'?(existing?.url??this.liveImages.get(id)):sameState?openImage:undefined;
+  const openImage=view.state==='OPEN'?message.attachments?.find(attachment=>attachment.name===`${view.type}-open.png`)?.url:undefined;
+  // Open-card artwork stays uploaded while native text/components carry the
+  // live timer, roster and wager state. Clicks therefore avoid rasterization.
+  const retainImageUrl=view.state==='LOCKED'&&view.type==='race'?(existing?.url??this.liveImages.get(id)):openImage;
   const saved=view.state==='LOCKED'&&view.type==='race'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
   const prepared=this.prepared.get(id);
   const samePlan=saved&&prepared&&presentationKey({plan:saved.data.plan,fightPlan:saved.data.fightPlan})===presentationKey({plan:prepared.preview.data.plan,fightPlan:prepared.preview.data.fightPlan});
