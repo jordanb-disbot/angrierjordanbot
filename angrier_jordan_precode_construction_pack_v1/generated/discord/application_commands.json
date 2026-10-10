@@ -921,6 +921,12 @@
   },
   {
     "type": 1,
+    "name": "ts",
+    "description": "Have Angrier Jordan announce Type Shit in main chat.",
+    "options": []
+  },
+  {
+    "type": 1,
     "name": "introduce",
     "description": "Create an introduction.",
     "options": []

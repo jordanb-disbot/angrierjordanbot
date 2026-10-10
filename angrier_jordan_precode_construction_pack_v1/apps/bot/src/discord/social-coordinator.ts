@@ -12,7 +12,7 @@ import {rasterizeSvg} from '../../../../packages/renderer/src/raster.js';
 import {avatarData} from './member-art.js';
 import {DisposableCardLifecycle} from './card-lifecycle.js';
 import {createDisplay,wideDisplay} from './wide-display.js';
-export const SOCIAL_COMMANDS=new Set(['social','haiku','pp']);
+export const SOCIAL_COMMANDS=new Set(['social','haiku','pp','ts']);
 type SocialInteraction=ChatInputCommandInteraction|ButtonInteraction;
 interface ActionContract {id:string;name?:string;description?:string;aliases?:readonly string[];command?:string;permissions?:readonly string[];channels?:readonly string[];options?:readonly {name:string;required?:boolean}[];}
 /** Action records remain in the generated command contract after the Discord registration consolidation. */
@@ -21,6 +21,7 @@ const normalizeSearch=(value:string)=>value.normalize('NFKC').toLowerCase().repl
 export function socialActionChoices(query:string){const needle=normalizeSearch(query);return registeredSocialActions().filter(c=>(!c.permissions?.length||c.permissions.includes('member'))&&[c.action,c.name??'',...(c.aliases??[]),c.description??''].some(s=>normalizeSearch(s).includes(needle))).sort((a,b)=>{const rank=(c:ReturnType<typeof registeredSocialActions>[number])=>[c.action,c.name??'',...(c.aliases??[])].some(s=>normalizeSearch(s)===needle)?0:[c.action,c.name??'',...(c.aliases??[])].some(s=>normalizeSearch(s).startsWith(needle))?1:2;return rank(a)-rank(b);}).slice(0,25).map(c=>({name:(c.aliases?.find(alias=>alias.includes(' '))??c.name??c.action).slice(0,100),value:c.action}));}
 export class DiscordSocialCoordinator {
  private readonly temporaryCards=new DisposableCardLifecycle(300_000);
+ private readonly typeShitAnnouncements=new Map<string,Promise<void>>();
  constructor(private readonly repo:PrismaSocialRepository,private readonly config:ConfigService,private readonly eligible:(g:string,u:string)=>Promise<boolean>){}
  private async socialChannel(guildId:string,channelId:string){const [main,extra]=await Promise.all([this.config.get(guildId,'channels.main_chat'),this.config.get(guildId,'social.additional_channel_ids')]);if(extra!==undefined&&(!Array.isArray(extra)||extra.length>10||extra.some(id=>typeof id!=='string'||!/^\d{17,20}$/.test(id))||new Set(extra).size!==extra.length))throw new DomainError('SOCIAL_CONFIG','Social channels are not configured correctly.');return channelId===main||Array.isArray(extra)&&extra.includes(channelId);}
  private async haikuChannel(guildId:string,channelId:string){const [main,extra]=await Promise.all([this.config.get(guildId,'channels.main_chat'),this.config.get(guildId,'haiku.additional_channel_ids')]);if(extra!==undefined&&(!Array.isArray(extra)||extra.length>20||extra.some(id=>typeof id!=='string'||!/^\d{17,20}$/.test(id))||new Set(extra).size!==extra.length))throw new DomainError('HAIKU_CONFIG','Haiku channels are not configured correctly.');return channelId===main||Array.isArray(extra)&&extra.includes(channelId);}
@@ -31,6 +32,17 @@ export class DiscordSocialCoordinator {
   if(!await this.eligible(guildId,userId))throw new DomainError('SOCIAL_RESTRICTED','Social commands are unavailable while restricted.');
  }
  private async member(guild:Guild,userId:string){const member=await guild.members.fetch({user:userId,force:true});if(member.user.bot||!await this.eligible(guild.id,userId))throw new DomainError('SOCIAL_MEMBER','Choose an eligible server member.');return member;}
+ private async announceTypeShit(i:ChatInputCommandInteraction){
+  const main=await this.config.get(i.guildId!,'channels.main_chat');if(typeof main!=='string'||!main)throw new DomainError('SOCIAL_CHANNEL','The main chat channel has not been configured.');
+  const prior=this.typeShitAnnouncements.get(i.guildId!)??Promise.resolve();
+  const next=prior.catch(()=>{}).then(async()=>{
+   const channel=await i.client.channels.fetch(main);if(!channel?.isTextBased()||!('messages'in channel)||!('send'in channel))throw new DomainError('SOCIAL_CHANNEL','The main chat is unavailable.');
+   const recent=await channel.messages.fetch({limit:100}),lastAnnouncement=[...recent.values()].find(message=>message.author.id===i.client.user?.id&&message.content.trim().toLowerCase()==='type shit');
+   if(lastAnnouncement&&![...recent.values()].some(message=>!message.author.bot&&message.createdTimestamp>lastAnnouncement.createdTimestamp))throw new DomainError('TYPE_SHIT_TURN','Wait for another member to speak before using /ts again.');
+   await channel.send({content:'Type Shit',allowedMentions:{parse:[]}});
+  });
+  this.typeShitAnnouncements.set(i.guildId!,next);try{await next;}finally{if(this.typeShitAnnouncements.get(i.guildId!)===next)this.typeShitAnnouncements.delete(i.guildId!);}
+ }
  async autocomplete(i:AutocompleteInteraction){
   try{if(!i.guildId||!i.channelId||i.commandName!=='social'||i.options.getSubcommand(false)!=='react'||i.options.getFocused(true).name!=='action'){await i.respond([]);return;}await this.guard(i.guildId,i.user.id,i.channelId);await i.respond(socialActionChoices(String(i.options.getFocused())));}catch{if(!i.responded)await i.respond([]);}
  }
@@ -67,10 +79,11 @@ export class DiscordSocialCoordinator {
     const data=await this.repo.retaliation(c,parts[2],i.message.id);await this.member(i.guild,data.actorId);
     result=await this.repo.queue(c,'roast',data.actorId,policy,{sessionId:parts[2],messageId:i.message.id});
    }else{
-    if(i.commandName!=='social')throw new DomainError('SOCIAL_ACTION','Choose a social command.');
-    const sub=i.options.getSubcommand(),action=sub==='roast'?'roast':sub==='react'?i.options.getString('action',true):'';
+    if(i.commandName!=='social'&&i.commandName!=='ts')throw new DomainError('SOCIAL_ACTION','Choose a social command.');
+    const sub=(i.commandName as string)==='ts'?'ts':i.options.getSubcommand(),action=sub==='roast'?'roast':sub==='react'?i.options.getString('action',true):sub;
     const contract=action==='roast'?null:registeredSocialActions().find(c=>c.action===action);
     if(action!=='roast'&&(!contract||contract.permissions?.length&&!contract.permissions.includes('member')))throw new DomainError('SOCIAL_ACTION','Choose an available social action.');
+    if(action==='ts'){await this.announceTypeShit(i);await i.editReply({content:'Type Shit announced in the main chat.',allowedMentions:{parse:[]}});return;}
     const target=i.options.getUser('member');if(target)await this.member(i.guild,target.id);
     if(contract?.options?.some(o=>o.name==='member'&&o.required)&&!target)throw new DomainError('SOCIAL_MEMBER','Choose a server member for this action.');
     result=await this.repo.queue(c,action,target?.id??null,policy);

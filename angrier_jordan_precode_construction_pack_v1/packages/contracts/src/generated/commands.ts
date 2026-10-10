@@ -2363,6 +2363,25 @@ export const COMMANDS = [
     ]
   },
   {
+    "id": "ts_announce",
+    "preferred": "/ts",
+    "registered": "/ts",
+    "type": "slash",
+    "module": "social",
+    "handler": "social.type_shit_announce",
+    "featureFlag": "social",
+    "permissions": [
+      "member"
+    ],
+    "channels": [
+      "main_chat"
+    ],
+    "options": [],
+    "ephemeralDefault": true,
+    "helpId": "social_ts",
+    "tutorialId": "social_commands"
+  },
+  {
     "id": "roast",
     "preferred": "/social roast",
     "registered": "/social roast",

@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_from": "Canonical Build Specification v2026-09-21 reconciliation",
-  "command_count": 135,
+  "command_count": 136,
   "commands": [
     {
       "id": "help",
@@ -2976,6 +2976,31 @@
           "name": "hitthegeekbar"
         }
       ]
+    },
+    {
+      "id": "ts_announce",
+      "command": "/ts",
+      "type": "slash",
+      "module": "social",
+      "description": "Have Angrier Jordan announce Type Shit in main chat.",
+      "permissions": [
+        "member"
+      ],
+      "channels": [
+        "main_chat"
+      ],
+      "options": [],
+      "handler": "social.type_shit_announce",
+      "feature_flag": "social",
+      "ephemeral_default": true,
+      "help_id": "social_ts",
+      "tutorial_id": "social_commands",
+      "aliases": [
+        "type shit"
+      ],
+      "status": "locked",
+      "preferred_invocation": "/ts",
+      "registration_path": "/ts"
     },
     {
       "id": "roast",
