@@ -69,12 +69,12 @@ export class DiscordEventsCoordinator {
   const fail=(stage:string,error:unknown)=>console.warn('Legacy race trigger failed.',{correlationId,stage,guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:error instanceof Error?error.name:'UNKNOWN'});
   try{
   if(message.channel&&'sendTyping' in message.channel)void message.channel.sendTyping().catch(()=>{});
+  if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
+  const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
+  const roles=access?.['!race']??[];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r))){await message.delete();return;}
   const channelName='name' in message.channel?message.channel.name:undefined;
   const namedMainChat=typeof channelName==='string'&&/^((main[-_ ]?chat)|(sit[-_ ]and[-_ ]chat))$/i.test(channelName.replace(/^.*?([a-z].*)$/i,'$1'));
   if(!namedMainChat&&!await interactiveGameChannelAllowed(this.config,message.guildId,message.channelId,true,channelName??undefined))return;
-  if(await this.config.get(message.guildId,'special_commands.enabled')!==true)return;
-  const [member,accessValue]=await Promise.all([message.guild.members.fetch(message.author.id),this.config.get(message.guildId,'special_commands.access_roles')]);const access=accessValue as Record<string,unknown>;
-  const roles=access?.['!race']??[];if(!Array.isArray(roles)||roles.some(r=>typeof r!=='string'))throw new Error('Invalid Race access-role configuration.');if(roles.length&&!roles.some(r=>member.roles.cache.has(r)))return;
   try{await this.guard(message.guildId,message.author.id,message.channelId,'race',true);}catch(error){console.warn('Legacy race command rejected.',{guildId:message.guildId,channelId:message.channelId,code:error instanceof DomainError?error.code:'UNKNOWN'});return;}
   if(!message.channel.isSendable())return;
   const sessionMessageId=await this.queueRace(message,member);
@@ -173,7 +173,7 @@ export class DiscordEventsCoordinator {
  }catch(error){const content=error instanceof DomainError?error.message:'The event update could not be completed. Check its saved state before retrying.';if(i.replied||silent&&i.deferred)await i.followUp({ephemeral:true,content});else if(i.deferred)await i.editReply({content});else await i.reply({ephemeral:true,content});}}
  async payload(view:RaceView,options:{animate?:boolean;retainImageUrl?:string;callout?:string;timeline?:RaceData;nowMs?:number}={}){
   const now=options.nowMs??Date.now(),waitingMs=Math.max(0,Math.ceil(((view.expiresAt?.getTime()??now)-now)/10)*10);
-  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=!fight&&live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
+  const fight=view.type==='fight',prefix=fight?'fight':'event',live=view.state==='LOCKED',saved=options.timeline,plan=fight?saved?.fightPlan:saved?.plan,animate=live&&options.animate!==false&&Boolean(plan&&saved?.startedAt),filename=`${fight?'fight':'race'}-${view.state.toLowerCase()}.${animate||options.retainImageUrl?'gif':'png'}`,open=view.state==='OPEN',components:ActionRowBuilder<ButtonBuilder>[]=[];
   const render=(imageView:RaceView=view,phase=0,remaining=waitingMs)=>{const motion={phase,waitingMs:remaining,...(options.callout?{callout:options.callout.replace(/<@&[^>]+>\s*/g,'')}: {})};return fight?renderFight(imageView,motion,'wide'):renderRace(imageView,'wide',motion);};
   let image:Buffer|undefined;
   if(!options.retainImageUrl){
@@ -206,13 +206,14 @@ export class DiscordEventsCoordinator {
   }
   return eventWindow({title:fight?'Robo Chair Fight':'Chair Race',description:'',filename,...(image?{image}:{}),rows:components,...(options.retainImageUrl?{imageUrl:options.retainImageUrl}:{}),...(open?{countdown:fight?fightWaitingText(view,now):raceWaitingText(view,now)}:{}),...(options.callout?{callout:options.callout}:{})});
  }
- async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.state==='OPEN'?waitingCountdown(view.expiresAt):view.type==='fight'&&view.state==='LOCKED'?fightProgress(view):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');const message=await channel.messages.fetch(view.messageId);if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
-  const filename=`${view.type==='fight'?'fight-locked.png':'race-locked.gif'}`,existing=view.state==='LOCKED'&&view.type==='race'?message.attachments?.find(attachment=>attachment.name===filename):undefined;
-  const openImage=view.state==='OPEN'?message.attachments?.find(attachment=>attachment.name===`${view.type}-open.png`)?.url:undefined;
+ async refresh(client:Client,id:string){const previous=this.refreshes.get(id)??Promise.resolve();const current=previous.catch(()=>{}).then(async()=>{let view=await eventTiming('event.read',()=>this.repo.publicView(id));if(!view.messageId)return;const version=(value:RaceView)=>this.publicationKey(value);let key=version(view),tick=view.state==='OPEN'?waitingCountdown(view.expiresAt):undefined;const sameState=this.publishedVersions.get(id)===key;if(sameState&&(!tick||this.countdownVersions.get(id)===tick))return;const channel=await client.channels.fetch(view.channelId);if(!channel?.isTextBased()||!('messages' in channel))throw new Error('Event channel unavailable.');let message:Message;try{message=await channel.messages.fetch(view.messageId) as Message;}catch(error){if(error&&typeof error==='object'&&'code' in error&&Number(error.code)===10008){await this.repo.cancel(view.guildId,id,'The event card was deleted; all wagers refunded.');return;}throw error;}if(message.author.id!==client.user?.id)throw new Error('Event message author mismatch.');
+  const attachments=message.attachments?[...message.attachments.values()]:[];
+  const filename=`${view.type==='fight'?'fight':'race'}-locked.gif`,existing=view.state==='LOCKED'?attachments.find(attachment=>attachment.name===filename):undefined;
+  const openImage=view.state==='OPEN'?attachments.find(attachment=>attachment.name===`${view.type}-open.png`)?.url:undefined;
   // Open-card artwork stays uploaded while native text/components carry the
   // live timer, roster and wager state. Clicks therefore avoid rasterization.
-  const retainImageUrl=view.state==='LOCKED'&&view.type==='race'?(existing?.url??this.liveImages.get(id)):openImage;
-  const saved=view.state==='LOCKED'&&view.type==='race'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
+  const retainImageUrl=view.state==='LOCKED'?(existing?.url??this.liveImages.get(id)):openImage;
+  const saved=view.state==='LOCKED'&&!retainImageUrl&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;
   const prepared=this.prepared.get(id);
   const samePlan=saved&&prepared&&presentationKey({plan:saved.data.plan,fightPlan:saved.data.fightPlan})===presentationKey({plan:prepared.preview.data.plan,fightPlan:prepared.preview.data.fightPlan});
   let payload=!retainImageUrl&&samePlan&&prepared?.key===this.visualKey(view)&&prepared.payload?prepared.payload:await eventTiming('event.render',()=>this.payload(view,retainImageUrl?{retainImageUrl}:saved?.state==='LOCKED'?{timeline:saved.data}:{}));
@@ -220,7 +221,7 @@ export class DiscordEventsCoordinator {
   // Rendering may span the end of a round. Never overwrite a persisted result/cancellation with stale live art.
   if(view.state==='LOCKED'||view.state==='OPEN'){const latest=await this.repo.publicView(id);if(latest.state!==view.state||latest.expiresAt?.getTime()!==view.expiresAt?.getTime()){view=latest;key=version(view);const latestSaved=view.state==='LOCKED'&&typeof this.repo.get==='function'?await this.repo.get(id):undefined;payload=await this.payload(view,latestSaved?.state==='LOCKED'?{timeline:latestSaved.data}:{});}}
   await eventTiming('event.edit-upload',()=>message.edit(payload));
-  if(view.type==='race'&&view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
+  if(view.state==='LOCKED'&&(retainImageUrl||payload.files?.some(file=>file.name===filename)))this.liveImages.set(id,retainImageUrl??'attachment://'+filename);else this.liveImages.delete(id);
   this.publishedVersions.set(id,key);if(tick)this.countdownVersions.set(id,tick);else this.countdownVersions.delete(id);this.prepare(view);});this.refreshes.set(id,current);try{await current;}finally{if(this.refreshes.get(id)===current)this.refreshes.delete(id);}}
  async sweep(client:Client){if(this.sweeping)return;this.sweeping=true;try{for(const event of await this.repo.active()){
   if(event.expiresAt&&event.expiresAt<=new Date()){await this.advance(client,event.guildId,event.id,event.state==='LOCKED');continue;}

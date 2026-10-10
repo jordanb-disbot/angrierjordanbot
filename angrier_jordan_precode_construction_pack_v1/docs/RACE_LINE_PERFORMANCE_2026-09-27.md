@@ -1,6 +1,6 @@
 # Race / Line responsiveness and entry refinement
 
-Owner requested this implementation and a push to master. `/race` is restored alongside `!race` by the newer direct instruction; both call the same publication function and Prisma Race repository. Line remains prefix-only. No schema, wager, payout, timer, eligibility, opt-in notification or settlement rules changed.
+Historical note: current command authority supersedes this document. Race is `!race`, Line is `!line`, and Fight is `/fight @member`; `/race` remains retired. No schema, wager, payout, eligibility, opt-in notification or settlement rules changed.
 
 ## Diagnosed cost and changes
 

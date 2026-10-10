@@ -47,7 +47,7 @@ test('late readiness rendering never overwrites the Line finale',async()=>{
  let reads=0;const v={...view,ownerId:'fixture-0',members:[],elapsedMs:9000},edits=[];
  const c=new DiscordSpecialCoordinator({publicView:async()=>({...v,state:++reads===1?'OPEN':'CLOSED'})},{},async()=>true);
  c.prepareFinale=()=>{};c.payload=async value=>({state:value.state});
- const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},edit:async p=>edits.push(p.state)})}})}};
+ const client={user:{id:'bot'},channels:{fetch:async()=>({isTextBased:()=>true,messages:{fetch:async()=>({author:{id:'bot'},attachments:new Map(),edit:async p=>edits.push(p.state)})}})}};
  await c.refresh(client,'fixture');assert.deepEqual(edits,['CLOSED']);
 });
 

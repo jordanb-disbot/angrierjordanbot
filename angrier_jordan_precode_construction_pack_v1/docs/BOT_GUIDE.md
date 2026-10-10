@@ -144,16 +144,10 @@ The table below is generated from the live master command registry. `Private` me
 
 | Command | What it does | Access | Channel | Private | Options / interaction |
 |---|---|---|---|---|---|
-| !race | Start Chair Race, ping the configured Race role, and open the 60-second join/betting window. | member | main_chat | No | — |
+| !race | Start Chair Race, ping the configured Race role, and open the 30-second join/betting window. | member | main_chat | No | — |
 | !line | Start Line Time, ping the configured Line role, and open readiness/entry. | member | main_chat | No | — |
 | !vc | Ping the configured VC role with a randomized voice-chat invitation. | member | main_chat | No | — |
 | !chess | Ping the configured Chess role with a randomized chess challenge. | member | main_chat | No | — |
-
-### Race
-
-| Command | What it does | Access | Channel | Private | Options / interaction |
-|---|---|---|---|---|---|
-| /race | Start the same Chair Race as !race in main chat. | member | main_chat | No | — |
 
 ### Fight
 

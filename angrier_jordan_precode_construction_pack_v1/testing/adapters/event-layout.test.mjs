@@ -42,7 +42,7 @@ test('Fight and Race entry cards are immediate static frames with live waiting d
   assert.equal(meta.width,1200);assert.equal(meta.format,'png');assert.equal(meta.pages??1,1);
   assert.equal(buffer.indexOf('NETSCAPE'),-1);assert.equal(buffer.indexOf('ANIMEXTS'),-1);
   const text=p.components[0].toJSON().components.map(c=>c.content).join('\n');
-  if(type==='fight')assert.match(text,/starts <t:4102444803:R>/);else assert.match(text,/00:03 remaining/);
+  assert.match(text,new RegExp(`${type==='fight'?'FIGHT BETTING WINDOW':'RACE WAITING ROOM'} · 00:03 remaining`));
  }
 });
 test('event controls form balanced member/host/wager groups without changing custom IDs',async()=>{
@@ -54,7 +54,7 @@ test('event controls form balanced member/host/wager groups without changing cus
  const fight=rows(await c.payload({...base,type:'fight',racers:reviewMembers.slice(0,2)},{animate:false,nowMs:now}));
  assert.deepEqual(fight.map(r=>r.length),[2,2]);assert.ok(fight[0].every(b=>b.style===1));
  const line=rows(await new DiscordSpecialCoordinator({}, {},async()=>true).payload({...base,ownerId:'fixture-0',elapsedMs:0,remainingMs:60000,members:reviewMembers.map(m=>({...m,status:'ready'}))}));
- assert.deepEqual(line.map(r=>r.map(b=>b.label)),[['I’m In','I Need a Second','Check-ins'],['Start Countdown','+30 Seconds','Cancel Line']]);
+ assert.deepEqual(line.map(r=>r.map(b=>b.label)),[['I’m In','I Need a Second'],['Start Countdown','+30 Seconds','Cancel Line']]);
 });
 test('a waiting render cannot overwrite an event that started during rasterization',async()=>{
  let reads=0;const edits=[],states=[],view={...base,id:'race',guildId:'g',channelId:'c',messageId:'m'};
