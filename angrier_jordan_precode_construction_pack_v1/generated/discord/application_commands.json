@@ -304,6 +304,24 @@
         "name": "buy_in",
         "description": "buy_in option",
         "required": true
+      },
+      {
+        "type": 6,
+        "name": "player_2",
+        "description": "player_2 option",
+        "required": false
+      },
+      {
+        "type": 6,
+        "name": "player_3",
+        "description": "player_3 option",
+        "required": false
+      },
+      {
+        "type": 6,
+        "name": "player_4",
+        "description": "player_4 option",
+        "required": false
       }
     ]
   },
@@ -317,6 +335,24 @@
         "name": "buy_in",
         "description": "buy_in option",
         "required": true
+      },
+      {
+        "type": 6,
+        "name": "player_2",
+        "description": "player_2 option",
+        "required": false
+      },
+      {
+        "type": 6,
+        "name": "player_3",
+        "description": "player_3 option",
+        "required": false
+      },
+      {
+        "type": 6,
+        "name": "player_4",
+        "description": "player_4 option",
+        "required": false
       }
     ]
   },

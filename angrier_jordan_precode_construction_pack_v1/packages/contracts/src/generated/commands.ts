@@ -640,6 +640,21 @@ export const COMMANDS = [
         "name": "buy_in",
         "type": "integer",
         "required": true
+      },
+      {
+        "name": "player_2",
+        "type": "user",
+        "required": false
+      },
+      {
+        "name": "player_3",
+        "type": "user",
+        "required": false
+      },
+      {
+        "name": "player_4",
+        "type": "user",
+        "required": false
       }
     ],
     "ephemeralDefault": false,
@@ -665,6 +680,21 @@ export const COMMANDS = [
         "name": "buy_in",
         "type": "integer",
         "required": true
+      },
+      {
+        "name": "player_2",
+        "type": "user",
+        "required": false
+      },
+      {
+        "name": "player_3",
+        "type": "user",
+        "required": false
+      },
+      {
+        "name": "player_4",
+        "type": "user",
+        "required": false
       }
     ],
     "ephemeralDefault": false,
