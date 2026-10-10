@@ -432,7 +432,11 @@ export async function startProductionBot():Promise<void>{
       };
       if(!useIncrementalRegistration){
         try{
-          const registered=await request(signal=>rest.put(route,{body:enabled,signal}));
+          // Guild-wide replacement is one atomic request.  It can legitimately
+          // take longer than an ordinary REST call when Discord reconciles a
+          // large command set, so do not turn a healthy request into dozens of
+          // rate-limited individual creates after 30 seconds.
+          const registered=await request(signal=>rest.put(route,{body:enabled,signal}),180_000);
           validateRegisteredCommands(enabled,registered);
           return 'complete';
         }catch(error){
