@@ -93,13 +93,19 @@ export class PrismaEventsRepository {
  }
  private async lockEvent(tx:Prisma.TransactionClient,guildId:string,id:string,s:Session<RaceData>,prepared?:PreparedEventClose){
   const recent=s.type==='fight'?await this.recentMoves(tx,guildId,id):[];
-  // Validate prepared outcome inputs inside the serializable transaction. Joining
-  // and betting share the session version with this transition.
-  // Rebuild inside this transaction so active effects are claimed before the
-  // outcome plan is persisted; never reuse a pre-transaction preview.
-  const reusable=false;
+  // Event art is expensive enough to prepare while its waiting room is open.
+  // Reuse a private plan only after this serializable transaction proves its
+  // exact roster and (for Fight) recent-move policy are still current, and no
+  // one has armed an outcome-changing effect. Bets affect escrow, never an
+  // event outcome, so they intentionally do not invalidate visual work.
+  const effect=s.type==='fight'?'fighting_lessons':'wheelchair_tuneup';
+  const armed=await Promise.all(s.data.racers.map(racer=>activeEffectTransaction(tx).findActiveEffect({guildId:s.guildId,userId:racer.userId,effect})));
+  const reusable=Boolean(
+   prepared&&prepared.sessionId===id&&prepared.guildId===guildId&&prepared.type===s.type&&prepared.participantFingerprint===requestFingerprint(s.data.racers)&&prepared.recentMoveFingerprint===requestFingerprint(recent)&&!armed.some(Boolean)&&
+   (s.type==='race'?prepared.data.plan:prepared.data.fightPlan)
+  );
   let favored:string|undefined;
-  if(!reusable){const effect=s.type==='fight'?'fighting_lessons':'wheelchair_tuneup';for(const racer of s.data.racers){const claim=await claimActiveEffect(activeEffectTransaction(tx),{guildId:s.guildId,userId:racer.userId,effect,requestKey:`${id}:${racer.userId}`});if(claim.applied){favored=racer.userId;break;}}}
+  if(!reusable){for(const racer of s.data.racers){const claim=await claimActiveEffect(activeEffectTransaction(tx),{guildId:s.guildId,userId:racer.userId,effect,requestKey:`${id}:${racer.userId}`});if(claim.applied){favored=racer.userId;break;}}}
   const nextPlan=reusable?prepared!.data:this.preparePlan(s.type,s.data.racers,recent,favored),durationMs=(nextPlan.fightPlan??nextPlan.plan)!.durationMs;
   const now=this.clock(),expiresAt=new Date(now.getTime()+durationMs),data={...s.data,...nextPlan,startedAt:now.toISOString()};
   await new SessionEngine(new PrismaTransactionSessions(tx)).transition<RaceData>(id,['OPEN'],'LOCKED',s=>({...s,data,expiresAt}));

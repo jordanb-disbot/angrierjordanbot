@@ -56,13 +56,13 @@ function raceEntry(view:RaceView){
 }
 /** Combat animation adds energy only: actual HP and moves come from the persisted timeline. */
 export function renderWideFight(view:RaceView,motion:EventMotion={}){
- const closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',live=view.state==='LOCKED',phase=motion.phase??0,hp=view.combat?.hp??[100,100];
+ const closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',live=view.state==='LOCKED',phase=motion.phase??0,hp=view.combat?.displayHp??view.combat?.hp??[100,100],action=view.combat?.action;
  if(closed)return grandFinale(view,'fight');
  let body=heading(closed?'Robo Chair Fight · Final Bell':'Robo Chair Fight',cancelled?'ALL WAGERS REFUNDED':closed?'THE OFFICIAL RESULT':live?'COMBAT LIVE · THE ARENA IS YOURS':'TWO CHAIRS · ONE WINNER');
  body+=panel(32,146,896,390,ink.gold)+'<ellipse cx="480" cy="443" rx="410" ry="52" fill="#061B22" stroke="#C8A057" stroke-width="3"/><ellipse cx="480" cy="473" rx="390" ry="43" fill="none" stroke="#10B981"/>';
- for(const[fIndex,f]of view.racers.entries()){const cx=260+fIndex*440,bob=live?Math.sin(phase*2*Math.PI+fIndex)*3:0,win=closed&&f.userId===view.winnerId;
+ for(const[fIndex,f]of view.racers.entries()){const cx=260+fIndex*440,active=live&&action?.actor===fIndex,beat=Math.sin(phase*2*Math.PI+fIndex*Math.PI),bob=live?beat*(active?8:3):0,lean=live?(active?beat*8:-beat*3):0,win=closed&&f.userId===view.winnerId;
   body+=title(cx,181,short(f.name,21),30,win?ink.gold:ink.white)+'<ellipse cx="'+cx+'" cy="396" rx="165" ry="110" fill="url(#'+(fIndex?'lamp':'aura')+')"/>';
-  body+='<g transform="translate('+cx+' '+(190+bob)+') scale('+(fIndex?-1:1)+' 1)"><image href="'+robot(f.chair)+'" x="-148" y="0" width="296" height="242"/></g>'+title(cx,470,hp[fIndex]+' HP',27,fIndex?ink.gold:ink.teal)+'<rect x="'+(cx-135)+'" y="479" width="270" height="9" rx="4" fill="#071820"/><rect x="'+(cx-135)+'" y="479" width="'+(270*Math.max(0,hp[fIndex]??0)/100)+'" height="9" rx="4" fill="'+(fIndex?'#F4C542':'#10B981')+'"/>';
+  body+='<g transform="translate('+cx+' '+(190+bob)+') rotate('+lean+') scale('+(fIndex?-1:1)+' 1)"><image href="'+robot(f.chair)+'" x="-148" y="0" width="296" height="242"/></g>'+title(cx,470,Math.round(hp[fIndex]??0)+' HP',27,fIndex?ink.gold:ink.teal)+'<rect x="'+(cx-135)+'" y="479" width="270" height="9" rx="4" fill="#071820"/><rect x="'+(cx-135)+'" y="479" width="'+(270*Math.max(0,hp[fIndex]??0)/100)+'" height="9" rx="4" fill="'+(fIndex?'#F4C542':'#10B981')+'"/>';
  }
  body+=title(480,316,closed?'KO':'VS',39,ink.gold);
  if(live)for(let i=0;i<12;i++){const a=i*Math.PI/6+phase*.4;body+='<circle cx="'+(480+Math.cos(a)*(22+phase*50))+'" cy="'+(356+Math.sin(a)*(22+phase*50))+'" r="2" fill="'+(i%2?'#10B981':'#F4C542')+'" opacity="'+(1-phase*.6)+'"/>';}

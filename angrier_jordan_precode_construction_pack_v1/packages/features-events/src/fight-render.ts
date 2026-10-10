@@ -4,7 +4,7 @@ import {art,footer,heading,ink,lines,panel,shell,text,type EventMotion} from './
 /** Saved HP and move logs are authoritative; visual breathing never changes combat. */
 export function renderFight(view:RaceView,motion:EventMotion={},layout:'compact'|'wide'='compact'){
  if(layout==='wide')return renderWideFight(view,motion);
- const hp=view.combat?.hp??[100,100],closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',live=view.state==='LOCKED',phase=motion.phase??0,height=790;
+ const hp=view.combat?.displayHp??view.combat?.hp??[100,100],closed=view.state==='CLOSED',cancelled=view.state==='CANCELLED',live=view.state==='LOCKED',phase=motion.phase??0,height=790;
  const logs=view.combat?.log??['Choose a fighter below. Your wager stays private.'],wrapped=logs.map(s=>lines(s,39));
  const winner=view.racers.find(f=>f.userId===view.winnerId);
  let body=heading(closed?'LIVE EVENTS / OFFICIAL RESULT':live?'LIVE EVENTS / COMBAT IN PROGRESS':'LIVE EVENTS / BETTING OPEN',cancelled?'Fight cancelled':closed?'Knockout':'Robo Chair Fight',cancelled?'All wagers refunded.':closed?`${winner?.name??'Winner'} wins`.slice(0,37):live?'Combat is live. Betting is locked.':'Two chairs. Equal odds. One winner.');

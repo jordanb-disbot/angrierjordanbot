@@ -7,11 +7,10 @@ export interface RacePlan {durationMs:number;winnerId:string;tracks:{userId:stri
 /** Winner is drawn first, independently of decoration and motion. Store this plan privately. */
 export function planRace(racers:readonly Racer[],rng:EventRandom=eventRandom,favoredUserId?:string,bonusPercent=0):RacePlan{
  if(racers.length<2||racers.length>6||new Set(racers.map(r=>r.userId)).size!==racers.length)throw new DomainError('RACER_COUNT','A race needs two to six distinct racers.');
- // Keep the public Chair Race presentation on a predictable 30-second beat.
- // The persisted plan remains deterministic/restart-safe; only the duration
- // is normalized so Discord receives a bounded animation window.
+ // A short, single-sprint race keeps the live GIF responsive on Discord while
+ // preserving a long enough beat for the standings to be readable.
  const favored=favoredUserId&&racers.some(r=>r.userId===favoredUserId)?favoredUserId:undefined;
- const winnerId=favored&&bonusPercent>0&&rng(100)<Math.min(100,Math.max(0,bonusPercent))?favored:racers[rng(racers.length)]!.userId,durationMs=30000;
+ const winnerId=favored&&bonusPercent>0&&rng(100)<Math.min(100,Math.max(0,bonusPercent))?favored:racers[rng(racers.length)]!.userId,durationMs=20000;
  const tracks=racers.map(r=>{const finish=r.userId===winnerId?100:90+rng(10),weights=Array.from({length:12},()=>4+rng(13)),sum=weights.reduce((a,b)=>a+b,0);let value=0;const points=[0,...weights.map(w=>(value+=w)*finish/sum)];points[points.length-1]=finish;return{userId:r.userId,points};});
  return{winnerId,durationMs,tracks};
 }

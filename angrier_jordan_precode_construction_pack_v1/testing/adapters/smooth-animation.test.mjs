@@ -9,12 +9,12 @@ test('animation artwork is losslessly shared across frames',()=>{
  for(let n=0;n<400;n++)assert.equal(unpackAnimationAssets(art.pack(svg),art.assets),svg);
  assert.equal(art.assets.length,1);assert.throws(()=>unpackAnimationAssets('aj-animation-asset:1',art.assets));
 });
-test('Line runs at 50ms steps with exact countdown boundaries and restart remainder',()=>{
+test('Line runs at one-second countdown steps, then efficient powder frames, with exact restart remainder',()=>{
  const view={state:'SETTLING',elapsedMs:0,durationMs:9000,ownerId:'host',members:[],remainingMs:0},sequence=lineSequence(view,'wide',true);
- assert.equal(sequence.frames.length,181);assert.ok(sequence.delays.slice(0,-1).every(d=>d===50));assert.equal(sequence.delays.reduce((a,b)=>a+b,0),10000);
- for(let n=0;n<120;n++)assert.match(sequence.frames[n],new RegExp(`data-countdown-number="${5-Math.floor(n/20)}"`));
- assert.ok(sequence.frames.slice(120).every(svg=>!svg.includes('data-countdown-number=')));
- const resumed=lineSequence({...view,elapsedMs:2430},'wide',true);assert.equal(resumed.delays[0],20);assert.equal(resumed.delays.reduce((a,b)=>a+b,0),7570);
+ assert.equal(sequence.frames.length,22);assert.deepEqual(sequence.delays.slice(0,5),[1000,1000,1000,1000,1000]);assert.ok(sequence.delays.slice(5,-1).every(d=>d===250));assert.equal(sequence.delays.at(-1),1000);assert.equal(sequence.delays.reduce((a,b)=>a+b,0),10000);
+ for(let n=0;n<5;n++)assert.match(sequence.frames[n],new RegExp(`data-countdown-number="${5-n}"`));
+ assert.ok(sequence.frames.slice(5).every(svg=>!svg.includes('data-countdown-number=')));
+ const resumed=lineSequence({...view,elapsedMs:2430},'wide',true);assert.equal(resumed.delays[0],570);assert.equal(resumed.delays.reduce((a,b)=>a+b,0),7570);
 });
 test('dense one-shot encoding preserves 20fps timing and final hold without replay',async()=>{
  const frames=Array.from({length:81},(_,n)=>`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640"><rect width="1200" height="640" fill="#081923"/><circle cx="${60+n*12}" cy="320" r="30" fill="#FFD070"/></svg>`),delays=frames.map((_,n)=>n===80?1000:50);

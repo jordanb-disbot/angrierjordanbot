@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {planRace,raceSnapshot,eventPayouts} from '../../.test-build/packages/features-events/src/domain.js';
 const racers=Array.from({length:6},(_,i)=>({userId:String(i),name:'Member '+i,chair:i+1}));
 test('each equally indexed fair draw selects its racer before motion is planned',()=>{
- for(let winner=0;winner<6;winner++){let first=true;const plan=planRace(racers,max=>{if(first){first=false;assert.equal(max,6);return winner;}return 0;});assert.equal(plan.winnerId,String(winner));assert.equal(plan.durationMs,30000);}
+ for(let winner=0;winner<6;winner++){let first=true;const plan=planRace(racers,max=>{if(first){first=false;assert.equal(max,6);return winner;}return 0;});assert.equal(plan.winnerId,String(winner));assert.equal(plan.durationMs,20000);}
 });
 test('one monotonic progress snapshot drives standings and only the selected racer finishes',()=>{
  for(let seed=1;seed<=30;seed++){let state=seed;const rng=max=>{state=(Math.imul(state,1664525)+1013904223)>>>0;return state%max;};const plan=planRace(racers,rng),last=new Map();

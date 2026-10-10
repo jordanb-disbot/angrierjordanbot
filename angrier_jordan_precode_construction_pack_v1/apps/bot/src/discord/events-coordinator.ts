@@ -39,9 +39,12 @@ export class DiscordEventsCoordinator {
  private readonly prepared=new Map<string,{key:string;preview:PreparedEventClose;payload?:Awaited<ReturnType<DiscordEventsCoordinator['payload']>>}>();
  private readonly preparing=new Set<string>();
  private publicationKey(value:RaceView){return JSON.stringify([value.state,value.expiresAt,value.extensionUsed,value.racers,value.pool,value.bets,value.result,value.winnerId,value.cancelReason]);}
- private visualKey(view:RaceView){return JSON.stringify([view.type,view.racers,view.pool,view.bets,view.extensionUsed]);}
+ // The animation only depends on the type and racer roster. Wagers and the
+ // one-time waiting-room extension must not throw away an already-rendered,
+ // private race animation moments before the flag drops.
+ private visualKey(view:RaceView){return JSON.stringify([view.type,view.racers]);}
  private prepare(view:RaceView){
-  if(view.type==='fight'||view.state!=='OPEN')return;
+  if(view.state!=='OPEN')return;
   const key=this.visualKey(view);
   if(view.racers.length<2||this.preparing.has(view.id)||this.prepared.get(view.id)?.key===key||typeof this.repo.prepareClose!=='function')return;
   if((view.expiresAt?.getTime()??0)-Date.now()<10000)return;
@@ -137,7 +140,7 @@ export class DiscordEventsCoordinator {
   if(fighters.some(m=>m.isCommunicationDisabled()||!m.permissionsIn(i.channelId!).has(PermissionFlagsBits.ViewChannel|PermissionFlagsBits.SendMessages)))throw new DomainError('FIGHT_TARGET','Both fighters need access to participate in main chat.');
   id=(await this.repo.startFight({guildId:i.guildId,channelId:i.channelId,userId:i.user.id,requestKey:i.id},fighters.map(m=>({userId:m.id,name:m.displayName,...(m.joinedAt?{joinedAt:m.joinedAt.toISOString()}:{}),avatarUrl:m.displayAvatarURL({size:128,extension:'png'})})))).sessionId;
   const initial=await this.repo.publicView(id);
-  const message=await i.editReply(await this.payload(initial));published=true;await this.repo.linkMessage(id,i.guildId,message.id);this.publishedVersions.set(id,this.publicationKey(initial));
+  const message=await i.editReply(await this.payload(initial));published=true;await this.repo.linkMessage(id,i.guildId,message.id);this.publishedVersions.set(id,this.publicationKey(initial));this.countdownVersions.set(id,waitingCountdown(initial.expiresAt));this.prepare(initial);
  }catch(error){if(id&&i.guildId)await this.repo.cancel(i.guildId,id,'Fight could not be published; wagers refunded.');const content=error instanceof DomainError?error.message:'Fight could not start. Try again when both members are available.';if(published||i.replied)await i.followUp({ephemeral:true,content});else if(i.deferred){await i.deleteReply();await i.followUp({ephemeral:true,content});}else await i.reply({ephemeral:true,content});}}
  async memberLeft(client:Client,guildId:string,userId:string){const affected=(await this.repo.active(guildId)).filter(r=>r.type==='fight');await this.repo.memberLeft(guildId,userId);for(const row of affected)await this.refresh(client,row.id);}
  async verifyFighters(client:Client,id:string){const view=await this.repo.publicView(id);if(view.type!=='fight'||!['OPEN','LOCKED'].includes(view.state))return;const guild=await client.guilds.fetch(view.guildId);for(const fighter of view.racers){try{const current=await guild.members.fetch({user:fighter.userId,force:true});if(fighter.joinedAt&&current.joinedAt&&current.joinedAt.toISOString()!==fighter.joinedAt){await this.repo.cancel(view.guildId,id,'A fighter left and rejoined; all wagers refunded.');return;}}catch(error){if(error&&typeof error==='object'&&'code' in error&&Number(error.code)===10007){await this.repo.memberLeft(view.guildId,fighter.userId);return;}throw error;}}}
