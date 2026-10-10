@@ -15,6 +15,12 @@ export function auditCommandShapes(commands){
    if(names.has(row.name))issues.push(`${next}: duplicate option name`);names.add(row.name);
    if(row.choices?.length>25)issues.push(`${next}: choices exceed 25; use filtered autocomplete or a supported grouping`);
    if(row.autocomplete&&row.choices?.length)issues.push(`${next}: autocomplete and static choices cannot be combined`);
+   for(const choice of row.choices??[]){
+    if(typeof choice?.name!=='string'||!choice.name)issues.push(`${next}: every choice needs a non-empty string name`);
+    if(typeof choice?.value!=='string'&&typeof choice?.value!=='number')issues.push(`${next}: every choice value must be a Discord string or number primitive`);
+    if(row.type===4&&typeof choice?.value!=='number')issues.push(`${next}: integer choices require numeric values`);
+    if(row.type===3&&typeof choice?.value!=='string')issues.push(`${next}: string choices require string values`);
+   }
    if(row.type!==1&&row.type!==2){if(row.required&&optional)issues.push(`${next}: required option follows optional option`);if(!row.required)optional=true;}
    options(row.options??[],next);
   }

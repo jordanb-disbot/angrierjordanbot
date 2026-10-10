@@ -312,25 +312,16 @@
         "required": true,
         "choices": [
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "500",
-              "value": 500
-            }
+            "name": "500",
+            "value": 500
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "1,000",
-              "value": 1000
-            }
+            "name": "1,000",
+            "value": 1000
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "5,000",
-              "value": 5000
-            }
+            "name": "5,000",
+            "value": 5000
           }
         ]
       },
@@ -341,32 +332,20 @@
         "required": false,
         "choices": [
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "No bots",
-              "value": 0
-            }
+            "name": "No bots",
+            "value": 0
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "1 bot",
-              "value": 1
-            }
+            "name": "1 bot",
+            "value": 1
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "2 bots",
-              "value": 2
-            }
+            "name": "2 bots",
+            "value": 2
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "3 bots",
-              "value": 3
-            }
+            "name": "3 bots",
+            "value": 3
           }
         ]
       }
@@ -384,25 +363,16 @@
         "required": true,
         "choices": [
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "500",
-              "value": 500
-            }
+            "name": "500",
+            "value": 500
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "1,000",
-              "value": 1000
-            }
+            "name": "1,000",
+            "value": 1000
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "5,000",
-              "value": 5000
-            }
+            "name": "5,000",
+            "value": 5000
           }
         ]
       },
@@ -413,32 +383,20 @@
         "required": false,
         "choices": [
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "No bots",
-              "value": 0
-            }
+            "name": "No bots",
+            "value": 0
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "1 bot",
-              "value": 1
-            }
+            "name": "1 bot",
+            "value": 1
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "2 bots",
-              "value": 2
-            }
+            "name": "2 bots",
+            "value": 2
           },
           {
-            "name": "[object Object]",
-            "value": {
-              "name": "3 bots",
-              "value": 3
-            }
+            "name": "3 bots",
+            "value": 3
           }
         ]
       }
