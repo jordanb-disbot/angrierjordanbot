@@ -701,7 +701,9 @@ export async function startProductionBot():Promise<void>{
       if(enableOnboardingSmoke&&interaction.isButton()&&interaction.customId==='roles:publish'){await onboarding.handleRolePublish(interaction);return;}
       if(enableOnboardingSmoke&&interaction.isStringSelectMenu()&&interaction.customId.startsWith('roles:select:')){await onboarding.handleRoleSelect(interaction);return;}
     }catch(error){
-      console.error('Interaction failed; response withheld or marked unsuccessful.');
+      const failure=error as {name?:unknown;code?:unknown};
+      const route='customId'in interaction&&typeof interaction.customId==='string'?interaction.customId.split(':').slice(0,2).join(':'):interaction.isChatInputCommand()?interaction.commandName:'unknown';
+      console.error('Interaction failed; response withheld or marked unsuccessful.',JSON.stringify({route,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='string'||typeof failure.code==='number'?failure.code:null}));
       const content='That action could not be completed. Angrier Jordan logged the failure.';
       if(interaction.isRepliable()){
         if(interaction.deferred&&!interaction.replied&&interaction.isChatInputCommand()&&interaction.commandName==='jail'&&interaction.options.getSubcommand(false)==='send')await interaction.editReply({content}).catch(()=>undefined);
