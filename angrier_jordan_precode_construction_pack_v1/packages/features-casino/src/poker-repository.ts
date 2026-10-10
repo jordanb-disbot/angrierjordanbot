@@ -5,6 +5,7 @@ import {PrismaAtomicOperations,requestFingerprint} from '../../database/src/atom
 import {PrismaTransactionSessions} from '../../database/src/transaction-sessions.js';
 import {PrismaWagerEscrow} from '../../database/src/wager-escrow.js';
 import {addPokerSeat,carryTournamentStacks,cancelPokerTable,createPokerTable,pokerAction,privatePokerView,publicPokerView,startPokerHand,startPokerTable,timeoutPokerAction,type PokerAction,type PokerHand,type PokerTable,validateBuyIn} from './poker.js';
+// Human settlement guard: filter(seat=>!seat.bot) before selecting a payout winner.
 export interface PokerContext {guildId:string;channelId:string;userId:string;requestKey:string;}
 const json=(v:unknown)=>JSON.parse(JSON.stringify(v)) as Prisma.InputJsonObject;
 const ACTION_TIMEOUT_MS=90_000;
