@@ -472,7 +472,22 @@ export async function startProductionBot():Promise<void>{
       await discordRequest('POST',missing);
       return 'partial';
     };
-    const retryCommandRegistration=()=>lifecycle.run(async()=>{try{const result=await registerCommands();if(result==='complete'){console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));return;}const retrySeconds=5;console.info('Bot command registration made progress; continuing gradually.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,retrySeconds*1_000);retry.unref();}}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown;retryAfterSeconds?:unknown;message?:unknown;rawError?:unknown};const retrySeconds=Math.max(60,typeof failure.retryAfterSeconds==='number'&&Number.isFinite(failure.retryAfterSeconds)?Math.ceil(failure.retryAfterSeconds)+10:60);console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null,errorMessage:typeof failure.message==='string'?failure.message.slice(0,500):null,errorDetail:failure.rawError&&typeof failure.rawError==='object'?failure.rawError:null}));if(!lifecycle.isStopping){const retry=setTimeout(retryCommandRegistration,retrySeconds*1_000);retry.unref();}}});
+    let commandRegistrationRetry:NodeJS.Timeout|undefined;
+    let commandRegistrationRetryAt=0;
+    let commandRegistrationRunning=false;
+    const scheduleCommandRegistration=(delayMs:number)=>{
+      if(lifecycle.isStopping||commandRegistrationRetry)return;
+      commandRegistrationRetryAt=Date.now()+delayMs;
+      commandRegistrationRetry=setTimeout(()=>{commandRegistrationRetry=undefined;retryCommandRegistration();},delayMs);
+      commandRegistrationRetry.unref();
+    };
+    const retryCommandRegistration=()=>{
+      if(lifecycle.isStopping||commandRegistrationRunning)return;
+      const remainingMs=commandRegistrationRetryAt-Date.now();
+      if(remainingMs>0){scheduleCommandRegistration(remainingMs);return;}
+      commandRegistrationRunning=true;
+      lifecycle.run(async()=>{try{const result=await registerCommands();if(result==='complete'){console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));return;}const retrySeconds=5;console.info('Bot command registration made progress; continuing gradually.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage}));scheduleCommandRegistration(retrySeconds*1_000);}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown;retryAfterSeconds?:unknown;message?:unknown;rawError?:unknown};const retrySeconds=Math.max(60,typeof failure.retryAfterSeconds==='number'&&Number.isFinite(failure.retryAfterSeconds)?Math.ceil(failure.retryAfterSeconds)+10:60);console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null,errorMessage:typeof failure.message==='string'?failure.message.slice(0,500):null,errorDetail:failure.rawError&&typeof failure.rawError==='object'?failure.rawError:null}));scheduleCommandRegistration(retrySeconds*1_000);}finally{commandRegistrationRunning=false;}});
+    };
     startup.mark('command-registration');retryCommandRegistration();console.info('Bot startup diagnostic',JSON.stringify({stage:'command-registration',event:'deferred'}));
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
