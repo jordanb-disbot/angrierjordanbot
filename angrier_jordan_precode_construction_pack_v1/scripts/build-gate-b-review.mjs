@@ -9,7 +9,12 @@ const approval = JSON.parse(fs.readFileSync(new URL('docs/approved_visuals/gate-
 assert.equal(approval.status, 'PASSED');
 const groups = ['family-events', 'casino-profiles', 'community', 'chairisms', 'superlative'];
 const read = file => fs.readFileSync(new URL(file, root));
-const hash = file => crypto.createHash('sha256').update(read(file)).digest('hex');
+// Fixture PNGs are binary, while source hashes must be stable across Git's
+// Windows and Linux line-ending checkout policies.
+const hash = file => {
+ const value=read(file);
+ return crypto.createHash('sha256').update(/\.(?:[cm]?ts|[cm]?js)$/i.test(file)?value.toString().replaceAll('\r\n','\n'):value).digest('hex');
+};
 const output = (file, value) => {
   if(process.argv.includes('--check'))assert.equal(read(file).toString().replaceAll('\r\n','\n'),value,file+' is stale; regenerate the Gate B review package.');
   else fs.writeFileSync(new URL(file,root),value);
