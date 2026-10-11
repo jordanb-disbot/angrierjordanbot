@@ -416,9 +416,9 @@ export async function startProductionBot():Promise<void>{
     startup.mark('command-registration-load');
     const registration=JSON.parse(fs.readFileSync(new URL('../../../generated/discord/application_commands.json',import.meta.url),'utf8'));
     const enabled=registration.filter((c:{name?:string;type?:number})=>chairismRegistrationEnabled(c,enableChairismsSmoke)||(enableCommunitySmoke&&c.type===3&&Boolean(c.name&&EMOJI_STEAL_CONTEXT_COMMANDS.has(c.name)))||c.type===1&&(c.name==='chess'||alwaysRegisteredCommand(c)||(enableSocialSmoke&&Boolean(c.name&&SOCIAL_COMMANDS.has(c.name)))||(enableIntroductionsSmoke&&Boolean(c.name&&INTRODUCTION_COMMANDS.has(c.name)))||(enableLearningSmoke&&Boolean(c.name&&['help','tutorial','lore','tldr'].includes(c.name)))||(enableFamilySmoke&&c.name==='family')||(enableCommunitySmoke&&Boolean(c.name&&(COMMUNITY_COMMANDS.has(c.name)||c.name==='steal')))||(enableCrimeSmoke&&c.name==='crime')||(enablePartySmoke&&Boolean(c.name&&PARTY_COMMANDS.has(c.name)))||(enablePvpSmoke&&c.name==='game')||(enableSoloSmoke&&Boolean(c.name&&SOLO_COMMANDS.has(c.name)))||(enableEventsSmoke&&(c.name==='fight'||c.name==='race'))||(enableCasinoSmoke&&Boolean(c.name&&CASINO_COMMANDS.has(c.name)))||(enableCasinoSmoke&&Boolean(c.name&&POKER_COMMANDS.has(c.name)))||(enableProfilesSmoke&&Boolean(c.name&&PROFILE_COMMANDS.has(c.name)))||(enableItemsSmoke&&Boolean(c.name&&ITEM_COMMANDS.has(c.name)))||(enableWyrSmoke&&c.name==='wyr')||(enableOnboardingSmoke&&(c.name==='rules'||c.name==='roles'))||(enableJailSmoke&&c.name==='jail')||(enableModerationSmoke&&c.name==='mod')||(enableSecuritySmoke&&c.name==='panic')||(enableEconomySmoke&&Boolean(c.name&&ECONOMY_COMMANDS.has(c.name)))));
+    const commandRegistrationOneShot=process.env.AJ_COMMAND_REGISTRATION_ONE_SHOT==='true';
     let commandRegistrationStage='bulk';
-    let useIncrementalRegistration=false;
-    const registerCommands=async():Promise<'complete'|'partial'>=>{
+    const registerCommands=async()=>{
       commandRegistrationStage='bulk';
       const applicationId=ready.user.id;
       if(!/^\d{17,20}$/.test(applicationId))throw new Error('Discord bot identity is invalid.');
@@ -444,51 +444,15 @@ export async function startProductionBot():Promise<void>{
         }
         return await response.json() as T;
       },timeoutMs);
-      if(!useIncrementalRegistration){
-        try{
-          // Guild-wide replacement is one atomic request.  It can legitimately
-          // take longer than an ordinary REST call when Discord reconciles a
-          // large command set, so do not turn a healthy request into dozens of
-          // rate-limited individual creates after 30 seconds.
-          const registered=await discordRequest<unknown>('PUT',enabled,180_000);
-          validateRegisteredCommands(enabled,registered);
-          return 'complete';
-        }catch(error){
-          if(!(error instanceof DOMException&&error.name==='AbortError'))throw error;
-          useIncrementalRegistration=true;
-        }
-        console.warn('Bulk command registration timed out; registering missing commands gradually.',JSON.stringify({commands:enabled.length}));
-      }
-      const commandKey=(command:{name?:unknown;type?:unknown})=>typeof command.name==='string'&&Number.isInteger(command.type)?`${command.type}:${command.name}`:null;
-      commandRegistrationStage='inventory';
-      const current=await discordRequest<unknown>('GET');
-      if(!Array.isArray(current))throw new Error('Discord command inventory is invalid.');
-      const existing=new Set(current.map(commandKey).filter((key):key is string=>key!==null));
-      const missing=enabled.find((command:{name?:unknown;type?:unknown})=>{const key=commandKey(command);return key!==null&&!existing.has(key);});
-      if(!missing)return 'complete';
-      const key=commandKey(missing);
-      if(!key)throw new Error('Command registration payload is invalid.');
-      commandRegistrationStage=`create:${key}`;
-      await discordRequest('POST',missing);
-      return 'partial';
+      // One owner-authorized, atomic request. Never fall back to individual
+      // creates or schedule a retry: either Discord accepts the full set, or
+      // an operator explicitly authorizes another one-shot release.
+      const registered=await discordRequest<unknown>('PUT',enabled,180_000);
+      validateRegisteredCommands(enabled,registered);
     };
-    let commandRegistrationRetry:NodeJS.Timeout|undefined;
-    let commandRegistrationRetryAt=0;
-    let commandRegistrationRunning=false;
-    const scheduleCommandRegistration=(delayMs:number)=>{
-      if(lifecycle.isStopping||commandRegistrationRetry)return;
-      commandRegistrationRetryAt=Date.now()+delayMs;
-      commandRegistrationRetry=setTimeout(()=>{commandRegistrationRetry=undefined;retryCommandRegistration();},delayMs);
-      commandRegistrationRetry.unref();
-    };
-    const retryCommandRegistration=()=>{
-      if(lifecycle.isStopping||commandRegistrationRunning)return;
-      const remainingMs=commandRegistrationRetryAt-Date.now();
-      if(remainingMs>0){scheduleCommandRegistration(remainingMs);return;}
-      commandRegistrationRunning=true;
-      lifecycle.run(async()=>{try{const result=await registerCommands();if(result==='complete'){console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));return;}const retrySeconds=5;console.info('Bot command registration made progress; continuing gradually.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage}));scheduleCommandRegistration(retrySeconds*1_000);}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown;retryAfterSeconds?:unknown;message?:unknown;rawError?:unknown};const dailyCooldown=dailyCommandCreateCooldownSeconds(failure.rawError);const retrySeconds=dailyCooldown??Math.max(60,typeof failure.retryAfterSeconds==='number'&&Number.isFinite(failure.retryAfterSeconds)?Math.ceil(failure.retryAfterSeconds)+10:60);console.warn('Bot command registration is pending; the bot remains available and will retry.',JSON.stringify({commands:enabled.length,retrySeconds,stage:commandRegistrationStage,dailyCreateLimit:dailyCooldown!==null,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null,errorMessage:typeof failure.message==='string'?failure.message.slice(0,500):null,errorDetail:failure.rawError&&typeof failure.rawError==='object'?failure.rawError:null}));scheduleCommandRegistration(retrySeconds*1_000);}finally{commandRegistrationRunning=false;}});
-    };
-    startup.mark('command-registration');retryCommandRegistration();console.info('Bot startup diagnostic',JSON.stringify({stage:'command-registration',event:'deferred'}));
+    startup.mark('command-registration');
+    if(!commandRegistrationOneShot)console.info('Bot command registration skipped.',JSON.stringify({commands:enabled.length,reason:'owner_one_shot_gate'}));
+    else lifecycle.run(async()=>{try{await registerCommands();console.info('Bot command registration completed.',JSON.stringify({commands:enabled.length}));}catch(error){const failure=error as {name?:unknown;code?:unknown;status?:unknown;message?:unknown;rawError?:unknown};console.warn('Bot command registration was not completed; another request requires explicit owner authorization.',JSON.stringify({commands:enabled.length,stage:commandRegistrationStage,dailyCreateLimit:dailyCommandCreateCooldownSeconds(failure.rawError)!==null,errorName:typeof failure.name==='string'?failure.name:'unknown',errorCode:typeof failure.code==='number'||typeof failure.code==='string'?failure.code:null,httpStatus:typeof failure.status==='number'?failure.status:null,errorMessage:typeof failure.message==='string'?failure.message.slice(0,500):null,errorDetail:failure.rawError&&typeof failure.rawError==='object'?failure.rawError:null}));}});
     startup.mark('family-bootstrap');
     if(await familyEnabled()){
       try{await ensureFamilyMembership();}
